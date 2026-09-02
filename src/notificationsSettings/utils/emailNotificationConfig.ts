@@ -189,11 +189,11 @@ export const ensureSmtpFieldDefaults = (
  * (`REQUIRED_EMAIL_CONFIG_FIELDS` in saleor/plugins/email_common.py).
  * `sender_name` is optional.
  */
-export const REQUIRED_CUSTOM_SMTP_FIELDS = ["host", "port", "sender_address"] as const;
+const REQUIRED_CUSTOM_SMTP_FIELDS = ["host", "port", "sender_address"] as const;
 
 export type CustomSmtpClientErrorCode = "required" | "invalidEmail" | "tlsSslExclusive";
 
-export type CustomSmtpClientErrors = Partial<
+type CustomSmtpClientErrors = Partial<
   Record<(typeof SMTP_CONFIG_FIELD_NAMES)[number], CustomSmtpClientErrorCode>
 >;
 

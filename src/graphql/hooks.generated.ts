@@ -211,6 +211,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   name
   type
   appUrl
+  created
   problems {
     __typename
     key
@@ -239,7 +240,7 @@ export const AttributeFragmentDoc = gql`
   slug
   type
   visibleInStorefront
-  filterableInStorefront
+  filterableInStorefront @lockSchema(schema: "main")
   unit
   inputType
 }
@@ -253,8 +254,8 @@ export const AttributeAssignedListFragmentDoc = gql`
 export const AttributeUpdateResultFragmentDoc = gql`
     fragment AttributeUpdateResult on Attribute {
   ...Attribute
-  availableInGrid
-  storefrontSearchPosition
+  availableInGrid @lockSchema(schema: "main")
+  storefrontSearchPosition @lockSchema(schema: "main")
   valueRequired
   referenceTypes {
     ... on ProductType {
@@ -308,6 +309,18 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
+export const AuthUserFragmentDoc = gql`
+    fragment AuthUser on User {
+  id
+  email
+  firstName
+  lastName
+  isStaff
+  userPermissions {
+    ...UserPermission
+  }
+}
+    ${UserPermissionFragmentDoc}`;
 export const ChannelFragmentDoc = gql`
     fragment Channel on Channel {
   id
@@ -1026,7 +1039,7 @@ export const VoucherCatalogueFragmentDoc = gql`
         thumbnail {
           url
         }
-        channelListings {
+        channelListings @include(if: $PERMISSION_MANAGE_PRODUCTS) {
           ...ChannelListingProductWithoutPricing
         }
       }
@@ -1078,10 +1091,6 @@ export const VoucherCatalogueFragmentDoc = gql`
           productType {
             id
             name
-            __typename
-          }
-          channelListings {
-            ...ChannelListingProductWithoutPricing
             __typename
           }
           __typename
@@ -2997,9 +3006,9 @@ export const PageFragmentDoc = gql`
 export const AttributeDetailsFragmentDoc = gql`
     fragment AttributeDetails on Attribute {
   ...Attribute
-  availableInGrid
+  availableInGrid @lockSchema(schema: "main")
   entityType
-  storefrontSearchPosition
+  storefrontSearchPosition @lockSchema(schema: "main")
   valueRequired
   referenceTypes {
     ... on ProductType {
@@ -3573,7 +3582,7 @@ export const SearchProductFragmentDoc = gql`
   thumbnail {
     url
   }
-  channelListings {
+  channelListings @include(if: $PERMISSION_MANAGE_PRODUCTS) {
     ...ChannelListingProductWithoutPricing
   }
   collections {
@@ -4995,6 +5004,363 @@ export function useRequestPasswordResetMutation(baseOptions?: ApolloReactHooks.M
 export type RequestPasswordResetMutationHookResult = ReturnType<typeof useRequestPasswordResetMutation>;
 export type RequestPasswordResetMutationResult = Apollo.MutationResult<Types.RequestPasswordResetMutation>;
 export type RequestPasswordResetMutationOptions = Apollo.BaseMutationOptions<Types.RequestPasswordResetMutation, Types.RequestPasswordResetMutationVariables>;
+export const LoginDocument = gql`
+    mutation Login($email: String!, $password: String!) {
+  tokenCreate(email: $email, password: $password) {
+    token
+    refreshToken
+    errors {
+      ...AccountError
+    }
+    user {
+      ...User
+    }
+  }
+}
+    ${AccountErrorFragmentDoc}
+${UserFragmentDoc}`;
+export type LoginMutationFn = Apollo.MutationFunction<Types.LoginMutation, Types.LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.LoginMutation, Types.LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.LoginMutation, Types.LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<Types.LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<Types.LoginMutation, Types.LoginMutationVariables>;
+export const RefreshTokenDocument = gql`
+    mutation RefreshToken($refreshToken: String!) {
+  tokenRefresh(refreshToken: $refreshToken) {
+    token
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${AccountErrorFragmentDoc}`;
+export type RefreshTokenMutationFn = Apollo.MutationFunction<Types.RefreshTokenMutation, Types.RefreshTokenMutationVariables>;
+
+/**
+ * __useRefreshTokenMutation__
+ *
+ * To run a mutation, you first call `useRefreshTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefreshTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refreshTokenMutation, { data, loading, error }] = useRefreshTokenMutation({
+ *   variables: {
+ *      refreshToken: // value for 'refreshToken'
+ *   },
+ * });
+ */
+export function useRefreshTokenMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefreshTokenMutation, Types.RefreshTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.RefreshTokenMutation, Types.RefreshTokenMutationVariables>(RefreshTokenDocument, options);
+      }
+export type RefreshTokenMutationHookResult = ReturnType<typeof useRefreshTokenMutation>;
+export type RefreshTokenMutationResult = Apollo.MutationResult<Types.RefreshTokenMutation>;
+export type RefreshTokenMutationOptions = Apollo.BaseMutationOptions<Types.RefreshTokenMutation, Types.RefreshTokenMutationVariables>;
+export const RefreshTokenWithUserDocument = gql`
+    mutation RefreshTokenWithUser($refreshToken: String!) {
+  tokenRefresh(refreshToken: $refreshToken) {
+    token
+    user {
+      ...AuthUser
+    }
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${AuthUserFragmentDoc}
+${AccountErrorFragmentDoc}`;
+export type RefreshTokenWithUserMutationFn = Apollo.MutationFunction<Types.RefreshTokenWithUserMutation, Types.RefreshTokenWithUserMutationVariables>;
+
+/**
+ * __useRefreshTokenWithUserMutation__
+ *
+ * To run a mutation, you first call `useRefreshTokenWithUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefreshTokenWithUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refreshTokenWithUserMutation, { data, loading, error }] = useRefreshTokenWithUserMutation({
+ *   variables: {
+ *      refreshToken: // value for 'refreshToken'
+ *   },
+ * });
+ */
+export function useRefreshTokenWithUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefreshTokenWithUserMutation, Types.RefreshTokenWithUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.RefreshTokenWithUserMutation, Types.RefreshTokenWithUserMutationVariables>(RefreshTokenWithUserDocument, options);
+      }
+export type RefreshTokenWithUserMutationHookResult = ReturnType<typeof useRefreshTokenWithUserMutation>;
+export type RefreshTokenWithUserMutationResult = Apollo.MutationResult<Types.RefreshTokenWithUserMutation>;
+export type RefreshTokenWithUserMutationOptions = Apollo.BaseMutationOptions<Types.RefreshTokenWithUserMutation, Types.RefreshTokenWithUserMutationVariables>;
+export const ExternalAuthenticationUrlDocument = gql`
+    mutation ExternalAuthenticationUrl($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalAuthenticationUrl(pluginId: $pluginId, input: $input) {
+    authenticationData
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${AccountErrorFragmentDoc}`;
+export type ExternalAuthenticationUrlMutationFn = Apollo.MutationFunction<Types.ExternalAuthenticationUrlMutation, Types.ExternalAuthenticationUrlMutationVariables>;
+
+/**
+ * __useExternalAuthenticationUrlMutation__
+ *
+ * To run a mutation, you first call `useExternalAuthenticationUrlMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useExternalAuthenticationUrlMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [externalAuthenticationUrlMutation, { data, loading, error }] = useExternalAuthenticationUrlMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useExternalAuthenticationUrlMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ExternalAuthenticationUrlMutation, Types.ExternalAuthenticationUrlMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ExternalAuthenticationUrlMutation, Types.ExternalAuthenticationUrlMutationVariables>(ExternalAuthenticationUrlDocument, options);
+      }
+export type ExternalAuthenticationUrlMutationHookResult = ReturnType<typeof useExternalAuthenticationUrlMutation>;
+export type ExternalAuthenticationUrlMutationResult = Apollo.MutationResult<Types.ExternalAuthenticationUrlMutation>;
+export type ExternalAuthenticationUrlMutationOptions = Apollo.BaseMutationOptions<Types.ExternalAuthenticationUrlMutation, Types.ExternalAuthenticationUrlMutationVariables>;
+export const ExternalObtainAccessTokensDocument = gql`
+    mutation ExternalObtainAccessTokens($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalObtainAccessTokens(pluginId: $pluginId, input: $input) {
+    token
+    refreshToken
+    user {
+      ...User
+    }
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${UserFragmentDoc}
+${AccountErrorFragmentDoc}`;
+export type ExternalObtainAccessTokensMutationFn = Apollo.MutationFunction<Types.ExternalObtainAccessTokensMutation, Types.ExternalObtainAccessTokensMutationVariables>;
+
+/**
+ * __useExternalObtainAccessTokensMutation__
+ *
+ * To run a mutation, you first call `useExternalObtainAccessTokensMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useExternalObtainAccessTokensMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [externalObtainAccessTokensMutation, { data, loading, error }] = useExternalObtainAccessTokensMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useExternalObtainAccessTokensMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ExternalObtainAccessTokensMutation, Types.ExternalObtainAccessTokensMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ExternalObtainAccessTokensMutation, Types.ExternalObtainAccessTokensMutationVariables>(ExternalObtainAccessTokensDocument, options);
+      }
+export type ExternalObtainAccessTokensMutationHookResult = ReturnType<typeof useExternalObtainAccessTokensMutation>;
+export type ExternalObtainAccessTokensMutationResult = Apollo.MutationResult<Types.ExternalObtainAccessTokensMutation>;
+export type ExternalObtainAccessTokensMutationOptions = Apollo.BaseMutationOptions<Types.ExternalObtainAccessTokensMutation, Types.ExternalObtainAccessTokensMutationVariables>;
+export const ExternalRefreshDocument = gql`
+    mutation ExternalRefresh($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalRefresh(pluginId: $pluginId, input: $input) {
+    token
+    refreshToken
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${AccountErrorFragmentDoc}`;
+export type ExternalRefreshMutationFn = Apollo.MutationFunction<Types.ExternalRefreshMutation, Types.ExternalRefreshMutationVariables>;
+
+/**
+ * __useExternalRefreshMutation__
+ *
+ * To run a mutation, you first call `useExternalRefreshMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useExternalRefreshMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [externalRefreshMutation, { data, loading, error }] = useExternalRefreshMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useExternalRefreshMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ExternalRefreshMutation, Types.ExternalRefreshMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ExternalRefreshMutation, Types.ExternalRefreshMutationVariables>(ExternalRefreshDocument, options);
+      }
+export type ExternalRefreshMutationHookResult = ReturnType<typeof useExternalRefreshMutation>;
+export type ExternalRefreshMutationResult = Apollo.MutationResult<Types.ExternalRefreshMutation>;
+export type ExternalRefreshMutationOptions = Apollo.BaseMutationOptions<Types.ExternalRefreshMutation, Types.ExternalRefreshMutationVariables>;
+export const ExternalRefreshWithUserDocument = gql`
+    mutation ExternalRefreshWithUser($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalRefresh(pluginId: $pluginId, input: $input) {
+    token
+    refreshToken
+    user {
+      ...User
+    }
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${UserFragmentDoc}
+${AccountErrorFragmentDoc}`;
+export type ExternalRefreshWithUserMutationFn = Apollo.MutationFunction<Types.ExternalRefreshWithUserMutation, Types.ExternalRefreshWithUserMutationVariables>;
+
+/**
+ * __useExternalRefreshWithUserMutation__
+ *
+ * To run a mutation, you first call `useExternalRefreshWithUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useExternalRefreshWithUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [externalRefreshWithUserMutation, { data, loading, error }] = useExternalRefreshWithUserMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useExternalRefreshWithUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ExternalRefreshWithUserMutation, Types.ExternalRefreshWithUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ExternalRefreshWithUserMutation, Types.ExternalRefreshWithUserMutationVariables>(ExternalRefreshWithUserDocument, options);
+      }
+export type ExternalRefreshWithUserMutationHookResult = ReturnType<typeof useExternalRefreshWithUserMutation>;
+export type ExternalRefreshWithUserMutationResult = Apollo.MutationResult<Types.ExternalRefreshWithUserMutation>;
+export type ExternalRefreshWithUserMutationOptions = Apollo.BaseMutationOptions<Types.ExternalRefreshWithUserMutation, Types.ExternalRefreshWithUserMutationVariables>;
+export const ExternalLogoutDocument = gql`
+    mutation ExternalLogout($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalLogout(pluginId: $pluginId, input: $input) {
+    logoutData
+    errors {
+      ...AccountError
+    }
+  }
+}
+    ${AccountErrorFragmentDoc}`;
+export type ExternalLogoutMutationFn = Apollo.MutationFunction<Types.ExternalLogoutMutation, Types.ExternalLogoutMutationVariables>;
+
+/**
+ * __useExternalLogoutMutation__
+ *
+ * To run a mutation, you first call `useExternalLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useExternalLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [externalLogoutMutation, { data, loading, error }] = useExternalLogoutMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useExternalLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ExternalLogoutMutation, Types.ExternalLogoutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ExternalLogoutMutation, Types.ExternalLogoutMutationVariables>(ExternalLogoutDocument, options);
+      }
+export type ExternalLogoutMutationHookResult = ReturnType<typeof useExternalLogoutMutation>;
+export type ExternalLogoutMutationResult = Apollo.MutationResult<Types.ExternalLogoutMutation>;
+export type ExternalLogoutMutationOptions = Apollo.BaseMutationOptions<Types.ExternalLogoutMutation, Types.ExternalLogoutMutationVariables>;
+export const SetPasswordDocument = gql`
+    mutation SetPassword($token: String!, $email: String!, $password: String!) {
+  setPassword(token: $token, email: $email, password: $password) {
+    errors {
+      ...AccountError
+    }
+    token
+    refreshToken
+    user {
+      ...AuthUser
+    }
+  }
+}
+    ${AccountErrorFragmentDoc}
+${AuthUserFragmentDoc}`;
+export type SetPasswordMutationFn = Apollo.MutationFunction<Types.SetPasswordMutation, Types.SetPasswordMutationVariables>;
+
+/**
+ * __useSetPasswordMutation__
+ *
+ * To run a mutation, you first call `useSetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setPasswordMutation, { data, loading, error }] = useSetPasswordMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SetPasswordMutation, Types.SetPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SetPasswordMutation, Types.SetPasswordMutationVariables>(SetPasswordDocument, options);
+      }
+export type SetPasswordMutationHookResult = ReturnType<typeof useSetPasswordMutation>;
+export type SetPasswordMutationResult = Apollo.MutationResult<Types.SetPasswordMutation>;
+export type SetPasswordMutationOptions = Apollo.BaseMutationOptions<Types.SetPasswordMutation, Types.SetPasswordMutationVariables>;
 export const AvailableExternalAuthenticationsDocument = gql`
     query AvailableExternalAuthentications {
   shop {
@@ -6666,11 +7032,12 @@ export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddress
 export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
 export const _GetDynamicLeftOperandsDocument = gql`
-    query _GetDynamicLeftOperands($first: Int!, $query: String!) {
+    query _GetDynamicLeftOperands($first: Int!, $query: String!, $type: AttributeTypeEnum!, $after: String) {
   attributes(
     first: $first
+    after: $after
     search: $query
-    where: {type: {eq: PRODUCT_TYPE}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE, SINGLE_REFERENCE]}}
+    where: {type: {eq: $type}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE, SINGLE_REFERENCE]}}
   ) {
     edges {
       node {
@@ -6682,6 +7049,10 @@ export const _GetDynamicLeftOperandsDocument = gql`
         __typename
       }
       __typename
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
     __typename
   }
@@ -6702,6 +7073,8 @@ export const _GetDynamicLeftOperandsDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      type: // value for 'type'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7001,7 +7374,7 @@ export type _SearchCustomerTypesOperandsQueryHookResult = ReturnType<typeof use_
 export type _SearchCustomerTypesOperandsLazyQueryHookResult = ReturnType<typeof use_SearchCustomerTypesOperandsLazyQuery>;
 export type _SearchCustomerTypesOperandsQueryResult = Apollo.QueryResult<Types._SearchCustomerTypesOperandsQuery, Types._SearchCustomerTypesOperandsQueryVariables>;
 export const _SearchAttributeOperandsDocument = gql`
-    query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!) {
+    query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!, $choicesFirst: Int!) {
   attributes(first: $first, filter: {slugs: $attributesSlugs}) {
     edges {
       node {
@@ -7010,13 +7383,17 @@ export const _SearchAttributeOperandsDocument = gql`
         slug
         inputType
         entityType
-        choices(first: 5, filter: {ids: $choicesIds}) {
+        choices(first: $choicesFirst, filter: {ids: $choicesIds}) {
           edges {
             node {
               slug: id
               id
               name
               originalSlug: slug
+              value
+              file {
+                url
+              }
             }
           }
         }
@@ -7041,6 +7418,7 @@ export const _SearchAttributeOperandsDocument = gql`
  *      attributesSlugs: // value for 'attributesSlugs'
  *      choicesIds: // value for 'choicesIds'
  *      first: // value for 'first'
+ *      choicesFirst: // value for 'choicesFirst'
  *   },
  * });
  */
@@ -7056,16 +7434,24 @@ export type _SearchAttributeOperandsQueryHookResult = ReturnType<typeof use_Sear
 export type _SearchAttributeOperandsLazyQueryHookResult = ReturnType<typeof use_SearchAttributeOperandsLazyQuery>;
 export type _SearchAttributeOperandsQueryResult = Apollo.QueryResult<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>;
 export const _GetAttributeChoicesDocument = gql`
-    query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!) {
+    query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!, $after: String) {
   attribute(slug: $slug) {
-    choices(first: $first, filter: {search: $query}) {
+    choices(first: $first, after: $after, filter: {search: $query}) {
       edges {
         node {
           slug: id
           id
           name
           originalSlug: slug
+          value
+          file {
+            url
+          }
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -7087,6 +7473,7 @@ export const _GetAttributeChoicesDocument = gql`
  *      slug: // value for 'slug'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7102,14 +7489,18 @@ export type _GetAttributeChoicesQueryHookResult = ReturnType<typeof use_GetAttri
 export type _GetAttributeChoicesLazyQueryHookResult = ReturnType<typeof use_GetAttributeChoicesLazyQuery>;
 export type _GetAttributeChoicesQueryResult = Apollo.QueryResult<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>;
 export const _GetCollectionsChoicesDocument = gql`
-    query _GetCollectionsChoices($first: Int!, $query: String!) {
-  collections(first: $first, filter: {search: $query}) {
+    query _GetCollectionsChoices($first: Int!, $query: String!, $after: String) {
+  collections(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7129,6 +7520,7 @@ export const _GetCollectionsChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7144,14 +7536,18 @@ export type _GetCollectionsChoicesQueryHookResult = ReturnType<typeof use_GetCol
 export type _GetCollectionsChoicesLazyQueryHookResult = ReturnType<typeof use_GetCollectionsChoicesLazyQuery>;
 export type _GetCollectionsChoicesQueryResult = Apollo.QueryResult<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>;
 export const _GetCategoriesChoicesDocument = gql`
-    query _GetCategoriesChoices($first: Int!, $query: String!) {
-  categories(first: $first, filter: {search: $query}) {
+    query _GetCategoriesChoices($first: Int!, $query: String!, $after: String) {
+  categories(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7171,6 +7567,7 @@ export const _GetCategoriesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7186,14 +7583,18 @@ export type _GetCategoriesChoicesQueryHookResult = ReturnType<typeof use_GetCate
 export type _GetCategoriesChoicesLazyQueryHookResult = ReturnType<typeof use_GetCategoriesChoicesLazyQuery>;
 export type _GetCategoriesChoicesQueryResult = Apollo.QueryResult<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>;
 export const _GetProductTypesChoicesDocument = gql`
-    query _GetProductTypesChoices($first: Int!, $query: String!) {
-  productTypes(first: $first, filter: {search: $query}) {
+    query _GetProductTypesChoices($first: Int!, $query: String!, $after: String) {
+  productTypes(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7213,6 +7614,7 @@ export const _GetProductTypesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7228,14 +7630,18 @@ export type _GetProductTypesChoicesQueryHookResult = ReturnType<typeof use_GetPr
 export type _GetProductTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductTypesChoicesLazyQuery>;
 export type _GetProductTypesChoicesQueryResult = Apollo.QueryResult<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>;
 export const _GetPageTypesChoicesDocument = gql`
-    query _GetPageTypesChoices($first: Int!, $query: String!) {
-  pageTypes(first: $first, filter: {search: $query}) {
+    query _GetPageTypesChoices($first: Int!, $query: String!, $after: String) {
+  pageTypes(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7255,6 +7661,7 @@ export const _GetPageTypesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7270,14 +7677,18 @@ export type _GetPageTypesChoicesQueryHookResult = ReturnType<typeof use_GetPageT
 export type _GetPageTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetPageTypesChoicesLazyQuery>;
 export type _GetPageTypesChoicesQueryResult = Apollo.QueryResult<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>;
 export const _GetCustomerTypesChoicesDocument = gql`
-    query _GetCustomerTypesChoices($first: Int!, $query: String!) {
-  customerTypes(first: $first, search: $query) {
+    query _GetCustomerTypesChoices($first: Int!, $query: String!, $after: String) {
+  customerTypes(first: $first, after: $after, search: $query) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7297,6 +7708,7 @@ export const _GetCustomerTypesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7312,8 +7724,8 @@ export type _GetCustomerTypesChoicesQueryHookResult = ReturnType<typeof use_GetC
 export type _GetCustomerTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetCustomerTypesChoicesLazyQuery>;
 export type _GetCustomerTypesChoicesQueryResult = Apollo.QueryResult<Types._GetCustomerTypesChoicesQuery, Types._GetCustomerTypesChoicesQueryVariables>;
 export const _GetPagesChoicesDocument = gql`
-    query _GetPagesChoices($first: Int!, $query: String!) {
-  pages(first: $first, filter: {search: $query}) {
+    query _GetPagesChoices($first: Int!, $query: String!, $after: String) {
+  pages(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
@@ -7321,6 +7733,10 @@ export const _GetPagesChoicesDocument = gql`
         slug
         originalSlug: slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7340,6 +7756,7 @@ export const _GetPagesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7355,14 +7772,21 @@ export type _GetPagesChoicesQueryHookResult = ReturnType<typeof use_GetPagesChoi
 export type _GetPagesChoicesLazyQueryHookResult = ReturnType<typeof use_GetPagesChoicesLazyQuery>;
 export type _GetPagesChoicesQueryResult = Apollo.QueryResult<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>;
 export const _GetProductChoicesDocument = gql`
-    query _GetProductChoices($first: Int!, $query: String!) {
-  products(first: $first, filter: {search: $query}) {
+    query _GetProductChoices($first: Int!, $query: String!, $after: String) {
+  products(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
+        thumbnail(size: 64) {
+          url
+        }
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7382,6 +7806,7 @@ export const _GetProductChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7397,8 +7822,8 @@ export type _GetProductChoicesQueryHookResult = ReturnType<typeof use_GetProduct
 export type _GetProductChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductChoicesLazyQuery>;
 export type _GetProductChoicesQueryResult = Apollo.QueryResult<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>;
 export const _GetProductVariantChoicesDocument = gql`
-    query _GetProductVariantChoices($first: Int!, $query: String!) {
-  productVariants(first: $first, filter: {search: $query}) {
+    query _GetProductVariantChoices($first: Int!, $query: String!, $after: String) {
+  productVariants(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
@@ -7406,9 +7831,17 @@ export const _GetProductVariantChoicesDocument = gql`
         slug: id
         originalSlug: name
         product {
+          id
           name
+          thumbnail(size: 64) {
+            url
+          }
         }
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7428,6 +7861,7 @@ export const _GetProductVariantChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7442,14 +7876,76 @@ export function use_GetProductVariantChoicesLazyQuery(baseOptions?: ApolloReactH
 export type _GetProductVariantChoicesQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesQuery>;
 export type _GetProductVariantChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesLazyQuery>;
 export type _GetProductVariantChoicesQueryResult = Apollo.QueryResult<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>;
+export const _GetProductVariantChoicesByProductDocument = gql`
+    query _GetProductVariantChoicesByProduct($first: Int!, $query: String!, $after: String, $variantsFirst: Int!) {
+  products(first: $first, after: $after, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        thumbnail(size: 64) {
+          url
+        }
+        productVariants(first: $variantsFirst) {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __use_GetProductVariantChoicesByProductQuery__
+ *
+ * To run a query within a React component, call `use_GetProductVariantChoicesByProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetProductVariantChoicesByProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetProductVariantChoicesByProductQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *      after: // value for 'after'
+ *      variantsFirst: // value for 'variantsFirst'
+ *   },
+ * });
+ */
+export function use_GetProductVariantChoicesByProductQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>(_GetProductVariantChoicesByProductDocument, options);
+      }
+export function use_GetProductVariantChoicesByProductLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>(_GetProductVariantChoicesByProductDocument, options);
+        }
+export type _GetProductVariantChoicesByProductQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesByProductQuery>;
+export type _GetProductVariantChoicesByProductLazyQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesByProductLazyQuery>;
+export type _GetProductVariantChoicesByProductQueryResult = Apollo.QueryResult<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>;
 export const _GetGiftCardTagsChoicesDocument = gql`
-    query _GetGiftCardTagsChoices($first: Int!, $query: String!) {
-  giftCardTags(first: $first, filter: {search: $query}) {
+    query _GetGiftCardTagsChoices($first: Int!, $query: String!, $after: String) {
+  giftCardTags(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7469,6 +7965,7 @@ export const _GetGiftCardTagsChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7484,8 +7981,8 @@ export type _GetGiftCardTagsChoicesQueryHookResult = ReturnType<typeof use_GetGi
 export type _GetGiftCardTagsChoicesLazyQueryHookResult = ReturnType<typeof use_GetGiftCardTagsChoicesLazyQuery>;
 export type _GetGiftCardTagsChoicesQueryResult = Apollo.QueryResult<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>;
 export const _GetCustomersChoicesDocument = gql`
-    query _GetCustomersChoices($first: Int!, $query: String!) {
-  customers(first: $first, filter: {search: $query}) {
+    query _GetCustomersChoices($first: Int!, $query: String!, $after: String) {
+  customers(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
@@ -7493,6 +7990,10 @@ export const _GetCustomersChoicesDocument = gql`
         firstName
         lastName
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7512,6 +8013,7 @@ export const _GetCustomersChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7621,6 +8123,9 @@ export const _SearchProductOperandsDocument = gql`
         name
         slug
         originalSlug: slug
+        thumbnail(size: 64) {
+          url
+        }
       }
     }
   }
@@ -7665,7 +8170,11 @@ export const _SearchProductVariantOperandsDocument = gql`
         slug: id
         originalSlug: name
         product {
+          id
           name
+          thumbnail(size: 64) {
+            url
+          }
         }
       }
     }
@@ -7702,14 +8211,18 @@ export type _SearchProductVariantOperandsQueryHookResult = ReturnType<typeof use
 export type _SearchProductVariantOperandsLazyQueryHookResult = ReturnType<typeof use_SearchProductVariantOperandsLazyQuery>;
 export type _SearchProductVariantOperandsQueryResult = Apollo.QueryResult<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>;
 export const _GetWarehouseChoicesDocument = gql`
-    query _GetWarehouseChoices($first: Int!, $query: String!) {
-  warehouses(first: $first, filter: {search: $query}) {
+    query _GetWarehouseChoices($first: Int!, $query: String!, $after: String) {
+  warehouses(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7729,6 +8242,7 @@ export const _GetWarehouseChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -9320,7 +9834,7 @@ export type VoucherUpdateMutationHookResult = ReturnType<typeof useVoucherUpdate
 export type VoucherUpdateMutationResult = Apollo.MutationResult<Types.VoucherUpdateMutation>;
 export type VoucherUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>;
 export const VoucherCataloguesAddDocument = gql`
-    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!, $PERMISSION_MANAGE_PRODUCTS: Boolean!) {
   voucherCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -9359,6 +9873,7 @@ export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.Vouch
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
  *      includeVariants: // value for 'includeVariants'
+ *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *   },
  * });
  */
@@ -9370,7 +9885,7 @@ export type VoucherCataloguesAddMutationHookResult = ReturnType<typeof useVouche
 export type VoucherCataloguesAddMutationResult = Apollo.MutationResult<Types.VoucherCataloguesAddMutation>;
 export type VoucherCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
 export const VoucherCataloguesRemoveDocument = gql`
-    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!, $PERMISSION_MANAGE_PRODUCTS: Boolean!) {
   voucherCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -9409,6 +9924,7 @@ export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.Vo
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
  *      includeVariants: // value for 'includeVariants'
+ *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *   },
  * });
  */
@@ -10045,7 +10561,7 @@ export type VoucherDetailsQueryHookResult = ReturnType<typeof useVoucherDetailsQ
 export type VoucherDetailsLazyQueryHookResult = ReturnType<typeof useVoucherDetailsLazyQuery>;
 export type VoucherDetailsQueryResult = Apollo.QueryResult<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>;
 export const VoucherCatalogueDocument = gql`
-    query VoucherCatalogue($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+    query VoucherCatalogue($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!, $PERMISSION_MANAGE_PRODUCTS: Boolean!) {
   voucher(id: $id) {
     id
     ...VoucherCatalogue
@@ -10074,6 +10590,7 @@ export const VoucherCatalogueDocument = gql`
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
  *      includeVariants: // value for 'includeVariants'
+ *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *   },
  * });
  */
@@ -11118,6 +11635,50 @@ export function useAppUpdatePermissionsMutation(baseOptions?: ApolloReactHooks.M
 export type AppUpdatePermissionsMutationHookResult = ReturnType<typeof useAppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationResult = Apollo.MutationResult<Types.AppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>;
+export const UpdateExtensionPreferencesDocument = gql`
+    mutation UpdateExtensionPreferences($input: AccountInput!) {
+  accountUpdate(input: $input) {
+    user {
+      id
+      metadata {
+        key
+        value
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}
+    `;
+export type UpdateExtensionPreferencesMutationFn = Apollo.MutationFunction<Types.UpdateExtensionPreferencesMutation, Types.UpdateExtensionPreferencesMutationVariables>;
+
+/**
+ * __useUpdateExtensionPreferencesMutation__
+ *
+ * To run a mutation, you first call `useUpdateExtensionPreferencesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateExtensionPreferencesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateExtensionPreferencesMutation, { data, loading, error }] = useUpdateExtensionPreferencesMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateExtensionPreferencesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateExtensionPreferencesMutation, Types.UpdateExtensionPreferencesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UpdateExtensionPreferencesMutation, Types.UpdateExtensionPreferencesMutationVariables>(UpdateExtensionPreferencesDocument, options);
+      }
+export type UpdateExtensionPreferencesMutationHookResult = ReturnType<typeof useUpdateExtensionPreferencesMutation>;
+export type UpdateExtensionPreferencesMutationResult = Apollo.MutationResult<Types.UpdateExtensionPreferencesMutation>;
+export type UpdateExtensionPreferencesMutationOptions = Apollo.BaseMutationOptions<Types.UpdateExtensionPreferencesMutation, Types.UpdateExtensionPreferencesMutationVariables>;
 export const InstalledAppsSnapshotDocument = gql`
     query InstalledAppsSnapshot {
   apps(first: 100) {
@@ -11429,6 +11990,7 @@ export const ExtensionListDocument = gql`
         }
         app {
           id
+          identifier
           appUrl
           name
           brand {
@@ -11958,44 +12520,6 @@ export function useChannelCurrenciesLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type ChannelCurrenciesQueryHookResult = ReturnType<typeof useChannelCurrenciesQuery>;
 export type ChannelCurrenciesLazyQueryHookResult = ReturnType<typeof useChannelCurrenciesLazyQuery>;
 export type ChannelCurrenciesQueryResult = Apollo.QueryResult<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>;
-export const ExportGiftCardsDocument = gql`
-    mutation ExportGiftCards($input: ExportGiftCardsInput!) {
-  exportGiftCards(input: $input) {
-    errors {
-      ...ExportError
-    }
-    exportFile {
-      id
-    }
-  }
-}
-    ${ExportErrorFragmentDoc}`;
-export type ExportGiftCardsMutationFn = Apollo.MutationFunction<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>;
-
-/**
- * __useExportGiftCardsMutation__
- *
- * To run a mutation, you first call `useExportGiftCardsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useExportGiftCardsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [exportGiftCardsMutation, { data, loading, error }] = useExportGiftCardsMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useExportGiftCardsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>(ExportGiftCardsDocument, options);
-      }
-export type ExportGiftCardsMutationHookResult = ReturnType<typeof useExportGiftCardsMutation>;
-export type ExportGiftCardsMutationResult = Apollo.MutationResult<Types.ExportGiftCardsMutation>;
-export type ExportGiftCardsMutationOptions = Apollo.BaseMutationOptions<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>;
 export const GiftCardSettingsUpdateDocument = gql`
     mutation GiftCardSettingsUpdate($input: GiftCardSettingsUpdateInput!) {
   giftCardSettingsUpdate(input: $input) {
@@ -12644,40 +13168,6 @@ export function useGiftCardListLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type GiftCardListQueryHookResult = ReturnType<typeof useGiftCardListQuery>;
 export type GiftCardListLazyQueryHookResult = ReturnType<typeof useGiftCardListLazyQuery>;
 export type GiftCardListQueryResult = Apollo.QueryResult<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>;
-export const GiftCardTotalCountDocument = gql`
-    query GiftCardTotalCount {
-  giftCards {
-    totalCount
-  }
-}
-    `;
-
-/**
- * __useGiftCardTotalCountQuery__
- *
- * To run a query within a React component, call `useGiftCardTotalCountQuery` and pass it any options that fit your needs.
- * When your component renders, `useGiftCardTotalCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGiftCardTotalCountQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGiftCardTotalCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>(GiftCardTotalCountDocument, options);
-      }
-export function useGiftCardTotalCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>(GiftCardTotalCountDocument, options);
-        }
-export type GiftCardTotalCountQueryHookResult = ReturnType<typeof useGiftCardTotalCountQuery>;
-export type GiftCardTotalCountLazyQueryHookResult = ReturnType<typeof useGiftCardTotalCountLazyQuery>;
-export type GiftCardTotalCountQueryResult = Apollo.QueryResult<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>;
 export const CustomerGiftCardListDocument = gql`
     query CustomerGiftCardList($userId: ID!, $first: Int) {
   user(id: $userId) {
@@ -13618,6 +14108,128 @@ export function useShopNavigationPinsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ShopNavigationPinsQueryHookResult = ReturnType<typeof useShopNavigationPinsQuery>;
 export type ShopNavigationPinsLazyQueryHookResult = ReturnType<typeof useShopNavigationPinsLazyQuery>;
 export type ShopNavigationPinsQueryResult = Apollo.QueryResult<Types.ShopNavigationPinsQuery, Types.ShopNavigationPinsQueryVariables>;
+export const StaffNotificationRecipientCreateDocument = gql`
+    mutation StaffNotificationRecipientCreate($input: StaffNotificationRecipientInput!) {
+  staffNotificationRecipientCreate(input: $input) {
+    errors {
+      ...ShopError
+    }
+    staffNotificationRecipient {
+      id
+      email
+      active
+    }
+  }
+}
+    ${ShopErrorFragmentDoc}`;
+export type StaffNotificationRecipientCreateMutationFn = Apollo.MutationFunction<Types.StaffNotificationRecipientCreateMutation, Types.StaffNotificationRecipientCreateMutationVariables>;
+
+/**
+ * __useStaffNotificationRecipientCreateMutation__
+ *
+ * To run a mutation, you first call `useStaffNotificationRecipientCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useStaffNotificationRecipientCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [staffNotificationRecipientCreateMutation, { data, loading, error }] = useStaffNotificationRecipientCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useStaffNotificationRecipientCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.StaffNotificationRecipientCreateMutation, Types.StaffNotificationRecipientCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.StaffNotificationRecipientCreateMutation, Types.StaffNotificationRecipientCreateMutationVariables>(StaffNotificationRecipientCreateDocument, options);
+      }
+export type StaffNotificationRecipientCreateMutationHookResult = ReturnType<typeof useStaffNotificationRecipientCreateMutation>;
+export type StaffNotificationRecipientCreateMutationResult = Apollo.MutationResult<Types.StaffNotificationRecipientCreateMutation>;
+export type StaffNotificationRecipientCreateMutationOptions = Apollo.BaseMutationOptions<Types.StaffNotificationRecipientCreateMutation, Types.StaffNotificationRecipientCreateMutationVariables>;
+export const StaffNotificationRecipientDeleteDocument = gql`
+    mutation StaffNotificationRecipientDelete($id: ID!) {
+  staffNotificationRecipientDelete(id: $id) {
+    errors {
+      ...ShopError
+    }
+  }
+}
+    ${ShopErrorFragmentDoc}`;
+export type StaffNotificationRecipientDeleteMutationFn = Apollo.MutationFunction<Types.StaffNotificationRecipientDeleteMutation, Types.StaffNotificationRecipientDeleteMutationVariables>;
+
+/**
+ * __useStaffNotificationRecipientDeleteMutation__
+ *
+ * To run a mutation, you first call `useStaffNotificationRecipientDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useStaffNotificationRecipientDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [staffNotificationRecipientDeleteMutation, { data, loading, error }] = useStaffNotificationRecipientDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useStaffNotificationRecipientDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.StaffNotificationRecipientDeleteMutation, Types.StaffNotificationRecipientDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.StaffNotificationRecipientDeleteMutation, Types.StaffNotificationRecipientDeleteMutationVariables>(StaffNotificationRecipientDeleteDocument, options);
+      }
+export type StaffNotificationRecipientDeleteMutationHookResult = ReturnType<typeof useStaffNotificationRecipientDeleteMutation>;
+export type StaffNotificationRecipientDeleteMutationResult = Apollo.MutationResult<Types.StaffNotificationRecipientDeleteMutation>;
+export type StaffNotificationRecipientDeleteMutationOptions = Apollo.BaseMutationOptions<Types.StaffNotificationRecipientDeleteMutation, Types.StaffNotificationRecipientDeleteMutationVariables>;
+export const StaffNotificationRecipientsDocument = gql`
+    query StaffNotificationRecipients($canManageStaff: Boolean!) {
+  shop {
+    id
+    staffNotificationRecipients {
+      id
+      email
+      active
+      user @include(if: $canManageStaff) {
+        id
+        email
+        firstName
+        lastName
+        isActive
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useStaffNotificationRecipientsQuery__
+ *
+ * To run a query within a React component, call `useStaffNotificationRecipientsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStaffNotificationRecipientsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStaffNotificationRecipientsQuery({
+ *   variables: {
+ *      canManageStaff: // value for 'canManageStaff'
+ *   },
+ * });
+ */
+export function useStaffNotificationRecipientsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>(StaffNotificationRecipientsDocument, options);
+      }
+export function useStaffNotificationRecipientsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>(StaffNotificationRecipientsDocument, options);
+        }
+export type StaffNotificationRecipientsQueryHookResult = ReturnType<typeof useStaffNotificationRecipientsQuery>;
+export type StaffNotificationRecipientsLazyQueryHookResult = ReturnType<typeof useStaffNotificationRecipientsLazyQuery>;
+export type StaffNotificationRecipientsQueryResult = Apollo.QueryResult<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {
@@ -19896,7 +20508,7 @@ export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchP
 export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
 export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>;
 export const SearchProductsDocument = gql`
-    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput, $includeVariants: Boolean = false) {
+    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput, $includeVariants: Boolean = false, $PERMISSION_MANAGE_PRODUCTS: Boolean = false) {
   search: products(
     after: $after
     first: $first
@@ -19948,6 +20560,7 @@ ${PageInfoFragmentDoc}`;
  *      channel: // value for 'channel'
  *      where: // value for 'where'
  *      includeVariants: // value for 'includeVariants'
+ *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *   },
  * });
  */

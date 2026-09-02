@@ -1,14 +1,13 @@
-import DeletableItem from "@dashboard/components/DeletableItem";
+import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
+import { DragHandle } from "@dashboard/components/DragHandle/DragHandle";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
-// Legacy shared with AssignmentList — migrate together to @dnd-kit.
-// eslint-disable-next-line no-restricted-imports
-import { SortableElement, type SortableElementProps } from "react-sortable-hoc";
 
-import SortableHandle from "../AssignmentList/SortableHandle";
 import styles from "./ChannelInventoryCard.module.css";
 
-interface ChannelInventoryWarehouseRowProps extends SortableElementProps {
+interface ChannelInventoryWarehouseRowProps {
   id: string;
   name: string;
   /** 1-based position shown beside the drag handle. */
@@ -17,22 +16,33 @@ interface ChannelInventoryWarehouseRowProps extends SortableElementProps {
   disabled?: boolean;
 }
 
-/** @deprecated SortableElement — migrate with AssignmentList to @dnd-kit. */
-export const ChannelInventoryWarehouseRow = SortableElement(
-  ({
+export const ChannelInventoryWarehouseRow = ({
+  id,
+  name,
+  position,
+  onDelete,
+  disabled = false,
+}: ChannelInventoryWarehouseRowProps): ReactNode => {
+  const { attributes, listeners, setNodeRef, transform, transition, isSorting } = useSortable({
     id,
-    name,
-    position,
-    onDelete,
-    disabled = false,
-  }: ChannelInventoryWarehouseRowProps): ReactNode => (
+    disabled,
+  });
+
+  return (
     <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
       className={styles.row}
       data-test-id="channel-inventory-warehouse-row"
       data-disabled={disabled ? "true" : undefined}
     >
       <div className={styles.rowMain}>
-        <SortableHandle data-test-id="button-drag-handle" />
+        <span className={styles.rowHandle} {...attributes} {...listeners}>
+          <DragHandle
+            cursor={disabled ? "not-allowed" : isSorting ? "grabbing" : "grab"}
+            data-test-id="button-drag-handle"
+          />
+        </span>
         <Text as="span" className={styles.rowIndex} size={2}>
           {position}
         </Text>
@@ -44,5 +54,5 @@ export const ChannelInventoryWarehouseRow = SortableElement(
         <DeletableItem id={id} onDelete={onDelete} disabled={disabled} />
       </div>
     </div>
-  ),
-);
+  );
+};

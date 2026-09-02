@@ -8,12 +8,12 @@ import listStyles from "@dashboard/components/ChannelsAvailabilityDialogChannels
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type CountryWithCodeFragment } from "@dashboard/graphql";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { getCountrySelectionMap, isRestWorldCountriesSelected } from "@dashboard/shipping/handlers";
-import { toggle } from "@dashboard/utils/lists";
+import { toggle } from "@dashboard/utils/lists/lists";
 import { Box } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,7 +28,7 @@ import {
 } from "./ShippingZoneCountriesAssignDialogCountriesList";
 import { ShippingZoneCountriesAssignDialogQuickPicks } from "./ShippingZoneCountriesAssignDialogQuickPicks";
 
-export interface ShippingZoneCountriesAssignFormData {
+interface ShippingZoneCountriesAssignFormData {
   countries: string[];
   query: string;
 }

@@ -6,8 +6,6 @@ import { useMemo } from "react";
 import { rightColumnBoxShadow } from "./ColumnPicker/utils";
 
 export const cellHeight = 40;
-/** Matches `ProductsTable` header row (`spacing-2` padding + `Text size={2}`). */
-export const tableHeaderHeight = 32;
 // Width for a single action button container (column picker, single row action)
 export const singleActionWidth = cellHeight;
 // Default width for the row action bar (can be overridden via Datagrid prop)
@@ -172,6 +170,15 @@ const useStyles = makeStyles<{
       editorContainer: {
         position: "relative",
         height: "100%",
+      },
+      rowAnchor: {
+        position: "fixed",
+        display: "block",
+        top: -1000,
+        left: -1000,
+        // Vertical pans must reach the page; the wheel listener forwards axes
+        // the grid can actually scroll.
+        touchAction: "pan-y",
       },
       rowActionBarShadow: {
         height: "100%",

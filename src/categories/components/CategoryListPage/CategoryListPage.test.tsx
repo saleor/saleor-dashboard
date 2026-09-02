@@ -42,21 +42,21 @@ jest.mock("@dashboard/components/AppLayout/TopNav", () => {
 
   return { TopNav };
 });
-jest.mock("@dashboard/components/BulkDeleteButton", () => ({
+jest.mock("@dashboard/components/BulkDeleteButton/BulkDeleteButton", () => ({
   BulkDeleteButton: ({ children, onClick }: { children: ReactNode; onClick: () => void }) => (
     <button onClick={onClick}>{children}</button>
   ),
 }));
-jest.mock("@dashboard/components/ButtonGroupWithDropdown", () => ({
+jest.mock("@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown", () => ({
   ButtonGroupWithDropdown: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 jest.mock("@dashboard/components/Card", () => ({
   DashboardCard: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
-jest.mock("@dashboard/components/FilterPresetsSelect", () => ({
+jest.mock("@dashboard/components/FilterPresetsSelect/FilterPresetsSelect", () => ({
   FilterPresetsSelect: () => null,
 }));
-jest.mock("@dashboard/components/Layouts", () => ({
+jest.mock("@dashboard/components/Layouts/List/Root", () => ({
   ListPageLayout: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 jest.mock("@dashboard/ripples/components/Ripple", () => ({
@@ -66,7 +66,7 @@ jest.mock("@dashboard/ripples/components/Ripple", () => ({
     return <div data-test-id="ripple-badge" />;
   },
 }));
-jest.mock("../CategoryListDatagrid", () => ({
+jest.mock("../CategoryListDatagrid/CategoryListDatagrid", () => ({
   CategoryListDatagrid: () => null,
 }));
 jest.mock("@saleor/macaw-ui-next", () => ({

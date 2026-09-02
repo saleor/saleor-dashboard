@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { type IChannelPriceArgs, type VariantChannelPriceData } from "@dashboard/channels/utils";
-import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { areSelectedChannelIdsEqual } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import { toggle } from "@dashboard/utils/lists";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
+import { toggle } from "@dashboard/utils/lists/lists";
 import { useMemo, useState } from "react";
 
 import { type ProductChannelListing } from "../types";

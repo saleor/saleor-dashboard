@@ -1,17 +1,19 @@
-import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { ContextualHelpIcon } from "@dashboard/components/AppLayout/ContextualLinks/ContextualHelpIcon";
+import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks/messages";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters/ListFilters";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { USER_PERMISSIONS_DOCS_URL } from "@dashboard/links";
 import { type StaffMembers } from "@dashboard/staff/types";
 import { type StaffListUrlSortField } from "@dashboard/staff/urls";
 import { type FilterPagePropsWithPresets, type ListProps, type SortPage } from "@dashboard/types";
@@ -20,7 +22,7 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { StaffListDatagrid } from "../StaffListDatagrid";
+import { StaffListDatagrid } from "../StaffListDatagrid/StaffListDatagrid";
 import { type StaffFilterKeys, type StaffListFilterOpts } from "./filters";
 
 interface StaffListPageProps
@@ -47,8 +49,10 @@ const StaffListPage = ({
   onFilterPresetsAll,
   ...listProps
 }: StaffListPageProps) => {
-  const subtitle = useContextualLink("staff_members");
   const intl = useIntl();
+  const staffMembersHelpLabel = intl.formatMessage(contextualLinks.staffMembers, {
+    userPermissions: intl.formatMessage(contextualLinks.userPermissions),
+  });
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const reachedLimit = isLimitReached(limits, "staffUsers");
 
@@ -59,7 +63,6 @@ const StaffListPage = ({
         hrefIcon={<TopNavDestinationIcon.configuration />}
         hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
         title={intl.formatMessage(sectionNames.staff)}
-        subtitle={subtitle}
         isAlignToRight={false}
         withoutBorder
       >
@@ -83,7 +86,15 @@ const StaffListPage = ({
               })}
             />
           </Box>
-          <Box>
+          <Box display="flex" alignItems="center" gap={2}>
+            <Box display="flex" alignItems="center" marginRight={3}>
+              <ContextualHelpIcon
+                href={USER_PERMISSIONS_DOCS_URL}
+                label={staffMembersHelpLabel}
+                analyticsType="user_permissions_docs"
+                dataTestId="user-permissions-docs"
+              />
+            </Box>
             <Button
               data-test-id="invite-staff-member"
               disabled={reachedLimit}

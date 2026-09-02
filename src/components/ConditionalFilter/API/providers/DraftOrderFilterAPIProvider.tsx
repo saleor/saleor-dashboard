@@ -1,12 +1,13 @@
 import { type FilterAPIProvider } from "../FilterAPIProvider";
+import { emptyAttributeChoicesPage, emptyChoicesPage } from "../filterChoicesPage";
 
 export const useDraftOrderFilterAPIProvider = (): FilterAPIProvider => {
   const fetchRightOptions = async () => {
-    return [];
+    return emptyChoicesPage();
   };
 
   const fetchAttributeOptions = async () => {
-    return [];
+    return emptyAttributeChoicesPage();
   };
 
   return {

@@ -5,8 +5,9 @@ import {
   useUserAvatarUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { errorMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
+import { commonMessages, errorMessages } from "@dashboard/intl";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { useIntl } from "react-intl";
 
 import { staffMemberDetailsUrl } from "../urls";
@@ -23,13 +24,26 @@ export const useProfileOperations = ({ refetch, id, closeModal }: UseUserMutatio
   const navigate = useNavigator();
   const [updateUserAccount, updateUserAccountOpts] = useUserAccountUpdateMutation({
     onCompleted: data => {
-      if (!data.accountUpdate?.errors.length) {
+      const errors = data.accountUpdate?.errors ?? [];
+
+      if (!errors.length) {
         refetch();
         notify({
           status: "success",
           text: intl.formatMessage({ id: "B5/YE0", defaultMessage: "Profile updated" }),
         });
+
+        return;
       }
+
+      notify({
+        status: "error",
+        text:
+          errors
+            .map(error => getAccountErrorMessage(error, intl) ?? error.message)
+            .filter((message): message is string => Boolean(message))
+            .join(", ") || intl.formatMessage(commonMessages.somethingWentWrong),
+      });
     },
   });
   const [updateUserAvatar] = useUserAvatarUpdateMutation({

@@ -3,11 +3,11 @@ import { type MenuErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
-import { TextField } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { type MenuDetailsFormData } from "../MenuDetailsPage";
+import { type MenuDetailsFormData } from "../MenuDetailsPage/MenuDetailsPage";
 
 interface MenuPropertiesProps {
   data: MenuDetailsFormData;
@@ -28,12 +28,12 @@ const MenuProperties = ({ data, disabled, errors, onChange }: MenuPropertiesProp
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <TextField
+        <Input
           data-test-id="menu-name"
           disabled={disabled}
           error={!!formErrors.name}
+          aria-invalid={!!formErrors.name}
           name={"name" as keyof MenuDetailsFormData}
-          fullWidth
           label={intl.formatMessage({
             id: "qL9Oi9",
             defaultMessage: "Structure Title",

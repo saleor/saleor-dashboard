@@ -1,9 +1,9 @@
 import { type EmailNotificationDefinition } from "../constants";
 import { type EmailNotificationsFormState } from "./emailNotificationConfig";
 
-export const STAFF_EMAIL_TEMPLATES_EXPORT_VERSION = 1 as const;
+const STAFF_EMAIL_TEMPLATES_EXPORT_VERSION = 1 as const;
 
-export interface StaffEmailTemplateExportItem {
+interface StaffEmailTemplateExportItem {
   id: string;
   subjectField: string;
   templateField: string;
@@ -12,7 +12,7 @@ export interface StaffEmailTemplateExportItem {
   template: string;
 }
 
-export interface StaffEmailTemplatesExport {
+interface StaffEmailTemplatesExport {
   version: typeof STAFF_EMAIL_TEMPLATES_EXPORT_VERSION;
   kind: "saleor.staff-email-templates";
   exportedAt: string;

@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react";
 
-import { Condition, FilterElement } from "./FilterElement";
+import { Condition } from "./FilterElement/Condition";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
-import { ExpressionValue } from "./FilterElement/FilterElement";
+import { ExpressionValue, FilterElement } from "./FilterElement/FilterElement";
 import { type FilterValueProvider } from "./FilterValueProvider";
 import { useContainerState } from "./useContainerState";
 
@@ -89,6 +89,63 @@ describe("ConditionalFilter / useContainerState", () => {
 
     // Assert
     expect(result.current.value).toEqual([staticPriceElement]);
+  });
+  it("resetToProvider restores values without sharing mutations", () => {
+    // Arrange
+    const staticPriceElement = new FilterElement(
+      new ExpressionValue("price", "Price", "price"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("price"),
+        new ConditionSelected(
+          { label: "price", slug: "price", value: "123" },
+          { type: "price", value: "123", label: "Price" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+    const providerWithValue: FilterValueProvider = {
+      ...valueProvider,
+      value: [staticPriceElement],
+    };
+    const { result } = renderHook(() => useContainerState(providerWithValue));
+
+    act(() => {
+      result.current.updateAt("0", el => {
+        el.updateRightOperator({ label: "price", slug: "price", value: "999" });
+      });
+    });
+
+    // Act
+    act(() => {
+      result.current.resetToProvider();
+    });
+
+    // Assert
+    expect(staticPriceElement.condition.selected.value).toEqual({
+      label: "price",
+      slug: "price",
+      value: "123",
+    });
+    expect((result.current.value[0] as FilterElement).condition.selected.value).toEqual({
+      label: "price",
+      slug: "price",
+      value: "123",
+    });
+  });
+  it("seeds an empty row when resetToProvider has nothing applied", () => {
+    // Arrange
+    const { result } = renderHook(() => useContainerState(valueProvider));
+
+    // Act
+    act(() => {
+      result.current.resetToProvider({ seedEmpty: true });
+    });
+
+    // Assert
+    expect(result.current.value).toEqual([FilterElement.createEmpty()]);
   });
   it("should create new empty row", () => {
     // Arrange

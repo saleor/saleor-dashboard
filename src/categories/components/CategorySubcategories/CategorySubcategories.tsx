@@ -3,7 +3,7 @@ import { useCategorySelectionController } from "@dashboard/categories/views/Cate
 import { useCategoryTreeController } from "@dashboard/categories/views/CategoryList/hooks/useCategoryTreeController";
 import { collectDescendantIds } from "@dashboard/categories/views/CategoryList/utils/categoryTree";
 import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import { PAGINATE_BY } from "@dashboard/config";
 import { type CategoryDetailsQuery } from "@dashboard/graphql";
 import { type ListProps, type ListViews, type RelayToFlat } from "@dashboard/types";
@@ -12,7 +12,7 @@ import { type Dispatch, type SetStateAction, useCallback, useState } from "react
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
-import { CategoryListDatagrid } from "../CategoryListDatagrid";
+import { CategoryListDatagrid } from "../CategoryListDatagrid/CategoryListDatagrid";
 import styles from "./CategorySubcategories.module.css";
 import { messages } from "./messages";
 
@@ -161,7 +161,12 @@ export const CategorySubcategories = ({
           ) : null}
           <Box className={styles.actions}>
             {hasSubcategories && selectedCategoryIds.length > 0 ? (
-              <BulkDeleteButton onClick={onCategoriesDelete} disabled={disabled}>
+              <BulkDeleteButton
+                count={selectedCategoryIds.length}
+                onClick={onCategoriesDelete}
+                disabled={disabled}
+                size="small"
+              >
                 <FormattedMessage {...messages.deleteSelected} />
               </BulkDeleteButton>
             ) : null}

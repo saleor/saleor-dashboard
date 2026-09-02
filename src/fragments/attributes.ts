@@ -32,10 +32,10 @@ export const attributeFragment = gql`
     slug
     type
     visibleInStorefront
-    # Removed from the API in 3.24, still queried because it is only deprecated in both schemas
-    # today. All UI/mutation usage is already gated behind isMainSchema() — delete this line and
-    # its remaining readers once staging becomes main.
-    filterableInStorefront
+    # Removed from Attribute in 3.24. @lockSchema keeps it off the wire on staging builds, so the
+    # one document serves both schemas — see src/graphql/lockSchema.ts. Readers are gated behind
+    # isMainSchema(); delete the line and its readers once staging becomes main.
+    filterableInStorefront @lockSchema(schema: "main")
     unit
     inputType
   }
@@ -51,8 +51,9 @@ export const attributeAssignedListFragment = gql`
 export const attributeUpdateResultFragment = gql`
   fragment AttributeUpdateResult on Attribute {
     ...Attribute
-    availableInGrid
-    storefrontSearchPosition
+    # Removed from Attribute in 3.24, see the note on filterableInStorefront above
+    availableInGrid @lockSchema(schema: "main")
+    storefrontSearchPosition @lockSchema(schema: "main")
     valueRequired
     referenceTypes {
       ... on ProductType {
@@ -97,9 +98,10 @@ export const attributeAssignedTypesFragment = gql`
 export const attributeDetailsFragment = gql`
   fragment AttributeDetails on Attribute {
     ...Attribute
-    availableInGrid
+    # Removed from Attribute in 3.24, see the note on filterableInStorefront above
+    availableInGrid @lockSchema(schema: "main")
     entityType
-    storefrontSearchPosition
+    storefrontSearchPosition @lockSchema(schema: "main")
     valueRequired
     referenceTypes {
       ... on ProductType {

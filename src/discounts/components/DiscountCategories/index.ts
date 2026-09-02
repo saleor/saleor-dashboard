@@ -1,1 +1,0 @@
-export { DiscountCategories } from "./DiscountCategories";

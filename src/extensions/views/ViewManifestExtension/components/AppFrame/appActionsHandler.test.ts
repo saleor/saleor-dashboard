@@ -52,7 +52,7 @@ jest.mock(
   }),
 );
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: () => mockNotify,
 }));
 

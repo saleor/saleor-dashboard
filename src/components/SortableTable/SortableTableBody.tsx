@@ -1,3 +1,7 @@
+import {
+  TableBody,
+  type TableSectionProps as TableBodyProps,
+} from "@dashboard/components/Table/Table";
 import { useSuppressClickAfterDrag } from "@dashboard/hooks/useSuppressClickAfterDrag";
 import { type ReorderAction } from "@dashboard/types";
 import {
@@ -18,8 +22,6 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { TableBody } from "@material-ui/core";
-import { type TableBodyProps } from "@material-ui/core/TableBody";
 import clsx from "clsx";
 import { cloneElement, type ReactElement, useCallback, useMemo, useState } from "react";
 import { createPortal } from "react-dom";

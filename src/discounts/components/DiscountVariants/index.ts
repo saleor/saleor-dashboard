@@ -1,1 +1,0 @@
-export { DiscountVariants } from "./DiscountVariants";

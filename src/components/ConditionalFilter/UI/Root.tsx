@@ -7,7 +7,7 @@ import { NoValue } from "./NoValue";
 import type { Error, FilterEvent, LeftOperatorOption, Row } from "./types";
 import { useEventEmitter } from "./useEvents";
 
-export type ConditionalFiltersLayout = "popover" | "inline";
+export type ConditionalFiltersLayout = "popover" | "inline" | "panel";
 
 export interface ExperimentalFiltersProps {
   value: Array<Row | string>;
@@ -32,44 +32,40 @@ export const Root = ({
     noValueText: "Click button below to start filtering",
   },
   error,
-}: ExperimentalFiltersProps) => {
+}: ExperimentalFiltersProps): JSX.Element => {
   const { emitter } = useEventEmitter({
     onChange,
   });
+  const rows =
+    value.length > 0 ? (
+      <Filters
+        value={value}
+        leftOptions={leftOptions}
+        emitter={emitter}
+        locale={locale}
+        error={error}
+        layout={layout}
+      />
+    ) : (
+      <NoValue locale={locale} />
+    );
 
   return (
     <FilterContext.Provider value={{ emitter, actionButtonsDisabled: value.length === 0 }}>
-      {layout === "inline" ? (
+      {layout === "panel" ? (
+        <Box display="flex" flexDirection="column" width="100%" __minWidth="0">
+          <Box padding={4}>{rows}</Box>
+          {children}
+        </Box>
+      ) : layout === "inline" ? (
         <Box display="flex" flexDirection="column" gap={3} width="100%" __minWidth="0">
-          {value.length > 0 ? (
-            <>
-              <Filters
-                value={value}
-                leftOptions={leftOptions}
-                emitter={emitter}
-                locale={locale}
-                error={error}
-                layout={layout}
-              />
-              <Divider />
-            </>
-          ) : null}
+          {rows}
+          <Divider />
           {children}
         </Box>
       ) : (
-        <Box height="100%" display="grid" __gridTemplateRows="1fr">
-          {value.length > 0 ? (
-            <Filters
-              value={value}
-              leftOptions={leftOptions}
-              emitter={emitter}
-              locale={locale}
-              error={error}
-              layout={layout}
-            />
-          ) : (
-            <NoValue locale={locale} />
-          )}
+        <Box height="100%" width="100%" display="grid" __gridTemplateRows="1fr" __minWidth="0">
+          {rows}
           <Divider />
           {children}
         </Box>

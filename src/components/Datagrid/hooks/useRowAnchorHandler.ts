@@ -5,8 +5,9 @@ export const useRowAnchorHandler = (navigatorOpts?: NavigatorOpts) => {
   const navigate = useNavigator();
 
   return (e: MouseEvent<HTMLAnchorElement>) => {
-    // When someone clicks with CMD key to open in new tab, we should not prevent default
-    if (e.metaKey || e.ctrlKey) {
+    // Native new-tab gestures must reach the <a>: cmd/ctrl+click, and middle
+    // click in browsers that still fire click with button === 1 (not only auxclick).
+    if (e.metaKey || e.ctrlKey || (e.button !== undefined && e.button !== 0)) {
       return;
     }
 

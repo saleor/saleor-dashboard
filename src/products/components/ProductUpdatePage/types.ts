@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type RichTextProps } from "@dashboard/attributes/utils/data";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import {
   type DatagridChangeOpts,

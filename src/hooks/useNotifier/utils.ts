@@ -1,4 +1,4 @@
-import { type INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { commonMessages } from "@dashboard/intl";
 import commonErrorMessages from "@dashboard/utils/errors/common";

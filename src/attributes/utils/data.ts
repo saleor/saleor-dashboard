@@ -1,12 +1,13 @@
 import { type FetchResult } from "@apollo/client";
-import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeInputData,
+} from "@dashboard/components/Attributes/Attributes";
 import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
 import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import {
   AttributeEntityTypeEnum,
-  type AttributeErrorFragment,
   AttributeInputTypeEnum,
-  type AttributeValueDeleteMutation,
   type AttributeValueFragment,
   type AttributeValueInput,
   type FileUploadMutation,
@@ -30,7 +31,8 @@ import {
   type RichTextGetters,
 } from "@dashboard/utils/richText/useMultipleRichText";
 
-import { type AttributePageFormData } from "../components/AttributePage";
+import { type AttributePageFormData } from "../components/AttributePage/AttributePage";
+import { formatVariantReferenceLabel } from "./formatVariantReferenceLabel";
 import { productVariantCacheManager } from "./productVariantCache";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
@@ -210,28 +212,6 @@ export function getSelectedAttributeValues(
   }
 }
 
-export const isFileValueUnused = (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  existingAttribute:
-    | PageSelectedAttributeFragment
-    | ProductFragment["attributes"][0]
-    | SelectedVariantAttributeFragment,
-) => {
-  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
-    return false;
-  }
-
-  if (existingAttribute.values.length === 0) {
-    return false;
-  }
-
-  const modifiedAttribute = attributesWithNewFileValue.find(
-    dataAttribute => dataAttribute.id === existingAttribute.attribute.id,
-  );
-
-  return !!modifiedAttribute;
-};
-
 export const mergeFileUploadErrors = (
   uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
 ): UploadErrorFragment[] =>
@@ -244,19 +224,6 @@ export const mergeFileUploadErrors = (
 
     return errors;
   }, [] as UploadErrorFragment[]);
-
-export const mergeAttributeValueDeleteErrors = (
-  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDeleteMutation>>,
-): AttributeErrorFragment[] =>
-  deleteAttributeValuesResult.reduce((errors, deleteValueResult) => {
-    const deleteErrors = deleteValueResult?.data?.attributeValueDelete?.errors;
-
-    if (deleteErrors) {
-      return [...errors, ...deleteErrors];
-    }
-
-    return errors;
-  }, [] as AttributeErrorFragment[]);
 
 export const mergeChoicesWithValues = (
   attribute:
@@ -571,7 +538,7 @@ const findProductVariantReference = (
 
     if (variant) {
       return {
-        label: `${product.name} ${variant.name}`,
+        label: formatVariantReferenceLabel(product.name, variant.name),
         value: valueId,
       };
     }
@@ -617,7 +584,9 @@ export const getReferenceAttributeDisplayData = (
                * and whenever the user assigns references in the dialog into useFormset data. */
               const meta = attribute.additionalData?.find(m => m.value === valueId);
 
-              if (meta) {
+              // Skip labels that are just the raw id (common when assign metadata
+              // never resolved). Search / saved values can still supply a name.
+              if (meta?.label && meta.label !== meta.value) {
                 return {
                   label: meta.label,
                   value: meta.value,

@@ -1,15 +1,15 @@
 import { rippleAttributeListGroupByType } from "@dashboard/attributes/ripples/attributeListGroupByType";
 import { attributeAddUrl, type AttributeListUrlSortField } from "@dashboard/attributes/urls";
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters/ListFilters";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { BulkUnassignButton } from "@dashboard/components/BulkUnassignButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
+import { BulkUnassignButton } from "@dashboard/components/BulkUnassignButton/BulkUnassignButton";
 import { DashboardCard } from "@dashboard/components/Card";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type AttributeFragment, type AttributeTypeEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -25,7 +25,7 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type FilterPagePropsWithPresets, type PageListProps, type SortPage } from "../../../types";
-import { AttributeListDatagrid } from "../AttributeListDatagrid";
+import { AttributeListDatagrid } from "../AttributeListDatagrid/AttributeListDatagrid";
 import { type AttributeFilterKeys, type AttributeListFilterOpts } from "./filters";
 import { attributeListPageMessages } from "./messages";
 
@@ -168,16 +168,22 @@ const AttributeListPage = ({
               defaultMessage: "Search attributes...",
             })}
             actions={
-              <Box display="flex" gap={4}>
+              <Box display="flex" gap={4} alignItems="center">
                 {canUnassignFromType &&
                   onAttributesUnassign &&
                   selectedAttributesIds.length > 0 && (
-                    <BulkUnassignButton onClick={onAttributesUnassign}>
+                    <BulkUnassignButton
+                      count={selectedAttributesIds.length}
+                      onClick={onAttributesUnassign}
+                    >
                       {intl.formatMessage(attributeListPageMessages.unassignAttributes)}
                     </BulkUnassignButton>
                   )}
                 {selectedAttributesIds.length > 0 && (
-                  <BulkDeleteButton onClick={onAttributesDelete}>
+                  <BulkDeleteButton
+                    count={selectedAttributesIds.length}
+                    onClick={onAttributesDelete}
+                  >
                     <FormattedMessage defaultMessage="Delete attributes" id="g0GAdN" />
                   </BulkDeleteButton>
                 )}

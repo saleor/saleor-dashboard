@@ -1,6 +1,6 @@
 import { AttributeCreateFormContent } from "@dashboard/attributes/components/AttributeCreateFormContent/AttributeCreateFormContent";
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
-import { AttributeValueDeleteDialog } from "@dashboard/attributes/components/AttributeValueDeleteDialog";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
+import { AttributeValueDeleteDialog } from "@dashboard/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog";
 import { useAttributeCreateValues } from "@dashboard/attributes/hooks/useAttributeCreateValues/useAttributeCreateValues";
 import { getAttributePageInitialForm } from "@dashboard/attributes/utils/attributePageForm";
 import {
@@ -8,12 +8,12 @@ import {
   type AttributeValueEditDialogFormData,
 } from "@dashboard/attributes/utils/data";
 import BackButton from "@dashboard/components/BackButton";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModelTypeDisplay } from "@dashboard/components/ModelType/ModelType";
 import { ProductTypeDisplay } from "@dashboard/components/ProductType/ProductType";
@@ -27,7 +27,7 @@ import { type CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { type ChangeEvent, type SubmitPromise } from "@dashboard/hooks/useForm";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
@@ -253,7 +253,11 @@ export const CreateAttributeDialog = ({
                             toggle: valueListActions.toggle,
                             toggleAll: valueListActions.toggleAll,
                             toolbar: (
-                              <BulkDeleteButton onClick={() => setBulkDeleteOpen(true)}>
+                              <BulkDeleteButton
+                                count={valueListActions.listElements.length}
+                                size="small"
+                                onClick={() => setBulkDeleteOpen(true)}
+                              >
                                 <FormattedMessage {...buttonMessages.delete} />
                               </BulkDeleteButton>
                             ),

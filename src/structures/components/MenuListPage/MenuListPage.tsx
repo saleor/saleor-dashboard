@@ -1,6 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,
@@ -15,7 +15,7 @@ import { type ListActions, type PageListProps, type SortPage } from "@dashboard/
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import MenuList from "../MenuList";
+import MenuList from "../MenuList/MenuList";
 
 interface MenuListPageProps extends PageListProps, ListActions, SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];

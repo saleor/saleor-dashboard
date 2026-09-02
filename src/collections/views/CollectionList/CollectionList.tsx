@@ -1,8 +1,9 @@
 // @ts-strict-ignore
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { createCollectionsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import {
   type CollectionErrorFragment,
@@ -10,10 +11,10 @@ import {
   useCollectionListQuery,
   useCreateCollectionMutation,
 } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -169,7 +170,7 @@ const CollectionList = ({ params }: CollectionListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => collections[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, collections);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {

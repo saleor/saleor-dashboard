@@ -10,6 +10,7 @@ const makeExtension = (overrides: Partial<Extension>): Extension => ({
   app: {
     __typename: "App",
     id: "app-1",
+    identifier: null,
     appUrl: "https://app.example.com",
     name: "Test app",
     brand: null,

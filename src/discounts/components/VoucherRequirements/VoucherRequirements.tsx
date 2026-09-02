@@ -4,7 +4,7 @@ import {
   DetailSettingNestedField,
   DetailSettingToggleRow,
 } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
 import { type ChannelInput } from "@dashboard/discounts/handlers";
@@ -18,7 +18,7 @@ import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type ChangeEvent, type ClipboardEvent, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage/VoucherDetailsPage";
 import styles from "./VoucherRequirements.module.css";
 
 interface VoucherRequirementsProps {

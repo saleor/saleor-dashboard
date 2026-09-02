@@ -4,6 +4,12 @@ export interface ItemOption {
   slug: string;
   // TODO: remove this when https://github.com/saleor/saleor/issues/13076 is ready
   originalSlug?: string | null;
+  productName?: string;
+  variantName?: string;
+  productId?: string;
+  productThumbnailUrl?: string;
+  swatchColor?: string;
+  swatchFileUrl?: string;
 }
 
 export type ConditionValue = ItemOption | ItemOption[] | string | string[] | [string, string];

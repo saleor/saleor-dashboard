@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters/ListFilters";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { type OrderDraftListQuery, type RefreshLimitsQuery } from "@dashboard/graphql";
 import { type OrderDraftListUrlSortField } from "@dashboard/orders/urls";
@@ -15,7 +15,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
+import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid/OrderDraftListDatagrid";
 import { OrderDraftListHeader } from "../OrderDraftListHeader/OrderDraftListHeader";
 import OrderLimitReached from "../OrderLimitReached";
 import { type OrderDraftFilterKeys, type OrderDraftListFilterOpts } from "./filters";
@@ -94,9 +94,12 @@ const OrderDraftListPage = ({
               defaultMessage: "Search draft orders...",
             })}
             actions={
-              <Box display="flex" gap={4}>
+              <Box display="flex" gap={4} alignItems="center">
                 {selectedOrderDraftIds.length > 0 && (
-                  <BulkDeleteButton onClick={onDraftOrdersDelete}>
+                  <BulkDeleteButton
+                    count={selectedOrderDraftIds.length}
+                    onClick={onDraftOrdersDelete}
+                  >
                     {intl.formatMessage({
                       id: "+b/qJ9",
                       defaultMessage: "Delete draft orders",

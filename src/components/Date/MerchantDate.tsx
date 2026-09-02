@@ -2,14 +2,14 @@ import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import { type IntlShape, type MessageDescriptor, useIntl } from "react-intl";
 
-import { LocaleConsumer } from "../Locale";
-import { TimezoneConsumer } from "../Timezone";
+import { LocaleConsumer } from "../Locale/Locale";
+import { TimezoneConsumer } from "../Timezone/Timezone";
 import { merchantDateMessages } from "./MerchantDate.messages";
 
 // The kinds we plan to surface in merchant-facing UI. To add a new one, append
 // the value to this union and a matching entry to `kindMessages` below; the
 // type system will then force translators to provide a full bundle.
-export type MerchantDateKind = "created" | "placed";
+type MerchantDateKind = "created" | "placed";
 
 interface MerchantDateMessageBundle {
   justNow: MessageDescriptor;
@@ -92,7 +92,7 @@ const previousCalendarDayKey = ({ day, month, year }: CalendarDateParts): string
   });
 };
 
-export interface MerchantDateResult {
+interface MerchantDateResult {
   label: string;
   tooltip: string;
 }

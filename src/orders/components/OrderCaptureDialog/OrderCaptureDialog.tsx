@@ -3,12 +3,12 @@ import { Callout } from "@dashboard/components/Callout/Callout";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import Money from "@dashboard/components/Money";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import {
   getCurrencyDecimalPoints,
   limitDecimalPlaces,
@@ -38,7 +38,7 @@ const isTransactionError = (
   return error.__typename === "TransactionRequestActionError";
 };
 
-export type CaptureAmountOption = "orderTotal" | "custom";
+type CaptureAmountOption = "orderTotal" | "custom";
 
 export interface OrderCaptureDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

@@ -8,7 +8,7 @@ import { FulfillmentPage } from "@pages/fulfillmentPage";
 import { OrdersPage } from "@pages/ordersPage";
 import { RefundPage } from "@pages/refundPage";
 import { expect } from "@playwright/test";
-import * as faker from "faker";
+import { faker } from "@faker-js/faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
@@ -463,7 +463,7 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #dis
  * Let's decide what do with it latter
  */
 test.skip("TC: SALEOR_217 Complete basic order for non existing customer #e2e #order", async () => {
-  const nonExistingEmail = `customer-${faker.datatype.number()}@example.com`;
+  const nonExistingEmail = `customer-${faker.number.int(99999)}@example.com`;
   const newAddress = ADDRESS.addressPL;
 
   await ordersPage.goToExistingOrderPage(ORDERS.orderWithoutAddedCustomer.id);

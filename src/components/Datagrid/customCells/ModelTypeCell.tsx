@@ -28,7 +28,7 @@ interface ModelTypeCellProps {
   readonly isDark: boolean;
 }
 
-export type ModelTypeCell = CustomCell<ModelTypeCellProps>;
+type ModelTypeCell = CustomCell<ModelTypeCellProps>;
 
 export const modelTypeCell = (
   icon: ModelTypeIcon,

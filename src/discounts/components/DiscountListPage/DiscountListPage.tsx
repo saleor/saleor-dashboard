@@ -1,11 +1,14 @@
-import { ExpressionFilters } from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
+import {
+  ExpressionFilterPanel,
+  ExpressionFilters,
+} from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
 import { LegacyFiltersPresetsAlert } from "@dashboard/components/AppLayout/ListFilters/components/LegacyFiltersPresetsAlert";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import {
   discountAddUrl,
   type DiscountListUrlSortField,
@@ -27,7 +30,7 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-import { DiscountListDatagrid } from "../DiscountListDatagrid";
+import { DiscountListDatagrid } from "../DiscountListDatagrid/DiscountListDatagrid";
 
 interface DiscountListPageProps
   extends PageListProps,
@@ -126,9 +129,9 @@ const DiscountListPage = ({
 
       <DashboardCard>
         <LegacyFiltersPresetsAlert />
-        <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4} paddingBottom={2} paddingX={6}>
+        <Box display="flex" flexDirection="column" gap={3} paddingBottom={2} paddingX={6}>
           <Box display="flex" alignItems="center" gap={4}>
-            <ExpressionFilters data-test-id="filters-button" />
+            <ExpressionFilters />
             <Box __width="320px">
               <SearchInput
                 initialSearch={initialSearch}
@@ -141,6 +144,7 @@ const DiscountListPage = ({
               />
             </Box>
           </Box>
+          <ExpressionFilterPanel />
         </Box>
 
         <DiscountListDatagrid {...listProps} onRowClick={handleRowClick} />

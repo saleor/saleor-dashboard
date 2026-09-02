@@ -2,31 +2,25 @@ import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHead
 import {
   NewRadioGroupField as RadioGroupField,
   type RadioGroupFieldChoice,
-} from "@dashboard/components/RadioGroupField";
+} from "@dashboard/components/RadioGroupField/RadioGroupField";
 import { type ExportErrorFragment, ExportScope, FileTypesEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import {
-  defineMessages,
-  FormattedMessage,
-  type IntlShape,
-  type MessageDescriptor,
-  useIntl,
-} from "react-intl";
+import { defineMessages, FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import { type ExportSettingsInput } from "./types";
 
 export type ExportItemsQuantity = Record<"all" | "filter", number>;
 
-export interface ExportScopeLabels {
+interface ExportScopeLabels {
   allItems: string;
   filteredItems: string;
   selectedItems: string;
 }
 
-export const exportDialogScopeMessages = defineMessages({
+const exportDialogScopeMessages = defineMessages({
   filteredItems: {
     id: "F2fOM7",
     defaultMessage: "List view filters ({number})",
@@ -36,11 +30,6 @@ export const exportDialogScopeMessages = defineMessages({
     id: "bbSkxt",
     defaultMessage: "Products to include",
     description: "export scope section header for products",
-  },
-  giftCardsToInclude: {
-    id: "7bueG3",
-    defaultMessage: "Gift cards to include",
-    description: "export scope section header for gift cards",
   },
   fileFormat: {
     id: "wqaEMQ",
@@ -65,9 +54,7 @@ interface ExportDialogSettingsProps {
   selectedItems: number;
   exportScopeLabels: ExportScopeLabels;
   onChange: (event: ChangeEvent) => void;
-  allowScopeSelection?: boolean;
   hasListFilters: boolean;
-  scopeSectionMessage?: MessageDescriptor;
 }
 
 const formFields: Array<keyof ExportSettingsInput> = ["fileType", "scope"];
@@ -78,9 +65,7 @@ export const ExportDialogSettings = ({
   onChange,
   selectedItems,
   exportScopeLabels,
-  allowScopeSelection = true,
   hasListFilters,
-  scopeSectionMessage = exportDialogScopeMessages.productsToInclude,
 }: ExportDialogSettingsProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(formFields, errors);
@@ -121,28 +106,26 @@ export const ExportDialogSettings = ({
 
   return (
     <Box display="flex" flexDirection="column" gap={6}>
-      {allowScopeSelection && (
-        <Box display="flex" flexDirection="column" gap={3}>
-          <ModalSectionHeader>
-            <FormattedMessage {...scopeSectionMessage} />
-          </ModalSectionHeader>
+      <Box display="flex" flexDirection="column" gap={3}>
+        <ModalSectionHeader>
+          <FormattedMessage {...exportDialogScopeMessages.productsToInclude} />
+        </ModalSectionHeader>
 
-          <RadioGroupField
-            name="scope"
-            value={data.scope}
-            error={!!formErrors.scope}
-            onChange={onChange}
-            choices={exportScopeChoices}
-            errorMessage={getExportErrorMessage(formErrors.scope, intl)}
-          />
+        <RadioGroupField
+          name="scope"
+          value={data.scope}
+          error={!!formErrors.scope}
+          onChange={onChange}
+          choices={exportScopeChoices}
+          errorMessage={getExportErrorMessage(formErrors.scope, intl)}
+        />
 
-          {!hasListFilters && (
-            <Text size={2} color="default2">
-              <FormattedMessage {...exportDialogScopeMessages.listFiltersDisabledHint} />
-            </Text>
-          )}
-        </Box>
-      )}
+        {!hasListFilters && (
+          <Text size={2} color="default2">
+            <FormattedMessage {...exportDialogScopeMessages.listFiltersDisabledHint} />
+          </Text>
+        )}
+      </Box>
 
       <Box display="flex" flexDirection="column" gap={3}>
         <ModalSectionHeader>

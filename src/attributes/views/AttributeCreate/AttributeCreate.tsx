@@ -1,4 +1,4 @@
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import {
   type AttributeCreateInput,
   AttributeErrorCode,
@@ -11,19 +11,21 @@ import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@dashboard/hooks/useLocalPageInfo";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { buttonMessages } from "@dashboard/intl";
 import { getMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews, type ReorderEvent } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists";
+import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists/lists";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import slugify from "slugify";
 
-import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
-import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
+import AttributePage, {
+  type AttributePageFormData,
+} from "../../components/AttributePage/AttributePage";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog/AttributeValueDeleteDialog";
 import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog/AttributeValueEditDialog";
 import {
   attributeAddUrl,
@@ -219,6 +221,8 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
         toggleAll: valueListActions.toggleAll,
         toolbar: (
           <BulkDeleteButton
+            count={valueListActions.listElements.length}
+            size="small"
             onClick={() => openModal("remove-values", { ids: valueListActions.listElements })}
           >
             <FormattedMessage {...buttonMessages.delete} />

@@ -5,7 +5,7 @@ import {
   type SearchProductsQuery,
   type SearchProductsQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch/makeTopLevelSearch";
 
 /**
  * Variants page size when includeVariants is true. Keep in sync with
@@ -19,6 +19,10 @@ export const searchProducts = gql`
     $channel: String
     $where: ProductWhereInput
     $includeVariants: Boolean = false
+    # makeQuery injects the caller's real permissions; the default only keeps this variable out
+    # of the hook's caller-facing types (makeSearch does not strip PERMISSION_* like makeQuery)
+    # and fails safe by omitting the gated field.
+    $PERMISSION_MANAGE_PRODUCTS: Boolean = false
   ) {
     search: products(
       after: $after

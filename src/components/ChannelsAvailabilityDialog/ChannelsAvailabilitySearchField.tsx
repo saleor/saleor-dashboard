@@ -1,4 +1,4 @@
-import { TextField } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ChannelsAvailabilitySearchFieldProps {
@@ -25,19 +25,14 @@ export const ChannelsAvailabilitySearchField = ({
   const searchPlaceholder = placeholder ?? defaultSearchText;
 
   return (
-    <TextField
+    <Input
       name="query"
       value={query}
       onChange={event => onQueryChange(event.target.value)}
       label={searchLabel}
       placeholder={searchPlaceholder}
-      fullWidth
-      inputProps={{
-        "data-test-id": inputTestId,
-      }}
-      InputProps={{
-        autoComplete: "off",
-      }}
+      data-test-id={inputTestId}
+      autoComplete="off"
     />
   );
 };

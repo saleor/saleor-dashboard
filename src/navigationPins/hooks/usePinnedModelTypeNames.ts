@@ -14,20 +14,22 @@ import { readModelTypeNamesSnapshot, writeModelTypeNamesSnapshot } from "../snap
 /** One alias per pinned id; a deleted model type resolves to `null` without failing the query. */
 type PinnedModelTypesResult = Record<string, PinnedModelTypeFragment | null>;
 
-export interface PinnedModelTypeLookup {
+interface PinnedModelTypeNamesResult {
   names: Record<string, string>;
   /**
    * Live-only: icons are not snapshotted because the icon itself resolves through a lazy import,
    * so the first frame renders the fallback either way.
    */
   icons: Record<string, ModelTypeIcon>;
+  /** Live query has settled (or there is nothing to fetch). Distinguishes loading from missing. */
+  hasResolved: boolean;
 }
 
 /**
  * Resolves pinned model type ids to their names. Ids that no longer resolve are simply absent
  * from the result, which is how deleted model types drop out of the sidebar — no orphan sweep.
  */
-export const usePinnedModelTypeNames = (ids: readonly string[]): PinnedModelTypeLookup => {
+export const usePinnedModelTypeNames = (ids: readonly string[]): PinnedModelTypeNamesResult => {
   const key = [...new Set(ids)].sort().join(",");
   // Memoised on the id set: a fresh document object every render would defeat Apollo's dedup.
   const uniqueIds = useMemo(() => (key === "" ? [] : key.split(",")), [key]);
@@ -49,7 +51,7 @@ export const usePinnedModelTypeNames = (ids: readonly string[]): PinnedModelType
       return null;
     }
 
-    return uniqueIds.reduce<PinnedModelTypeLookup>(
+    return uniqueIds.reduce<Pick<PinnedModelTypeNamesResult, "names" | "icons">>(
       (acc, id, index) => {
         const node = data[getAliasForIndex(index)];
 
@@ -74,5 +76,9 @@ export const usePinnedModelTypeNames = (ids: readonly string[]): PinnedModelType
     }
   }, [live]);
 
-  return live ?? { names: snapshot ?? {}, icons: {} };
+  return {
+    names: live?.names ?? snapshot ?? {},
+    icons: live?.icons ?? {},
+    hasResolved: uniqueIds.length === 0 || live !== null,
+  };
 };

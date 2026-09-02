@@ -3,16 +3,17 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Grid from "@dashboard/components/Grid";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { DashboardCard } from "@dashboard/components/Card";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Grid from "@dashboard/components/Grid/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
-import { TablePagination } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
+import { TablePagination } from "@dashboard/components/TablePagination/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type TaxClassFragment } from "@dashboard/graphql";
 import { useClientPagination } from "@dashboard/hooks/useClientPagination/useClientPagination";
@@ -20,22 +21,21 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getById } from "@dashboard/misc";
 import { parseQuery } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/utils";
-import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { type TaxClassesPageFormData } from "@dashboard/taxes/types";
 import { useAutofocus } from "@dashboard/taxes/utils/useAutofocus";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getTaxesErrorMessage from "@dashboard/utils/errors/taxes";
-import { Card, CardContent, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Input } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import TaxInput from "../../components/TaxInput";
+import TaxInput from "../../components/TaxInput/TaxInput";
 import TaxClassesForm from "./form";
 import { useStyles } from "./styles";
-import { TaxClassesMenu } from "./TaxClassesMenu";
+import { TaxClassesMenu } from "./TaxClassesMenu/TaxClassesMenu";
 
 interface TaxClassesPageProps {
   taxClasses: TaxClassFragment[] | undefined;
@@ -134,38 +134,44 @@ const TaxClassesPage = (props: TaxClassesPageProps) => {
                   />
                   {currentTaxClass && (
                     <div>
-                      <Card>
-                        <CardTitle title={intl.formatMessage(taxesMessages.generalInformation)} />
-                        <CardContent>
-                          <TextField
+                      <DashboardCard>
+                        <DashboardCard.Header>
+                          <DashboardCard.Title>
+                            {intl.formatMessage(taxesMessages.generalInformation)}
+                          </DashboardCard.Title>
+                        </DashboardCard.Header>
+                        <DashboardCard.Content>
+                          <Input
                             value={data?.name}
                             onChange={change}
                             name="name"
                             data-test-id="class-name-input"
-                            variant="outlined"
                             placeholder={intl.formatMessage(taxesMessages.taxRateName)}
-                            fullWidth
-                            inputProps={{ className: classes.namePadding }}
-                            inputRef={nameInputRef}
+                            ref={nameInputRef}
                             error={!!formErrors.name}
+                            aria-invalid={!!formErrors.name}
                             helperText={getTaxesErrorMessage(formErrors.name, intl)}
                           />
-                        </CardContent>
-                      </Card>
+                        </DashboardCard.Content>
+                      </DashboardCard>
                       <VerticalSpacer spacing={3} />
-                      <Card>
-                        <CardTitle title={intl.formatMessage(taxesMessages.taxClassRates)} />
+                      <DashboardCard>
+                        <DashboardCard.Header>
+                          <DashboardCard.Title>
+                            {intl.formatMessage(taxesMessages.taxClassRates)}
+                          </DashboardCard.Title>
+                        </DashboardCard.Header>
                         {currentTaxClass?.countries.length === 0 ? (
-                          <CardContent className={classes.supportText}>
+                          <DashboardCard.Content className={classes.supportText}>
                             <FormattedMessage
                               {...taxesMessages.noRatesInTaxClass}
                               values={{
                                 tab: <b>{intl.formatMessage(taxesMessages.countriesSection)}</b>,
                               }}
                             />
-                          </CardContent>
+                          </DashboardCard.Content>
                         ) : (
-                          <CardContent>
+                          <DashboardCard.Content>
                             <ResponsiveTable
                               search={{
                                 placeholder: intl.formatMessage(taxesMessages.searchTaxCountries),
@@ -210,9 +216,9 @@ const TaxClassesPage = (props: TaxClassesPageProps) => {
                                 ))}
                               </TableBody>
                             </ResponsiveTable>
-                          </CardContent>
+                          </DashboardCard.Content>
                         )}
-                      </Card>
+                      </DashboardCard>
                       <VerticalSpacer spacing={3} />
                       <Metadata data={data} onChange={handlers.changeMetadata} />
                     </div>

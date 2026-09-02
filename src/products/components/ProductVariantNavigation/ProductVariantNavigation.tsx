@@ -1,6 +1,6 @@
 import { borderHeight, savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
-import { Divider } from "@dashboard/components/Divider";
+import { Divider } from "@dashboard/components/Divider/Divider";
 import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";

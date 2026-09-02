@@ -1,7 +1,7 @@
 import { Callout } from "@dashboard/components/Callout/Callout";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { type DiscountErrorFragment, type SearchProductFragment } from "@dashboard/graphql";
+import { type DiscountErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { type Node } from "@dashboard/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -13,7 +13,10 @@ import { DiscountCategories } from "../DiscountCategories/DiscountCategories";
 import { DiscountCollections } from "../DiscountCollections/DiscountCollections";
 import { DiscountProducts } from "../DiscountProducts/DiscountProducts";
 import { DiscountVariants } from "../DiscountVariants/DiscountVariants";
-import { VoucherDetailsPageTab, type VoucherTabItemsCount } from "../VoucherDetailsPage";
+import {
+  VoucherDetailsPageTab,
+  type VoucherTabItemsCount,
+} from "../VoucherDetailsPage/VoucherDetailsPage";
 import { voucherCatalogueMessages as messages } from "./messages";
 import { formatVoucherCatalogueErrorMessage } from "./voucherCatalogueErrors";
 import styles from "./VoucherCatalogueSection.module.css";
@@ -31,7 +34,7 @@ interface VoucherCatalogueSectionProps {
   tabItemsCount: VoucherTabItemsCount;
   categories: Parameters<typeof DiscountCategories>[0]["categories"];
   collections: Parameters<typeof DiscountCollections>[0]["collections"];
-  products: SearchProductFragment[];
+  products: Parameters<typeof DiscountProducts>[0]["products"];
   variants: Parameters<typeof DiscountVariants>[0]["variants"];
   numberOfRows: number;
   onUpdateListSettings: (key: "rowNumber", value: number) => void;

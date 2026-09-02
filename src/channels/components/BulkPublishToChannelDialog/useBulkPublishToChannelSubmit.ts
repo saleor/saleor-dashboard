@@ -17,7 +17,7 @@ import {
   useProductChannelListingUpdateMutation,
   useProductVariantBulkUpdateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -137,7 +137,7 @@ const buildVariantBulkUpdateInputs = ({
     })
     .filter((input): input is ProductVariantBulkUpdateInput => input !== undefined);
 
-export type BulkPublishSubmitResult = {
+type BulkPublishSubmitResult = {
   failedProductIds: string[];
 };
 

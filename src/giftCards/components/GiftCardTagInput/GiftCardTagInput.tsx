@@ -1,4 +1,4 @@
-import { Multiselect } from "@dashboard/components/Combobox";
+import { Multiselect } from "@dashboard/components/Combobox/components/Multiselect";
 import { DetailSettingsOptionalLabel } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { type GiftCardBulkCreateFormError } from "@dashboard/giftCards/GiftCardBulkCreateDialog/types";

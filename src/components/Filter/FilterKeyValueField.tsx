@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type KeyValue } from "@dashboard/types";
-import { TextField } from "@material-ui/core";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Input } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -65,8 +65,8 @@ export const FilterKeyValueField = <K extends string = string>({
       <div className={classes.fieldsWrapper}>
         {values.map((innerField, index) => (
           <div className={classes.metadataField} key={`${innerField.key}-${index}`}>
-            <TextField
-              fullWidth
+            <Input
+              width="100%"
               name={filter.name}
               label={intl.formatMessage(keyValueMessages.key)}
               value={innerField.key}
@@ -82,8 +82,8 @@ export const FilterKeyValueField = <K extends string = string>({
                 })
               }
             />
-            <TextField
-              fullWidth
+            <Input
+              width="100%"
               name={filter.name}
               label={intl.formatMessage(keyValueMessages.value)}
               value={innerField.value ?? ""}

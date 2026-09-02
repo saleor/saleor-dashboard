@@ -23,3 +23,14 @@
 .headerLink:focus-visible .label {
   color: var(--mu-colors-text-default1);
 }
+
+/* Header actions stay out of the way until the card is hovered/focused. */
+.card .headerActions {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.card:hover .headerActions,
+.card:focus-within .headerActions {
+  opacity: 1;
+}

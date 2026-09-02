@@ -94,6 +94,9 @@ export default tseslint.config(
       "react-hooks/config": "warn", // Config violations
       "react-hooks/gating": "warn", // Conditional rendering violations
 
+      // Cyclomatic complexity: warn-only while we bring existing offenders down
+      complexity: ["warn", 20],
+
       // Migration in progress:
       // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
       "@typescript-eslint/no-non-null-assertion": "warn",
@@ -274,10 +277,6 @@ export default tseslint.config(
               message: "Legacy Macaw UI is deprecated. Use @saleor/macaw-ui-next",
             },
             {
-              name: "react-sortable-hoc",
-              message: "Use @dnd-kit instead of react-sortable-hoc.",
-            },
-            {
               name: "moment",
               message: "Use react-intl formatDate instead of moment.",
             },
@@ -349,14 +348,7 @@ export default tseslint.config(
       "@graphql-eslint/require-selections": "warn", // this is useful for Apollo caching
     },
   },
-  {
-    // Legacy SDK uses Apollo Client local-only fields (@client directive) not in the schema
-    files: ["src/legacy-sdk/**/*.graphql"],
-    rules: {
-      "@graphql-eslint/fields-on-correct-type": "off",
-      "@graphql-eslint/known-directives": "off",
-    },
-  }, // Disable any rules that conflict with Prettier
+  // Disable any rules that conflict with Prettier
   prettierConfig,
   storybook.configs["flat/recommended"],
 );

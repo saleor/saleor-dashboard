@@ -1,7 +1,7 @@
 import { StaffMemberStatus } from "@dashboard/graphql";
-import { createFilterStructure } from "@dashboard/staff/components/StaffListPage";
+import { createFilterStructure } from "@dashboard/staff/components/StaffListPage/filters";
 import { type StaffListUrlFilters } from "@dashboard/staff/urls";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { getFilterQueryParams } from "@dashboard/utils/filters/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { testIntlInstance } from "@test/intl";

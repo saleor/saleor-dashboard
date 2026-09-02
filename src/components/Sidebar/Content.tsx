@@ -3,9 +3,9 @@ import { useAllRipplesModalState } from "@dashboard/ripples/state";
 import { Box } from "@saleor/macaw-ui-next";
 
 import { DeprecationBanner } from "./DeprecationBanner/DeprecationBanner";
-import { Menu } from "./menu";
+import { Menu } from "./menu/Menu";
 import { MountingPoint } from "./MountingPoint";
-import { UserInfo } from "./user";
+import { UserInfo } from "./user/Info";
 
 export const SidebarContent = () => {
   const { isModalOpen, setModalState } = useAllRipplesModalState();

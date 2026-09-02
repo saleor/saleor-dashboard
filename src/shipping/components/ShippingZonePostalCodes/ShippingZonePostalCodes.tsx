@@ -2,8 +2,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
+import RadioGroupField from "@dashboard/components/RadioGroupField/RadioGroupField";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import {
   PostalCodeRuleInclusionTypeEnum,

@@ -1,8 +1,8 @@
 import { type IntFilterInput } from "@dashboard/graphql";
 
 import { type Handler, NoopValuesHandler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
 import { isItemOption } from "../../FilterElement/ConditionValue";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { type BothApiQueryVarsBuilder } from "./types";
 

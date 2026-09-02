@@ -1,9 +1,9 @@
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import {
   formatMoney as formatMoneyUtils,
   formatMoneyRange as formatMoneyRangeUtils,
 } from "@dashboard/components/Money";
-import { type Condition, isTuple } from "@dashboard/discounts/models";
+import { type Condition, isTuple } from "@dashboard/discounts/models/Condition";
 
 export const formatMoneyRange = (condition: Condition, currencySymbol: string, locale: Locale) => {
   if (!isTuple(condition.value)) {

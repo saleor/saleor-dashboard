@@ -5,6 +5,7 @@ import {
   type AttributeChangeData,
   type AttributeFocusData,
   type AttributeInputValueChangeData,
+  type AttributeScrollEndData,
   type ConditionBlurData,
   type ConditionChangeData,
   type ConditionFocusData,
@@ -18,6 +19,7 @@ import {
   type RightOperatorFocusData,
   type RightOperatorInputValueChangeData,
   type RightOperatorOption,
+  type RightOperatorScrollEndData,
   type RowAddData,
   type RowRemoveData,
 } from "./types";
@@ -149,6 +151,18 @@ export class FilterEventEmitter extends EventTarget {
     );
   }
 
+  scrollEndAttribute(index: number) {
+    this.dispatchEvent(
+      new CustomEvent<AttributeScrollEndData>(this.type, {
+        detail: {
+          type: "attribute.onScrollEnd",
+          path: `${index}`,
+          index,
+        },
+      }),
+    );
+  }
+
   changeCondition(index: number, value: ConditionChangeData["value"]) {
     this.dispatchEvent(
       new CustomEvent<ConditionChangeData>(this.type, {
@@ -234,6 +248,18 @@ export class FilterEventEmitter extends EventTarget {
           path: `${index}.condition.selected.value`,
           index,
           value,
+        },
+      }),
+    );
+  }
+
+  scrollEndRightOperator(index: number) {
+    this.dispatchEvent(
+      new CustomEvent<RightOperatorScrollEndData>(this.type, {
+        detail: {
+          type: "rightOperator.onScrollEnd",
+          path: `${index}.condition.selected.value`,
+          index,
         },
       }),
     );

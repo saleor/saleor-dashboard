@@ -21,7 +21,7 @@ enum ReferenceWhereKey {
 }
 
 /** Enough of an attribute to skip/constrain reference searches. */
-export interface ReferenceSearchAttribute {
+interface ReferenceSearchAttribute {
   entityType?: AttributeEntityTypeEnum | null;
   referenceTypes?: Array<{
     __typename?: string | null;

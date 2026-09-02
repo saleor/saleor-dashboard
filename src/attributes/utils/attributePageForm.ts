@@ -1,4 +1,4 @@
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
 import {
   type AttributeDetailsQuery,
   AttributeInputTypeEnum,
@@ -45,15 +45,17 @@ export function getAttributePageInitialForm(
   }
 
   return {
-    availableInGrid: attribute.availableInGrid,
+    // Faceted navigation settings are absent on the 3.24 schema, which does not select them.
+    // The form fields they back are gated behind isMainSchema().
+    availableInGrid: attribute.availableInGrid ?? true,
     entityType: attribute.entityType,
-    filterableInStorefront: attribute.filterableInStorefront,
+    filterableInStorefront: attribute.filterableInStorefront ?? true,
     inputType: attribute.inputType ?? AttributeInputTypeEnum.DROPDOWN,
     metadata: [],
     name: attribute.name ?? "",
     privateMetadata: [],
     slug: attribute.slug ?? "",
-    storefrontSearchPosition: attribute.storefrontSearchPosition.toString(),
+    storefrontSearchPosition: attribute.storefrontSearchPosition?.toString() ?? "",
     type: attribute.type ?? AttributeTypeEnum.PRODUCT_TYPE,
     valueRequired: !!attribute.valueRequired,
     visibleInStorefront: attribute.visibleInStorefront,

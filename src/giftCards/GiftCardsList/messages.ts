@@ -11,11 +11,6 @@ export const giftCardsListHeaderMenuItemsMessages = defineMessages({
     defaultMessage: "Bulk Issue",
     description: "bulk issue structure item",
   },
-  exportCodes: {
-    id: "JJ3PCA",
-    defaultMessage: "Export card codes",
-    description: "export card codes structure item",
-  },
   issueButtonLabel: {
     id: "RfPJ1E",
     defaultMessage: "Issue card",

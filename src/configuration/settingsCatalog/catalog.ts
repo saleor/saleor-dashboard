@@ -22,13 +22,5 @@ export const settingsCatalogEntries: SettingsCatalogEntry[] = [
   ...configurationHubsCatalogEntries,
 ];
 
-export { allSettingsHashes, settingsHashes, settingsHref } from "./hashes";
-export { resolveSettingsCatalog, resolveSettingsCatalogEntry } from "./resolve";
-export { searchSettingsCatalog } from "./search";
-export type {
-  ResolvedSettingsCatalogEntry,
-  SettingsCatalogEntry,
-  SettingsCatalogKind,
-  SettingsCatalogOwnership,
-} from "./types";
-export { useResolvedSettingsCatalog, useSettingsCatalogSearch } from "./useSettingsCatalogSearch";
+export type { ResolvedSettingsCatalogEntry } from "./types";
+export { useSettingsCatalogSearch } from "./useSettingsCatalogSearch";

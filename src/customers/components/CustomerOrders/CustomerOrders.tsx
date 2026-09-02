@@ -8,7 +8,7 @@ import { ChannelDisplay } from "@dashboard/components/Channel/Channel";
 import { DateTime } from "@dashboard/components/Date/DateTime";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { type CustomerDetailsQuery, type OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";

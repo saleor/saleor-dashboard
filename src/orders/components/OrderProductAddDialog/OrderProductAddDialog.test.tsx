@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { orderLineSearch } from "@dashboard/orders/fixtures";
 import { type OrderSearchProduct } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import Wrapper from "@test/wrapper";

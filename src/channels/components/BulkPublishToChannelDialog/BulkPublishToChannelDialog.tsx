@@ -10,7 +10,7 @@ import { ChannelDisplay } from "@dashboard/components/Channel/Channel";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -25,8 +25,8 @@ import {
   getParsedSearchData,
   getSearchFetchMoreProps,
 } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useWizard from "@dashboard/hooks/useWizard";
 import { buttonMessages } from "@dashboard/intl";
 import useProductSearch from "@dashboard/searches/useProductSearch";

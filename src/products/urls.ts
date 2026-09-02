@@ -31,8 +31,6 @@ import { stringifyQs } from "../utils/urls";
 const productSection = "/products/";
 
 export const productAddPath = urlJoin(productSection, "add");
-export const productAddUrl = (params?: ProductCreateUrlQueryParams) =>
-  productAddPath + "?" + stringifyQs(params);
 
 export const productListPath = productSection;
 export type ProductListUrlDialog =

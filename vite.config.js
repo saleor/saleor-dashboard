@@ -104,9 +104,7 @@ export default defineConfig(({ command, mode }) => {
     copyNoopSW(),
   ];
 
-  if (!isDev) {
-    console.log("Enabling service worker...");
-
+  if (!isDev && SENTRY_AUTH_TOKEN) {
     plugins.push(
       sentryVitePlugin({
         authToken: SENTRY_AUTH_TOKEN,

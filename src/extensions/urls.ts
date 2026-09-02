@@ -1,5 +1,5 @@
 import { getAbsoluteApiUrl } from "@dashboard/config";
-import { type FlagList } from "@dashboard/featureFlags";
+import { type FlagList } from "@dashboard/featureFlags/availableFlags";
 import { type Dialog, type SingleAction } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -9,6 +9,14 @@ export const LegacyAppSections = {
   appsSection: "/apps/",
 };
 
+/**
+ * @deprecated Superseded by `ExtensionsPaths`. Unlike `/extensions/app/:id`,
+ * these paths accept the per-installation app ID only - never a manifest
+ * identifier - so links built here are not portable between environments.
+ *
+ * ponytail: kept alive only for old app-issued redirects; delete once those
+ * are gone (see `useHandleRedirectAction`).
+ */
 export const LegacyAppPaths = {
   appListPath: LegacyAppSections.appsSection,
   resolveAppPath: (id: string) => urlJoin(LegacyAppSections.appsSection, id, "app"),

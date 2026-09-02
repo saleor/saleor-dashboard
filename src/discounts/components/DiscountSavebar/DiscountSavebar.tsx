@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SavebarCompositionHint } from "@dashboard/components/Savebar/SavebarCompositionHint";
 import { useIntl } from "react-intl";

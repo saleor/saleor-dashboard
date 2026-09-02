@@ -1,16 +1,16 @@
 import { useApolloClient } from "@apollo/client";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import {
   type ProductErrorFragment,
   useCategoryCreateMutation,
   useRootCategoriesQuery,
 } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -285,10 +285,8 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
           sort={getSortParams(params)}
           onSort={handleSort}
           disabled={!data}
-          onUpdateListSettings={(...props) => {
-            clearRowSelection();
-            updateListSettings(...props);
-          }}
+          // Keep selection on page-size/column updates; Datagrid drops stale indices.
+          onUpdateListSettings={updateListSettings}
         />
       </CategoryListPageStateProvider>
 

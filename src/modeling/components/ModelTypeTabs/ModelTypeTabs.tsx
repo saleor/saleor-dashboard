@@ -1,4 +1,4 @@
-import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown/ButtonWithDropdown";
 import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
 import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
@@ -45,7 +45,7 @@ export interface ModelTypeTabItem {
   metadata?: Array<{ key: string; value: string }> | null;
 }
 
-export interface ModelTypeTabsProps {
+interface ModelTypeTabsProps {
   pageTypes: ModelTypeTabItem[] | undefined;
   selectedIds: string[];
   counts: Record<string, ModelTypeTabCount | undefined>;

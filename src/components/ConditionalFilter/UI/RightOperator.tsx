@@ -6,8 +6,18 @@ import {
   Select,
 } from "@saleor/macaw-ui-next";
 
+import { isSwatchAttributeOption, isSwatchAttributeType } from "../API/swatchAttributeOption";
+import {
+  isProductReferenceEntity,
+  isProductReferenceOption,
+  isStaticProductFilter,
+  isVariantReferenceEntity,
+  isVariantReferenceOption,
+} from "../API/variantReferenceOption";
 import BulkSelect from "./BulkSelect";
 import { type FilterEventEmitter } from "./EventEmitter";
+import { getFilterControlId } from "./filterControlId";
+import { isFlatFilterLayout } from "./filterLayout";
 import { MetadataInput } from "./MetadataInput";
 import {
   isBulkSelect,
@@ -23,9 +33,18 @@ import {
   isSelect,
   isTextInput,
 } from "./operators";
+import { ProductReferenceMultiselect } from "./ProductReferenceMultiselect";
 import { RangeInputWrapper } from "./RangeInputWrapper";
+import {
+  includeSelectedComboboxOptions,
+  isSelectedComboboxLabel,
+  isSelectedMultiselectLabel,
+  resolveComboboxValue,
+} from "./resolveAsyncComboboxState";
 import { type ConditionalFiltersLayout } from "./Root";
+import { SwatchAttributeMultiselect } from "./SwatchAttributeMultiselect";
 import { type SelectedOperator } from "./types";
+import { VariantReferenceMultiselect } from "./VariantReferenceMultiselect";
 
 interface RightOperatorProps {
   index: number;
@@ -35,10 +54,18 @@ interface RightOperatorProps {
   helperText: string;
   disabled: boolean;
   layout?: ConditionalFiltersLayout;
+  entityType?: string | null;
+  attributeType?: string | null;
+  leftType?: string | null;
 }
 
-const getInlineControlProps = (layout: ConditionalFiltersLayout | undefined) =>
-  layout === "inline" ? { backgroundColor: "default1" as const } : {};
+const getInlineControlProps = (
+  layout: ConditionalFiltersLayout | undefined,
+  { fillWidth = true }: { fillWidth?: boolean } = {},
+) => ({
+  ...(fillWidth ? { width: "100%" as const } : {}),
+  ...(isFlatFilterLayout(layout) ? { backgroundColor: "default1" as const } : {}),
+});
 
 export const RightOperator = ({
   index,
@@ -48,6 +75,9 @@ export const RightOperator = ({
   disabled,
   helperText,
   layout = "popover",
+  entityType,
+  attributeType,
+  leftType,
 }: RightOperatorProps) => {
   const inlineControlProps = getInlineControlProps(layout);
 
@@ -112,18 +142,86 @@ export const RightOperator = ({
   }
 
   if (isMultiselect(selected)) {
+    const isVariantReference =
+      isVariantReferenceEntity(entityType) ||
+      selected.options.some(isVariantReferenceOption) ||
+      selected.value.some(isVariantReferenceOption);
+
+    if (isVariantReference) {
+      return (
+        <VariantReferenceMultiselect
+          index={index}
+          selected={selected}
+          emitter={emitter}
+          error={error}
+          helperText={helperText}
+          disabled={disabled}
+          layout={layout}
+        />
+      );
+    }
+
+    const isProductReference =
+      isProductReferenceEntity(entityType) ||
+      isStaticProductFilter(leftType) ||
+      selected.options.some(isProductReferenceOption) ||
+      selected.value.some(isProductReferenceOption);
+
+    if (isProductReference) {
+      return (
+        <ProductReferenceMultiselect
+          index={index}
+          selected={selected}
+          emitter={emitter}
+          error={error}
+          helperText={helperText}
+          disabled={disabled}
+          layout={layout}
+        />
+      );
+    }
+
+    const isSwatchAttribute =
+      isSwatchAttributeType(attributeType) ||
+      selected.options.some(isSwatchAttributeOption) ||
+      selected.value.some(isSwatchAttributeOption);
+
+    if (isSwatchAttribute) {
+      return (
+        <SwatchAttributeMultiselect
+          index={index}
+          selected={selected}
+          emitter={emitter}
+          error={error}
+          helperText={helperText}
+          disabled={disabled}
+          layout={layout}
+        />
+      );
+    }
+
+    const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
+
     return (
       <DynamicMultiselect
         {...inlineControlProps}
+        id={getFilterControlId("right", index)}
         data-test-id={`right-${index}`}
         value={selected.value}
-        options={selected.options ?? []}
+        options={options}
         loading={selected.loading}
         onChange={value => {
           emitter.changeRightOperator(index, value);
         }}
         onInputValueChange={value => {
+          if (isSelectedMultiselectLabel(selected.value, value)) {
+            return;
+          }
+
           emitter.inputChangeRightOperator(index, value);
+        }}
+        onScrollEnd={() => {
+          emitter.scrollEndRightOperator(index);
         }}
         onFocus={() => {
           emitter.focusRightOperator(index);
@@ -139,19 +237,32 @@ export const RightOperator = ({
   }
 
   if (isCombobox(selected)) {
+    const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
+    const value = resolveComboboxValue(options, selected.value);
+
     return (
       <DynamicCombobox
         {...inlineControlProps}
+        id={getFilterControlId("right", index)}
         data-test-id={`right-${index}`}
-        value={selected.value}
-        options={selected.options ?? []}
+        value={value}
+        options={options}
         loading={selected.loading}
-        onChange={value => {
-          if (!value) return;
+        onChange={nextValue => {
+          if (!nextValue) return;
 
-          emitter.changeRightOperator(index, value);
+          emitter.changeRightOperator(index, nextValue);
         }}
-        onInputValueChange={value => emitter.inputChangeRightOperator(index, value)}
+        onInputValueChange={inputValue => {
+          if (isSelectedComboboxLabel(selected.value, inputValue)) {
+            return;
+          }
+
+          emitter.inputChangeRightOperator(index, inputValue);
+        }}
+        onScrollEnd={() => {
+          emitter.scrollEndRightOperator(index);
+        }}
         onFocus={() => {
           emitter.focusRightOperator(index);
         }}
@@ -166,13 +277,17 @@ export const RightOperator = ({
   }
 
   if (isSelect(selected)) {
+    const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
+    const value = resolveComboboxValue(options, selected.value) ?? selected.value;
+
     return (
       <Select
         {...inlineControlProps}
+        id={getFilterControlId("right", index)}
         data-test-id={`right-${index}`}
-        value={selected.value}
-        options={selected.options ?? []}
-        onChange={value => emitter.changeRightOperator(index, value)}
+        value={value}
+        options={options}
+        onChange={nextValue => emitter.changeRightOperator(index, nextValue)}
         onFocus={() => {
           emitter.focusRightOperator(index);
         }}
@@ -242,9 +357,9 @@ export const RightOperator = ({
 
   if (isDateRange(selected)) {
     return (
-      <RangeInputWrapper>
+      <RangeInputWrapper inline compact="date">
         <RangeInput
-          {...inlineControlProps}
+          {...getInlineControlProps(layout, { fillWidth: false })}
           data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
@@ -254,7 +369,6 @@ export const RightOperator = ({
           error={!!error}
           helperText={helperText}
           disabled={disabled}
-          width="100%"
         />
       </RangeInputWrapper>
     );
@@ -262,9 +376,9 @@ export const RightOperator = ({
 
   if (isDateTimeRange(selected)) {
     return (
-      <RangeInputWrapper>
+      <RangeInputWrapper inline compact="datetime">
         <RangeInput
-          {...inlineControlProps}
+          {...getInlineControlProps(layout, { fillWidth: false })}
           data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
@@ -274,7 +388,6 @@ export const RightOperator = ({
           error={!!error}
           helperText={helperText}
           disabled={disabled}
-          width="100%"
         />
       </RangeInputWrapper>
     );

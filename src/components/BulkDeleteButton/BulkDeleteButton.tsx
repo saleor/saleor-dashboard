@@ -1,51 +1,37 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Button } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
-import type * as React from "react";
-import { forwardRef, useState } from "react";
+import { forwardRef, type ReactNode } from "react";
+import { FormattedMessage } from "react-intl";
 
-interface ProductListDeleteButtonProps {
+import { bulkActionWithCountMessages } from "./messages";
+
+interface BulkDeleteButtonProps {
   onClick: () => void;
   disabled?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
+  count: number;
+  size?: "small" | "medium";
 }
 
-export const BulkDeleteButton = forwardRef<HTMLButtonElement, ProductListDeleteButtonProps>(
-  ({ onClick, children, disabled }, ref) => {
-    const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-
-    const handleClick = (): void => {
-      setIsTooltipOpen(false);
-      onClick();
-    };
-
-    return (
-      <Tooltip open={isTooltipOpen}>
-        <Tooltip.Trigger>
-          <Button
-            ref={ref}
-            disabled={disabled}
-            onMouseOver={() => {
-              setIsTooltipOpen(true);
-            }}
-            onMouseLeave={() => {
-              setIsTooltipOpen(false);
-            }}
-            onClick={handleClick}
-            type="button"
-            size="small"
-            icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
-            variant="secondary"
-            data-test-id="bulk-delete-button"
-          />
-        </Tooltip.Trigger>
-        <Tooltip.Content side="bottom">
-          <Tooltip.Arrow />
-          {children}
-        </Tooltip.Content>
-      </Tooltip>
-    );
-  },
+export const BulkDeleteButton = forwardRef<HTMLButtonElement, BulkDeleteButtonProps>(
+  ({ onClick, children, disabled, count, size = "medium" }, ref) => (
+    <Button
+      ref={ref}
+      disabled={disabled}
+      onClick={onClick}
+      type="button"
+      size={size}
+      variant="secondary"
+      data-test-id="bulk-delete-button"
+    >
+      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+      <FormattedMessage
+        {...bulkActionWithCountMessages.actionWithCount}
+        values={{ action: children, count }}
+      />
+    </Button>
+  ),
 );
 
 BulkDeleteButton.displayName = "BulkDeleteButton";

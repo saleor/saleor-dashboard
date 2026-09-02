@@ -1,11 +1,11 @@
 import { newPasswordUrl } from "@dashboard/auth/urls";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { useStaffMemberAddMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 import { useCallback, useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";

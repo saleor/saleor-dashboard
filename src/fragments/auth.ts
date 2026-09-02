@@ -7,6 +7,19 @@ export const userUserPermissionFragment = gql`
   }
 `;
 
+export const fragmentAuthUser = gql`
+  fragment AuthUser on User {
+    id
+    email
+    firstName
+    lastName
+    isStaff
+    userPermissions {
+      ...UserPermission
+    }
+  }
+`;
+
 export const fragmentUser = gql`
   fragment User on User {
     id

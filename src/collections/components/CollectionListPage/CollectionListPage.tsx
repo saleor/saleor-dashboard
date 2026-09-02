@@ -1,14 +1,14 @@
 // @ts-strict-ignore
 import { type Collections } from "@dashboard/collections/types";
 import { type CollectionListUrlSortField, collectionUrl } from "@dashboard/collections/urls";
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { getByName } from "@dashboard/components/Filter/utils";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,
@@ -24,7 +24,7 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-import { CollectionListDatagrid } from "../CollectionListDatagrid";
+import { CollectionListDatagrid } from "../CollectionListDatagrid/CollectionListDatagrid";
 import {
   type CollectionFilterKeys,
   type CollectionListFilterOpts,
@@ -152,9 +152,12 @@ const CollectionListPage = ({
               defaultMessage: "Search collections...",
             })}
             actions={
-              <Box display="flex" gap={4}>
+              <Box display="flex" gap={4} alignItems="center">
                 {selectedCollectionIds.length > 0 && (
-                  <BulkDeleteButton onClick={onCollectionsDelete}>
+                  <BulkDeleteButton
+                    count={selectedCollectionIds.length}
+                    onClick={onCollectionsDelete}
+                  >
                     <FormattedMessage defaultMessage="Delete collections" id="FTYkgw" />
                   </BulkDeleteButton>
                 )}

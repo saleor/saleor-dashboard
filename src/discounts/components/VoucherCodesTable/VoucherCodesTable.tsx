@@ -4,7 +4,7 @@ import {
   AssignableListTable,
 } from "@dashboard/components/AssignableListTable/AssignableListTable";
 import { ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import { ProductAvailabilityStatusLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductAvailabilityStatusLabel";
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
@@ -203,7 +203,7 @@ export const VoucherCodesTable = ({
           onUpdateListSettings={onSettingsChange}
           beforePagination={
             selectedCodesIds.length > 0 ? (
-              <BulkDeleteButton onClick={onBulkDelete}>
+              <BulkDeleteButton count={selectedCodesIds.length} onClick={onBulkDelete} size="small">
                 <FormattedMessage defaultMessage="Delete codes" id="UJ97Lb" />
               </BulkDeleteButton>
             ) : null

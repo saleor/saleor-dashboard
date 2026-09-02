@@ -16,7 +16,7 @@ export const isOrderLevelGrantedRefund = (
   return linesWithQuantity.length === 0;
 };
 
-export const grantedRefundNeedsAttention = (status: OrderGrantedRefundStatusEnum): boolean =>
+const grantedRefundNeedsAttention = (status: OrderGrantedRefundStatusEnum): boolean =>
   status === OrderGrantedRefundStatusEnum.NONE || status === OrderGrantedRefundStatusEnum.FAILURE;
 
 export const getOrderLevelGrantedRefundsNeedingAttention = (

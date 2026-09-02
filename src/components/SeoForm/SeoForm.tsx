@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import {
   type CollectionErrorFragment,
@@ -24,7 +24,7 @@ const maxSlugLength = 255;
 const maxTitleLength = 70;
 const maxDescriptionLength = 300;
 
-export const seoCompletionMessages = defineMessages({
+const seoCompletionMessages = defineMessages({
   sectionTitle: {
     id: "TOA3CD",
     defaultMessage: "SEO",

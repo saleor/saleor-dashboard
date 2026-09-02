@@ -1,12 +1,18 @@
 import { gql } from "@apollo/client";
 
 export const initialDynamicLeftOperands = gql`
-  query _GetDynamicLeftOperands($first: Int!, $query: String!) {
+  query _GetDynamicLeftOperands(
+    $first: Int!
+    $query: String!
+    $type: AttributeTypeEnum!
+    $after: String
+  ) {
     attributes(
       first: $first
+      after: $after
       search: $query
       where: {
-        type: { eq: PRODUCT_TYPE }
+        type: { eq: $type }
         inputType: {
           oneOf: [
             DROPDOWN
@@ -32,6 +38,10 @@ export const initialDynamicLeftOperands = gql`
           __typename
         }
         __typename
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
       __typename
     }
@@ -115,7 +125,12 @@ export const initialDynamicOperands = gql`
     }
   }
 
-  query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!) {
+  query _SearchAttributeOperands(
+    $attributesSlugs: [String!]
+    $choicesIds: [ID!]
+    $first: Int!
+    $choicesFirst: Int!
+  ) {
     attributes(first: $first, filter: { slugs: $attributesSlugs }) {
       edges {
         node {
@@ -124,13 +139,17 @@ export const initialDynamicOperands = gql`
           slug
           inputType
           entityType
-          choices(first: 5, filter: { ids: $choicesIds }) {
+          choices(first: $choicesFirst, filter: { ids: $choicesIds }) {
             edges {
               node {
                 slug: id
                 id
                 name
                 originalSlug: slug
+                value
+                file {
+                  url
+                }
               }
             }
           }
@@ -141,23 +160,31 @@ export const initialDynamicOperands = gql`
 `;
 
 export const dynamicOperandsQueries = gql`
-  query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!) {
+  query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!, $after: String) {
     attribute(slug: $slug) {
-      choices(first: $first, filter: { search: $query }) {
+      choices(first: $first, after: $after, filter: { search: $query }) {
         edges {
           node {
             slug: id
             id
             name
             originalSlug: slug
+            value
+            file {
+              url
+            }
           }
         }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
       }
     }
   }
 
-  query _GetCollectionsChoices($first: Int!, $query: String!) {
-    collections(first: $first, filter: { search: $query }) {
+  query _GetCollectionsChoices($first: Int!, $query: String!, $after: String) {
+    collections(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -165,11 +192,15 @@ export const dynamicOperandsQueries = gql`
           slug
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 
-  query _GetCategoriesChoices($first: Int!, $query: String!) {
-    categories(first: $first, filter: { search: $query }) {
+  query _GetCategoriesChoices($first: Int!, $query: String!, $after: String) {
+    categories(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -177,11 +208,15 @@ export const dynamicOperandsQueries = gql`
           slug
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 
-  query _GetProductTypesChoices($first: Int!, $query: String!) {
-    productTypes(first: $first, filter: { search: $query }) {
+  query _GetProductTypesChoices($first: Int!, $query: String!, $after: String) {
+    productTypes(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -189,11 +224,15 @@ export const dynamicOperandsQueries = gql`
           slug
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 
-  query _GetPageTypesChoices($first: Int!, $query: String!) {
-    pageTypes(first: $first, filter: { search: $query }) {
+  query _GetPageTypesChoices($first: Int!, $query: String!, $after: String) {
+    pageTypes(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -201,11 +240,15 @@ export const dynamicOperandsQueries = gql`
           slug
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 
-  query _GetCustomerTypesChoices($first: Int!, $query: String!) {
-    customerTypes(first: $first, search: $query) {
+  query _GetCustomerTypesChoices($first: Int!, $query: String!, $after: String) {
+    customerTypes(first: $first, after: $after, search: $query) {
       edges {
         node {
           id
@@ -213,11 +256,15 @@ export const dynamicOperandsQueries = gql`
           slug
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 
-  query _GetPagesChoices($first: Int!, $query: String!) {
-    pages(first: $first, filter: { search: $query }) {
+  query _GetPagesChoices($first: Int!, $query: String!, $after: String) {
+    pages(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -226,23 +273,34 @@ export const dynamicOperandsQueries = gql`
           originalSlug: slug
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 
-  query _GetProductChoices($first: Int!, $query: String!) {
-    products(first: $first, filter: { search: $query }) {
+  query _GetProductChoices($first: Int!, $query: String!, $after: String) {
+    products(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
           name
           slug
+          thumbnail(size: 64) {
+            url
+          }
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
 
-  query _GetProductVariantChoices($first: Int!, $query: String!) {
-    productVariants(first: $first, filter: { search: $query }) {
+  query _GetProductVariantChoices($first: Int!, $query: String!, $after: String) {
+    productVariants(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -250,26 +308,69 @@ export const dynamicOperandsQueries = gql`
           slug: id
           originalSlug: name
           product {
+            id
             name
+            thumbnail(size: 64) {
+              url
+            }
           }
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
 
-  query _GetGiftCardTagsChoices($first: Int!, $query: String!) {
-    giftCardTags(first: $first, filter: { search: $query }) {
+  query _GetProductVariantChoicesByProduct(
+    $first: Int!
+    $query: String!
+    $after: String
+    $variantsFirst: Int!
+  ) {
+    products(first: $first, after: $after, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          thumbnail(size: 64) {
+            url
+          }
+          productVariants(first: $variantsFirst) {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+
+  query _GetGiftCardTagsChoices($first: Int!, $query: String!, $after: String) {
+    giftCardTags(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
           name
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 
-  query _GetCustomersChoices($first: Int!, $query: String!) {
-    customers(first: $first, filter: { search: $query }) {
+  query _GetCustomersChoices($first: Int!, $query: String!, $after: String) {
+    customers(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -277,6 +378,10 @@ export const dynamicOperandsQueries = gql`
           firstName
           lastName
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -315,6 +420,9 @@ export const dynamicOperandsQueries = gql`
           name
           slug
           originalSlug: slug
+          thumbnail(size: 64) {
+            url
+          }
         }
       }
     }
@@ -329,21 +437,29 @@ export const dynamicOperandsQueries = gql`
           slug: id
           originalSlug: name
           product {
+            id
             name
+            thumbnail(size: 64) {
+              url
+            }
           }
         }
       }
     }
   }
 
-  query _GetWarehouseChoices($first: Int!, $query: String!) {
-    warehouses(first: $first, filter: { search: $query }) {
+  query _GetWarehouseChoices($first: Int!, $query: String!, $after: String) {
+    warehouses(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
           name
           slug
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }

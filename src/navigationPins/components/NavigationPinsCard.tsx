@@ -1,28 +1,48 @@
-import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { AssignListCard } from "@dashboard/components/AssignListCard/AssignListCard";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { PermissionEnum } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { Text } from "@saleor/macaw-ui-next";
+import { pageListUrl } from "@dashboard/modeling/urls";
+import { Button } from "@saleor/macaw-ui-next";
+import { Pin } from "lucide-react";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { useNavigationPinListItems } from "../hooks/useNavigationPinListItems";
 import { useNavigationPins } from "../hooks/useNavigationPins";
 import { navigationPinMessages as messages } from "../messages";
+import { findNavigationPinByItemId } from "../pinListItem";
 import { removePin } from "../serialization";
-import { type NavigationPin } from "../types";
-import { NavigationPinList } from "./NavigationPinList";
+
+const pinIcon = <Pin size={iconSize.small} strokeWidth={iconStrokeWidth} />;
 
 /**
- * Lives on the account page, which is where "Account Settings" already points. Always lists
- * every user pin — it is the only way to remove one that has since been pinned by the
- * organization, because the models page hides its button in that case.
+ * Personal sidebar shortcuts. This is the only place to remove a user pin that is also
+ * organization-pinned — the models page hides its button in that case — and to free a
+ * slot occupied by a deleted model type.
  */
-export const NavigationPinsCard = () => {
+export const NavigationPinsCard = (): JSX.Element => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const notify = useNotifier();
+  const userPermissions = useUserPermissions();
+  const canViewModels = hasPermissions(userPermissions ?? [], [PermissionEnum.MANAGE_PAGES]);
   const { userPins, setUserPins } = useNavigationPins();
+  const { items, hasResolved } = useNavigationPinListItems(userPins);
   const [submitting, setSubmitting] = useState(false);
+  const hasPins = userPins.length > 0;
 
-  const handleRemove = async (pin: NavigationPin) => {
+  const handleRemove = async (itemId: string): Promise<void> => {
+    const pin = findNavigationPinByItemId(userPins, itemId);
+
+    if (!pin) {
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -36,21 +56,39 @@ export const NavigationPinsCard = () => {
   };
 
   return (
-    <DetailSettingsCard
+    <AssignListCard
       data-test-id="navigation-pins"
+      inset="flush"
       title={intl.formatMessage(messages.userPinsTitle)}
-      intro={
-        <Text size={3} color="default2">
-          {intl.formatMessage(messages.userPinsDescription)}
-        </Text>
+      subtitle={
+        hasPins
+          ? intl.formatMessage(messages.userPinsCount, { count: userPins.length })
+          : intl.formatMessage(messages.userPinsNone)
       }
-    >
-      <NavigationPinList
-        pins={userPins}
-        emptyMessage={intl.formatMessage(messages.userPinsEmpty)}
-        disabled={submitting}
-        onRemove={handleRemove}
-      />
-    </DetailSettingsCard>
+      intro={intl.formatMessage(messages.userPinsDescription)}
+      loading={hasPins && !hasResolved}
+      items={items.map(item => ({ ...item, icon: pinIcon }))}
+      emptyState={{
+        icon: pinIcon,
+        title: intl.formatMessage(messages.userPinsEmptyTitle),
+        description: intl.formatMessage(messages.userPinsEmptyDescription),
+      }}
+      footerAction={
+        !hasPins && canViewModels ? (
+          <Button
+            variant="secondary"
+            type="button"
+            data-test-id="navigation-pins-view-models"
+            onClick={() => navigate(pageListUrl())}
+          >
+            {intl.formatMessage(messages.viewModels)}
+          </Button>
+        ) : undefined
+      }
+      onRemoveItem={handleRemove}
+      removeLabel={intl.formatMessage(messages.unpinFromNav)}
+      disabled={submitting}
+      rowTestId="navigation-pin-row"
+    />
   );
 };

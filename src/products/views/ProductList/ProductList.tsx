@@ -1,9 +1,10 @@
 // @ts-strict-ignore
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
@@ -32,10 +33,10 @@ import {
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -66,12 +67,13 @@ import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";
+import { ProductFilterKeys } from "../../components/ProductListPage/filters";
+import ProductListPage from "../../components/ProductListPage/ProductListPage";
 import { createMinimalProduct } from "./createMinimalProduct";
 import { ProductsExportParameters } from "./export";
 import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
@@ -266,7 +268,7 @@ const ProductList = ({ params }: ProductListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => products[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, products);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
@@ -358,10 +360,8 @@ const ProductList = ({ params }: ProductListProps) => {
         disabled={!data}
         limits={limitOpts.data?.shop.limits}
         products={products}
-        onUpdateListSettings={(...props) => {
-          clearRowSelection();
-          updateListSettings(...props);
-        }}
+        // Keep selection on page-size/column updates; Datagrid drops stale indices.
+        onUpdateListSettings={updateListSettings}
         onAdd={() => openModal("create-product")}
         onCreateProductType={() => openModal("create-product-type")}
         onAll={resetFilters}

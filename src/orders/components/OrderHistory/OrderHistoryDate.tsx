@@ -1,4 +1,4 @@
-import { TimezoneConsumer } from "@dashboard/components/Timezone";
+import { TimezoneConsumer } from "@dashboard/components/Timezone/Timezone";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import { type IntlShape, useIntl } from "react-intl";
 

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { type ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
@@ -11,7 +11,7 @@ import { isVoucherCatalogueError } from "@dashboard/discounts/components/Voucher
 import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
 import { isVoucherCountriesError } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
 import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
-import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
 import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
@@ -28,7 +28,7 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { sectionNames } from "@dashboard/intl";
 import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
@@ -38,7 +38,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import VoucherCreatePage from "../../components/VoucherCreatePage";
+import VoucherCreatePage from "../../components/VoucherCreatePage/VoucherCreatePage";
 import {
   voucherAddUrl,
   type VoucherCreateUrlQueryParams,
@@ -117,19 +117,27 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
   const [collectionSearchVariables, setCollectionSearchVariables] =
     useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
+  // Assign-picker searches only feed their dialog, so keep them off until it opens.
+  // SearchProducts pulls Product/ProductVariant.channelListings, which Core gates behind
+  // MANAGE_PRODUCTS — running it on mount buried MANAGE_DISCOUNTS-only staff in permission
+  // errors just for opening the create page.
   const categoriesSearch = useCategoryWithTotalProductsSearch({
+    skip: params.action !== "assign-category",
     variables: categorySearchVariables,
   });
   const collectionsSearch = useCollectionWithTotalProductsSearch({
+    skip: params.action !== "assign-collection",
     variables: collectionSearchVariables,
   });
   // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
   // on a large catalog. Ask for more per request so the picker stays useful without leaning on
   // backfill for every page.
   const productsSearch = useProductSearch({
+    skip: params.action !== "assign-product",
     variables: productSearchVariables,
   });
   const variantsSearch = useProductSearch({
+    skip: params.action !== "assign-variant",
     variables: variantSearchVariables,
   });
 

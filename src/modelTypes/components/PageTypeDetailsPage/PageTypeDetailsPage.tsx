@@ -4,12 +4,13 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
+import { FormDirtyStateSync } from "@dashboard/components/Form/FormDirtyStateSync";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
 import { readModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";

@@ -1,8 +1,8 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { MONO_FONT_FAMILY } from "@dashboard/styles/monoFontFamily";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useRef, useState } from "react";

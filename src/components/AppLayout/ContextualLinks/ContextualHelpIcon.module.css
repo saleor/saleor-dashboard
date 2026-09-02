@@ -1,0 +1,34 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  height: var(--mu-spacing-8);
+  line-height: 0;
+}
+
+/* Flatten the trigger box so the <a> is the only flex item and tab stop. */
+.root :global(button) {
+  display: contents;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--mu-colors-text-default2);
+  line-height: 0;
+}
+
+.icon svg {
+  display: block;
+}
+
+.icon:hover {
+  color: var(--mu-colors-text-default1);
+}
+
+.icon:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

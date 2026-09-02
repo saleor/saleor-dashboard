@@ -1,14 +1,24 @@
 import { useEffect, useRef } from "react";
 
+import { NAVIGATOR_SEARCH_INPUT_ID } from "./consts";
+
 export const useCommandMenuInput = () => {
   const container = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    container.current = document.getElementById("navigator-search-input") as HTMLInputElement;
+    container.current = document.getElementById(NAVIGATOR_SEARCH_INPUT_ID) as HTMLInputElement;
   }, []);
 
   const updateAriaActiveDescendant = (id: string) => {
     if (!container.current) return;
+
+    // An empty value would be a dangling reference; "no active option" is
+    // expressed by dropping the attribute instead.
+    if (!id) {
+      clearActiveDescendant();
+
+      return;
+    }
 
     container.current.setAttribute("aria-activedescendant", id);
   };

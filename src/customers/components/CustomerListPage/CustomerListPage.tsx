@@ -1,10 +1,13 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { ExpressionFilters } from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
+import {
+  ExpressionFilterPanel,
+  ExpressionFilters,
+} from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { ListSearchInput } from "@dashboard/components/ListSearchInput/ListSearchInput";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
@@ -137,31 +140,34 @@ export const CustomerListPage = ({
         />
         <DashboardCard>
           <Box
-            display="grid"
-            __gridTemplateColumns="auto 1fr"
-            gap={4}
+            display="flex"
+            flexDirection="column"
+            gap={3}
             paddingBottom={2}
             paddingX={6}
             paddingTop={4}
           >
-            <Box display="flex" alignItems="center" gap={4}>
-              <ExpressionFilters />
-              <ListSearchInput
-                initialSearch={initialSearch}
-                placeholder={intl.formatMessage({
-                  id: "bVjFta",
-                  defaultMessage: "Search customers",
-                })}
-                onSearchChange={onSearchChange}
-              />
+            <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4}>
+              <Box display="flex" alignItems="center" gap={4}>
+                <ExpressionFilters />
+                <ListSearchInput
+                  initialSearch={initialSearch}
+                  placeholder={intl.formatMessage({
+                    id: "bVjFta",
+                    defaultMessage: "Search customers",
+                  })}
+                  onSearchChange={onSearchChange}
+                />
+              </Box>
+              <Box display="flex" justifyContent="flex-end" alignItems="center">
+                {canEditCustomers && selectedCustomerIds.length > 0 && (
+                  <BulkDeleteButton count={selectedCustomerIds.length} onClick={onCustomersDelete}>
+                    <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
+                  </BulkDeleteButton>
+                )}
+              </Box>
             </Box>
-            <Box display="flex" justifyContent="flex-end" alignItems="center">
-              {canEditCustomers && selectedCustomerIds.length > 0 && (
-                <BulkDeleteButton onClick={onCustomersDelete}>
-                  <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
-                </BulkDeleteButton>
-              )}
-            </Box>
+            <ExpressionFilterPanel />
           </Box>
           <CustomerListDatagrid
             {...customerListProps}

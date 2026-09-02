@@ -57,7 +57,7 @@ export interface InsetSegmentedControlProps<T extends string = string> {
   "data-test-id"?: string;
 }
 
-export const renderInsetSegmentLabel = (
+const renderInsetSegmentLabel = (
   label: InsetSegmentedControlOption["label"],
   isActive: boolean,
 ): ReactNode => {

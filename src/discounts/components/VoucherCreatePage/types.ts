@@ -6,7 +6,7 @@ import {
   type SearchProductVariantFragment,
 } from "@dashboard/graphql";
 
-import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage/VoucherDetailsPage";
 
 export type VoucherCreateProductVariant = SearchProductVariantFragment;
 

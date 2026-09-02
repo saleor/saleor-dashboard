@@ -62,5 +62,3 @@ export const getNavigationCustomIconStrokeWidth = (viewBoxSize: number) =>
 /** Match Lucide stroke weight for custom SVG icons rendered at TopNav icon size. */
 export const getTopNavCustomIconStrokeWidth = (viewBoxSize: number) =>
   iconStrokeWidthBySize.small * (viewBoxSize / LUCIDE_VIEWBOX_SIZE);
-
-export type IconSize = keyof typeof iconSize;

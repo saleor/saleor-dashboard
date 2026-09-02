@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Locale } from "@dashboard/components/Locale";
+import { Locale } from "@dashboard/components/Locale/Locale";
 
 import { numberCellEmptyValue, type NumberCellProps, numberCellRenderer } from "./NumberCell";
 

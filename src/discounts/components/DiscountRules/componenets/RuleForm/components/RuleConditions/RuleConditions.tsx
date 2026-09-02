@@ -1,15 +1,16 @@
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/hooks/useConditionNames";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
-import { createEmptyCodition, type Rule } from "@dashboard/discounts/models";
+import { createEmptyCodition } from "@dashboard/discounts/models/Condition";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
-import { RuleConditionRow } from "../RuleConditionRow";
-import { AddConditionsSection } from "./components/AddConditionsSection";
-import { NestedConditionsWarning } from "./components/NestedConditionsWarning";
+import { RuleConditionRow } from "../RuleConditionRow/RuleConditionRow";
+import { AddConditionsSection } from "./components/AddConditionsSection/AddConditionsSection";
+import { NestedConditionsWarning } from "./components/NestedConditionsWarning/NestedConditionsWarning";
 
 interface RuleConditionsProps {
   hasSelectedChannels: boolean;

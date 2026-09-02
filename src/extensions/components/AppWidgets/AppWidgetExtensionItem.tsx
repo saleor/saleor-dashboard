@@ -5,6 +5,7 @@ import { IframePost } from "@dashboard/extensions/components/IframePost/IframePo
 import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
+import { InlineExtensionPreferenceControls } from "@dashboard/extensions/preferences/InlineExtensionPreferenceControls";
 import { type ExtensionWithParams } from "@dashboard/extensions/types";
 import { type AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
@@ -13,6 +14,8 @@ import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
+
+import styles from "./AppWidgetExtensionItem.module.css";
 
 interface AppWidgetExtensionItemProps {
   extension: ExtensionWithParams;
@@ -37,6 +40,21 @@ export const AppWidgetExtensionItem = ({
   }
 
   const settings = settingsValidation.data;
+
+  const renderWithControls = (children: ReactNode) => (
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      gap={2}
+      className={styles.hoverRow}
+    >
+      <Box>{children}</Box>
+      <Box className={styles.hoverControls}>
+        <InlineExtensionPreferenceControls extension={extension} />
+      </Box>
+    </Box>
+  );
 
   if (extension.targetName !== "WIDGET") {
     const onClick = () => extension.open(params);
@@ -65,10 +83,12 @@ export const AppWidgetExtensionItem = ({
 
     return (
       <Box paddingX={6} data-test-id="app-widget-text">
-        <Link onClick={onClick} title={title}>
-          {extension.label}
-          {suffix}
-        </Link>
+        {renderWithControls(
+          <Link onClick={onClick} title={title}>
+            {extension.label}
+            {suffix}
+          </Link>,
+        )}
       </Box>
     );
   }
@@ -94,7 +114,10 @@ export const AppWidgetExtensionItem = ({
   });
 
   return (
-    <AppWidgetCard extension={extension}>
+    <AppWidgetCard
+      extension={extension}
+      headerActions={<InlineExtensionPreferenceControls extension={extension} />}
+    >
       {isIframePost ? (
         <IframePost
           autoHeight

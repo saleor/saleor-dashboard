@@ -7,7 +7,7 @@ import {
 } from "@dashboard/attributes/utils/data";
 import { getAssignedModelTypesForAttribute } from "@dashboard/attributes/utils/getAssignedModelTypesForAttribute";
 import { mapAssignedTypeConnection } from "@dashboard/attributes/utils/mapAssignedTypeConnection";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import {
   AttributeTypeEnum,
   OrderDirection,
@@ -26,21 +26,23 @@ import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { buttonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews, type ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { move } from "@dashboard/utils/lists";
+import { move } from "@dashboard/utils/lists/lists";
 import omit from "lodash/omit";
 import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog";
+import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog/AttributeDeleteDialog";
 import { AttributeMetadataDialog } from "../../components/AttributeMetadataDialog/AttributeMetadataDialog";
-import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
-import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
+import AttributePage, {
+  type AttributePageFormData,
+} from "../../components/AttributePage/AttributePage";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog/AttributeValueDeleteDialog";
 import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog/AttributeValueEditDialog";
 import {
   attributeListUrl,
@@ -395,6 +397,8 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
         toggleAll: valueListActions.toggleAll,
         toolbar: (
           <BulkDeleteButton
+            count={valueListActions.listElements.length}
+            size="small"
             onClick={() => openModal("remove-values", { ids: valueListActions.listElements })}
           >
             <FormattedMessage {...buttonMessages.delete} />

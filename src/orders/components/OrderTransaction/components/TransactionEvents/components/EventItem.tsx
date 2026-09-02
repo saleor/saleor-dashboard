@@ -1,7 +1,7 @@
 import Money from "@dashboard/components/Money";
+import { TableCell, TableRow } from "@dashboard/components/Table/Table";
 import { type TransactionEventFragment, TransactionEventTypeEnum } from "@dashboard/graphql";
 import { type TransactionFakeEvent } from "@dashboard/orders/types";
-import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";

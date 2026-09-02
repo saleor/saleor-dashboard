@@ -8,7 +8,6 @@ import { AppExtensionPopupProvider } from "@dashboard/extensions/components/AppE
 import { ExtensionsPaths, extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
-import { SaleorProvider } from "@dashboard/legacy-sdk";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { notificationsSettingsPath } from "@dashboard/notificationsSettings/urls";
@@ -16,7 +15,7 @@ import { orderSettingsPath } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { StaffInviteProvider } from "@dashboard/staff/components/StaffInviteProvider/StaffInviteProvider";
 import { structuresListPath } from "@dashboard/structures/urls";
-import { ThemeProvider } from "@dashboard/theme";
+import { ThemeProvider } from "@dashboard/theme/provider";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
@@ -32,33 +31,36 @@ import { RootRoutes } from "./auth/components/RootRoutes";
 import SectionRoute from "./auth/components/SectionRoute";
 import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
 import { channelsSection } from "./channels/urls";
-import AppLayout from "./components/AppLayout";
 import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
+import AppLayout from "./components/AppLayout/AppLayout";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
-import ErrorPage from "./components/ErrorPage";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { legacyRedirects } from "./components/LegacyRedirects";
-import { LocaleProvider } from "./components/Locale";
+import { LocaleProvider } from "./components/Locale/Locale";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
-import { NotificationProvider, NotificationsToaster } from "./components/notifications";
+import {
+  NotificationProvider,
+  NotificationsToaster,
+} from "./components/notifications/NotificationProvider";
 import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { GTM_ID } from "./config";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
-import AppStateProvider from "./containers/AppState";
-import BackgroundTasksProvider from "./containers/BackgroundTasks";
+import AppStateProvider from "./containers/AppState/AppState";
+import BackgroundTasksProvider from "./containers/BackgroundTasks/BackgroundTasksProvider";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
-import { apolloClient, saleorClient } from "./graphql/client";
+import { apolloClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import { NotFound } from "./NotFound";
 import { errorTracker } from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import { warehouseSection } from "./warehouses/urls";
-import { OnboardingProvider } from "./welcomePage/WelcomePageOnboarding/onboardingContext";
+import { OnboardingProvider } from "./welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 
 // Lazy-loaded page sections for code splitting
 const AttributeSection = lazy(() => import("./attributes"));
@@ -126,47 +128,45 @@ const handleLegacyTheming = (): void => {
 handleLegacyTheming();
 
 const App = (): JSX.Element => (
-  <SaleorProvider client={saleorClient}>
-    <ApolloProvider client={apolloClient}>
-      <Router>
-        {/* @ts-expect-error legacy types */}
-        <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
-          <ThemeProvider>
-            <LocaleProvider>
-              <NotificationProvider>
-                <BackgroundTasksProvider>
-                  <AppStateProvider>
-                    <AuthProvider>
-                      <ProductAnalytics>
-                        <ShopProvider>
-                          <AppChannelProvider>
-                            <ExitFormDialogProvider>
-                              <DevModeProvider>
-                                <NavigatorSearchProvider>
-                                  <SavebarRefProvider>
-                                    <FeatureFlagsProviderWithUser>
-                                      <OnboardingProvider>
-                                        <Routes />
-                                      </OnboardingProvider>
-                                    </FeatureFlagsProviderWithUser>
-                                    <NotificationsToaster />
-                                  </SavebarRefProvider>
-                                </NavigatorSearchProvider>
-                              </DevModeProvider>
-                            </ExitFormDialogProvider>
-                          </AppChannelProvider>
-                        </ShopProvider>
-                      </ProductAnalytics>
-                    </AuthProvider>
-                  </AppStateProvider>
-                </BackgroundTasksProvider>
-              </NotificationProvider>
-            </LocaleProvider>
-          </ThemeProvider>
-        </LegacyThemeProvider>
-      </Router>
-    </ApolloProvider>
-  </SaleorProvider>
+  <ApolloProvider client={apolloClient}>
+    <Router>
+      {/* @ts-expect-error legacy types */}
+      <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
+        <ThemeProvider>
+          <LocaleProvider>
+            <NotificationProvider>
+              <BackgroundTasksProvider>
+                <AppStateProvider>
+                  <AuthProvider>
+                    <ProductAnalytics>
+                      <ShopProvider>
+                        <AppChannelProvider>
+                          <ExitFormDialogProvider>
+                            <DevModeProvider>
+                              <NavigatorSearchProvider>
+                                <SavebarRefProvider>
+                                  <FeatureFlagsProviderWithUser>
+                                    <OnboardingProvider>
+                                      <Routes />
+                                    </OnboardingProvider>
+                                  </FeatureFlagsProviderWithUser>
+                                  <NotificationsToaster />
+                                </SavebarRefProvider>
+                              </NavigatorSearchProvider>
+                            </DevModeProvider>
+                          </ExitFormDialogProvider>
+                        </AppChannelProvider>
+                      </ShopProvider>
+                    </ProductAnalytics>
+                  </AuthProvider>
+                </AppStateProvider>
+              </BackgroundTasksProvider>
+            </NotificationProvider>
+          </LocaleProvider>
+        </ThemeProvider>
+      </LegacyThemeProvider>
+    </Router>
+  </ApolloProvider>
 );
 const Routes = () => {
   const intl = useIntl();

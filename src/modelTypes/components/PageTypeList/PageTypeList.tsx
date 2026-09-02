@@ -1,17 +1,17 @@
 // @ts-strict-ignore
-import Checkbox from "@dashboard/components/Checkbox";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
 import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableHead from "@dashboard/components/TableHead";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
+import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type PageTypeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { PageTypeListUrlSortField, pageTypePath } from "@dashboard/modelTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import type * as React from "react";

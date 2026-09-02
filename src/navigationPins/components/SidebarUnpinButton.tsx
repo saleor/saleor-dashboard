@@ -1,5 +1,5 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { PinOff } from "lucide-react";

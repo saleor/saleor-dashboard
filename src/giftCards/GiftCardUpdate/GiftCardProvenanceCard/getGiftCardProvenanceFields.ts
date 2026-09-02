@@ -13,7 +13,7 @@ type GiftCardDetails = NonNullable<GiftCardDetailsQuery["giftCard"]>;
 
 export type GiftCardProvenanceActorIcon = "user" | "mail" | "app" | "staff";
 
-export interface GiftCardProvenanceActor {
+interface GiftCardProvenanceActor {
   label: MessageDescriptor;
   name: string;
   url?: string;
@@ -22,7 +22,7 @@ export interface GiftCardProvenanceActor {
   icon: GiftCardProvenanceActorIcon;
 }
 
-export interface GiftCardProvenanceOrder {
+interface GiftCardProvenanceOrder {
   link: string;
   text: string;
   entity: "order";

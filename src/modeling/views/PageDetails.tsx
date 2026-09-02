@@ -1,17 +1,15 @@
 // @ts-strict-ignore
 import {
   getAttributesAfterFileAttributesUpdate,
-  mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
 } from "@dashboard/attributes/utils/data";
 import {
-  handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
@@ -22,14 +20,13 @@ import {
   type PageErrorFragment,
   type PageInput,
   type UploadErrorFragment,
-  useAttributeValueDeleteMutation,
   useFileUploadMutation,
   usePageDetailsQuery,
   usePageRemoveMutation,
   usePageUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import {
   useReferenceCategorySearch,
   useReferenceCollectionSearch,
@@ -46,8 +43,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getStringOrPlaceholder, maybe } from "../../misc";
 import { PageDeleteDialog } from "../components/PageDeleteDialog/PageDeleteDialog";
-import PageDetailsPage from "../components/PageDetailsPage";
 import { type PageData, type PageSubmitData } from "../components/PageDetailsPage/form";
+import PageDetailsPage from "../components/PageDetailsPage/PageDetailsPage";
 import { PageMetadataDialog } from "../components/PageMetadataDialog/PageMetadataDialog";
 import { pageListUrl, pageUrl, type PageUrlQueryParams } from "../urls";
 import { getAttributeInputFromPage } from "../utils/data";
@@ -100,7 +97,6 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
   const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({
     disableErrorHandling: true,
   });
-  const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
     onCompleted: data => {
       if (data.pageDelete.errors.length === 0) {
@@ -121,11 +117,6 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
     );
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      pageDetails?.data?.page?.attributes,
-      variables => deleteAttributeValue({ variables }),
-    );
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
       uploadFilesResult,
@@ -141,7 +132,6 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     errors = [
       ...errors,
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
       ...updateResult.data.pageUpdate.errors,
     ];
 
@@ -218,12 +208,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
       <PageDetailsPage
-        loading={
-          pageDetails.loading ||
-          pageUpdateOpts.loading ||
-          uploadFileOpts.loading ||
-          deleteAttributeValueOpts.loading
-        }
+        loading={pageDetails.loading || pageUpdateOpts.loading || uploadFileOpts.loading}
         errors={pageUpdateOpts.data?.pageUpdate.errors || []}
         saveButtonBarState={pageUpdateOpts.status}
         page={pageDetails.data?.page}

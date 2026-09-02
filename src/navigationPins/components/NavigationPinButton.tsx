@@ -1,5 +1,5 @@
 import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";

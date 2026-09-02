@@ -1,6 +1,6 @@
-import AttributeDetails from "@dashboard/attributes/components/AttributeDetails";
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
-import AttributeProperties from "@dashboard/attributes/components/AttributeProperties";
+import AttributeDetails from "@dashboard/attributes/components/AttributeDetails/AttributeDetails";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
+import AttributeProperties from "@dashboard/attributes/components/AttributeProperties/AttributeProperties";
 import { AttributeReferenceTypesSection } from "@dashboard/attributes/components/AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import { AttributeValues } from "@dashboard/attributes/components/AttributeValues/AttributeValues";
 import {
@@ -9,7 +9,7 @@ import {
   REFERENCE_ATTRIBUTE_TYPES,
 } from "@dashboard/attributes/utils/data";
 import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
-import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { type ListSettingsUpdate } from "@dashboard/components/TablePagination/TablePagination";
 import {
   type AttributeErrorFragment,
   type AttributeInputTypeEnum,
@@ -29,7 +29,7 @@ import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 
-export type AttributeCreateFormStep = 1 | 2;
+type AttributeCreateFormStep = 1 | 2;
 
 interface AttributeCreateFormContentProps
   extends Pick<

@@ -4,7 +4,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
 import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import { PermissionEnum } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button, Select, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";

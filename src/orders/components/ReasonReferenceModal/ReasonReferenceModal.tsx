@@ -1,7 +1,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useModelsOfTypeQuery } from "@dashboard/graphql";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Select, Text, Textarea } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo, useState } from "react";

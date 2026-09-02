@@ -1,26 +1,28 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
-import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
+import { Radio } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui-next";
 import { Fragment, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type AssignContainerDialogProps } from "../AssignContainerDialog";
+import { type AssignContainerDialogProps } from "../AssignContainerDialog/AssignContainerDialog";
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "../BackButton";
@@ -30,7 +32,11 @@ import { AssignVariantLoadMoreRow } from "./AssignVariantLoadMoreRow";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { useAssignVariantDialogProducts } from "./useAssignVariantDialogProducts";
-import { getCompositeLabel, toAssignableProducts, type VariantWithProductLabel } from "./utils";
+import {
+  toAssignableProducts,
+  toAssignedVariantContainers,
+  type VariantWithProductLabel,
+} from "./utils";
 
 interface AssignVariantDialogSingleProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -135,13 +141,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
           productName: variant.product.name,
         };
 
-        onSubmit([
-          {
-            ...variantWithLabel,
-            name: getCompositeLabel(variantWithLabel),
-            id: variant.id,
-          },
-        ]);
+        onSubmit(toAssignedVariantContainers([variantWithLabel]));
 
         return;
       }
@@ -160,17 +160,14 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
         <DashboardModal.PickerHeader
           toolbar={
             <>
-              <TextField
+              <Input
                 name="query"
                 value={query}
                 onChange={onQueryChange}
                 label={intl.formatMessage(messages.assignVariantDialogSearch)}
                 placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
-                fullWidth
-                InputProps={{
-                  autoComplete: "off",
-                  endAdornment: loading && <SaleorThrobber size={16} />,
-                }}
+                autoComplete="off"
+                endAdornment={loading && <SaleorThrobber size={16} />}
               />
 
               <ModalFilters />

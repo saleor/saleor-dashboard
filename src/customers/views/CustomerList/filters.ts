@@ -1,8 +1,8 @@
 import { type FilterElement } from "@dashboard/components/Filter/types";
-import { CustomerFilterKeys } from "@dashboard/customers/components/CustomerListPage";
+import { CustomerFilterKeys } from "@dashboard/customers/components/CustomerListPage/filters";
 import { type CustomerFilterInput } from "@dashboard/graphql";
 
-import { getGteLteVariables, getMinMaxQueryParam } from "../../../utils/filters";
+import { getGteLteVariables, getMinMaxQueryParam } from "../../../utils/filters/filters";
 import { type CustomerListUrlFilters, CustomerListUrlFiltersEnum } from "../../urls";
 
 export function getFilterVariables(params: CustomerListUrlFilters): CustomerFilterInput {

@@ -1,5 +1,118 @@
 # Changelog
 
+## 3.23.31
+
+### Patch Changes
+
+- [#6888](https://github.com/saleor/saleor-dashboard/pull/6888) [`ae4e4d2`](https://github.com/saleor/saleor-dashboard/commit/ae4e4d2c1ea1c0b3285c14af26be1973ac2f9031) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Extension URLs now accept an app's manifest identifier in place of its ID, so links can be shared between environments. `/extensions/app/saleor.app.adyen` resolves to the installed app and swaps itself for the ID form (`/extensions/app/QXBwOjE=`), keeping any deep path, query string and hash. Existing ID-based URLs are unchanged. If no installed app matches the identifier, the user lands on Explore Extensions.
+
+- [#6868](https://github.com/saleor/saleor-dashboard/pull/6868) [`a7e18d5`](https://github.com/saleor/saleor-dashboard/commit/a7e18d581822acac48e02eface45e3bc8e8a65a4) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Rows in list views behave like real links again — middle click and right-click "Open link in new tab" work on product, order, and other datagrid rows.
+
+- [#6883](https://github.com/saleor/saleor-dashboard/pull/6883) [`b6662d2`](https://github.com/saleor/saleor-dashboard/commit/b6662d2d273ada0cf00393e88d12a0393c462f4f) Thanks [@mirekm](https://github.com/mirekm)! - Clarify list filters and search.
+
+  Auto-added Channel and Currency rows now show why they are required. Empty filter panels say “No filters”. List pages put docs behind a help icon instead of a subtitle.
+
+- [#6884](https://github.com/saleor/saleor-dashboard/pull/6884) [`008207d`](https://github.com/saleor/saleor-dashboard/commit/008207d8a81bb82f73f998299189a9342d50f17f) Thanks [@mirekm](https://github.com/mirekm)! - Product pickers in list filters show thumbnails.
+
+  Gift card Products, and any other product filter, use the same thumbnail list as product reference attributes.
+
+- [#6889](https://github.com/saleor/saleor-dashboard/pull/6889) [`b1206c4`](https://github.com/saleor/saleor-dashboard/commit/b1206c491b86644b45c51aa7ea3023bce940d6e3) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The vendored `@saleor/sdk` copy that lived in `src/legacy-sdk` has been merged into the Dashboard
+  itself. Authentication now runs on the Dashboard's own Apollo client, GraphQL documents and
+  generated types instead of a second, separately generated copy of the schema.
+
+  This is an internal refactor with no change to how you log in, but two bugs went away with it:
+  a token refresh triggered while another refresh was already in flight could refresh itself in a
+  loop, and logging out refetched every open query against the token that had just been cleared,
+  producing a burst of authorization errors on the way to the login screen.
+
+- [#6889](https://github.com/saleor/saleor-dashboard/pull/6889) [`b1206c4`](https://github.com/saleor/saleor-dashboard/commit/b1206c491b86644b45c51aa7ea3023bce940d6e3) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed SSO login hanging on a loading screen when running the Dashboard from a local development
+  build. The OAuth callback was exchanging its single-use authorization code twice, and the losing
+  request came back without a user — which reported "no permissions", logged the session out, and
+  then blocked the successful login that arrived moments later.
+
+  The code is now exchanged once per callback. Deployed builds were never affected.
+
+- [#6893](https://github.com/saleor/saleor-dashboard/pull/6893) [`f301871`](https://github.com/saleor/saleor-dashboard/commit/f301871abf91d17594666b1e7513a3c7e06c35f8) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Vouchers no longer demand the MANAGE_PRODUCTS permission. Staff who could only manage discounts were met with a stack of "you need one of the following permissions: MANAGE_PRODUCTS" errors as soon as a voucher opened.
+
+  Two things caused it. The voucher page ran the assign-product and assign-variant picker searches on page load, with every picker closed — those searches now wait until their dialog is opened. And product channel availability, which does require MANAGE_PRODUCTS, was requested unconditionally — it is now requested only when the signed-in user can actually read it.
+
+  Staff without MANAGE_PRODUCTS see the Eligible products list without its Availability column, and the assign-product picker no longer filters by voucher channels, since it cannot know which channels a product is in. Nothing changes for staff who do have the permission.
+
+  Opening a voucher is also lighter: four catalog searches no longer fire on every page load.
+
+## 3.23.30
+
+### Patch Changes
+
+- [#6876](https://github.com/saleor/saleor-dashboard/pull/6876) [`ce6966f`](https://github.com/saleor/saleor-dashboard/commit/ce6966fe981257727e59166b3d8e6d2edaaf74f9) Thanks [@mirekm](https://github.com/mirekm)! - You can now filter customers by attributes.
+
+  On the customer list, open **Conditions** and choose **Attribute**.
+
+- [#6867](https://github.com/saleor/saleor-dashboard/pull/6867) [`e258774`](https://github.com/saleor/saleor-dashboard/commit/e2587747354d060d9ecd21c4b2d739877d9722ff) Thanks [@mirekm](https://github.com/mirekm)! - Customer types are now in the Customers sidebar.
+
+  Open **Customers** to jump to **All**, or to a type such as **B2B** or **Default**. **Customer Types** at the bottom opens the type settings. If you only have one type, the menu stays **All** plus settings — that type is the same list as All. Types you pin on the customer list appear first; only a handful of types are listed so the menu stays short.
+
+- [#6876](https://github.com/saleor/saleor-dashboard/pull/6876) [`ce6966f`](https://github.com/saleor/saleor-dashboard/commit/ce6966fe981257727e59166b3d8e6d2edaaf74f9) Thanks [@mirekm](https://github.com/mirekm)! - Improve filter menus so they show more choices and load on scroll.
+
+- [#6879](https://github.com/saleor/saleor-dashboard/pull/6879) [`255a40f`](https://github.com/saleor/saleor-dashboard/commit/255a40f202cb828beaba2573be0ca3ea0042e686) Thanks [@mirekm](https://github.com/mirekm)! - General update of the main lists filtering component.
+
+  Filters on product, customer, and other lists now open as a foldable panel. Search uses the same bordered field, with syntax hints where Saleor supports them.
+
+  Product and variant reference filters show chips with thumbnails; variant choices are grouped under their product. Color (swatch) attributes use a color preview instead of a plain list.
+
+  Also fixes applying color together with reference filters, and filter drafts that did not reset cleanly.
+
+- [#6655](https://github.com/saleor/saleor-dashboard/pull/6655) [`7002c5a`](https://github.com/saleor/saleor-dashboard/commit/7002c5a246f38cf316bf15d7b61ceec9882f206d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed the product page freezing while it loads. The media card re-rendered
+  itself in a loop until the product query resolved, which could lock up the tab
+  on slower connections.
+
+- [#6875](https://github.com/saleor/saleor-dashboard/pull/6875) [`070d0e6`](https://github.com/saleor/saleor-dashboard/commit/070d0e62ea0cfda70c5d440fbb0f88368847c5f4) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed the gift card code export from the Dashboard: the "Export card codes" menu item on the
+  gift card list and the export dialog are gone. The feature is deprecated — `exportGiftCards` is
+  removed from the 3.24 API, and on 3.23 it can still be used directly via the API.
+
+  Bulk issuing gift cards no longer opens a follow-up dialog offering to email the codes — the
+  success notification is now the only confirmation, since exporting was that dialog's only action.
+
+- [#6655](https://github.com/saleor/saleor-dashboard/pull/6655) [`7002c5a`](https://github.com/saleor/saleor-dashboard/commit/7002c5a246f38cf316bf15d7b61ceec9882f206d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Rich text fields (product, category and collection descriptions, CMS pages, and
+  rich text attributes) now support images. Pick "Image" from the editor toolbar
+  and paste a link to an externally hosted image, or paste the link straight into
+  the editor.
+
+  Uploading files to Saleor media storage is not supported yet, so dragging,
+  dropping or pasting an image file does nothing.
+
+  Note: storefronts and other API clients that render rich text content need to
+  handle the `image` block to display these images.
+
+- [#6873](https://github.com/saleor/saleor-dashboard/pull/6873) [`e2fe430`](https://github.com/saleor/saleor-dashboard/commit/e2fe430fbc973e1c7663082cbf76d34fe76eb0fd) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Lists no longer crash when rows stay selected while the list shrinks.
+
+  Selecting rows and then lowering "rows per page", bulk-deleting, or refetching fewer records could take the whole view down with "We've encountered an unexpected error". Glide tracks its row selection by index, independently of the data, so the grid reported indices that no longer pointed at a row and the list resolved them straight onto its own data. Products, collections, models, draft orders, shipping zones and gift cards were affected. Attribute and voucher lists did not crash but could put undefined entries into the selection that bulk actions run on.
+
+- [#6871](https://github.com/saleor/saleor-dashboard/pull/6871) [`bc08ccf`](https://github.com/saleor/saleor-dashboard/commit/bc08ccf6de05d7f2062b0c68c178f399eca611e5) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed every attribute request failing against the 3.24 API. The Dashboard kept selecting
+  `availableInGrid`, `filterableInStorefront` and `storefrontSearchPosition`, which 3.24 removes
+  from `Attribute`, so attribute list, details and update all returned validation errors.
+
+  Those three fields are now marked as belonging to the 3.23 schema only and are dropped from the
+  request when the Dashboard is built against 3.24. On 3.23 the storefront faceted navigation
+  settings keep working unchanged. Sorting the attribute list by "Use in faceted search" falls back
+  to sorting by name on 3.24, where that sort field is gone too.
+
+## 3.23.29
+
+### Patch Changes
+
+- [#6860](https://github.com/saleor/saleor-dashboard/pull/6860) [`408bec4`](https://github.com/saleor/saleor-dashboard/commit/408bec4285b5eddf83da056e2ae97f7df85a076f) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Discount rule reward values now keep their decimal part.
+
+  Typing `12.55` into a rule's reward value stored `12` — the field parsed input with `parseInt`, so everything after the decimal point was dropped without any feedback. Fractional rewards below `1`, such as a `0.5%` discount, were also rejected with "Rule reward value is required". Both now work, for fixed-amount and percentage rewards alike.
+
+- [#6701](https://github.com/saleor/saleor-dashboard/pull/6701) [`6e5cfcb`](https://github.com/saleor/saleor-dashboard/commit/6e5cfcb58a4394122d6c7faf2f81bcf0244626b7) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Staff users can now pin or hide individual app widget extensions. Manage visibility inline via hover controls next to each widget, or from the new "Extensions visibility" section on your account page. Preferences are stored per-user and pinned widgets are sorted to the top while hidden ones are not rendered.
+
+- [#6858](https://github.com/saleor/saleor-dashboard/pull/6858) [`a262e9f`](https://github.com/saleor/saleor-dashboard/commit/a262e9fc447f267f9fc372570ce7c73a5b2cd2b7) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Navigator (Ctrl/Cmd + K) is now announced correctly by screen readers.
+
+  The search field used the abstract `role="input"`, declared `aria-expanded` on a role that does not support it, and pointed `aria-activedescendant` at a hardcoded `/orders/` route with no `aria-controls` to make that reference resolvable. Results put `role="option"` on a child of the element that actually received `aria-selected`, and nothing in the popup was a `listbox`. Assistive technology therefore announced neither the field as a combobox, nor the popup as a list, nor which result was highlighted.
+
+  The field is now a `combobox` controlling a labelled `listbox`, `aria-expanded` follows the popup, and every result — action, setting, or resource row — is a single `option` node carrying its own id and `aria-selected`, so arrowing through the Navigator announces the highlighted item. The placeholder is translated too.
+
 ## 3.23.28
 
 ### Patch Changes

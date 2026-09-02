@@ -1,10 +1,10 @@
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { TableCell } from "@dashboard/components/Table/Table";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import {
   type AssignableSearchProduct,
   isVariantsListTruncated,
 } from "@dashboard/searches/mapSearchProductsForVariantAssign";
-import { TableCell } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 

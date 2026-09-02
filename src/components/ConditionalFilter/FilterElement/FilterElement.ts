@@ -1,7 +1,10 @@
 import { type AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 
-import { type InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
+import {
+  type AttributeLookup,
+  hasAttributeLookup,
+} from "../API/initialState/product/InitialProductStateResponse";
 import { type RowType, STATIC_OPTIONS } from "../constants";
 import { type LeftOperand } from "../LeftOperandsProvider";
 import { type InitialResponseType } from "../types";
@@ -10,7 +13,7 @@ import { Condition } from "./Condition";
 import { type ConditionItem, ConditionOptions, type StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { type ConditionValue, type ItemOption } from "./ConditionValue";
-import { Constraint } from "./Constraint";
+import { Constraint, GLOBAL } from "./Constraint";
 
 export class ExpressionValue {
   constructor(
@@ -22,6 +25,10 @@ export class ExpressionValue {
 
   public setLabel(label: string) {
     this.label = label;
+  }
+
+  public clone(): ExpressionValue {
+    return new ExpressionValue(this.value, this.label, this.type, this.entityType);
   }
 
   public isEmpty() {
@@ -55,7 +62,7 @@ export class ExpressionValue {
     return new ExpressionValue(token.name, option.label, token.name);
   }
 
-  public static forAttribute(attributeName: string, response: InitialProductStateResponse) {
+  public static forAttribute(attributeName: string, response: AttributeLookup) {
     const attribute = response.attributeByName(attributeName);
 
     if (!attribute) {
@@ -228,6 +235,28 @@ export class FilterElement {
     );
   }
 
+  public clone(): FilterElement {
+    const copy = new FilterElement(
+      this.value.clone(),
+      this.condition.clone(),
+      this.loading,
+      undefined,
+      this.selectedAttribute?.clone() ?? null,
+      this.availableAttributesList.map(operand => ({ ...operand })),
+      this.attributeLoading,
+    );
+
+    copy.constraint = this.constraint
+      ? new Constraint(
+          this.constraint.isGlobal ? GLOBAL : [...this.constraint.dependsOn],
+          this.constraint.disabled ? [...this.constraint.disabled] : undefined,
+          this.constraint.removable,
+        )
+      : undefined;
+
+    return copy;
+  }
+
   public static createEmpty() {
     return new FilterElement(
       ExpressionValue.emptyStatic(),
@@ -256,7 +285,18 @@ export class FilterElement {
     }
 
     if (token.isAttribute()) {
-      const attribute = (response as InitialProductStateResponse).attributeByName(token.name);
+      if (!hasAttributeLookup(response)) {
+        const error = new Error(
+          `Attribute "${token.name}" not found when creating FilterElement from URL token. This may indicate a deleted attribute or invalid URL parameter.`,
+        );
+
+        console.error(error.message, { token, response });
+        errorTracker.captureException(error);
+
+        return FilterElement.createEmpty();
+      }
+
+      const attribute = response.attributeByName(token.name);
 
       if (!attribute) {
         const error = new Error(
@@ -274,7 +314,7 @@ export class FilterElement {
         Condition.fromUrlToken(token, response),
         false,
         undefined,
-        ExpressionValue.forAttribute(token.name, response as InitialProductStateResponse),
+        ExpressionValue.forAttribute(token.name, response),
       );
     }
 
@@ -285,5 +325,22 @@ export class FilterElement {
 export const hasEmptyRows = (container: FilterContainer) => {
   return container.filter(FilterElement.isFilterElement).some((e: FilterElement) => e.isEmpty());
 };
+
+export const cloneFilterContainer = (container: FilterContainer): FilterContainer =>
+  container.map(item => {
+    if (typeof item === "string") {
+      return item;
+    }
+
+    if (FilterElement.isFilterElement(item)) {
+      return item.clone();
+    }
+
+    if (Array.isArray(item)) {
+      return cloneFilterContainer(item);
+    }
+
+    return item;
+  });
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;

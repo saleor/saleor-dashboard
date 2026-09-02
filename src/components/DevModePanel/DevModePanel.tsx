@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 import { type FetcherOpts, type FetcherParams } from "@graphiql/toolkit";
 import { useIntl } from "react-intl";
 
 import { ContextualLine } from "../AppLayout/ContextualLinks/ContextualLine";
 import { useContextualLink } from "../AppLayout/ContextualLinks/useContextualLink";
-import PlainGraphiQL from "../GraphiQLPlain";
+import PlainGraphiQL from "../GraphiQLPlain/GraphiQL";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
 import { getFetcher } from "./utils";

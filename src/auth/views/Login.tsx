@@ -5,10 +5,10 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
+import { useLocation } from "react-router";
 import urlJoin from "url-join";
-import useRouter from "use-react-router";
 
-import LoginPage from "../components/LoginPage";
+import LoginPage from "../components/LoginPage/LoginPage";
 import { type LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
@@ -19,9 +19,21 @@ interface LoginViewProps {
   params: LoginUrlQueryParams;
 }
 
+/**
+ * The OAuth authorization `code` is single-use, but this view is mounted more than once per
+ * callback: React 18 StrictMode double-invokes the mount effect in dev, and flipping
+ * `authenticating` swaps the whole tree to `<LoginLoading />` and back, remounting it again.
+ * Two concurrent `externalObtainAccessTokens` calls race on the same code — the loser comes back
+ * with no user, which sets `noPermissionsError` and logs out, and that error then permanently
+ * blocks `authenticated` even after the winner succeeds.
+ *
+ * Module scope, not a ref: a ref dies with the unmount this is meant to survive.
+ */
+let exchangedAuthCode: string | null = null;
+
 const LoginView = ({ params }: LoginViewProps) => {
   const navigate = useNavigator();
-  const { location } = useRouter();
+  const location = useLocation();
   const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } =
     useUser();
   const {
@@ -84,7 +96,8 @@ const LoginView = ({ params }: LoginViewProps) => {
     const externalAuthParamsExist = code && state && isCallbackPath;
     const externalAuthNotPerformed = !authenticating && !errors.length;
 
-    if (externalAuthParamsExist && externalAuthNotPerformed) {
+    if (externalAuthParamsExist && externalAuthNotPerformed && exchangedAuthCode !== code) {
+      exchangedAuthCode = code;
       handleExternalAuthentication(code, state);
     }
 

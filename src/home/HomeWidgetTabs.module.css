@@ -2,3 +2,29 @@
 .tab.tab {
   padding: 12px 8px 10px;
 }
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Tabs scroll horizontally rather than pushing the actions off the row. */
+.tabs {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.actions {
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.container:hover .actions,
+.container:focus-within .actions {
+  opacity: 1;
+}

@@ -32,14 +32,14 @@ interface GetPdpSchematicModelArgs {
   selectedVariantAttributeIds: string[];
 }
 
-export interface PdpSchematicModel {
+interface PdpSchematicModel {
   optionAttributes: PdpSchematicNamedAttribute[];
   badgeAttributes: PdpSchematicNamedAttribute[];
   specAttributes: PdpSchematicNamedAttribute[];
 }
 
 /** One example from the type — long choice names must not blow the miniature PDP. */
-export const SCHEMATIC_SAMPLE_MAX_CHARS = 16;
+const SCHEMATIC_SAMPLE_MAX_CHARS = 16;
 
 export const truncateSchematicSample = (value: string): string => {
   const trimmed = value.trim();

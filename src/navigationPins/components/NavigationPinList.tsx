@@ -1,12 +1,15 @@
-import { FALLBACK_MODEL_TYPE_ICON } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
 import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
+import { Link as RouterLink } from "react-router-dom";
 
-import { getPinTarget } from "../constants";
-import { usePinnedModelTypeNames } from "../hooks/usePinnedModelTypeNames";
+import { useNavigationPinListItems } from "../hooks/useNavigationPinListItems";
 import { navigationPinMessages as messages } from "../messages";
+import { findNavigationPinByItemId } from "../pinListItem";
 import { type NavigationPin } from "../types";
+import styles from "./NavigationPinList.module.css";
 
 interface NavigationPinListProps {
   pins: NavigationPin[];
@@ -16,61 +19,73 @@ interface NavigationPinListProps {
 }
 
 /**
- * Unlike the sidebar, this list keeps rows whose model type no longer resolves — otherwise a
- * deleted type would occupy one of the three slots with no way to free it.
+ * Management list for organization pins (modal). Deleted types stay so a slot can be freed.
  */
 export const NavigationPinList = ({
   pins,
   emptyMessage,
   disabled,
   onRemove,
-}: NavigationPinListProps) => {
+}: NavigationPinListProps): JSX.Element => {
   const intl = useIntl();
-  const { names, icons } = usePinnedModelTypeNames(pins.map(pin => pin.id));
+  const { items, hasResolved } = useNavigationPinListItems(pins);
 
   if (pins.length === 0) {
+    return <Placeholder>{emptyMessage}</Placeholder>;
+  }
+
+  if (!hasResolved) {
     return (
-      <Text size={3} color="default2">
-        {emptyMessage}
-      </Text>
+      <Box className={styles.list} aria-busy="true" data-test-id="navigation-pin-list-loading">
+        <Box className={styles.row}>
+          <Skeleton __height="1.25rem" __width="40%" />
+        </Box>
+        <Box className={styles.row}>
+          <Skeleton __height="1.25rem" __width="55%" />
+        </Box>
+      </Box>
     );
   }
 
   return (
-    <Box display="flex" flexDirection="column" gap={2}>
-      {pins.map(pin => {
-        const target = getPinTarget(pin.target);
-
-        return (
-          <Box
-            key={`${pin.target}:${pin.id}`}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            gap={4}
-          >
-            <Box display="flex" alignItems="center" gap={2}>
-              <ModelTypeIcon icon={icons[pin.id] ?? FALLBACK_MODEL_TYPE_ICON} />
-              <Box display="flex" flexDirection="column">
-                <Text size={3}>{names[pin.id] ?? pin.id}</Text>
-                {target && (
-                  <Text size={2} color="default2">
-                    {intl.formatMessage(target.label)}
-                  </Text>
-                )}
-              </Box>
-            </Box>
-            <Button
-              variant="tertiary"
-              disabled={disabled}
-              onClick={() => onRemove(pin)}
-              data-test-id="remove-navigation-pin"
-            >
-              {intl.formatMessage(messages.remove)}
-            </Button>
+    <Box className={styles.list} data-test-id="navigation-pin-list">
+      {items.map(item => (
+        <Box key={item.id} className={styles.row} data-test-id="navigation-pin-row">
+          <ModelTypeIcon icon={item.icon} />
+          <Box className={styles.rowCopy}>
+            {item.href ? (
+              <RouterLink to={item.href} className={styles.rowName}>
+                <Text size={3} fontWeight="medium">
+                  {item.name}
+                </Text>
+              </RouterLink>
+            ) : (
+              <Text size={3} fontWeight="medium">
+                {item.name}
+              </Text>
+            )}
+            {item.description ? (
+              <Text size={2} color="default2">
+                {item.description}
+              </Text>
+            ) : null}
           </Box>
-        );
-      })}
+          <Box className={styles.rowDelete}>
+            <DeletableItem
+              id={item.id}
+              disabled={disabled}
+              label={intl.formatMessage(messages.unpinFromNav)}
+              onDelete={itemId => {
+                const pin = findNavigationPinByItemId(pins, itemId);
+
+                if (pin) {
+                  onRemove(pin);
+                }
+              }}
+            />
+          </Box>
+        </Box>
+      ))}
     </Box>
   );
 };

@@ -1,15 +1,16 @@
 import { AssignPickerListEmptyStateRow } from "@dashboard/components/AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "@dashboard/components/AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { type OrderFulfillLineFragment, type WarehouseFragment } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { buttonMessages } from "@dashboard/intl";
@@ -17,8 +18,8 @@ import { renderCollection } from "@dashboard/misc";
 import { getLineAvailableQuantityInWarehouse } from "@dashboard/orders/utils/data";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Radio } from "@material-ui/core";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -146,18 +147,15 @@ export const OrderChangeWarehouseDialog = ({
             />
           }
           toolbar={
-            <TextField
+            <Input
               data-test-id="warehouse-search-input"
               name="query"
               value={query}
               onChange={onQueryChange}
               label={intl.formatMessage(messages.searchFieldPlaceholder)}
               placeholder={intl.formatMessage(messages.searchFieldPlaceholder)}
-              fullWidth
-              InputProps={{
-                autoComplete: "off",
-                endAdornment: loading && <SaleorThrobber size={16} />,
-              }}
+              autoComplete="off"
+              endAdornment={loading && <SaleorThrobber size={16} />}
             />
           }
         >

@@ -1,34 +1,53 @@
 import { Box, Divider, Skeleton } from "@saleor/macaw-ui-next";
 
+import styles from "./LoadingFiltersArea.module.css";
 import { type ConditionalFiltersLayout } from "./UI";
 
 interface LoadingFiltersAreaProps {
   layout?: ConditionalFiltersLayout;
 }
 
-export const LoadingFiltersArea = ({ layout = "popover" }: LoadingFiltersAreaProps) => {
-  const isInline = layout === "inline";
+export const LoadingFiltersArea = ({
+  layout = "popover",
+}: LoadingFiltersAreaProps): JSX.Element => {
+  const isPopover = layout === "popover";
+  const isPanel = layout === "panel";
 
   return (
     <Box
-      padding={isInline ? undefined : 3}
-      backgroundColor={isInline ? undefined : "default1Hovered"}
-      borderBottomLeftRadius={isInline ? undefined : 2}
-      borderBottomRightRadius={isInline ? undefined : 2}
+      padding={isPopover ? 3 : undefined}
+      backgroundColor={isPopover ? "default1Hovered" : undefined}
+      borderBottomLeftRadius={isPopover ? 2 : undefined}
+      borderBottomRightRadius={isPopover ? 2 : undefined}
       display="flex"
       flexDirection="column"
-      gap={isInline ? 3 : undefined}
+      gap={isPopover ? undefined : 3}
+      width="100%"
+      __minWidth="0"
     >
-      <Box display="flex" flexDirection="column" gap={isInline ? undefined : 3} height="100%">
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap={3}
+        height="100%"
+        padding={isPanel ? 4 : undefined}
+      >
         <Skeleton height={7} />
         <Skeleton height={7} />
         <Skeleton height={7} />
       </Box>
-      {!isInline ? <Divider /> : null}
-      <Box display="flex" gap={4} justifyContent="space-between" flexWrap="wrap">
+      {isPopover ? <Divider /> : null}
+      <Box
+        className={isPanel ? styles.panelFooter : undefined}
+        display="flex"
+        gap={isPanel ? undefined : 4}
+        justifyContent="space-between"
+        flexWrap="wrap"
+      >
         <Skeleton height={7} __width="60px" />
         <Box display="flex" gap={3}>
           <Skeleton height={7} __width="60px" />
+          {isPanel ? <Skeleton height={7} __width="60px" /> : null}
           <Skeleton height={7} __width="60px" />
         </Box>
       </Box>

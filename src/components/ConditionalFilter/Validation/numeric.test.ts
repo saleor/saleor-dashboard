@@ -1,7 +1,7 @@
-import { Condition, FilterElement } from "../FilterElement";
+import { Condition } from "../FilterElement/Condition";
 import { ConditionOptions } from "../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../FilterElement/ConditionSelected";
-import { ExpressionValue } from "../FilterElement/FilterElement";
+import { ExpressionValue, FilterElement } from "../FilterElement/FilterElement";
 import { validateFilterElementToBeNumeric } from "./numeric";
 
 describe("ConditionalFilter / validation / numeric", () => {

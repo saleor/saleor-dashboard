@@ -4,13 +4,13 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DashboardCard } from "@dashboard/components/Card";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import Grid from "@dashboard/components/Grid/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
   type CountryCode,
@@ -21,19 +21,19 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TaxCountryDialog } from "@dashboard/taxes/components/TaxCountryDialog/TaxCountryDialog";
-import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
-import { Card, CardContent, Divider } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import { List, ListHeader, ListItem, ListItemCell, PageTab, PageTabs } from "@saleor/macaw-ui";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getSelectedTaxStrategy, getTaxAppId, getTaxCalculationStrategy } from "./helpers";
 import { useStyles } from "./styles";
-import { TaxChannelsMenu } from "./TaxChannelsMenu";
-import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
-import TaxSettingsCard from "./TaxSettingsCard";
+import { TaxChannelsMenu } from "./TaxChannelsMenu/TaxChannelsMenu";
+import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem/TaxCountryExceptionListItem";
+import TaxSettingsCard from "./TaxSettingsCard/TaxSettingsCard";
 import { useTaxStrategyChoices } from "./useTaxStrategyChoices";
 
 interface TaxChannelsPageProps {
@@ -203,11 +203,12 @@ const TaxChannelsPage = (props: TaxChannelsPageProps) => {
                       strategyChoicesLoading={loading}
                     />
                     <VerticalSpacer spacing={3} />
-                    <Card>
-                      <CardTitle
-                        className={classes.toolbarMargin}
-                        title={intl.formatMessage(taxesMessages.countryExceptions)}
-                        toolbar={
+                    <DashboardCard>
+                      <DashboardCard.Header>
+                        <DashboardCard.Title>
+                          {intl.formatMessage(taxesMessages.countryExceptions)}
+                        </DashboardCard.Title>
+                        <DashboardCard.Toolbar>
                           <Button
                             data-test-id="add-country-button"
                             variant="secondary"
@@ -215,12 +216,12 @@ const TaxChannelsPage = (props: TaxChannelsPageProps) => {
                           >
                             <FormattedMessage {...taxesMessages.addCountryLabel} />
                           </Button>
-                        }
-                      />
+                        </DashboardCard.Toolbar>
+                      </DashboardCard.Header>
                       {countryExceptions?.length === 0 ? (
-                        <CardContent>
+                        <DashboardCard.Content>
                           <FormattedMessage {...taxesMessages.noExceptionsForChannel} />
-                        </CardContent>
+                        </DashboardCard.Content>
                       ) : (
                         <List gridTemplate={["1fr 500px 1fr 1fr"]}>
                           <ListHeader>
@@ -268,7 +269,7 @@ const TaxChannelsPage = (props: TaxChannelsPageProps) => {
                           )) ?? <Skeleton />}
                         </List>
                       )}
-                    </Card>
+                    </DashboardCard>
                   </div>
                 </Grid>
 

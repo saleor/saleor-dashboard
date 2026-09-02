@@ -3,17 +3,17 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { usePermissionGroupCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
-import { type PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
+import { type PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
   type PermissionGroupCreateFormData,
   PermissionGroupCreatePage,
-} from "../../components/PermissionGroupCreatePage";
+} from "../../components/PermissionGroupCreatePage/PermissionGroupCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
 import {
   checkIfUserHasRestictedAccessToChannels,

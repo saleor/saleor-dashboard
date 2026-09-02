@@ -15,12 +15,13 @@ import {
   type VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { type FilterContainer } from "./FilterElement";
-import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
+import { type FilterContainer } from "./FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
+import { FiltersQueryBuilder } from "./FiltersQueryBuilder/FiltersQueryBuilder";
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
 import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayMetadataQueryVarsBuilder";
 import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
+import { AssignedAttributeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AssignedAttributeQueryVarsBuilder";
 import { CustomerTypeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/CustomerTypeQueryVarsBuilder";
 import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
 import { FulfillmentStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentStatusQueryVarsBuilder";
@@ -37,6 +38,7 @@ import { ProductExportFieldMapper } from "./FiltersQueryBuilder/queryVarsBuilder
 import { PromotionStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PromotionStatusQueryVarsBuilder";
 import { PromotionTypeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PromotionTypeQueryVarsBuilder";
 import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder";
+import { QueryApiType } from "./FiltersQueryBuilder/types";
 
 type ProductQueryVars = ProductWhereInput & { channel?: string };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
@@ -208,7 +210,10 @@ export const createGiftCardQueryVariables = (value: FilterContainer): GiftCardFi
 
 // Saleor rejects a query that carries both `filter` and `where`, so every customer
 // filter has to go through `where` — `customerType` only exists there anyway.
-const customerFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+// AssignedAttributeQueryVarsBuilder must win over the default AttributeQueryVarsBuilder
+// because CustomerWhereInput.attributes is AssignedAttributeWhereInput, not AttributeInput.
+export const customerFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  new AssignedAttributeQueryVarsBuilder(),
   new CustomerTypeQueryVarsBuilder(),
   new DateTimeRangeQueryVarsBuilder(), // dateJoined uses DateTimeRangeInput
   new MetadataFilterInputQueryVarsBuilder(), // metadata uses MetadataFilterInput

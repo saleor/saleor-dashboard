@@ -1,15 +1,16 @@
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { type INotification } from "@dashboard/components/notifications";
+import { bulkActionWithCountMessages } from "@dashboard/components/BulkDeleteButton/messages";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
 import {
   useGiftCardBulkActivateMutation,
   useGiftCardBulkDeactivateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getByIds } from "@dashboard/orders/components/OrderReturnPage/utils";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as messages } from "../messages";
-import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "../queries";
 
 export const GiftCardListBulkActions = () => {
@@ -95,7 +96,10 @@ export const GiftCardListBulkActions = () => {
           transitionState={activateGiftCardsOpts?.status}
           data-test-id="activate-gift-cards"
         >
-          {intl.formatMessage(messages.enableLabel)}
+          {intl.formatMessage(bulkActionWithCountMessages.actionWithCount, {
+            action: intl.formatMessage(messages.enableLabel),
+            count: selectedRowIds.length,
+          })}
         </ConfirmButton>
       )}
       {(areAllSelectedCardsActive || isSelectionMixed) && (
@@ -105,7 +109,10 @@ export const GiftCardListBulkActions = () => {
           transitionState={deactivateGiftCardsOpts?.status}
           data-test-id="deactivate-gift-cards"
         >
-          {intl.formatMessage(messages.disableLabel)}
+          {intl.formatMessage(bulkActionWithCountMessages.actionWithCount, {
+            action: intl.formatMessage(messages.disableLabel),
+            count: selectedRowIds.length,
+          })}
         </ConfirmButton>
       )}
     </>

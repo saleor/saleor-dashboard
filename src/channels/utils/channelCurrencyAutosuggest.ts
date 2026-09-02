@@ -1,4 +1,4 @@
-export interface ChannelCurrencyAutosuggestState {
+interface ChannelCurrencyAutosuggestState {
   currencyManuallyEdited: boolean;
   pendingSuggestedCurrency: string | null;
 }

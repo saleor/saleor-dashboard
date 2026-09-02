@@ -1,5 +1,6 @@
 import photoIcon from "@assets/images/photo-icon.svg";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import { FixedAtCreationField } from "@dashboard/components/FixedAtCreationField/FixedAtCreationField";
 import {
   type StaffErrorFragment,
   type StaffMemberDetailsFragment,
@@ -12,11 +13,36 @@ import getStaffErrorMessage from "@dashboard/utils/errors/staff";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import { type ChangeEvent, createRef } from "react";
 import SVG from "react-inlinesvg";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+
+const messages = defineMessages({
+  myProfile: {
+    id: "zdyqBq",
+    defaultMessage: "My profile",
+    description: "account settings profile card title when viewing yourself",
+  },
+  profile: {
+    id: "Mwk9vC",
+    defaultMessage: "Profile",
+    description: "staff details profile card title when viewing another staff member",
+  },
+  emailHintLocked: {
+    id: "gcrgGO",
+    defaultMessage: "Only a staff administrator can change your email.",
+    description: "helper under locked email when the signed-in user cannot manage staff",
+  },
+  emailHintEditable: {
+    id: "pkzlgy",
+    defaultMessage: "Used to sign in. The change takes effect as soon as you save.",
+    description: "helper under editable staff email — login identity, no confirmation step",
+  },
+});
 
 interface StaffPropertiesProps {
   canEditAvatar: boolean;
   canEditEmail: boolean;
+  /** Viewing the signed-in user’s own staff profile. */
+  isCurrentUser: boolean;
   data: {
     email: string;
     firstName: string;
@@ -33,6 +59,7 @@ interface StaffPropertiesProps {
 export const StaffProperties = ({
   canEditAvatar,
   canEditEmail,
+  isCurrentUser,
   data,
   errors,
   disabled,
@@ -53,11 +80,7 @@ export const StaffProperties = ({
   return (
     <DetailSettingsCard
       data-test-id="staff-member-information"
-      title={intl.formatMessage({
-        id: "VTITVe",
-        defaultMessage: "Staff Member Information",
-        description: "section header",
-      })}
+      title={intl.formatMessage(isCurrentUser ? messages.myProfile : messages.profile)}
     >
       <Box display="grid" gap={6} __gridTemplateColumns="120px 1fr">
         <div>
@@ -75,14 +98,14 @@ export const StaffProperties = ({
               <Box as="img" pointerEvents="none" width="100%" src={avatarUrl} />
             ) : (
               <Box
-                backgroundColor="accent1"
+                backgroundColor="default3"
                 __height="120px"
                 __width="120px"
                 display="flex"
                 justifyContent="center"
               >
                 <Text
-                  color="buttonDefaultPrimary"
+                  color="default1"
                   fontWeight="bold"
                   textAlign="center"
                   __fontSize={35}
@@ -194,17 +217,33 @@ export const StaffProperties = ({
             onChange={onChange}
             data-test-id="staffLastName"
           />
-          <Input
-            size="small"
-            disabled={disabled || !canEditEmail}
-            error={!!formErrors.email}
-            helperText={formErrors.email ? getStaffErrorMessage(formErrors.email, intl) : undefined}
-            label={intl.formatMessage(commonMessages.email)}
-            name="email"
-            value={data.email}
-            onChange={onChange}
-            data-test-id="staffEmail"
-          />
+          <Box __gridColumn="1 / -1" width="100%">
+            {canEditEmail ? (
+              <Input
+                size="small"
+                disabled={disabled}
+                error={!!formErrors.email}
+                helperText={
+                  formErrors.email
+                    ? getStaffErrorMessage(formErrors.email, intl)
+                    : intl.formatMessage(messages.emailHintEditable)
+                }
+                label={intl.formatMessage(commonMessages.email)}
+                name="email"
+                value={data.email}
+                onChange={onChange}
+                data-test-id="staffEmail"
+              />
+            ) : (
+              <FixedAtCreationField
+                data-test-id="staffEmail"
+                helperText={intl.formatMessage(messages.emailHintLocked)}
+                label={intl.formatMessage(commonMessages.email)}
+                name="email"
+                value={data.email}
+              />
+            )}
+          </Box>
         </Box>
       </Box>
       {!!formErrors.id && (

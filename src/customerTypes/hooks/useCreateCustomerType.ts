@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type CreateCustomerTypeFormData } from "@dashboard/customerTypes/components/CreateCustomerTypeDialog/CreateCustomerTypeDialog";
 import { messages as createCustomerTypeMessages } from "@dashboard/customerTypes/components/CreateCustomerTypeDialog/messages";
 import { customerTypeUrl } from "@dashboard/customerTypes/urls";
@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 

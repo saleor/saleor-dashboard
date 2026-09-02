@@ -1,4 +1,4 @@
-import { Card } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ComponentType } from "react";
 import { fn } from "storybook/test";
@@ -11,9 +11,9 @@ const meta: Meta<typeof CardTitle> = {
   component: CardTitle,
   decorators: [
     (Story: ComponentType) => (
-      <Card style={{ maxWidth: 640 }}>
+      <Box backgroundColor="default1" __maxWidth={640}>
         <Story />
-      </Card>
+      </Box>
     ),
   ],
   args: {

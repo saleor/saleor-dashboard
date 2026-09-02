@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
-import { type FileChoiceType } from "@dashboard/components/FileUploadField";
-import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
+import { type FileChoiceType } from "@dashboard/components/FileUploadField/FileUploadField";
+import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField/SortableChipsField";
 import { type AttributeValueFragment } from "@dashboard/graphql";
 import { type FetchMoreProps } from "@dashboard/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";

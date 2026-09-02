@@ -466,7 +466,42 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(result.data.references).toEqual([
-        { value: "test-variant-1", label: "Product 1 Variant A" },
+        { value: "test-variant-1", label: "Product 1: Variant A" },
+      ]);
+    });
+
+    it("ignores additionalData that is only the raw id and uses search instead", () => {
+      // Arrange
+      const variantId = "UHJvZHVjdFZhcmlhbnQ6Mzg0";
+      const attribute = {
+        id: "attr-gid-test",
+        value: [variantId],
+        label: "Test",
+        data: {
+          inputType: AttributeInputTypeEnum.REFERENCE,
+          entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+          isRequired: false,
+          values: [],
+          references: [],
+        },
+        additionalData: [{ value: variantId, label: variantId }],
+      };
+      const references = createMockReferenceData({
+        products: [
+          {
+            id: "test-product-1",
+            name: "White Plimsolls",
+            variants: [{ id: variantId, name: "44 / White" }],
+          },
+        ],
+      });
+
+      // Act
+      const result = getReferenceAttributeDisplayData(attribute, references);
+
+      // Assert
+      expect(result.data.references).toEqual([
+        { value: variantId, label: "White Plimsolls: 44 / White" },
       ]);
     });
 
@@ -538,7 +573,7 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(result.data.references).toEqual([
-        { value: "v3", label: "Product 3 Variant 3" },
+        { value: "v3", label: "Product 3: Variant 3" },
         { value: "non-existent", label: "non-existent" }, // Fallback
       ]);
     });
@@ -650,14 +685,14 @@ describe("attributes/utils/data", () => {
 
         // Assert - Verify cache is working
         expect(result1.data.references).toEqual([
-          { value: "cache-variant-1", label: "Cache Test Product Cache Variant 1" },
+          { value: "cache-variant-1", label: "Cache Test Product: Cache Variant 1" },
         ]);
         expect(result2.data.references).toEqual([
-          { value: "cache-variant-2", label: "Cache Test Product Cache Variant 2" },
+          { value: "cache-variant-2", label: "Cache Test Product: Cache Variant 2" },
         ]);
         expect(result3.data.references).toEqual([
-          { value: "cache-variant-3", label: "Cache Test Product Cache Variant 3" },
-          { value: "cache-variant-1", label: "Cache Test Product Cache Variant 1" },
+          { value: "cache-variant-3", label: "Cache Test Product: Cache Variant 3" },
+          { value: "cache-variant-1", label: "Cache Test Product: Cache Variant 1" },
         ]);
 
         // productVariants is read once while building the cache; later lookups reuse it
@@ -715,10 +750,10 @@ describe("attributes/utils/data", () => {
 
         // Assert
         expect(result.data.references).toEqual([
-          { value: "sep-p1-v1", label: "Separate Cache Product 1 P1 Variant 1" },
-          { value: "sep-p2-v1", label: "Separate Cache Product 2 P2 Variant 1" },
-          { value: "sep-p1-v2", label: "Separate Cache Product 1 P1 Variant 2" },
-          { value: "sep-p2-v2", label: "Separate Cache Product 2 P2 Variant 2" },
+          { value: "sep-p1-v1", label: "Separate Cache Product 1: P1 Variant 1" },
+          { value: "sep-p2-v1", label: "Separate Cache Product 2: P2 Variant 1" },
+          { value: "sep-p1-v2", label: "Separate Cache Product 1: P1 Variant 2" },
+          { value: "sep-p2-v2", label: "Separate Cache Product 2: P2 Variant 2" },
         ]);
 
         expect(product1GetterCalls).toBe(1);

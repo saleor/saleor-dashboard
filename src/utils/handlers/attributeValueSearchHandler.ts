@@ -13,7 +13,7 @@ interface AttributeValueSearchHandlerState {
   query: string;
 }
 
-export type AttributeValueChoice = NonNullable<
+type AttributeValueChoice = NonNullable<
   NonNullable<NonNullable<SearchAttributeValuesQuery["attribute"]>["choices"]>["edges"]
 >[number]["node"];
 

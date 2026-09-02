@@ -6,9 +6,9 @@ import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 
 import { DevModePanel } from "../DevModePanel/DevModePanel";
-import NavigatorSearch from "../NavigatorSearch";
+import NavigatorSearch from "../NavigatorSearch/NavigatorSearch";
 import { useSavebarRef } from "../Savebar/SavebarRefContext";
-import { Sidebar } from "../Sidebar";
+import { Sidebar } from "../Sidebar/Sidebar";
 import { SidebarProvider } from "../Sidebar/SidebarContext";
 import { borderHeight, savebarHeight } from "./consts";
 import { useStyles } from "./styles";

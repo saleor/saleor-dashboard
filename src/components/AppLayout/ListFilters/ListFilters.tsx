@@ -3,7 +3,7 @@ import { type FilterProps, type SearchPageProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
-import { ExpressionFilters } from "./components/ExpressionFilters";
+import { ExpressionFilterPanel, ExpressionFilters } from "./components/ExpressionFilters";
 import { FiltersSelect } from "./components/FiltersSelect";
 import { LegacyFiltersPresetsAlert } from "./components/LegacyFiltersPresetsAlert";
 import SearchInput from "./components/SearchInput";
@@ -41,31 +41,34 @@ export const ListFilters = <TFilterKeys extends string = string>({
   return (
     <>
       {isExpressionFilter && <LegacyFiltersPresetsAlert />}
-      <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4} paddingBottom={2} paddingX={6}>
-        <Box display="flex" alignItems="center" gap={4}>
-          {isExpressionFilter ? (
-            <ExpressionFilters data-test-id="filters-button" />
-          ) : (
-            <FiltersSelect<TFilterKeys>
-              errorMessages={props.errorMessages}
-              menu={props.filterStructure!}
-              currencySymbol={props.currencySymbol}
-              onFilterAdd={props.onFilterChange!}
-              onFilterAttributeFocus={props.onFilterAttributeFocus}
-            />
-          )}
-          <Box __width="360px">
-            <SearchInput
-              initialSearch={initialSearch}
-              placeholder={searchPlaceholder}
-              onSearchChange={onSearchChange}
-              showSearchTooltip={showSearchTooltip}
-            />
+      <Box display="flex" flexDirection="column" gap={3} paddingBottom={2} paddingX={6}>
+        <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4}>
+          <Box display="flex" alignItems="center" gap={4}>
+            {isExpressionFilter ? (
+              <ExpressionFilters />
+            ) : (
+              <FiltersSelect<TFilterKeys>
+                errorMessages={props.errorMessages}
+                menu={props.filterStructure!}
+                currencySymbol={props.currencySymbol}
+                onFilterAdd={props.onFilterChange!}
+                onFilterAttributeFocus={props.onFilterAttributeFocus}
+              />
+            )}
+            <Box __width="360px">
+              <SearchInput
+                initialSearch={initialSearch}
+                placeholder={searchPlaceholder}
+                onSearchChange={onSearchChange}
+                showSearchTooltip={showSearchTooltip}
+              />
+            </Box>
+          </Box>
+          <Box display="flex" justifyContent="flex-end" alignItems="center">
+            {actions}
           </Box>
         </Box>
-        <Box display="flex" justifyContent="flex-end">
-          {actions}
-        </Box>
+        {isExpressionFilter ? <ExpressionFilterPanel /> : null}
       </Box>
     </>
   );

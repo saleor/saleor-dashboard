@@ -2,7 +2,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { type ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { useSaleorConfig } from "@dashboard/legacy-sdk";
 import { getById } from "@dashboard/misc";
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 
@@ -34,7 +33,6 @@ const isValidChannel = (channelId: string, channelList?: ChannelFragment[]) => {
 };
 
 export const AppChannelProvider = ({ children }: { children: ReactNode }) => {
-  const { setChannel } = useSaleorConfig();
   const { authenticated, user } = useUser();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useBaseChannelsQuery({
@@ -54,9 +52,6 @@ export const AppChannelProvider = ({ children }: { children: ReactNode }) => {
       setSelectedChannel("");
     }
   }, [selectedChannel, setSelectedChannel, user]);
-  useEffect(() => {
-    setChannel(selectedChannel);
-  }, [selectedChannel]);
 
   const availableChannels = channelData?.channels || [];
   const channel = channelData && (availableChannels.find(getById(selectedChannel)) || null);

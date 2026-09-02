@@ -792,6 +792,12 @@ export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
     type: "metadata",
     slug: "metadata",
   },
+  {
+    value: "attribute",
+    label: "Attribute",
+    type: "attribute",
+    slug: "attribute",
+  },
 ];
 
 export const STATIC_PRODUCT_TYPES_OPTIONS: LeftOperand[] = [

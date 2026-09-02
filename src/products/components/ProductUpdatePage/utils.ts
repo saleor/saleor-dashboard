@@ -4,7 +4,7 @@ import {
   type DatagridChange,
   type DatagridChangeOpts,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import {
   type ChannelFragment,
   type ProductChannelListingAddInput,

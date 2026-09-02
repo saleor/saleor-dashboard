@@ -1,6 +1,6 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { buttonMessages } from "@dashboard/intl";
-import { useTheme } from "@dashboard/theme";
+import { useTheme } from "@dashboard/theme/hook";
 import { Box, Button, Input, Popover, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";

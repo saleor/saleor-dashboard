@@ -1,4 +1,4 @@
-import { Locale } from "@dashboard/components/Locale";
+import { Locale } from "@dashboard/components/Locale/Locale";
 import { act, render, renderHook, screen } from "@testing-library/react";
 import { Provider as JotaiProvider } from "jotai";
 import { IntlProvider } from "react-intl";

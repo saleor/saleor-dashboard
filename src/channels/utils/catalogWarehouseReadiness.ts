@@ -1,4 +1,4 @@
-export type CatalogWarehouseReadiness = "no_shop_warehouses" | "no_channel_warehouses" | "ready";
+type CatalogWarehouseReadiness = "no_shop_warehouses" | "no_channel_warehouses" | "ready";
 
 export const getCatalogWarehouseReadiness = ({
   channelWarehouseCount,

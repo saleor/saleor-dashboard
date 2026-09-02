@@ -5,7 +5,7 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";

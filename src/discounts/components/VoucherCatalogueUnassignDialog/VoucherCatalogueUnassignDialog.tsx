@@ -2,12 +2,12 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Box } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-export type VoucherCatalogueUnassignType = "category" | "collection" | "product" | "variant";
+type VoucherCatalogueUnassignType = "category" | "collection" | "product" | "variant";
 
 interface VoucherCatalogueUnassignDialogProps {
   catalogueType: VoucherCatalogueUnassignType;

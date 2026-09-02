@@ -1,4 +1,4 @@
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
@@ -6,7 +6,7 @@ import {
   useWebhookUpdateMutation,
   WebhookEventTypeAsyncEnum,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 

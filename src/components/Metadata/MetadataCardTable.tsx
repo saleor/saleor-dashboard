@@ -1,9 +1,9 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { Table, TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type MetadataInput } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Input, Text, Textarea, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Trash2 } from "lucide-react";

@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { toggle } from "@dashboard/utils/lists";
+import { toggle } from "@dashboard/utils/lists/lists";
 import { FormControlLabel, Radio } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 
-import Checkbox from "../Checkbox";
+import Checkbox from "../Checkbox/Checkbox";
 import { type FieldType, type FilterFieldBaseProps } from "./types";
 
 const useStyles = makeStyles(

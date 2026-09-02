@@ -1,4 +1,4 @@
-import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
+import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip/ButtonWithTooltip";
 import { type PermissionEnum } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";

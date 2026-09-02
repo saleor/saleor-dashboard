@@ -8,7 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { usePreloadedLucideIcons } from "@dashboard/components/ModelTypeIcon/usePreloadedLucideIcons";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { type Page, type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField } from "@dashboard/modeling/urls";
 import { type ListProps, type SortPage } from "@dashboard/types";

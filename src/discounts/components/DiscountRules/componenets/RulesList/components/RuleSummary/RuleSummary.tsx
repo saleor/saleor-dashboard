@@ -1,11 +1,11 @@
 import { messages } from "@dashboard/discounts/components/DiscountRules/messages";
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Tag } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import { RuleConditionsChips } from "./components/RuleConditionsChips";
-import { RuleUnknownChips } from "./components/RuleUnknownChips";
+import { RuleConditionsChips } from "./components/RuleConditionsChips/RuleConditionsChips";
+import { RuleUnknownChips } from "./components/RuleUnknownChips/RuleUnknownChips";
 import { hasNoRuleConditions } from "./utils";
 
 interface RuleSummaryProps {

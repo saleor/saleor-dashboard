@@ -5,7 +5,7 @@ import {
 } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import { act, renderHook } from "@testing-library/react";
 import { useIntl } from "react-intl";
@@ -23,7 +23,7 @@ jest.mock("@dashboard/graphql", () => {
 
 jest.mock("@dashboard/hooks/useLocalStorage", () => jest.fn());
 jest.mock("@dashboard/hooks/useNavigator", () => jest.fn());
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn(),
 }));
 jest.mock("@dashboard/misc", () => ({

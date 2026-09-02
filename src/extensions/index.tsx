@@ -26,10 +26,11 @@ import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
 import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
+import { ResolveAppId } from "./components/ResolveAppId/ResolveAppId";
 import { useCustomAppToken } from "./hooks/useCustomAppToken";
 import { AddCustomExtension } from "./views/AddCustomExtension/AddCustomExtension";
 import { AddCustomExtensionWebhook } from "./views/AddCustomExtensionWebhook/AddCustomExtensionWebhook";
-import { EditCustomExtension } from "./views/EditCustomExtension";
+import { EditCustomExtension } from "./views/EditCustomExtension/EditCustomApp";
 import { EditCustomExtensionWebhook } from "./views/EditCustomExtensionWebhook/EditCustomExtensionWebhook";
 import { EditManifestExtension } from "./views/EditManifestExtension/AppManageView";
 import { EditManifestExtensionPermissions } from "./views/EditManifestExtensionPermissions/EditManifestExtensionPermissions";
@@ -80,15 +81,27 @@ const EditManifestExtensionView = ({ match }: RouteComponentProps<{ id: string }
   const qs = parseQs(location.search.substr(1));
   const params: AppDetailsUrlQueryParams = qs;
 
-  return <EditManifestExtension id={decodeURIComponent(match.params.id)} params={params} />;
+  return (
+    <ResolveAppId segment={decodeURIComponent(match.params.id)}>
+      {id => <EditManifestExtension id={id} params={params} />}
+    </ResolveAppId>
+  );
 };
 
 const ViewManifestExtensionIframeView = ({ match }: RouteComponentProps<{ id: string }>) => {
-  return <ViewManifestExtensionIframe id={decodeURIComponent(match.params.id)} />;
+  return (
+    <ResolveAppId segment={decodeURIComponent(match.params.id)}>
+      {id => <ViewManifestExtensionIframe id={id} />}
+    </ResolveAppId>
+  );
 };
 
 const EditManifestExtensionPermissionsView = ({ match }: RouteComponentProps<{ id: string }>) => {
-  return <EditManifestExtensionPermissions id={decodeURIComponent(match.params.id)} />;
+  return (
+    <ResolveAppId segment={decodeURIComponent(match.params.id)}>
+      {id => <EditManifestExtensionPermissions id={id} />}
+    </ResolveAppId>
+  );
 };
 
 const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id: string }>) => {

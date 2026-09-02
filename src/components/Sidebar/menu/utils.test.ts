@@ -25,6 +25,7 @@ describe("mapToExtensionsItems", () => {
   const mockApp: Extension["app"] = {
     __typename: "App",
     id: "app-1",
+    identifier: null,
     appUrl: "https://app.example.com",
     name: "App name",
     brand: null,
@@ -276,6 +277,7 @@ describe("getMenuItemExtension", () => {
   const mockAppDefinition: Extension["app"] = {
     __typename: "App",
     id: "app-1",
+    identifier: null,
     appUrl: "https://app.example.com",
     name: "App name",
     brand: null,
@@ -456,6 +458,7 @@ describe("getMenuItemExtension", () => {
     const catalogExtensionApp: Extension["app"] = {
       __typename: "App",
       id: "app-2",
+      identifier: null,
       appUrl: "https://app2.example.com",
       name: "App name",
       brand: null,
@@ -532,6 +535,58 @@ describe("isMenuActive with navigation pins", () => {
 
     // Act & Assert
     expect(isMenuActive("/models/?pageTypes%5B0%5D=type-a", models)).toBe(true);
+  });
+});
+
+describe("isMenuActive with customer type shortcuts", () => {
+  const typeItem = (id: string): SidebarMenuItem => ({
+    id: `customer-type-nav-${id}`,
+    label: "Type",
+    url: `/customers/?customerTypes%5B0%5D=${id}`,
+    type: "item",
+  });
+
+  it("marks only the shortcut matching the selected customer type", () => {
+    // Arrange
+    const location = "/customers/?customerTypes%5B0%5D=type-b2b";
+
+    // Act & Assert
+    expect(isMenuActive(location, typeItem("type-b2b"))).toBe(true);
+    expect(isMenuActive(location, typeItem("type-default"))).toBe(false);
+  });
+
+  it("does not mark any type shortcut on the unfiltered customer list", () => {
+    // Act & Assert
+    expect(isMenuActive("/customers/", typeItem("type-b2b"))).toBe(false);
+  });
+
+  it("marks All only on the unfiltered customer list", () => {
+    // Arrange
+    const allItem: SidebarMenuItem = {
+      id: "customer-type-nav-all",
+      label: "All",
+      url: "/customers/",
+      type: "item",
+    };
+
+    // Act & Assert
+    expect(isMenuActive("/customers/", allItem)).toBe(true);
+    expect(isMenuActive("/customers/?query=ada", allItem)).toBe(true);
+    expect(isMenuActive("/customers/?customerTypes%5B0%5D=type-b2b", allItem)).toBe(false);
+    expect(isMenuActive("/customers/UHNlcjox", allItem)).toBe(false);
+  });
+
+  it("still marks the Customers group while a type is selected", () => {
+    // Arrange
+    const customers: SidebarMenuItem = {
+      id: "customers",
+      label: "Customers",
+      url: "/customers/",
+      type: "itemGroup",
+    };
+
+    // Act & Assert
+    expect(isMenuActive("/customers/?customerTypes%5B0%5D=type-b2b", customers)).toBe(true);
   });
 });
 

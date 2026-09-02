@@ -1,5 +1,5 @@
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
-import { Select } from "@dashboard/components/Select";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
+import { Select } from "@dashboard/components/Select/Select";
 import { type MeasurementUnitsEnum } from "@dashboard/graphql";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";

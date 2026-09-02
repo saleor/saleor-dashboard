@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { useTheme } from "@dashboard/theme";
+import { useTheme } from "@dashboard/theme/hook";
 import { type LucideIcon, Shapes } from "lucide-react";
 import { useEffect, useState } from "react";
 

@@ -23,7 +23,7 @@ interface ModalPageFilterContextValue extends ModalFilterResult<PageWhereInput> 
 
 const ModalPageFilterContext = createContext<ModalPageFilterContextValue | null>(null);
 
-export interface ModalPageFilterProviderProps {
+interface ModalPageFilterProviderProps {
   children: ReactNode;
   excludedFilters?: string[];
   initialConstraints?: InitialPageConstraints;

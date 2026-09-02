@@ -82,17 +82,18 @@ jest.mock("./form", () => ({
       richText: { getValue: jest.fn() },
     }),
 }));
-jest.mock("../ProductDetailsForm", () => ({
+jest.mock("../ProductDetailsForm/ProductDetailsForm", () => ({
   ProductDetailsForm: () => <div data-test-id="product-details-form-mock" />,
 }));
-jest.mock("../ProductMedia", () => ({
+jest.mock("../ProductMedia/ProductMedia", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-media-mock" />,
 }));
 jest.mock("../ProductVariants/ProductVariants", () => ({
   ProductVariants: () => <div data-test-id="product-variants-mock" />,
 }));
-jest.mock("@dashboard/components/SeoForm", () => ({
+jest.mock("@dashboard/components/SeoForm/SeoForm", () => ({
+  ...(jest.requireActual("@dashboard/components/SeoForm/SeoForm") as object),
   SeoForm: () => <div data-test-id="seo-form-mock" />,
 }));
 jest.mock("../ProductOrganization/ProductOrganization", () => ({

@@ -1,6 +1,6 @@
 import { scrollElementIntoDetailContent } from "@dashboard/components/Layouts/Detail/scrollElementIntoDetailContent";
 
-export const productSetupScrollTargets = {
+const productSetupScrollTargets = {
   category: '[data-test-id="category"]',
   variants: '[data-test-id="product-variants"]',
   media: '[data-test-id="product-media"]',
@@ -9,7 +9,7 @@ export const productSetupScrollTargets = {
   attributes: '[data-test-id="attributes"]',
 } as const;
 
-export type ProductSetupScrollTarget = keyof typeof productSetupScrollTargets;
+type ProductSetupScrollTarget = keyof typeof productSetupScrollTargets;
 
 const expandBeforeScroll: Partial<
   Record<ProductSetupScrollTarget, { container: string; trigger: string }>
