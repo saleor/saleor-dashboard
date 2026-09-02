@@ -6,8 +6,8 @@ import { type TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components/LegacyFlowWarning";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import { Divider, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
-import { type Option } from "@saleor/macaw-ui-next";
+import { FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
+import { Divider, type Option } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type TaxConfigurationFormData } from "../TaxChannelsPage";

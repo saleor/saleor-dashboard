@@ -1,4 +1,4 @@
-import { Divider } from "@material-ui/core";
+import { Divider } from "@saleor/macaw-ui-next";
 import { type PropsWithChildren } from "react";
 
 interface CollectionWithDividersProps<T> {

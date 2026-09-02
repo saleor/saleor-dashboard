@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
 import RadioSwitchField from "@dashboard/components/RadioSwitchField/RadioSwitchField";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
@@ -8,7 +7,7 @@ import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Divider, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import type * as React from "react";
 import { useState } from "react";
@@ -259,7 +258,7 @@ const VisibilityCard = (props: VisibilityCardProps) => {
         )}
         {hasAvailableProps && (
           <>
-            <Hr />
+            <Divider />
             <RadioSwitchField
               className={classes.switchField}
               disabled={disabled}
@@ -330,7 +329,7 @@ const VisibilityCard = (props: VisibilityCardProps) => {
         )}
         {visibleInListings !== undefined && (
           <>
-            <Hr />
+            <Divider />
             <ControlledCheckbox
               className={classes.checkbox}
               name="visibleInListings"

@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { DashboardCard } from "@dashboard/components/Card";
-import Hr from "@dashboard/components/Hr";
 import {
   SimpleRadioGroupField,
   type SimpleRadioGroupFieldChoice,
@@ -13,7 +12,7 @@ import {
 } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { defineMessages, FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
@@ -242,7 +241,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
                 />
               </Text>
             </Checkbox>
-            <Hr className={classes.hr} />
+            <Divider className={classes.hr} />
           </>
         )}
 
