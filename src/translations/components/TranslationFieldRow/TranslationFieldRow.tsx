@@ -260,7 +260,7 @@ export const TranslationFieldRow = ({
             </Box>
           </Box>
           {showPerFieldActions && !isEditing && (
-            <Button variant="tertiary" data-test-id={`edit-${field.name}`} onClick={onEdit}>
+            <Button variant="secondary" data-test-id={`edit-${field.name}`} onClick={onEdit}>
               <FormattedMessage {...translationDetailMessages.editField} />
             </Button>
           )}

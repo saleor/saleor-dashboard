@@ -121,7 +121,7 @@ export const FilterKeyValueField = <K extends string = string>({
       </div>
       <Button
         className={classes.addButton}
-        variant="tertiary"
+        variant="secondary"
         onClick={() => {
           onFilterPropertyChange({
             payload: {

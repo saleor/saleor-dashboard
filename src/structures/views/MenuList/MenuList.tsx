@@ -139,7 +139,7 @@ const MenuList = ({ params }: MenuListProps) => {
         toggleAll={toggleAll}
         toolbar={
           <Button
-            variant="tertiary"
+            variant="secondary"
             onClick={() =>
               navigate(
                 menuListUrl({

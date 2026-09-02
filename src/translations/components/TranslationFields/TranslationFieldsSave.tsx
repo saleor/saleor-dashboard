@@ -44,7 +44,7 @@ const TranslationFieldsSave = (props: TranslationFieldsSaveProps) => {
       >
         <FormattedMessage {...buttonMessages.save} />
       </ConfirmButton>
-      <Button variant="tertiary" onClick={onDiscard} type="submit">
+      <Button variant="secondary" onClick={onDiscard} type="submit">
         <FormattedMessage id="vTN5DZ" defaultMessage="Discard" description="button" />
       </Button>
     </div>

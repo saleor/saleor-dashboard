@@ -521,7 +521,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={
-          <Button variant="tertiary" onClick={() => openModal("unassign-product")}>
+          <Button variant="secondary" onClick={() => openModal("unassign-product")}>
             <FormattedMessage
               id="YdeHZX"
               defaultMessage="Unassign"
