@@ -33,7 +33,8 @@ const createMockClient = () => ({
   clearStore: jest.fn(),
 });
 
-// `update` callbacks seed `ROOT_QUERY.me`; only `writeQuery` is exercised.
+// `update` callbacks of the authenticated-context mutations seed `ROOT_QUERY.me`;
+// only `writeQuery` is exercised.
 const mockCache: any = { writeQuery: jest.fn() };
 
 type MockClient = ReturnType<typeof createMockClient>;
@@ -303,6 +304,7 @@ describe("auth", () => {
 
       // Assert
       expect(mockedStorage.setAccessToken).toHaveBeenCalledWith("new-token-with-user");
+      expect(mockCache.writeQuery).not.toHaveBeenCalled();
     });
   });
 
@@ -538,6 +540,7 @@ describe("auth", () => {
 
       // Assert
       expect(mockedStorage.setTokens).not.toHaveBeenCalled();
+      expect(mockCache.writeQuery).not.toHaveBeenCalled();
       expect(authStateVar().authenticating).toBe(false);
       expect(authStateVar().authenticated).toBe(false);
     });

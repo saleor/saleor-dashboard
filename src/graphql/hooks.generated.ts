@@ -308,6 +308,18 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
+export const AuthUserFragmentDoc = gql`
+    fragment AuthUser on User {
+  id
+  email
+  firstName
+  lastName
+  isStaff
+  userPermissions {
+    ...UserPermission
+  }
+}
+    ${UserPermissionFragmentDoc}`;
 export const ChannelFragmentDoc = gql`
     fragment Channel on Channel {
   id
@@ -5064,14 +5076,14 @@ export const RefreshTokenWithUserDocument = gql`
   tokenRefresh(refreshToken: $refreshToken) {
     token
     user {
-      ...User
+      ...AuthUser
     }
     errors {
       ...AccountError
     }
   }
 }
-    ${UserFragmentDoc}
+    ${AuthUserFragmentDoc}
 ${AccountErrorFragmentDoc}`;
 export type RefreshTokenWithUserMutationFn = Apollo.MutationFunction<Types.RefreshTokenWithUserMutation, Types.RefreshTokenWithUserMutationVariables>;
 
@@ -5304,12 +5316,12 @@ export const SetPasswordDocument = gql`
     token
     refreshToken
     user {
-      ...User
+      ...AuthUser
     }
   }
 }
     ${AccountErrorFragmentDoc}
-${UserFragmentDoc}`;
+${AuthUserFragmentDoc}`;
 export type SetPasswordMutationFn = Apollo.MutationFunction<Types.SetPasswordMutation, Types.SetPasswordMutationVariables>;
 
 /**

@@ -10844,7 +10844,7 @@ export type RefreshTokenWithUserMutationVariables = Exact<{
 }>;
 
 
-export type RefreshTokenWithUserMutation = { __typename: 'Mutation', tokenRefresh: { __typename: 'RefreshToken', token: string | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isActive: boolean, isStaff: boolean, dateJoined: any, restrictedAccessToChannels: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }> } | null };
+export type RefreshTokenWithUserMutation = { __typename: 'Mutation', tokenRefresh: { __typename: 'RefreshToken', token: string | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }> } | null };
 
 export type ExternalAuthenticationUrlMutationVariables = Exact<{
   pluginId?: InputMaybe<Scalars['String']['input']>;
@@ -10893,7 +10893,7 @@ export type SetPasswordMutationVariables = Exact<{
 }>;
 
 
-export type SetPasswordMutation = { __typename: 'Mutation', setPassword: { __typename: 'SetPassword', token: string | null, refreshToken: string | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isActive: boolean, isStaff: boolean, dateJoined: any, restrictedAccessToChannels: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null } | null };
+export type SetPasswordMutation = { __typename: 'Mutation', setPassword: { __typename: 'SetPassword', token: string | null, refreshToken: string | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
 
 export type AvailableExternalAuthenticationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -12226,6 +12226,8 @@ export type AttributeValueListFragment = { __typename: 'AttributeValueCountableC
 export type AvailableAttributeFragment = { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null };
 
 export type UserPermissionFragment = { __typename: 'UserPermission', code: PermissionEnum, name: string };
+
+export type AuthUserFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null };
 
 export type UserFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isActive: boolean, isStaff: boolean, dateJoined: any, restrictedAccessToChannels: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
 

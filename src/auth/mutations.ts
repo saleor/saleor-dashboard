@@ -43,7 +43,7 @@ export const refreshTokenWithUser = gql`
     tokenRefresh(refreshToken: $refreshToken) {
       token
       user {
-        ...User
+        ...AuthUser
       }
       errors {
         ...AccountError
@@ -140,7 +140,7 @@ export const setPassword = gql`
       token
       refreshToken
       user {
-        ...User
+        ...AuthUser
       }
     }
   }

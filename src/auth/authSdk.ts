@@ -115,9 +115,15 @@ export const auth = ({
   apolloClient: ApolloClient<NormalizedCacheObject>;
 }): AuthSDK => {
   /**
-   * Auth mutations return the same `User` fragment as `UserDetails`, but Apollo normalises them
+   * Mutations that authenticate the request in Core (`tokenCreate`, `externalObtainAccessTokens`,
+   * `externalRefresh`) return the same `User` fragment as `UserDetails`, but Apollo normalises it
    * under `User:<id>` without ever recording `ROOT_QUERY.me`. Seeding it here lets the
-   * `UserDetails` query read straight from cache, so login/autologin costs one request, not two.
+   * `UserDetails` query read straight from cache, so logging in costs one request, not two.
+   *
+   * `tokenRefresh` and `setPassword` cannot do this: they never set `info.context.user`, so
+   * permission-guarded fields inside the fragment (`accessibleChannels.isActive`) raise
+   * `PermissionDenied` and fail the whole mutation. They ask for `AuthUser` and let `UserDetails`
+   * fetch the rest.
    */
   const seedUserQuery = (cache: ApolloCache<NormalizedCacheObject>, user?: UserFragment | null) => {
     if (user) {
@@ -194,9 +200,8 @@ export const auth = ({
         variables: {
           refreshToken,
         },
-        update: (cache, { data }) => {
+        update: (_, { data }) => {
           if (data?.tokenRefresh?.token) {
-            seedUserQuery(cache, data.tokenRefresh.user);
             storage.setAccessToken(data.tokenRefresh.token);
             setAuthState({
               authenticated: true,
@@ -229,9 +234,8 @@ export const auth = ({
     return client.mutate<SetPasswordMutation, SetPasswordMutationVariables>({
       mutation: SET_PASSWORD,
       variables: { ...opts },
-      update: (cache, { data }) => {
+      update: (_, { data }) => {
         if (data?.setPassword?.token) {
-          seedUserQuery(cache, data.setPassword.user);
           storage.setTokens({
             accessToken: data.setPassword.token,
             refreshToken: data.setPassword.refreshToken,
@@ -271,12 +275,12 @@ export const auth = ({
       },
       update: (cache, { data }) => {
         storage.setAuthPluginId(opts.pluginId ?? null);
-        seedUserQuery(cache, data?.externalObtainAccessTokens?.user);
 
         if (
           data?.externalObtainAccessTokens?.token &&
           !!data.externalObtainAccessTokens.user?.userPermissions?.length
         ) {
+          seedUserQuery(cache, data.externalObtainAccessTokens.user);
           storage.setTokens({
             accessToken: data.externalObtainAccessTokens.token,
             refreshToken: data.externalObtainAccessTokens.refreshToken,
