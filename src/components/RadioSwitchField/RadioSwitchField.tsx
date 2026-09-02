@@ -1,94 +1,43 @@
-// @ts-strict-ignore
-import { FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
+import { RadioGroup } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 
-const useStyles = makeStyles(
-  theme => ({
-    formControl: {
-      padding: 0,
-      width: "100%",
-    },
-    formLabel: {
-      marginLeft: "-5px",
-      paddingBottom: "10px",
-    },
-    radioLabel: {
-      "& > span": {
-        paddingTop: theme.spacing(),
-        paddingBottom: theme.spacing(),
-      },
-    },
-    secondLabel: {
-      display: "block",
-      fontSize: "12px",
-    },
-  }),
-  { name: "RadioSwitchField" },
-);
-
 interface RadioSwitchFieldProps {
-  classes?: Record<"radioLabel", string>;
   className?: string;
   disabled?: boolean;
   error?: boolean;
   firstOptionLabel: React.ReactNode;
-  name?: string;
+  name: string;
   secondOptionLabel: React.ReactNode;
   value?: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<boolean>) => void;
 }
 
-const RadioSwitchField = (props: RadioSwitchFieldProps) => {
-  const {
-    classes: overrideClasses,
-    className,
-    disabled,
-    error,
-    firstOptionLabel,
-    onChange,
-    name,
-    secondOptionLabel,
-    value,
-  } = props;
-  const classes = useStyles(props);
-  const initialValue = value ? "true" : "false";
-  const change = event => {
-    onChange({
-      target: {
-        name: event.target.name,
-        value: event.target.value === "true",
-      },
-    } as any);
-  };
-
-  return (
-    <FormControl className={clsx(classes.formControl, className)} error={error} disabled={disabled}>
-      <RadioGroup
-        aria-label={name}
-        name={name}
-        value={initialValue}
-        onChange={event => change(event)}
-      >
-        <FormControlLabel
-          value="true"
-          className={clsx(classes.radioLabel, overrideClasses?.radioLabel)}
-          control={<Radio color="secondary" />}
-          label={firstOptionLabel}
-          name={name}
-        />
-        <FormControlLabel
-          value="false"
-          className={clsx(classes.radioLabel, overrideClasses?.radioLabel)}
-          control={<Radio color="secondary" />}
-          label={secondOptionLabel}
-          name={name}
-        />
-      </RadioGroup>
-    </FormControl>
-  );
-};
-
-RadioSwitchField.displayName = "RadioSwitchField";
-export default RadioSwitchField;
+export const RadioSwitchField = ({
+  className,
+  disabled,
+  error,
+  firstOptionLabel,
+  name,
+  secondOptionLabel,
+  value,
+  onChange,
+}: RadioSwitchFieldProps) => (
+  <RadioGroup
+    className={className}
+    name={name}
+    value={value ? "true" : "false"}
+    error={error}
+    onValueChange={selected => onChange({ target: { name, value: selected === "true" } })}
+    display="flex"
+    flexDirection="column"
+    gap={3}
+  >
+    <RadioGroup.Item id={`${name}-true`} value="true" disabled={disabled}>
+      {firstOptionLabel}
+    </RadioGroup.Item>
+    <RadioGroup.Item id={`${name}-false`} value="false" disabled={disabled}>
+      {secondOptionLabel}
+    </RadioGroup.Item>
+  </RadioGroup>
+);

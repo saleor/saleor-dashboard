@@ -4,6 +4,7 @@ import {
 } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { Radio } from "@dashboard/components/Radio/Radio";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
@@ -17,7 +18,6 @@ import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
-import { Radio } from "@material-ui/core";
 import { Input, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -218,9 +218,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
                             <Radio
                               checked={isSelected}
                               disabled={!isProductAvailable}
-                              onChange={() => handleChange(product.id)}
                               value={product.id}
-                              name="product-selection"
                             />
                           </TableCell>
                           <TableCellAvatar

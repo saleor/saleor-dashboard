@@ -1,5 +1,5 @@
 import listStyles from "@dashboard/components/ChannelsAvailabilityDialogChannelsList/ChannelsAvailabilityDialogChannelsList.module.css";
-import { FormControlLabel, Radio } from "@material-ui/core";
+import { Radio } from "@dashboard/components/Radio/Radio";
 import { Text } from "@saleor/macaw-ui-next";
 
 interface TaxCountryPickerItem {
@@ -27,12 +27,13 @@ export const TaxCountryDialogCountriesList = ({
           data-test-id="country-row"
           data-last-row={index === countries.length - 1 ? true : undefined}
         >
-          <FormControlLabel
+          <Radio
             checked={selectedCountryId === country.id}
-            control={<Radio color="primary" name="tax-country-selection" value={country.id} />}
-            label={<Text className={listStyles.label}>{country.name}</Text>}
+            value={country.id}
             onChange={() => onSelect(country)}
-          />
+          >
+            <Text className={listStyles.label}>{country.name}</Text>
+          </Radio>
         </div>
       ))}
     </>
