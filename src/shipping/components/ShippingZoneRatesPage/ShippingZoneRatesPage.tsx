@@ -28,7 +28,7 @@ import {
 import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useStateUpdate } from "@dashboard/hooks/useStateUpdate";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
 import OrderValue from "@dashboard/shipping/components/OrderValue/OrderValue";
@@ -157,7 +157,9 @@ const ShippingZoneRatesPage = ({
     triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
   const { setExitDialogSubmitRef, setIsDirty } = useExitFormDialog({ formId });
-  const [taxClassDisplayName, setTaxClassDisplayName] = useStateUpdate(rate?.taxClass?.name ?? "");
+  const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps(
+    rate?.taxClass?.name ?? "",
+  );
   const handleFormSubmit = useHandleFormSubmit({
     formId,
     onSubmit,
