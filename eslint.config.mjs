@@ -277,10 +277,6 @@ export default tseslint.config(
               message: "Legacy Macaw UI is deprecated. Use @saleor/macaw-ui-next",
             },
             {
-              name: "react-sortable-hoc",
-              message: "Use @dnd-kit instead of react-sortable-hoc.",
-            },
-            {
               name: "moment",
               message: "Use react-intl formatDate instead of moment.",
             },
