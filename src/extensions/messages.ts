@@ -119,6 +119,11 @@ export const infoMessages = defineMessages({
     defaultMessage: "Grant this extension full access to the store",
     id: "Yuv3Ou",
   },
+  newExtension: {
+    defaultMessage: "New",
+    id: "JBglRB",
+    description: "badge on recently installed extension",
+  },
 });
 
 export const formLabels = defineMessages({

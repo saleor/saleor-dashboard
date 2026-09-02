@@ -132,6 +132,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           appType: "THIRDPARTY",
           activeProblemCount: 0,
           criticalProblemCount: 0,
+          isNew: false,
         },
         {
           id: "2",
@@ -144,6 +145,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           appType: "THIRDPARTY",
           activeProblemCount: 0,
           criticalProblemCount: 0,
+          isNew: false,
         },
         {
           id: "plug1",

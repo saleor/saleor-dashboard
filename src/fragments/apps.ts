@@ -204,6 +204,7 @@ export const InstalledAppDetails = gql`
     name
     type
     appUrl
+    created
     problems {
       __typename
       key

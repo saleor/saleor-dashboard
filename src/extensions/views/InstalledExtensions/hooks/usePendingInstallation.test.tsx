@@ -113,6 +113,7 @@ describe("InstalledExtensions / hooks / usePendingInstallation", () => {
           criticalProblemCount: 0,
         },
       ],
+      justInstalledName: null,
       pendingInstallationsLoading: undefined,
       handleRemoveInProgress: expect.any(Function),
       deleteInProgressAppStatus: undefined,
