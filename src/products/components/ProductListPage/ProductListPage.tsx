@@ -243,7 +243,6 @@ const ProductListPage = (props: ProductListPageProps) => {
           justifyContent="space-between"
         >
           <ListFilters
-            type="expression-filter"
             initialSearch={initialSearch}
             onSearchChange={onSearchChange}
             showSearchTooltip

@@ -1,6 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { Button } from "@dashboard/components/Button/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type PermissionGroupDetailsQuery,
@@ -22,6 +21,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
+import { Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,9 +1,9 @@
 import notFoundImage from "@assets/images/not-found-404.svg";
-import { Button } from "@dashboard/components/Button/Button";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(
   theme => ({
@@ -84,7 +84,12 @@ const NotFoundPage = (props: NotFoundPageProps) => {
             </Text>
           </div>
           <div>
-            <Button className={classes.button} variant="primary" onClick={onBack} href={backHref}>
+            <Button
+              className={classes.button}
+              variant="primary"
+              onClick={onBack}
+              {...(backHref ? { as: Link, to: backHref } : {})}
+            >
               <FormattedMessage
                 id="95oJ5d"
                 defaultMessage="Go back to dashboard"
