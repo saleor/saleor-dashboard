@@ -148,6 +148,7 @@ const SortableChipsField = ({
               {activeId && activeItem ? (
                 <SortableChip
                   label={activeItem.label}
+                  startAdornment={<ModelTypeChipIcon icon={activeItem.icon} />}
                   url={activeItem.url}
                   loading={loading}
                   isDragged

@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { type FileChoiceType } from "@dashboard/components/FileUploadField/FileUploadField";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
 import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField/SortableChipsField";
 import { type AttributeValueFragment } from "@dashboard/graphql";
 import { type FetchMoreProps } from "@dashboard/types";
@@ -40,7 +41,10 @@ export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   };
 }
 
-export function getReferenceDisplayValue(attribute: AttributeInput): SortableChipsFieldValueType[] {
+export function getReferenceDisplayValue(
+  attribute: AttributeInput,
+  icons?: Map<string, ModelTypeIcon>,
+): SortableChipsFieldValueType[] {
   if (!attribute.value || attribute.value.length === 0) {
     return [];
   }
@@ -53,7 +57,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
     return {
       label: referenceData.label,
       value: referenceData.value,
-      icon: referenceData.icon,
+      icon: icons?.get(referenceData.value) ?? referenceData.icon,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: referenceData.value,
@@ -64,6 +68,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
 
 export function getSingleReferenceDisplayValue(
   attribute: AttributeInput,
+  icons?: Map<string, ModelTypeIcon>,
 ): SortableChipsFieldValueType {
   if (!attribute.value || attribute.value.length === 0) {
     return null;
@@ -75,7 +80,7 @@ export function getSingleReferenceDisplayValue(
     return {
       label: reference.label,
       value: reference.value,
-      icon: reference.icon,
+      icon: icons?.get(reference.value) ?? reference.icon,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: reference.value,
