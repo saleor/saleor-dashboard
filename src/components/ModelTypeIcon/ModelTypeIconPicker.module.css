@@ -43,8 +43,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  /*
+    Matches the height of the labelled macaw Input this sits next to. `aspect-ratio` cannot do
+    this: as a flex item the button's width resolves from its content before `align-self: stretch`
+    makes the height definite, so the ratio has nothing to compute from and it renders 34x52.
+    An explicit square is the only way to guarantee 1:1 here.
+  */
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
   border: 1px solid var(--mu-colors-border-default1);
   border-radius: var(--mu-border-radius-3);
   background-color: var(--mu-colors-background-default1);

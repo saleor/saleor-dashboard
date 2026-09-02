@@ -37,7 +37,7 @@ const PageTypeDetails = ({
     >
       {/* The icon sits with the name because the two together are what identifies a model type
           everywhere it is listed. */}
-      <Box display="flex" gap={2} alignItems="flex-start">
+      <Box display="flex" gap={2}>
         <ModelTypeIconPicker
           value={data?.icon ?? null}
           disabled={disabled}

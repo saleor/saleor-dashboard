@@ -1,8 +1,12 @@
-import { render, screen, within } from "@testing-library/react";
+import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { render as rtlRender, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type React from "react";
 
 import AssignModelDialog from "./AssignModelDialog";
+
+// Rows carry the model type's icon, which resolves its colour from the macaw theme.
+const render = (ui: React.ReactElement) => rtlRender(ui, { wrapper: ThemeProvider });
 
 jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
