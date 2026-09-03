@@ -8,12 +8,9 @@
 import "graphiql/graphiql.min.css";
 
 import {
-  Button,
-  ButtonGroup,
   ChevronDownIcon,
   ChevronUpIcon,
   CopyIcon,
-  Dialog,
   ExecuteButton,
   GraphiQLProvider,
   type GraphiQLProviderProps,
@@ -41,26 +38,14 @@ import {
   type UseQueryEditorArgs,
   type UseResponseEditorArgs,
   useSchemaContext,
-  useStorageContext,
-  useTheme,
   type UseVariableEditorArgs,
   VariableEditor,
   type WriteableEditorProps,
 } from "@graphiql/react";
-import { type ComponentType, type PropsWithChildren, type ReactNode, useState } from "react";
-import * as React from "react";
+import { useState } from "react";
 
 import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
 import { AttachAuthButton } from "./AttachAuthButton";
-
-interface GraphiQLToolbarConfig {
-  /**
-   * This content will be rendered after the built-in buttons of the toolbar.
-   * Note that this will not apply if you provide a completely custom toolbar
-   * (by passing `GraphiQL.Toolbar` as child to the `GraphiQL` component).
-   */
-  additionalContent?: React.ReactNode;
-}
 
 /**
  * API docs for this live here:
@@ -143,12 +128,10 @@ function GraphiQL({
       validationRules={validationRules}
       variables={variables}
     >
-      <GraphiQLInterface showPersistHeadersSettings={shouldPersistHeaders} {...props} />
+      <GraphiQLInterface {...props} />
     </GraphiQLProvider>
   );
 }
-GraphiQL.Toolbar = GraphiQLToolbar;
-GraphiQL.Footer = GraphiQLFooter;
 
 type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
@@ -160,7 +143,6 @@ type GraphiQLInterfaceProps = WriteableEditorProps &
   AddSuffix<Pick<UseVariableEditorArgs, "onEdit">, "Variables"> &
   AddSuffix<Pick<UseHeaderEditorArgs, "onEdit">, "Headers"> &
   Pick<UseResponseEditorArgs, "responseTooltip"> & {
-    children?: ReactNode;
     /**
      * Set the default state for the editor tools.
      * - `false` hides the editor tools
@@ -176,16 +158,6 @@ type GraphiQLInterfaceProps = WriteableEditorProps &
      * @default true
      */
     isHeadersEditorEnabled?: boolean;
-    /**
-     * An object that allows configuration of the toolbar next to the query
-     * editor.
-     */
-    toolbar?: GraphiQLToolbarConfig;
-    /**
-     * Indicates if settings for persisting headers should appear in the
-     * settings modal.
-     */
-    showPersistHeadersSettings?: boolean;
   };
 
 function GraphiQLInterface(props: GraphiQLInterfaceProps) {
@@ -193,7 +165,6 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const editorContext = useEditorContext({ nonNull: true });
   const executionContext = useExecutionContext({ nonNull: true });
   const schemaContext = useSchemaContext({ nonNull: true });
-  const storageContext = useStorageContext();
   const pluginContext = usePluginContext();
   const copy = useCopyQuery({ onCopyQuery: props.onCopyQuery });
   const merge = useMergeQuery();
@@ -202,7 +173,6 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
 
   useGraphiQLThemeSwitcher();
 
-  const { theme, setTheme } = useTheme();
   const PluginContent = pluginContext?.visiblePlugin?.content;
   const pluginResize = useDragResize({
     defaultSizeRelation: 1 / 3,
@@ -237,10 +207,7 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
         : "variables";
     },
   );
-  const [showDialog, setShowDialog] = useState<"settings" | "short-keys" | null>(null);
-  const [clearStorageStatus, setClearStorageStatus] = useState<"success" | "error" | null>(null);
-  const children = React.Children.toArray(props.children);
-  const toolbar = children.find(child => isChildComponentType(child, GraphiQL.Toolbar)) || (
+  const toolbar = (
     <>
       <ToolbarButton onClick={() => prettify()} label="Prettify query (Shift-Ctrl-P)">
         <PrettifyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
@@ -251,21 +218,13 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       <ToolbarButton onClick={() => copy()} label="Copy query (Shift-Ctrl-C)">
         <CopyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
-      {props.toolbar?.additionalContent || null}
     </>
   );
-  const footer = children.find(child => isChildComponentType(child, GraphiQL.Footer));
   const onClickReference = () => {
     if (pluginResize.hiddenElement === "first") {
       pluginResize.setHiddenElement(null);
     }
   };
-  const modifier =
-    window.navigator.platform.toLowerCase().indexOf("mac") === 0 ? (
-      <code className="graphiql-key">Cmd</code>
-    ) : (
-      <code className="graphiql-key">Ctrl</code>
-    );
 
   return (
     <div data-testid="graphiql-container" className="graphiql-container" style={{ ...rootStyle }}>
@@ -537,216 +496,14 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                     responseTooltip={props.responseTooltip}
                     keyMap={props.keyMap}
                   />
-                  {footer}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* @ts-expect-error legacy types */}
-      <Dialog isOpen={showDialog === "short-keys"} onDismiss={() => setShowDialog(null)}>
-        <div className="graphiql-dialog-header">
-          <div className="graphiql-dialog-title">Short Keys</div>
-          <Dialog.Close onClick={() => setShowDialog(null)} />
-        </div>
-        <div className="graphiql-dialog-section">
-          <div>
-            <table className="graphiql-table">
-              <thead>
-                <tr>
-                  <th>Short key</th>
-                  <th>Function</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    {modifier}
-                    {" + "}
-                    <code className="graphiql-key">F</code>
-                  </td>
-                  <td>Search in editor</td>
-                </tr>
-                <tr>
-                  <td>
-                    {modifier}
-                    {" + "}
-                    <code className="graphiql-key">K</code>
-                  </td>
-                  <td>Search in documentation</td>
-                </tr>
-                <tr>
-                  <td>
-                    {modifier}
-                    {" + "}
-                    <code className="graphiql-key">Enter</code>
-                  </td>
-                  <td>Execute query</td>
-                </tr>
-                <tr>
-                  <td>
-                    <code className="graphiql-key">Ctrl</code>
-                    {" + "}
-                    <code className="graphiql-key">Shift</code>
-                    {" + "}
-                    <code className="graphiql-key">P</code>
-                  </td>
-                  <td>Prettify editors</td>
-                </tr>
-                <tr>
-                  <td>
-                    <code className="graphiql-key">Ctrl</code>
-                    {" + "}
-                    <code className="graphiql-key">Shift</code>
-                    {" + "}
-                    <code className="graphiql-key">M</code>
-                  </td>
-                  <td>Merge fragments definitions into operation definition</td>
-                </tr>
-                <tr>
-                  <td>
-                    <code className="graphiql-key">Ctrl</code>
-                    {" + "}
-                    <code className="graphiql-key">Shift</code>
-                    {" + "}
-                    <code className="graphiql-key">C</code>
-                  </td>
-                  <td>Copy query</td>
-                </tr>
-                <tr>
-                  <td>
-                    <code className="graphiql-key">Ctrl</code>
-                    {" + "}
-                    <code className="graphiql-key">Shift</code>
-                    {" + "}
-                    <code className="graphiql-key">R</code>
-                  </td>
-                  <td>Re-fetch schema using introspection</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>
-              The editors use{" "}
-              <a
-                href="https://codemirror.net/5/doc/manual.html#keymaps"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                CodeMirror Key Maps
-              </a>{" "}
-              that add more short keys. This instance of Graph<em>i</em>QL uses{" "}
-              <code>{props.keyMap || "sublime"}</code>.
-            </p>
-          </div>
-        </div>
-      </Dialog>
-      {/* @ts-expect-error legacy types */}
-      <Dialog
-        isOpen={showDialog === "settings"}
-        onDismiss={() => {
-          setShowDialog(null);
-          setClearStorageStatus(null);
-        }}
-      >
-        <div className="graphiql-dialog-header">
-          <div className="graphiql-dialog-title">Settings</div>
-          <Dialog.Close
-            onClick={() => {
-              setShowDialog(null);
-              setClearStorageStatus(null);
-            }}
-          />
-        </div>
-        <div className="graphiql-dialog-section">
-          <div>
-            <div className="graphiql-dialog-section-title">Theme</div>
-            <div className="graphiql-dialog-section-caption">
-              Adjust how the interface looks like.
-            </div>
-          </div>
-          <div>
-            <ButtonGroup>
-              <Button
-                type="button"
-                className={theme === null ? "active" : ""}
-                onClick={() => setTheme(null)}
-              >
-                System
-              </Button>
-              <Button
-                type="button"
-                className={theme === "light" ? "active" : ""}
-                onClick={() => setTheme("light")}
-              >
-                Light
-              </Button>
-              <Button
-                type="button"
-                className={theme === "dark" ? "active" : ""}
-                onClick={() => setTheme("dark")}
-              >
-                Dark
-              </Button>
-            </ButtonGroup>
-          </div>
-        </div>
-        {storageContext ? (
-          <div className="graphiql-dialog-section">
-            <div>
-              <div className="graphiql-dialog-section-title">Clear storage</div>
-              <div className="graphiql-dialog-section-caption">
-                Remove all locally stored data and start fresh.
-              </div>
-            </div>
-            <div>
-              <Button
-                type="button"
-                state={clearStorageStatus || undefined}
-                disabled={clearStorageStatus === "success"}
-                onClick={() => {
-                  try {
-                    setClearStorageStatus("success");
-                  } catch {
-                    setClearStorageStatus("error");
-                  }
-                }}
-              >
-                {clearStorageStatus === "success"
-                  ? "Cleared data"
-                  : clearStorageStatus === "error"
-                    ? "Failed"
-                    : "Clear data"}
-              </Button>
-            </div>
-          </div>
-        ) : null}
-      </Dialog>
     </div>
   );
-}
-
-// Configure the UI by providing this Component as a child of GraphiQL.
-function GraphiQLToolbar<TProps>(props: PropsWithChildren<TProps>) {
-  return <>{props.children}</>;
-}
-
-GraphiQLToolbar.displayName = "GraphiQLToolbar";
-
-// Configure the UI by providing this Component as a child of GraphiQL.
-function GraphiQLFooter<TProps>(props: PropsWithChildren<TProps>) {
-  return <div className="graphiql-footer">{props.children}</div>;
-}
-
-GraphiQLFooter.displayName = "GraphiQLFooter";
-
-// Determines if the React child is of the same type of the provided React component
-function isChildComponentType<T extends ComponentType>(child: any, component: T): child is T {
-  if (child?.type?.displayName && child.type.displayName === component.displayName) {
-    return true;
-  }
-
-  return child.type === component;
 }
 
 export default GraphiQL;

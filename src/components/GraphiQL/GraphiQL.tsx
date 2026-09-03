@@ -12,31 +12,18 @@ import {
   UnStyledButton,
   useCopyQuery,
   useEditorContext,
-  type UseHeaderEditorArgs,
   usePluginContext,
   usePrettifyEditors,
   type UseQueryEditorArgs,
-  type UseResponseEditorArgs,
-  type UseVariableEditorArgs,
   type WriteableEditorProps,
 } from "@graphiql/react";
 import clsx from "clsx";
-import { type ComponentType, type PropsWithChildren, type ReactNode, useState } from "react";
-import * as React from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 
 import DryRun from "../DryRun/DryRun";
 import { messages } from "./messages";
 import { useDashboardTheme, useEditorStyles, useGraphiQLThemeSwitcher, useStyles } from "./styles";
-
-interface GraphiQLToolbarConfig {
-  /**
-   * This content will be rendered after the built-in buttons of the toolbar.
-   * Note that this will not apply if you provide a completely custom toolbar
-   * (by passing `GraphiQL.Toolbar` as child to the `GraphiQL` component).
-   */
-  additionalContent?: React.ReactNode;
-}
 
 type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
 
@@ -126,25 +113,15 @@ function GraphiQL({
     </GraphiQLProvider>
   );
 }
-// Export main windows/panes to be used separately if desired.
-GraphiQL.Toolbar = GraphiQLToolbar;
-
 type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
 };
 
 type GraphiQLInterfaceProps = WriteableEditorProps &
   AddSuffix<Pick<UseQueryEditorArgs, "onEdit">, "Query"> &
-  Pick<UseQueryEditorArgs, "onCopyQuery"> &
-  AddSuffix<Pick<UseVariableEditorArgs, "onEdit">, "Variables"> &
-  AddSuffix<Pick<UseHeaderEditorArgs, "onEdit">, "Headers"> &
-  Pick<UseResponseEditorArgs, "responseTooltip"> & {
-    children?: ReactNode;
-    defaultEditorToolsVisibility?: boolean | "variables" | "headers";
-    isHeadersEditorEnabled?: boolean;
-    toolbar?: GraphiQLToolbarConfig;
+  Pick<UseQueryEditorArgs, "onCopyQuery"> & {
     showDialog?: boolean;
-    setShowDialog?: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowDialog?: Dispatch<SetStateAction<boolean>>;
     result?: string;
   };
 
@@ -161,8 +138,7 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   useGraphiQLThemeSwitcher();
 
   const PluginContent = pluginContext?.visiblePlugin?.content;
-  const children = React.Children.toArray(props.children);
-  const toolbar = children.find(child => isChildComponentType(child, GraphiQL.Toolbar)) || (
+  const toolbar = (
     <>
       <ToolbarButton
         onClick={() => props.setShowDialog(true)}
@@ -177,7 +153,6 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       <ToolbarButton onClick={() => copy()} label="Copy query (Shift-Ctrl-C)">
         <CopyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
-      {props.toolbar?.additionalContent || null}
     </>
   );
   const onClickReference = () => {
@@ -302,20 +277,6 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       </div>
     </div>
   );
-}
-
-function GraphiQLToolbar<TProps>(props: PropsWithChildren<TProps>) {
-  return <>{props.children}</>;
-}
-
-GraphiQLToolbar.displayName = "GraphiQLToolbar";
-
-function isChildComponentType<T extends ComponentType>(child: any, component: T): child is T {
-  if (child?.type?.displayName && child.type.displayName === component.displayName) {
-    return true;
-  }
-
-  return child.type === component;
 }
 
 export default GraphiQL;
