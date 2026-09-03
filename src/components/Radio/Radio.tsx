@@ -24,7 +24,14 @@ export const Radio = ({
   onChange,
   "data-test-id": dataTestId,
 }: RadioProps) => (
-  <RadioGroup value={checked ? value : ""} onValueChange={onChange}>
+  // Legacy macaw's list cells set `box-sizing: content-box`, which the global
+  // `* { box-sizing: inherit }` reset passes down and inflates the radio by its border,
+  // pushing the inner dot off centre. Re-anchor it for any legacy container.
+  <RadioGroup
+    value={checked ? value : ""}
+    onValueChange={onChange}
+    style={{ boxSizing: "border-box" }}
+  >
     <RadioGroup.Item
       id={value}
       value={value}
