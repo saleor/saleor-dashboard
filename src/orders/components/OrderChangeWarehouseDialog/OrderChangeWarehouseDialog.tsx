@@ -4,6 +4,7 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { Radio } from "@dashboard/components/Radio/Radio";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
@@ -18,7 +19,6 @@ import { renderCollection } from "@dashboard/misc";
 import { getLineAvailableQuantityInWarehouse } from "@dashboard/orders/utils/data";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Radio } from "@material-ui/core";
 import { Input, Text } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -197,12 +197,7 @@ export const OrderChangeWarehouseDialog = ({
                           onClick={() => handleChange(warehouse)}
                         >
                           <TableCell padding="checkbox">
-                            <Radio
-                              checked={isSelected}
-                              onChange={() => handleChange(warehouse)}
-                              value={warehouse.id}
-                              name="warehouse-selection"
-                            />
+                            <Radio checked={isSelected} value={warehouse.id} />
                           </TableCell>
                           <TableCell style={{ width: "100%" }}>
                             {warehouse.name}

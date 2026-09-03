@@ -12,9 +12,6 @@ export const useStyles = makeStyles(
     container: {
       display: "block",
     },
-    optionLabel: {
-      display: "block",
-    },
   }),
   { name: "OrderCustomerAddressesEditDialog" },
 );

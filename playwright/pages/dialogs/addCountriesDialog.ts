@@ -8,7 +8,7 @@ export class AddCountriesDialog {
     readonly searchCountryInput = page.getByTestId("search-country-input").locator("input"),
     readonly countryRow = page.getByTestId("country-row"),
     readonly addButton = page.getByTestId("add-button"),
-    readonly rowRadioButton = page.locator("input[type='radio']"),
+    readonly rowRadioButton = page.locator("[role='radio']"),
   ) {
     this.page = page;
   }

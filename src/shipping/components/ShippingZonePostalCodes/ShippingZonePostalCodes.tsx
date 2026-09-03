@@ -3,16 +3,14 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
-import RadioGroupField from "@dashboard/components/RadioGroupField/RadioGroupField";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import {
   PostalCodeRuleInclusionTypeEnum,
   type ShippingMethodTypeFragment,
 } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, RadioGroup, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
-import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./ShippingZonePostalCodes.module.css";
@@ -39,14 +37,12 @@ const ShippingZonePostalCodes = ({
   const intl = useIntl();
   const selectedInclusionType =
     inclusionType ?? postalCodes?.[0]?.inclusionType ?? PostalCodeRuleInclusionTypeEnum.EXCLUDE;
-  const onInclusionRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    const postalType =
+  const onInclusionRadioChange = (value: string) => {
+    onPostalCodeInclusionChange(
       value === "EXCLUDE"
         ? PostalCodeRuleInclusionTypeEnum.EXCLUDE
-        : PostalCodeRuleInclusionTypeEnum.INCLUDE;
-
-    onPostalCodeInclusionChange(postalType);
+        : PostalCodeRuleInclusionTypeEnum.INCLUDE,
+    );
   };
   const getPostalCodeRangeLabel = (
     postalCodeRange: ShippingMethodTypeFragment["postalCodeRules"][0],
@@ -87,57 +83,63 @@ const ShippingZonePostalCodes = ({
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <RadioGroupField
-          alignTop
-          innerContainerClassName={styles.radioGroup}
-          choices={[
-            {
-              label: (
-                <Box className={styles.radioOption}>
-                  <Text size={4} fontWeight="regular">
-                    <FormattedMessage
-                      id="YpLVVc"
-                      defaultMessage="Exclude postal codes"
-                      description="action"
-                    />
-                  </Text>
-                  <Text color="default2" size={2} fontWeight="light" display="block">
-                    <FormattedMessage
-                      id="/DCKjx"
-                      defaultMessage="Leave the list empty to apply this rate to all postal codes. Added ranges will be excluded."
-                      description="exclude postal codes helper"
-                    />
-                  </Text>
-                </Box>
-              ),
-              value: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-            },
-            {
-              label: (
-                <Box className={styles.radioOption}>
-                  <Text size={4} fontWeight="regular">
-                    <FormattedMessage
-                      id="7qsOwa"
-                      defaultMessage="Include postal codes"
-                      description="action"
-                    />
-                  </Text>
-                  <Text color="default2" size={2} fontWeight="light" display="block">
-                    <FormattedMessage
-                      id="wKbeLZ"
-                      defaultMessage="Leave the list empty to apply this rate to all postal codes. Only matching added ranges can use it."
-                      description="include postal codes helper"
-                    />
-                  </Text>
-                </Box>
-              ),
-              value: PostalCodeRuleInclusionTypeEnum.INCLUDE,
-            },
-          ]}
+        <RadioGroup
           name="includePostalCodes"
           value={selectedInclusionType}
-          onChange={onInclusionRadioChange}
-        />
+          onValueChange={onInclusionRadioChange}
+          display="flex"
+          flexDirection="column"
+          gap={3}
+        >
+          <RadioGroup.Item
+            id={PostalCodeRuleInclusionTypeEnum.EXCLUDE}
+            value={PostalCodeRuleInclusionTypeEnum.EXCLUDE}
+            data-test-id={PostalCodeRuleInclusionTypeEnum.EXCLUDE}
+            alignItems="flex-start"
+            className="simple-radio-group"
+          >
+            <Box className={styles.radioOption}>
+              <Text size={4} fontWeight="regular">
+                <FormattedMessage
+                  id="YpLVVc"
+                  defaultMessage="Exclude postal codes"
+                  description="action"
+                />
+              </Text>
+              <Text color="default2" size={2} fontWeight="light" display="block">
+                <FormattedMessage
+                  id="/DCKjx"
+                  defaultMessage="Leave the list empty to apply this rate to all postal codes. Added ranges will be excluded."
+                  description="exclude postal codes helper"
+                />
+              </Text>
+            </Box>
+          </RadioGroup.Item>
+          <RadioGroup.Item
+            id={PostalCodeRuleInclusionTypeEnum.INCLUDE}
+            value={PostalCodeRuleInclusionTypeEnum.INCLUDE}
+            data-test-id={PostalCodeRuleInclusionTypeEnum.INCLUDE}
+            alignItems="flex-start"
+            className="simple-radio-group"
+          >
+            <Box className={styles.radioOption}>
+              <Text size={4} fontWeight="regular">
+                <FormattedMessage
+                  id="7qsOwa"
+                  defaultMessage="Include postal codes"
+                  description="action"
+                />
+              </Text>
+              <Text color="default2" size={2} fontWeight="light" display="block">
+                <FormattedMessage
+                  id="wKbeLZ"
+                  defaultMessage="Leave the list empty to apply this rate to all postal codes. Only matching added ranges can use it."
+                  description="include postal codes helper"
+                />
+              </Text>
+            </Box>
+          </RadioGroup.Item>
+        </RadioGroup>
         {postalCodes === undefined ? (
           <Box marginTop={4}>
             <Skeleton />

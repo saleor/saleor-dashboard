@@ -1,13 +1,14 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Grid from "@dashboard/components/Grid/Grid";
+import { RadioSwitchField } from "@dashboard/components/RadioSwitchField/RadioSwitchField";
 import { Select } from "@dashboard/components/Select/Select";
 import { type TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components/LegacyFlowWarning";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import { FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
-import { Divider, type Option } from "@saleor/macaw-ui-next";
+import { Typography } from "@material-ui/core";
+import { Divider, type Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type TaxConfigurationFormData } from "../TaxChannelsPage";
@@ -70,33 +71,20 @@ const TaxSettingsCard = ({
       <Divider />
       <DashboardCard.Content data-test-id="entered-rendered-prices-section">
         <Grid variant="uniform">
-          <RadioGroup
-            value={values.pricesEnteredWithTax}
-            name={"pricesEnteredWithTax" as keyof TaxConfigurationUpdateInput}
-            onChange={e => {
-              onChange({
-                target: {
-                  name: e.target.name,
-                  value: e.target.value === "true",
-                },
-              });
-            }}
-            className={classes.showCheckboxShadows}
-          >
+          <div className={classes.showCheckboxShadows}>
             <Typography className={classes.supportHeader}>
               <FormattedMessage {...taxesMessages.enteredPrices} />
             </Typography>
-            <FormControlLabel
-              value={true}
-              control={<Radio />}
-              label={intl.formatMessage(taxesMessages.pricesWithTaxLabel)}
+            <RadioSwitchField
+              name="pricesEnteredWithTax"
+              value={values.pricesEnteredWithTax}
+              firstOptionLabel={<Text>{intl.formatMessage(taxesMessages.pricesWithTaxLabel)}</Text>}
+              secondOptionLabel={
+                <Text>{intl.formatMessage(taxesMessages.pricesWithoutTaxLabel)}</Text>
+              }
+              onChange={onChange}
             />
-            <FormControlLabel
-              value={false}
-              control={<Radio />}
-              label={intl.formatMessage(taxesMessages.pricesWithoutTaxLabel)}
-            />
-          </RadioGroup>
+          </div>
           <div className={classes.showCheckboxShadows}>
             <Typography className={classes.supportHeader}>
               <FormattedMessage {...taxesMessages.renderedPrices} />

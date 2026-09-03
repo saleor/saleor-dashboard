@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import RadioSwitchField from "@dashboard/components/RadioSwitchField/RadioSwitchField";
+import { RadioSwitchField } from "@dashboard/components/RadioSwitchField/RadioSwitchField";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
@@ -264,27 +264,29 @@ const VisibilityCard = (props: VisibilityCardProps) => {
               disabled={disabled}
               error={!!getFieldError(errors, "isAvailableForPurchase")}
               firstOptionLabel={
-                <>
-                  <p className={classes.label}>{messages.availableLabel}</p>
+                <Box display="flex" __alignItems="baseline" gap={2}>
+                  <Text>{messages.availableLabel}</Text>
                   {isAvailableOrPublished({
                     condition: isAvailableForPurchase,
                     date: availableForPurchaseAt,
                     now: dateNow,
                   }) && (
-                    <span className={classes.secondLabel}>
+                    <Text size={2} color="default2">
                       {visibleMessage(availableForPurchaseAt)}
-                    </span>
+                    </Text>
                   )}
-                </>
+                </Box>
               }
-              name={"isAvailableForPurchase" as keyof FormData}
+              name="isAvailableForPurchase"
               secondOptionLabel={
-                <>
-                  <p className={classes.label}>{messages.unavailableLabel}</p>
+                <Box display="flex" __alignItems="baseline" gap={2}>
+                  <Text>{messages.unavailableLabel}</Text>
                   {availableForPurchaseAt && !isAvailableForPurchase && (
-                    <span className={classes.secondLabel}>{messages.availableSecondLabel}</span>
+                    <Text size={2} color="default2">
+                      {messages.availableSecondLabel}
+                    </Text>
                   )}
-                </>
+                </Box>
               }
               value={isAvailableForPurchase}
               onChange={handleRadioFieldChange("availableForPurchaseAt")}

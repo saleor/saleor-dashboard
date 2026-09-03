@@ -5,6 +5,7 @@ import {
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
+import { Radio } from "@dashboard/components/Radio/Radio";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
@@ -17,7 +18,6 @@ import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFi
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
-import { Radio } from "@material-ui/core";
 import { Input } from "@saleor/macaw-ui-next";
 import { Fragment, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -226,12 +226,9 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                                 <TableCell />
                                 <TableCell className={classes.colVariantCheckbox}>
                                   <Radio
-                                    className={classes.variantCheckbox}
                                     checked={isSelected}
                                     disabled={loading}
-                                    onChange={() => handleVariantSelect(variant.id)}
                                     value={variant.id}
-                                    name="variant-selection"
                                   />
                                 </TableCell>
                                 <TableCell>

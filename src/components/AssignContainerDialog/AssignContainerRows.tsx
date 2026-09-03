@@ -1,6 +1,6 @@
+import { Radio } from "@dashboard/components/Radio/Radio";
 import { TableCell } from "@dashboard/components/Table/Table";
 import { type Container } from "@dashboard/types";
-import { Radio } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
@@ -41,12 +41,7 @@ export const SingleSelectionRows = ({
           onClick={() => onSelect(container.id)}
         >
           <TableCell padding="checkbox">
-            <Radio
-              checked={isSelected}
-              onChange={() => onSelect(container.id)}
-              value={container.id}
-              name="container-selection"
-            />
+            <Radio checked={isSelected} value={container.id} />
           </TableCell>
           <TableCell style={{ width: "100%" }} data-test-id={container.name}>
             <ContainerLabel adornment={renderAdornment?.(container)} name={container.name} />

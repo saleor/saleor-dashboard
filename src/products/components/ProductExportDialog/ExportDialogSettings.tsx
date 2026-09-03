@@ -1,8 +1,8 @@
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import {
-  NewRadioGroupField as RadioGroupField,
-  type RadioGroupFieldChoice,
-} from "@dashboard/components/RadioGroupField/RadioGroupField";
+  SimpleRadioGroupField,
+  type SimpleRadioGroupFieldChoice,
+} from "@dashboard/components/SimpleRadioGroupField";
 import { type ExportErrorFragment, ExportScope, FileTypesEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -69,7 +69,7 @@ export const ExportDialogSettings = ({
 }: ExportDialogSettingsProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(formFields, errors);
-  const productExportTypeChoices: Array<RadioGroupFieldChoice<FileTypesEnum>> = [
+  const productExportTypeChoices: SimpleRadioGroupFieldChoice[] = [
     {
       label: intl.formatMessage({
         id: "9Tl/bT",
@@ -111,7 +111,7 @@ export const ExportDialogSettings = ({
           <FormattedMessage {...exportDialogScopeMessages.productsToInclude} />
         </ModalSectionHeader>
 
-        <RadioGroupField
+        <SimpleRadioGroupField
           name="scope"
           value={data.scope}
           error={!!formErrors.scope}
@@ -132,7 +132,7 @@ export const ExportDialogSettings = ({
           <FormattedMessage {...exportDialogScopeMessages.fileFormat} />
         </ModalSectionHeader>
 
-        <RadioGroupField
+        <SimpleRadioGroupField
           name="fileType"
           value={data.fileType}
           error={!!formErrors.fileType}

@@ -1,4 +1,4 @@
-import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField/RadioGroupField";
+import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField/TimePeriodField";
 import {
   type GiftCardBulkCreateFormErrors,
@@ -71,7 +71,7 @@ const GiftCardCreateExpirySelect = ({
       </Checkbox>
       {expirySelected ? (
         <Box display="flex" flexDirection="column" gap={4} paddingLeft={6}>
-          <RadioGroupField
+          <SimpleRadioGroupField
             choices={translatedOptions}
             error={false}
             name="expiryType"

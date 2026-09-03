@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField/RadioGroupField";
+import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import {
   WarehouseClickAndCollectOptionEnum,
   type WarehouseWithShippingFragment,
@@ -166,7 +166,7 @@ const WarehouseSettings = ({
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content data-test-id="stock-settings-section">
-        <RadioGroupField
+        <SimpleRadioGroupField
           choices={isPrivateChoices}
           name="isPrivate"
           value={data.isPrivate.toString()}
@@ -181,7 +181,7 @@ const WarehouseSettings = ({
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <RadioGroupField
+        <SimpleRadioGroupField
           choices={data.isPrivate ? clickAndCollectChoices : clickAndCollectChoicesPublic}
           name="clickAndCollectOption"
           value={data.clickAndCollectOption}
