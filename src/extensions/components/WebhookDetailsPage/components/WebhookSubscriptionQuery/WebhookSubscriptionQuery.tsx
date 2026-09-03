@@ -58,14 +58,11 @@ export const WebhookSubscriptionQuery = ({
       </DashboardCard.Header>
       <DashboardCard.Content className={classes.cardContent}>
         <GraphiQL
-          data-test-id="graphiql-webhook"
-          defaultEditorToolsVisibility={"headers"}
           fetcher={fetcher}
           query={query}
           storage={null}
           onEditQuery={setQuery}
           plugins={[explorerPlugin]}
-          isHeadersEditorEnabled={false}
           data={data}
         />
       </DashboardCard.Content>
