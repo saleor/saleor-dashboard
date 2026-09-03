@@ -96,6 +96,7 @@ const ShippingZonePostalCodes = ({
             value={PostalCodeRuleInclusionTypeEnum.EXCLUDE}
             data-test-id={PostalCodeRuleInclusionTypeEnum.EXCLUDE}
             alignItems="flex-start"
+            className="simple-radio-group"
           >
             <Box className={styles.radioOption}>
               <Text size={4} fontWeight="regular">
@@ -119,6 +120,7 @@ const ShippingZonePostalCodes = ({
             value={PostalCodeRuleInclusionTypeEnum.INCLUDE}
             data-test-id={PostalCodeRuleInclusionTypeEnum.INCLUDE}
             alignItems="flex-start"
+            className="simple-radio-group"
           >
             <Box className={styles.radioOption}>
               <Text size={4} fontWeight="regular">

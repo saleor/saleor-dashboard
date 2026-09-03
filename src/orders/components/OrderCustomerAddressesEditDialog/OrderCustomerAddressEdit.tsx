@@ -108,7 +108,7 @@ const OrderCustomerAddressEdit = (props: OrderCustomerAddressEditProps) => {
         <Text>{intl.formatMessage(addressEditMessages.newAddress)}</Text>
       </RadioGroup.Item>
       {addressInputOption === AddressInputOptionEnum.NEW_ADDRESS && (
-        <Box display="grid" gap={5}>
+        <Box display="grid" gap={5} marginTop={5}>
           <AddressEdit
             countries={countryChoices}
             countryDisplayValue={formAddressCountryDisplayName}
