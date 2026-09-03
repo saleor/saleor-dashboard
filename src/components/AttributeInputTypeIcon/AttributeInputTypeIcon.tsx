@@ -16,7 +16,7 @@ export const AttributeInputTypeIcon = ({
   inputType,
   size = "small",
   hasUnit = false,
-}: AttributeInputTypeIconProps): JSX.Element => {
+}: AttributeInputTypeIconProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

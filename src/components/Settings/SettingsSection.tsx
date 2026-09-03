@@ -27,7 +27,7 @@ export const SettingsSection = ({
   children,
   id,
   "data-test-id": dataTestId,
-}: SettingsSectionProps): JSX.Element => {
+}: SettingsSectionProps): React.ReactNode => {
   return (
     <Box
       as="section"

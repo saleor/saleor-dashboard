@@ -46,7 +46,7 @@ export interface AssignProductDialogProps
   initialConstraints?: InitialConstraints;
 }
 
-export const AssignProductDialog = (props: AssignProductDialogProps): JSX.Element => {
+export const AssignProductDialog = (props: AssignProductDialogProps): React.ReactNode => {
   const {
     selectionMode = "multiple",
     excludedFilters,

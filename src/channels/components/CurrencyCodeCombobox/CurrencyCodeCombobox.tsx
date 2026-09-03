@@ -32,7 +32,7 @@ export const CurrencyCodeCombobox = ({
   value,
   onChange,
   "data-test-id": dataTestId,
-}: CurrencyCodeComboboxProps): JSX.Element => {
+}: CurrencyCodeComboboxProps): React.ReactNode => {
   const intl = useIntl();
   // Macaw fires onChange(null) while syncing inputValue on mount/remount. Ignore that
   // so country→currency autosuggest is not immediately cleared.

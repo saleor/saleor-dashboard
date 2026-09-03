@@ -110,7 +110,7 @@ export const CategoryListDatagrid = ({
   onLoadMoreSubcategories,
   hidePagination = false,
   variant = "default",
-}: CategoryListDatagridProps): JSX.Element => {
+}: CategoryListDatagridProps): React.ReactNode => {
   const isSidebar = variant === "sidebar";
   const containerRef = useRef<HTMLDivElement>(null);
   const [sidebarColumnWidths, setSidebarColumnWidths] = useState(DEFAULT_SIDEBAR_COLUMN_WIDTHS);

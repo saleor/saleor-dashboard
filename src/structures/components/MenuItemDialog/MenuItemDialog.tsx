@@ -46,7 +46,7 @@ export const MenuItemDialog = ({
   onClose,
   onSubmit,
   open,
-}: MenuItemDialogProps): JSX.Element => {
+}: MenuItemDialogProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
 

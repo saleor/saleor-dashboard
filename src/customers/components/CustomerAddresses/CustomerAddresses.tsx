@@ -24,7 +24,7 @@ interface AddressBlockProps {
   address: NonNullable<CustomerDetailsFragment["defaultBillingAddress"]>;
 }
 
-const AddressBlock = ({ label, address }: AddressBlockProps): JSX.Element => {
+const AddressBlock = ({ label, address }: AddressBlockProps): React.ReactNode => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const copyAriaLabel = intl.formatMessage(buttonMessages.copyToClipboard);
@@ -61,7 +61,7 @@ const CustomerAddresses = ({
   customer,
   disabled,
   manageAddressHref,
-}: CustomerAddressesProps): JSX.Element => {
+}: CustomerAddressesProps): React.ReactNode => {
   const billing = customer?.defaultBillingAddress ?? null;
   const shipping = customer?.defaultShippingAddress ?? null;
   const sameAddress = billing && shipping && billing.id === shipping.id;

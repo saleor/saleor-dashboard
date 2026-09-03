@@ -41,7 +41,7 @@ export const CreateProductTypeDialog = ({
   errors: apiErrors,
   onClose,
   onSubmit,
-}: CreateProductTypeDialogProps): JSX.Element => {
+}: CreateProductTypeDialogProps): React.ReactNode => {
   const intl = useIntl();
   const [submitErrors, setSubmitErrors] = useState<ProductErrorFragment[]>([]);
   const [showApiErrors, setShowApiErrors] = useState(false);

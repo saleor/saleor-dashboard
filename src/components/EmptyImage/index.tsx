@@ -2,7 +2,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box } from "@saleor/macaw-ui-next";
 import { Image } from "lucide-react";
 
-export const EmptyImage = (): JSX.Element => (
+export const EmptyImage = (): React.ReactNode => (
   <Box
     __width="31px"
     __height="31px"

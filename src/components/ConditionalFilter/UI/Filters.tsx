@@ -18,7 +18,7 @@ export const Filters = ({
   locale,
   error,
   layout = "popover",
-}: FiltersProps): JSX.Element => {
+}: FiltersProps): React.ReactNode => {
   const errorsByRowIndex = createErrorLookup(error);
   const isInline = isFlatFilterLayout(layout);
   const columnGap = isInline ? 3 : 2;

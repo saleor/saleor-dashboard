@@ -21,7 +21,7 @@ interface LinkProps
   state?: LinkState;
 }
 
-export const Link = (props: LinkProps): JSX.Element => {
+export const Link = (props: LinkProps): React.ReactNode => {
   const {
     className,
     children,

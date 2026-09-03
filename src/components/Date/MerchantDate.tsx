@@ -197,7 +197,7 @@ interface MerchantDateProps {
 // row date), each tick of `useCurrentDate` re-allocates a few Intl formatters.
 // Worth introducing a memoized formatter cache keyed by (locale, options) at
 // that point. Single-instance usage in headers is fine.
-export const MerchantDate = ({ kind, date, now }: MerchantDateProps): JSX.Element => {
+export const MerchantDate = ({ kind, date, now }: MerchantDateProps): React.ReactNode => {
   const intl = useIntl();
   const liveNow = useCurrentDate();
   const referenceNow = now ?? new Date(liveNow);

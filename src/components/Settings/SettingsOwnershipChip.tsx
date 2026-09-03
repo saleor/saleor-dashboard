@@ -14,7 +14,9 @@ interface SettingsOwnershipChipProps {
  * Ownership pill used on every SettingsSection / SettingsLinkCard.
  * Shop and Channel share this component so padding and placement stay consistent.
  */
-export const SettingsOwnershipChip = ({ ownership }: SettingsOwnershipChipProps): JSX.Element => {
+export const SettingsOwnershipChip = ({
+  ownership,
+}: SettingsOwnershipChipProps): React.ReactNode => {
   const Icon = ownership === "shop" ? Store : Globe;
   const isShop = ownership === "shop";
 

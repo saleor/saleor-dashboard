@@ -59,7 +59,7 @@ export const ButtonGroupWithDropdown = ({
   size,
   className,
   ...boxProps
-}: ButtonGroupWithDropdownProps): JSX.Element => {
+}: ButtonGroupWithDropdownProps): React.ReactNode => {
   const showSeparator = pinnedOptions.length > 0 && options.length > 0;
   const chevronSize = size === "small" ? iconSize.small : iconSize.medium;
   const chevronStroke = size === "small" ? iconStrokeWidthBySize.small : iconStrokeWidth;

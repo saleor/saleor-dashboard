@@ -31,7 +31,7 @@ export const ReasonReferenceModal = ({
   referenceModelTypeId,
   onClose,
   onConfirm,
-}: ReasonReferenceModalProps): JSX.Element => {
+}: ReasonReferenceModalProps): React.ReactNode => {
   const intl = useIntl();
   const [tempReason, setTempReason] = useState(reason);
   const [tempReference, setTempReference] = useState(reasonReference);

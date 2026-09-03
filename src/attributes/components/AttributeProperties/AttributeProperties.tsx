@@ -28,7 +28,7 @@ const AttributeProperties = ({
   errors,
   disabled,
   onChange,
-}: AttributePropertiesProps): JSX.Element => {
+}: AttributePropertiesProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
   // filterableInStorefront and storefrontSearchPosition are removed from the API in 3.24

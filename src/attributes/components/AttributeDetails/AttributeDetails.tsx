@@ -68,7 +68,7 @@ interface AttributeDetailsProps
   variant?: "card" | "embedded";
 }
 
-const AttributeDetails = (props: AttributeDetailsProps): JSX.Element => {
+const AttributeDetails = (props: AttributeDetailsProps): React.ReactNode => {
   const {
     canChangeType,
     errors,

@@ -22,7 +22,7 @@ export const VoucherBulkDeleteDialog = ({
   onClose,
   onConfirm,
   open,
-}: VoucherBulkDeleteDialogProps): JSX.Element => {
+}: VoucherBulkDeleteDialogProps): React.ReactNode => {
   const isSubmitting = confirmButtonState === "loading";
 
   const handleClose = (): void => {

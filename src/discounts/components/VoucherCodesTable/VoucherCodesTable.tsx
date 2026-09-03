@@ -47,7 +47,7 @@ export const VoucherCodesTable = ({
   onBulkDelete,
   settings,
   onSettingsChange,
-}: VoucherCodesTableProps): JSX.Element => {
+}: VoucherCodesTableProps): React.ReactNode => {
   const intl = useIntl();
   const rows: VoucherCodeRow[] | undefined = useMemo(() => {
     if (loading && codes.length === 0) {

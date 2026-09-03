@@ -60,7 +60,7 @@ export const CategoryProducts = ({
   categoryId,
   params,
   disabled,
-}: CategoryProductsProps): JSX.Element => {
+}: CategoryProductsProps): React.ReactNode => {
   const navigate = useNavigator();
   const [openModal, closeModal] = createDialogActionHandlers<
     CategoryUrlDialog,

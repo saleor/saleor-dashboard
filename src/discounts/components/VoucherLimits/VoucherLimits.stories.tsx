@@ -60,7 +60,7 @@ const InteractiveLimits = ({
   initialData,
 }: {
   initialData: VoucherDetailsPageFormData;
-}): JSX.Element => {
+}): React.ReactNode => {
   const [data, setData] = useState(initialData);
 
   return (

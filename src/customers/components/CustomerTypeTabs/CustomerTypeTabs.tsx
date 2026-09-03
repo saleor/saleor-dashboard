@@ -35,7 +35,7 @@ export const CustomerTypeTabs = ({
   counts,
   onTabChange,
   rightSlot,
-}: CustomerTypeTabsProps): JSX.Element => (
+}: CustomerTypeTabsProps): React.ReactNode => (
   <ModelTypeTabs
     pageTypes={customerTypes}
     selectedIds={selectedIds}

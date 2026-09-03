@@ -37,7 +37,7 @@ export const DiscountCategories = ({
   numberOfRows = PAGINATE_BY,
   onUpdateListSettings,
   embedded = false,
-}: DiscountCategoriesProps): JSX.Element => {
+}: DiscountCategoriesProps): React.ReactNode => {
   const intl = useIntl();
 
   const body = (

@@ -45,7 +45,7 @@ export const CategorySubcategories = ({
   setClearDatagridRowSelectionCallback,
   settings,
   onUpdateListSettings,
-}: CategorySubcategoriesProps): JSX.Element => {
+}: CategorySubcategoriesProps): React.ReactNode => {
   const client = useApolloClient();
   const location = useLocation();
   const [storedExpandedIds, setStoredExpandedIds] = useState<string[]>([]);

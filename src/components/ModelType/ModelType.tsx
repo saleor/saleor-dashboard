@@ -70,7 +70,7 @@ export const ModelTypeDisplay = ({
   color = "default2",
   "data-test-id": dataTestId = "model-type-display",
   title,
-}: ModelTypeProps): JSX.Element => {
+}: ModelTypeProps): React.ReactNode => {
   const intl = useIntl();
 
   if (!modelType) {
@@ -113,7 +113,7 @@ export const ModelTypeDisplay = ({
   );
 };
 
-export const ClickableModelType = (props: ModelTypeProps): JSX.Element => {
+export const ClickableModelType = (props: ModelTypeProps): React.ReactNode => {
   const { modelType } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();

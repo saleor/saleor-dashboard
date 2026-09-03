@@ -39,7 +39,7 @@ export const VoucherRequirements = ({
   onChange,
   onChannelChange,
   onChannelsChange,
-}: VoucherRequirementsProps): JSX.Element => {
+}: VoucherRequirementsProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormErrors(["minSpent", "minCheckoutItemsQuantity"], errors);
   const minimalOrderValueText = intl.formatMessage({

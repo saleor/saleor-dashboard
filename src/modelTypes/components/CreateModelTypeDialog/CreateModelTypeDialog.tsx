@@ -38,7 +38,7 @@ export const CreateModelTypeDialog = ({
   errors: apiErrors,
   onClose,
   onSubmit,
-}: CreateModelTypeDialogProps): JSX.Element => {
+}: CreateModelTypeDialogProps): React.ReactNode => {
   const intl = useIntl();
   const [submitErrors, setSubmitErrors] = useState<PageErrorFragment[]>([]);
   const [showApiErrors, setShowApiErrors] = useState(false);

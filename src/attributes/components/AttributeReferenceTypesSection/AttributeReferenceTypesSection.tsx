@@ -28,7 +28,7 @@ export const AttributeReferenceTypesSection = ({
   onChange,
   options,
   value,
-}: AttributeReferenceTypesSectionProps): JSX.Element => {
+}: AttributeReferenceTypesSectionProps): React.ReactNode => {
   const intl = useIntl();
   const label =
     entityType === AttributeEntityTypeEnum.PAGE

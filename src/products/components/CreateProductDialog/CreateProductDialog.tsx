@@ -57,7 +57,7 @@ export const CreateProductDialog = ({
   onClose,
   onCreateProductType,
   onSubmit,
-}: CreateProductDialogProps): JSX.Element => {
+}: CreateProductDialogProps): React.ReactNode => {
   const intl = useIntl();
   const [selectedOption, setSelectedOption] = useState<ProductTypeChoice | null>(null);
   const [query, setQuery] = useState("");

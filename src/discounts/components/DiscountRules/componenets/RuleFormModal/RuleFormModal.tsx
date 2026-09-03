@@ -30,7 +30,7 @@ export const RuleFormModal = ({
   initialFormValues,
   onClose,
   onSubmit,
-}: RuleFormModalProps): JSX.Element => {
+}: RuleFormModalProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
   const { discountType } = useDiscountRulesContext();

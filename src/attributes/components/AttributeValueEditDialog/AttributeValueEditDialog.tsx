@@ -66,7 +66,7 @@ const AttributeValueEditForm = ({
   onClose,
   onSubmit,
   onSubmitMany,
-}: AttributeValueEditFormProps): JSX.Element => {
+}: AttributeValueEditFormProps): React.ReactNode => {
   const intl = useIntl();
   const { pendingPaste, handlePaste, keepAsOneName, clearPendingPaste } = useAttributeValuePaste({
     disabled,
@@ -235,7 +235,7 @@ export const AttributeValueEditDialog = ({
   onSubmitMany,
   open,
   inputType,
-}: AttributeValueEditDialogProps): JSX.Element => {
+}: AttributeValueEditDialogProps): React.ReactNode => {
   const isSubmittingRef = useRef(false);
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
   const isAdd = attributeValue === null;

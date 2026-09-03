@@ -22,7 +22,7 @@ export const MenuBulkDeleteDialog = ({
   onClose,
   onConfirm,
   open,
-}: MenuBulkDeleteDialogProps): JSX.Element => {
+}: MenuBulkDeleteDialogProps): React.ReactNode => {
   const isSubmitting = confirmButtonState === "loading";
 
   const handleClose = (): void => {

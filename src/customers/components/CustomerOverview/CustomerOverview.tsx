@@ -32,7 +32,7 @@ interface CustomerOverviewProps {
 const ICON_SIZE = 16;
 const EMPTY_VALUE = "—";
 
-export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Element => {
+export const CustomerOverview = ({ customer }: CustomerOverviewProps): React.ReactNode => {
   const intl = useIntl();
   const { locale } = useLocale();
   const { effectiveKpiChannelId, kpiChannels, setKpiChannelId } = useCustomerDetails();

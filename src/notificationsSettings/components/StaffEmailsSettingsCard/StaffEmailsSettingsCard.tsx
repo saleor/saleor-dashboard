@@ -105,7 +105,7 @@ export const StaffEmailsSettingsCard = ({
   onActiveChange,
   onDeliveryModeChange,
   onSmtpFieldChange,
-}: StaffEmailsSettingsCardProps): JSX.Element => {
+}: StaffEmailsSettingsCardProps): React.ReactNode => {
   const intl = useIntl();
   const smtpValues = ensureSmtpFieldDefaults(formState.otherFields);
   const tlsSslError = smtpFieldErrors.use_tls || smtpFieldErrors.use_ssl || undefined;
@@ -291,7 +291,7 @@ export const StaffMessagesSettingsCard = ({
   deliveryMode,
   disabled,
   onNotificationChange,
-}: StaffMessagesSettingsCardProps): JSX.Element => {
+}: StaffMessagesSettingsCardProps): React.ReactNode => {
   const intl = useIntl();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const lockCustomCopy = IS_CLOUD_INSTANCE && deliveryMode === "default";
@@ -423,7 +423,7 @@ const NotificationEmailEditor = ({
   expanded,
   onToggle,
   onChange,
-}: NotificationEmailEditorProps): JSX.Element => {
+}: NotificationEmailEditorProps): React.ReactNode => {
   const intl = useIntl();
   const templateRef = useRef<HTMLTextAreaElement | null>(null);
   const effectiveTemplateMode = lockCustomCopy ? "default" : values.templateMode;

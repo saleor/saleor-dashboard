@@ -19,7 +19,7 @@ export const TableRowLinkCheckbox = ({
   disabled,
   onCheckedChange,
   "data-test-id": dataTestId,
-}: TableRowLinkCheckboxProps): JSX.Element => (
+}: TableRowLinkCheckboxProps): React.ReactNode => (
   <Box
     display="flex"
     alignItems="center"

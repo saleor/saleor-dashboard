@@ -19,7 +19,7 @@ const AttributePropertiesPlayground = ({
   initial,
 }: {
   initial: Partial<AttributePageFormData>;
-}): JSX.Element => {
+}): React.ReactNode => {
   const [data, setData] = useState<AttributePageFormData>({
     ...getAttributePageInitialForm(),
     ...initial,

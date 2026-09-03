@@ -7,7 +7,7 @@ import { IntlProvider } from "react-intl";
 
 import { StaffPasswordResetDialog } from "./StaffPasswordResetDialog";
 
-const TestWrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const TestWrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <IntlProvider defaultLocale="en" locale="en">
     <ThemeProvider>{children}</ThemeProvider>
   </IntlProvider>

@@ -52,7 +52,7 @@ export const VoucherCodesCard = ({
   settings,
   onSettingsChange,
   errors = [],
-}: VoucherCodesCardProps): JSX.Element => {
+}: VoucherCodesCardProps): React.ReactNode => {
   const intl = useIntl();
   const { pageInfo, ...paginationValues } = voucherCodesPagination;
   const [openModal, setOpenModal] = useState<VoucherCodesUrlDialog | null>(null);

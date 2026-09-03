@@ -8,7 +8,7 @@ import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider
 import { useGiftCardList } from "../providers/GiftCardListProvider/GiftCardListProvider";
 import { giftCardListSearchAndFiltersMessages as messages } from "./messages";
 
-const GiftCardListSearchAndFilters = (): JSX.Element => {
+const GiftCardListSearchAndFilters = (): React.ReactNode => {
   const intl = useIntl();
 
   const { params, handleSearchChange, selectedRowIds } = useGiftCardList();

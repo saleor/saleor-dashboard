@@ -33,7 +33,7 @@ export const TokenCreateDialog = ({
   token,
   onClose,
   onCreate,
-}: TokenCreateDialogProps): JSX.Element => {
+}: TokenCreateDialogProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
   const step: TokenCreateStep = token ? "summary" : "form";

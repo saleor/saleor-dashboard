@@ -44,7 +44,7 @@ export const RowComponent = ({
   emitter,
   error,
   layout = "popover",
-}: RowProps): JSX.Element => {
+}: RowProps): React.ReactNode => {
   const constrain = getItemConstraint(item.constraint);
   const reasonLabels = getConstraintReasonLabels(item, rows);
   const isAttribute = item.isAttribute;

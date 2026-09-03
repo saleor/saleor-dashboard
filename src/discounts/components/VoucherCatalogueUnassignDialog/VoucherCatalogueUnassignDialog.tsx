@@ -108,7 +108,7 @@ export const VoucherCatalogueUnassignDialog = ({
   onClose,
   onConfirm,
   open,
-}: VoucherCatalogueUnassignDialogProps): JSX.Element => {
+}: VoucherCatalogueUnassignDialogProps): React.ReactNode => {
   const isSubmitting = confirmButtonState === "loading";
 
   const handleClose = (): void => {

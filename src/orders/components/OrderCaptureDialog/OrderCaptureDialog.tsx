@@ -67,7 +67,7 @@ export const OrderCaptureDialog = ({
   errors = [],
   onClose,
   onSubmit,
-}: OrderCaptureDialogProps): JSX.Element => {
+}: OrderCaptureDialogProps): React.ReactNode => {
   const intl = useIntl();
 
   const currency = orderTotal.currency;

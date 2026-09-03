@@ -10,7 +10,7 @@ import { useGiftCardListDialogs } from "./providers/GiftCardListDialogsProvider/
 import { useGiftCardList } from "./providers/GiftCardListProvider/GiftCardListProvider";
 import { GiftCardListActionParamsEnum } from "./types";
 
-export const GiftCardListPage = (): JSX.Element => {
+export const GiftCardListPage = (): React.ReactNode => {
   const { params, onPresetSave, onPresetDelete, getPresetNameToDelete } = useGiftCardList();
   const { onClose } = useGiftCardListDialogs();
 

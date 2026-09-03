@@ -47,7 +47,7 @@ export const DiscountScheduleCard = <ErrorCode,>({
   statusTestId,
   fieldsTestId,
   skeletonTestId,
-}: DiscountScheduleCardProps<ErrorCode>): JSX.Element => {
+}: DiscountScheduleCardProps<ErrorCode>): React.ReactNode => {
   const intl = useIntl();
   const phase = getVoucherSchedulePhase(data);
   const statusMessage =

@@ -33,7 +33,7 @@ export const ShippingZoneRateChannelTable = ({
   variant,
   disabled,
   getRateChannelSetupHref,
-}: ShippingZoneRateChannelTableProps): JSX.Element => {
+}: ShippingZoneRateChannelTableProps): React.ReactNode => {
   const intl = useIntl();
   const [query, setQuery] = useState("");
   const filteredChannels = useMemo(

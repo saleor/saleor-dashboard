@@ -22,7 +22,7 @@ export const ExtensionPreferenceStateControl = ({
   value,
   disabled,
   onChange,
-}: ExtensionPreferenceStateControlProps): JSX.Element => {
+}: ExtensionPreferenceStateControlProps): React.ReactNode => {
   const intl = useIntl();
   const shown = isWidgetShown(value);
   const pinned = isWidgetPinned(value);

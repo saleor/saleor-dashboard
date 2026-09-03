@@ -77,7 +77,7 @@ const VariantSelectionSwitch = ({
   disabled: boolean;
   disabledReason?: string;
   onPressedChange: (next: boolean) => void;
-}): JSX.Element => {
+}): React.ReactNode => {
   const toggle = (): void => {
     if (!disabled) {
       onPressedChange(!pressed);

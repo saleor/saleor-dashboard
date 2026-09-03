@@ -51,7 +51,7 @@ const getGiftCardSettingsExit = (
   };
 };
 
-export const GiftCardSettingsPage = (): JSX.Element => {
+export const GiftCardSettingsPage = (): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();

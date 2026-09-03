@@ -78,7 +78,7 @@ export const ProductExportDialog = ({
   hasListFilters,
   warehouses,
   ...fetchMoreProps
-}: ProductExportDialogProps): JSX.Element => {
+}: ProductExportDialogProps): React.ReactNode => {
   const [step, { next, prev, set: setStep }] = useWizard(ProductExportStep.INFO, [
     ProductExportStep.INFO,
     ProductExportStep.SETTINGS,

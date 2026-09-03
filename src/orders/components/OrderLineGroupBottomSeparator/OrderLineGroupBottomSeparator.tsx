@@ -1,6 +1,6 @@
 import { Box, type vars } from "@saleor/macaw-ui-next";
 
-const OrderLineGroupBottomSeparator = (): JSX.Element => (
+const OrderLineGroupBottomSeparator = (): React.ReactNode => (
   <Box
     backgroundColor="default1"
     width="100%"
@@ -19,7 +19,7 @@ interface OrderLineGroupEndProps {
 export const OrderLineGroupEnd = ({
   showBottomSeparator,
   backgroundColor,
-}: OrderLineGroupEndProps): JSX.Element =>
+}: OrderLineGroupEndProps): React.ReactNode =>
   showBottomSeparator ? (
     <OrderLineGroupBottomSeparator />
   ) : (

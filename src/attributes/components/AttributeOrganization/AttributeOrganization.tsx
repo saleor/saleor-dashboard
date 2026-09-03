@@ -41,7 +41,7 @@ const ClassTile = ({
   tileRef: (node: HTMLElement | null) => void;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
   onSelect: (value: AttributeTypeEnum) => void;
-}): JSX.Element => {
+}): React.ReactNode => {
   const Icon = option.icon;
 
   return (
@@ -89,7 +89,7 @@ const AttributeOrganization = ({
   data,
   disabled,
   onChange,
-}: AttributeOrganizationProps): JSX.Element => {
+}: AttributeOrganizationProps): React.ReactNode => {
   const intl = useIntl();
   const tileRefs = useRef<Partial<Record<AttributeTypeEnum, HTMLElement | null>>>({});
   const value = data.type ?? AttributeTypeEnum.PRODUCT_TYPE;

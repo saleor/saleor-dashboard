@@ -49,7 +49,7 @@ export const StaffAddMemberDialog = ({
   onConfirm,
   onSearchChange,
   open,
-}: StaffAddMemberDialogProps): JSX.Element => {
+}: StaffAddMemberDialogProps): React.ReactNode => {
   const dialogErrors = useModalDialogErrors(errors, open);
   const intl = useIntl();
   const formErrors = getFormErrors(["firstName", "lastName", "email"], dialogErrors);

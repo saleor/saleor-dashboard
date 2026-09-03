@@ -24,7 +24,7 @@ const uploadSuccessResult = (mediaId: string): FetchResult<ProductMediaCreateMut
   },
 });
 
-const TestWrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const TestWrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <MemoryRouter>
     <Wrapper>{children}</Wrapper>
   </MemoryRouter>

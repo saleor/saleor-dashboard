@@ -26,7 +26,7 @@ const PageTypeDetails = ({
   errors = [],
   onChange,
   onIconChange,
-}: PageTypeDetailsProps): JSX.Element => {
+}: PageTypeDetailsProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

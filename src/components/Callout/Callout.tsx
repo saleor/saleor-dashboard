@@ -47,7 +47,7 @@ export const Callout = ({
   children,
   className,
   "data-test-id": dataTestId,
-}: CalloutProps): JSX.Element => {
+}: CalloutProps): React.ReactNode => {
   const { Icon, className: typeClassName } = calloutVariants[type];
   const rootClassName = [styles.callout, typeClassName, className].filter(Boolean).join(" ");
 

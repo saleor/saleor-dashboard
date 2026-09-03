@@ -112,7 +112,7 @@ const OverviewProviders = ({
   children: ReactNode;
   permissions?: PermissionEnum[];
   kpiContext?: ReturnType<typeof withKpiContext>;
-}): JSX.Element => (
+}): React.ReactNode => (
   <UserContext.Provider value={staffContext(permissions)}>
     <TimezoneProvider value="America/New_York">
       <CustomerDetailsContext.Provider value={kpiContext}>

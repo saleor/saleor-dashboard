@@ -3,7 +3,7 @@ import { type DefaultTheme, Text } from "@saleor/macaw-ui-next";
 import { Moon, Sun } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
-export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }): JSX.Element => {
+export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }): React.ReactNode => {
   if (theme === "defaultLight") {
     return (
       <>

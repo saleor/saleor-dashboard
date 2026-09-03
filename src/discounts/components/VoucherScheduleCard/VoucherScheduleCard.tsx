@@ -21,7 +21,7 @@ export const VoucherScheduleCard = ({
   disabled,
   loading = false,
   onChange,
-}: VoucherScheduleCardProps): JSX.Element => (
+}: VoucherScheduleCardProps): React.ReactNode => (
   <DiscountScheduleCard
     data={data}
     errors={errors}

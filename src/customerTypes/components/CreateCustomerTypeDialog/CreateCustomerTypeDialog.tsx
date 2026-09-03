@@ -38,7 +38,7 @@ export const CreateCustomerTypeDialog = ({
   errors: apiErrors,
   onClose,
   onSubmit,
-}: CreateCustomerTypeDialogProps): JSX.Element => {
+}: CreateCustomerTypeDialogProps): React.ReactNode => {
   const intl = useIntl();
   const [submitErrors, setSubmitErrors] = useState<CustomerTypeCreateErrorFragment[]>([]);
   const [showApiErrors, setShowApiErrors] = useState(false);

@@ -13,7 +13,7 @@ export const RefundedIcon = ({
   className?: string;
   color?: string;
   strokeWidth?: number;
-}): JSX.Element => (
+}): React.ReactNode => (
   <svg
     width={size}
     height={size}

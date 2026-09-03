@@ -29,7 +29,7 @@ import { OrderLineGrantedRefundRow } from "./OrderLineGrantedRefundRow";
 
 const cancelableStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.WAITING_FOR_APPROVAL];
 
-const MetadataDot = (): JSX.Element => (
+const MetadataDot = (): React.ReactNode => (
   <span className={styles.metadataDot} aria-hidden="true">
     ·
   </span>

@@ -95,7 +95,7 @@ export const ChannelDisplay = ({
   inline = false,
   "data-test-id": dataTestId = "channel-display",
   title,
-}: ChannelProps): JSX.Element => {
+}: ChannelProps): React.ReactNode => {
   const intl = useIntl();
 
   if (!channel) {
@@ -143,7 +143,7 @@ export const ChannelDisplay = ({
   return content;
 };
 
-export const ClickableChannel = (props: ChannelLinkProps): JSX.Element => {
+export const ClickableChannel = (props: ChannelLinkProps): React.ReactNode => {
   const { channel } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();
@@ -176,7 +176,7 @@ export const ClickableChannel = (props: ChannelLinkProps): JSX.Element => {
   );
 };
 
-export const ChannelDetailsLink = ({ onClick, ...props }: ChannelLinkProps): JSX.Element => {
+export const ChannelDetailsLink = ({ onClick, ...props }: ChannelLinkProps): React.ReactNode => {
   const { channel } = props;
   const intl = useIntl();
 
