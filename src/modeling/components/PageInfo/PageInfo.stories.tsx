@@ -18,6 +18,7 @@ const baseData: PageData = {
     __typename: "PageType",
     id: "page-type-1",
     name: "Landing page",
+    metadata: [],
     attributes: [],
   },
   privateMetadata: [],

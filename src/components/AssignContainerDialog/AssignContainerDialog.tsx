@@ -45,6 +45,8 @@ export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps 
   backfillResetKey?: string;
   /** Shown instead of `emptyMessage` when exclusion emptied every loaded page. */
   backfillExhaustedMessage?: string;
+  /** Renders before a row's name — used by the model dialog to show the model type's icon. */
+  renderContainerAdornment?: (container: Container) => ReactNode;
   selectionMode?: "single" | "multiple";
   selectedId?: string;
   filtersSlot?: ReactNode;
@@ -73,6 +75,7 @@ const AssignContainerDialog = ({
   excludeContainer,
   backfillResetKey,
   backfillExhaustedMessage,
+  renderContainerAdornment,
   selectionMode = "multiple",
   selectedId,
   filtersSlot,
@@ -215,12 +218,14 @@ const AssignContainerDialog = ({
                         containers={displayedContainers}
                         selectedItemId={singleSelection.selectedItemId}
                         onSelect={singleSelection.handleSelect}
+                        renderAdornment={renderContainerAdornment}
                       />
                     ) : (
                       <MultiSelectionRows
                         containers={displayedContainers}
                         isSelected={multiSelection.isSelected}
                         onToggle={multiSelection.handleToggle}
+                        renderAdornment={renderContainerAdornment}
                       />
                     )}
                   </>

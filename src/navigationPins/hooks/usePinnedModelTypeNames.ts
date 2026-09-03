@@ -1,4 +1,6 @@
 import { useQuery } from "@apollo/client";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+import { readModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { type PinnedModelTypeFragment } from "@dashboard/graphql";
 import { useEffect, useMemo, useState } from "react";
 
@@ -14,6 +16,11 @@ type PinnedModelTypesResult = Record<string, PinnedModelTypeFragment | null>;
 
 interface PinnedModelTypeNamesResult {
   names: Record<string, string>;
+  /**
+   * Live-only: icons are not snapshotted because the icon itself resolves through a lazy import,
+   * so the first frame renders the fallback either way.
+   */
+  icons: Record<string, ModelTypeIcon>;
   /** Live query has settled (or there is nothing to fetch). Distinguishes loading from missing. */
   hasResolved: boolean;
 }
@@ -39,26 +46,39 @@ export const usePinnedModelTypeNames = (ids: readonly string[]): PinnedModelType
     errorPolicy: "all",
   });
 
-  const liveNames = useMemo(() => {
+  const live = useMemo(() => {
     if (!data) {
       return null;
     }
 
-    return uniqueIds.reduce<Record<string, string>>((acc, id, index) => {
-      const node = data[getAliasForIndex(index)];
+    return uniqueIds.reduce<Pick<PinnedModelTypeNamesResult, "names" | "icons">>(
+      (acc, id, index) => {
+        const node = data[getAliasForIndex(index)];
 
-      return node ? { ...acc, [id]: node.name } : acc;
-    }, {});
+        if (!node) {
+          return acc;
+        }
+
+        const icon = readModelTypeIcon(node.metadata);
+
+        return {
+          names: { ...acc.names, [id]: node.name },
+          icons: icon ? { ...acc.icons, [id]: icon } : acc.icons,
+        };
+      },
+      { names: {}, icons: {} },
+    );
   }, [data, uniqueIds]);
 
   useEffect(() => {
-    if (liveNames) {
-      writeModelTypeNamesSnapshot(liveNames);
+    if (live) {
+      writeModelTypeNamesSnapshot(live.names);
     }
-  }, [liveNames]);
+  }, [live]);
 
   return {
-    names: liveNames ?? snapshot ?? {},
-    hasResolved: uniqueIds.length === 0 || liveNames !== null,
+    names: live?.names ?? snapshot ?? {},
+    icons: live?.icons ?? {},
+    hasResolved: uniqueIds.length === 0 || live !== null,
   };
 };

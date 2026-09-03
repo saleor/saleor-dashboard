@@ -660,6 +660,10 @@
     "context": "staff notification description",
     "string": "Sent to people in {alertsLink} when a customer completes checkout. Draft orders completed in the Dashboard are not included."
   },
+  "0Sq+Ey": {
+    "context": "button opening the model type icon picker",
+    "string": "Change icon"
+  },
   "0UeJGl": {
     "context": "issue gift card dialog intro",
     "string": "Set the gift card value and optional delivery details."
@@ -1960,6 +1964,10 @@
   "5nQ6yG": {
     "context": "empty state in variant media selection dialog",
     "string": "No product media available. Upload images on the product page first."
+  },
+  "5nSDBL": {
+    "context": "model type icon picker title",
+    "string": "Icon"
   },
   "5nrCxC": {
     "string": "Go to model types"
@@ -3707,6 +3715,10 @@
   "C6pJYY": {
     "context": "deactivate app",
     "string": "Are you sure you want to disable this extension? Your data will be kept until you reactivate the extension."
+  },
+  "C7GV73": {
+    "context": "model type icon picker empty state",
+    "string": "No icons match “{query}”"
   },
   "C7I2lg": {
     "context": "input label",
@@ -9630,6 +9642,10 @@
     "context": "variants grid range label with count of unsaved staged deletions",
     "string": "{range} ({count} pending delete)"
   },
+  "YHAiGl": {
+    "context": "model type icon picker search field",
+    "string": "Search icons"
+  },
   "YI6Fhj": {
     "context": "no address is set in draft order",
     "string": "Not set"
@@ -11131,6 +11147,10 @@
   "dgd7wb": {
     "context": "staff detail top nav CTA when staff member is inactive",
     "string": "Activate"
+  },
+  "diG2vm": {
+    "context": "model type icon colour swatch",
+    "string": "Color {color}"
   },
   "diq8M5": {
     "context": "payment apps list truncated warning",
@@ -16736,6 +16756,10 @@
   "xePeMh": {
     "context": "shipping method detail cogs menu, opens GraphiQL with this method",
     "string": "Open this shipping method in GraphiQL"
+  },
+  "xewIsS": {
+    "context": "model type icon picker result cap hint",
+    "string": "Showing first {count} matches — keep typing to narrow down"
   },
   "xfGZsi": {
     "context": "configuration section name",
