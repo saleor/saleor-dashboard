@@ -8,8 +8,6 @@ import {
   PrettifyIcon,
   QueryEditor,
   ToolbarButton,
-  Tooltip,
-  UnStyledButton,
   useCopyQuery,
   useEditorContext,
   usePluginContext,
@@ -23,42 +21,14 @@ import { useIntl } from "react-intl";
 
 import DryRun from "../DryRun/DryRun";
 import { messages } from "./messages";
+import { CodeMirrorFontSizeOverrides, PluginSidebarSection } from "./shared";
 import { useDashboardTheme, useEditorStyles, useGraphiQLThemeSwitcher, useStyles } from "./styles";
 
 type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
 
-function GraphiQL({
-  dangerouslyAssumeSchemaIsValid,
-  defaultQuery,
-  defaultTabs,
-  externalFragments,
-  fetcher,
-  getDefaultFieldNames,
-  headers,
-  initialTabs,
-  inputValueDeprecation,
-  introspectionQueryName,
-  maxHistoryLength,
-  onEditOperationName,
-  onSchemaChange,
-  onTabChange,
-  onTogglePluginVisibility,
-  operationName,
-  plugins,
-  query,
-  response,
-  schema,
-  schemaDescription,
-  shouldPersistHeaders,
-  storage,
-  validationRules,
-  variables,
-  visiblePlugin,
-  defaultHeaders,
-  ...props
-}: GraphiQLProps & { data: WebhookFormData }) {
+function GraphiQL(props: GraphiQLProps & { data: WebhookFormData }) {
   // Ensure props are correct
-  if (typeof fetcher !== "function") {
+  if (typeof props.fetcher !== "function") {
     throw new TypeError(
       "The `GraphiQL` component requires a `fetcher` function to be passed as prop.",
     );
@@ -68,35 +38,7 @@ function GraphiQL({
   const [result, setResult] = useState("");
 
   return (
-    <GraphiQLProvider
-      getDefaultFieldNames={getDefaultFieldNames}
-      dangerouslyAssumeSchemaIsValid={dangerouslyAssumeSchemaIsValid}
-      defaultQuery={defaultQuery}
-      defaultHeaders={defaultHeaders}
-      defaultTabs={defaultTabs}
-      externalFragments={externalFragments}
-      fetcher={fetcher}
-      headers={headers}
-      initialTabs={initialTabs}
-      inputValueDeprecation={inputValueDeprecation}
-      introspectionQueryName={introspectionQueryName}
-      maxHistoryLength={maxHistoryLength}
-      onEditOperationName={onEditOperationName}
-      onSchemaChange={onSchemaChange}
-      onTabChange={onTabChange}
-      onTogglePluginVisibility={onTogglePluginVisibility}
-      plugins={plugins}
-      visiblePlugin={visiblePlugin}
-      operationName={operationName}
-      query={query}
-      response={response}
-      schema={schema}
-      schemaDescription={schemaDescription}
-      shouldPersistHeaders={shouldPersistHeaders}
-      storage={storage}
-      validationRules={validationRules}
-      variables={variables}
-    >
+    <GraphiQLProvider {...props}>
       <GraphiQLInterface
         {...props}
         showDialog={showDialog}
@@ -106,13 +48,14 @@ function GraphiQL({
       <DryRun
         showDialog={showDialog}
         setShowDialog={setShowDialog}
-        query={query}
+        query={props.query}
         setResult={setResult}
         syncEvents={props.data.syncEvents}
       />
     </GraphiQLProvider>
   );
 }
+
 type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
 };
@@ -160,17 +103,6 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       pluginResize.setHiddenElement(null);
     }
   };
-  const overwriteCodeMirrorCSSVariables = {
-    __html: `
-      .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
-        --font-size-hint: ${rootStyle["--font-size-hint"]} !important;
-        --font-size-inline-code: ${rootStyle["--font-size-inline-code"]} !important;
-        --font-size-body: ${rootStyle["--font-size-body"]} !important;
-        --font-size-h4: ${rootStyle["--font-size-h4"]} !important;
-        --font-size-h3: ${rootStyle["--font-size-h3"]} !important;
-        --font-size-h2: ${rootStyle["--font-size-h2"]} !important;
-    `,
-  };
 
   return (
     <div
@@ -178,37 +110,9 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       className={clsx("graphiql-container", classes.graphiqlContainer)}
       style={rootStyle}
     >
-      <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
+      <CodeMirrorFontSizeOverrides />
       <div className="graphiql-sidebar">
-        <div className="graphiql-sidebar-section">
-          {pluginContext?.plugins.map(plugin => {
-            const isVisible = plugin === pluginContext.visiblePlugin;
-            const label = `${isVisible ? "Hide" : "Show"} ${plugin.title}`;
-            const Icon = plugin.icon;
-
-            return (
-              <Tooltip key={plugin.title} label={label}>
-                <UnStyledButton
-                  type="button"
-                  className={isVisible ? "active" : ""}
-                  onClick={() => {
-                    if (isVisible) {
-                      pluginContext.setVisiblePlugin(null);
-                      pluginResize.setHiddenElement("first");
-                    } else {
-                      pluginContext.setVisiblePlugin(plugin);
-                      pluginResize.setHiddenElement(null);
-                    }
-                  }}
-                  aria-label={label}
-                >
-                  <Icon aria-hidden="true" />
-                </UnStyledButton>
-              </Tooltip>
-            );
-          })}
-        </div>
-        <div className="graphiql-sidebar-section"></div>
+        <PluginSidebarSection pluginResize={pluginResize} />
       </div>
       <div className={clsx("graphiql-main", classes.main)}>
         <div

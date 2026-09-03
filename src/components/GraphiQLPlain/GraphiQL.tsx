@@ -28,7 +28,6 @@ import {
   Tooltip,
   UnStyledButton,
   useCopyQuery,
-  useDragResize,
   useEditorContext,
   useExecutionContext,
   type UseHeaderEditorArgs,
@@ -44,7 +43,8 @@ import {
 } from "@graphiql/react";
 import { useState } from "react";
 
-import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
+import { PluginSidebarSection } from "../GraphiQL/shared";
+import { useDashboardTheme, useEditorStyles, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
 import { AttachAuthButton } from "./AttachAuthButton";
 
 /**
@@ -61,73 +61,16 @@ type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterface
  * @see https://github.com/graphql/graphiql#usage
  */
 
-function GraphiQL({
-  dangerouslyAssumeSchemaIsValid,
-  defaultQuery,
-  defaultTabs,
-  externalFragments,
-  fetcher,
-  getDefaultFieldNames,
-  headers,
-  initialTabs,
-  inputValueDeprecation,
-  introspectionQueryName,
-  maxHistoryLength,
-  onEditOperationName,
-  onSchemaChange,
-  onTabChange,
-  onTogglePluginVisibility,
-  operationName,
-  plugins,
-  query,
-  response,
-  schema,
-  schemaDescription,
-  shouldPersistHeaders,
-  storage,
-  validationRules,
-  variables,
-  visiblePlugin,
-  defaultHeaders,
-  ...props
-}: GraphiQLProps) {
+function GraphiQL(props: GraphiQLProps) {
   // Ensure props are correct
-  if (typeof fetcher !== "function") {
+  if (typeof props.fetcher !== "function") {
     throw new TypeError(
       "The `GraphiQL` component requires a `fetcher` function to be passed as prop.",
     );
   }
 
   return (
-    <GraphiQLProvider
-      getDefaultFieldNames={getDefaultFieldNames}
-      dangerouslyAssumeSchemaIsValid={dangerouslyAssumeSchemaIsValid}
-      defaultQuery={defaultQuery}
-      defaultHeaders={defaultHeaders}
-      defaultTabs={defaultTabs}
-      externalFragments={externalFragments}
-      fetcher={fetcher}
-      headers={headers}
-      initialTabs={initialTabs}
-      inputValueDeprecation={inputValueDeprecation}
-      introspectionQueryName={introspectionQueryName}
-      maxHistoryLength={maxHistoryLength}
-      onEditOperationName={onEditOperationName}
-      onSchemaChange={onSchemaChange}
-      onTabChange={onTabChange}
-      onTogglePluginVisibility={onTogglePluginVisibility}
-      plugins={plugins}
-      visiblePlugin={visiblePlugin}
-      operationName={operationName}
-      query={query}
-      response={response}
-      schema={schema}
-      schemaDescription={schemaDescription}
-      shouldPersistHeaders={shouldPersistHeaders}
-      storage={storage}
-      validationRules={validationRules}
-      variables={variables}
-    >
+    <GraphiQLProvider {...props}>
       <GraphiQLInterface {...props} />
     </GraphiQLProvider>
   );
@@ -166,6 +109,7 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const executionContext = useExecutionContext({ nonNull: true });
   const schemaContext = useSchemaContext({ nonNull: true });
   const pluginContext = usePluginContext();
+  const { pluginResize, editorResize, editorToolsResize } = useEditorStyles();
   const copy = useCopyQuery({ onCopyQuery: props.onCopyQuery });
   const merge = useMergeQuery();
   const prettify = usePrettifyEditors();
@@ -174,23 +118,6 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   useGraphiQLThemeSwitcher();
 
   const PluginContent = pluginContext?.visiblePlugin?.content;
-  const pluginResize = useDragResize({
-    defaultSizeRelation: 1 / 3,
-    direction: "horizontal",
-    initiallyHidden: pluginContext?.visiblePlugin ? undefined : "first",
-    sizeThresholdSecond: 200,
-    storageKey: "docExplorerFlex",
-  });
-  const editorResize = useDragResize({
-    direction: "horizontal",
-    storageKey: "editorFlex",
-  });
-  const editorToolsResize = useDragResize({
-    defaultSizeRelation: 3,
-    direction: "vertical",
-    sizeThresholdSecond: 60,
-    storageKey: "secondaryEditorFlex",
-  });
   const [activeSecondaryEditor, setActiveSecondaryEditor] = useState<"variables" | "headers">(
     () => {
       if (
@@ -229,34 +156,7 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   return (
     <div data-testid="graphiql-container" className="graphiql-container" style={{ ...rootStyle }}>
       <div className="graphiql-sidebar">
-        <div className="graphiql-sidebar-section">
-          {pluginContext?.plugins.map(plugin => {
-            const isVisible = plugin === pluginContext.visiblePlugin;
-            const label = `${isVisible ? "Hide" : "Show"} ${plugin.title}`;
-            const Icon = plugin.icon;
-
-            return (
-              <Tooltip key={plugin.title} label={label}>
-                <UnStyledButton
-                  type="button"
-                  className={isVisible ? "active" : ""}
-                  onClick={() => {
-                    if (isVisible) {
-                      pluginContext.setVisiblePlugin(null);
-                      pluginResize.setHiddenElement("first");
-                    } else {
-                      pluginContext.setVisiblePlugin(plugin);
-                      pluginResize.setHiddenElement(null);
-                    }
-                  }}
-                  aria-label={label}
-                >
-                  <Icon aria-hidden="true" />
-                </UnStyledButton>
-              </Tooltip>
-            );
-          })}
-        </div>
+        <PluginSidebarSection pluginResize={pluginResize} />
         <div className="graphiql-sidebar-section">
           <Tooltip label="Re-fetch GraphQL schema">
             <UnStyledButton
