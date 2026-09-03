@@ -327,3 +327,57 @@ test("Product list row overlay is a real link — middle click and hide on wheel
   await popup.waitForURL(/\/products\//);
   expect(popup.url(), "New tab should open the hovered product").toContain(expectedPath);
 });
+test("Product list does not open a row after a touch-style drag @basic-regression #e2e #product", async () => {
+  await productPage.gotoProductListPage();
+
+  const listUrl = productPage.page.url();
+
+  await test.step("leftover click after a drag does not navigate", async () => {
+    await productPage.hoverGridCell(0, 0);
+    await expect(productPage.datagridRowAnchor).toHaveAttribute("href", /\/products\//);
+    await productPage.leftoverClickAfterTouchDrag(productPage.datagridRowAnchor);
+    expect(productPage.page.url(), "Drag leftover click must stay on the product list").toBe(
+      listUrl,
+    );
+    await expect(productPage.datagridRowAnchor).not.toHaveAttribute("href");
+  });
+
+  await test.step("leftover click after pointercancel does not navigate", async () => {
+    await productPage.hoverGridCell(0, 0);
+    await expect(productPage.datagridRowAnchor).toHaveAttribute("href", /\/products\//);
+    await productPage.leftoverClickAfterPointerCancel(productPage.datagridRowAnchor);
+    expect(productPage.page.url(), "Cancelled scroll leftover click must stay on the list").toBe(
+      listUrl,
+    );
+    await expect(productPage.datagridRowAnchor).not.toHaveAttribute("href");
+  });
+
+  await test.step("column picker still opens after a sloppy press", async () => {
+    await productPage.leftoverClickAfterTouchDrag(productPage.datagridColumnPickerButton);
+    await expect(productPage.datagridColumnPickerStaticColumns).toBeVisible();
+    await productPage.page.keyboard.press("Escape");
+    await expect(productPage.datagridColumnPickerStaticColumns).toBeHidden();
+  });
+
+  await test.step("a real tap still opens the row", async () => {
+    await productPage.hoverGridCell(0, 0);
+    await expect(productPage.datagridRowAnchor).toHaveAttribute("href", /\/products\//);
+
+    const href = await productPage.datagridRowAnchor.getAttribute("href");
+
+    expect(href, "Hovered row must expose a product href").toBeTruthy();
+
+    if (!href) {
+      return;
+    }
+
+    await productPage.clickGridCell(0, 0);
+    await productPage.page.waitForURL(/\/products\//);
+
+    const expectedPath = new URL(href, productPage.page.url()).pathname;
+
+    expect(productPage.page.url(), "A tap after a drag must still open the product").toContain(
+      expectedPath,
+    );
+  });
+});

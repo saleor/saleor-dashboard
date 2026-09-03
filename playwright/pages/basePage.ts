@@ -22,6 +22,8 @@ export class BasePage {
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
     readonly dataGridLoader = page.locator(LOCATORS.dataGridLoader),
     readonly datagridRowAnchor = page.getByTestId("datagrid-row-anchor"),
+    readonly datagridColumnPickerButton = page.getByTestId("open-column-picker-button"),
+    readonly datagridColumnPickerStaticColumns = page.getByTestId("static-col-container"),
     readonly previousPagePaginationButton = page.getByTestId("button-pagination-back"),
     readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
     readonly rowNumberOption = page.getByTestId("rowNumberOption"),
@@ -249,6 +251,72 @@ export class BasePage {
     await this.page.mouse.move(bounds.center.x, bounds.center.y);
 
     return bounds;
+  }
+
+  /**
+   * Replay the pointer sequence a browser emits after a touch scroll: move past
+   * the drag threshold, then a leftover click without a new pointerdown.
+   * Chromium will not synthesize that click after page.mouse.drag, and it cannot
+   * reproduce iOS taking over the gesture — so we dispatch the events ourselves.
+   */
+  async leftoverClickAfterTouchDrag(locator: Locator): Promise<void> {
+    const box = await locator.boundingBox();
+
+    if (!box) {
+      throw new Error("Target is not on screen");
+    }
+
+    const start = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+    const end = { x: start.x, y: start.y + 20 };
+
+    await this.dispatchPrimaryPointer(locator, "pointerdown", start);
+    await this.dispatchPrimaryPointer(locator, "pointermove", end);
+    await this.dispatchPrimaryPointer(locator, "pointerup", end);
+    await this.dispatchLeftoverClick(locator);
+  }
+
+  async leftoverClickAfterPointerCancel(locator: Locator): Promise<void> {
+    const box = await locator.boundingBox();
+
+    if (!box) {
+      throw new Error("Target is not on screen");
+    }
+
+    const start = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+
+    await this.dispatchPrimaryPointer(locator, "pointerdown", start);
+    await this.dispatchPrimaryPointer(locator, "pointercancel", start);
+    await this.dispatchLeftoverClick(locator);
+  }
+
+  private async dispatchPrimaryPointer(
+    locator: Locator,
+    type: "pointercancel" | "pointerdown" | "pointermove" | "pointerup",
+    position: { x: number; y: number },
+  ): Promise<void> {
+    await locator.evaluate(
+      (element, { type, x, y }) => {
+        element.dispatchEvent(
+          new PointerEvent(type, {
+            bubbles: true,
+            cancelable: true,
+            composed: true,
+            pointerId: 1,
+            isPrimary: true,
+            clientX: x,
+            clientY: y,
+            pointerType: "touch",
+          }),
+        );
+      },
+      { type, x: position.x, y: position.y },
+    );
+  }
+
+  private async dispatchLeftoverClick(locator: Locator): Promise<void> {
+    await locator.evaluate(element => {
+      element.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    });
   }
 
   async middleClickGridCell(col: number, row: number, nthChild = 0) {
