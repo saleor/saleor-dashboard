@@ -23,7 +23,7 @@ export const AssignPickerBackfillExhaustedRow = ({
   message,
   buttonLabel,
   onLoadMore,
-}: AssignPickerBackfillExhaustedProps): JSX.Element => (
+}: AssignPickerBackfillExhaustedProps): React.ReactNode => (
   <TableRow>
     <TableCell colSpan={colSpan} className={styles.cell}>
       <Box

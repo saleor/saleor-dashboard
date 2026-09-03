@@ -21,7 +21,7 @@ const CustomersSidebarMenu = ({
   customerTypes,
   pinnedIds,
   selectedTypeIds,
-}: CustomersSidebarMenuProps): JSX.Element => {
+}: CustomersSidebarMenuProps): React.ReactNode => {
   const children = [
     ...createCustomerTypeMenuItems({
       customerTypes,

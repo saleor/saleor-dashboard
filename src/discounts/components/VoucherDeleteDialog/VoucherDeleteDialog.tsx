@@ -23,7 +23,7 @@ export const VoucherDeleteDialog = ({
   onConfirm,
   open,
   voucherCode,
-}: VoucherDeleteDialogProps): JSX.Element => {
+}: VoucherDeleteDialogProps): React.ReactNode => {
   const isSubmitting = confirmButtonState === "loading";
 
   const handleClose = (): void => {

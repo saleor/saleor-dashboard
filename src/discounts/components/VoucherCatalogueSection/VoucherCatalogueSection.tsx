@@ -95,7 +95,7 @@ export const VoucherCatalogueSection = ({
   collectionListToolbar,
   productListToolbar,
   variantListToolbar,
-}: VoucherCatalogueSectionProps): JSX.Element => {
+}: VoucherCatalogueSectionProps): React.ReactNode => {
   const intl = useIntl();
   const catalogueErrorMessage = formatVoucherCatalogueErrorMessage(errors, intl);
   const categoriesCount = tabItemsCount.categories ?? 0;

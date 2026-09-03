@@ -10,7 +10,7 @@ interface AttributeValueRequiredCellProps {
 
 export const AttributeValueRequiredCell = ({
   valueRequired,
-}: AttributeValueRequiredCellProps): JSX.Element => (
+}: AttributeValueRequiredCellProps): React.ReactNode => (
   <Text size={2} color={valueRequired ? "default1" : "default2"} data-test-id="value-required">
     {valueRequired ? (
       <FormattedMessage {...messages.required} />

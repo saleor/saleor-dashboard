@@ -32,7 +32,7 @@ const initialRecipients: StaffOrderAlertRecipient[] = [
   },
 ];
 
-export const WithRecipients = (): JSX.Element => {
+export const WithRecipients = (): React.ReactNode => {
   const [recipients, setRecipients] = useState(initialRecipients);
 
   return (
@@ -50,7 +50,7 @@ export const WithRecipients = (): JSX.Element => {
   );
 };
 
-export const Empty = (): JSX.Element => (
+export const Empty = (): React.ReactNode => (
   <Box padding={6} __maxWidth="48rem">
     <StaffOrderAlertRecipientsCard
       recipients={[]}

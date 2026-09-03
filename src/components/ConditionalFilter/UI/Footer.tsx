@@ -59,7 +59,7 @@ export const ClearButton = ({ children, disabled, ...props }: ButtonProps) => {
   );
 };
 
-export const CloseButton = ({ children, ...props }: ButtonProps): JSX.Element => (
+export const CloseButton = ({ children, ...props }: ButtonProps): React.ReactNode => (
   <Button variant="tertiary" {...props}>
     {children}
   </Button>

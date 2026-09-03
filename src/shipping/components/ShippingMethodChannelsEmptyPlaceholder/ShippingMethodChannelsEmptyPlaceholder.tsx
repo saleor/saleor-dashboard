@@ -11,7 +11,7 @@ const messages = defineMessages({
   },
 });
 
-export const ShippingMethodChannelsEmptyPlaceholder = (): JSX.Element => (
+export const ShippingMethodChannelsEmptyPlaceholder = (): React.ReactNode => (
   <Placeholder
     icon={<Lock size={iconSize.medium} strokeWidth={iconStrokeWidthBySize.medium} aria-hidden />}
   >

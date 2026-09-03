@@ -32,7 +32,7 @@ export const AssignWarehouseDialog = ({
   open,
   onClose,
   ...fetchMoreProps
-}: AssignWarehouseDialogProps): JSX.Element => {
+}: AssignWarehouseDialogProps): React.ReactNode => {
   const intl = useIntl();
 
   const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({

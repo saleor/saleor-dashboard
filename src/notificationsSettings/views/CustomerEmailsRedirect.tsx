@@ -12,7 +12,7 @@ import { notificationsMessages } from "../messages";
  * Opens the installed SMTP app (customer emails). If not installed, sends merchants
  * to Explore Extensions in this Dashboard — not the public App Store.
  */
-export const CustomerEmailsRedirectView = (): JSX.Element => {
+export const CustomerEmailsRedirectView = (): React.ReactNode => {
   const navigate = useNavigator();
   const { navigateToApp } = useAppNavigation();
   const redirected = useRef(false);

@@ -2,7 +2,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
 
-export const AddNewValueAdornment = (): JSX.Element => (
+export const AddNewValueAdornment = (): React.ReactNode => (
   <Box
     as="span"
     display="flex"

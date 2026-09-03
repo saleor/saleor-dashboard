@@ -31,7 +31,7 @@ export const SortableHandle = ({
   isSorting = false,
   attributes,
   listeners,
-}: SortableHandleProps): JSX.Element => (
+}: SortableHandleProps): React.ReactNode => (
   <TableCell className={clsx(styles.cell, disabled && styles.disabled)} onClick={stopRowNavigation}>
     <div
       className={styles.handle}

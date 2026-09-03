@@ -24,7 +24,7 @@ export const SettingsHubLayout = ({
   backHrefIcon,
   backHrefTitle,
   children,
-}: SettingsHubLayoutProps): JSX.Element => {
+}: SettingsHubLayoutProps): React.ReactNode => {
   useScrollToSettingsHash();
 
   return (

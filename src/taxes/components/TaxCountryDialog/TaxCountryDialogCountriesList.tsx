@@ -17,7 +17,7 @@ export const TaxCountryDialogCountriesList = ({
   countries,
   onSelect,
   selectedCountryId,
-}: TaxCountryDialogCountriesListProps): JSX.Element => {
+}: TaxCountryDialogCountriesListProps): React.ReactNode => {
   return (
     <>
       {countries.map((country, index) => (

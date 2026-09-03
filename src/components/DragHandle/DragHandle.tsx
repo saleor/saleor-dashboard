@@ -22,7 +22,7 @@ export const DragHandle = ({
   className,
   cursor = "grab",
   ...props
-}: DragHandleProps): JSX.Element => (
+}: DragHandleProps): React.ReactNode => (
   <GripVertical
     className={clsx(styles.root, cursorClassName[cursor], className)}
     size={iconSize.small}

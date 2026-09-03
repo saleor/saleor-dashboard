@@ -15,7 +15,7 @@ const DeletableItem = ({
   id,
   disabled = false,
   label,
-}: DeletableItemProps): JSX.Element => {
+}: DeletableItemProps): React.ReactNode => {
   const handleDelete = () => {
     if (!disabled) {
       onDelete(id);

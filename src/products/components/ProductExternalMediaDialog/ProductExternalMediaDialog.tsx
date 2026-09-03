@@ -27,7 +27,7 @@ export const ProductExternalMediaDialog = ({
   open,
   onClose,
   onSubmit,
-}: ProductExternalMediaDialogProps): JSX.Element => {
+}: ProductExternalMediaDialogProps): React.ReactNode => {
   const intl = useIntl();
   const urlInputRef = useRef<HTMLInputElement>(null);
   const isSubmittingRef = useRef(false);

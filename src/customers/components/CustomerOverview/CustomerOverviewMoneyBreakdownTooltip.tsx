@@ -18,7 +18,7 @@ interface MoneyTooltipRowProps {
   locale: string;
 }
 
-const MoneyTooltipRow = ({ label, money, locale }: MoneyTooltipRowProps): JSX.Element => (
+const MoneyTooltipRow = ({ label, money, locale }: MoneyTooltipRowProps): React.ReactNode => (
   <Box className={styles.moneyTooltipRow}>
     <Text size={2} color="default2" className={styles.moneyTooltipLabel}>
       {label}
@@ -36,7 +36,7 @@ export const CustomerOverviewMoneyBreakdownTooltip = ({
   locale,
   shipping,
   refunded,
-}: CustomerOverviewMoneyBreakdownTooltipProps): JSX.Element => (
+}: CustomerOverviewMoneyBreakdownTooltipProps): React.ReactNode => (
   <Box className={styles.moneyTooltip}>
     <Text size={2} color="default2">
       <FormattedMessage

@@ -31,7 +31,7 @@ interface CategoryListPageStateProviderProps extends PropsWithChildren {
 export const CategoryListPageStateProvider = ({
   children,
   value,
-}: CategoryListPageStateProviderProps): JSX.Element => {
+}: CategoryListPageStateProviderProps): React.ReactNode => {
   const [store] = useState(() => {
     const initialStore = createStore();
 

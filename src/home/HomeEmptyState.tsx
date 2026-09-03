@@ -47,7 +47,7 @@ const messages = defineMessages({
   },
 });
 
-export const HomeEmptyState = (): JSX.Element => {
+export const HomeEmptyState = (): React.ReactNode => {
   const intl = useIntl();
   const videoRef = useRef<HTMLVideoElement>(null);
   const pulseLink = getPulsePromotionLink(IS_CLOUD_INSTANCE);

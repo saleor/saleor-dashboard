@@ -43,7 +43,7 @@ const AttributeRow = ({
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
   richTextGetters,
-}: AttributeRowProps): JSX.Element => {
+}: AttributeRowProps): React.ReactNode => {
   const intl = useIntl();
   const labelProps = getAttributeRowLabelProps(attribute);
   const referenceIcons = useModelReferenceIcons(attribute);

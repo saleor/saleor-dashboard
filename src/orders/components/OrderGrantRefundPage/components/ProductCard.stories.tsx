@@ -61,7 +61,7 @@ const GrantRefundDecorator = ({
 }: {
   children: ReactNode;
   reasonReferenceTypeId?: string;
-}): JSX.Element => (
+}): React.ReactNode => (
   <GrantRefundContext.Provider
     value={{
       state,

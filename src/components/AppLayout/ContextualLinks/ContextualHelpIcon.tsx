@@ -19,7 +19,7 @@ export const ContextualHelpIcon = ({
   label,
   analyticsType,
   dataTestId,
-}: ContextualHelpIconProps): JSX.Element => {
+}: ContextualHelpIconProps): React.ReactNode => {
   const { trackEvent } = useAnalytics();
 
   return (

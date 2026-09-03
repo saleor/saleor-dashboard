@@ -67,7 +67,7 @@ export const StaffProperties = ({
   onChange,
   onImageDelete,
   onImageUpload,
-}: StaffPropertiesProps): JSX.Element => {
+}: StaffPropertiesProps): React.ReactNode => {
   const intl = useIntl();
   const imgInputAnchor = createRef<HTMLInputElement>();
   const clickImgInput = (): void => {

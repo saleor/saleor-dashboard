@@ -28,7 +28,7 @@ interface PaperSignIconProps {
   size?: number;
 }
 
-export const PaperSignIcon = ({ size = iconSize.small }: PaperSignIconProps): JSX.Element => (
+export const PaperSignIcon = ({ size = iconSize.small }: PaperSignIconProps): React.ReactNode => (
   <svg
     width={size}
     height={size}

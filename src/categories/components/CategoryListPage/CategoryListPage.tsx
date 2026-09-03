@@ -54,7 +54,7 @@ export const CategoryListPage = ({
   onCreateCategory,
   hasPresetsChanged,
   ...listProps
-}: CategoryTableProps): JSX.Element => {
+}: CategoryTableProps): React.ReactNode => {
   const {
     rows,
     selectedCategoriesIds,

@@ -25,7 +25,7 @@ const pinIcon = <Pin size={iconSize.small} strokeWidth={iconStrokeWidth} />;
  * organization-pinned — the models page hides its button in that case — and to free a
  * slot occupied by a deleted model type.
  */
-export const NavigationPinsCard = (): JSX.Element => {
+export const NavigationPinsCard = (): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();

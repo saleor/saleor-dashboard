@@ -16,7 +16,7 @@ export const StaffMetadataDialog = ({
   onClose,
   open,
   staffMember,
-}: StaffMetadataDialogProps): JSX.Element => {
+}: StaffMetadataDialogProps): React.ReactNode => {
   const intl = useIntl();
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
     initialData: staffMember ?? undefined,

@@ -52,7 +52,7 @@ const OptionPlaceholders = ({
 }: {
   name: string;
   sampleValue: string | null;
-}): JSX.Element => {
+}): React.ReactNode => {
   const useSwatches = isColorAttributeName(name);
 
   return (
@@ -72,7 +72,11 @@ const OptionPlaceholders = ({
   );
 };
 
-const OptionRows = ({ attributes }: { attributes: PdpSchematicNamedAttribute[] }): JSX.Element => (
+const OptionRows = ({
+  attributes,
+}: {
+  attributes: PdpSchematicNamedAttribute[];
+}): React.ReactNode => (
   <>
     {attributes.map(attribute => (
       <Box key={attribute.id} className={styles.optionRow} data-test-id="pdp-schematic-option">
@@ -85,7 +89,7 @@ const OptionRows = ({ attributes }: { attributes: PdpSchematicNamedAttribute[] }
   </>
 );
 
-const SampleValue = ({ value }: { value: string | null }): JSX.Element =>
+const SampleValue = ({ value }: { value: string | null }): React.ReactNode =>
   value ? (
     <Text as="span" className={styles.specValue}>
       {value}
@@ -118,7 +122,7 @@ const LegendItem = ({
   titleClassName: string;
   title: ReactNode;
   body: ReactNode;
-}): JSX.Element => (
+}): React.ReactNode => (
   <Box as="li" className={styles.legendItem} data-schematic-region={region}>
     <Box className={styles.legendLeading} aria-hidden>
       <Box className={clsx(styles.legendIcon, iconClassName)} />
@@ -134,7 +138,7 @@ const LegendItem = ({
   </Box>
 );
 
-const SchematicLoadingRegions = (): JSX.Element => (
+const SchematicLoadingRegions = (): React.ReactNode => (
   <>
     <Box className={clsx(styles.region, styles.regionOptions)}>
       <Text as="span" className={styles.regionLabel}>
@@ -163,7 +167,7 @@ const SchematicLoadingRegions = (): JSX.Element => (
   </>
 );
 
-const SchematicLoadingSpecs = (): JSX.Element => (
+const SchematicLoadingSpecs = (): React.ReactNode => (
   <>
     {Array.from({ length: 2 }, (_, index) => (
       <Box key={index} className={styles.specRow} aria-hidden>
@@ -181,7 +185,7 @@ export const ProductTypePdpSchematic = ({
   selectedVariantAttributeIds,
   onDismiss,
   loading = false,
-}: ProductTypePdpSchematicProps): JSX.Element => {
+}: ProductTypePdpSchematicProps): React.ReactNode => {
   const intl = useIntl();
   const { theme } = useTheme();
   const { optionAttributes, badgeAttributes, specAttributes } = getPdpSchematicModel({

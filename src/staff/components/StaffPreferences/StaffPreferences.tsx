@@ -12,7 +12,7 @@ interface StaffPreferencesProps {
 export const StaffPreferences = ({
   locale,
   onLocaleChange,
-}: StaffPreferencesProps): JSX.Element => {
+}: StaffPreferencesProps): React.ReactNode => {
   const intl = useIntl();
   const handleLocaleChange = async (nextLocale: Locale): Promise<void> => {
     if (!nextLocale) {

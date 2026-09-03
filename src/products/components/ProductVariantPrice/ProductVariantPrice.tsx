@@ -65,7 +65,7 @@ export const ProductVariantPrice = ({
   listedInChannelsCount,
   availableChannelsCount,
   disabledMessage,
-}: ProductVariantPriceProps): JSX.Element => {
+}: ProductVariantPriceProps): React.ReactNode => {
   const intl = useIntl();
   const channelApiErrors = errors.filter(
     (error): error is ProductChannelListingErrorFragment => "channels" in error,

@@ -36,7 +36,7 @@ export const OrderTransactionsSection = ({
   onPaymentVoid,
   onAddManualTransaction,
   onRefundAdd,
-}: OrderTransactionsSectionProps): JSX.Element => {
+}: OrderTransactionsSectionProps): React.ReactNode => {
   const filteredPayments = useMemo(() => getFilteredPayments(order), [order]);
 
   const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCards].some(

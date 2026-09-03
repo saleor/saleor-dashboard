@@ -33,7 +33,7 @@ const messages = defineMessages({
 export const ProductListViewSwitch = ({
   defaultValue,
   setProductListViewType,
-}: ProductListViewSwitchProps): JSX.Element => {
+}: ProductListViewSwitchProps): React.ReactNode => {
   const intl = useIntl();
   const listViewLabel = intl.formatMessage(messages.listView);
   const gridViewLabel = intl.formatMessage(messages.gridView);

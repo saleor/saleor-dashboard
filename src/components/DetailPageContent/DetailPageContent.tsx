@@ -20,7 +20,7 @@ export const DetailPageContent = ({
   children,
   className,
   ...rest
-}: DetailPageContentProps): JSX.Element => (
+}: DetailPageContentProps): React.ReactNode => (
   <Box
     className={clsx(styles.root, className)}
     display="flex"

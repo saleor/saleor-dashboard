@@ -41,7 +41,7 @@ export const ReasonSettingsSection = ({
   onChange,
   loading,
   disabled = false,
-}: ReasonSettingsSectionProps): JSX.Element => {
+}: ReasonSettingsSectionProps): React.ReactNode => {
   const selectedTypeLabel = modelTypesOptions.find(option => option.value === value)?.label;
 
   return (

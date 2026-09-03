@@ -78,7 +78,7 @@ export const AssignedAttributesCard = ({
   onAttributeCreate,
   onAttributeReorder,
   onAttributeUnassign,
-}: AssignedAttributesCardProps): JSX.Element => {
+}: AssignedAttributesCardProps): React.ReactNode => {
   const intl = useIntl();
   const { items: orderedAttributes, onSortEnd } = useOptimisticListReorder(
     attributes,

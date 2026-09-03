@@ -24,7 +24,7 @@ const LockedSettingNotice = ({
 }: {
   children: ReactNode;
   "data-test-id"?: string;
-}): JSX.Element => (
+}): React.ReactNode => (
   <div className={styles.lockedNotice} data-test-id={dataTestId} role="status">
     <Lock
       className={styles.lockedNoticeIcon}

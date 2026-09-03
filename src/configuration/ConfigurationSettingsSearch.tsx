@@ -11,7 +11,7 @@ import styles from "./ConfigurationSettingsSearch.module.css";
 
 const CONFIGURATION_SETTINGS_LISTBOX_ID = "configuration-settings-search-listbox";
 
-const KindBadge = ({ kind }: { kind: ResolvedSettingsCatalogEntry["kind"] }): JSX.Element => {
+const KindBadge = ({ kind }: { kind: ResolvedSettingsCatalogEntry["kind"] }): React.ReactNode => {
   switch (kind) {
     case "hub":
       return (
@@ -59,7 +59,7 @@ export const ConfigurationSettingsSearchToolbar = ({
   onQueryChange,
   onKeyDown,
   activeOptionId,
-}: ConfigurationSettingsSearchToolbarProps): JSX.Element => {
+}: ConfigurationSettingsSearchToolbarProps): React.ReactNode => {
   const intl = useIntl();
   const hasQuery = query.trim().length > 0;
 
@@ -109,7 +109,7 @@ export const ConfigurationSettingsSearchResults = ({
   query,
   activeIndex,
   onActiveIndexChange,
-}: ConfigurationSettingsSearchResultsProps): JSX.Element => {
+}: ConfigurationSettingsSearchResultsProps): React.ReactNode => {
   const listRef = useRef<HTMLUListElement | null>(null);
 
   useEffect(

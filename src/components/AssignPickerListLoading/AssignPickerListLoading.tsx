@@ -4,7 +4,7 @@ import { Box } from "@saleor/macaw-ui-next";
 
 import styles from "./AssignPickerListPlaceholder.module.css";
 
-export const AssignPickerListLoading = (): JSX.Element => (
+export const AssignPickerListLoading = (): React.ReactNode => (
   <Box
     className={styles.container}
     display="flex"
@@ -22,7 +22,7 @@ interface AssignPickerListLoadingRowProps {
 
 export const AssignPickerListLoadingRow = ({
   colSpan = 3,
-}: AssignPickerListLoadingRowProps): JSX.Element => (
+}: AssignPickerListLoadingRowProps): React.ReactNode => (
   <TableRow>
     <TableCell colSpan={colSpan} className={styles.cell}>
       <AssignPickerListLoading />

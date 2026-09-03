@@ -42,7 +42,7 @@ const scrollToStaffDelivery = (): void => {
   scrollToDetailSection(settingsHashes.notificationsDelivery);
 };
 
-export const StaffEmailsView = (): JSX.Element => {
+export const StaffEmailsView = (): React.ReactNode => {
   const intl = useIntl();
   const notify = useNotifier();
   const { data, loading } = usePluginQuery({

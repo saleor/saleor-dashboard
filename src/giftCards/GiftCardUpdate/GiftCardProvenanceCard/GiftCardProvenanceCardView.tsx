@@ -47,7 +47,7 @@ export const GiftCardProvenanceCardView = ({
   giftCard,
   loading = false,
   channel = null,
-}: GiftCardProvenanceCardViewProps): JSX.Element => {
+}: GiftCardProvenanceCardViewProps): React.ReactNode => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 

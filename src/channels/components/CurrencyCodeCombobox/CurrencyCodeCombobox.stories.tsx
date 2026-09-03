@@ -12,7 +12,7 @@ export default meta;
 
 type Story = StoryObj<typeof CurrencyCodeCombobox>;
 
-const CurrencyCodeComboboxPlayground = (): JSX.Element => {
+const CurrencyCodeComboboxPlayground = (): React.ReactNode => {
   const [value, setValue] = useState("PLN");
 
   return (

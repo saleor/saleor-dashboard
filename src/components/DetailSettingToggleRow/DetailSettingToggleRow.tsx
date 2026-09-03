@@ -28,7 +28,7 @@ export const DetailSettingToggleRow = ({
   testId,
   notice,
   children,
-}: DetailSettingToggleRowProps): JSX.Element => {
+}: DetailSettingToggleRowProps): React.ReactNode => {
   const toggle = () => {
     if (!disabled) {
       onPressedChange(!pressed);
@@ -80,6 +80,8 @@ export const DetailSettingToggleRow = ({
   );
 };
 
-export const DetailSettingNestedField = ({ children }: { children: ReactNode }): JSX.Element => (
-  <Box className={styles.nestedField}>{children}</Box>
-);
+export const DetailSettingNestedField = ({
+  children,
+}: {
+  children: ReactNode;
+}): React.ReactNode => <Box className={styles.nestedField}>{children}</Box>;

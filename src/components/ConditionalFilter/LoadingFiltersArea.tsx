@@ -9,7 +9,7 @@ interface LoadingFiltersAreaProps {
 
 export const LoadingFiltersArea = ({
   layout = "popover",
-}: LoadingFiltersAreaProps): JSX.Element => {
+}: LoadingFiltersAreaProps): React.ReactNode => {
   const isPopover = layout === "popover";
   const isPanel = layout === "panel";
 

@@ -55,7 +55,7 @@ export const StaffOrderAlertRecipientsCard = ({
   staffEmailsEnabled,
   onAssign,
   onRemove,
-}: StaffOrderAlertRecipientsCardProps): JSX.Element => {
+}: StaffOrderAlertRecipientsCardProps): React.ReactNode => {
   const intl = useIntl();
   const hasRecipients = recipients.length > 0;
   const assignButton = canManageStaff ? (
@@ -154,7 +154,7 @@ interface RecipientRowProps {
   onRemove: (id: string) => void;
 }
 
-const RecipientRow = ({ recipient, disabled, onRemove }: RecipientRowProps): JSX.Element => {
+const RecipientRow = ({ recipient, disabled, onRemove }: RecipientRowProps): React.ReactNode => {
   const name = recipientDisplayName(recipient);
   const hint = recipientHint(recipient);
   const href = recipient.userId ? staffMemberDetailsUrl(recipient.userId) : undefined;

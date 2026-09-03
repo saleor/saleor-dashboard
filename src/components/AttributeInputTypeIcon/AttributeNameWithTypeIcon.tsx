@@ -14,7 +14,7 @@ export const AttributeNameWithTypeIcon = ({
   name,
   inputType,
   secondary,
-}: AttributeNameWithTypeIconProps): JSX.Element => (
+}: AttributeNameWithTypeIconProps): React.ReactNode => (
   <Box display="flex" flexDirection="column" gap={0.5} minWidth={0}>
     <Box display="flex" alignItems="center" gap={1} minWidth={0}>
       {name}

@@ -107,7 +107,7 @@ export const CategoryUpdatePage = ({
   onUpdateListSettings,
   onShowMetadata,
   onCreateSubcategory,
-}: CategoryUpdatePageProps): JSX.Element => {
+}: CategoryUpdatePageProps): React.ReactNode => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();

@@ -73,7 +73,7 @@ export const AttributeValueInlineAdd = ({
   onAdd,
   onAddMany,
   variant = "tableFooter",
-}: AttributeValueInlineAddProps): JSX.Element => {
+}: AttributeValueInlineAddProps): React.ReactNode => {
   const intl = useIntl();
   const [form, setForm] = useState<AttributeValueEditDialogFormData>(emptyForm);
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;

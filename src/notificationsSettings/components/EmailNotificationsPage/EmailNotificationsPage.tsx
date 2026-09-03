@@ -50,7 +50,7 @@ export const EmailNotificationsPage = ({
   onNotificationChange,
   onSmtpFieldChange,
   onSubmit,
-}: EmailNotificationsPageProps): JSX.Element => {
+}: EmailNotificationsPageProps): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
   const formId = "staff-emails-form";

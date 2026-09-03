@@ -22,7 +22,7 @@ export const SwatchPreview = ({
   imageUrl,
   size = 40,
   shape = "rounded",
-}: SwatchPreviewProps): JSX.Element => {
+}: SwatchPreviewProps): React.ReactNode => {
   const hasImage = Boolean(imageUrl);
   const hasColor = Boolean(color);
   const isEmpty = !hasImage && !hasColor;

@@ -64,7 +64,7 @@ export const CustomerListPage = ({
   tabCounts,
   onTabChange,
   ...customerListProps
-}: CustomerListPageProps): JSX.Element => {
+}: CustomerListPageProps): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
   const canEditCustomers = useCanEditCustomers();

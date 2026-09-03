@@ -26,7 +26,7 @@ export const SwitchToDefaultDeliveryDialog = ({
   onClose,
   onConfirm,
   onDownloadBackup,
-}: SwitchToDefaultDeliveryDialogProps): JSX.Element => {
+}: SwitchToDefaultDeliveryDialogProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

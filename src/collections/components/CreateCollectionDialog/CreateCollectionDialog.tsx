@@ -56,7 +56,7 @@ export const CreateCollectionDialog = ({
   errors: apiErrors,
   onClose,
   onSubmit,
-}: CreateCollectionDialogProps): JSX.Element => {
+}: CreateCollectionDialogProps): React.ReactNode => {
   const intl = useIntl();
   const [submitErrors, setSubmitErrors] = useState<CollectionErrorFragment[]>([]);
   // Ignore Apollo's last mutation result until this open session submits again.

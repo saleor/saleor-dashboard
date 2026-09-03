@@ -26,7 +26,7 @@ export const DiscountSavebar = ({
   onCancel,
   submitButtonState,
   composition = EMPTY_PROMOTION_SAVE_COMPOSITION,
-}: DiscountSavebarProps): JSX.Element => {
+}: DiscountSavebarProps): React.ReactNode => {
   const intl = useIntl();
   const hasUnsavedChanges = hasPromotionSaveComposition(composition);
   const isSaveDisabled = disabled || !hasUnsavedChanges;

@@ -59,7 +59,7 @@ export const AssignListCard = ({
   "data-test-id": dataTestId,
   rowTestId = "assign-list-row",
   rowLinkTestId = (id: string): string => `${id}-link`,
-}: AssignListCardProps): JSX.Element => {
+}: AssignListCardProps): React.ReactNode => {
   const hasItems = items.length > 0;
 
   return (

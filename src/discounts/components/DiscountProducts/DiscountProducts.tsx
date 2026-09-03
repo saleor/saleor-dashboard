@@ -55,7 +55,7 @@ export const DiscountProducts = ({
   numberOfRows = PAGINATE_BY,
   onUpdateListSettings,
   embedded = false,
-}: SaleProductsProps): JSX.Element => {
+}: SaleProductsProps): React.ReactNode => {
   const intl = useIntl();
   // Product.channelListings is behind MANAGE_PRODUCTS and simply absent otherwise, so drop the
   // column instead of filling every row with a placeholder.

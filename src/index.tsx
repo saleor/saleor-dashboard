@@ -127,7 +127,7 @@ const handleLegacyTheming = (): void => {
 
 handleLegacyTheming();
 
-const App = (): JSX.Element => (
+const App = (): React.ReactNode => (
   <ApolloProvider client={apolloClient}>
     <Router>
       {/* @ts-expect-error legacy types */}

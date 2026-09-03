@@ -37,7 +37,7 @@ export const RefundsSettingsPage = ({
   refundReasonReferenceType,
   returnReasonReferenceType,
   saveButtonBarState,
-}: RefundsSettingsPageProps): JSX.Element => {
+}: RefundsSettingsPageProps): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
 

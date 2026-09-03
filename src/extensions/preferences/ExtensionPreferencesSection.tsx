@@ -22,7 +22,7 @@ import { useExtensionPreferences } from "./useExtensionPreferences";
 import { getWidgetLocationHref, isWidgetMount, widgetMountMessages } from "./widgetMountLabel";
 import { isWidgetShown } from "./widgetPreferenceState";
 
-export const ExtensionPreferencesSection = (): JSX.Element => {
+export const ExtensionPreferencesSection = (): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
   const userPermissions = useUserPermissions();

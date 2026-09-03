@@ -29,14 +29,14 @@ interface CustomerOrdersProps {
   viewAllHref: string;
 }
 
-const OrderStatusPill = ({ status }: { status: OrderStatus }): JSX.Element => {
+const OrderStatusPill = ({ status }: { status: OrderStatus }): React.ReactNode => {
   const intl = useIntl();
   const { localized, status: color } = transformOrderStatus(status, intl);
 
   return <Pill label={localized} color={color} data-test-id="customer-order-status" />;
 };
 
-export const CustomerOrders = ({ orders, viewAllHref }: CustomerOrdersProps): JSX.Element => {
+export const CustomerOrders = ({ orders, viewAllHref }: CustomerOrdersProps): React.ReactNode => {
   return (
     <AssignableListCard
       data-test-id="customer-orders"

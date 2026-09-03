@@ -12,7 +12,7 @@ import styles from "./ExpressionFilters.module.css";
 
 const EXPRESSION_FILTERS_PANEL_ID = "expression-filters-panel";
 
-export const ExpressionFilters = (): JSX.Element => {
+export const ExpressionFilters = (): React.ReactNode => {
   const { formatMessage } = useIntl();
   const { valueProvider, containerState, filterWindow } = useConditionalFilterContext();
   const handleToggle = (): void => {

@@ -32,7 +32,7 @@ export const TaxCountryDialog = ({
   onClose,
   onConfirm,
   open,
-}: TaxCountryDialogProps): JSX.Element => {
+}: TaxCountryDialogProps): React.ReactNode => {
   const intl = useIntl();
   const countryItems = useMemo(() => toCountryPickerItems(countries), [countries]);
   const countriesByCode = useMemo(

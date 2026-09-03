@@ -22,6 +22,6 @@ export interface VoucherCodesProps {
   onCustomCodeGenerate: (code: string) => void;
 }
 
-export const VoucherCodes = (props: VoucherCodesProps): JSX.Element => (
+export const VoucherCodes = (props: VoucherCodesProps): React.ReactNode => (
   <VoucherCodesCard {...props} />
 );

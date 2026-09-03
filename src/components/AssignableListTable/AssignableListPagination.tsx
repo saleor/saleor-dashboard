@@ -64,7 +64,7 @@ export const AssignableListPagination = ({
   inset = "card",
   paddingLeft,
   beforePagination,
-}: AssignableListPaginationProps): JSX.Element => {
+}: AssignableListPaginationProps): React.ReactNode => {
   const intl = useIntl();
   const { hasNextPage, hasPreviousPage, loadNextPage, loadPreviousPage } = usePaginatorContext();
   const currentRowNumber = String(numberOfRows);

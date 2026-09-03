@@ -33,7 +33,7 @@ const getLockedValueOptions = (element: FilterElement): ItemOption[] =>
 
 /** Renders a locked value with the canonical read-only type component so the
  * restriction hint matches how model/product types appear in detail page headers. */
-const LockedValue = ({ field, option }: { field: string; option: ItemOption }): JSX.Element => {
+const LockedValue = ({ field, option }: { field: string; option: ItemOption }): React.ReactNode => {
   if (field === "pageTypes") {
     return <ModelTypeDisplay modelType={{ id: option.value, name: option.label }} />;
   }
@@ -49,7 +49,7 @@ const LockedValue = ({ field, option }: { field: string; option: ItemOption }): 
   );
 };
 
-const LockedRestrictionHint = ({ elements }: { elements: FilterElement[] }): JSX.Element => {
+const LockedRestrictionHint = ({ elements }: { elements: FilterElement[] }): React.ReactNode => {
   const { formatMessage } = useIntl();
 
   return (

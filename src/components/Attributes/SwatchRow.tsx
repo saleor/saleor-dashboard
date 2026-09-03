@@ -32,7 +32,7 @@ export const SwatchRow = ({
   disabled,
   error,
   onChange,
-}: SwatchRowProps): JSX.Element => {
+}: SwatchRowProps): React.ReactNode => {
   const intl = useIntl();
   const selectedValueSlug = attribute.value[0];
   const value = selectedValueSlug

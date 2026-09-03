@@ -28,7 +28,7 @@ export const AssignShippingZoneDialog = ({
   open,
   onClose,
   ...fetchMoreProps
-}: AssignShippingZoneDialogProps): JSX.Element => {
+}: AssignShippingZoneDialogProps): React.ReactNode => {
   const intl = useIntl();
 
   const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({

@@ -18,7 +18,7 @@ const FORM_ID = "staff-password-reset";
 
 const normalizeEmail = (value: string): string => value.trim().toLowerCase();
 
-export const StaffPasswordResetDialog = ({ open, onClose }: DialogProps): JSX.Element => {
+export const StaffPasswordResetDialog = ({ open, onClose }: DialogProps): React.ReactNode => {
   const intl = useIntl();
   const [email, setEmail] = useState("");
   const notify = useNotifier();

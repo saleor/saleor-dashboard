@@ -10,7 +10,7 @@ interface DiscountDetailsTitleProps {
   data: PromotionDetailsFragment | undefined | null;
 }
 
-export const DiscountDetailsTitle = ({ data }: DiscountDetailsTitleProps): JSX.Element => {
+export const DiscountDetailsTitle = ({ data }: DiscountDetailsTitleProps): React.ReactNode => {
   const intl = useIntl();
 
   if (!data) {

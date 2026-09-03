@@ -82,7 +82,7 @@ export const CustomerTypeDisplay = ({
   color = "default2",
   "data-test-id": dataTestId = "customer-type-display",
   title,
-}: CustomerTypeProps): JSX.Element => {
+}: CustomerTypeProps): React.ReactNode => {
   const intl = useIntl();
 
   if (!customerType) {
@@ -116,7 +116,7 @@ export const CustomerTypeDisplay = ({
   );
 };
 
-export const ClickableCustomerType = (props: CustomerTypeProps): JSX.Element => {
+export const ClickableCustomerType = (props: CustomerTypeProps): React.ReactNode => {
   const { customerType, href } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();

@@ -9,7 +9,7 @@ interface RefundTransferFailureInfoProps {
 export const RefundTransferFailureInfo = ({
   message,
   testId = "refund-transfer-failure-info",
-}: RefundTransferFailureInfoProps): JSX.Element => (
+}: RefundTransferFailureInfoProps): React.ReactNode => (
   <Tooltip>
     <Tooltip.Trigger>
       <Box display="flex" cursor="pointer" padding={1} flexShrink="0" data-test-id={testId}>

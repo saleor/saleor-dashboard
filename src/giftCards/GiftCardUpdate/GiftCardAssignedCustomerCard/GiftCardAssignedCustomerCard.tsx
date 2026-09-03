@@ -10,7 +10,7 @@ import { GIFT_CARD_DETAILS_QUERY } from "../queries";
 import { GiftCardAssignedCustomerCardView } from "./GiftCardAssignedCustomerCardView";
 import { giftCardAssignedCustomerCardMessages as messages } from "./messages";
 
-export const GiftCardAssignedCustomerCard = (): JSX.Element => {
+export const GiftCardAssignedCustomerCard = (): React.ReactNode => {
   const intl = useIntl();
   const notify = useNotifier();
   const { giftCard, loading } = useGiftCardDetails();

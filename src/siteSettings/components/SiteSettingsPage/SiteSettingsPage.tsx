@@ -99,7 +99,7 @@ export const SiteSettingsPage = ({
   saveButtonBarState,
   shop,
   onSubmit,
-}: SiteSettingsPageProps): JSX.Element => {
+}: SiteSettingsPageProps): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [displayCountry, setDisplayCountry] = useStateFromProps(

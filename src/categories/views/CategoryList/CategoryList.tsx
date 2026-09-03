@@ -58,7 +58,7 @@ interface CategoryListProps {
   params: CategoryListUrlQueryParams;
 }
 
-const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
+const CategoryList = ({ params }: CategoryListProps): React.ReactNode => {
   const client = useApolloClient();
   const location = useLocation();
   const navigate = useNavigator();

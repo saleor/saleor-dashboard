@@ -26,7 +26,7 @@ export const NavigationPinList = ({
   emptyMessage,
   disabled,
   onRemove,
-}: NavigationPinListProps): JSX.Element => {
+}: NavigationPinListProps): React.ReactNode => {
   const intl = useIntl();
   const { items, hasResolved } = useNavigationPinListItems(pins);
 

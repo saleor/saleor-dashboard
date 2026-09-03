@@ -59,7 +59,7 @@ export const CustomerAttributesCard = ({
   disabled,
   error,
   onChange,
-}: CustomerAttributesCardProps): JSX.Element => {
+}: CustomerAttributesCardProps): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
   const userPermissions = useUserPermissions();

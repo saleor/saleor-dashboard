@@ -42,7 +42,7 @@ export const SwatchAttributeMultiselect = ({
   helperText,
   disabled,
   layout,
-}: SwatchAttributeMultiselectProps): JSX.Element => {
+}: SwatchAttributeMultiselectProps): React.ReactNode => {
   const [query, setQuery] = useState("");
   const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
   const listItems = filterProductReferenceOptions(options, query);

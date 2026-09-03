@@ -21,7 +21,7 @@ import { submitRefundsSettingsForm } from "@dashboard/refundsSettings/components
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-export const RefundsSettings = (): JSX.Element => {
+export const RefundsSettings = (): React.ReactNode => {
   const intl = useIntl();
   const notify = useNotifier();
   const formId = useRef(Symbol("refunds-settings-form")).current;

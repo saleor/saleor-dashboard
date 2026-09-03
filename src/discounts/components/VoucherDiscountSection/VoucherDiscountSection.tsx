@@ -52,7 +52,7 @@ export const VoucherDiscountSectionSkeleton = ({
   variant = "unknown",
 }: {
   variant?: VoucherDiscountSkeletonVariant;
-}): JSX.Element => {
+}): React.ReactNode => {
   const isShipping = variant === "shipping";
 
   return (
@@ -103,7 +103,7 @@ export const VoucherDiscountSection = ({
   onChange,
   onChannelChange,
   onChannelsChange,
-}: VoucherDiscountSectionProps): JSX.Element => {
+}: VoucherDiscountSectionProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormErrors(["discountType", "discountValue", "type"], errors);
   const isShipping = isShippingVoucher(data);

@@ -29,7 +29,7 @@ const ActionLink = ({
 }: {
   action: RippleVideoAnnouncementAction;
   children: ReactNode;
-}): JSX.Element => {
+}): React.ReactNode => {
   if (action.external) {
     return (
       <Link href={action.href} target="_blank" rel="noopener noreferrer" inline={false}>

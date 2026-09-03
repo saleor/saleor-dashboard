@@ -61,7 +61,7 @@ export const CreateCategoryDialog = ({
   errors: apiErrors,
   onClose,
   onSubmit,
-}: CreateCategoryDialogProps): JSX.Element => {
+}: CreateCategoryDialogProps): React.ReactNode => {
   const intl = useIntl();
   const [submitErrors, setSubmitErrors] = useState<ProductErrorFragment[]>([]);
   // Ignore Apollo's last mutation result until this open session submits again.

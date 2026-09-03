@@ -20,7 +20,7 @@ export const DisableStaffEmailsDialog = ({
   confirmButtonState,
   onClose,
   onConfirm,
-}: DisableStaffEmailsDialogProps): JSX.Element => {
+}: DisableStaffEmailsDialogProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

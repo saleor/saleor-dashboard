@@ -10,7 +10,7 @@ interface VoucherDiscountSubsectionHeaderProps {
 export const VoucherDiscountSubsectionHeader = ({
   title,
   hint,
-}: VoucherDiscountSubsectionHeaderProps): JSX.Element => (
+}: VoucherDiscountSubsectionHeaderProps): React.ReactNode => (
   <Box display="flex" flexDirection="column" gap={1}>
     <Text size={3} fontWeight="medium" as="h3" margin={0}>
       {title}

@@ -11,7 +11,7 @@ interface CopyableTextProps {
   children?: ReactNode;
 }
 
-export const CopyableText = ({ text, children }: CopyableTextProps): JSX.Element => {
+export const CopyableText = ({ text, children }: CopyableTextProps): React.ReactNode => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const [showCopyButton, setShowCopyButton] = useState(false);

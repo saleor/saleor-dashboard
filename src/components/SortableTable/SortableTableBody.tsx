@@ -80,7 +80,7 @@ export const SortableTableBody = ({
   className,
   onSortEnd,
   ...props
-}: SortableTableBodyComponentProps): JSX.Element => {
+}: SortableTableBodyComponentProps): React.ReactNode => {
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [overlayMetrics, setOverlayMetrics] = useState<OverlayMetrics | null>(null);
   const suppressClickAfterDrag = useSuppressClickAfterDrag();

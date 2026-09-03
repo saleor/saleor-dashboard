@@ -23,7 +23,7 @@ interface FormData {
  * Open (non-carded) activity section — sits last in DetailPageContent.
  * Timeline chrome is self-spacing; avoid wrapping in DetailSettingsCard / DetailGroupBox.
  */
-export const GiftCardHistory = (): JSX.Element => {
+export const GiftCardHistory = (): React.ReactNode => {
   const intl = useIntl();
   const notify = useNotifier();
   const { giftCard } = useGiftCardDetails();

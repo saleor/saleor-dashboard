@@ -16,7 +16,7 @@ export const ProductListPagination = ({
   settings,
   disabled,
   onUpdateListSettings,
-}: ProductListPaginationProps): JSX.Element => {
+}: ProductListPaginationProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

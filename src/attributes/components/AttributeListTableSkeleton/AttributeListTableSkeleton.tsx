@@ -12,7 +12,7 @@ interface AttributeListTableSkeletonRowsProps {
 export const AttributeListTableSkeletonRows = ({
   rowCount = 3,
   variantColumn,
-}: AttributeListTableSkeletonRowsProps): JSX.Element => (
+}: AttributeListTableSkeletonRowsProps): React.ReactNode => (
   <>
     {Array.from({ length: rowCount }, (_, index) => (
       <TableRow key={index} className={tableStyles.row}>

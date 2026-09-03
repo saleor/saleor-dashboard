@@ -42,7 +42,7 @@ jest.mock("./hooks/useGraphQLPlayground", () => ({
 }));
 jest.setTimeout(30000); // Timeout was increased because of error throw in update test when run all tests
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => {
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => {
   return (
     <MemoryRouter>
       <MockedProvider

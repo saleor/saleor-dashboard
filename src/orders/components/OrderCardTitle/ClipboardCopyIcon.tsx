@@ -5,7 +5,7 @@ interface ClipboardCopyIconProps {
   hasBeenClicked: boolean;
 }
 
-export const ClipboardCopyIcon = ({ hasBeenClicked }: ClipboardCopyIconProps): JSX.Element => {
+export const ClipboardCopyIcon = ({ hasBeenClicked }: ClipboardCopyIconProps): React.ReactNode => {
   const className = sprinkles({ color: "default2" });
 
   return hasBeenClicked ? (

@@ -37,7 +37,7 @@ export const DetailGroupBox = ({
   marginTop,
   triggerButtonTestId,
   variant = "primary",
-}: DetailGroupBoxProps): JSX.Element => {
+}: DetailGroupBoxProps): React.ReactNode => {
   const [expanded, setExpanded] = useState<string | undefined>(
     defaultExpanded ? groupId : undefined,
   );

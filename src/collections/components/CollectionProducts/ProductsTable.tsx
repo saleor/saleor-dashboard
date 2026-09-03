@@ -61,7 +61,7 @@ const areAllChecked = (products: Product[], selected: number) => {
   return selected !== 0;
 };
 
-const ProductsTableEmpty = (): JSX.Element => (
+const ProductsTableEmpty = (): React.ReactNode => (
   <Box padding={4} data-test-id="products-empty-state">
     <Placeholder
       icon={
@@ -88,7 +88,7 @@ const ProductsTableBody = ({
   reorderable,
   draggable,
   wrapRows,
-}: ProductsTableBodyProps): JSX.Element => {
+}: ProductsTableBodyProps): React.ReactNode => {
   const allChecked = areAllChecked(products, selected);
 
   return (
@@ -199,7 +199,7 @@ const ProductsTableBody = ({
   );
 };
 
-const ProductsTableStatic = (props: ProductsTableProps): JSX.Element => {
+const ProductsTableStatic = (props: ProductsTableProps): React.ReactNode => {
   const { products } = props;
 
   if (products.length === 0) {
@@ -217,7 +217,7 @@ const ProductsTableStatic = (props: ProductsTableProps): JSX.Element => {
   );
 };
 
-const ProductsTableReorderable = (props: ProductsTableProps): JSX.Element => {
+const ProductsTableReorderable = (props: ProductsTableProps): React.ReactNode => {
   const { products, paginationState } = props;
   const { items, sensors, isSaving, handleDragEnd, handleDragCancel } = useProductDrag({
     products,
@@ -253,7 +253,7 @@ const ProductsTableReorderable = (props: ProductsTableProps): JSX.Element => {
 export const ProductsTable = ({
   reorderable = true,
   ...props
-}: ProductsTableProps): JSX.Element => {
+}: ProductsTableProps): React.ReactNode => {
   if (!reorderable) {
     return <ProductsTableStatic {...props} reorderable={false} />;
   }

@@ -19,7 +19,7 @@ export const VoucherCodesAddButton = ({
   onMultiCodesGenerate,
   onSingleCodesGenerate,
   disabled = false,
-}: VoucherCodesAddButtonProps): JSX.Element => {
+}: VoucherCodesAddButtonProps): React.ReactNode => {
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
   const intl = useIntl();
   const handleMultipleCodesGenerate = useCallback(() => {

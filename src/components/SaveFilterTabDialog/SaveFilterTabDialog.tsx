@@ -30,7 +30,7 @@ export const SaveFilterTabDialog = ({
   onClose,
   onSubmit,
   open,
-}: SaveFilterTabDialogProps): JSX.Element => {
+}: SaveFilterTabDialogProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
 

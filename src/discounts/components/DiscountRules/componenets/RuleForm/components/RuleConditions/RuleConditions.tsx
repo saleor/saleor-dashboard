@@ -20,7 +20,7 @@ interface RuleConditionsProps {
 export const RuleConditions = ({
   hasSelectedChannels,
   openPlayground,
-}: RuleConditionsProps): JSX.Element => {
+}: RuleConditionsProps): React.ReactNode => {
   const intl = useIntl();
   const { discountType, disabled } = useDiscountRulesContext();
   const conditionNames = useConditionNames(discountType);
