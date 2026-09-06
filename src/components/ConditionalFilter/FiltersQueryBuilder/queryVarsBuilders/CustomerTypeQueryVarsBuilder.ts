@@ -1,8 +1,8 @@
 import { type ApolloClient } from "@apollo/client";
 
 import { CustomerTypeHandler, type Handler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { type BothApiQueryVarsBuilder } from "./types";
 
 type CustomerTypeQueryPart = { eq?: string } | { oneOf?: string[] };

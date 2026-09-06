@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { Multiselect } from "@dashboard/components/Combobox";
+import { Multiselect } from "@dashboard/components/Combobox/components/Multiselect";
 import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";

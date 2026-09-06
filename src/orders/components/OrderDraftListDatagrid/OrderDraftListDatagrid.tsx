@@ -5,7 +5,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { type OrderDraft } from "@dashboard/orders/types";

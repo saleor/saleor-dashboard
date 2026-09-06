@@ -17,7 +17,7 @@ export const ListSearchInput = ({
   placeholder,
   onSearchChange,
   showTooltip = true,
-}: ListSearchInputProps): JSX.Element => {
+}: ListSearchInputProps): React.ReactNode => {
   const [search, setSearch] = useState(initialSearch);
 
   useEffect(

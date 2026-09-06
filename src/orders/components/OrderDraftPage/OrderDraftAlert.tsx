@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import OrderAlerts from "../OrderAlerts";
+import OrderAlerts from "../OrderAlerts/OrderAlerts";
 import { alertMessages } from "./messages";
 import { useAlertStyles } from "./styles";
 

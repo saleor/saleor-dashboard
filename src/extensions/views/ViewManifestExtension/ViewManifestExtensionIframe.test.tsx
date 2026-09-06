@@ -16,7 +16,7 @@ jest.mock("@dashboard/hooks/useHasManagedAppsPermission", () => ({
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: () => jest.fn(),
 }));
 

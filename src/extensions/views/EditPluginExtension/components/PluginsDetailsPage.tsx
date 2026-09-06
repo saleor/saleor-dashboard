@@ -4,10 +4,10 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import Grid from "@dashboard/components/Grid/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
@@ -24,7 +24,7 @@ import { useIntl } from "react-intl";
 
 import { isSecretField } from "../utils";
 import { PluginAuthorization } from "./PluginAuthorization";
-import { PluginDetailsChannelsCard } from "./PluginDetailsChannelsCard";
+import { PluginDetailsChannelsCard } from "./PluginDetailsChannelsCard/PluginDetailsChannelsCard";
 import { PluginInfo } from "./PluginInfo";
 import { PluginSettings } from "./PluginSettings/PluginSettings";
 

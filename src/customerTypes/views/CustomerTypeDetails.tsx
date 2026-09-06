@@ -1,17 +1,17 @@
 // @ts-strict-ignore
 import { AssignedAttributesBulkDeleteButton } from "@dashboard/attributes/components/AssignedAttributesCard/AssignedAttributesBulkDeleteButton";
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
-import ActionDialog from "@dashboard/components/ActionDialog";
-import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
-import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog/AssignAttributeDialog";
+import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog/AttributeUnassignDialog";
 import { usePendingAttributeUnassign } from "@dashboard/components/AttributeUnassignDialog/usePendingAttributeUnassign";
-import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog/BulkAttributeUnassignDialog";
 import {
   type AttributeCreateSubmitData,
   CreateAttributeDialog,
 } from "@dashboard/components/CreateAttributeDialog/CreateAttributeDialog";
 import { messages as createAttributeMessages } from "@dashboard/components/CreateAttributeDialog/messages";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { type CustomerTypeForm } from "@dashboard/customerTypes/components/CustomerTypeDetailsPage/CustomerTypeDetailsPage";
@@ -42,7 +42,7 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { type ReorderEvent } from "@dashboard/types";

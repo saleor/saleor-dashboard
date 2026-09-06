@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { type ShippingZoneDetailsFragment } from "@dashboard/graphql";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";

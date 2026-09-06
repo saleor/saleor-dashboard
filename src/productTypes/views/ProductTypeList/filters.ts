@@ -9,9 +9,10 @@ import { findValueInEnum, maybe } from "@dashboard/misc";
 import {
   ProductTypeFilterKeys,
   type ProductTypeListFilterOpts,
-} from "@dashboard/productTypes/components/ProductTypeListPage";
+} from "@dashboard/productTypes/components/ProductTypeListPage/filters";
 
-import { createFilterTabUtils, getSingleValueQueryParam } from "../../../utils/filters";
+import { getSingleValueQueryParam } from "../../../utils/filters/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import { type ProductTypeListUrlFilters, ProductTypeListUrlFiltersEnum } from "../../urls";
 
 const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";

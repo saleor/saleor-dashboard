@@ -1,4 +1,5 @@
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -16,13 +17,18 @@ interface NavigationPinButtonProps {
   /** The single selected model type, or null on the "All models" and group tabs. */
   modelTypeId: string | null;
   modelTypeName: string | undefined;
+  modelTypeIcon?: ModelTypeIconValue;
 }
 
 /**
  * Reflects only the viewer's own pin. Organization pins are managed separately, so this
  * control never edits them — it just steps aside when one exists.
  */
-export const NavigationPinButton = ({ modelTypeId, modelTypeName }: NavigationPinButtonProps) => {
+export const NavigationPinButton = ({
+  modelTypeId,
+  modelTypeName,
+  modelTypeIcon,
+}: NavigationPinButtonProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { userPins, organizationPins, setUserPins } = useNavigationPins();
@@ -75,6 +81,7 @@ export const NavigationPinButton = ({ modelTypeId, modelTypeName }: NavigationPi
           onClose={() => setDialogOpen(false)}
           modelTypeId={modelTypeId}
           modelTypeName={modelTypeName ?? ""}
+          modelTypeIcon={modelTypeIcon}
         />
       )}
     </Box>

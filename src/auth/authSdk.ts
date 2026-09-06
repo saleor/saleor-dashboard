@@ -1,4 +1,4 @@
-import { type ApolloClient, type NormalizedCacheObject } from "@apollo/client";
+import { type ApolloCache, type ApolloClient, type NormalizedCacheObject } from "@apollo/client";
 import {
   ExternalAuthenticationUrlDocument as EXTERNAL_AUTHENTICATION_URL,
   type ExternalAuthenticationUrlMutation,
@@ -27,6 +27,9 @@ import {
   SetPasswordDocument as SET_PASSWORD,
   type SetPasswordMutation,
   type SetPasswordMutationVariables,
+  UserDetailsDocument as USER_DETAILS,
+  type UserDetailsQuery,
+  type UserFragment,
 } from "@dashboard/graphql";
 
 import { resetAuthState, setAuthState } from "./authState";
@@ -111,6 +114,26 @@ export const auth = ({
 }: {
   apolloClient: ApolloClient<NormalizedCacheObject>;
 }): AuthSDK => {
+  /**
+   * Mutations that authenticate the request in Core (`tokenCreate`, `externalObtainAccessTokens`,
+   * `externalRefresh`) return the same `User` fragment as `UserDetails`, but Apollo normalises it
+   * under `User:<id>` without ever recording `ROOT_QUERY.me`. Seeding it here lets the
+   * `UserDetails` query read straight from cache, so logging in costs one request, not two.
+   *
+   * `tokenRefresh` and `setPassword` cannot do this: they never set `info.context.user`, so
+   * permission-guarded fields inside the fragment (`accessibleChannels.isActive`) raise
+   * `PermissionDenied` and fail the whole mutation. They ask for `AuthUser` and let `UserDetails`
+   * fetch the rest.
+   */
+  const seedUserQuery = (cache: ApolloCache<NormalizedCacheObject>, user?: UserFragment | null) => {
+    if (user) {
+      cache.writeQuery<UserDetailsQuery>({
+        query: USER_DETAILS,
+        data: { __typename: "Query", me: user },
+      });
+    }
+  };
+
   const login: AuthSDK["login"] = opts => {
     setAuthState({ authenticating: true });
 
@@ -119,8 +142,9 @@ export const auth = ({
       variables: {
         ...opts,
       },
-      update: (_, { data }) => {
+      update: (cache, { data }) => {
         if (data?.tokenCreate?.token) {
+          seedUserQuery(cache, data.tokenCreate.user);
           storage.setTokens({
             accessToken: data.tokenCreate.token,
             refreshToken: data.tokenCreate.refreshToken,
@@ -249,13 +273,14 @@ export const auth = ({
       variables: {
         ...opts,
       },
-      update: (_, { data }) => {
+      update: (cache, { data }) => {
         storage.setAuthPluginId(opts.pluginId ?? null);
 
         if (
           data?.externalObtainAccessTokens?.token &&
           !!data.externalObtainAccessTokens.user?.userPermissions?.length
         ) {
+          seedUserQuery(cache, data.externalObtainAccessTokens.user);
           storage.setTokens({
             accessToken: data.externalObtainAccessTokens.token,
             refreshToken: data.externalObtainAccessTokens.refreshToken,
@@ -292,8 +317,9 @@ export const auth = ({
             refreshToken,
           }),
         },
-        update: (_, { data }) => {
+        update: (cache, { data }) => {
           if (data?.externalRefresh?.token) {
+            seedUserQuery(cache, data.externalRefresh.user);
             storage.setTokens({
               accessToken: data.externalRefresh.token,
               refreshToken: data.externalRefresh.refreshToken,

@@ -1,7 +1,7 @@
 import { type ApolloQueryResult, type DocumentNode, useApolloClient } from "@apollo/client";
-import { type MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { useUpdateMetadataMutation, useUpdatePrivateMetadataMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useMemo, useRef } from "react";

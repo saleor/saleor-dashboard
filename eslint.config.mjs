@@ -94,6 +94,9 @@ export default tseslint.config(
       "react-hooks/config": "warn", // Config violations
       "react-hooks/gating": "warn", // Conditional rendering violations
 
+      // Cyclomatic complexity: warn-only while we bring existing offenders down
+      complexity: ["warn", 20],
+
       // Migration in progress:
       // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
       "@typescript-eslint/no-non-null-assertion": "warn",
@@ -272,10 +275,6 @@ export default tseslint.config(
             {
               name: "@saleor/macaw-ui",
               message: "Legacy Macaw UI is deprecated. Use @saleor/macaw-ui-next",
-            },
-            {
-              name: "react-sortable-hoc",
-              message: "Use @dnd-kit instead of react-sortable-hoc.",
             },
             {
               name: "moment",

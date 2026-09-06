@@ -5,7 +5,7 @@ import {
   type MenuItemMoveInput,
 } from "@dashboard/graphql";
 
-import { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
+import { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage/MenuDetailsPage";
 import { type MenuItemDialogFormData } from "../../components/MenuItemDialog/types";
 import { unknownTypeError } from "../../components/MenuItemsSortableTree/utils";
 

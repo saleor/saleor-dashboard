@@ -15,22 +15,22 @@ import {
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
-} from "@dashboard/components/AssignAttributeValueDialog";
+} from "@dashboard/components/AssignAttributeValueDialog/AssignAttributeValueDialog";
 import {
   type AttributeInput,
   Attributes,
   type AttributeValueChoices,
   type AttributeValueFetchMore,
-} from "@dashboard/components/Attributes";
+} from "@dashboard/components/Attributes/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
-import { SeoForm } from "@dashboard/components/SeoForm";
+import { SeoForm } from "@dashboard/components/SeoForm/SeoForm";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -81,20 +81,20 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { type AttributeValuesMetadata, getChoices } from "../../utils/data";
-import { ProductDetailsForm } from "../ProductDetailsForm";
+import { ProductDetailsForm } from "../ProductDetailsForm/ProductDetailsForm";
 import { AvailabilityCard } from "../ProductDoctor/AvailabilityCard";
 import { useProductAvailabilityDiagnostics } from "../ProductDoctor/hooks/useProductAvailabilityDiagnostics";
 import { useProductDoctorVariants } from "../ProductDoctor/hooks/useProductDoctorVariants";
 import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToDiagnosticData";
 import { mergeFormDataWithChannelSummaries } from "../ProductDoctor/utils/mergeChannelSummaries";
-import ProductMedia from "../ProductMedia";
+import ProductMedia from "../ProductMedia/ProductMedia";
 import {
   getMakeAvailableChannelOpts,
   getProductSetupReadinessFromPage,
 } from "../ProductSetupCard/buildProductSetupReadiness";
 import { ProductSetupCard } from "../ProductSetupCard/ProductSetupCard";
 import { scrollToProductSetupTarget } from "../ProductSetupCard/scrollToProductSetupTarget";
-import { ProductShipping } from "../ProductShipping";
+import { ProductShipping } from "../ProductShipping/ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
 import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";

@@ -6,7 +6,7 @@ import {
   statusCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { type VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {

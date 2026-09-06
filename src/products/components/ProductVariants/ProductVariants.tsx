@@ -1,6 +1,6 @@
 import { type ChannelData } from "@dashboard/channels/utils";
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {

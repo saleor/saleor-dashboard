@@ -3,7 +3,7 @@ import type { Page } from "@playwright/test";
 export class AddTrackingDialog {
   constructor(
     page: Page,
-    readonly trackingNumberInput = page.getByTestId("tracking-number-input").locator("input"),
+    readonly trackingNumberInput = page.getByTestId("tracking-number-input"),
     readonly confirmTrackingNumberButton = page.getByTestId("confirm-tracking-number-button"),
   ) {}
 

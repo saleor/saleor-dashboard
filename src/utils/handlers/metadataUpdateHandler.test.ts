@@ -1,4 +1,4 @@
-import { type MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 
 import createMetadataUpdateHandler, { type ObjectWithMetadata } from "./metadataUpdateHandler";
 

@@ -28,7 +28,7 @@ const PageTypeAttributes = ({
   onAttributeReorder,
   onAttributeUnassign,
   ...listActions
-}: PageTypeAttributesProps): JSX.Element => {
+}: PageTypeAttributesProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

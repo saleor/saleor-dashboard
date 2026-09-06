@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.23.30",
+  "version": "3.23.32",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -46,6 +46,7 @@
     "lint:prettier": "prettier --ignore-unknown --write .",
     "prepare": "is-ci || husky install",
     "preview": "vite preview",
+    "react-doctor": "react-doctor",
     "release": "node scripts/release.cjs",
     "release:cleanup": "./scripts/release-cleanup.sh",
     "serve:lhci": "cross-env NODE_ENV=production pnpm run server",
@@ -135,11 +136,9 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
-    "react-sortable-hoc": "^1.11.0",
     "slugify": "^1.6.6",
     "sonner": "^2.0.7",
     "url-join": "^4.0.1",
-    "use-react-router": "^1.0.7",
     "zod": "^3.25.76",
     "zod-validation-error": "3.5.3"
   },
@@ -164,6 +163,7 @@
     "@sentry/cli": "^2.58.2",
     "@storybook/addon-mcp": "^0.4.1",
     "@storybook/addon-vitest": "10.2.19",
+    "@storybook/react": "10.2.19",
     "@storybook/react-vite": "10.2.19",
     "@swc/jest": "^0.2.39",
     "@types/apollo-upload-client": "^17.0.5",
@@ -180,6 +180,7 @@
     "@types/react-router-dom": "^4.3.5",
     "@types/url-join": "^4.0.3",
     "@types/webappsec-credential-management": "^0.5.1",
+    "@typescript-eslint/parser": "^8.54.0",
     "@vitejs/plugin-react-swc": "^4.3.0",
     "@vitest/browser-playwright": "4.1.8",
     "@vitest/coverage-v8": "4.1.8",
@@ -212,6 +213,7 @@
     "knip": "^5.69.1",
     "playwright": "1.58.2",
     "playwright-ctrf-json-reporter": "0.0.26",
+    "react-doctor": "^0.9.11",
     "rollup-plugin-polyfill-node": "^0.11.0",
     "sort-package-json": "3.4.0",
     "storybook": "10.2.19",

@@ -9,7 +9,7 @@ const customerType = {
   isDefault: false,
 };
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <ThemeWrapper>{children}</ThemeWrapper>
 );
 

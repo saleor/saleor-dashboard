@@ -1,4 +1,4 @@
-import { type FilterContainer } from "../FilterElement";
+import { type FilterContainer } from "../FilterElement/FilterElement";
 import { FilterElement } from "../FilterElement/FilterElement";
 import { validateMetadataFilterElement } from "./metadata";
 import { validateFilterElementToBeNumeric } from "./numeric";

@@ -1,5 +1,4 @@
-import { TableCell } from "@material-ui/core";
-import { type TableCellProps } from "@material-ui/core/TableCell";
+import { TableCell, type TableCellProps } from "@dashboard/components/Table/Table";
 import clsx from "clsx";
 
 import Avatar, { type AvatarProps } from "./Avatar";

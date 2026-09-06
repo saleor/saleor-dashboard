@@ -1,12 +1,16 @@
+import { MockedProvider } from "@apollo/client/testing";
 import { AttributeInputTypeEnum, MeasurementUnitsEnum } from "@dashboard/graphql";
 import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
-import { render, screen } from "@testing-library/react";
+import { render as rtlRender, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useState } from "react";
+import { type ReactElement, useState } from "react";
 
 import AttributeRow from "./AttributeRow";
 import { type AttributeInput } from "./Attributes";
 import { type AttributeRowProps } from "./types";
+
+// Reference rows look up the referenced models' type icons through Apollo.
+const render = (ui: ReactElement) => rtlRender(ui, { wrapper: MockedProvider });
 
 jest.mock("react-intl", () => {
   const actual = jest.requireActual("react-intl");

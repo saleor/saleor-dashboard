@@ -11,15 +11,16 @@ import {
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
-} from "@dashboard/components/AssignAttributeValueDialog";
+} from "@dashboard/components/AssignAttributeValueDialog/AssignAttributeValueDialog";
 import { type Products } from "@dashboard/components/AssignProductDialog/types";
-import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type AttributeInput, Attributes } from "@dashboard/components/Attributes/Attributes";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
+import { FormDirtyStateSync } from "@dashboard/components/Form/FormDirtyStateSync";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
@@ -45,7 +46,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { commonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
@@ -66,9 +67,9 @@ import {
 } from "react";
 import { useIntl } from "react-intl";
 
-import CustomerAddresses from "../CustomerAddresses";
+import CustomerAddresses from "../CustomerAddresses/CustomerAddresses";
 import { CustomerAttributesCard } from "../CustomerAttributesCard/CustomerAttributesCard";
-import CustomerInfo from "../CustomerInfo";
+import CustomerInfo from "../CustomerInfo/CustomerInfo";
 import { CustomerOrders } from "../CustomerOrders/CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
 import { ExternalReferenceCard } from "../ExternalReferenceCard/ExternalReferenceCard";

@@ -137,6 +137,37 @@ describe("settingsCatalog", () => {
     expect(results.some(entry => entry.id === "orders.automatically-confirm")).toBe(true);
   });
 
+  it("finds staff order alert recipients via the API field name", () => {
+    // Arrange
+    const user = createUser([PermissionEnum.MANAGE_SETTINGS, PermissionEnum.MANAGE_PLUGINS]);
+    const catalog = resolveSettingsCatalog(settingsCatalogEntries, intl, user);
+
+    // Act
+    const results = searchSettingsCatalog(catalog, "staffNotificationRecipients");
+
+    // Assert
+    expect(results.some(entry => entry.id === "notifications.staffOrderAlerts")).toBe(true);
+  });
+
+  it("hides new order alerts unless the user can open staff emails and manage recipients", () => {
+    // Arrange
+    const entry = settingsCatalogEntries.find(item => item.id === "notifications.staffOrderAlerts");
+    const settingsOnly = createUser([PermissionEnum.MANAGE_SETTINGS]);
+    const pluginsOnly = createUser([PermissionEnum.MANAGE_PLUGINS]);
+    const both = createUser([PermissionEnum.MANAGE_SETTINGS, PermissionEnum.MANAGE_PLUGINS]);
+
+    // Assert
+    expect(entry).toBeDefined();
+
+    if (!entry) {
+      return;
+    }
+
+    expect(canAccessSettingsEntry(entry, settingsOnly)).toBe(false);
+    expect(canAccessSettingsEntry(entry, pluginsOnly)).toBe(false);
+    expect(canAccessSettingsEntry(entry, both)).toBe(true);
+  });
+
   it("finds refund settings by title", () => {
     // Arrange
     const user = createUser([PermissionEnum.MANAGE_SETTINGS]);

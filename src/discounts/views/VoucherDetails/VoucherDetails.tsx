@@ -5,18 +5,18 @@ import {
   createSortedChannelsDataFromVoucher,
 } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog";
-import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
-import AssignProductDialog from "@dashboard/components/AssignProductDialog";
-import AssignVariantDialog from "@dashboard/components/AssignVariantDialog";
-import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/AssignCategoryDialog";
+import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog/AssignCollectionDialog";
+import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
+import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/AssignVariantDialog";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
   PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
   VOUCHER_CATALOGUE_PAGINATE_BY,
 } from "@dashboard/config";
-import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
+import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog";
 import { getPreferredVoucherCatalogueTab } from "@dashboard/discounts/components/VoucherCatalogueSection/getPreferredVoucherCatalogueTab";
 import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
 import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/VoucherCatalogueUnassignDialog/VoucherCatalogueUnassignDialog";
@@ -27,7 +27,7 @@ import VoucherDetailsPage, {
   VoucherDetailsPageTab,
   type VoucherDetailsPageVoucher,
   type VoucherTabItemsCount,
-} from "@dashboard/discounts/components/VoucherDetailsPage";
+} from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { VoucherMetadataDialog } from "@dashboard/discounts/components/VoucherMetadataDialog/VoucherMetadataDialog";
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
 import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
@@ -70,7 +70,7 @@ import useLocalPaginator, {
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { buttonMessages, sectionNames } from "@dashboard/intl";

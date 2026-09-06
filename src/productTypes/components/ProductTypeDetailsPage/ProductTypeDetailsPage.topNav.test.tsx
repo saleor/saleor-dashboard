@@ -37,7 +37,7 @@ jest.mock("../ProductTypeVariantAttributes/ProductTypeVariantAttributes", () => 
   default: () => <div data-test-id="product-type-variant-attributes-mock" />,
 }));
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <MemoryRouter>
     <ThemeProvider>{children}</ThemeProvider>
   </MemoryRouter>

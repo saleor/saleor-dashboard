@@ -30,7 +30,7 @@ const deltaTextColor = {
   neutral: "default2",
 } as const;
 
-const DeltaIcon = ({ trend }: { trend: KpiDelta["trend"] }): JSX.Element => {
+const DeltaIcon = ({ trend }: { trend: KpiDelta["trend"] }): React.ReactNode => {
   if (trend === "up") {
     return <TrendingUp size={12} />;
   }
@@ -58,7 +58,7 @@ export const KpiCard = ({
   active,
   onSelect,
   dataTestId,
-}: KpiCardProps): JSX.Element => {
+}: KpiCardProps): React.ReactNode => {
   if (loading) {
     return (
       <Box

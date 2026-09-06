@@ -6,7 +6,8 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
-import { DatagridPagination, TablePagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
+import { TablePagination } from "@dashboard/components/TablePagination/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { giftCardListUrl, giftCardUrl } from "@dashboard/giftCards/urls";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
@@ -20,7 +21,7 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { messages as filterLabels } from "../filters";
-import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider/GiftCardListProvider";
 import { canBeSorted } from "../sort";
 import { type GiftCardListColummns, GiftCardUrlSortField } from "../types";
 import { createGetCellContent, getColumns } from "./datagrid";

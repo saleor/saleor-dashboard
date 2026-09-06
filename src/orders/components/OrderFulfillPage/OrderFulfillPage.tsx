@@ -6,12 +6,13 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import {
   type FulfillOrderMutation,
   OrderErrorCode,
@@ -39,7 +40,6 @@ import {
   getToFulfillOrderLines,
   type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";

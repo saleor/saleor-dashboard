@@ -5,7 +5,7 @@ import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
 
-import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage/VoucherDetailsPage";
 import { VoucherLimits } from "./VoucherLimits";
 
 const baseFormData: VoucherDetailsPageFormData = {
@@ -60,7 +60,7 @@ const InteractiveLimits = ({
   initialData,
 }: {
   initialData: VoucherDetailsPageFormData;
-}): JSX.Element => {
+}): React.ReactNode => {
   const [data, setData] = useState(initialData);
 
   return (

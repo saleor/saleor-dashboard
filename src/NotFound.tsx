@@ -1,4 +1,4 @@
-import NotFoundPage from "./components/NotFoundPage";
+import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 import useNavigator from "./hooks/useNavigator";
 
 export const NotFound = () => {

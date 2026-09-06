@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { messages } from "./messages";
 import styles from "./OrderLineExpandedPanel.module.css";
 
-const MetadataDot = (): JSX.Element => (
+const MetadataDot = (): React.ReactNode => (
   <span className={styles.metadataDot} aria-hidden="true">
     ·
   </span>
@@ -36,7 +36,7 @@ export const OrderLineGrantedRefundRow = ({
   entry,
   orderId,
   locale,
-}: OrderLineGrantedRefundRowProps): JSX.Element => {
+}: OrderLineGrantedRefundRowProps): React.ReactNode => {
   const intl = useIntl();
   const canEdit = canEditLineGrantedRefund(entry.status);
   const statusLabel = getGrantedRefundStatusMessage(entry.status, intl);

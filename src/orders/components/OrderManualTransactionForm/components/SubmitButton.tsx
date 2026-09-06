@@ -1,5 +1,8 @@
 // @ts-strict-ignore
-import { ConfirmButton, type ConfirmButtonProps } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonProps,
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 
 import { useManualTransactionContext } from "../context";
 

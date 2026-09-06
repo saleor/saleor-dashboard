@@ -1,20 +1,20 @@
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { createProductTypesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
+import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete/useProductTypeDelete";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -29,7 +29,7 @@ import { useIntl } from "react-intl";
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
 import { maybe } from "../../../misc";
 import { CreateProductTypeDialog } from "../../components/CreateProductTypeDialog/CreateProductTypeDialog";
-import ProductTypeListPage from "../../components/ProductTypeListPage";
+import ProductTypeListPage from "../../components/ProductTypeListPage/ProductTypeListPage";
 import { useCreateProductType } from "../../hooks/useCreateProductType";
 import {
   productTypeListUrl,

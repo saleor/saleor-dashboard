@@ -6,7 +6,7 @@ import {
   type PromotionRuleUpdateMutation,
   usePromotionRuleUpdateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { useIntl } from "react-intl";
 
 export const usePromotionRuleUpdate = (id: string) => {

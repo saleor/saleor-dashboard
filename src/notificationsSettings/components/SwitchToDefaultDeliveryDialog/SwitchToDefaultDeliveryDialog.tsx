@@ -1,6 +1,6 @@
 import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { Callout } from "@dashboard/components/Callout/Callout";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { notificationsMessages } from "@dashboard/notificationsSettings/messages";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -26,7 +26,7 @@ export const SwitchToDefaultDeliveryDialog = ({
   onClose,
   onConfirm,
   onDownloadBackup,
-}: SwitchToDefaultDeliveryDialogProps): JSX.Element => {
+}: SwitchToDefaultDeliveryDialogProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

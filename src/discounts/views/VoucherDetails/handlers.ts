@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { type FetchResult } from "@apollo/client";
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
-import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { clearInactiveVoucherDiscountDrafts } from "@dashboard/discounts/data";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";

@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
+import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import {
   WarehouseClickAndCollectOptionEnum,
   type WarehouseWithShippingFragment,
@@ -10,13 +10,12 @@ import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { type RelayToFlat } from "@dashboard/types";
-import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { type WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
+import { type WarehouseDetailsPageFormData } from "../WarehouseDetailsPage/WarehouseDetailsPage";
 import messages from "./messages";
 
 const WarehouseRadioSubtitle = ({ children }: { children: ReactNode }) => (
@@ -167,7 +166,7 @@ const WarehouseSettings = ({
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content data-test-id="stock-settings-section">
-        <RadioGroupField
+        <SimpleRadioGroupField
           choices={isPrivateChoices}
           name="isPrivate"
           value={data.isPrivate.toString()}
@@ -182,7 +181,7 @@ const WarehouseSettings = ({
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <RadioGroupField
+        <SimpleRadioGroupField
           choices={data.isPrivate ? clickAndCollectChoices : clickAndCollectChoicesPublic}
           name="clickAndCollectOption"
           value={data.clickAndCollectOption}

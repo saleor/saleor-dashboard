@@ -40,11 +40,9 @@ export const OrderManualTransactionDialog = ({
                 <Box display="flex" flexDirection="column" gap={4}>
                   <OrderManualTransactionForm.DescriptionField
                     label={intl.formatMessage(commonMessages.description)}
-                    fullWidth
                   />
                   <OrderManualTransactionForm.PspReferenceField
                     label={intl.formatMessage(commonMessages.pspReferenceOptional)}
-                    fullWidth
                   />
                   <OrderManualTransactionForm.PriceInputField
                     label={intl.formatMessage(manualTransactionMessages.transactionAmount)}

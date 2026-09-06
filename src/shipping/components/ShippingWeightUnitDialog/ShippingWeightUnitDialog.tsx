@@ -3,7 +3,7 @@ import { type WeightUnitsEnum } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { FormattedMessage } from "react-intl";
 
-import ShippingWeightUnitForm from "../ShippingWeightUnitForm";
+import ShippingWeightUnitForm from "../ShippingWeightUnitForm/ShippingWeightUnitForm";
 
 interface ShippingWeightUnitDialogProps {
   open: boolean;

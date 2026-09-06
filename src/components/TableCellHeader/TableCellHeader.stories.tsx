@@ -1,4 +1,4 @@
-import { TableHead, TableRow } from "@material-ui/core";
+import { TableHead, TableRow } from "@dashboard/components/Table/Table";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ComponentType } from "react";
 import { fn } from "storybook/test";

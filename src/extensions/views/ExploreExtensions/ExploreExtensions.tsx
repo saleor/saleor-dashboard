@@ -3,7 +3,7 @@ import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";

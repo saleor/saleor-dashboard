@@ -25,7 +25,7 @@ export const WarehouseInfo = ({
   warehouseId,
   separator = ", ",
   variant = "fulfilledFrom",
-}: WarehouseInfoProps): JSX.Element => {
+}: WarehouseInfoProps): React.ReactNode => {
   const intl = useIntl();
   const message = warehouseMessageByVariant[variant];
 

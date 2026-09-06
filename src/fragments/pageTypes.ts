@@ -5,6 +5,9 @@ export const pageTypeFragment = gql`
     id
     name
     hasPages
+    metadata {
+      ...MetadataItem
+    }
   }
 `;
 

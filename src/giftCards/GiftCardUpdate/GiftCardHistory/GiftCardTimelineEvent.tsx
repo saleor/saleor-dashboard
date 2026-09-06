@@ -228,7 +228,7 @@ export const GiftCardTimelineEvent = ({
   date,
   event,
   isLastInGroup,
-}: GiftCardTimelineEventProps): JSX.Element => {
+}: GiftCardTimelineEventProps): React.ReactNode => {
   const intl = useIntl();
   const icon = event.type ? giftCardEventIconMap[event.type] : undefined;
   const actor = resolveActor(event);

@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
-import { cloneFilterContainer, type FilterContainer, FilterElement } from "./FilterElement";
+import {
+  cloneFilterContainer,
+  type FilterContainer,
+  FilterElement,
+} from "./FilterElement/FilterElement";
 import { type FilterValueProvider } from "./FilterValueProvider";
 import { getFilterContainerKey } from "./ValueProvider/utils";
 

@@ -1,5 +1,5 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
 import { type DialogProps } from "@dashboard/types";
 

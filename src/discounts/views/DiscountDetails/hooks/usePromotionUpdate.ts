@@ -4,7 +4,7 @@ import {
   type PromotionUpdateMutationVariables,
   usePromotionUpdateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { useRef } from "react";
 import { useIntl } from "react-intl";
 

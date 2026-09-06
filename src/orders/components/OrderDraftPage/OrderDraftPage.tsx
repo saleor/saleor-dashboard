@@ -6,9 +6,9 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -32,11 +32,11 @@ import { Trash2 } from "lucide-react";
 import { useContext, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import OrderCustomer from "../OrderCustomer";
+import OrderCustomer from "../OrderCustomer/OrderCustomer";
 import { messages as orderDetailsPageMessages } from "../OrderDetailsPage/messages";
 import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
-import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
+import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory/OrderHistory";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderDraftAlert from "./OrderDraftAlert";
 

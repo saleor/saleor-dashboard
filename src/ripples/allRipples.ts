@@ -17,6 +17,7 @@ import { rippleModelMetadata } from "@dashboard/modeling/ripples/modelMetadata";
 import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { rippleNavigationPins } from "@dashboard/navigationPins/ripples/navigationPins";
+import { rippleStaffOrderAlertRecipients } from "@dashboard/notificationsSettings/ripples/staffOrderAlertRecipients";
 import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMetadata";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
@@ -105,6 +106,7 @@ export const allRipples: Ripple[] = [
 
   // Staff
   rippleStaffCustomerProfiles,
+  rippleStaffOrderAlertRecipients,
 
   // Translations
   rippleSlugTranslation,

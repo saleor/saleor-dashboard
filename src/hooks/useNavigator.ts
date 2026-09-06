@@ -1,6 +1,6 @@
 import { ExitFormDialogContext } from "@dashboard/components/Form/ExitFormDialogProvider";
 import { useContext } from "react";
-import useRouter from "use-react-router";
+import { useHistory, useLocation } from "react-router";
 
 export type NavigatorOpts = {
   replace?: boolean;
@@ -11,10 +11,8 @@ export type NavigatorOpts = {
 
 export type UseNavigatorResult = (url: string, opts?: NavigatorOpts) => void;
 function useNavigator(): UseNavigatorResult {
-  const {
-    location: { search },
-    history,
-  } = useRouter();
+  const { search } = useLocation();
+  const history = useHistory();
   const { shouldBlockNavigation } = useContext(ExitFormDialogContext);
 
   return (

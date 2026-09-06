@@ -1,5 +1,6 @@
 import { type Item } from "@glideapps/glide-data-grid";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 interface Bounds {
   x: number;
@@ -105,7 +106,9 @@ export const useTooltipContainer = () => {
     [clearShowTimeout],
   );
 
-  // Header click tooltips stay open until dismissed — clear on outside pointer or Escape.
+  useHotkeys("escape", clearTooltip, { enabled: !!tooltip, enableOnFormTags: true });
+
+  // Header click tooltips stay open until dismissed — clear on outside pointer.
   // Defer listener attach so the opening click is not treated as a dismiss.
   useEffect(
     function dismissTooltipOnOutsideInteraction() {
@@ -116,22 +119,14 @@ export const useTooltipContainer = () => {
       const onPointerDown = () => {
         clearTooltip();
       };
-      const onKeyDown = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-          clearTooltip();
-        }
-      };
 
       const attachId = window.setTimeout(() => {
         window.addEventListener("pointerdown", onPointerDown, true);
       }, 0);
 
-      window.addEventListener("keydown", onKeyDown);
-
       return () => {
         window.clearTimeout(attachId);
         window.removeEventListener("pointerdown", onPointerDown, true);
-        window.removeEventListener("keydown", onKeyDown);
       };
     },
     [clearTooltip, tooltip],

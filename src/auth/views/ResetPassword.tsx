@@ -5,7 +5,9 @@ import { extractMutationErrors } from "@dashboard/misc";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import ResetPasswordPage, { type ResetPasswordPageFormData } from "../components/ResetPasswordPage";
+import ResetPasswordPage, {
+  type ResetPasswordPageFormData,
+} from "../components/ResetPasswordPage/ResetPasswordPage";
 import { passwordResetSuccessUrl } from "../urls";
 import { getNewPasswordResetRedirectUrl } from "../utils";
 

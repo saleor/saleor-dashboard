@@ -86,7 +86,7 @@ export const InsetSegmentedControl = <T extends string>({
   "aria-label": ariaLabel,
   className,
   "data-test-id": dataTestId,
-}: InsetSegmentedControlProps<T>): JSX.Element => {
+}: InsetSegmentedControlProps<T>): React.ReactNode => {
   const sizeStyles = SIZE_STYLES[size];
 
   return (

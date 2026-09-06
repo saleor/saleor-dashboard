@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { type UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import VersionInfo from "../components/VersionInfo";
+import VersionInfo from "../components/VersionInfo/VersionInfo";
 import {
   ConfigurationSettingsSearchResults,
   ConfigurationSettingsSearchToolbar,

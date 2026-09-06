@@ -13,7 +13,7 @@ export class NavigationDetailsPage extends BasePage {
   constructor(
     page: Page,
     readonly navigationDetails = page.getByTestId("navigation-menu-details-page"),
-    readonly menuNameInput = page.getByTestId("menu-name").locator("input"),
+    readonly menuNameInput = page.getByTestId("menu-name"),
     readonly createMenuItemButton = page.getByTestId("create-new-menu-item"),
     readonly menuItem = page.getByTestId("menu-item"),
     readonly undoButton = page.getByTestId("undo-button"),

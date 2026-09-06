@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import {
   ProductMediaType,
   useProductMediaByIdQuery,
@@ -7,13 +7,13 @@ import {
   useProductMediaUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useIntl } from "react-intl";
 
 import { ProductMediaDeleteDialog } from "../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMediaMetadataDialog } from "../components/ProductMediaMetadataDialog/ProductMediaMetadataDialog";
-import ProductMediaPage from "../components/ProductMediaPage";
+import ProductMediaPage from "../components/ProductMediaPage/ProductMediaPage";
 import {
   productImageUrl,
   type ProductImageUrlDialog,

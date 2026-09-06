@@ -37,7 +37,7 @@ export const VoucherChannelAvailabilityCard = ({
   managePermissions,
   onManageClick,
   scheduleData,
-}: VoucherChannelAvailabilityCardProps): JSX.Element => {
+}: VoucherChannelAvailabilityCardProps): React.ReactNode => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const sortedChannels = useMemo(

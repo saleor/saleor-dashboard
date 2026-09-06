@@ -1,7 +1,7 @@
 import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
-import { createFilterStructure } from "@dashboard/productTypes/components/ProductTypeListPage";
+import { createFilterStructure } from "@dashboard/productTypes/components/ProductTypeListPage/filters";
 import { type ProductTypeListUrlFilters } from "@dashboard/productTypes/urls";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { getFilterQueryParams } from "@dashboard/utils/filters/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { testIntlInstance } from "@test/intl";

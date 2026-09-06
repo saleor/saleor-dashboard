@@ -26,7 +26,7 @@ const ProductTypeAttributes = ({
   onAttributeReorder,
   onAttributeUnassign,
   ...listActions
-}: ProductTypeAttributesProps): JSX.Element => {
+}: ProductTypeAttributesProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

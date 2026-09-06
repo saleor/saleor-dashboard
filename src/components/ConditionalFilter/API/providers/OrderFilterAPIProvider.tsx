@@ -10,7 +10,7 @@ import {
 import { type IntlShape, useIntl } from "react-intl";
 
 import { type RowType } from "../../constants";
-import { type FilterContainer, type FilterElement } from "../../FilterElement";
+import { type FilterContainer, type FilterElement } from "../../FilterElement/FilterElement";
 import { type FilterAPIProvider } from "../FilterAPIProvider";
 import { emptyAttributeChoicesPage, fetchHandlerPage } from "../filterChoicesPage";
 import {

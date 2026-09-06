@@ -27,7 +27,7 @@ const ProductTypeDetails = ({
   disabled,
   errors,
   onChange,
-}: ProductTypeDetailsProps): JSX.Element => {
+}: ProductTypeDetailsProps): React.ReactNode => {
   const intl = useIntl();
   const nameInputRef = useRef<HTMLInputElement>(null);
 

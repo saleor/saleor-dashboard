@@ -16,7 +16,7 @@ export const RangeInputWrapper = ({
   children,
   inline = false,
   compact = "date",
-}: RangeInputWrapperProps): JSX.Element => (
+}: RangeInputWrapperProps): React.ReactNode => (
   <Box
     className={clsx(styles.root, inline && styles.inline)}
     data-range-layout={inline ? "inline" : "stack"}

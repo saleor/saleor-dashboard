@@ -6,13 +6,11 @@ import { Box } from "@saleor/macaw-ui-next";
 import { useParams, useRouteMatch } from "react-router";
 import { Redirect } from "react-router-dom";
 
-import { filterHomeExtensions } from "./filterHomeExtensions";
+import { filterHomeExtensions, HOMEPAGE_WIDGETS_MOUNT } from "./filterHomeExtensions";
 import { HomeEmptyState } from "./HomeEmptyState";
 import { HomeTabPanels } from "./HomeTabPanels";
 import { type HomeActiveTab } from "./HomeWidgetTabs";
 import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
-
-const HOMEPAGE_MOUNT = ["HOMEPAGE_WIDGETS"] as const;
 
 export const useHomeRouteParams = () => {
   const { extensionId: rawExtensionId } = useParams<{ extensionId?: string }>();
@@ -90,7 +88,8 @@ export const HomePage = () => {
   const { user } = useUser();
   const userPermissions = user?.userPermissions ?? [];
 
-  const { extensions: extensionsByMount, loading } = useExtensionsWithLoadingState(HOMEPAGE_MOUNT);
+  const { extensions: extensionsByMount, loading } =
+    useExtensionsWithLoadingState(HOMEPAGE_WIDGETS_MOUNT);
   const extensions = extensionsByMount.HOMEPAGE_WIDGETS;
   const { getState } = useExtensionPreferences();
 

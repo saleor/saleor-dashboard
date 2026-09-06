@@ -1,11 +1,11 @@
-import { useTheme } from "@dashboard/theme";
+import { useTheme } from "@dashboard/theme/hook";
 import { type DefaultTheme } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 
 import { SaleorLogo } from "./SaleorLogo";
 
-jest.mock("@dashboard/theme", () => {
-  const actualTheme = jest.requireActual("@dashboard/theme");
+jest.mock("@dashboard/theme/hook", () => {
+  const actualTheme = jest.requireActual("@dashboard/theme/hook");
 
   return {
     ...actualTheme,

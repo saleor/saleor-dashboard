@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";

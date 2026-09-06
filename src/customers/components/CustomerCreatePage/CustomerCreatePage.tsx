@@ -6,9 +6,9 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { customerListUrl } from "@dashboard/customers/urls";
 import {
@@ -27,7 +27,7 @@ import { useIntl } from "react-intl";
 
 import { type AddressTypeInput } from "../../types";
 import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddress";
-import CustomerCreateDetails from "../CustomerCreateDetails";
+import CustomerCreateDetails from "../CustomerCreateDetails/CustomerCreateDetails";
 import CustomerCreateNote from "../CustomerCreateNote/CustomerCreateNote";
 
 export interface CustomerCreatePageFormData {

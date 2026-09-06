@@ -28,7 +28,7 @@ export const GiftCardBalanceCardView = ({
   giftCard,
   loading = false,
   onSetBalance,
-}: GiftCardBalanceCardViewProps): JSX.Element => {
+}: GiftCardBalanceCardViewProps): React.ReactNode => {
   const intl = useIntl();
   const { locale } = useLocale();
   const localizeDate = useDateLocalize();

@@ -17,7 +17,7 @@ interface SubMenuProps {
  * Title + description action menu (e.g. Add code).
  * Typography matches DetailSettingToggleRow: title size 3 medium, hint size 2 default2.
  */
-export const SubMenu = ({ menuItems }: SubMenuProps): JSX.Element => (
+export const SubMenu = ({ menuItems }: SubMenuProps): React.ReactNode => (
   <List padding={1} __minWidth="100%">
     {menuItems.map(({ id, title, description, icon, onClick }) => (
       <List.Item

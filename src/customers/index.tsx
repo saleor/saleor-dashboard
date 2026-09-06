@@ -1,5 +1,5 @@
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
-import { ConditionalCustomerFilterProvider } from "@dashboard/components/ConditionalFilter";
+import { ConditionalCustomerFilterProvider } from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { PermissionEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -22,7 +22,7 @@ import {
 import CustomerAddressesViewComponent from "./views/CustomerAddresses";
 import CustomerCreateView from "./views/CustomerCreate";
 import CustomerDetailsViewComponent from "./views/CustomerDetails";
-import CustomerListViewComponent from "./views/CustomerList";
+import CustomerListViewComponent from "./views/CustomerList/CustomerList";
 
 const CustomerListView = () => {
   const qs = parseQs(location.search.substr(1)) as any;

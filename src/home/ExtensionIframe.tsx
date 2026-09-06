@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { APP_VERSION } from "@dashboard/config";
 import { IframePost } from "@dashboard/extensions/components/IframePost/IframePost";
 import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";

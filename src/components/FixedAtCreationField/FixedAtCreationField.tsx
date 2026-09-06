@@ -20,7 +20,7 @@ export const FixedAtCreationField = ({
   label,
   name,
   value,
-}: FixedAtCreationFieldProps): JSX.Element => (
+}: FixedAtCreationFieldProps): React.ReactNode => (
   <Input
     data-test-id={dataTestId}
     disabled

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
-import { type CardMenuItem } from "@dashboard/components/CardMenu";
+import { type CardMenuItem } from "@dashboard/components/CardMenu/CardMenu";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { ROW_ACTION_BAR_WIDTH } from "@dashboard/components/Datagrid/const";

@@ -32,3 +32,15 @@ export const sortByName = (a: InstalledExtension, b: InstalledExtension) => {
 
   return 0;
 };
+
+const RECENTLY_INSTALLED_THRESHOLD_MS = 48 * 60 * 60 * 1000;
+
+export const isRecentlyInstalled = (created?: string | null) => {
+  if (!created) {
+    return false;
+  }
+
+  const timestamp = new Date(created).getTime();
+
+  return !Number.isNaN(timestamp) && Date.now() - timestamp < RECENTLY_INSTALLED_THRESHOLD_MS;
+};

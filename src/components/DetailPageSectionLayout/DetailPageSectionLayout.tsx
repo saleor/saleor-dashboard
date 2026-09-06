@@ -24,7 +24,7 @@ interface DetailPageSectionLayoutProps {
 export const DetailPageSectionLayout = ({
   nav,
   children,
-}: DetailPageSectionLayoutProps): JSX.Element => (
+}: DetailPageSectionLayoutProps): React.ReactNode => (
   <Box className={styles.root} display="flex" gap={4} paddingTop={6} paddingBottom={6}>
     <Box
       display={{ mobile: "none", tablet: "block", desktop: "block" }}

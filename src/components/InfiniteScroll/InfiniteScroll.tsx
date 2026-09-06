@@ -2,7 +2,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import InfiniteScrollComponent, { type Props } from "react-infinite-scroll-component";
 
-import { SaleorThrobber } from "../Throbber";
+import { SaleorThrobber } from "../Throbber/SaleorThrobber";
 import styles from "./InfiniteScroll.module.css";
 
 type InfiniteScrollBaseProps = Omit<Props, "loader" | "id" | "scrollableTarget"> & {

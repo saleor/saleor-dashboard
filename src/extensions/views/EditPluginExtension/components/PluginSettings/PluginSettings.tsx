@@ -4,8 +4,7 @@ import { ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { TextField } from "@material-ui/core";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Text, Textarea } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type PluginDetailsPageFormData } from "../PluginsDetailsPage";
@@ -46,26 +45,38 @@ export const PluginSettings = ({ data, disabled, errors, onChange }: PluginSetti
         <Box display="flex" flexDirection="column" gap={4}>
           {textConfigFields.map(field => (
             <Box key={field.name} display="flex" flexDirection="row" alignItems="center">
-              <TextField
-                disabled={disabled}
-                error={!!getFieldError(errors, "name")}
-                helperText={field.helpText}
-                label={field.label}
-                name={field.name}
-                multiline={field.type === ConfigurationTypeFieldEnum.MULTILINE}
-                InputProps={{
-                  rowsMax: 6,
-                  readOnly: field.type === ConfigurationTypeFieldEnum.OUTPUT,
-                }}
-                onFocus={event => {
-                  if (field.type === ConfigurationTypeFieldEnum.OUTPUT) {
-                    event.target.select();
-                  }
-                }}
-                fullWidth
-                value={field.value}
-                onChange={onChange}
-              />
+              {field.type === ConfigurationTypeFieldEnum.MULTILINE ? (
+                <Textarea
+                  width="100%"
+                  disabled={disabled}
+                  error={!!getFieldError(errors, "name")}
+                  aria-invalid={!!getFieldError(errors, "name")}
+                  helperText={field.helpText}
+                  label={field.label}
+                  name={field.name}
+                  maxRows={6}
+                  value={field.value}
+                  onChange={onChange}
+                />
+              ) : (
+                <Input
+                  width="100%"
+                  disabled={disabled}
+                  error={!!getFieldError(errors, "name")}
+                  aria-invalid={!!getFieldError(errors, "name")}
+                  helperText={field.helpText}
+                  label={field.label}
+                  name={field.name}
+                  readOnly={field.type === ConfigurationTypeFieldEnum.OUTPUT}
+                  onFocus={event => {
+                    if (field.type === ConfigurationTypeFieldEnum.OUTPUT) {
+                      event.target.select();
+                    }
+                  }}
+                  value={field.value}
+                  onChange={onChange}
+                />
+              )}
             </Box>
           ))}
           {booleanConfigFields.map(field => {

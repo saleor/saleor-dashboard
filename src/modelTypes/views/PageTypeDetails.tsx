@@ -1,17 +1,22 @@
 // @ts-strict-ignore
 import { AssignedAttributesBulkDeleteButton } from "@dashboard/attributes/components/AssignedAttributesCard/AssignedAttributesBulkDeleteButton";
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
-import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
-import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
+import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog/AssignAttributeDialog";
+import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog/AttributeUnassignDialog";
 import { usePendingAttributeUnassign } from "@dashboard/components/AttributeUnassignDialog/usePendingAttributeUnassign";
-import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog/BulkAttributeUnassignDialog";
 import {
   type AttributeCreateSubmitData,
   CreateAttributeDialog,
 } from "@dashboard/components/CreateAttributeDialog/CreateAttributeDialog";
 import { messages as createAttributeMessages } from "@dashboard/components/CreateAttributeDialog/messages";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
-import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
+import {
+  buildModelTypeIconMetadataUpdate,
+  isSameModelTypeIcon,
+  readModelTypeIcon,
+} from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
@@ -31,9 +36,9 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import usePageTypeDelete from "@dashboard/modelTypes/hooks/usePageTypeDelete";
+import usePageTypeDelete from "@dashboard/modelTypes/hooks/usePageTypeDelete/usePageTypeDelete";
 import { type ReorderEvent } from "@dashboard/types";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -42,7 +47,9 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useIntl } from "react-intl";
 
 import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
-import PageTypeDetailsPage, { type PageTypeForm } from "../components/PageTypeDetailsPage";
+import PageTypeDetailsPage, {
+  type PageTypeForm,
+} from "../components/PageTypeDetailsPage/PageTypeDetailsPage";
 import { PageTypeMetadataDialog } from "../components/PageTypeMetadataDialog/PageTypeMetadataDialog";
 import { executePageTypeAttributeCreate } from "../handlers/pageTypeAttributeCreateHandler";
 import {
@@ -141,8 +148,27 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
         },
       },
     });
+    const errors = result.data.pageTypeUpdate.errors;
 
-    return result.data.pageTypeUpdate.errors;
+    if (errors.length > 0) {
+      return errors;
+    }
+
+    // `PageTypeUpdateInput` carries no metadata, so the icon rides a second call. `UpdateMetadata`
+    // sets and deletes in one round trip, which is what makes "Reset" work, and it merges by key
+    // so unrelated metadata is untouched.
+    if (!isSameModelTypeIcon(readModelTypeIcon(pageType?.metadata), formData.icon)) {
+      const iconUpdate = await updateMetadata({
+        variables: { id, ...buildModelTypeIconMetadataUpdate(formData.icon) },
+      });
+
+      return [
+        ...(iconUpdate.data?.deleteMetadata?.errors ?? []),
+        ...(iconUpdate.data?.updateMetadata?.errors ?? []),
+      ];
+    }
+
+    return errors;
   };
   const handlePageTypeDelete = () => deletePageType({ variables: { id } });
   const handleAssignAttribute = async () => {

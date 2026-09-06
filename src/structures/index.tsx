@@ -10,7 +10,7 @@ import {
   structuresListPath,
 } from "./urls";
 import MenuDetailsComponent from "./views/MenuDetails";
-import MenuListComponent from "./views/MenuList";
+import MenuListComponent from "./views/MenuList/MenuList";
 
 const MenuList = () => {
   const qs = parseQs(location.search.substr(1)) as any;

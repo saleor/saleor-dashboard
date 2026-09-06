@@ -5,15 +5,14 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Hr from "@dashboard/components/Hr";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import {
   type CreateManualTransactionRefundMutationVariables,
   type OrderDetailsFragment,
 } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Divider, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DataLine } from "./components/DataLine";
@@ -105,7 +104,7 @@ const OrderSendRefundPage = ({
               </DataLine>
             </ul>
           </DashboardCard.Content>
-          <Hr />
+          <Divider />
           <DashboardCard.Header>
             <DashboardCard.Title>
               <FormattedMessage {...refundPageMessages.balanceAfterRequests} />

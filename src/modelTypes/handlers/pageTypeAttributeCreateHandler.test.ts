@@ -1,4 +1,4 @@
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
 import {
   AttributeErrorCode,
   AttributeInputTypeEnum,

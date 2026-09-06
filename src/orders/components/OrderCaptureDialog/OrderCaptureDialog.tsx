@@ -3,12 +3,12 @@ import { Callout } from "@dashboard/components/Callout/Callout";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import Money from "@dashboard/components/Money";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import {
   getCurrencyDecimalPoints,
   limitDecimalPlaces,
@@ -67,7 +67,7 @@ export const OrderCaptureDialog = ({
   errors = [],
   onClose,
   onSubmit,
-}: OrderCaptureDialogProps): JSX.Element => {
+}: OrderCaptureDialogProps): React.ReactNode => {
   const intl = useIntl();
 
   const currency = orderTotal.currency;

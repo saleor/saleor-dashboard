@@ -2,7 +2,7 @@ import { AttributeErrorCode, type AttributeErrorFragment } from "@dashboard/grap
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@dashboard/hooks/useLocalPageInfo";
 import { ListViews, type ReorderEvent } from "@dashboard/types";
-import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists";
+import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists/lists";
 import { useCallback, useState } from "react";
 
 import { type AttributeValueEditDialogFormData } from "../../utils/data";

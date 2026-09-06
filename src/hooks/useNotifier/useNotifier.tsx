@@ -1,7 +1,7 @@
 import {
   type INotification,
   type INotificationCallback,
-} from "@dashboard/components/notifications";
+} from "@dashboard/components/notifications/NotificationContext";
 import { enqueueToast } from "@dashboard/components/notifications/notificationQueue";
 import { commonMessages } from "@dashboard/intl";
 import { useCallback } from "react";

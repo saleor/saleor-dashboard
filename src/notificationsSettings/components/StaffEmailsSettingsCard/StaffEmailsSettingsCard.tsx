@@ -15,7 +15,10 @@ import {
   notificationsMessages,
   staffNotificationCopy,
 } from "@dashboard/notificationsSettings/messages";
-import { notificationsCustomerEmailsPath } from "@dashboard/notificationsSettings/urls";
+import {
+  notificationsCustomerEmailsPath,
+  notificationsStaffEmailsPath,
+} from "@dashboard/notificationsSettings/urls";
 import {
   type EmailNotificationsFormState,
   ensureSmtpFieldDefaults,
@@ -102,7 +105,7 @@ export const StaffEmailsSettingsCard = ({
   onActiveChange,
   onDeliveryModeChange,
   onSmtpFieldChange,
-}: StaffEmailsSettingsCardProps): JSX.Element => {
+}: StaffEmailsSettingsCardProps): React.ReactNode => {
   const intl = useIntl();
   const smtpValues = ensureSmtpFieldDefaults(formState.otherFields);
   const tlsSslError = smtpFieldErrors.use_tls || smtpFieldErrors.use_ssl || undefined;
@@ -288,7 +291,7 @@ export const StaffMessagesSettingsCard = ({
   deliveryMode,
   disabled,
   onNotificationChange,
-}: StaffMessagesSettingsCardProps): JSX.Element => {
+}: StaffMessagesSettingsCardProps): React.ReactNode => {
   const intl = useIntl();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const lockCustomCopy = IS_CLOUD_INSTANCE && deliveryMode === "default";
@@ -321,7 +324,24 @@ export const StaffMessagesSettingsCard = ({
               key={definition.id}
               id={definition.id}
               title={intl.formatMessage(getStaffCopy(definition.id, ""))}
-              description={intl.formatMessage(getStaffCopy(definition.id, "Desc"))}
+              description={
+                definition.id === "staff-order-confirmation" ? (
+                  <FormattedMessage
+                    {...staffNotificationCopy["staff-order-confirmationDesc"]}
+                    values={{
+                      alertsLink: (
+                        <MicrocopyLink
+                          to={`${notificationsStaffEmailsPath}#${settingsHashes.notificationsOrderAlerts}`}
+                        >
+                          <FormattedMessage {...notificationsMessages.orderAlertsTitle} />
+                        </MicrocopyLink>
+                      ),
+                    }}
+                  />
+                ) : (
+                  intl.formatMessage(getStaffCopy(definition.id, "Desc"))
+                )
+              }
               icon={getNotificationIcon(definition.id)}
               values={values}
               defaultSubject={definition.defaultSubject}
@@ -359,7 +379,7 @@ const getNotificationIcon = (id: string): ReactNode => {
 interface NotificationEmailEditorProps {
   id: string;
   title: string;
-  description: string;
+  description: ReactNode;
   icon: ReactNode;
   values: NotificationFormValues;
   defaultSubject: string;
@@ -403,7 +423,7 @@ const NotificationEmailEditor = ({
   expanded,
   onToggle,
   onChange,
-}: NotificationEmailEditorProps): JSX.Element => {
+}: NotificationEmailEditorProps): React.ReactNode => {
   const intl = useIntl();
   const templateRef = useRef<HTMLTextAreaElement | null>(null);
   const effectiveTemplateMode = lockCustomCopy ? "default" : values.templateMode;

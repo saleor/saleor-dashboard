@@ -40,7 +40,7 @@ const mockUser: UserFragment = {
   restrictedAccessToChannels: false,
 };
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <MemoryRouter>
     <UserContext.Provider
       value={{

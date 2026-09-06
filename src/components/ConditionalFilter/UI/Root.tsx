@@ -32,7 +32,7 @@ export const Root = ({
     noValueText: "Click button below to start filtering",
   },
   error,
-}: ExperimentalFiltersProps): JSX.Element => {
+}: ExperimentalFiltersProps): React.ReactNode => {
   const { emitter } = useEventEmitter({
     onChange,
   });

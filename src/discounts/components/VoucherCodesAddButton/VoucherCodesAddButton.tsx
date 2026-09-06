@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { type MenuItem, SubMenu } from "@dashboard/components/SubMenu";
+import { type MenuItem, SubMenu } from "@dashboard/components/SubMenu/SubMenu";
 import { Button, Popover } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
@@ -19,7 +19,7 @@ export const VoucherCodesAddButton = ({
   onMultiCodesGenerate,
   onSingleCodesGenerate,
   disabled = false,
-}: VoucherCodesAddButtonProps): JSX.Element => {
+}: VoucherCodesAddButtonProps): React.ReactNode => {
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
   const intl = useIntl();
   const handleMultipleCodesGenerate = useCallback(() => {

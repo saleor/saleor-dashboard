@@ -8,7 +8,7 @@ import {
   fetchHandlerPage,
 } from "../../API/filterChoicesPage";
 import { EnumValuesHandler } from "../../API/Handler";
-import { type FilterContainer, type FilterElement } from "../../FilterElement";
+import { type FilterContainer, type FilterElement } from "../../FilterElement/FilterElement";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];

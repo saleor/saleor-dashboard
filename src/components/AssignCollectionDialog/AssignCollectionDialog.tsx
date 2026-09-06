@@ -1,10 +1,12 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type CollectionFilterInput } from "@dashboard/graphql";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { useIntl } from "react-intl";
 
-import AssignContainerDialog, { type AssignContainerDialogProps } from "../AssignContainerDialog";
+import AssignContainerDialog, {
+  type AssignContainerDialogProps,
+} from "../AssignContainerDialog/AssignContainerDialog";
 import {
   ModalCollectionFilterProvider,
   useModalCollectionFilterContext,

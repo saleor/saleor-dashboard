@@ -1,20 +1,31 @@
 import { useStaffMemberDeleteMutation, useStaffMemberUpdateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { useIntl } from "react-intl";
 
 import { staffListUrl } from "../urls";
 
-export const useStaffUserOperations = () => {
+interface UseStaffUserOperationsProps {
+  /** Own account settings — toast as a profile save, not a staff-admin edit. */
+  isOwnAccount?: boolean;
+}
+
+export const useStaffUserOperations = ({
+  isOwnAccount = false,
+}: UseStaffUserOperationsProps = {}) => {
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
   const [updateStaffMember, updateStaffMemberOpts] = useStaffMemberUpdateMutation({
     onCompleted: data => {
-      if (!data.staffUpdate?.errors.length) {
+      if (!data.staffUpdate?.errors?.length) {
         notify({
           status: "success",
-          text: intl.formatMessage({ id: "EDihQs", defaultMessage: "Staff member updated" }),
+          text: intl.formatMessage(
+            isOwnAccount
+              ? { id: "B5/YE0", defaultMessage: "Profile updated" }
+              : { id: "EDihQs", defaultMessage: "Staff member updated" },
+          ),
         });
       }
     },

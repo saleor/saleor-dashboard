@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Skeleton } from "@dashboard/components/Skeleton/Skeleton";
 import { type PermissionEnum } from "@dashboard/graphql";

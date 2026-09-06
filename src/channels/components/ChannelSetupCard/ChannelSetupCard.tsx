@@ -1,6 +1,6 @@
 import { type ChannelSectionId } from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
 import { useChannelReviewItems } from "@dashboard/channels/hooks/useChannelReviewItems";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { SetupChecklist } from "@dashboard/components/SetupChecklist/SetupChecklist";
 import { type SetupChecklistTask } from "@dashboard/components/SetupChecklist/types";
 import { type TaxCalculationStrategy } from "@dashboard/graphql";

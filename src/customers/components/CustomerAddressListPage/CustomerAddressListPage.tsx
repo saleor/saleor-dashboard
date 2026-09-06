@@ -4,7 +4,7 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
 import { customerUrl } from "@dashboard/customers/urls";
 import { type AddressTypeEnum, type CustomerAddressesFragment } from "@dashboard/graphql";

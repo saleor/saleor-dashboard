@@ -6,11 +6,11 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { CountryList } from "@dashboard/components/CountryList";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { CountryList } from "@dashboard/components/CountryList/CountryList";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
-import { useExitFormDialog } from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   type ChannelFragment,
@@ -34,9 +34,9 @@ import { useIntl } from "react-intl";
 import { getStringOrPlaceholder } from "../../../misc";
 import { type FetchMoreProps, type SearchProps } from "../../../types";
 import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
-import ShippingZoneInfo from "../ShippingZoneInfo";
+import ShippingZoneInfo from "../ShippingZoneInfo/ShippingZoneInfo";
 import { ShippingZoneRates } from "../ShippingZoneRates/ShippingZoneRates";
-import ShippingZoneSettingsCard from "../ShippingZoneSettingsCard";
+import ShippingZoneSettingsCard from "../ShippingZoneSettingsCard/ShippingZoneSettingsCard";
 import { messages } from "./messages";
 import { buildShippingZoneSaveComposition } from "./saveComposition";
 import { ShippingZoneSaveCompositionHint } from "./ShippingZoneSaveCompositionHint";

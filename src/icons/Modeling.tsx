@@ -53,7 +53,7 @@ const ModelingIconPaths = ({ strokeWidth }: { strokeWidth: number }) => (
   </>
 );
 
-export const ModelingIcon = (): JSX.Element => (
+export const ModelingIcon = (): React.ReactNode => (
   <svg
     width={navigationLucideIconProps.size}
     height={navigationLucideIconProps.size}
@@ -65,7 +65,7 @@ export const ModelingIcon = (): JSX.Element => (
   </svg>
 );
 
-export const ConfigurationModelingIcon = (): JSX.Element => (
+export const ConfigurationModelingIcon = (): React.ReactNode => (
   <svg
     width={configurationLucideIconProps.size}
     height={configurationLucideIconProps.size}
@@ -77,7 +77,7 @@ export const ConfigurationModelingIcon = (): JSX.Element => (
   </svg>
 );
 
-export const TopNavModelingIcon = (): JSX.Element => (
+export const TopNavModelingIcon = (): React.ReactNode => (
   <svg
     width={topNavLucideIconProps.size}
     height={topNavLucideIconProps.size}

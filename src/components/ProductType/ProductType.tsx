@@ -71,7 +71,7 @@ export const ProductTypeDisplay = ({
   color = "default2",
   "data-test-id": dataTestId = "product-type-display",
   title,
-}: ProductTypeProps): JSX.Element => {
+}: ProductTypeProps): React.ReactNode => {
   const intl = useIntl();
 
   if (!productType) {
@@ -105,7 +105,7 @@ export const ProductTypeDisplay = ({
   );
 };
 
-export const ClickableProductType = (props: ProductTypeProps): JSX.Element => {
+export const ClickableProductType = (props: ProductTypeProps): React.ReactNode => {
   const { productType } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();

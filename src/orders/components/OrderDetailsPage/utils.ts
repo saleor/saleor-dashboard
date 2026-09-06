@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { type MetadataIdSchema } from "@dashboard/components/Metadata";
+import { type MetadataIdSchema } from "@dashboard/components/Metadata/types";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 

@@ -2,8 +2,8 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductErrorFragment, ProductTypeKindEnum } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -41,7 +41,7 @@ export const CreateProductTypeDialog = ({
   errors: apiErrors,
   onClose,
   onSubmit,
-}: CreateProductTypeDialogProps): JSX.Element => {
+}: CreateProductTypeDialogProps): React.ReactNode => {
   const intl = useIntl();
   const [submitErrors, setSubmitErrors] = useState<ProductErrorFragment[]>([]);
   const [showApiErrors, setShowApiErrors] = useState(false);

@@ -5,7 +5,7 @@ import {
   AssignableListTable,
 } from "@dashboard/components/AssignableListTable/AssignableListTable";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown";
+import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductChannelsAvailability";
 import { type ProductChannelListing } from "@dashboard/components/ChannelsAvailabilityDropdown/productUtils";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { PAGINATE_BY } from "@dashboard/config";
@@ -55,7 +55,7 @@ export const DiscountProducts = ({
   numberOfRows = PAGINATE_BY,
   onUpdateListSettings,
   embedded = false,
-}: SaleProductsProps): JSX.Element => {
+}: SaleProductsProps): React.ReactNode => {
   const intl = useIntl();
   // Product.channelListings is behind MANAGE_PRODUCTS and simply absent otherwise, so drop the
   // column instead of filling every row with a placeholder.

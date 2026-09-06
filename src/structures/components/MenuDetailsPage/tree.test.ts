@@ -2,7 +2,7 @@
 import { type RecursiveMenuItem } from "@dashboard/structures/types";
 
 import { menu } from "../../fixtures";
-import { type TreeOperation } from "../MenuItems";
+import { type TreeOperation } from "../MenuItems/tree";
 import { computeRelativeTree } from "./tree";
 
 const relativeOutput: RecursiveMenuItem[][] = [

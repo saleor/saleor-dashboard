@@ -4,7 +4,7 @@ import { sectionNames } from "@dashboard/intl";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export const OrderReturnsRefundsSettingsCard = (): JSX.Element => {
+export const OrderReturnsRefundsSettingsCard = (): React.ReactNode => {
   const intl = useIntl();
 
   return (

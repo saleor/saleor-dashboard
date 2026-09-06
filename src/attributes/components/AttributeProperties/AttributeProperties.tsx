@@ -13,7 +13,7 @@ import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { Box, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type AttributePageFormData } from "../AttributePage";
+import { type AttributePageFormData } from "../AttributePage/AttributePage";
 import { messages } from "./messages";
 
 interface AttributePropertiesProps {
@@ -28,7 +28,7 @@ const AttributeProperties = ({
   errors,
   disabled,
   onChange,
-}: AttributePropertiesProps): JSX.Element => {
+}: AttributePropertiesProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
   // filterableInStorefront and storefrontSearchPosition are removed from the API in 3.24

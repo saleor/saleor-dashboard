@@ -1,10 +1,10 @@
-import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { areSelectedChannelIdsEqual } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { type ChannelFragment } from "@dashboard/graphql";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { type DialogProps } from "@dashboard/types";
-import { arrayDiff } from "@dashboard/utils/arrays";
-import { toggle } from "@dashboard/utils/lists";
+import { arrayDiff } from "@dashboard/utils/arrays/arrays";
+import { toggle } from "@dashboard/utils/lists/lists";
 import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 

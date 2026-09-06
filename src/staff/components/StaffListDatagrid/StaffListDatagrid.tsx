@@ -5,7 +5,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { type StaffMember, type StaffMembers } from "@dashboard/staff/types";

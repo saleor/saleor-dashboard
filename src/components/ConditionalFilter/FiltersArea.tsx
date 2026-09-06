@@ -1,8 +1,8 @@
 import { Box } from "@saleor/macaw-ui-next";
 import { type FC, useMemo, useState } from "react";
 
-import { useConditionalFilterContext } from "./context";
-import { type FilterContainer } from "./FilterElement";
+import { useConditionalFilterContext } from "./context/consumer";
+import { type FilterContainer } from "./FilterElement/FilterElement";
 import { getEditableFilterContainer } from "./globalConstraints";
 import { type LeftOperand } from "./LeftOperandsProvider";
 import { useFiltersAreaTranslations } from "./messages";

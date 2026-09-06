@@ -12,7 +12,7 @@ const meta: Meta<typeof AssignableListCard> = {
 export default meta;
 type Story = StoryObj<typeof AssignableListCard>;
 
-const TablePlaceholder = (): JSX.Element => (
+const TablePlaceholder = (): React.ReactNode => (
   <Text size={3} color="default2" padding={6} display="block">
     Table heading + rows live here. Hover a row to reveal delete.
   </Text>

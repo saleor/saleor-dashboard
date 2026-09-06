@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import * as React from "react";
-import useRouter from "use-react-router";
+import { useLocation } from "react-router";
 
 import appStateReducer, { type AppStateReducerAction } from "./reducer";
 import type IAppState from "./state";
@@ -13,7 +13,7 @@ export const AppStateContext = React.createContext<AppStateContextType>([
 ]);
 
 const AppStateProvider = ({ children }: { children: ReactNode }) => {
-  const { location } = useRouter();
+  const location = useLocation();
   const stateAndDispatch = React.useReducer(appStateReducer, initialAppState);
   const [state, dispatch] = stateAndDispatch;
 

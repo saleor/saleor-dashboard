@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, type ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";

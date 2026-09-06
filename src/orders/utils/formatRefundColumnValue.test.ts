@@ -1,4 +1,4 @@
-import { Locale } from "@dashboard/components/Locale";
+import { Locale } from "@dashboard/components/Locale/Locale";
 
 import { formatRefundColumnValue } from "./formatRefundColumnValue";
 

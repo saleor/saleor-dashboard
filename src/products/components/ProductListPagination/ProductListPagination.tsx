@@ -1,4 +1,5 @@
-import { DatagridPagination, type ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
+import { type ListSettingsUpdate } from "@dashboard/components/TablePagination/TablePagination";
 import { type ProductListColumns } from "@dashboard/config";
 import { type ListProps } from "@dashboard/types";
 import { useIntl } from "react-intl";
@@ -15,7 +16,7 @@ export const ProductListPagination = ({
   settings,
   disabled,
   onUpdateListSettings,
-}: ProductListPaginationProps): JSX.Element => {
+}: ProductListPaginationProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

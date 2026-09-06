@@ -2,7 +2,7 @@ import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroup
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { formatMoneyAmount, formatMoneyRange } from "@dashboard/components/Money";
 import { Title2 } from "@dashboard/components/Title2/Title2";
-import WeightRange from "@dashboard/components/WeightRange";
+import WeightRange from "@dashboard/components/WeightRange/WeightRange";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";

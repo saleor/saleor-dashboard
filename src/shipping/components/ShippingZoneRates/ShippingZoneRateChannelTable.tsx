@@ -1,5 +1,5 @@
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
-import MoneyRange from "@dashboard/components/MoneyRange";
+import MoneyRange from "@dashboard/components/MoneyRange/MoneyRange";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Globe } from "lucide-react";
@@ -33,7 +33,7 @@ export const ShippingZoneRateChannelTable = ({
   variant,
   disabled,
   getRateChannelSetupHref,
-}: ShippingZoneRateChannelTableProps): JSX.Element => {
+}: ShippingZoneRateChannelTableProps): React.ReactNode => {
   const intl = useIntl();
   const [query, setQuery] = useState("");
   const filteredChannels = useMemo(

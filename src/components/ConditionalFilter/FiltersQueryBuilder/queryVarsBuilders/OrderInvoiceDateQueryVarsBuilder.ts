@@ -1,5 +1,5 @@
 import { type Handler, NoopValuesHandler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { QueryVarsDateUtils } from "../dateUtils";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 

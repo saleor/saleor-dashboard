@@ -1,14 +1,14 @@
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters/ListFilters";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import { Box } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { GiftCardListBulkActions } from "../GiftCardListBulkActions";
-import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
-import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { GiftCardListBulkActions } from "../GiftCardListBulkActions/GiftCardListBulkActions";
+import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider/GiftCardListDialogsProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider/GiftCardListProvider";
 import { giftCardListSearchAndFiltersMessages as messages } from "./messages";
 
-const GiftCardListSearchAndFilters = (): JSX.Element => {
+const GiftCardListSearchAndFilters = (): React.ReactNode => {
   const intl = useIntl();
 
   const { params, handleSearchChange, selectedRowIds } = useGiftCardList();
@@ -16,7 +16,6 @@ const GiftCardListSearchAndFilters = (): JSX.Element => {
 
   return (
     <ListFilters
-      type="expression-filter"
       initialSearch={params?.query || ""}
       onSearchChange={handleSearchChange}
       showSearchTooltip

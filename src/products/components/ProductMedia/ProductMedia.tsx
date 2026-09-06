@@ -2,13 +2,13 @@
 import { type FetchResult } from "@apollo/client";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Draggable } from "@dashboard/components/Draggable/Draggable";
-import MediaTile from "@dashboard/components/MediaTile";
+import MediaTile from "@dashboard/components/MediaTile/MediaTile";
 import {
   type ProductMediaCreateMutation,
   type ProductMediaFragment,
   ProductMediaType,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { type ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
 import { closestCenter, DndContext, DragOverlay } from "@dnd-kit/core";

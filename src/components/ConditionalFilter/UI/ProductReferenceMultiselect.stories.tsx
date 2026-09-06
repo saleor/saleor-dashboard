@@ -46,7 +46,7 @@ export default meta;
 
 type Story = StoryObj<typeof ProductReferenceMultiselect>;
 
-const ProductReferenceMultiselectPlayground = (): JSX.Element => {
+const ProductReferenceMultiselectPlayground = (): React.ReactNode => {
   const [value, setValue] = useState<RightOperatorOption[]>([options[0]]);
   const selected: MultiselectOperator = {
     conditionValue: { type: "multiselect", label: "in", value: "input-2" },

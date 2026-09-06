@@ -1,16 +1,16 @@
 import { useApolloClient } from "@apollo/client";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import {
   type ProductErrorFragment,
   useCategoryCreateMutation,
   useRootCategoriesQuery,
 } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -58,7 +58,7 @@ interface CategoryListProps {
   params: CategoryListUrlQueryParams;
 }
 
-const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
+const CategoryList = ({ params }: CategoryListProps): React.ReactNode => {
   const client = useApolloClient();
   const location = useLocation();
   const navigate = useNavigator();

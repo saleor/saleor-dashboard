@@ -15,7 +15,7 @@ interface DiscountDatesWithControllerProps<ErrorCode> {
 export const DiscountDatesWithController = <ErrorCode,>({
   disabled,
   errors,
-}: DiscountDatesWithControllerProps<ErrorCode>): JSX.Element => {
+}: DiscountDatesWithControllerProps<ErrorCode>): React.ReactNode => {
   const { formState } = useFormContext<DiscoutFormData>();
   const { field } = useController<DiscoutFormData, "dates">({
     name: "dates",

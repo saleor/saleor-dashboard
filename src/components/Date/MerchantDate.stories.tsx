@@ -1,4 +1,4 @@
-import { TimezoneProvider } from "@dashboard/components/Timezone";
+import { TimezoneProvider } from "@dashboard/components/Timezone/Timezone";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ComponentType } from "react";

@@ -1,6 +1,6 @@
-import { type INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
 import { useGiftCardUnassignUserMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { useIntl } from "react-intl";
 
@@ -10,7 +10,7 @@ import { GIFT_CARD_DETAILS_QUERY } from "../queries";
 import { GiftCardAssignedCustomerCardView } from "./GiftCardAssignedCustomerCardView";
 import { giftCardAssignedCustomerCardMessages as messages } from "./messages";
 
-export const GiftCardAssignedCustomerCard = (): JSX.Element => {
+export const GiftCardAssignedCustomerCard = (): React.ReactNode => {
   const intl = useIntl();
   const notify = useNotifier();
   const { giftCard, loading } = useGiftCardDetails();

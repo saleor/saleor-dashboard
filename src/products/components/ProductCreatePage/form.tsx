@@ -17,9 +17,12 @@ import {
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
 import { type ChannelData, type ChannelPriceArgs } from "@dashboard/channels/utils";
-import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeInputData,
+} from "@dashboard/components/Attributes/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { type MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
   type ProductErrorWithAttributesFragment,
   type ProductTypeQuery,
@@ -74,9 +77,9 @@ import {
   type ProductStockFormsetData,
   type ProductStockInput,
   type ProductStockPasteRow,
-} from "../ProductStocks";
+} from "../ProductStocks/ProductStocks";
 
-export interface ProductCreateFormData extends MetadataFormData {
+interface ProductCreateFormData extends MetadataFormData {
   category: string;
   channelListings: ChannelData[];
   collections: Option[];
@@ -100,7 +103,7 @@ export interface ProductCreateData extends ProductCreateFormData {
   stocks: ProductStockInput[];
 }
 
-export interface ProductCreateHandlers
+interface ProductCreateHandlers
   extends Record<
       | "changeMetadata"
       | "selectCategory"
@@ -454,4 +457,3 @@ const ProductCreateForm = ({
 };
 
 ProductCreateForm.displayName = "ProductCreateForm";
-export default ProductCreateForm;

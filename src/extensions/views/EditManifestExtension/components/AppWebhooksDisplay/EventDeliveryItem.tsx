@@ -1,4 +1,4 @@
-import EventTime from "@dashboard/components/EventTime";
+import EventTime from "@dashboard/components/EventTime/EventTime";
 import {
   type EventDeliveryAttemptFragment,
   type EventDeliveryStatusEnum,

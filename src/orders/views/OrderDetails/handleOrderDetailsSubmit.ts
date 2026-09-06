@@ -1,5 +1,5 @@
 import { type FetchResult } from "@apollo/client";
-import { type MetadataIdSchema } from "@dashboard/components/Metadata";
+import { type MetadataIdSchema } from "@dashboard/components/Metadata/types";
 import {
   type MetadataErrorFragment,
   type OrderConfirmMutation,
@@ -12,7 +12,7 @@ import {
   type UpdatePrivateMetadataMutation,
   type UpdatePrivateMetadataMutationVariables,
 } from "@dashboard/graphql";
-import { type useNotifier } from "@dashboard/hooks/useNotifier";
+import { type useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderDetailsPage/utils";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { areMetadataArraysEqual } from "@dashboard/utils/handlers/metadataUpdateHelpers";

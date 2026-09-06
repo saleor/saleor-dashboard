@@ -50,7 +50,7 @@ export const VoucherFixedAmountChannelList = ({
   amountKind = "fixed",
   onChannelChange,
   onChannelsChange,
-}: VoucherFixedAmountChannelListProps): JSX.Element => {
+}: VoucherFixedAmountChannelListProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormErrors(["discountValue"], errors);
   const isPercentage = amountKind === "percentage";

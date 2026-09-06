@@ -1,12 +1,13 @@
 import {
   AttributeFilterKeys,
   type AttributeListFilterOpts,
-} from "@dashboard/attributes/components/AttributeListPage";
+} from "@dashboard/attributes/components/AttributeListPage/filters";
 import { type FilterElement } from "@dashboard/components/Filter/types";
 import { type AttributeFilterInput } from "@dashboard/graphql";
 import { parseBoolean } from "@dashboard/misc";
 
-import { createFilterTabUtils, getSingleValueQueryParam } from "../../../utils/filters";
+import { getSingleValueQueryParam } from "../../../utils/filters/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import { type AttributeListUrlFilters, AttributeListUrlFiltersEnum } from "../../urls";
 
 const ATTRIBUTE_FILTERS_KEY = "attributeFilters";

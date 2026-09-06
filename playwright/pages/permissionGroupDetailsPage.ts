@@ -17,9 +17,7 @@ export class PermissionGroupDetailsPage extends BasePage {
     readonly pageTitle = page
       .getByTestId("page-header")
       .filter({ hasText: "New Permission Group" }),
-    readonly permissionGroupNameInput = page
-      .getByTestId("permission-group-name-input")
-      .locator("input"),
+    readonly permissionGroupNameInput = page.getByTestId("permission-group-name-input"),
     readonly channelPermissionsCheckbox = page.getByTestId("all-channel-permissions-checkbox"),
     readonly permissionGroupListItem = page.getByTestId("permission-group-list-item"),
     readonly assignMembersButton = page.getByTestId("assign-members"),

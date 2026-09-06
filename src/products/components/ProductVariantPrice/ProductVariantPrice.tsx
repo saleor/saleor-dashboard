@@ -6,7 +6,7 @@ import {
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelIcon } from "@dashboard/components/ChannelAvailability/primitives";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
 import {
@@ -65,7 +65,7 @@ export const ProductVariantPrice = ({
   listedInChannelsCount,
   availableChannelsCount,
   disabledMessage,
-}: ProductVariantPriceProps): JSX.Element => {
+}: ProductVariantPriceProps): React.ReactNode => {
   const intl = useIntl();
   const channelApiErrors = errors.filter(
     (error): error is ProductChannelListingErrorFragment => "channels" in error,

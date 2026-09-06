@@ -1,18 +1,18 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth/useUser";
-import { ChannelPickerDialog } from "@dashboard/channels/components/ChannelPickerDialog";
+import { ChannelPickerDialog } from "@dashboard/channels/components/ChannelPickerDialog/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { createDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { useOrderDraftCreateMutation, useOrderDraftListQuery } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -31,7 +31,7 @@ import isEqual from "lodash/isEqual";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import OrderDraftListPage from "../../components/OrderDraftListPage";
+import OrderDraftListPage from "../../components/OrderDraftListPage/OrderDraftListPage";
 import {
   orderDraftListUrl,
   type OrderDraftListUrlDialog,

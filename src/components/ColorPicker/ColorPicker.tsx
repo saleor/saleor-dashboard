@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer/HorizontalSpacer";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { type RequireOnlyOne } from "@dashboard/misc";
 import commonErrorMessages from "@dashboard/utils/errors/common";

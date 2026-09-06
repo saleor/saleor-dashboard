@@ -1,11 +1,11 @@
 import { useUser } from "@dashboard/auth/useUser";
-import { useFlag } from "@dashboard/featureFlags";
+import { useFlag } from "@dashboard/featureFlags/useFlag";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import type * as React from "react";
 
 import { onboardingCompletedMock, onboardingInitState } from "./mocks";
-import { OnboardingProvider } from "./onboardingContext";
+import { OnboardingProvider } from "./onboardingContext/OnboardingContext";
 import { useOnboardingStorage } from "./onboardingContext/useOnboardingStorage";
 import { WelcomePageOnboarding } from "./WelcomePageOnboarding";
 
@@ -15,7 +15,7 @@ jest.mock("@dashboard/components/Router/useRouteChange", () => ({
   }),
 }));
 jest.mock("@dashboard/auth/useUser");
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: jest.fn().mockReturnValue({
     enabled: false,
   }),

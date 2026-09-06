@@ -1,6 +1,6 @@
 import { useApolloClient } from "@apollo/client";
 
-import { type FilterContainer } from "../../FilterElement";
+import { type FilterContainer } from "../../FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "../../FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { type LeftOperand } from "../../LeftOperandsProvider";
 import { type FilterAPIProvider } from "../FilterAPIProvider";

@@ -11,7 +11,7 @@ const SearchInput = ({
   onSearchChange,
   placeholder,
   showSearchTooltip = false,
-}: SearchInputProps): JSX.Element => (
+}: SearchInputProps): React.ReactNode => (
   <ListSearchInput
     initialSearch={initialSearch}
     placeholder={placeholder}

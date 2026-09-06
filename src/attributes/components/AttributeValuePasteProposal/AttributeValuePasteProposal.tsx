@@ -16,7 +16,7 @@ export const AttributeValuePasteProposal = ({
   values,
   onAdd,
   onKeepAsOne,
-}: AttributeValuePasteProposalProps): JSX.Element => (
+}: AttributeValuePasteProposalProps): React.ReactNode => (
   <Box className={styles.pasteProposal} data-test-id="attribute-value-paste-proposal">
     <Text size={2} fontWeight="medium">
       <FormattedMessage

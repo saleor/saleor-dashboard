@@ -48,16 +48,18 @@ jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
   useAnalytics: () => ({ trackEvent: jest.fn() }),
 }));
 
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: () => true,
-  useFlags: () => ({}),
 }));
 
-jest.mock("@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext", () => ({
-  useOnboarding: () => ({
-    markOnboardingStepAsCompleted: mockMarkOnboardingStepAsCompleted,
+jest.mock(
+  "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext",
+  () => ({
+    useOnboarding: () => ({
+      markOnboardingStepAsCompleted: mockMarkOnboardingStepAsCompleted,
+    }),
   }),
-}));
+);
 
 const mockUsePendingInstallation = usePendingInstallation as jest.Mock;
 const mockUseInstalledExtensionsFilter = useInstalledExtensionsFilter as jest.Mock;

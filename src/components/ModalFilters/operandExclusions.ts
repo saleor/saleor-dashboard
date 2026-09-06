@@ -1,6 +1,5 @@
 import { type FilterAPIProvider } from "../ConditionalFilter/API/FilterAPIProvider";
 import { getFilterElement } from "../ConditionalFilter/API/utils";
-import { type FilterContainer, FilterElement } from "../ConditionalFilter/FilterElement";
 import { Condition } from "../ConditionalFilter/FilterElement/Condition";
 import { ConditionSelected } from "../ConditionalFilter/FilterElement/ConditionSelected";
 import {
@@ -8,6 +7,10 @@ import {
   isItemOptionArray,
   type ItemOption,
 } from "../ConditionalFilter/FilterElement/ConditionValue";
+import {
+  type FilterContainer,
+  FilterElement,
+} from "../ConditionalFilter/FilterElement/FilterElement";
 import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 
 export type OperandValueExclusions = Partial<Record<"collection", string[]>>;

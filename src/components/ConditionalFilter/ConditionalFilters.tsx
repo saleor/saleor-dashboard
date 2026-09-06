@@ -1,8 +1,8 @@
 import { Box } from "@saleor/macaw-ui-next";
 import { type FC, useEffect, useRef, useState } from "react";
 
-import { useConditionalFilterContext } from "./context";
-import { type FilterContainer } from "./FilterElement";
+import { useConditionalFilterContext } from "./context/consumer";
+import { type FilterContainer } from "./FilterElement/FilterElement";
 import { FiltersArea } from "./FiltersArea";
 import { LoadingFiltersArea } from "./LoadingFiltersArea";
 import { type ConditionalFiltersLayout, isFlatFilterLayout } from "./UI";

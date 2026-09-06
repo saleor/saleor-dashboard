@@ -16,34 +16,54 @@ export const extensionPreferencesMessages = defineMessages({
     defaultMessage: "Hide extension",
     description: "tooltip for hide action on a widget extension",
   },
+  show: {
+    id: "k+8l4c",
+    defaultMessage: "Show extension",
+    description: "tooltip for show action on a hidden widget",
+  },
+  pinLabel: {
+    id: "bSCHfM",
+    defaultMessage: "Pin",
+    description: "widget preference: pin button label when not pinned",
+  },
+  pinnedLabel: {
+    id: "gRj2e3",
+    defaultMessage: "Pinned",
+    description: "widget preference: pin button label when pinned",
+  },
+  visibleLabel: {
+    id: "076tw7",
+    defaultMessage: "Visible",
+    description: "widget preference: visibility button when shown",
+  },
+  hiddenLabel: {
+    id: "wXeUSb",
+    defaultMessage: "Hidden",
+    description: "widget preference: visibility button when hidden",
+  },
   sectionTitle: {
-    id: "r2ajD2",
-    defaultMessage: "Extensions visibility",
-    description: "account settings section title",
+    id: "w5h+Jh",
+    defaultMessage: "Dashboard extension widgets",
+    description: "account settings section title for personal widget chrome",
   },
   sectionSubtitle: {
-    id: "/2uCva",
-    defaultMessage: "Pin extensions to the top or hide them across the dashboard.",
-    description: "account settings section subtitle",
+    id: "2sxu3x",
+    defaultMessage: "Extension widgets on Home and detail pages. Changes save immediately.",
+    description: "account settings widgets section intro",
   },
-  stateDefault: {
-    id: "TCV876",
-    defaultMessage: "Default",
-    description: "tri-state option: default visibility",
+  emptyTitle: {
+    id: "J+rJFb",
+    defaultMessage: "No extension widgets",
+    description: "account settings empty state title for dashboard extension widgets",
   },
-  statePinned: {
-    id: "WCl+E+",
-    defaultMessage: "Pinned",
-    description: "tri-state option: pinned",
+  emptyDescription: {
+    id: "FJwkW2",
+    defaultMessage: "Install an extension that adds one to Home or a detail page.",
+    description: "account settings empty state description for dashboard extension widgets",
   },
-  stateHidden: {
-    id: "rNNHeS",
-    defaultMessage: "Hidden",
-    description: "tri-state option: hidden",
-  },
-  emptyState: {
-    id: "qO6iZs",
-    defaultMessage: "No extensions available to manage.",
-    description: "empty state for extensions visibility list",
+  exploreExtensions: {
+    id: "w73h9A",
+    defaultMessage: "Explore extensions",
+    description: "empty state CTA to explore extensions that add widgets",
   },
 });

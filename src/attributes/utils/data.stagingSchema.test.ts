@@ -1,4 +1,4 @@
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
 import { AttributeInputTypeEnum, AttributeTypeEnum } from "@dashboard/graphql";
 
 import { getAttributeData } from "./data";

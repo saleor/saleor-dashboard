@@ -6,7 +6,7 @@ import {
   TransactionActionEnum,
   type TransactionItemFragment,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -19,7 +19,7 @@ import { OrderManualTransactionRefundPage } from "./OrderManualTransactionRefund
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn);
 jest.mock("@dashboard/components/Savebar");
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn(() => () => undefined),
 }));
 mockResizeObserver();

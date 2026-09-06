@@ -1,8 +1,8 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
-import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalDivider } from "@dashboard/components/Modal/ModalDivider";

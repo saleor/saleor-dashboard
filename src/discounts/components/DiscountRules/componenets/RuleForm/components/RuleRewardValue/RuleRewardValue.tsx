@@ -1,12 +1,12 @@
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { type Rule } from "@dashboard/discounts/models";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { Input, Text } from "@saleor/macaw-ui-next";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
-import { DiscountTypeSwitch } from "../DiscountTypeSwitch";
-import { RuleInputWrapper } from "../RuleInputWrapper";
+import { DiscountTypeSwitch } from "../DiscountTypeSwitch/DiscountTypeSwitch";
+import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 import styles from "./RuleRewardValue.module.css";
 
 interface RuleRewardPriceProps {

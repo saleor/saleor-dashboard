@@ -31,7 +31,7 @@ const staffUser: UserFragment = {
   restrictedAccessToChannels: false,
 };
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <MemoryRouter>
     <UserContext.Provider
       value={{
@@ -85,15 +85,15 @@ jest.mock("@dashboard/searches/usePageTypeSearch", () => ({
 jest.mock("@dashboard/components/Metadata/Metadata", () => ({
   Metadata: () => <div data-test-id="metadata-mock" />,
 }));
-jest.mock("../AttributeOrganization", () => ({
+jest.mock("../AttributeOrganization/AttributeOrganization", () => ({
   __esModule: true,
   default: () => <div data-test-id="attribute-organization-mock" />,
 }));
-jest.mock("../AttributeDetails", () => ({
+jest.mock("../AttributeDetails/AttributeDetails", () => ({
   __esModule: true,
   default: () => <div data-test-id="attribute-details-mock" />,
 }));
-jest.mock("../AttributeProperties", () => ({
+jest.mock("../AttributeProperties/AttributeProperties", () => ({
   __esModule: true,
   default: () => <div data-test-id="attribute-properties-mock" />,
 }));

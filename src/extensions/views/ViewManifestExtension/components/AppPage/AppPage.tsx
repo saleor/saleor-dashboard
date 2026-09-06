@@ -1,5 +1,5 @@
 import { borderHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { APP_VERSION } from "@dashboard/config";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { type AppQuery } from "@dashboard/graphql";

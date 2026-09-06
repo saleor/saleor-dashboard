@@ -4,16 +4,17 @@ import { Callout } from "@dashboard/components/Callout/Callout";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
-import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
+import { FilterTab } from "@dashboard/components/TableFilter/FilterTab";
+import FilterTabs from "@dashboard/components/TableFilter/FilterTabs";
 import {
   ProductVariantSkusExistDocument,
   type ProductVariantSkusExistQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { buttonMessages } from "@dashboard/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";

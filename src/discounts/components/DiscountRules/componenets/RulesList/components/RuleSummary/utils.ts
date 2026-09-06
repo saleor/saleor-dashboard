@@ -5,7 +5,8 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { isArrayOfOptions, type Rule } from "@dashboard/discounts/models";
+import { isArrayOfOptions } from "@dashboard/discounts/models/Condition";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { type DefaultTheme, type Option } from "@saleor/macaw-ui-next";
 

@@ -1,7 +1,7 @@
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";

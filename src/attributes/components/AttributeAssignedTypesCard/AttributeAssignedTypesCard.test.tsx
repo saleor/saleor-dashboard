@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import { AttributeAssignedTypesCard } from "./AttributeAssignedTypesCard";
 
-const RouterWrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const RouterWrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <MemoryRouter>
     <Wrapper>{children}</Wrapper>
   </MemoryRouter>

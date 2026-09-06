@@ -1,7 +1,7 @@
 import { type IMoney } from "@dashboard/utils/intl";
 import { useIntl } from "react-intl";
 
-import { LocaleConsumer } from "../Locale";
+import { LocaleConsumer } from "../Locale/Locale";
 import { getMoneyRange } from "./utils";
 
 interface MoneyRangeProps {

@@ -30,7 +30,7 @@ export const VoucherScopeTile = ({
   disabled,
   onSelect,
   "data-test-id": dataTestId,
-}: VoucherScopeTileProps): JSX.Element => (
+}: VoucherScopeTileProps): React.ReactNode => (
   <Box
     as="button"
     type="button"

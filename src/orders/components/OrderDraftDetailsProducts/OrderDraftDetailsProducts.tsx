@@ -1,5 +1,5 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";

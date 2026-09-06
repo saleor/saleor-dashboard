@@ -50,7 +50,7 @@ export const DiscountVariants = ({
   numberOfRows = PAGINATE_BY,
   onUpdateListSettings,
   embedded = false,
-}: SaleVariantsProps): JSX.Element => {
+}: SaleVariantsProps): React.ReactNode => {
   const intl = useIntl();
   const variants = getLoadableList(discountVariants) as DiscountVariantRow[] | undefined;
 

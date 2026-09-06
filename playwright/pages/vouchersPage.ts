@@ -36,7 +36,7 @@ export class VouchersPage extends BasePage {
     readonly usageLimitSection = page.getByTestId("usage-limit-section"),
     readonly valueSection = page.getByTestId("value-section"),
     readonly minimumRequirementsSection = page.getByTestId("minimum-requirements-section"),
-    readonly usageLimitInput = page.getByTestId("usage-limit").locator("input"),
+    readonly usageLimitInput = page.getByTestId("usage-limit"),
     readonly assignedSpecificProductsTable = page.getByTestId("assigned-specific-products-table"),
     readonly assignedSpecificProductRow = page.getByTestId("assigned-specific-product"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),

@@ -3,16 +3,16 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {
   FulfillmentStatus,
   type OrderErrorFragment,
   type WarehouseFragment,
 } from "@dashboard/graphql";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Box, DynamicCombobox, type Option, Text } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";

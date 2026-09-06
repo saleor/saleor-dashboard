@@ -2,9 +2,9 @@ import { DashboardCard } from "@dashboard/components/Card";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import PriceField from "@dashboard/components/PriceField";
+import PriceField from "@dashboard/components/PriceField/PriceField";
 import {
   type OrderDetailsFragment,
   type OrderGrantRefundCreateErrorFragment,

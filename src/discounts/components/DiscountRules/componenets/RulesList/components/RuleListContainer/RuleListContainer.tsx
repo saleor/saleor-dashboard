@@ -6,6 +6,6 @@ interface RuleListContainerProps {
   children: ReactNode;
 }
 
-export const RuleListContainer = ({ children }: RuleListContainerProps): JSX.Element => (
+export const RuleListContainer = ({ children }: RuleListContainerProps): React.ReactNode => (
   <div className={styles.grid}>{children}</div>
 );

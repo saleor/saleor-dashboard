@@ -1,7 +1,7 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { type DialogProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";

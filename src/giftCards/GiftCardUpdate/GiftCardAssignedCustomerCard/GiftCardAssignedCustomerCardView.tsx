@@ -32,7 +32,7 @@ export const GiftCardAssignedCustomerCardView = ({
   removing = false,
   onAssign,
   onRemove,
-}: GiftCardAssignedCustomerCardViewProps): JSX.Element => {
+}: GiftCardAssignedCustomerCardViewProps): React.ReactNode => {
   const items = useMemo(() => {
     if (!giftCard) {
       return [];

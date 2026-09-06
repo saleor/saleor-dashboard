@@ -1,10 +1,10 @@
-import {
-  Condition,
-  type FilterContainer,
-  FilterElement,
-} from "@dashboard/components/ConditionalFilter/FilterElement";
+import { Condition } from "@dashboard/components/ConditionalFilter/FilterElement/Condition";
 import { ConditionOptions } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
+import {
+  type FilterContainer,
+  FilterElement,
+} from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import { ExpressionValue } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";

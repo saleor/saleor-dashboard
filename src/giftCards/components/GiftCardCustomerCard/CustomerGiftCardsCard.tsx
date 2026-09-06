@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
+import CollectionWithDividers from "@dashboard/components/CollectionWithDividers/CollectionWithDividers";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";

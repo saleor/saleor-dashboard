@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 
+import { Radio } from "@dashboard/components/Radio/Radio";
 import { useStyles } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/styles";
 import { useQuery } from "@dashboard/hooks/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Radio } from "@material-ui/core";
 import {
   List,
   ListBody,
@@ -77,7 +77,7 @@ const DryRunItemsList = ({ object, objectId, setObjectId }: DryRunItemsListProps
                 {item.thumbnail && <Avatar thumbnail={item.thumbnail?.url} />}
               </ListItemCell>
               <ListItemCell>
-                <Radio checked={item.id === objectId} />
+                <Radio checked={item.id === objectId} value={item.id} />
               </ListItemCell>
             </ListItem>
           ))

@@ -3,9 +3,9 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
@@ -27,7 +27,7 @@ import {
   type SortPage,
   type TabPageProps,
 } from "../../../types";
-import PageTypeList from "../PageTypeList";
+import PageTypeList from "../PageTypeList/PageTypeList";
 
 interface PageTypeListPageProps
   extends PageListProps,

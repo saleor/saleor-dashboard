@@ -3,7 +3,7 @@ import { Switch } from "@saleor/macaw-ui-next";
 import { Grid3x3, List } from "lucide-react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { type ProductListViewType } from "../ProductListPage";
+import { type ProductListViewType } from "../ProductListPage/ProductListPage";
 import styles from "./ProductListViewSwitch.module.css";
 
 interface ProductListViewSwitchProps {
@@ -33,7 +33,7 @@ const messages = defineMessages({
 export const ProductListViewSwitch = ({
   defaultValue,
   setProductListViewType,
-}: ProductListViewSwitchProps): JSX.Element => {
+}: ProductListViewSwitchProps): React.ReactNode => {
   const intl = useIntl();
   const listViewLabel = intl.formatMessage(messages.listView);
   const gridViewLabel = intl.formatMessage(messages.gridView);

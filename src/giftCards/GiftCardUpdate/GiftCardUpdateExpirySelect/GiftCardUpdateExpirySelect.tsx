@@ -13,7 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { giftCardExpirySelectMessages as messages } from "./messages";
 
-export const GiftCardUpdateExpirySelect = (): JSX.Element => {
+export const GiftCardUpdateExpirySelect = (): React.ReactNode => {
   const intl = useIntl();
   const {
     change,

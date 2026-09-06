@@ -18,7 +18,7 @@ export const AttributeLabelIcon = ({
   icon,
   size = "small",
   ariaLabel,
-}: AttributeLabelIconProps): JSX.Element => {
+}: AttributeLabelIconProps): React.ReactNode => {
   const pixelSize = attributeInputTypeIconPixelSize[size];
 
   return (

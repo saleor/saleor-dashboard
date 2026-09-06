@@ -31,7 +31,7 @@ export const AssignableListCard = ({
   children,
   footer,
   "data-test-id": dataTestId,
-}: AssignableListCardProps): JSX.Element => (
+}: AssignableListCardProps): React.ReactNode => (
   <DetailSettingsCard
     title={title}
     subtitle={subtitle}

@@ -13,18 +13,19 @@ import {
   getReferenceDisplayValue,
   getTruncatedTextValue,
 } from "@dashboard/components/Attributes/utils";
-import FileUploadField from "@dashboard/components/FileUploadField";
-import RichTextEditor from "@dashboard/components/RichTextEditor";
-import SortableChipsField from "@dashboard/components/SortableChipsField";
+import FileUploadField from "@dashboard/components/FileUploadField/FileUploadField";
+import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import SortableChipsField from "@dashboard/components/SortableChipsField/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { Multiselect } from "../Combobox";
-import { DateTimeField } from "../DateTimeField";
+import { Multiselect } from "../Combobox/components/Multiselect";
+import { DateTimeField } from "../DateTimeField/DateTimeField";
 import { DropdownRow } from "./DropdownRow";
 import { SingleReferenceField } from "./SingleReferenceField";
 import { type AttributeRowProps } from "./types";
+import { useModelReferenceIcons } from "./useModelReferenceIcons";
 
 const AttributeRow = ({
   attribute,
@@ -42,15 +43,17 @@ const AttributeRow = ({
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
   richTextGetters,
-}: AttributeRowProps): JSX.Element => {
+}: AttributeRowProps): React.ReactNode => {
   const intl = useIntl();
   const labelProps = getAttributeRowLabelProps(attribute);
+  const referenceIcons = useModelReferenceIcons(attribute);
 
   switch (attribute.data.inputType) {
     case AttributeInputTypeEnum.SINGLE_REFERENCE:
       return (
         <SingleReferenceField
           attribute={attribute}
+          referenceIcons={referenceIcons}
           disabled={disabled}
           loading={loading}
           error={error}
@@ -62,7 +65,7 @@ const AttributeRow = ({
       return (
         <BasicAttributeRow label={attribute.label} {...labelProps}>
           <SortableChipsField
-            values={getReferenceDisplayValue(attribute)}
+            values={getReferenceDisplayValue(attribute, referenceIcons)}
             onValueDelete={value =>
               onReferencesRemove(
                 attribute.id,

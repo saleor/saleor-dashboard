@@ -9,7 +9,7 @@ const meta = {
 
 export default meta;
 
-export const Default = (): JSX.Element => {
+export const Default = (): React.ReactNode => {
   const [open, setOpen] = useState(true);
 
   return (

@@ -34,7 +34,7 @@ const initialFormState: EmailNotificationsFormState = {
   otherFields: {},
 };
 
-export const CloudDefaultDelivery = (): JSX.Element => {
+export const CloudDefaultDelivery = (): React.ReactNode => {
   const [deliveryMode, setDeliveryMode] = useState<StaffEmailDeliveryMode>("default");
   const [formState, setFormState] = useState<EmailNotificationsFormState>(initialFormState);
 

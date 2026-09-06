@@ -1,1 +1,0 @@
-export { TaxClassesMenu } from "./TaxClassesMenu";

@@ -5,7 +5,7 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { customerAddressesUrl } from "@dashboard/customers/urls";
@@ -16,7 +16,7 @@ import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
-import CustomerAddresses from "../CustomerAddresses";
+import CustomerAddresses from "../CustomerAddresses/CustomerAddresses";
 import { messages as customerInfoMessages } from "../CustomerInfo/messages";
 import { CustomerOrders } from "../CustomerOrders/CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";

@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { type MetadataIdSchema } from "@dashboard/components/Metadata";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { type MetadataIdSchema } from "@dashboard/components/Metadata/types";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
@@ -14,7 +14,7 @@ import {
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getMutationState } from "@dashboard/misc";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";

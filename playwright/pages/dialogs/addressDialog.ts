@@ -15,7 +15,7 @@ export class AddressDialog {
     readonly submitButton = page.getByTestId("submit"),
     readonly firstNameInput = page.getByTestId("first-name-input").locator("input"),
     readonly lastNameInput = page.getByTestId("last-name-input").locator("input"),
-    readonly companyNameInput = page.getByTestId("company-name-input").locator("input"),
+    readonly companyNameInput = page.getByTestId("company-name-input"),
     readonly phoneInput = page.getByTestId("phone-input").locator("input"),
     readonly cityInput = page.getByTestId("city-input").locator("input"),
     readonly zipInput = page.getByTestId("zip-input").locator("input"),

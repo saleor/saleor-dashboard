@@ -50,7 +50,7 @@ export const VariantReferenceMultiselect = ({
   helperText,
   disabled,
   layout,
-}: VariantReferenceMultiselectProps): JSX.Element => {
+}: VariantReferenceMultiselectProps): React.ReactNode => {
   const [query, setQuery] = useState("");
   const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
   const variantOptions = filterVariantReferenceOptions(

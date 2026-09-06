@@ -1,6 +1,15 @@
 import { act, renderHook } from "@testing-library/react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 import { CELL_TOOLTIP_SHOW_DELAY_MS, useTooltipContainer } from "./useTooltipContainer";
+
+// react-hotkeys-hook is stubbed globally in testUtils/setup.ts, so key matching itself
+// cannot be exercised here — assert the registration and run the callback it was given.
+const lastHotkeyCall = () => {
+  const { calls } = (useHotkeys as jest.Mock).mock;
+
+  return calls[calls.length - 1];
+};
 
 const bounds = { x: 0, y: 0, width: 10, height: 10 };
 
@@ -109,12 +118,26 @@ describe("useTooltipContainer", () => {
     });
 
     // Act
+    const [keys, onEscape, options] = lastHotkeyCall();
+
     act(() => {
-      window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+      onEscape();
     });
 
     // Assert
+    expect(keys).toBe("escape");
+    expect(options).toEqual({ enabled: true, enableOnFormTags: true });
     expect(result.current.tooltip).toBeUndefined();
+  });
+
+  it("keeps the Escape hotkey disabled while no tooltip is open", () => {
+    // Arrange & Act
+    renderHook(() => useTooltipContainer());
+
+    // Assert
+    const [, , options] = lastHotkeyCall();
+
+    expect(options).toEqual({ enabled: false, enableOnFormTags: true });
   });
 
   it("does not dismiss on the same turn as opening", () => {

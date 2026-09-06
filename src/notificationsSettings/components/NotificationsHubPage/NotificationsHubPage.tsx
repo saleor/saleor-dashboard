@@ -13,7 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { notificationsMessages } from "../../messages";
 
-export const NotificationsHubPage = (): JSX.Element => {
+export const NotificationsHubPage = (): React.ReactNode => {
   const intl = useIntl();
 
   return (

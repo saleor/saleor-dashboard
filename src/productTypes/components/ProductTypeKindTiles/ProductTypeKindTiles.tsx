@@ -37,7 +37,7 @@ const KindTile = ({
   tileRef: (node: HTMLElement | null) => void;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
   onSelect: (value: ProductTypeKindEnum) => void;
-}): JSX.Element => {
+}): React.ReactNode => {
   const Icon = option.icon;
 
   return (
@@ -85,7 +85,7 @@ export const ProductTypeKindTiles = ({
   value,
   disabled,
   onChange,
-}: ProductTypeKindTilesProps): JSX.Element => {
+}: ProductTypeKindTilesProps): React.ReactNode => {
   const intl = useIntl();
   const tileRefs = useRef<Partial<Record<ProductTypeKindEnum, HTMLElement | null>>>({});
   const options: KindOption[] = [

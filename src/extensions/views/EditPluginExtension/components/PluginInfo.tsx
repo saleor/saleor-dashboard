@@ -1,10 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import Hr from "@dashboard/components/Hr";
 import { PluginErrorCode } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -61,7 +60,7 @@ export const PluginInfo = ({
           </Box>
         )}
         <FormSpacer />
-        <Hr />
+        <Divider />
         <Text
           lineHeight={2}
           fontSize={3}

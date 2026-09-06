@@ -9,7 +9,7 @@ import { NotificationsHubView } from "@dashboard/notificationsSettings/views/Not
 import { StaffEmailsView } from "@dashboard/notificationsSettings/views/StaffEmails";
 import { Switch } from "react-router-dom";
 
-export const NotificationsSettingsRoute = (): JSX.Element => (
+export const NotificationsSettingsRoute = (): React.ReactNode => (
   <Switch>
     <Route exact path={notificationsSettingsPath} component={NotificationsHubView} />
     <Route exact path={notificationsStaffEmailsPath} component={StaffEmailsView} />

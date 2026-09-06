@@ -1,14 +1,14 @@
 import { useUser } from "@dashboard/auth/useUser";
-import AccountPermissions from "@dashboard/components/AccountPermissions";
+import AccountPermissions from "@dashboard/components/AccountPermissions/AccountPermissions";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { ChannelPermission } from "@dashboard/components/ChannelPermission";
-import Form from "@dashboard/components/Form";
+import { ChannelPermission } from "@dashboard/components/ChannelPermission/ChannelPermission";
+import Form from "@dashboard/components/Form/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   type ChannelFragment,
@@ -38,8 +38,8 @@ import {
   getUserAccessibleChannelsOptions,
   isGroupFullAccess,
 } from "../../utils";
-import PermissionGroupInfo from "../PermissionGroupInfo";
-import PermissionGroupMemberList from "../PermissionGroupMemberList";
+import PermissionGroupInfo from "../PermissionGroupInfo/PermissionGroupInfo";
+import PermissionGroupMemberList from "../PermissionGroupMemberList/PermissionGroupMemberList";
 
 export interface PermissionGroupDetailsPageFormData {
   name: string;

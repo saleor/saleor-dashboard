@@ -1,7 +1,7 @@
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { type VoucherChannelListingAddInput } from "@dashboard/graphql";
 
-import { type VoucherDetailsPageFormData } from "./components/VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "./components/VoucherDetailsPage/VoucherDetailsPage";
 import { DiscountTypeEnum, RequirementsPicker } from "./types";
 
 /**

@@ -25,7 +25,7 @@ import { type ComponentType, type PropsWithChildren, type ReactNode, useState } 
 import * as React from "react";
 import { useIntl } from "react-intl";
 
-import DryRun from "../DryRun";
+import DryRun from "../DryRun/DryRun";
 import { messages } from "./messages";
 import { useDashboardTheme, useEditorStyles, useGraphiQLThemeSwitcher, useStyles } from "./styles";
 

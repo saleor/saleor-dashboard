@@ -10,4 +10,12 @@ const meta: Meta<typeof ExtensionPreferenceStateControl> = {
 
 export default meta;
 
-export const Default: StoryObj<typeof ExtensionPreferenceStateControl> = {};
+export const Shown: StoryObj<typeof ExtensionPreferenceStateControl> = {};
+
+export const Pinned: StoryObj<typeof ExtensionPreferenceStateControl> = {
+  args: { value: "pinned" },
+};
+
+export const Hidden: StoryObj<typeof ExtensionPreferenceStateControl> = {
+  args: { value: "hidden" },
+};

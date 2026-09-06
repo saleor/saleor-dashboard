@@ -2,7 +2,7 @@
 import useShop from "@dashboard/hooks/useShop";
 
 import { maybe } from "../../misc";
-import TranslationsLanguageListPage from "../components/TranslationsLanguageListPage";
+import TranslationsLanguageListPage from "../components/TranslationsLanguageListPage/TranslationsLanguageListPage";
 
 const TranslationsLanguageList = () => {
   const shop = useShop();

@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { EntityBackgroundImageDeleteDialog } from "@dashboard/components/EntityBackgroundImageField/EntityBackgroundImageDeleteDialog";
 import { FormattedMessage } from "react-intl";
 

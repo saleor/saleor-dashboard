@@ -2,9 +2,9 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
@@ -21,7 +21,7 @@ import {
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages, errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
@@ -46,7 +46,7 @@ import { ProductDeleteDialog } from "../../components/ProductDeleteDialog/Produc
 import { ProductMediaDeleteDialog } from "../../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMetadataDialog } from "../../components/ProductMetadataDialog/ProductMetadataDialog";
 import { useProductSetupCardDismiss } from "../../components/ProductSetupCard/useProductSetupCardDismiss";
-import ProductUpdatePage from "../../components/ProductUpdatePage";
+import ProductUpdatePage from "../../components/ProductUpdatePage/ProductUpdatePage";
 import { useProductVariantsGrid } from "../../hooks/useProductVariantsGrid";
 import {
   productListUrl,

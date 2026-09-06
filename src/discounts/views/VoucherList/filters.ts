@@ -3,7 +3,7 @@ import { type FilterElement, type FilterElementRegular } from "@dashboard/compon
 import {
   VoucherFilterKeys,
   type VoucherListFilterOpts,
-} from "@dashboard/discounts/components/VoucherListPage";
+} from "@dashboard/discounts/components/VoucherListPage/filters";
 import {
   DiscountStatusEnum,
   VoucherDiscountType,
@@ -13,13 +13,13 @@ import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
 import { type Option } from "@saleor/macaw-ui-next";
 
 import {
-  createFilterTabUtils,
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
   getSingleValueQueryParam,
-} from "../../../utils/filters";
+} from "../../../utils/filters/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import {
   type VoucherListUrlFilters,
   VoucherListUrlFiltersEnum,

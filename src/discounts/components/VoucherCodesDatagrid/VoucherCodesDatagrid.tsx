@@ -4,7 +4,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { useTheme } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";

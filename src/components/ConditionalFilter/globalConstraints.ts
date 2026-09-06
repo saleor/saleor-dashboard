@@ -1,4 +1,4 @@
-import { type FilterContainer, FilterElement } from "./FilterElement";
+import { type FilterContainer, FilterElement } from "./FilterElement/FilterElement";
 
 export const hasGlobalConstraints = (filterValue: FilterContainer): boolean =>
   filterValue.some(

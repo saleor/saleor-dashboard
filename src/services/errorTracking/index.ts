@@ -1,6 +1,6 @@
 import { getAbsoluteApiUrl } from "@dashboard/config";
 
-import { SentryAdapter } from "./adapters";
+import { SentryAdapter } from "./adapters/Sentry";
 import { ErrorTrackerFactory } from "./trackerFactory";
 
 export const errorTracker = ErrorTrackerFactory(

@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { Lock } from "lucide-react";
 import { defineMessages, FormattedMessage } from "react-intl";
 
@@ -11,7 +11,7 @@ const messages = defineMessages({
   },
 });
 
-export const ShippingMethodChannelsEmptyPlaceholder = (): JSX.Element => (
+export const ShippingMethodChannelsEmptyPlaceholder = (): React.ReactNode => (
   <Placeholder
     icon={<Lock size={iconSize.medium} strokeWidth={iconStrokeWidthBySize.medium} aria-hidden />}
   >

@@ -8,7 +8,7 @@ import { CSS } from "@dnd-kit/utilities";
 import clsx from "clsx";
 import { type CSSProperties } from "react";
 
-import TableRowLink, { type TableRowLinkProps } from "../TableRowLink";
+import TableRowLink, { type TableRowLinkProps } from "../TableRowLink/TableRowLink";
 import { SortableHandle } from "./SortableHandle";
 import styles from "./SortableTableRow.module.css";
 import { useSortableContext } from "./sortableTableState";
@@ -49,7 +49,7 @@ const SortableTableRowView = ({
   setRowNodeRef,
   style,
   ...props
-}: SortableTableRowViewProps): JSX.Element => {
+}: SortableTableRowViewProps): React.ReactNode => {
   const { disabled, isSorting } = useSortableContext();
 
   return (
@@ -76,7 +76,7 @@ const SortableTableRowView = ({
   );
 };
 
-const SortableTableRowDnd = (props: SortableTableRowProps): JSX.Element => {
+const SortableTableRowDnd = (props: SortableTableRowProps): React.ReactNode => {
   const { disabled } = useSortableContext();
   const sortableId = props.id ?? props.index;
 
@@ -108,7 +108,7 @@ const SortableTableRowDnd = (props: SortableTableRowProps): JSX.Element => {
   );
 };
 
-export const SortableTableRow = ({ overlay, ...props }: SortableTableRowProps): JSX.Element => {
+export const SortableTableRow = ({ overlay, ...props }: SortableTableRowProps): React.ReactNode => {
   if (overlay) {
     return <SortableTableRowView {...props} overlay />;
   }

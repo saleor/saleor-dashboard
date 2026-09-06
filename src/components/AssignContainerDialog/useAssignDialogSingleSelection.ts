@@ -1,4 +1,4 @@
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { type Container } from "@dashboard/types";
 import { useState } from "react";
 

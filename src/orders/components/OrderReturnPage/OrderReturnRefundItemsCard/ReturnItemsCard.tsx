@@ -2,8 +2,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { QuantityInput } from "@dashboard/components/QuantityInput";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import {
   type OrderDetailsFragment,
   type OrderErrorFragment,
@@ -11,7 +12,6 @@ import {
 } from "@dashboard/graphql";
 import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { Button, Checkbox, Skeleton } from "@saleor/macaw-ui-next";
 import { type CSSProperties, useState } from "react";

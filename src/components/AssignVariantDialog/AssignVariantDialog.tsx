@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import {
   type Container,
@@ -8,7 +8,7 @@ import {
 } from "@dashboard/types";
 
 import { hasReferenceTypeConstraints } from "../AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AssignContainerDialogProps } from "../AssignContainerDialog";
+import { type AssignContainerDialogProps } from "../AssignContainerDialog/AssignContainerDialog";
 import {
   type InitialConstraints,
   ModalProductFilterProvider,

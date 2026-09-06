@@ -2,8 +2,8 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type CollectionErrorFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -56,7 +56,7 @@ export const CreateCollectionDialog = ({
   errors: apiErrors,
   onClose,
   onSubmit,
-}: CreateCollectionDialogProps): JSX.Element => {
+}: CreateCollectionDialogProps): React.ReactNode => {
   const intl = useIntl();
   const [submitErrors, setSubmitErrors] = useState<CollectionErrorFragment[]>([]);
   // Ignore Apollo's last mutation result until this open session submits again.

@@ -2,8 +2,8 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type MenuErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -35,7 +35,7 @@ export const MenuCreateDialog = ({
   onClose,
   onConfirm,
   open,
-}: MenuCreateDialogProps): JSX.Element => {
+}: MenuCreateDialogProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
   const formErrors = getFormErrors(["name"], errors);

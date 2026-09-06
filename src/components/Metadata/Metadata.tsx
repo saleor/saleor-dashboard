@@ -1,6 +1,6 @@
 import { type MetadataInput } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
-import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
+import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists/lists";
 import { Box, type BoxProps } from "@saleor/macaw-ui-next";
 import { memo } from "react";
 

@@ -8,7 +8,7 @@ import { ChannelDisplay } from "@dashboard/components/Channel/Channel";
 import { DateTime } from "@dashboard/components/Date/DateTime";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { type CustomerDetailsQuery, type OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";
@@ -29,14 +29,14 @@ interface CustomerOrdersProps {
   viewAllHref: string;
 }
 
-const OrderStatusPill = ({ status }: { status: OrderStatus }): JSX.Element => {
+const OrderStatusPill = ({ status }: { status: OrderStatus }): React.ReactNode => {
   const intl = useIntl();
   const { localized, status: color } = transformOrderStatus(status, intl);
 
   return <Pill label={localized} color={color} data-test-id="customer-order-status" />;
 };
 
-export const CustomerOrders = ({ orders, viewAllHref }: CustomerOrdersProps): JSX.Element => {
+export const CustomerOrders = ({ orders, viewAllHref }: CustomerOrdersProps): React.ReactNode => {
   return (
     <AssignableListCard
       data-test-id="customer-orders"

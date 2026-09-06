@@ -1,4 +1,4 @@
-import { HookFormInput } from "@dashboard/components/HookFormInput";
+import { HookFormInput } from "@dashboard/components/HookFormInput/HookFormInput";
 import {
   HookFormRadioGroup,
   type HookFormRadioGroupChoice,

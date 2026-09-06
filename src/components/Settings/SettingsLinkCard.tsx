@@ -26,7 +26,7 @@ export const SettingsLinkCard = ({
   ownership,
   id,
   "data-test-id": dataTestId,
-}: SettingsLinkCardProps): JSX.Element => {
+}: SettingsLinkCardProps): React.ReactNode => {
   return (
     <Link to={to} className={styles.link} data-test-id={dataTestId} id={id}>
       <Box

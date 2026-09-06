@@ -6,10 +6,10 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { type WithFormId } from "@dashboard/components/Form";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { type WithFormId } from "@dashboard/components/Form/types";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -24,10 +24,10 @@ import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
-import OrderValue from "@dashboard/shipping/components/OrderValue";
-import OrderWeight from "@dashboard/shipping/components/OrderWeight";
-import PricingCard from "@dashboard/shipping/components/PricingCard";
-import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
+import OrderValue from "@dashboard/shipping/components/OrderValue/OrderValue";
+import OrderWeight from "@dashboard/shipping/components/OrderWeight/OrderWeight";
+import PricingCard from "@dashboard/shipping/components/PricingCard/PricingCard";
+import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo/ShippingRateInfo";
 import { useShippingRateChannels } from "@dashboard/shipping/hooks/useShippingRateChannels";
 import { useShippingRateEditChanges } from "@dashboard/shipping/hooks/useShippingRateEditChanges";
 import { type FetchMoreProps } from "@dashboard/types";
@@ -39,7 +39,7 @@ import { useIntl } from "react-intl";
 
 import { ShippingMethodChannelAvailabilityCard } from "../ShippingMethodChannelAvailabilityCard/ShippingMethodChannelAvailabilityCard";
 import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
-import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
+import ShippingZonePostalCodes from "../ShippingZonePostalCodes/ShippingZonePostalCodes";
 import { type ShippingZoneRateCommonFormData } from "../ShippingZoneRatesPage/types";
 
 interface ShippingZoneRatesCreatePageProps extends WithFormId {

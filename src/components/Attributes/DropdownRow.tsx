@@ -69,7 +69,7 @@ export const DropdownRow = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
-}: DropdownRowProps): JSX.Element => {
+}: DropdownRowProps): React.ReactNode => {
   const intl = useIntl();
   const fieldId = `attribute:${attribute.label}`;
   const [inputValue, setInputValue] = useState("");

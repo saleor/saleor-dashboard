@@ -4,7 +4,8 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
+import { FilterTab } from "@dashboard/components/TableFilter/FilterTab";
+import FilterTabs from "@dashboard/components/TableFilter/FilterTabs";
 import { type LanguageFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { Box } from "@saleor/macaw-ui-next";

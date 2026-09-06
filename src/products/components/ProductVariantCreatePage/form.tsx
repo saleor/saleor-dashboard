@@ -20,9 +20,9 @@ import {
   type IChannelPriceArgs,
   type VariantChannelPriceData,
 } from "@dashboard/channels/utils";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { type MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
   type ProductErrorWithAttributesFragment,
   type ProductVariantCreateDataQuery,
@@ -65,7 +65,7 @@ import {
   type ProductStockFormsetData,
   type ProductStockInput,
   type ProductStockPasteRow,
-} from "../ProductStocks";
+} from "../ProductStocks/ProductStocks";
 import {
   concatChannelsBySelection,
   createVariantChannelsFromProduct,

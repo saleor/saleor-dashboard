@@ -1,4 +1,4 @@
-import { type INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
 import { enqueueToast } from "@dashboard/components/notifications/notificationQueue";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { ThemeProvider } from "@saleor/macaw-ui-next";

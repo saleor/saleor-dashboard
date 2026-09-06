@@ -1,4 +1,4 @@
-import { ButtonLink } from "@dashboard/components/ButtonLink";
+import { ButtonLink } from "@dashboard/components/ButtonLink/ButtonLink";
 import { voucherUrl } from "@dashboard/discounts/urls";
 import {
   DiscountValueTypeEnum,
@@ -7,6 +7,7 @@ import {
   type OrderErrorFragment,
   type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   type DiscountTypeCategory,
   getDiscountTypeCategory,
@@ -19,7 +20,6 @@ import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { ChevronDown, ChevronUp, Info } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { defineMessages, type MessageDescriptor, useIntl } from "react-intl";
-import useRouter from "use-react-router";
 
 import { OrderDiscountModal } from "../OrderDiscountModal/OrderDiscountModal";
 import { type LineDiscountSummaryEntry } from "./getLineDiscountsSummary";
@@ -269,7 +269,7 @@ export const OrderValue = (props: Props): ReactNode => {
     isEditable = false,
   } = props;
   const intl = useIntl();
-  const { history } = useRouter();
+  const navigate = useNavigator();
   const [discountsExpanded, setDiscountsExpanded] = useState(false);
   const editableProps = isEditable ? (props as BaseProps & EditableProps) : null;
 
@@ -434,7 +434,7 @@ export const OrderValue = (props: Props): ReactNode => {
                       as="span"
                       color="default2"
                       className={styles.subtleLink}
-                      onClick={() => history.push(voucherUrl(voucherId))}
+                      onClick={() => navigate(voucherUrl(voucherId))}
                       title={discount.name ?? undefined}
                     >
                       {discount.name}
@@ -502,7 +502,7 @@ export const OrderValue = (props: Props): ReactNode => {
                       as="span"
                       color="default2"
                       className={styles.subtleLink}
-                      onClick={() => history.push(voucherUrl(voucherId))}
+                      onClick={() => navigate(voucherUrl(voucherId))}
                       title={discount.name ?? undefined}
                     >
                       {discount.name}

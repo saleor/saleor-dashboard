@@ -4,8 +4,8 @@ import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
 } from "@dashboard/products/views/ProductList/utils";
-import { type GetFilterTabsOutput, type StorageUtils } from "@dashboard/utils/filters";
 import { prepareQs } from "@dashboard/utils/filters/qs";
+import { type GetFilterTabsOutput, type StorageUtils } from "@dashboard/utils/filters/storage";
 import { stringify } from "qs";
 import { useState } from "react";
 

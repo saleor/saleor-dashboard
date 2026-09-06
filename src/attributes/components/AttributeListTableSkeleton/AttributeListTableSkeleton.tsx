@@ -1,5 +1,5 @@
-import { tableStyles } from "@dashboard/components/ResponsiveTable";
-import { TableCell, TableRow } from "@material-ui/core";
+import { tableStyles } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableCell, TableRow } from "@dashboard/components/Table/Table";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 
 import columnStyles from "./attributeListTableColumns.module.css";
@@ -12,7 +12,7 @@ interface AttributeListTableSkeletonRowsProps {
 export const AttributeListTableSkeletonRows = ({
   rowCount = 3,
   variantColumn,
-}: AttributeListTableSkeletonRowsProps): JSX.Element => (
+}: AttributeListTableSkeletonRowsProps): React.ReactNode => (
   <>
     {Array.from({ length: rowCount }, (_, index) => (
       <TableRow key={index} className={tableStyles.row}>

@@ -3,7 +3,11 @@ import "./skeleton.css";
 import { Box, type SkeletonProps } from "@saleor/macaw-ui-next";
 import { type ComponentProps } from "react";
 
-export const Skeleton = ({ className, borderRadius = 2, ...props }: SkeletonProps): JSX.Element => (
+export const Skeleton = ({
+  className,
+  borderRadius = 2,
+  ...props
+}: SkeletonProps): React.ReactNode => (
   <Box
     {...(props as ComponentProps<typeof Box>)}
     borderRadius={borderRadius}

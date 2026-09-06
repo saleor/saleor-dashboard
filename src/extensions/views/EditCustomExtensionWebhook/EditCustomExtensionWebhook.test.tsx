@@ -16,7 +16,7 @@ jest.mock("@dashboard/graphql", () => ({
   useWebhookUpdateMutation: jest.fn(),
 }));
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: () => jest.fn(),
 }));
 
@@ -24,7 +24,7 @@ jest.mock("../../hooks/useAvailableEvents", () => ({
   useAvailableEvents: () => [],
 }));
 
-jest.mock("@dashboard/components/NotFoundPage", () => ({
+jest.mock("@dashboard/components/NotFoundPage/NotFoundPage", () => ({
   __esModule: true,
   default: () => <div data-test-id="not-found-page" />,
 }));

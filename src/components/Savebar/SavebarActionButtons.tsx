@@ -3,7 +3,10 @@ import { Box, Button, type ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { ConfirmButton as ConfirmButtonComponent, type ConfirmButtonProps } from "../ConfirmButton";
+import {
+  ConfirmButton as ConfirmButtonComponent,
+  type ConfirmButtonProps,
+} from "../ConfirmButton/ConfirmButton";
 
 export const DeleteButton = ({
   children,

@@ -5,9 +5,7 @@ export class AssignAttributeDialog {
 
   constructor(
     page: Page,
-    readonly assignAttributesSearchInput = page
-      .getByTestId("attribute-search-input")
-      .locator("input"),
+    readonly assignAttributesSearchInput = page.getByTestId("attribute-search-input"),
     readonly attributesList = page.getByTestId("attributes-list"),
     readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
   ) {

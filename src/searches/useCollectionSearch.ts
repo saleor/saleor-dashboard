@@ -8,7 +8,7 @@ import {
   type SearchCollectionsWithTotalProductsQuery,
   type SearchCollectionsWithTotalProductsQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch/makeTopLevelSearch";
 import { mapFilterSearchQuery } from "@dashboard/hooks/makeTopLevelSearch/mapFilterSearchQuery";
 
 export const searchCollections = gql`

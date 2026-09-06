@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type FetchResult } from "@apollo/client";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -23,9 +23,9 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { OrderCannotCancelOrderDialog } from "@dashboard/orders/components/OrderCannotCancelOrderDialog/OrderCannotCancelOrderDialog";
 import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import { OrderFulfillmentApproveDialog } from "@dashboard/orders/components/OrderFulfillmentApproveDialog/OrderFulfillmentApproveDialog";
-import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
+import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog/OrderInvoiceEmailSendDialog";
 import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
-import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
+import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog/OrderManualTransactionDialog";
 import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
@@ -44,15 +44,15 @@ import { customerUrl } from "../../../../customers/urls";
 import { extractMutationErrors, getById, getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
-import { OrderCancelDialog } from "../../../components/OrderCancelDialog";
+import { OrderCancelDialog } from "../../../components/OrderCancelDialog/OrderCancelDialog";
 import { OrderCaptureDialog } from "../../../components/OrderCaptureDialog/OrderCaptureDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage/OrderDetailsPage";
-import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
+import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog/OrderFulfillmentCancelDialog";
 import { OrderFulfillmentTrackingDialog } from "../../../components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog";
 import { OrderMarkAsPaidDialog } from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
-import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
+import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog/OrderPaymentVoidDialog";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
-import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
+import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog";
 import {
   orderDetailsUrl,
   orderFulfillUrl,

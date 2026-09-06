@@ -1,14 +1,14 @@
 // @ts-strict-ignore
-import AccountPermissions from "@dashboard/components/AccountPermissions";
+import AccountPermissions from "@dashboard/components/AccountPermissions/AccountPermissions";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AppHeaderOptions } from "@dashboard/extensions/components/AppHeaderOptions";
 import { appMessages } from "@dashboard/extensions/messages";

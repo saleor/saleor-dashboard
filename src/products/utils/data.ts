@@ -3,7 +3,8 @@ import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
 } from "@dashboard/attributes/utils/data";
-import { type AttributeInput, VariantAttributeScope } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import { VariantAttributeScope } from "@dashboard/components/Attributes/types";
 import {
   type ProductDetailsVariantFragment,
   type ProductFragment,
@@ -20,7 +21,7 @@ import { maybe } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { type Option } from "@saleor/macaw-ui-next";
 
-import { type ProductStockInput } from "../components/ProductStocks";
+import { type ProductStockInput } from "../components/ProductStocks/ProductStocks";
 import { type ProductUpdateFormData } from "../components/ProductUpdatePage/types";
 
 interface Node {

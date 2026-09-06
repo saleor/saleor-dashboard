@@ -28,7 +28,7 @@ export const CustomerTypeAttributes = ({
   onAttributeReorder,
   onAttributeUnassign,
   ...listActions
-}: CustomerTypeAttributesProps): JSX.Element => {
+}: CustomerTypeAttributesProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

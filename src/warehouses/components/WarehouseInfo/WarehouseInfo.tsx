@@ -5,7 +5,7 @@ import { type FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
-import { TextField } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface WarehouseInfoProps {
@@ -30,11 +30,11 @@ const WarehouseInfo = ({ data, disabled, errors, onChange }: WarehouseInfoProps)
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <TextField
+        <Input
           data-test-id="warehouse-name-input"
           disabled={disabled}
           error={!!formErrors.name}
-          fullWidth
+          aria-invalid={!!formErrors.name}
           helperText={getWarehouseErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
             id: "llBnr+",
@@ -43,18 +43,14 @@ const WarehouseInfo = ({ data, disabled, errors, onChange }: WarehouseInfoProps)
           name={"name" as keyof typeof data}
           value={data.name}
           onChange={onChange}
-          InputProps={{
-            inputProps: {
-              autoComplete: "none",
-            },
-          }}
+          autoComplete="none"
         />
         <FormSpacer />
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.email}
+          aria-invalid={!!formErrors.email}
           data-test-id="company-email-input"
-          fullWidth
           helperText={getWarehouseErrorMessage(formErrors.email, intl)}
           label={intl.formatMessage({
             id: "sy+pv5",
@@ -63,10 +59,8 @@ const WarehouseInfo = ({ data, disabled, errors, onChange }: WarehouseInfoProps)
           name={"email"}
           value={data.email}
           onChange={onChange}
-          InputProps={{
-            autoComplete: "email",
-            spellCheck: false,
-          }}
+          autoComplete="email"
+          spellCheck={false}
         />
       </DashboardCard.Content>
     </DashboardCard>

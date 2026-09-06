@@ -3,7 +3,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { type CustomerCreateUrlQueryParams, customerUrl } from "@dashboard/customers/urls";
 import { useCreateCustomerMutation, useCustomerCreateDataQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -11,7 +11,7 @@ import { useLocation } from "react-router";
 import { extractMutationErrors, maybe } from "../../misc";
 import CustomerCreatePage, {
   type CustomerCreatePageSubmitData,
-} from "../components/CustomerCreatePage";
+} from "../components/CustomerCreatePage/CustomerCreatePage";
 
 const CustomerCreate = () => {
   const navigate = useNavigator();

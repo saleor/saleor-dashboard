@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { OrderErrorCode, type OrderErrorFragment } from "@dashboard/graphql";
 import { type IMoney } from "@dashboard/utils/intl";
 import Wrapper from "@test/wrapper";

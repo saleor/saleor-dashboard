@@ -152,7 +152,7 @@ const OrderSettingsForm = ({
   channels,
   onSubmit,
   disabled,
-}: OrderSettingsFormProps): JSX.Element => {
+}: OrderSettingsFormProps): React.ReactNode => {
   const props = useOrderSettingsForm(shop, channels, onSubmit, disabled);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {

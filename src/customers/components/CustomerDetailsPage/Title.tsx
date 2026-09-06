@@ -1,5 +1,5 @@
 import { ClickableCustomerType } from "@dashboard/components/CustomerType/CustomerType";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
 import { getUserName } from "@dashboard/misc";
 import { Ripple } from "@dashboard/ripples/components/Ripple";

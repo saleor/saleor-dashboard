@@ -1,6 +1,7 @@
 import { type CategoryFilterInput } from "@dashboard/graphql";
 
-import { createFilterTabUtils, createFilterUtils } from "../../../utils/filters";
+import { createFilterUtils } from "../../../utils/filters/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import {
   type CategoryListUrlFilters,
   CategoryListUrlFiltersEnum,

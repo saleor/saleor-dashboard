@@ -4,7 +4,7 @@ import { type ReactElement, type ReactNode } from "react";
 
 import { ShippingMethodDetailsTitle } from "./Title";
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <ThemeProvider>{children}</ThemeProvider>
 );
 

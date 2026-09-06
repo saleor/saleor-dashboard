@@ -33,7 +33,7 @@ interface UsageTypeRowProps {
   roles?: AssignedTypeRole[];
 }
 
-const UsageTypeRow = ({ name, href, roles }: UsageTypeRowProps): JSX.Element => {
+const UsageTypeRow = ({ name, href, roles }: UsageTypeRowProps): React.ReactNode => {
   const intl = useIntl();
 
   return (
@@ -71,7 +71,7 @@ interface UsageListProps {
   showRoles: boolean;
 }
 
-const UsageList = ({ types, getTypeUrl, showRoles }: UsageListProps): JSX.Element => (
+const UsageList = ({ types, getTypeUrl, showRoles }: UsageListProps): React.ReactNode => (
   <Box as="ul" className={styles.list} data-test-id="attribute-usage-list">
     {types.map(type => (
       <UsageTypeRow
@@ -97,7 +97,7 @@ interface UsageCardSkeletonProps {
   showRolePills: boolean;
 }
 
-const UsageCardSkeleton = ({ showRolePills }: UsageCardSkeletonProps): JSX.Element => (
+const UsageCardSkeleton = ({ showRolePills }: UsageCardSkeletonProps): React.ReactNode => (
   <Box as="ul" className={styles.list} data-test-id="attribute-usage-card-skeleton">
     {USAGE_SKELETON_ROW_WIDTHS.map(width => (
       <Box as="li" key={width} className={styles.listItem}>
@@ -115,7 +115,7 @@ const UsageEmptyState = ({
   hintMessage,
   linkMessage,
   href,
-}: UsageEmptyStateProps): JSX.Element => (
+}: UsageEmptyStateProps): React.ReactNode => (
   <Box display="flex" flexDirection="column" gap={2}>
     <Text size={3} color="default2">
       <FormattedMessage {...message} />
@@ -142,7 +142,7 @@ export const AttributeAssignedTypesCard = ({
   variantTypes,
   modelTypes,
   modelTypesListHasMore = false,
-}: AttributeAssignedTypesCardProps): JSX.Element => {
+}: AttributeAssignedTypesCardProps): React.ReactNode => {
   const intl = useIntl();
   const isProductAttribute = attributeType === AttributeTypeEnum.PRODUCT_TYPE;
   const productUsage = mergeProductAssignedTypeUsage(productTypes, variantTypes);

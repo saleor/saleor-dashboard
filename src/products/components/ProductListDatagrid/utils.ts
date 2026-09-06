@@ -1,4 +1,4 @@
-import { FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 
 export const createChannelFilterElement = () => {
   const channelFilterElement = FilterElement.createStaticBySlug("channel");

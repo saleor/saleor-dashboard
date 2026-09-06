@@ -19,7 +19,7 @@ import {
   useCustomerAddressesQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { type CustomerEditData } from "@dashboard/orders/components/OrderCustomer";
+import { type CustomerEditData } from "@dashboard/orders/components/OrderCustomer/OrderCustomer";
 import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import {
   CustomerChangeActionEnum,
@@ -46,7 +46,7 @@ import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddr
 import { OrderDraftCancelDialog } from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftPage from "../../../components/OrderDraftPage/OrderDraftPage";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
-import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
+import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog";
 import { orderDraftListUrl, type OrderUrlDialog, type OrderUrlQueryParams } from "../../../urls";
 
 interface OrderDraftDetailsProps {

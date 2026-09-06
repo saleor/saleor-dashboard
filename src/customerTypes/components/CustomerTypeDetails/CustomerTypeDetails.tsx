@@ -25,7 +25,7 @@ export const CustomerTypeDetails = ({
   isDefault = false,
   errors = [],
   onChange,
-}: CustomerTypeDetailsProps): JSX.Element => {
+}: CustomerTypeDetailsProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name", "slug"], errors);
 

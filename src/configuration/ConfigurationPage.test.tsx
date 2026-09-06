@@ -9,7 +9,7 @@ import { ConfigurationPage } from "./ConfigurationPage";
 import { type MenuSection } from "./types";
 
 jest.mock("@material-ui/core/useMediaQuery", () => jest.fn());
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: jest.fn(() => ({ enabled: true })),
 }));
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());

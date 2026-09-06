@@ -79,7 +79,7 @@ export const AttributeClassDisplay = ({
   color = "default2",
   "data-test-id": dataTestId = "attribute-class-display",
   title,
-}: AttributeClassProps): JSX.Element => {
+}: AttributeClassProps): React.ReactNode => {
   const intl = useIntl();
 
   if (!attributeType) {
@@ -123,7 +123,7 @@ export const AttributeClassDisplay = ({
   );
 };
 
-export const ClickableAttributeClass = (props: AttributeClassProps): JSX.Element => {
+export const ClickableAttributeClass = (props: AttributeClassProps): React.ReactNode => {
   const { attributeType } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();

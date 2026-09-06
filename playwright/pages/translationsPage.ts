@@ -11,7 +11,7 @@ export class TranslationsPage extends BasePage {
     page: Page,
     readonly translationPl_PL = page.getByTestId("PL_PL"),
     readonly editTranslationNameButton = page.getByTestId("edit-name"),
-    readonly translationInput = page.getByTestId("translation-field").locator("input"),
+    readonly translationInput = page.getByTestId("translation-field"),
     readonly translationRichText = page
       .getByTestId("rich-text-editor-translation")
       .locator("[contenteditable]"),

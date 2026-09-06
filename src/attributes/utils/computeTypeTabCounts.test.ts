@@ -66,6 +66,7 @@ describe("computePageTypeTabCounts", () => {
               id: "pt-1",
               name: "Blog",
               hasPages: true,
+              metadata: [],
               attributes: [{ __typename: "Attribute", id: "a-1" }],
             },
           },

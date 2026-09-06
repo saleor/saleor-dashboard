@@ -6,11 +6,11 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type AttributeErrorFragment, AttributeInputTypeEnum } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { type FormErrors, getFormErrors } from "@dashboard/utils/errors";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
@@ -66,7 +66,7 @@ const AttributeValueEditForm = ({
   onClose,
   onSubmit,
   onSubmitMany,
-}: AttributeValueEditFormProps): JSX.Element => {
+}: AttributeValueEditFormProps): React.ReactNode => {
   const intl = useIntl();
   const { pendingPaste, handlePaste, keepAsOneName, clearPendingPaste } = useAttributeValuePaste({
     disabled,
@@ -235,7 +235,7 @@ export const AttributeValueEditDialog = ({
   onSubmitMany,
   open,
   inputType,
-}: AttributeValueEditDialogProps): JSX.Element => {
+}: AttributeValueEditDialogProps): React.ReactNode => {
   const isSubmittingRef = useRef(false);
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
   const isAdd = attributeValue === null;

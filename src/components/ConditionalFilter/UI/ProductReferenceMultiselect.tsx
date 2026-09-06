@@ -44,7 +44,7 @@ export const ProductReferenceMultiselect = ({
   helperText,
   disabled,
   layout,
-}: ProductReferenceMultiselectProps): JSX.Element => {
+}: ProductReferenceMultiselectProps): React.ReactNode => {
   const [query, setQuery] = useState("");
   const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
   const listItems = filterProductReferenceOptions(options, query);

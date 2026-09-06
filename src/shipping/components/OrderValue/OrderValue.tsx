@@ -47,7 +47,7 @@ const OrderValue = ({
   disabled,
   onChannelChange,
   onChannelsReplace,
-}: OrderValueProps): JSX.Element => {
+}: OrderValueProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormChannelErrors(
     ["maximumOrderPrice", "minimumOrderPrice"],

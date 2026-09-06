@@ -1,4 +1,4 @@
-import { type INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
 import {
   type OrderDetailsGrantRefundQuery,
   type OrderGrantRefundAddMutation,

@@ -1,5 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +17,7 @@ export const ChangeCustomerTypeDialog = ({
   typeName,
   onClose,
   onConfirm,
-}: ChangeCustomerTypeDialogProps): JSX.Element => (
+}: ChangeCustomerTypeDialogProps): React.ReactNode => (
   <DashboardModal onChange={onClose} open={open}>
     {open ? (
       <DashboardModal.Content size="xs" data-test-id="change-customer-type-dialog">

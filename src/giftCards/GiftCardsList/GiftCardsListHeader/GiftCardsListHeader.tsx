@@ -1,8 +1,8 @@
 import { ContextualHelpIcon } from "@dashboard/components/AppLayout/ContextualLinks/ContextualHelpIcon";
 import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks/messages";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,
@@ -17,8 +17,8 @@ import { useIntl } from "react-intl";
 
 import { giftCardSettingsUrl } from "../../urls";
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
-import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
-import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider/GiftCardListDialogsProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider/GiftCardListProvider";
 
 const GiftCardsListHeader = () => {
   const intl = useIntl();

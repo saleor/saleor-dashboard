@@ -3,7 +3,7 @@ import { type LanguageFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import TranslationsLanguageList from "../TranslationsLanguageList";
+import TranslationsLanguageList from "../TranslationsLanguageList/TranslationsLanguageList";
 
 interface TranslationsLanguageListPageProps {
   languages: LanguageFragment[];

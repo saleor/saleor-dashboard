@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import AddressFormatter from "@dashboard/components/AddressFormatter";
+import AddressFormatter from "@dashboard/components/AddressFormatter/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
-import CardMenu from "@dashboard/components/CardMenu";
+import CardMenu from "@dashboard/components/CardMenu/CardMenu";
 import { type AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";

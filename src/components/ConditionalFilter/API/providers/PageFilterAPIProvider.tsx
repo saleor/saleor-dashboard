@@ -1,6 +1,6 @@
 import { useApolloClient } from "@apollo/client";
 
-import { type FilterContainer } from "../../FilterElement";
+import { type FilterContainer } from "../../FilterElement/FilterElement";
 import { type FilterAPIProvider } from "../FilterAPIProvider";
 import { emptyAttributeChoicesPage, fetchHandlerPage } from "../filterChoicesPage";
 import { PageTypesHandler } from "../Handler";

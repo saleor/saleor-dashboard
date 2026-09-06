@@ -1,3 +1,4 @@
+import { FALLBACK_MODEL_TYPE_ICON } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -72,6 +73,7 @@ const createMockReferenceData = (data: {
       __typename: "Page",
       id: p.id,
       title: p.title,
+      pageType: { __typename: "PageType" as const, id: "page-type-1", metadata: [] },
     }));
   }
 
@@ -427,7 +429,9 @@ describe("attributes/utils/data", () => {
       const result = getReferenceAttributeDisplayData(attribute, references);
 
       // Assert
-      expect(result.data.references).toEqual([{ value: "test-page-1", label: "Page Title" }]);
+      expect(result.data.references).toEqual([
+        { value: "test-page-1", label: "Page Title", icon: FALLBACK_MODEL_TYPE_ICON },
+      ]);
     });
 
     it("should handle product variant references", () => {

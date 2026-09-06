@@ -2,7 +2,7 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Box } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
@@ -108,7 +108,7 @@ export const VoucherCatalogueUnassignDialog = ({
   onClose,
   onConfirm,
   open,
-}: VoucherCatalogueUnassignDialogProps): JSX.Element => {
+}: VoucherCatalogueUnassignDialogProps): React.ReactNode => {
   const isSubmitting = confirmButtonState === "loading";
 
   const handleClose = (): void => {

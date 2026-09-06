@@ -1,4 +1,4 @@
-import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
+import { ExternalLinkNext } from "@dashboard/components/ExternalLink/ExternalLink";
 import Link from "@dashboard/components/Link";
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { HOMEPAGE_WIDGETS_DOCS_URL } from "@dashboard/links";
@@ -47,7 +47,7 @@ const messages = defineMessages({
   },
 });
 
-export const HomeEmptyState = (): JSX.Element => {
+export const HomeEmptyState = (): React.ReactNode => {
   const intl = useIntl();
   const videoRef = useRef<HTMLVideoElement>(null);
   const pulseLink = getPulsePromotionLink(IS_CLOUD_INSTANCE);

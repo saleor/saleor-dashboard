@@ -1,6 +1,6 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
 
-export const NoValue = ({ locale }: { locale: Record<string, string> }): JSX.Element => (
+export const NoValue = ({ locale }: { locale: Record<string, string> }): React.ReactNode => (
   <Box
     display="flex"
     justifyContent="center"

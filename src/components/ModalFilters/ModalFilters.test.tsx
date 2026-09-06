@@ -1,4 +1,4 @@
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 
@@ -8,15 +8,14 @@ import { type LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
 import { createLockedFilterElement } from "./lockedFilters";
 import { ModalFilters } from "./ModalFilters";
 
-jest.mock("@dashboard/components/ConditionalFilter", () => {
-  const actual = jest.requireActual("@dashboard/components/ConditionalFilter");
-
-  return {
-    ...actual,
-    useConditionalFilterContext: jest.fn(),
-    ConditionalFilters: (): null => null,
-  };
-});
+jest.mock("@dashboard/components/ConditionalFilter/context/consumer", () => ({
+  ...(jest.requireActual("@dashboard/components/ConditionalFilter/context/consumer") as object),
+  useConditionalFilterContext: jest.fn(),
+}));
+jest.mock("@dashboard/components/ConditionalFilter/ConditionalFilters", () => ({
+  ...(jest.requireActual("@dashboard/components/ConditionalFilter/ConditionalFilters") as object),
+  ConditionalFilters: (): null => null,
+}));
 
 const mockUseConditionalFilterContext = useConditionalFilterContext as jest.Mock;
 

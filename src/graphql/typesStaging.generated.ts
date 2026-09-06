@@ -1118,11 +1118,6 @@ export type ChannelListingUpdateInput = {
   channelListing: Scalars['ID']['input'];
   /** Cost price of the variant in channel. */
   costPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
-  /**
-   * The threshold for preorder variant in channel.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  preorderThreshold?: InputMaybe<Scalars['Int']['input']>;
   /** Price of the particular variant in channel. */
   price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Price of the variant before discount. */
@@ -5525,11 +5520,6 @@ export type OrderFilterInput = {
   giftCardUsed?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   isClickAndCollect?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Filter by orders containing a variant that is currently in preorder.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   numbers?: InputMaybe<Array<Scalars['String']['input']>>;
   /**
@@ -6596,24 +6586,6 @@ export enum PostalCodeRuleInclusionTypeEnum {
   INCLUDE = 'INCLUDE'
 }
 
-/**
- * Preorder settings for a product variant.
- *
- * DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
- */
-export type PreorderSettingsInput = {
-  /**
-   * The end date for preorder.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  endDate?: InputMaybe<Scalars['DateTime']['input']>;
-  /**
-   * The global threshold for preorder variant.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  globalThreshold?: InputMaybe<Scalars['Int']['input']>;
-};
-
 export type PriceFilterInput = {
   /** The amount of the price to filter by. */
   amount: DecimalFilterInput;
@@ -6865,8 +6837,6 @@ export enum ProductErrorCode {
   NOT_FOUND = 'NOT_FOUND',
   NOT_PRODUCTS_IMAGE = 'NOT_PRODUCTS_IMAGE',
   NOT_PRODUCTS_VARIANT = 'NOT_PRODUCTS_VARIANT',
-  /** @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit. */
-  PREORDER_VARIANT_CANNOT_BE_DEACTIVATED = 'PREORDER_VARIANT_CANNOT_BE_DEACTIVATED',
   PRODUCT_NOT_ASSIGNED_TO_CHANNEL = 'PRODUCT_NOT_ASSIGNED_TO_CHANNEL',
   PRODUCT_WITHOUT_CATEGORY = 'PRODUCT_WITHOUT_CATEGORY',
   REQUIRED = 'REQUIRED',
@@ -6904,11 +6874,6 @@ export type ProductFilterInput = {
   /** Filter on whether product is a gift card or not. */
   giftCard?: InputMaybe<Scalars['Boolean']['input']>;
   hasCategory?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Filter by product with preordered variants.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  hasPreorderedVariants?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by availability for purchase. */
   isAvailable?: InputMaybe<Scalars['Boolean']['input']>;
@@ -7178,11 +7143,6 @@ export type ProductVariantBulkCreateInput = {
   /** Variant name. */
   name?: InputMaybe<Scalars['String']['input']>;
   /**
-   * Determines if variant is in preorder.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  preorder?: InputMaybe<PreorderSettingsInput>;
-  /**
    * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -7246,11 +7206,6 @@ export type ProductVariantBulkUpdateInput = {
   /** Variant name. */
   name?: InputMaybe<Scalars['String']['input']>;
   /**
-   * Determines if variant is in preorder.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  preorder?: InputMaybe<PreorderSettingsInput>;
-  /**
    * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -7273,11 +7228,6 @@ export type ProductVariantChannelListingAddInput = {
   channelId: Scalars['ID']['input'];
   /** Cost price of the variant in channel. */
   costPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
-  /**
-   * The threshold for preorder variant in channel.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  preorderThreshold?: InputMaybe<Scalars['Int']['input']>;
   /** Price of the particular variant in channel. */
   price: Scalars['PositiveDecimal']['input'];
   /** Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive. */
@@ -7307,11 +7257,6 @@ export type ProductVariantCreateInput = {
   /** Variant name. */
   name?: InputMaybe<Scalars['String']['input']>;
   /**
-   * Determines if variant is in preorder.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  preorder?: InputMaybe<PreorderSettingsInput>;
-  /**
    * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -7332,11 +7277,6 @@ export type ProductVariantCreateInput = {
 };
 
 export type ProductVariantFilterInput = {
-  /**
-   * Filter by variants that are currently in preorder.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   search?: InputMaybe<Scalars['String']['input']>;
   sku?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -7356,11 +7296,6 @@ export type ProductVariantInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Determines if variant is in preorder.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -7453,11 +7388,6 @@ export type ProductWhereInput = {
   giftCard?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by product with category assigned. */
   hasCategory?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Filter by product with preordered variants.
-   * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
-   */
-  hasPreorderedVariants?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by availability for purchase. */
   isAvailable?: InputMaybe<Scalars['Boolean']['input']>;

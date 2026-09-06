@@ -1,7 +1,8 @@
 import { type ChannelsAction } from "@dashboard/channels/urls";
 import { type Channel, sortChannelShippingDataByName } from "@dashboard/channels/utils";
 import { areSelectedChannelIdsEqual } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
-import { useExitFormDialog, type WithFormId } from "@dashboard/components/Form";
+import { type WithFormId } from "@dashboard/components/Form/types";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import useListActions from "@dashboard/hooks/useListActions";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import isEqual from "lodash/isEqual";

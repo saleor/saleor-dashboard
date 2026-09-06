@@ -9,6 +9,9 @@ export const pageFragment = gql`
     pageType {
       id
       name
+      metadata {
+        ...MetadataItem
+      }
     }
   }
 `;

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type ApolloQueryResult } from "@apollo/client";
-import { type INotificationCallback } from "@dashboard/components/notifications";
+import { type INotificationCallback } from "@dashboard/components/notifications/NotificationContext";
 import {
   type CheckExportFileStatusQuery,
   type CheckOrderInvoicesStatusQuery,

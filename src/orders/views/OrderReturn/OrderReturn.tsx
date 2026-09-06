@@ -4,10 +4,10 @@ import {
   useOrderDetailsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
-import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage";
 import { type OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
+import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage/OrderReturnPage";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { type OrderReturnUrlQueryParams, orderUrl } from "@dashboard/orders/urls";
 import { useState } from "react";

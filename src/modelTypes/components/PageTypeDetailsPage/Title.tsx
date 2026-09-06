@@ -1,8 +1,12 @@
+import { iconSize } from "@dashboard/components/icons";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 
 interface PageTypeDetailsHeaderPageType {
   name: string;
+  metadata?: Array<{ key: string; value: string }> | null;
 }
 
 interface PageTypeDetailsTitleProps {
@@ -45,6 +49,7 @@ export const PageTypeDetailsTitle = ({ pageType, loading }: PageTypeDetailsTitle
 
   return (
     <div className={classes.container}>
+      <ModelTypeIcon icon={getModelTypeIcon(pageType.metadata)} size={iconSize.medium} />
       <Box className={classes.name} title={pageType.name}>
         {pageType.name}
       </Box>

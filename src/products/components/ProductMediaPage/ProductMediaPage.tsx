@@ -6,9 +6,9 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import Grid from "@dashboard/components/Grid/Grid";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ProductMediaType } from "@dashboard/graphql";
@@ -16,12 +16,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { rippleProductMediaMetadata } from "@dashboard/products/ripples/productMediaMetadata";
 import { productUrl } from "@dashboard/products/urls";
 import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
-import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Skeleton, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text, Textarea, vars } from "@saleor/macaw-ui-next";
 import { defineMessages, type IntlShape, useIntl } from "react-intl";
 
-import ProductMediaNavigation from "../ProductMediaNavigation";
+import ProductMediaNavigation from "../ProductMediaNavigation/ProductMediaNavigation";
 
 const messages = defineMessages({
   editMedia: {
@@ -228,14 +227,12 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                   </DashboardCard.Title>
                 </DashboardCard.Header>
                 <DashboardCard.Content>
-                  <TextField
+                  <Textarea
                     name="alt"
                     label={intl.formatMessage(messages.altText)}
                     disabled={disabled}
                     onChange={change}
                     value={data.alt}
-                    multiline
-                    fullWidth
                   />
                 </DashboardCard.Content>
               </DashboardCard>

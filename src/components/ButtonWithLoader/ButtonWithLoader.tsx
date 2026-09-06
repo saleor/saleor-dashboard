@@ -1,10 +1,10 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, type ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { useIntl } from "react-intl";
 
-import { type ConfirmButtonTransitionState } from "../ConfirmButton";
+import { type ConfirmButtonTransitionState } from "../ConfirmButton/ConfirmButton";
 import styles from "./ButtonWithLoader.module.css";
 
 interface ButtonWithLoaderProps extends ButtonProps {

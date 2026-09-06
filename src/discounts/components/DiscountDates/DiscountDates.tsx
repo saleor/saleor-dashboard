@@ -38,7 +38,7 @@ const DiscountDatesFields = <ErrorCode,>({
   formErrors,
   onChange,
   onBlur,
-}: Omit<DiscountDatesProps<ErrorCode>, "unwrapped">): JSX.Element => {
+}: Omit<DiscountDatesProps<ErrorCode>, "unwrapped">): React.ReactNode => {
   const intl = useIntl();
   const apiErrors = getFormErrors(["startDate", "endDate"], errors);
 
@@ -180,7 +180,7 @@ const DiscountDatesFields = <ErrorCode,>({
 export const DiscountDates = <ErrorCode,>({
   unwrapped = false,
   ...props
-}: DiscountDatesProps<ErrorCode>): JSX.Element => {
+}: DiscountDatesProps<ErrorCode>): React.ReactNode => {
   const fields: ReactNode = <DiscountDatesFields {...props} />;
 
   if (unwrapped) {

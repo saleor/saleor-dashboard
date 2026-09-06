@@ -1,10 +1,13 @@
 import { type FetchResult } from "@apollo/client";
-import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeInputData,
+} from "@dashboard/components/Attributes/Attributes";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import {
   AttributeEntityTypeEnum,
-  type AttributeErrorFragment,
   AttributeInputTypeEnum,
-  type AttributeValueDeleteMutation,
   type AttributeValueFragment,
   type AttributeValueInput,
   type FileUploadMutation,
@@ -28,7 +31,7 @@ import {
   type RichTextGetters,
 } from "@dashboard/utils/richText/useMultipleRichText";
 
-import { type AttributePageFormData } from "../components/AttributePage";
+import { type AttributePageFormData } from "../components/AttributePage/AttributePage";
 import { formatVariantReferenceLabel } from "./formatVariantReferenceLabel";
 import { productVariantCacheManager } from "./productVariantCache";
 
@@ -69,6 +72,8 @@ export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
 export interface AttributeReference {
   label: string;
   value: string;
+  /** Model references only — the icon configured on the referenced model's type. */
+  icon?: ModelTypeIcon;
 }
 
 export interface AttributeValueEditDialogFormData {
@@ -207,28 +212,6 @@ export function getSelectedAttributeValues(
   }
 }
 
-export const isFileValueUnused = (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  existingAttribute:
-    | PageSelectedAttributeFragment
-    | ProductFragment["attributes"][0]
-    | SelectedVariantAttributeFragment,
-) => {
-  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
-    return false;
-  }
-
-  if (existingAttribute.values.length === 0) {
-    return false;
-  }
-
-  const modifiedAttribute = attributesWithNewFileValue.find(
-    dataAttribute => dataAttribute.id === existingAttribute.attribute.id,
-  );
-
-  return !!modifiedAttribute;
-};
-
 export const mergeFileUploadErrors = (
   uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
 ): UploadErrorFragment[] =>
@@ -241,19 +224,6 @@ export const mergeFileUploadErrors = (
 
     return errors;
   }, [] as UploadErrorFragment[]);
-
-export const mergeAttributeValueDeleteErrors = (
-  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDeleteMutation>>,
-): AttributeErrorFragment[] =>
-  deleteAttributeValuesResult.reduce((errors, deleteValueResult) => {
-    const deleteErrors = deleteValueResult?.data?.attributeValueDelete?.errors;
-
-    if (deleteErrors) {
-      return [...errors, ...deleteErrors];
-    }
-
-    return errors;
-  }, [] as AttributeErrorFragment[]);
 
 export const mergeChoicesWithValues = (
   attribute:
@@ -495,6 +465,7 @@ const findPageReference = (
     return {
       label: page.title,
       value: valueId,
+      icon: getModelTypeIcon(page.pageType?.metadata),
     };
   }
 

@@ -2,11 +2,11 @@ import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import { type ReactNode } from "react";
 
-import { useConditionalFilterContext } from "./context";
+import { useConditionalFilterContext } from "./context/consumer";
 import { FiltersArea } from "./FiltersArea";
 import { useFilterContainer } from "./useFilterContainer";
 
-jest.mock("./context", () => ({
+jest.mock("./context/consumer", () => ({
   useConditionalFilterContext: jest.fn(),
 }));
 
@@ -29,7 +29,7 @@ jest.mock("./useTranslate", () => ({
 }));
 
 jest.mock("./UI", () => {
-  const Footer = ({ children }: { children: ReactNode }): JSX.Element => <div>{children}</div>;
+  const Footer = ({ children }: { children: ReactNode }): React.ReactNode => <div>{children}</div>;
   const Button = ({
     children,
     ...props
@@ -39,13 +39,13 @@ jest.mock("./UI", () => {
     disabled?: boolean;
     variant?: string;
     "data-test-id"?: string;
-  }): JSX.Element => (
+  }): React.ReactNode => (
     <button type="button" {...props}>
       {children}
     </button>
   );
   const Filters = Object.assign(
-    ({ children }: { children: ReactNode }): JSX.Element => <div>{children}</div>,
+    ({ children }: { children: ReactNode }): React.ReactNode => <div>{children}</div>,
     {
       Footer,
       AddRowButton: Button,

@@ -1,4 +1,4 @@
-import { SortableTree } from "@dashboard/components/SortableTree";
+import { SortableTree } from "@dashboard/components/SortableTree/SortableTree";
 import { type MenuTreeItem, type RecursiveMenuItem } from "@dashboard/structures/types";
 import { type UniqueIdentifier } from "@dnd-kit/core";
 import { Box, Text } from "@saleor/macaw-ui-next";

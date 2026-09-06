@@ -1,7 +1,7 @@
 import {
   ConditionalDraftOrderFilterProvider,
   ConditionalOrderFilterProvider,
-} from "@dashboard/components/ConditionalFilter";
+} from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
@@ -33,18 +33,18 @@ import {
   type OrderTransactionRefundUrlQueryParams,
   type OrderUrlQueryParams,
 } from "./urls";
-import OrderDetailsComponent from "./views/OrderDetails";
-import OrderDraftListComponent from "./views/OrderDraftList";
-import OrderGrantRefundEditComponent from "./views/OrderEditGrantRefund";
-import OrderFulfillComponent from "./views/OrderFulfill";
-import OrderGrantRefundComponent from "./views/OrderGrantRefund";
-import OrderListComponent from "./views/OrderList";
-import OrderManualTransactionRefundComponent from "./views/OrderManualTransactionRefund";
-import OrderRefundComponent from "./views/OrderRefund";
-import OrderReturnComponent from "./views/OrderReturn";
-import OrderSendRefundComponent from "./views/OrderSendRefund";
-import OrderTransactionRefundCreateComponent from "./views/OrderTransactionRefundCreate";
-import OrderTransactionRefundEditComponent from "./views/OrderTransactionRefundEdit";
+import OrderDetailsComponent from "./views/OrderDetails/OrderDetails";
+import OrderDraftListComponent from "./views/OrderDraftList/OrderDraftList";
+import OrderGrantRefundEditComponent from "./views/OrderEditGrantRefund/OrderEditGrantRefund";
+import OrderFulfillComponent from "./views/OrderFulfill/OrderFulfill";
+import OrderGrantRefundComponent from "./views/OrderGrantRefund/OrderGrantRefund";
+import OrderListComponent from "./views/OrderList/OrderList";
+import OrderManualTransactionRefundComponent from "./views/OrderManualTransactionRefund/OrderManualTransactionRefund";
+import OrderRefundComponent from "./views/OrderRefund/OrderRefund";
+import OrderReturnComponent from "./views/OrderReturn/OrderReturn";
+import OrderSendRefundComponent from "./views/OrderSendRefund/OrderSendRefund";
+import OrderTransactionRefundCreateComponent from "./views/OrderTransactionRefundCreate/OrderTransactionRefundCreate";
+import OrderTransactionRefundEditComponent from "./views/OrderTransactionRefundEdit/OrderTransactionRefundEdit";
 
 interface MatchParams {
   id?: string;

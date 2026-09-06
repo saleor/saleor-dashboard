@@ -10,7 +10,7 @@ const graphqlStrokeWidth = getNavigationCustomIconStrokeWidth(GRAPHQL_VIEWBOX_WI
 const graphqlVertexRadius = 2.25;
 const graphqlIconOpacity = 0.95;
 
-export const GraphqlIcon = (): JSX.Element => (
+export const GraphqlIcon = (): React.ReactNode => (
   <Box __opacity={graphqlIconOpacity}>
     <svg
       width={navigationLucideIconProps.size}

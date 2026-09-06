@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableRow } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableRow } from "@dashboard/components/Table/Table";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ComponentType } from "react";
 

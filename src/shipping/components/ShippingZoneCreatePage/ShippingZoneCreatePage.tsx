@@ -5,10 +5,10 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { CountryList } from "@dashboard/components/CountryList";
-import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { CountryList } from "@dashboard/components/CountryList/CountryList";
+import Form from "@dashboard/components/Form/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { type CountryFragment, type ShippingErrorFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -17,8 +17,8 @@ import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { ShippingZoneCountriesAssignDialog } from "../ShippingZoneCountriesAssignDialog";
-import ShippingZoneInfo from "../ShippingZoneInfo";
+import { ShippingZoneCountriesAssignDialog } from "../ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog";
+import ShippingZoneInfo from "../ShippingZoneInfo/ShippingZoneInfo";
 
 export interface ShippingZoneCreateFormData {
   countries: string[];

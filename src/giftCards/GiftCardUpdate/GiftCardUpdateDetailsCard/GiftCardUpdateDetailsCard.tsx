@@ -1,6 +1,6 @@
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
-import { GiftCardUpdateExpirySelect } from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect";
+import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput/GiftCardTagInput";
+import { GiftCardUpdateExpirySelect } from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect/GiftCardUpdateExpirySelect";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -9,7 +9,7 @@ import useGiftCardUpdateForm from "../providers/GiftCardUpdateFormProvider/hooks
 import styles from "./GiftCardUpdateDetailsCard.module.css";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
-export const GiftCardUpdateDetailsCard = (): JSX.Element => {
+export const GiftCardUpdateDetailsCard = (): React.ReactNode => {
   const intl = useIntl();
   const { loading } = useGiftCardDetails();
   const {

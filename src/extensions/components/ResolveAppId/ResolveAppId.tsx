@@ -13,7 +13,7 @@ type ResolutionState =
   | { status: "notInstalled" }
   | { status: "failed" };
 
-const Centered = ({ children }: { children: ReactNode }): JSX.Element => (
+const Centered = ({ children }: { children: ReactNode }): React.ReactNode => (
   <Box display="flex" justifyContent="center" alignItems="center" padding={12}>
     {children}
   </Box>
@@ -38,7 +38,7 @@ const buildAppIdUrl = (
   );
 };
 
-const RedirectFromIdentifier = ({ identifier }: { identifier: string }): JSX.Element => {
+const RedirectFromIdentifier = ({ identifier }: { identifier: string }): React.ReactNode => {
   const location = useLocation();
   const { resolveAppIdFromIdentifier } = useAppNavigation();
   const [state, setState] = useState<ResolutionState>({ status: "resolving" });
@@ -105,7 +105,7 @@ interface ResolveAppIdProps {
  * An identifier is resolved once and replaced with the ID form, so everything
  * rendered below this component only ever sees an app ID.
  */
-export const ResolveAppId = ({ segment, children }: ResolveAppIdProps): JSX.Element => {
+export const ResolveAppId = ({ segment, children }: ResolveAppIdProps): React.ReactNode => {
   if (isAppGlobalId(segment)) {
     return <>{children(segment)}</>;
   }

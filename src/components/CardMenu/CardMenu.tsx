@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@material-ui/core";
 import { type IconButtonProps, makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
@@ -10,7 +10,7 @@ import type * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { IconButton } from "../IconButton";
+import { IconButton } from "../IconButton/IconButton";
 import { cardMenuMessages as messages } from "./messages";
 
 const ITEM_HEIGHT = 48;

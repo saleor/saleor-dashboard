@@ -1,5 +1,5 @@
-import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
-import { TimezoneProvider } from "@dashboard/components/Timezone";
+import { Locale, RawLocaleProvider } from "@dashboard/components/Locale/Locale";
+import { TimezoneProvider } from "@dashboard/components/Timezone/Timezone";
 import { ThemeWrapper } from "@test/themeWrapper";
 import { render, screen } from "@testing-library/react";
 import { type ReactNode } from "react";

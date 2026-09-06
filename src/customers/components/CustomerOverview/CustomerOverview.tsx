@@ -2,7 +2,7 @@ import { Date as DateLabel } from "@dashboard/components/Date/Date";
 import { KpiCard } from "@dashboard/components/KpiCard/KpiCard";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import { TimezoneConsumer } from "@dashboard/components/Timezone";
+import { TimezoneConsumer } from "@dashboard/components/Timezone/Timezone";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { type CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
@@ -32,7 +32,7 @@ interface CustomerOverviewProps {
 const ICON_SIZE = 16;
 const EMPTY_VALUE = "—";
 
-export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Element => {
+export const CustomerOverview = ({ customer }: CustomerOverviewProps): React.ReactNode => {
   const intl = useIntl();
   const { locale } = useLocale();
   const { effectiveKpiChannelId, kpiChannels, setKpiChannelId } = useCustomerDetails();

@@ -1,4 +1,4 @@
-import { type FilterElement } from "../FilterElement";
+import { type FilterElement } from "../FilterElement/FilterElement";
 
 export const validateMetadataFilterElement = (element: FilterElement, row: number) => {
   const { value } = element.condition.selected;

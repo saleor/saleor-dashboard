@@ -1,12 +1,13 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import { bulkActionWithCountMessages } from "@dashboard/components/BulkDeleteButton/messages";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { ListSearchInput } from "@dashboard/components/ListSearchInput/ListSearchInput";
+import { readModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,
@@ -30,7 +31,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { rippleGroupedModelTypeTabs } from "../../ripples/groupedModelTypeTabs";
-import { type ModelTypeTabCount, ModelTypeTabs } from "../ModelTypeTabs/ModelTypeTabs";
+import {
+  type ModelTypeTabCount,
+  type ModelTypeTabItem,
+  ModelTypeTabs,
+} from "../ModelTypeTabs/ModelTypeTabs";
 import { type ModelTypeTabGrouping } from "../ModelTypeTabs/useModelTypeTabGrouping";
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
@@ -47,7 +52,7 @@ interface PageListPageProps extends PageListProps, SortPage<PageListUrlSortField
   onPagesUnpublish: () => void;
   onPageCreate: () => void;
   onCreateModelType: () => void;
-  pageTypes: Array<{ id: string; name: string }> | undefined;
+  pageTypes: ModelTypeTabItem[] | undefined;
   selectedIds: string[];
   activePageTypeName: string | undefined;
   tabCounts: Record<string, ModelTypeTabCount | undefined>;
@@ -94,6 +99,13 @@ const PageListPage = ({
     testId: "create-page-type",
     onSelect: onCreateModelType,
   };
+
+  // Only a single-type selection has one icon; group and "all" tabs resolve to nothing.
+  const activePageTypeIcon =
+    selectedIds.length === 1
+      ? (readModelTypeIcon(pageTypes?.find(pageType => pageType.id === selectedIds[0])?.metadata) ??
+        undefined)
+      : undefined;
 
   const [organizationPinsOpen, setOrganizationPinsOpen] = useState(false);
   const canManageOrganizationPins = Boolean(
@@ -180,6 +192,7 @@ const PageListPage = ({
                 <NavigationPinButton
                   modelTypeId={selectedIds.length === 1 ? selectedIds[0] : null}
                   modelTypeName={activePageTypeName}
+                  modelTypeIcon={activePageTypeIcon}
                 />
               )}
             </Box>

@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { type ReactNode } from "react";
+import { useHistory, useLocation } from "react-router";
 import { MemoryRouter } from "react-router-dom";
-import useRouter from "use-react-router";
 
 import { useUrlFilterStore } from "./useUrlFilterStore";
 
@@ -96,7 +96,7 @@ describe("useUrlFilterStore", () => {
       const { result } = renderHook(
         () => {
           const store = useUrlFilterStore();
-          const router = useRouter();
+          const router = { location: useLocation(), history: useHistory() };
 
           return { store, router };
         },
@@ -122,7 +122,7 @@ describe("useUrlFilterStore", () => {
       const { result } = renderHook(
         () => {
           const store = useUrlFilterStore();
-          const router = useRouter();
+          const router = { location: useLocation(), history: useHistory() };
 
           return { store, router };
         },
@@ -146,7 +146,7 @@ describe("useUrlFilterStore", () => {
       const { result } = renderHook(
         () => {
           const store = useUrlFilterStore();
-          const router = useRouter();
+          const router = { location: useLocation(), history: useHistory() };
 
           return { store, router };
         },
@@ -173,7 +173,7 @@ describe("useUrlFilterStore", () => {
       const { result } = renderHook(
         () => {
           const store = useUrlFilterStore();
-          const router = useRouter();
+          const router = { location: useLocation(), history: useHistory() };
 
           return { store, router };
         },
@@ -196,7 +196,7 @@ describe("useUrlFilterStore", () => {
       const { result } = renderHook(
         () => {
           const store = useUrlFilterStore();
-          const router = useRouter();
+          const router = { location: useLocation(), history: useHistory() };
 
           return { store, router };
         },
@@ -219,7 +219,7 @@ describe("useUrlFilterStore", () => {
       const { result } = renderHook(
         () => {
           const store = useUrlFilterStore();
-          const router = useRouter();
+          const router = { location: useLocation(), history: useHistory() };
 
           return { store, router };
         },
@@ -247,7 +247,7 @@ describe("useUrlFilterStore", () => {
       const { result } = renderHook(
         () => {
           const store = useUrlFilterStore();
-          const router = useRouter();
+          const router = { location: useLocation(), history: useHistory() };
 
           return { store, router };
         },
@@ -274,7 +274,7 @@ describe("useUrlFilterStore", () => {
       const { result } = renderHook(
         () => {
           const store = useUrlFilterStore();
-          const router = useRouter();
+          const router = { location: useLocation(), history: useHistory() };
 
           return { store, router };
         },

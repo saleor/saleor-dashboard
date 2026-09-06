@@ -1,5 +1,5 @@
 import { type FetchResult, type MutationResult } from "@apollo/client";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type UserPermissionFragment } from "@dashboard/graphql";
 
 import { type FilterElement, type IFilter } from "./components/Filter/types";
@@ -115,6 +115,14 @@ export interface SearchProps {
 export interface SearchPageProps extends SearchProps {
   initialSearch: string;
 }
+// Not exported: the legacy FiltersSelect UI that consumed these props directly is gone,
+// but list views still thread onFilterChange through FilterPageProps into their datagrids.
+interface FilterProps<TKeys extends string> {
+  currencySymbol?: string;
+  onFilterChange: (filter: IFilter<TKeys>) => void;
+  onFilterAttributeFocus?: (id?: string) => void;
+}
+
 export interface FilterPageProps<TKeys extends string, TOpts extends {}>
   extends FilterProps<TKeys>,
     SearchPageProps,
@@ -127,12 +135,6 @@ export interface FilterPagePropsWithPresets<TKeys extends string, TOpts extends 
     SearchPageProps,
     FilterPresetsProps {
   filterOpts: TOpts;
-}
-
-export interface FilterProps<TKeys extends string> {
-  currencySymbol?: string;
-  onFilterChange: (filter: IFilter<TKeys>) => void;
-  onFilterAttributeFocus?: (id?: string) => void;
 }
 
 export interface FilterPresetsProps {

@@ -10,5 +10,11 @@ export const pinnedModelTypeFragment = gql`
   fragment PinnedModelType on PageType {
     id
     name
+    # Spread inline: buildPinnedModelTypesDocument assembles this document at runtime and would
+    # have to carry the MetadataItem fragment definition along with it.
+    metadata {
+      key
+      value
+    }
   }
 `;

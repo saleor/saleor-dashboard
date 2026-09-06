@@ -2,8 +2,8 @@ import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import { type IntlShape, type MessageDescriptor, useIntl } from "react-intl";
 
-import { LocaleConsumer } from "../Locale";
-import { TimezoneConsumer } from "../Timezone";
+import { LocaleConsumer } from "../Locale/Locale";
+import { TimezoneConsumer } from "../Timezone/Timezone";
 import { merchantDateMessages } from "./MerchantDate.messages";
 
 // The kinds we plan to surface in merchant-facing UI. To add a new one, append
@@ -197,7 +197,7 @@ interface MerchantDateProps {
 // row date), each tick of `useCurrentDate` re-allocates a few Intl formatters.
 // Worth introducing a memoized formatter cache keyed by (locale, options) at
 // that point. Single-instance usage in headers is fine.
-export const MerchantDate = ({ kind, date, now }: MerchantDateProps): JSX.Element => {
+export const MerchantDate = ({ kind, date, now }: MerchantDateProps): React.ReactNode => {
   const intl = useIntl();
   const liveNow = useCurrentDate();
   const referenceNow = now ?? new Date(liveNow);

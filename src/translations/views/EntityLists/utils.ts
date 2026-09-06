@@ -2,7 +2,7 @@ import {
   type ProductTranslationFragment,
   type ShippingMethodTranslationsQuery,
 } from "@dashboard/graphql";
-import { type TranslatableEntity } from "@dashboard/translations/components/TranslationsEntitiesList";
+import { type TranslatableEntity } from "@dashboard/translations/components/TranslationsEntitiesList/TranslationsEntitiesList";
 import {
   getTranslationCompletion,
   type TranslationProgress,

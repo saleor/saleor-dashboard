@@ -1,4 +1,4 @@
-import { Locale } from "../Locale";
+import { Locale } from "../Locale/Locale";
 import { formatPercantage } from "./utils";
 
 describe("formatPercantage", () => {

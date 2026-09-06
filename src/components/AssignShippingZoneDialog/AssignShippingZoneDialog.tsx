@@ -1,7 +1,7 @@
 import AssignContainerDialog, {
   type AssignContainerDialogProps,
 } from "@dashboard/components/AssignContainerDialog/AssignContainerDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { useIntl } from "react-intl";
@@ -28,7 +28,7 @@ export const AssignShippingZoneDialog = ({
   open,
   onClose,
   ...fetchMoreProps
-}: AssignShippingZoneDialogProps): JSX.Element => {
+}: AssignShippingZoneDialogProps): React.ReactNode => {
   const intl = useIntl();
 
   const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({

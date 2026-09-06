@@ -1,12 +1,12 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { type Condition } from "@dashboard/discounts/models";
+import { type Condition } from "@dashboard/discounts/models/Condition";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
 
-import { RuleConditionName } from "../RuleConditionName/";
-import { RuleConditionType } from "../RuleConditionType/";
-import { RuleConditionValues } from "../RuleConditionValues";
-import { RuleInputWrapper } from "../RuleInputWrapper";
+import { RuleConditionName } from "../RuleConditionName/RuleConditionName";
+import { RuleConditionType } from "../RuleConditionType/RuleConditionType";
+import { RuleConditionValues } from "../RuleConditionValues/RuleConditionValues";
+import { RuleInputWrapper } from "../RuleInputWrapper/RuleInputWrapper";
 
 interface DiscountConditionRowProps {
   conditionIndex: number;

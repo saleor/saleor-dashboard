@@ -5,7 +5,7 @@ import {
 import { ProductTypeEnum } from "@dashboard/graphql";
 import { useIntl } from "react-intl";
 
-import { type FilterContainer } from "../../FilterElement";
+import { type FilterContainer } from "../../FilterElement/FilterElement";
 import { type FilterAPIProvider } from "../FilterAPIProvider";
 import {
   emptyAttributeChoicesPage,

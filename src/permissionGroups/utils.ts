@@ -8,7 +8,7 @@ import {
 import { type Option } from "@saleor/macaw-ui-next";
 import difference from "lodash/difference";
 
-import { type PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+import { type PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
 
 /**
  * Will return true if group has all permissions available in shop assigned.

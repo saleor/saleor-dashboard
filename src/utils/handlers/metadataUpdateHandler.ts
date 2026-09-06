@@ -9,7 +9,7 @@ import {
   type UpdatePrivateMetadataMutationVariables,
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 
 import { filterMetadataArray } from "./filterMetadataArray";
 import { areMetadataArraysEqual } from "./metadataUpdateHelpers";

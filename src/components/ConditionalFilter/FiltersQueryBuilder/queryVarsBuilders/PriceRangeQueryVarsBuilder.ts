@@ -1,7 +1,7 @@
 import { type PriceRangeInput } from "@dashboard/graphql";
 
 import { type Handler, NoopValuesHandler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { type FilterOnlyQueryVarsBuilder } from "./types";
 

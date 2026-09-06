@@ -1,4 +1,4 @@
-import { Locale, LocaleContext } from "@dashboard/components/Locale";
+import { Locale, LocaleContext } from "@dashboard/components/Locale/Locale";
 import { renderHook } from "@testing-library/react";
 import { type ReactNode } from "react";
 

@@ -9,13 +9,13 @@ export const UnderlineLink = ({
   children,
   textProps,
   ...props
-}: UnderlineLinkProps): JSX.Element => (
+}: UnderlineLinkProps): React.ReactNode => (
   <Link {...props}>
     <UnderlineText {...textProps}>{children}</UnderlineText>
   </Link>
 );
 
-const UnderlineText = ({ children, ...props }: TextProps): JSX.Element => (
+const UnderlineText = ({ children, ...props }: TextProps): React.ReactNode => (
   <Text
     as="span"
     textDecoration="underline"

@@ -42,7 +42,7 @@ export default meta;
 
 type Story = StoryObj<typeof SwatchAttributeMultiselect>;
 
-const SwatchAttributeMultiselectPlayground = (): JSX.Element => {
+const SwatchAttributeMultiselectPlayground = (): React.ReactNode => {
   const [value, setValue] = useState<RightOperatorOption[]>([options[0]]);
   const selected: MultiselectOperator = {
     conditionValue: { type: "multiselect", label: "in", value: "input-2" },

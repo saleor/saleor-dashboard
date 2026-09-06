@@ -6,7 +6,7 @@ import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage/VoucherDetailsPage";
 
 interface VoucherInfoProps {
   data: VoucherDetailsPageFormData;

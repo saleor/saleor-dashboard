@@ -1,7 +1,7 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Link from "@dashboard/components/Link";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { buttonMessages } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { Box, Button, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -103,7 +103,7 @@ export const AssignableListTable = <T extends { id: string }>({
   "data-test-id": dataTestId = "assignable-list-table",
   leadingInset = ASSIGNABLE_LIST_TABLE_LEADING_INSET,
   density = "compact",
-}: AssignableListTableProps<T>): JSX.Element => {
+}: AssignableListTableProps<T>): React.ReactNode => {
   const intl = useIntl();
   const showSelection = selection === "checkbox";
   const showRowActions = showSelection && Boolean(onUnassign);
@@ -314,7 +314,7 @@ export const AssignableListCell = ({
   children: ReactNode;
   truncate?: boolean;
   align?: "start" | "end";
-}): JSX.Element => (
+}): React.ReactNode => (
   <GridTable.Cell
     __height="inherit"
     padding={0}
@@ -338,7 +338,7 @@ export const AssignableListLinkCell = ({
   /** Full label for native browser tooltip when the cell truncates. */
   title?: string;
   children: ReactNode;
-}): JSX.Element => (
+}): React.ReactNode => (
   <GridTable.Cell __height="inherit" padding={0} className={styles.truncateCell}>
     <Link href={href} inline={false} className={styles.cellLink} title={title}>
       <Box className={styles.cellContent}>{children}</Box>

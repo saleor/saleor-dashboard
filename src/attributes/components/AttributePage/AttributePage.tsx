@@ -22,16 +22,16 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
-import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { type ListSettingsUpdate } from "@dashboard/components/TablePagination/TablePagination";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type AttributeDetailsQuery,
@@ -63,9 +63,9 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
-import AttributeDetails from "../AttributeDetails";
-import AttributeOrganization from "../AttributeOrganization";
-import AttributeProperties from "../AttributeProperties";
+import AttributeDetails from "../AttributeDetails/AttributeDetails";
+import AttributeOrganization from "../AttributeOrganization/AttributeOrganization";
+import AttributeProperties from "../AttributeProperties/AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import { AttributeValues } from "../AttributeValues/AttributeValues";
 import { AttributePageLoading } from "./AttributePageLoading";

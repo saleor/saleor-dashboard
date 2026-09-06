@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
-import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
+import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput/GiftCardTagInput";
 import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
   useGiftCardSettingsQuery,
 } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { type getFormErrors } from "@dashboard/utils/errors";
 import { Box, Text, Textarea } from "@saleor/macaw-ui-next";
@@ -20,7 +20,7 @@ import {
 } from "../components/GiftCardAssignCustomerSelect/GiftCardAssignCustomerSelect";
 import { GiftCardSendToCustomer } from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { type GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
-import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
+import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect/GiftCardCreateExpirySelect";
 import { GiftCardCreateMoneyInput } from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "./messages";

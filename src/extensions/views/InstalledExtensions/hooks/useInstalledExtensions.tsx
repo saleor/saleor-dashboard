@@ -16,6 +16,7 @@ import { resolveInstalledAppHref } from "@dashboard/extensions/utils/resolveInst
 import {
   byActivePlugin,
   filterOutHiddenPlugins,
+  isRecentlyInstalled,
   sortByName,
 } from "@dashboard/extensions/views/InstalledExtensions/utils";
 import {
@@ -126,7 +127,7 @@ export const useInstalledExtensions = () => {
 
   const installedApps = useMemo<InstalledExtension[]>(
     () =>
-      installedAppsData.map(({ id, name, isActive, brand, type, problems, appUrl }) => {
+      installedAppsData.map(({ id, name, isActive, brand, type, problems, appUrl, created }) => {
         const appEvents = eventDeliveriesMap.get(id);
         const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
@@ -157,6 +158,7 @@ export const useInstalledExtensions = () => {
           appType: type,
           activeProblemCount: activeProblemsForApp.length,
           criticalProblemCount: activeProblemsForApp.filter(p => isProblemCritical(p)).length,
+          isNew: isRecentlyInstalled(created),
         };
       }),
     [eventDeliveries, eventDeliveriesData, installedAppsData, webhookErrorMessage],

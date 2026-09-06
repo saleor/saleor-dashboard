@@ -14,7 +14,7 @@ jest.mock("@dashboard/intl", () => ({
   },
 }));
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: () => jest.fn(),
 }));
 

@@ -12,7 +12,7 @@ interface TimelineDateGroupHeaderProps {
 export const TimelineDateGroupHeader = ({
   groupKey,
   isSoleGroup = false,
-}: TimelineDateGroupHeaderProps): JSX.Element => {
+}: TimelineDateGroupHeaderProps): React.ReactNode => {
   const intl = useIntl();
 
   const getLabel = (key: string): string => {

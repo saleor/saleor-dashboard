@@ -14,7 +14,7 @@ const paginatorValue = {
   loadPreviousPage: jest.fn(),
 };
 
-const TestWrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const TestWrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <Wrapper>
     <MemoryRouter>
       <PaginatorContext.Provider value={paginatorValue}>{children}</PaginatorContext.Provider>

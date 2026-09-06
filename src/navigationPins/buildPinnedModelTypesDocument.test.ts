@@ -13,20 +13,24 @@ describe("buildPinnedModelTypesDocument", () => {
     // Assert — this exact shape was verified against a live API: a missing type nulls only
     // its own alias instead of failing the whole query.
     expect(printed).toMatchInlineSnapshot(`
-      "query PinnedModelTypes($pin0: ID!, $pin1: ID!) {
-        pin0: pageType(id: $pin0) {
-          ...PinnedModelType
-        }
-        pin1: pageType(id: $pin1) {
-          ...PinnedModelType
-        }
-      }
+"query PinnedModelTypes($pin0: ID!, $pin1: ID!) {
+  pin0: pageType(id: $pin0) {
+    ...PinnedModelType
+  }
+  pin1: pageType(id: $pin1) {
+    ...PinnedModelType
+  }
+}
 
-      fragment PinnedModelType on PageType {
-        id
-        name
-      }"
-    `);
+fragment PinnedModelType on PageType {
+  id
+  name
+  metadata {
+    key
+    value
+  }
+}"
+`);
   });
 
   it("never interpolates ids into the document text", () => {

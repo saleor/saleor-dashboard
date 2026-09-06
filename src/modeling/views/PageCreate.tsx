@@ -6,7 +6,7 @@ import {
 } from "@dashboard/attributes/utils/handlers";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
@@ -20,7 +20,7 @@ import {
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { useLastCreatedEntityTypeStorage } from "@dashboard/hooks/useLastCreatedEntityTypeStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import {
@@ -38,8 +38,8 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
-import PageDetailsPage from "../components/PageDetailsPage";
 import { type PageSubmitData } from "../components/PageDetailsPage/form";
+import PageDetailsPage from "../components/PageDetailsPage/PageDetailsPage";
 import { pageCreateUrl, type PageCreateUrlQueryParams, pageUrl } from "../urls";
 
 interface PageCreateProps {

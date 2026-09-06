@@ -2,13 +2,13 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { type INotification } from "@dashboard/components/notifications";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { type GiftCardBulkCreateInput, useGiftCardBulkCreateMutation } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { buttonMessages } from "@dashboard/intl";
 import { type DialogProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";

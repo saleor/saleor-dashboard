@@ -1,8 +1,8 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { useWidgetIframeAutoHeight } from "@dashboard/extensions/hooks/useWidgetIframeAutoHeight";
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { type AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
-import { useAllFlags } from "@dashboard/featureFlags";
+import { useAllFlags } from "@dashboard/featureFlags/useAllFlags";
 import { useNodeRef } from "@dashboard/hooks/useNodeRef";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";

@@ -1,5 +1,5 @@
 import { ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
-import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown";
+import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductChannelsAvailability";
 import { DragHandle } from "@dashboard/components/DragHandle/DragHandle";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { GridTable } from "@dashboard/components/GridTable";

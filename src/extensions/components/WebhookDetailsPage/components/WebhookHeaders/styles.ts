@@ -21,7 +21,7 @@ export const useStyles = makeStyles(
           margin: 0,
         },
 
-        "&.MuiTableCell-root:first-child:not(.MuiTableCell-paddingCheckbox)": {
+        "&:first-child": {
           paddingRight: theme.spacing(0),
           paddingTop: theme.spacing(3),
         },
@@ -49,9 +49,6 @@ export const useStyles = makeStyles(
       emptyContainer: {
         paddingBottom: 0,
         paddingTop: 0,
-      },
-      input: {
-        padding: theme.spacing(1.5, 2),
       },
       table: {
         marginTop: theme.spacing(2),

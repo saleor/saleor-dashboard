@@ -1,5 +1,5 @@
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { Locale } from "@dashboard/components/Locale";
+import { Locale } from "@dashboard/components/Locale/Locale";
 import {
   createGetCellContent,
   getMatrixColumnTooltipContent,

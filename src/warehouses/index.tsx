@@ -14,9 +14,9 @@ import {
   warehousePath,
   type WarehouseUrlQueryParams,
 } from "./urls";
-import WarehouseCreate from "./views/WarehouseCreate";
-import WarehouseDetailsComponent from "./views/WarehouseDetails";
-import WarehouseListComponent from "./views/WarehouseList";
+import WarehouseCreate from "./views/WarehouseCreate/WarehouseCreate";
+import WarehouseDetailsComponent from "./views/WarehouseDetails/WarehouseDetails";
+import WarehouseListComponent from "./views/WarehouseList/WarehouseList";
 
 const WarehouseList = ({ location }: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1)) as any;

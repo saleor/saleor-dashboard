@@ -5,7 +5,9 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, type Option, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 
-import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";
+import { FlatTaxRateLabel } from "../../components/FlatTaxRateLabel";
+import { PluginLabel } from "../../components/PluginLabel";
+import { TaxAppLabel } from "../../components/TaxAppLabel";
 
 const flatTaxRateChoice = {
   label: <FlatTaxRateLabel />,

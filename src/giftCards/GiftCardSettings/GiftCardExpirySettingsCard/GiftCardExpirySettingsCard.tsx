@@ -26,7 +26,7 @@ export const GiftCardExpirySettingsCard = ({
   disabled,
   errors,
   onChange,
-}: GiftCardExpirySettingsCardProps): JSX.Element => {
+}: GiftCardExpirySettingsCardProps): React.ReactNode => {
   const intl = useIntl();
 
   const handleToggle = (checked: boolean) => {

@@ -2,7 +2,7 @@
 import "graphiql/graphiql.min.css";
 
 import { DashboardCard } from "@dashboard/components/Card";
-import GraphiQL from "@dashboard/components/GraphiQL";
+import GraphiQL from "@dashboard/components/GraphiQL/GraphiQL";
 import { type WebhookErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { useExplorerPlugin } from "@graphiql/plugin-explorer";

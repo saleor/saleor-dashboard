@@ -8,7 +8,7 @@ import {
   useUpdateCustomerAddressMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -16,7 +16,7 @@ import { useIntl } from "react-intl";
 
 import { CustomerAddressDeleteDialog } from "../components/CustomerAddressDeleteDialog/CustomerAddressDeleteDialog";
 import { CustomerAddressDialog } from "../components/CustomerAddressDialog/CustomerAddressDialog";
-import CustomerAddressListPage from "../components/CustomerAddressListPage";
+import CustomerAddressListPage from "../components/CustomerAddressListPage/CustomerAddressListPage";
 import {
   customerAddressesUrl,
   type CustomerAddressesUrlDialog,

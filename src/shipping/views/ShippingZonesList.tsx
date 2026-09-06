@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
-import ActionDialog from "@dashboard/components/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import {
   useBulkDeleteShippingZoneMutation,
@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -25,8 +25,8 @@ import isEqual from "lodash/isEqual";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ShippingWeightUnitDialog } from "../components/ShippingWeightUnitDialog";
-import ShippingZonesListPage from "../components/ShippingZonesListPage";
+import { ShippingWeightUnitDialog } from "../components/ShippingWeightUnitDialog/ShippingWeightUnitDialog";
+import ShippingZonesListPage from "../components/ShippingZonesListPage/ShippingZonesListPage";
 import {
   shippingZonesListUrl,
   type ShippingZonesListUrlDialog,

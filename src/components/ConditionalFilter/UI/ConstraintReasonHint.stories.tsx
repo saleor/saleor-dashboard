@@ -12,7 +12,7 @@ export default meta;
 
 type Story = StoryObj<typeof ConstraintReasonHint>;
 
-const FilterRowChrome = ({ fields }: { fields: string[] }): JSX.Element => (
+const FilterRowChrome = ({ fields }: { fields: string[] }): React.ReactNode => (
   <Box
     __width="560px"
     padding={4}

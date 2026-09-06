@@ -11,7 +11,7 @@ interface AssignedAttributesBulkDeleteButtonProps {
 export const AssignedAttributesBulkDeleteButton = ({
   onClick,
   label,
-}: AssignedAttributesBulkDeleteButtonProps): JSX.Element => (
+}: AssignedAttributesBulkDeleteButtonProps): React.ReactNode => (
   <Button
     data-test-id="bulk-delete-button"
     variant="tertiary"

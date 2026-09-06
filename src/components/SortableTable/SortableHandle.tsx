@@ -1,6 +1,6 @@
 import { DragHandle } from "@dashboard/components/DragHandle/DragHandle";
+import { TableCell } from "@dashboard/components/Table/Table";
 import { type DraggableAttributes, type DraggableSyntheticListeners } from "@dnd-kit/core";
-import { TableCell } from "@material-ui/core";
 import clsx from "clsx";
 import { type MouseEvent, type PointerEvent } from "react";
 
@@ -31,7 +31,7 @@ export const SortableHandle = ({
   isSorting = false,
   attributes,
   listeners,
-}: SortableHandleProps): JSX.Element => (
+}: SortableHandleProps): React.ReactNode => (
   <TableCell className={clsx(styles.cell, disabled && styles.disabled)} onClick={stopRowNavigation}>
     <div
       className={styles.handle}

@@ -22,7 +22,7 @@ export const StoreDetailsFields = ({
   disabled,
   errors,
   onChange,
-}: StoreDetailsFieldsProps): JSX.Element => {
+}: StoreDetailsFieldsProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name", "description"], errors);
 
@@ -60,7 +60,7 @@ export const StoreDetailsCard = ({
   disabled,
   errors,
   onChange,
-}: StoreDetailsCardProps): JSX.Element => {
+}: StoreDetailsCardProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

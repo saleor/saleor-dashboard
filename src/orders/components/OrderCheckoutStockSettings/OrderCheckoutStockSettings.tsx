@@ -18,7 +18,7 @@ export const OrderCheckoutStockSettings = ({
   data,
   disabled,
   onChange,
-}: OrderCheckoutStockSettingsProps): JSX.Element => {
+}: OrderCheckoutStockSettingsProps): React.ReactNode => {
   const intl = useIntl();
 
   return (

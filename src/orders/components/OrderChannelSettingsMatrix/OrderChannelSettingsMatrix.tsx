@@ -2,7 +2,7 @@ import { channelUrl } from "@dashboard/channels/urls";
 import { ChannelSearchInput } from "@dashboard/components/ChannelAvailability/ChannelSearchInput";
 import { channelAvailabilityMessages } from "@dashboard/components/ChannelAvailability/messages";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
 import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { type OrderSettingsChannelsQuery, OrderStatus } from "@dashboard/graphql";
@@ -56,7 +56,7 @@ const HeaderWithHelp = ({
   tooltip,
   tooltipContent,
   id,
-}: HeaderWithHelpProps): JSX.Element => {
+}: HeaderWithHelpProps): React.ReactNode => {
   const intl = useIntl();
 
   return (
@@ -88,7 +88,7 @@ const HeaderWithHelp = ({
   );
 };
 
-const AutoConfirmTooltip = (): JSX.Element => {
+const AutoConfirmTooltip = (): React.ReactNode => {
   const intl = useIntl();
   const unfulfilledStatus = transformOrderStatus(OrderStatus.UNFULFILLED, intl);
   const unconfirmedStatus = transformOrderStatus(OrderStatus.UNCONFIRMED, intl);
@@ -134,7 +134,7 @@ const MatrixCheckbox = ({
   disabled?: boolean;
   testId: string;
   onCheckedChange: (checked: boolean) => void;
-}): JSX.Element => (
+}): React.ReactNode => (
   <Box className={styles.matrixControl}>
     <Checkbox
       checked={checked}
@@ -151,7 +151,7 @@ export const OrderChannelSettingsMatrix = ({
   dirtyChannelIds,
   disabled,
   onChannelChange,
-}: OrderChannelSettingsMatrixProps): JSX.Element => {
+}: OrderChannelSettingsMatrixProps): React.ReactNode => {
   const intl = useIntl();
   const [searchQuery, setSearchQuery] = useState("");
   const [hideInactive, setHideInactive] = useState(false);

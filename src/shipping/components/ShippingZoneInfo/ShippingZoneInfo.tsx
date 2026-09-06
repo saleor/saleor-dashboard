@@ -3,9 +3,8 @@ import { type ShippingErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Input, Textarea } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -60,21 +59,20 @@ const ShippingZoneInfo = ({ data, disabled, errors, onChange }: ShippingZoneInfo
       data-test-id="shipping-zone-general-info"
     >
       <Box display="flex" flexDirection="column" gap={4}>
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.name}
-          fullWidth
+          aria-invalid={!!formErrors.name}
           helperText={getShippingErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage(messages.name)}
-          inputProps={{
-            "data-test-id": "shipping-zone-name",
-          }}
+          data-test-id="shipping-zone-name"
           name="name"
           value={data.name}
           onChange={onChange}
         />
-        <TextField
+        <Textarea
           error={data.description.length > MAX_DESCRIPTION_LENGTH}
+          aria-invalid={data.description.length > MAX_DESCRIPTION_LENGTH}
           name={"description"}
           data-test-id="shipping-zone-description"
           label={
@@ -95,16 +93,10 @@ const ShippingZoneInfo = ({ data, disabled, errors, onChange }: ShippingZoneInfo
               )}
             </div>
           }
-          InputProps={{
-            inputProps: {
-              maxLength: MAX_DESCRIPTION_LENGTH,
-            },
-          }}
+          maxLength={MAX_DESCRIPTION_LENGTH}
           value={data.description}
           onChange={onChange}
           disabled={disabled}
-          fullWidth
-          multiline
           placeholder={intl.formatMessage(messages.descriptionPlaceholder)}
           rows={3}
         />
