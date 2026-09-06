@@ -16,6 +16,7 @@ import {
   transformPaymentStatus,
 } from "@dashboard/misc";
 import { type OrderListUrlSortField } from "@dashboard/orders/urls";
+import { getDeliveryMethodInfo } from "@dashboard/orders/utils/deliveryMethod";
 import { type RelayToFlat, type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { type GridCell, type Item, type TextCell } from "@glideapps/glide-data-grid";
@@ -207,22 +208,17 @@ export function getDeliveryCellContent(
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  const deliveryMethod = rowData?.deliveryMethod;
+  const info = getDeliveryMethodInfo(rowData?.deliveryMethod);
 
-  if (!deliveryMethod) {
+  if (!info) {
     return readonlyTextCell("-");
   }
 
-  const isWarehouse = deliveryMethod.__typename === "Warehouse";
-  const label = intl.formatMessage(
-    isWarehouse ? columnsMessages.deliveryWarehouse : columnsMessages.deliveryShipping,
+  return pillCell(
+    intl.formatMessage(info.labelMessage),
+    getStatusColor({ status: info.color, currentTheme }),
+    COMMON_CELL_PROPS,
   );
-  const color = getStatusColor({
-    status: isWarehouse ? "attention" : "info",
-    currentTheme,
-  });
-
-  return pillCell(label, color, COMMON_CELL_PROPS);
 }
 
 function getNetCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {

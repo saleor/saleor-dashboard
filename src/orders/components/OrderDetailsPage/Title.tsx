@@ -3,8 +3,8 @@ import { MerchantDate } from "@dashboard/components/Date/MerchantDate";
 import { Pill } from "@dashboard/components/Pill/Pill";
 import { type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
-import { columnsMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
 import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
+import { getDeliveryMethodInfo } from "@dashboard/orders/utils/deliveryMethod";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -43,6 +43,7 @@ const Title = (props: TitleProps) => {
 
   const { localized, status } = transformOrderStatus(order.status, intl);
   const dateKind = order.status === OrderStatus.UNCONFIRMED ? "created" : "placed";
+  const deliveryMethodInfo = getDeliveryMethodInfo(order.deliveryMethod);
 
   return (
     <div className={classes.container}>
@@ -54,15 +55,11 @@ const Title = (props: TitleProps) => {
         <div className={classes.statusContainer}>
           <Box display="flex" alignItems="center" gap={1}>
             <Pill data-test-id="status-info" label={localized} color={status} />
-            {order.deliveryMethod && (
+            {deliveryMethodInfo && (
               <Pill
                 data-test-id="delivery-method-info"
-                label={intl.formatMessage(
-                  order.deliveryMethod.__typename === "Warehouse"
-                    ? columnsMessages.deliveryWarehouse
-                    : columnsMessages.deliveryShipping,
-                )}
-                color={order.deliveryMethod.__typename === "Warehouse" ? "attention" : "info"}
+                label={intl.formatMessage(deliveryMethodInfo.labelMessage)}
+                color={deliveryMethodInfo.color}
               />
             )}
           </Box>
