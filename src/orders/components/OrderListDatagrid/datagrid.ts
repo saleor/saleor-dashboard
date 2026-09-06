@@ -52,6 +52,11 @@ export const orderListStaticColumnAdapter = (
       width: 200,
     },
     {
+      id: "delivery",
+      title: intl.formatMessage(columnsMessages.delivery),
+      width: 200,
+    },
+    {
       id: "status",
       title: intl.formatMessage(columnsMessages.status),
       width: 200,
@@ -108,6 +113,8 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
         return getCustomerCellContent(rowData);
       case "payment":
         return getPaymentCellContent(intl, theme, rowData);
+      case "delivery":
+        return getDeliveryCellContent(intl, theme, rowData);
       case "status":
         return getStatusCellContent(intl, theme, rowData);
       case "net":
@@ -193,6 +200,29 @@ export function getPaymentCellContent(
   }
 
   return readonlyTextCell("-");
+}
+
+export function getDeliveryCellContent(
+  intl: IntlShape,
+  currentTheme: DefaultTheme,
+  rowData: RelayToFlat<OrderListQuery["orders"]>[number],
+) {
+  const deliveryMethod = rowData?.deliveryMethod;
+
+  if (!deliveryMethod) {
+    return readonlyTextCell("-");
+  }
+
+  const isWarehouse = deliveryMethod.__typename === "Warehouse";
+  const label = intl.formatMessage(
+    isWarehouse ? columnsMessages.deliveryWarehouse : columnsMessages.deliveryShipping,
+  );
+  const color = getStatusColor({
+    status: isWarehouse ? "attention" : "info",
+    currentTheme,
+  });
+
+  return pillCell(label, color, COMMON_CELL_PROPS);
 }
 
 function getNetCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {

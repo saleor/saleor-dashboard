@@ -15965,6 +15965,9 @@ export const OrderListDocument = gql`
           }
         }
         userEmail
+        deliveryMethod {
+          __typename
+        }
         chargeStatus
       }
     }

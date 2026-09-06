@@ -16,7 +16,17 @@ const meta: Meta<typeof OrderListDatagrid> = {
     sort: { sort: "number" as any, asc: true },
     onSort: fn(),
     settings: {
-      columns: ["number", "date", "customer", "payment", "status", "net", "total", "channel"],
+      columns: [
+        "number",
+        "date",
+        "customer",
+        "payment",
+        "delivery",
+        "status",
+        "net",
+        "total",
+        "channel",
+      ],
       rowsPerPage: 20,
     },
     onUpdateListSettings: fn(),
