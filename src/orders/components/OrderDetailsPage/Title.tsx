@@ -4,6 +4,7 @@ import { Pill } from "@dashboard/components/Pill/Pill";
 import { type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
+import { rippleOrderDeliveryMethod } from "@dashboard/orders/ripples/orderDeliveryMethod";
 import { getDeliveryMethodInfo } from "@dashboard/orders/utils/deliveryMethod";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -56,11 +57,31 @@ const Title = (props: TitleProps) => {
           <Box display="flex" alignItems="center" gap={1}>
             <Pill data-test-id="status-info" label={localized} color={status} />
             {deliveryMethodInfo && (
-              <Pill
-                data-test-id="delivery-method-info"
-                label={intl.formatMessage(deliveryMethodInfo.labelMessage)}
-                color={deliveryMethodInfo.color}
-              />
+              <Box
+                position="relative"
+                display="flex"
+                alignItems="center"
+                __height="30px"
+                paddingRight={5}
+              >
+                <Pill
+                  data-test-id="delivery-method-info"
+                  label={intl.formatMessage(deliveryMethodInfo.labelMessage)}
+                  color={deliveryMethodInfo.color}
+                />
+                <Box
+                  position="absolute"
+                  __top="0"
+                  __right="0"
+                  __width="30px"
+                  __height="30px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Ripple model={rippleOrderDeliveryMethod} />
+                </Box>
+              </Box>
             )}
           </Box>
         </div>
