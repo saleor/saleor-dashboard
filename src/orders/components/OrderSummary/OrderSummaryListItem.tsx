@@ -33,12 +33,13 @@ export const OrderSummaryListItem = ({
       __gridTemplateColumns="1fr auto"
       alignItems="baseline"
       gap={2}
+      __minWidth={0}
       title={title}
       {...props}
     >
-      <Text fontWeight={fontWeight} size={4}>
+      <Box fontSize={4} fontWeight={fontWeight} __minWidth={0}>
         {children}
-      </Text>
+      </Box>
       <Box title={amountTitle}>
         <Text fontWeight={fontWeight} color="default2" size={3}>
           {currency}
