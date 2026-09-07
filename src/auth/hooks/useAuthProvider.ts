@@ -74,10 +74,11 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     skip: !authenticated,
     // Don't change this to 'network-only' - update of intl provider's
     // state will cause an error.
-    // `cache-first` (not `cache-and-network`): every path that flips `authenticated` runs an auth
-    // mutation that seeds `me` with the full `User` fragment, so the boot-time network round trip
-    // here would only re-fetch what just arrived. Views that mutate the current user call
-    // `refetchUser` explicitly.
+    // `cache-first` (not `cache-and-network`): `tokenCreate` seeds `me` with the full `User`
+    // fragment, so after a password login the network round trip here would only re-fetch what
+    // just arrived. External login and token refresh cannot seed it — they may only ask for
+    // `AuthUser`, see the note in `authSdk` — so those paths miss the cache and fetch as before.
+    // Views that mutate the current user call `refetchUser` explicitly.
     fetchPolicy: "cache-first",
   });
   const handleLoginError = (error: ApolloError) => {

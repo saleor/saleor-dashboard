@@ -75,7 +75,7 @@ export const externalObtainAccessTokens = gql`
       token
       refreshToken
       user {
-        ...User
+        ...AuthUser
       }
       errors {
         ...AccountError
@@ -108,7 +108,7 @@ export const externalRefreshWithUser = gql`
       token
       refreshToken
       user {
-        ...User
+        ...AuthUser
       }
       errors {
         ...AccountError
