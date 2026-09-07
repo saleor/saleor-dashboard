@@ -9200,11 +9200,6 @@ export type WebhookCreateInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   /** Subscription query used to define a webhook payload. */
   query?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * The secret key used to create a hash signature with each payload.
-   * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
-   */
-  secretKey?: InputMaybe<Scalars['String']['input']>;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
   /** The url to receive the payload. */
@@ -10258,11 +10253,6 @@ export type WebhookUpdateInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   /** Subscription query used to define a webhook payload. */
   query?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Use to create a hash signature with each payload.
-   * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
-   */
-  secretKey?: InputMaybe<Scalars['String']['input']>;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
   /** The url to receive the payload. */
