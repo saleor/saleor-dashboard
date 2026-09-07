@@ -5165,14 +5165,14 @@ export const ExternalObtainAccessTokensDocument = gql`
     token
     refreshToken
     user {
-      ...User
+      ...AuthUser
     }
     errors {
       ...AccountError
     }
   }
 }
-    ${UserFragmentDoc}
+    ${AuthUserFragmentDoc}
 ${AccountErrorFragmentDoc}`;
 export type ExternalObtainAccessTokensMutationFn = Apollo.MutationFunction<Types.ExternalObtainAccessTokensMutation, Types.ExternalObtainAccessTokensMutationVariables>;
 
@@ -5245,14 +5245,14 @@ export const ExternalRefreshWithUserDocument = gql`
     token
     refreshToken
     user {
-      ...User
+      ...AuthUser
     }
     errors {
       ...AccountError
     }
   }
 }
-    ${UserFragmentDoc}
+    ${AuthUserFragmentDoc}
 ${AccountErrorFragmentDoc}`;
 export type ExternalRefreshWithUserMutationFn = Apollo.MutationFunction<Types.ExternalRefreshWithUserMutation, Types.ExternalRefreshWithUserMutationVariables>;
 
