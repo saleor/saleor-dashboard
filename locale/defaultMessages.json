@@ -4946,6 +4946,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
   },
+  "GiS5VI": {
+    "context": "short link after Shipping label to change the selected method",
+    "string": "Change"
+  },
   "Gk5o6q": {
     "context": "prefilled name when duplicating a channel",
     "string": "Copy of {name}"
@@ -11819,6 +11823,10 @@
   "gaOXvo": {
     "context": "notification, form submitted",
     "string": "Refund grant for order #{orderNumber} was updated"
+  },
+  "gbDGKk": {
+    "context": "accessible label for changing the selected shipping method",
+    "string": "Change shipping method"
   },
   "gbo0sd": {
     "context": "storefront example in model type tab grouping help tooltip",
