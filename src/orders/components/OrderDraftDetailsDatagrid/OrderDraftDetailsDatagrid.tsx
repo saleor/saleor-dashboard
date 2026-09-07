@@ -17,6 +17,7 @@ import { type OrderDiscountCommonInput } from "@dashboard/orders/components/Orde
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { productUrl } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
+import { withAppMountUri } from "@dashboard/utils/urls";
 import { type Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import { ExternalLink, Percent, Trash2 } from "lucide-react";
@@ -113,7 +114,7 @@ export const OrderDraftDetailsDatagrid = ({
           const productId = lines[index]?.variant?.product.id;
 
           if (productId) {
-            window.open(productUrl(productId), "_blank", "noopener,noreferrer");
+            window.open(withAppMountUri(productUrl(productId)), "_blank", "noopener,noreferrer");
           }
         },
       },

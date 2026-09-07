@@ -1,5 +1,5 @@
-import { getAppMountUri } from "@dashboard/config";
 import { getCellAction } from "@dashboard/products/components/ProductListDatagrid/datagrid";
+import { withAppMountUri } from "@dashboard/utils/urls";
 import {
   type DataEditorProps,
   type GridMouseEventArgs,
@@ -125,7 +125,7 @@ export const useRowAnchor = ({
       anchor.style.width = `${args.bounds.width}px`;
       anchor.style.top = `${args.bounds.y}px`;
       anchor.style.height = `${args.bounds.height}px`;
-      anchor.href = getAppMountUri() + (href.startsWith("/") ? href.slice(1) : href);
+      anchor.href = withAppMountUri(href);
       anchor.dataset.reactRouterPath = href;
       anchor.style.display = "block";
     },

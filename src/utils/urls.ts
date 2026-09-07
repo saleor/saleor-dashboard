@@ -52,3 +52,11 @@ export const getMultipleUrlValues = (urlSearch: string, fieldName: string): stri
 
   return params.getAll(fieldName);
 };
+
+/**
+ * Router-relative paths (e.g. productUrl()) are resolved by react-router against its
+ * basename. Anything that leaves the router - window.open, anchor href - must prepend
+ * APP_MOUNT_URI itself, otherwise the link drops the dashboard mount point.
+ */
+export const withAppMountUri = (path: string) =>
+  getAppMountUri() + (path.startsWith("/") ? path.slice(1) : path);
