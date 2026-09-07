@@ -2,18 +2,26 @@ import { type OrderDetailsFragment, type OrderLinesUpdateFragment } from "@dashb
 import { prepareMoney } from "@dashboard/orders/fixtures";
 import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type ComponentProps, type ComponentType } from "react";
+import { type ComponentProps, type ComponentType, type ReactElement } from "react";
 import { expect, fn, within } from "storybook/test";
 
 import { OrderValue } from "./OrderValue";
 
 type Props = ComponentProps<typeof OrderValue>;
 
-const taxed = (amount: number, currency = "GBP") => ({
-  __typename: "TaxedMoney" as const,
-  gross: { __typename: "Money" as const, amount, currency },
-  net: { __typename: "Money" as const, amount, currency },
-  tax: { __typename: "Money" as const, amount: 0, currency },
+const taxed = (
+  amount: number,
+  currency = "GBP",
+): {
+  __typename: "TaxedMoney";
+  gross: { __typename: "Money"; amount: number; currency: string };
+  net: { __typename: "Money"; amount: number; currency: string };
+  tax: { __typename: "Money"; amount: number; currency: string };
+} => ({
+  __typename: "TaxedMoney",
+  gross: { __typename: "Money", amount, currency },
+  net: { __typename: "Money", amount, currency },
+  tax: { __typename: "Money", amount: 0, currency },
 });
 
 const shippingPrice = {
@@ -107,7 +115,7 @@ const meta: Meta<typeof OrderValue> = {
   component: OrderValue,
   // Narrow card so ellipsis on long carrier names is visible in Storybook/Chromatic.
   decorators: [
-    (Story: ComponentType) => (
+    (Story: ComponentType): ReactElement => (
       <Box
         __maxWidth="22rem"
         padding={4}
@@ -132,7 +140,7 @@ export const LongCarrierMethodName: Story = {
   args: {
     shippingMethodName: LONG_CARRIER_METHOD_NAME,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }): Promise<void> => {
     const canvas = within(canvasElement);
     const methodName = canvas.getByTestId("shipping-method-name");
 
@@ -143,7 +151,7 @@ export const LongCarrierMethodName: Story = {
 
 export const EditableWithChange: Story = {
   args: editableBase as Props,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }): Promise<void> => {
     const canvas = within(canvasElement);
 
     await expect(canvas.getByRole("button", { name: "Change shipping method" })).toHaveTextContent(
@@ -160,7 +168,7 @@ export const EditableLongCarrierMethodName: Story = {
     ...(editableBase as Props),
     shippingMethodName: LONG_CARRIER_METHOD_NAME,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }): Promise<void> => {
     const canvas = within(canvasElement);
 
     await expect(
@@ -179,7 +187,7 @@ export const EditableNoAlternatives: Story = {
     shippingMethods: [],
     isShippingRequired: false,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }): Promise<void> => {
     const canvas = within(canvasElement);
 
     await expect(
@@ -202,7 +210,7 @@ export const EditableSetShippingMethod: Story = {
       gross: { __typename: "Money", amount: 0, currency: "GBP" },
     },
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }): Promise<void> => {
     const canvas = within(canvasElement);
 
     await expect(canvas.getByText("Set shipping method")).toBeInTheDocument();
@@ -220,7 +228,7 @@ export const EditableNoShippingAddress: Story = {
       gross: { __typename: "Money", amount: 0, currency: "GBP" },
     },
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }): Promise<void> => {
     const canvas = within(canvasElement);
 
     await expect(canvas.getByText("No shipping address")).toBeInTheDocument();

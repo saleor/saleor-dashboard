@@ -37,9 +37,9 @@ export const OrderSummaryListItem = ({
       title={title}
       {...props}
     >
-      <Text as="div" fontWeight={fontWeight} size={4} __minWidth={0}>
+      <Box fontSize={4} fontWeight={fontWeight} __minWidth={0}>
         {children}
-      </Text>
+      </Box>
       <Box title={amountTitle}>
         <Text fontWeight={fontWeight} color="default2" size={3}>
           {currency}
