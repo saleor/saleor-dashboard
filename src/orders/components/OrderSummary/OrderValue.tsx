@@ -64,6 +64,16 @@ const messages = defineMessages({
     defaultMessage: "Set shipping method",
     description: "set shipping method link when no shipping method selected",
   },
+  changeShippingMethod: {
+    id: "gbDGKk",
+    defaultMessage: "Change shipping method",
+    description: "accessible label for changing the selected shipping method",
+  },
+  change: {
+    id: "GiS5VI",
+    defaultMessage: "Change",
+    description: "short link after Shipping label to change the selected method",
+  },
   shipping: {
     id: "glR0om",
     defaultMessage: "Shipping",
@@ -284,47 +294,112 @@ export const OrderValue = (props: Props): ReactNode => {
     ? getFormErrors(["shipping"], editableProps.errors ?? [])
     : { shipping: undefined };
 
+  const renderShippingLabel = (onChange?: () => void): ReactNode => (
+    <Box display="flex" alignItems="baseline" gap={2} __minWidth={0}>
+      <Text as="span" size={4}>
+        {intl.formatMessage(messages.shipping)}
+      </Text>
+      {onChange && (
+        // Slightly smaller than the label — action should not compete with "Shipping".
+        <Text as="span" size={3}>
+          <ButtonLink
+            onClick={onChange}
+            aria-label={intl.formatMessage(messages.changeShippingMethod)}
+            data-test-id="edit-shipping-method"
+          >
+            {intl.formatMessage(messages.change)}
+          </ButtonLink>
+        </Text>
+      )}
+    </Box>
+  );
+
+  const renderShippingMethodName = ({
+    methodName,
+    title,
+  }: {
+    methodName: string;
+    title?: string;
+  }): ReactNode => (
+    // Prefer the merchant-facing prefix ("UK Standard Delivery…"); full carrier
+    // SKU stays available on hover. Width-based ellipsis — no JS substring.
+    <Text
+      as="span"
+      color="default2"
+      size={3}
+      ellipsis
+      display="block"
+      minWidth={0}
+      title={title ?? methodName}
+      data-test-id="shipping-method-name"
+    >
+      {methodName}
+    </Text>
+  );
+
+  const renderChosenShippingRow = ({
+    amount,
+    amountTitle,
+    onChange,
+    methodName,
+    methodTitle,
+  }: {
+    amount: number;
+    amountTitle: string;
+    onChange?: () => void;
+    methodName: string;
+    methodTitle?: string;
+  }): ReactNode => (
+    <OrderSummaryListItem amount={amount} amountTitle={amountTitle} alignItems="start">
+      <Box display="flex" flexDirection="column" gap={0.5} __minWidth={0}>
+        {renderShippingLabel(onChange)}
+        {renderShippingMethodName({ methodName, title: methodTitle })}
+      </Box>
+    </OrderSummaryListItem>
+  );
+
   const renderShippingRow = (): ReactNode => {
     const shippingAmountTitle = intl.formatMessage(messages.shippingTitle);
 
+    // "Shipping" (+ Change when editable) shares the amount row; method name
+    // is plain truncated data underneath — never a link.
     if (!isEditable) {
-      return (
-        <OrderSummaryListItem amount={shippingPrice.gross.amount} amountTitle={shippingAmountTitle}>
-          {intl.formatMessage(messages.shipping)}{" "}
-          <Text as="span" color="default2">
-            {shippingMethodName}
-          </Text>
-        </OrderSummaryListItem>
-      );
-    }
-
-    if (hasChosenShippingMethod) {
-      if (!hasShippingMethods) {
+      if (!shippingMethodName) {
         return (
           <OrderSummaryListItem
             amount={shippingPrice.gross.amount}
             amountTitle={shippingAmountTitle}
           >
-            {intl.formatMessage(messages.shipping)}{" "}
-            <Text
-              as="span"
-              color="default2"
-              title={intl.formatMessage(messages.noAlternativeShippingMethods)}
-            >
-              {shippingMethodName}
-            </Text>
+            {intl.formatMessage(messages.shipping)}
           </OrderSummaryListItem>
         );
       }
 
-      return (
-        <OrderSummaryListItem amount={shippingPrice.gross.amount} amountTitle={shippingAmountTitle}>
-          {intl.formatMessage(messages.shipping)}{" "}
-          <ButtonLink onClick={editableProps?.onShippingMethodEdit}>
-            {shippingMethodName}
-          </ButtonLink>
-        </OrderSummaryListItem>
-      );
+      return renderChosenShippingRow({
+        amount: shippingPrice.gross.amount,
+        amountTitle: shippingAmountTitle,
+        methodName: shippingMethodName,
+      });
+    }
+
+    if (hasChosenShippingMethod && shippingMethodName) {
+      if (!hasShippingMethods) {
+        return renderChosenShippingRow({
+          amount: shippingPrice.gross.amount,
+          amountTitle: shippingAmountTitle,
+          methodName: shippingMethodName,
+          methodTitle: `${shippingMethodName} — ${intl.formatMessage(
+            messages.noAlternativeShippingMethods,
+          )}`,
+        });
+      }
+
+      return renderChosenShippingRow({
+        amount: shippingPrice.gross.amount,
+        amountTitle: shippingAmountTitle,
+        onChange: editableProps?.onShippingMethodEdit,
+        methodName: shippingMethodName,
+      });
     }
 
     const hasShippingAddress = !!editableProps?.shippingAddress;
