@@ -7637,6 +7637,12 @@ export type ProductVariantInput = {
 };
 
 export enum ProductVariantSortField {
+  /**
+   * Sort product variants by ID.
+   *
+   * Added in Saleor 3.23.
+   */
+  ID = 'ID',
   /** Sort product variants by last modification date. */
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }

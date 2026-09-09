@@ -3354,7 +3354,7 @@ export type ObjectWithMetadataFieldPolicy = {
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type OrderKeySpecifier = ('actions' | 'authorizeStatus' | 'availableCollectionPoints' | 'availableShippingMethods' | 'billingAddress' | 'canFinalize' | 'channel' | 'chargeStatus' | 'checkoutId' | 'collectionPointName' | 'created' | 'customerNote' | 'deliveryMethod' | 'discount' | 'discountName' | 'discounts' | 'displayGrossPrices' | 'errors' | 'events' | 'externalReference' | 'fulfillments' | 'giftCards' | 'grantedRefunds' | 'id' | 'invoices' | 'isPaid' | 'isShippingRequired' | 'languageCode' | 'languageCodeEnum' | 'lines' | 'metadata' | 'metafield' | 'metafields' | 'number' | 'origin' | 'original' | 'paymentStatus' | 'paymentStatusDisplay' | 'payments' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'redirectUrl' | 'shippingAddress' | 'shippingMethod' | 'shippingMethodName' | 'shippingMethods' | 'shippingPrice' | 'shippingTaxClass' | 'shippingTaxClassMetadata' | 'shippingTaxClassName' | 'shippingTaxClassPrivateMetadata' | 'shippingTaxRate' | 'status' | 'statusDisplay' | 'subtotal' | 'taxExemption' | 'token' | 'total' | 'totalAuthorizePending' | 'totalAuthorized' | 'totalBalance' | 'totalCancelPending' | 'totalCanceled' | 'totalCaptured' | 'totalChargePending' | 'totalCharged' | 'totalGrantedRefund' | 'totalRefundPending' | 'totalRefunded' | 'totalRemainingGrant' | 'trackingClientId' | 'transactions' | 'translatedDiscountName' | 'undiscountedShippingPrice' | 'undiscountedTotal' | 'updatedAt' | 'user' | 'userEmail' | 'voucher' | 'voucherCode' | 'weight' | OrderKeySpecifier)[];
+export type OrderKeySpecifier = ('actions' | 'authorizeStatus' | 'availableCollectionPoints' | 'availableShippingMethods' | 'billingAddress' | 'canFinalize' | 'channel' | 'chargeStatus' | 'checkoutId' | 'collectionPointName' | 'created' | 'customerNote' | 'deliveryMethod' | 'discount' | 'discountName' | 'discounts' | 'displayGrossPrices' | 'errors' | 'events' | 'externalReference' | 'fulfillments' | 'giftCards' | 'grantedRefunds' | 'id' | 'invoices' | 'isPaid' | 'isShippingRequired' | 'languageCode' | 'languageCodeEnum' | 'lines' | 'metadata' | 'metafield' | 'metafields' | 'number' | 'origin' | 'original' | 'paymentStatus' | 'paymentStatusDisplay' | 'payments' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'redirectUrl' | 'shippingAddress' | 'shippingMethod' | 'shippingMethodName' | 'shippingMethods' | 'shippingPrice' | 'shippingTaxClass' | 'shippingTaxClassMetadata' | 'shippingTaxClassName' | 'shippingTaxClassPrivateMetadata' | 'shippingTaxRate' | 'status' | 'statusDisplay' | 'subtotal' | 'taxExemption' | 'token' | 'total' | 'totalAuthorizePending' | 'totalAuthorized' | 'totalBalance' | 'totalCancelPending' | 'totalCanceled' | 'totalCaptured' | 'totalChargePending' | 'totalCharged' | 'totalGrantedRefund' | 'totalRefundPending' | 'totalRefunded' | 'totalRemainingGrant' | 'trackingClientId' | 'transactionSummaries' | 'transactions' | 'translatedDiscountName' | 'undiscountedShippingPrice' | 'undiscountedTotal' | 'updatedAt' | 'user' | 'userEmail' | 'voucher' | 'voucherCode' | 'weight' | OrderKeySpecifier)[];
 export type OrderFieldPolicy = {
 	actions?: FieldPolicy<any> | FieldReadFunction<any>,
 	authorizeStatus?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3428,6 +3428,7 @@ export type OrderFieldPolicy = {
 	totalRefunded?: FieldPolicy<any> | FieldReadFunction<any>,
 	totalRemainingGrant?: FieldPolicy<any> | FieldReadFunction<any>,
 	trackingClientId?: FieldPolicy<any> | FieldReadFunction<any>,
+	transactionSummaries?: FieldPolicy<any> | FieldReadFunction<any>,
 	transactions?: FieldPolicy<any> | FieldReadFunction<any>,
 	translatedDiscountName?: FieldPolicy<any> | FieldReadFunction<any>,
 	undiscountedShippingPrice?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6922,6 +6923,17 @@ export type TransactionRequestRefundForGrantedRefundErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TransactionSummaryKeySpecifier = ('authorizePendingAmount' | 'authorizedAmount' | 'canceledAmount' | 'chargePendingAmount' | 'chargedAmount' | 'createdAt' | 'paymentMethodDetails' | 'refundedAmount' | TransactionSummaryKeySpecifier)[];
+export type TransactionSummaryFieldPolicy = {
+	authorizePendingAmount?: FieldPolicy<any> | FieldReadFunction<any>,
+	authorizedAmount?: FieldPolicy<any> | FieldReadFunction<any>,
+	canceledAmount?: FieldPolicy<any> | FieldReadFunction<any>,
+	chargePendingAmount?: FieldPolicy<any> | FieldReadFunction<any>,
+	chargedAmount?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	paymentMethodDetails?: FieldPolicy<any> | FieldReadFunction<any>,
+	refundedAmount?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TransactionUpdateKeySpecifier = ('errors' | 'transaction' | TransactionUpdateKeySpecifier)[];
 export type TransactionUpdateFieldPolicy = {
@@ -10843,6 +10855,10 @@ export type StrictTypedTypePolicies = {
 	TransactionRequestRefundForGrantedRefundError?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TransactionRequestRefundForGrantedRefundErrorKeySpecifier | (() => undefined | TransactionRequestRefundForGrantedRefundErrorKeySpecifier),
 		fields?: TransactionRequestRefundForGrantedRefundErrorFieldPolicy,
+	},
+	TransactionSummary?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | TransactionSummaryKeySpecifier | (() => undefined | TransactionSummaryKeySpecifier),
+		fields?: TransactionSummaryFieldPolicy,
 	},
 	TransactionUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TransactionUpdateKeySpecifier | (() => undefined | TransactionUpdateKeySpecifier),

@@ -1133,6 +1133,7 @@ import type {
   TransactionRequestRefundForGrantedRefund,
   TransactionRequestRefundForGrantedRefundError,
   TransactionSortingInput,
+  TransactionSummary,
   TransactionUpdate,
   TransactionUpdateError,
   TransactionUpdateInput,
@@ -18843,6 +18844,12 @@ export type OptionalOrder = {
   totalRemainingGrant?: OptionalMoney | undefined;
   /** Google Analytics tracking client ID. */
   trackingClientId?: Order['trackingClientId'] | undefined;
+  /**
+ * Payment history of the order, with one entry per payment transaction that moved any money. Unlike `transactions`, it requires no permission and exposes only the payment method and the amounts, so it can be used to display payment details to the customer without exposing internal information.
+ *
+ * Added in Saleor 3.23.
+ */
+  transactionSummaries?: OptionalTransactionSummary[] | undefined;
   /** List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. */
   transactions?: OptionalTransactionItem[] | undefined;
   /** Translated discount name. */
@@ -36030,6 +36037,42 @@ export type OptionalTransactionSortingInput = {
  */
 export const defineTransactionSortingInputFactory: DefineTypeFactoryInterface<
   OptionalTransactionSortingInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Customer-facing summary of a single payment transaction. Exposes the payment method and the amounts, without the identifiers, events and actions available on `TransactionItem`.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalTransactionSummary = {
+  __typename?: 'TransactionSummary';
+  /** Total amount of ongoing authorization requests for the transaction. */
+  authorizePendingAmount?: OptionalMoney | undefined;
+  /** Total amount authorized for this payment. */
+  authorizedAmount?: OptionalMoney | undefined;
+  /** Total amount canceled for this payment. */
+  canceledAmount?: OptionalMoney | undefined;
+  /** Total amount of ongoing charge requests for the transaction. */
+  chargePendingAmount?: OptionalMoney | undefined;
+  /** Total amount charged for this payment. */
+  chargedAmount?: OptionalMoney | undefined;
+  /** Date and time at which payment transaction was created. */
+  createdAt?: TransactionSummary['createdAt'] | undefined;
+  /** The payment method used for this transaction. As this field is public, card number digits and expiration date are stripped: `firstDigits`, `lastDigits`, `expMonth` and `expYear` of `CardPaymentMethodDetails` are always `null` here. Read them through `Order.transactions` instead, which requires MANAGE_ORDERS or HANDLE_PAYMENTS. */
+  paymentMethodDetails?: Maybe<OptionalPaymentMethodDetails> | undefined;
+  /** Total amount refunded for this payment. */
+  refundedAmount?: OptionalMoney | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionSummary} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionSummaryFactoryInterface}
+ */
+export const defineTransactionSummaryFactory: DefineTypeFactoryInterface<
+  OptionalTransactionSummary,
   {}
 > = defineTypeFactory;
 
