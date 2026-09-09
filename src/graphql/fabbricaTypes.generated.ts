@@ -17613,6 +17613,12 @@ export type Order = Node & ObjectWithMetadata & {
   totalRemainingGrant: Money;
   /** Google Analytics tracking client ID. */
   trackingClientId: Scalars['String']['output'];
+  /**
+   * Payment history of the order, with one entry per payment transaction that moved any money. Unlike `transactions`, it requires no permission and exposes only the payment method and the amounts, so it can be used to display payment details to the customer without exposing internal information.
+   *
+   * Added in Saleor 3.23.
+   */
+  transactionSummaries: Array<TransactionSummary>;
   /** List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. */
   transactions: Array<TransactionItem>;
   /**
@@ -24630,6 +24636,12 @@ export type ProductVariantSetDefault = {
 };
 
 export type ProductVariantSortField =
+  /**
+   * Sort product variants by ID.
+   *
+   * Added in Saleor 3.23.
+   */
+  | 'ID'
   /** Sort product variants by last modification date. */
   | 'LAST_MODIFIED_AT';
 
@@ -31488,6 +31500,31 @@ export type TransactionSortingInput = {
   direction: OrderDirection;
   /** Sort transactions by the selected field. */
   field: TransactionSortField;
+};
+
+/**
+ * Customer-facing summary of a single payment transaction. Exposes the payment method and the amounts, without the identifiers, events and actions available on `TransactionItem`.
+ *
+ * Added in Saleor 3.23.
+ */
+export type TransactionSummary = {
+  __typename: 'TransactionSummary';
+  /** Total amount of ongoing authorization requests for the transaction. */
+  authorizePendingAmount: Money;
+  /** Total amount authorized for this payment. */
+  authorizedAmount: Money;
+  /** Total amount canceled for this payment. */
+  canceledAmount: Money;
+  /** Total amount of ongoing charge requests for the transaction. */
+  chargePendingAmount: Money;
+  /** Total amount charged for this payment. */
+  chargedAmount: Money;
+  /** Date and time at which payment transaction was created. */
+  createdAt: Scalars['DateTime']['output'];
+  /** The payment method used for this transaction. As this field is public, card number digits and expiration date are stripped: `firstDigits`, `lastDigits`, `expMonth` and `expYear` of `CardPaymentMethodDetails` are always `null` here. Read them through `Order.transactions` instead, which requires MANAGE_ORDERS or HANDLE_PAYMENTS. */
+  paymentMethodDetails: Maybe<PaymentMethodDetails>;
+  /** Total amount refunded for this payment. */
+  refundedAmount: Money;
 };
 
 /**
