@@ -115,15 +115,18 @@ export const auth = ({
   apolloClient: ApolloClient<NormalizedCacheObject>;
 }): AuthSDK => {
   /**
-   * Mutations that authenticate the request in Core (`tokenCreate`, `externalObtainAccessTokens`,
-   * `externalRefresh`) return the same `User` fragment as `UserDetails`, but Apollo normalises it
-   * under `User:<id>` without ever recording `ROOT_QUERY.me`. Seeding it here lets the
-   * `UserDetails` query read straight from cache, so logging in costs one request, not two.
+   * `tokenCreate` returns the same `User` fragment as `UserDetails`, but Apollo normalises it under
+   * `User:<id>` without ever recording `ROOT_QUERY.me`. Seeding it here lets the `UserDetails`
+   * query read straight from cache, so logging in costs one request, not two.
    *
-   * `tokenRefresh` and `setPassword` cannot do this: they never set `info.context.user`, so
-   * permission-guarded fields inside the fragment (`accessibleChannels.isActive`) raise
-   * `PermissionDenied` and fail the whole mutation. They ask for `AuthUser` and let `UserDetails`
-   * fetch the rest.
+   * No other auth mutation may request `...User`. `tokenCreate` is the only one that assigns
+   * `info.context.user`; `tokenRefresh`, `setPassword`, `externalObtainAccessTokens` and
+   * `externalRefresh` leave the request unauthenticated as far as field resolution is concerned
+   * (the external pair only write `info.context._cached_user`, which `BaseMutation.mutate` has
+   * already made dead by unwrapping the lazy `context.user` proxy). Permission-guarded fields
+   * inside the fragment — `accessibleChannels { isActive ... }` — then raise `PermissionDenied`
+   * and fail the whole mutation, which the login screen reports as "no permission to log in".
+   * Those four ask for `AuthUser` and let `UserDetails` fetch the rest.
    */
   const seedUserQuery = (cache: ApolloCache<NormalizedCacheObject>, user?: UserFragment | null) => {
     if (user) {
@@ -273,14 +276,13 @@ export const auth = ({
       variables: {
         ...opts,
       },
-      update: (cache, { data }) => {
+      update: (_, { data }) => {
         storage.setAuthPluginId(opts.pluginId ?? null);
 
         if (
           data?.externalObtainAccessTokens?.token &&
           !!data.externalObtainAccessTokens.user?.userPermissions?.length
         ) {
-          seedUserQuery(cache, data.externalObtainAccessTokens.user);
           storage.setTokens({
             accessToken: data.externalObtainAccessTokens.token,
             refreshToken: data.externalObtainAccessTokens.refreshToken,
@@ -317,9 +319,8 @@ export const auth = ({
             refreshToken,
           }),
         },
-        update: (cache, { data }) => {
+        update: (_, { data }) => {
           if (data?.externalRefresh?.token) {
-            seedUserQuery(cache, data.externalRefresh.user);
             storage.setTokens({
               accessToken: data.externalRefresh.token,
               refreshToken: data.externalRefresh.refreshToken,

@@ -33,8 +33,7 @@ const createMockClient = () => ({
   clearStore: jest.fn(),
 });
 
-// `update` callbacks of the authenticated-context mutations seed `ROOT_QUERY.me`;
-// only `writeQuery` is exercised.
+// The `tokenCreate` `update` callback seeds `ROOT_QUERY.me`; only `writeQuery` is exercised.
 const mockCache: any = { writeQuery: jest.fn() };
 
 type MockClient = ReturnType<typeof createMockClient>;
@@ -104,6 +103,9 @@ describe("auth", () => {
         accessToken: "access-token",
         refreshToken: "refresh-token",
       });
+      expect(mockCache.writeQuery).toHaveBeenCalledWith(
+        expect.objectContaining({ data: { __typename: "Query", me: { id: "1", isStaff: true } } }),
+      );
       expect(authStateVar()).toEqual({
         authenticated: true,
         authenticating: false,
@@ -483,6 +485,8 @@ describe("auth", () => {
         accessToken: "ext-access",
         refreshToken: "ext-refresh",
       });
+      // External login only gets `AuthUser`, so `me` stays unseeded and `UserDetails` fetches it.
+      expect(mockCache.writeQuery).not.toHaveBeenCalled();
     });
 
     it("should stop authenticating via update callback when user has no permissions", async () => {
@@ -672,6 +676,7 @@ describe("auth", () => {
         accessToken: "new-access-with-user",
         refreshToken: "new-refresh-with-user",
       });
+      expect(mockCache.writeQuery).not.toHaveBeenCalled();
     });
   });
 });

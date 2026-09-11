@@ -1,5 +1,5 @@
 import { productTypeUrl } from "@dashboard/productTypes/urls";
-import { getMultipleUrlValues, withQuery } from "@dashboard/utils/urls";
+import { getMultipleUrlValues, withAppMountUri, withQuery } from "@dashboard/utils/urls";
 
 describe("withQuery", () => {
   it("omits the query string when there are no params", () => {
@@ -74,5 +74,28 @@ describe("getMultipleUrlValues", () => {
     );
 
     expect(getMultipleUrlValues(url.search, "activeField")).toEqual(["name", "description"]);
+  });
+});
+
+describe("withAppMountUri", () => {
+  afterEach(() => {
+    window.__SALEOR_CONFIG__.APP_MOUNT_URI = "/";
+  });
+
+  it("prepends the mount point to router-relative paths", () => {
+    // Arrange
+    window.__SALEOR_CONFIG__.APP_MOUNT_URI = "/dashboard/";
+
+    // Act / Assert
+    expect(withAppMountUri("/products/id?")).toBe("/dashboard/products/id?");
+    expect(withAppMountUri("products/id")).toBe("/dashboard/products/id");
+  });
+
+  it("leaves the path unchanged when mounted at root", () => {
+    // Arrange
+    window.__SALEOR_CONFIG__.APP_MOUNT_URI = "/";
+
+    // Act / Assert
+    expect(withAppMountUri("/products/id")).toBe("/products/id");
   });
 });

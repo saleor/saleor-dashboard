@@ -8,70 +8,27 @@ import {
   PrettifyIcon,
   QueryEditor,
   ToolbarButton,
-  Tooltip,
-  UnStyledButton,
   useCopyQuery,
   useEditorContext,
-  type UseHeaderEditorArgs,
   usePluginContext,
   usePrettifyEditors,
   type UseQueryEditorArgs,
-  type UseResponseEditorArgs,
-  type UseVariableEditorArgs,
   type WriteableEditorProps,
 } from "@graphiql/react";
 import clsx from "clsx";
-import { type ComponentType, type PropsWithChildren, type ReactNode, useState } from "react";
-import * as React from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 
 import DryRun from "../DryRun/DryRun";
 import { messages } from "./messages";
+import { CodeMirrorFontSizeOverrides, PluginSidebarSection } from "./shared";
 import { useDashboardTheme, useEditorStyles, useGraphiQLThemeSwitcher, useStyles } from "./styles";
-
-interface GraphiQLToolbarConfig {
-  /**
-   * This content will be rendered after the built-in buttons of the toolbar.
-   * Note that this will not apply if you provide a completely custom toolbar
-   * (by passing `GraphiQL.Toolbar` as child to the `GraphiQL` component).
-   */
-  additionalContent?: React.ReactNode;
-}
 
 type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
 
-function GraphiQL({
-  dangerouslyAssumeSchemaIsValid,
-  defaultQuery,
-  defaultTabs,
-  externalFragments,
-  fetcher,
-  getDefaultFieldNames,
-  headers,
-  initialTabs,
-  inputValueDeprecation,
-  introspectionQueryName,
-  maxHistoryLength,
-  onEditOperationName,
-  onSchemaChange,
-  onTabChange,
-  onTogglePluginVisibility,
-  operationName,
-  plugins,
-  query,
-  response,
-  schema,
-  schemaDescription,
-  shouldPersistHeaders,
-  storage,
-  validationRules,
-  variables,
-  visiblePlugin,
-  defaultHeaders,
-  ...props
-}: GraphiQLProps & { data: WebhookFormData }) {
+function GraphiQL(props: GraphiQLProps & { data: WebhookFormData }) {
   // Ensure props are correct
-  if (typeof fetcher !== "function") {
+  if (typeof props.fetcher !== "function") {
     throw new TypeError(
       "The `GraphiQL` component requires a `fetcher` function to be passed as prop.",
     );
@@ -81,35 +38,7 @@ function GraphiQL({
   const [result, setResult] = useState("");
 
   return (
-    <GraphiQLProvider
-      getDefaultFieldNames={getDefaultFieldNames}
-      dangerouslyAssumeSchemaIsValid={dangerouslyAssumeSchemaIsValid}
-      defaultQuery={defaultQuery}
-      defaultHeaders={defaultHeaders}
-      defaultTabs={defaultTabs}
-      externalFragments={externalFragments}
-      fetcher={fetcher}
-      headers={headers}
-      initialTabs={initialTabs}
-      inputValueDeprecation={inputValueDeprecation}
-      introspectionQueryName={introspectionQueryName}
-      maxHistoryLength={maxHistoryLength}
-      onEditOperationName={onEditOperationName}
-      onSchemaChange={onSchemaChange}
-      onTabChange={onTabChange}
-      onTogglePluginVisibility={onTogglePluginVisibility}
-      plugins={plugins}
-      visiblePlugin={visiblePlugin}
-      operationName={operationName}
-      query={query}
-      response={response}
-      schema={schema}
-      schemaDescription={schemaDescription}
-      shouldPersistHeaders={shouldPersistHeaders}
-      storage={storage}
-      validationRules={validationRules}
-      variables={variables}
-    >
+    <GraphiQLProvider {...props}>
       <GraphiQLInterface
         {...props}
         showDialog={showDialog}
@@ -119,15 +48,13 @@ function GraphiQL({
       <DryRun
         showDialog={showDialog}
         setShowDialog={setShowDialog}
-        query={query}
+        query={props.query}
         setResult={setResult}
         syncEvents={props.data.syncEvents}
       />
     </GraphiQLProvider>
   );
 }
-// Export main windows/panes to be used separately if desired.
-GraphiQL.Toolbar = GraphiQLToolbar;
 
 type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
@@ -135,16 +62,9 @@ type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
 
 type GraphiQLInterfaceProps = WriteableEditorProps &
   AddSuffix<Pick<UseQueryEditorArgs, "onEdit">, "Query"> &
-  Pick<UseQueryEditorArgs, "onCopyQuery"> &
-  AddSuffix<Pick<UseVariableEditorArgs, "onEdit">, "Variables"> &
-  AddSuffix<Pick<UseHeaderEditorArgs, "onEdit">, "Headers"> &
-  Pick<UseResponseEditorArgs, "responseTooltip"> & {
-    children?: ReactNode;
-    defaultEditorToolsVisibility?: boolean | "variables" | "headers";
-    isHeadersEditorEnabled?: boolean;
-    toolbar?: GraphiQLToolbarConfig;
+  Pick<UseQueryEditorArgs, "onCopyQuery"> & {
     showDialog?: boolean;
-    setShowDialog?: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowDialog?: Dispatch<SetStateAction<boolean>>;
     result?: string;
   };
 
@@ -161,8 +81,7 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   useGraphiQLThemeSwitcher();
 
   const PluginContent = pluginContext?.visiblePlugin?.content;
-  const children = React.Children.toArray(props.children);
-  const toolbar = children.find(child => isChildComponentType(child, GraphiQL.Toolbar)) || (
+  const toolbar = (
     <>
       <ToolbarButton
         onClick={() => props.setShowDialog(true)}
@@ -177,24 +96,12 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       <ToolbarButton onClick={() => copy()} label="Copy query (Shift-Ctrl-C)">
         <CopyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
-      {props.toolbar?.additionalContent || null}
     </>
   );
   const onClickReference = () => {
     if (pluginResize.hiddenElement === "first") {
       pluginResize.setHiddenElement(null);
     }
-  };
-  const overwriteCodeMirrorCSSVariables = {
-    __html: `
-      .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
-        --font-size-hint: ${rootStyle["--font-size-hint"]} !important;
-        --font-size-inline-code: ${rootStyle["--font-size-inline-code"]} !important;
-        --font-size-body: ${rootStyle["--font-size-body"]} !important;
-        --font-size-h4: ${rootStyle["--font-size-h4"]} !important;
-        --font-size-h3: ${rootStyle["--font-size-h3"]} !important;
-        --font-size-h2: ${rootStyle["--font-size-h2"]} !important;
-    `,
   };
 
   return (
@@ -203,37 +110,9 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       className={clsx("graphiql-container", classes.graphiqlContainer)}
       style={rootStyle}
     >
-      <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
+      <CodeMirrorFontSizeOverrides />
       <div className="graphiql-sidebar">
-        <div className="graphiql-sidebar-section">
-          {pluginContext?.plugins.map(plugin => {
-            const isVisible = plugin === pluginContext.visiblePlugin;
-            const label = `${isVisible ? "Hide" : "Show"} ${plugin.title}`;
-            const Icon = plugin.icon;
-
-            return (
-              <Tooltip key={plugin.title} label={label}>
-                <UnStyledButton
-                  type="button"
-                  className={isVisible ? "active" : ""}
-                  onClick={() => {
-                    if (isVisible) {
-                      pluginContext.setVisiblePlugin(null);
-                      pluginResize.setHiddenElement("first");
-                    } else {
-                      pluginContext.setVisiblePlugin(plugin);
-                      pluginResize.setHiddenElement(null);
-                    }
-                  }}
-                  aria-label={label}
-                >
-                  <Icon aria-hidden="true" />
-                </UnStyledButton>
-              </Tooltip>
-            );
-          })}
-        </div>
-        <div className="graphiql-sidebar-section"></div>
+        <PluginSidebarSection pluginResize={pluginResize} />
       </div>
       <div className={clsx("graphiql-main", classes.main)}>
         <div
@@ -302,20 +181,6 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       </div>
     </div>
   );
-}
-
-function GraphiQLToolbar<TProps>(props: PropsWithChildren<TProps>) {
-  return <>{props.children}</>;
-}
-
-GraphiQLToolbar.displayName = "GraphiQLToolbar";
-
-function isChildComponentType<T extends ComponentType>(child: any, component: T): child is T {
-  if (child?.type?.displayName && child.type.displayName === component.displayName) {
-    return true;
-  }
-
-  return child.type === component;
 }
 
 export default GraphiQL;
