@@ -4,6 +4,8 @@ import { Pill } from "@dashboard/components/Pill/Pill";
 import { type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
+import { rippleOrderDeliveryMethod } from "@dashboard/orders/ripples/orderDeliveryMethod";
+import { getDeliveryMethodInfo } from "@dashboard/orders/utils/deliveryMethod";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -42,6 +44,7 @@ const Title = (props: TitleProps) => {
 
   const { localized, status } = transformOrderStatus(order.status, intl);
   const dateKind = order.status === OrderStatus.UNCONFIRMED ? "created" : "placed";
+  const deliveryMethodInfo = getDeliveryMethodInfo(order.deliveryMethod);
 
   return (
     <div className={classes.container}>
@@ -51,7 +54,36 @@ const Title = (props: TitleProps) => {
           { orderNumber: order?.number },
         )}
         <div className={classes.statusContainer}>
-          <Pill data-test-id="status-info" label={localized} color={status} />
+          <Box display="flex" alignItems="center" gap={1}>
+            <Pill data-test-id="status-info" label={localized} color={status} />
+            {deliveryMethodInfo && (
+              <Box
+                position="relative"
+                display="flex"
+                alignItems="center"
+                __height="30px"
+                paddingRight={5}
+              >
+                <Pill
+                  data-test-id="delivery-method-info"
+                  label={intl.formatMessage(deliveryMethodInfo.labelMessage)}
+                  color={deliveryMethodInfo.color}
+                />
+                <Box
+                  position="absolute"
+                  __top="0"
+                  __right="0"
+                  __width="30px"
+                  __height="30px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Ripple model={rippleOrderDeliveryMethod} />
+                </Box>
+              </Box>
+            )}
+          </Box>
         </div>
       </Box>
 

@@ -51,6 +51,9 @@ export const orderListQuery = gql`
             }
           }
           userEmail
+          deliveryMethod {
+            __typename
+          }
           chargeStatus
         }
       }

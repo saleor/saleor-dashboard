@@ -3302,6 +3302,10 @@
     "context": "dialog header",
     "string": "Delete models"
   },
+  "AgdhYN": {
+    "context": "orders list tag: order is picked up by the customer at a warehouse",
+    "string": "Pickup"
+  },
   "Ai4XSg": {
     "context": "shown when shipping address is required but not set",
     "string": "No shipping address"
@@ -6722,6 +6726,10 @@
   "NNT3Lp": {
     "context": "collections section name",
     "string": "Collections"
+  },
+  "NOlC2k": {
+    "context": "orders list tag: order is shipped to the customer by a shipping method",
+    "string": "Shipping"
   },
   "NOvpOq": {
     "context": "setup task description when category missing",
@@ -15855,6 +15863,10 @@
   },
   "uf1ttM": {
     "string": "Rule reward value is required"
+  },
+  "ufYgcB": {
+    "context": "orders list column: how the order is delivered (shipping or warehouse pickup)",
+    "string": "Delivery"
   },
   "ufahVh": {
     "context": "collection filter hidden",
