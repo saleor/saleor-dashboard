@@ -48,6 +48,7 @@ import OrderDraftPage from "../../../components/OrderDraftPage/OrderDraftPage";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog";
 import { orderDraftListUrl, type OrderUrlDialog, type OrderUrlQueryParams } from "../../../urls";
+import { getUnresolvedFinalizeErrors } from "./getUnresolvedFinalizeErrors";
 
 interface OrderDraftDetailsProps {
   id: string;
@@ -180,7 +181,10 @@ export const OrderDraftDetails = ({
 
     return errors;
   };
-  const errors = orderDraftFinalize.opts.data?.draftOrderComplete.errors || [];
+  const errors = getUnresolvedFinalizeErrors(
+    orderDraftFinalize.opts.data?.draftOrderComplete.errors || [],
+    order,
+  );
 
   return (
     <>
