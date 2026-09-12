@@ -65,6 +65,24 @@ export const useEditorStyles = () => {
   };
 };
 
+/**
+ * GraphiQL is sized and coloured through CSS custom properties. React's
+ * `CSSProperties` does not know about custom properties, so intersect it to
+ * keep both the `style={...}` assignability and the indexed reads.
+ */
+type DashboardThemeStyle = React.CSSProperties &
+  Record<
+    | "--font-size-body"
+    | "--font-size-h2"
+    | "--font-size-h3"
+    | "--font-size-h4"
+    | "--font-weight-regular"
+    | "--font-size-hint"
+    | "--font-size-inline-code"
+    | "--color-base",
+    string
+  >;
+
 export const useDashboardTheme = () => {
   const {
     themeValues: {
@@ -72,7 +90,7 @@ export const useDashboardTheme = () => {
     },
   } = useTheme();
   const match = background.default1.match(/hsla\(([^)]+)\)/);
-  const rootStyle = {
+  const rootStyle: DashboardThemeStyle = {
     "--font-size-body": vars.fontSize[4],
     "--font-size-h2": vars.fontSize[6],
     "--font-size-h3": vars.fontSize[5],
@@ -81,7 +99,7 @@ export const useDashboardTheme = () => {
     "--font-size-hint": vars.fontSize[5],
     "--font-size-inline-code": vars.fontSize[3],
     "--color-base": match ? match[1] : background.default1,
-  } as React.CSSProperties;
+  };
 
   return { rootStyle };
 };

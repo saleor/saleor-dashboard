@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.23.33
+
+### Patch Changes
+
+- [#6891](https://github.com/saleor/saleor-dashboard/pull/6891) [`74c10cc`](https://github.com/saleor/saleor-dashboard/commit/74c10cc748e693a1c9cf9f60716a7425b203d636) Thanks [@offx366](https://github.com/offx366)! - Prevent touch scrolling over datagrid rows from opening the row under the finger.
+
+- [#6913](https://github.com/saleor/saleor-dashboard/pull/6913) [`3ac2924`](https://github.com/saleor/saleor-dashboard/commit/3ac2924c55015c4182839f49d528e506bd9f5825) Thanks [@vojtesa](https://github.com/vojtesa)! - Improved the Czech translation of the Dashboard: coverage of `locale/cs.json` grows from ~45 % to **100 %** of all translatable messages. Adds more than 2 600 new Czech translations and refines around 900 existing ones — fixing leftover English fragments, inconsistent terminology (e.g. "Stav vyřízení" → "Stav objednávky", "dopravní oblast" → "doručovací zóna") and noun declension issues.
+
+- [#6922](https://github.com/saleor/saleor-dashboard/pull/6922) [`7e93191`](https://github.com/saleor/saleor-dashboard/commit/7e9319173cc7d0a1490e5327954bd82257416c8c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Buttons and accordions across the dashboard now use the current design system instead of the legacy one. The change is visual only — some buttons are slightly smaller with rounder corners, and their labels are a touch bolder. Affected surfaces: the 404 page, translation field rows, list toolbars (Remove/Unassign), and the product export dialog.
+
+- [#6865](https://github.com/saleor/saleor-dashboard/pull/6865) [`232aa70`](https://github.com/saleor/saleor-dashboard/commit/232aa708920f7b7af685c8a1dce4dd0b0f163f98) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Model types can now carry an icon and a colour, so they are recognisable at a glance instead of being told apart by name alone.
+
+  Pick one from the icon control next to the name on a model type's edit page: search the full Lucide set, choose one of six colours, and save with the rest of the form. "Reset" clears it again.
+
+  The icon then follows the model type everywhere it appears — sidebar pins and the pin manager, the model list tabs and its "Type" column, the model type list, the type picker and pin dialogs, and the chips of model references on other entities. Model types without an icon render a neutral fallback, so nothing shifts when one is configured.
+
+  Storage is public metadata on `PageType`, under `dashboard-icon-name` and `dashboard-icon-color`.
+
+- [#6917](https://github.com/saleor/saleor-dashboard/pull/6917) [`23ae7aa`](https://github.com/saleor/saleor-dashboard/commit/23ae7aa212ee02e5744003f28cc066534c046528) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Now the installed extensions list makes freshly added extensions easier to spot. After an extension finishes installing, its row gets a one-off accent highlight that sweeps in from the left — so you can find it even when alphabetical sorting drops it in the middle of the table. Extensions installed in the last 48 hours also get a "New" badge next to their name.
+
+- [#6930](https://github.com/saleor/saleor-dashboard/pull/6930) [`7480dbe`](https://github.com/saleor/saleor-dashboard/commit/7480dbefe9c8c90c3c0f648bdc644172903a149f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Now "Open product details" in order lines opens a working link when the Dashboard is mounted under a sub-path (e.g. `/dashboard/`). Previously the new tab dropped the mount point and landed on a 404. The same fix applies to the channel catalog "view products" links.
+
+- [#6914](https://github.com/saleor/saleor-dashboard/pull/6914) [`aa79e5b`](https://github.com/saleor/saleor-dashboard/commit/aa79e5be2280348308f857ede62d8369674255cc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Now the Dashboard fetches the signed-in user once when you log in, instead of twice. Previously `tokenCreate` returned the user and then a separate `UserDetails` request fetched the same user again before the app could render. The login mutations now return the full user and seed the Apollo cache, removing one round trip from the login path.
+
 ## 3.23.32
 
 ### Patch Changes
