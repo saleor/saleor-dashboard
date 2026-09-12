@@ -65,6 +65,7 @@ describe("OrderDraftAlert", () => {
           {...alertProps}
           order={{
             ...order("--url--"),
+            isShippingRequired: true,
             shippingMethods: [],
           }}
           data-test-id="draft-alert"
@@ -74,5 +75,43 @@ describe("OrderDraftAlert", () => {
 
     expect(screen.getByText(/Wyspy Salomona/)).toBeInTheDocument();
     expect(screen.getByText(/{configLink}/)).toBeInTheDocument();
+  });
+
+  it("doesn't render no shipping methods alert when the order doesn't require shipping", () => {
+    render(
+      <Wrapper>
+        <OrderDraftAlert
+          {...alertProps}
+          order={{
+            ...order("--url--"),
+            isShippingRequired: false,
+            shippingMethods: [],
+          }}
+          data-test-id="draft-alert"
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.queryByTestId("draft-alert")).toBeNull();
+  });
+
+  it("still reports the other blockers when the order doesn't require shipping", () => {
+    render(
+      <Wrapper>
+        <OrderDraftAlert
+          {...alertProps}
+          order={{
+            ...order("--url--"),
+            isShippingRequired: false,
+            shippingMethods: [],
+            channel: { ...channelsList[0], isActive: false },
+          }}
+          data-test-id="draft-alert"
+        />
+      </Wrapper>,
+    );
+
+    expect(screen.getByText("Orders cannot be placed in an inactive channel.")).toBeInTheDocument();
+    expect(screen.queryByText(/Wyspy Salomona/)).toBeNull();
   });
 });
