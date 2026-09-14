@@ -1,7 +1,8 @@
+import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { defineMessage } from "react-intl";
-import { fn } from "storybook/test";
+import { expect, fn, userEvent, within } from "storybook/test";
 
 import { Ripple } from "./Ripple";
 
@@ -31,6 +32,22 @@ const meta: Meta<typeof Ripple> = {
 export default meta;
 
 type Story = StoryObj<typeof Ripple>;
+
+export const CustomerTypes: Story = {
+  args: { model: rippleCustomerTypes },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    // Arrange
+    const canvas = within(canvasElement);
+    const page = within(canvasElement.ownerDocument.body);
+
+    // Act
+    await userEvent.click(canvas.getByRole("button", { name: "Learn about Customer types" }));
+
+    // Assert
+    await expect(page.getByRole("button", { name: "Set up types" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Dismiss" })).toBeVisible();
+  },
+};
 
 export const Default: Story = {
   args: {

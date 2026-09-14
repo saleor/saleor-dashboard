@@ -1166,6 +1166,9 @@
     "context": "fulfill a single order line from row menu",
     "string": "Fulfill this line"
   },
+  "2cxQy7": {
+    "string": "Group customers into types like B2B or Wholesale, each with its own attributes."
+  },
   "2dgbGR": {
     "string": "Those codes already exist"
   },
@@ -3041,6 +3044,9 @@
   "9exKzi": {
     "context": "Close the list filter panel without clearing applied filters",
     "string": "Close"
+  },
+  "9flAMP": {
+    "string": "Learn about {feature}"
   },
   "9gb9b4": {
     "context": "address type",
@@ -8239,6 +8245,9 @@
     "context": "header",
     "string": "Structure Items"
   },
+  "TDaF6J": {
+    "string": "Dismiss"
+  },
   "TDhHMi": {
     "string": "This needs to be unique"
   },
@@ -12838,9 +12847,6 @@
   "kAAlGL": {
     "string": "Rules"
   },
-  "kAEQyV": {
-    "string": "OK"
-  },
   "kAPaN6": {
     "context": "empty metadata text",
     "string": "Empty"
@@ -15532,6 +15538,9 @@
   "tf+OkY": {
     "context": "link to edit variant metadata",
     "string": "Edit on variant page"
+  },
+  "tfplrt": {
+    "string": "Set up types"
   },
   "th06kZ": {
     "context": "dialog body asking to confirm product removal from draft order",

@@ -1,90 +1,95 @@
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { RippleAnimation } from "@dashboard/ripples/components/RippleAnimation";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Popover, Text } from "@saleor/macaw-ui-next";
+import { ArrowRight } from "lucide-react";
+import { useId } from "react";
 import { useIntl } from "react-intl";
 
-export const Ripple = (props: { model: RippleModel }) => {
-  const content = props.model.content.contextual;
-  const isPlainString = typeof content === "string";
+import styles from "./Ripple.module.css";
+
+export const Ripple = ({ model }: { model: RippleModel }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+  const titleId = useId();
+  const contextualAction = model.contextualAction;
   const { setFirstSeenFlag, getShouldShow, setManuallyHidden } = useRippleStorage();
 
-  if (!getShouldShow(props.model)) {
+  if (!getShouldShow(model)) {
     return null;
   }
 
   return (
-    <Tooltip
-      onOpenChange={() => {
-        setFirstSeenFlag(props.model);
+    <Popover
+      onOpenChange={open => {
+        if (open) setFirstSeenFlag(model);
       }}
     >
-      <Tooltip.Trigger>
-        <Box>
-          <RippleAnimation cursor="pointer" />
-        </Box>
-      </Tooltip.Trigger>
-      <Tooltip.Content align="start" side="bottom">
-        <Tooltip.Arrow />
-        <Box __maxWidth="320px">
-          <Tooltip.ContentHeading>Hint</Tooltip.ContentHeading>
-          <Box marginBottom={4}>{isPlainString ? <Text>{content}</Text> : content}</Box>
-          <Box display="flex" justifyContent="flex-end" gap={2}>
-            {props.model.actions?.map((rippleAction, index) => {
-              if (rippleAction.href) {
-                return (
-                  <Button
-                    key={index}
-                    size="small"
-                    variant="tertiary"
-                    onClick={e => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setManuallyHidden(props.model);
-                      window.open(rippleAction.href, "_blank", "noopener,noreferrer");
-                    }}
-                  >
-                    {intl.formatMessage(rippleAction.label)}
-                  </Button>
-                );
-              }
-
-              return (
-                <Button
-                  size="small"
-                  key={index}
-                  variant="tertiary"
-                  onClick={e => {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    setManuallyHidden(props.model);
-
-                    rippleAction.onClick?.();
-                  }}
-                >
-                  {intl.formatMessage(rippleAction.label)}
-                </Button>
-              );
-            })}
-            <Button
-              size="small"
-              onClick={e => {
-                e.stopPropagation();
-                e.preventDefault();
-
-                setManuallyHidden(props.model);
-              }}
-            >
-              {intl.formatMessage({
-                defaultMessage: "OK",
-                id: "kAEQyV",
-              })}
-            </Button>
+      <Popover.Trigger>
+        <button
+          type="button"
+          className={styles.trigger}
+          aria-label={intl.formatMessage(
+            { defaultMessage: "Learn about {feature}", id: "9flAMP" },
+            { feature: model.content.oneLiner },
+          )}
+          onClick={event => event.stopPropagation()}
+        >
+          <RippleAnimation />
+        </button>
+      </Popover.Trigger>
+      <Popover.Content
+        align="start"
+        side="bottom"
+        sideOffset={8}
+        className={styles.content}
+        aria-labelledby={titleId}
+      >
+        <Box onClick={event => event.stopPropagation()}>
+          <Text id={titleId} size={3} fontWeight="bold">
+            {model.content.oneLiner}
+          </Text>
+          <Box className={styles.description}>
+            <Text size={2} color="default2">
+              {model.content.contextual}
+            </Text>
           </Box>
+          <div className={styles.actions}>
+            <Button size="small" variant="tertiary" onClick={() => setManuallyHidden(model)}>
+              {intl.formatMessage({ defaultMessage: "Dismiss", id: "TDaF6J" })}
+            </Button>
+            {contextualAction && (
+              <Button
+                size="small"
+                variant="secondary"
+                onClick={() => {
+                  navigate(contextualAction.url);
+                  setManuallyHidden(model);
+                }}
+              >
+                {intl.formatMessage(contextualAction.label)}
+                <ArrowRight size={14} />
+              </Button>
+            )}
+            {model.actions?.map((action, index) => (
+              <Button
+                key={index}
+                size="small"
+                variant="secondary"
+                onClick={() => {
+                  setManuallyHidden(model);
+
+                  if (action.href) window.open(action.href, "_blank", "noopener,noreferrer");
+                  else action.onClick?.();
+                }}
+              >
+                {intl.formatMessage(action.label)}
+              </Button>
+            ))}
+          </div>
         </Box>
-      </Tooltip.Content>
-    </Tooltip>
+      </Popover.Content>
+    </Popover>
   );
 };
