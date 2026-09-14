@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth/useUser";
+import { APP_VERSION } from "@dashboard/config";
 import { type ShopInfoQuery, useShopInfoQuery } from "@dashboard/graphql";
 import { createContext, type ReactNode, useEffect } from "react";
 
@@ -21,10 +22,16 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
     if (data && user) {
       const { shop } = data;
 
-      analytics.initialize({
-        domain: shop.domain.host,
-        email_domain: extractEmailDomain(user.email),
-      });
+      analytics.initialize(
+        {
+          domain: shop.domain.host,
+          email_domain: extractEmailDomain(user.email),
+        },
+        {
+          dashboard_version: APP_VERSION,
+          saleor_version: shop.version,
+        },
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, user]);

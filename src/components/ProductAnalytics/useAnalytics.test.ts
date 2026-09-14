@@ -3,20 +3,31 @@ import { renderHook } from "@testing-library/react";
 import { useAnalytics } from "./useAnalytics";
 
 const mockCapture = jest.fn();
+const mockRegister = jest.fn();
+const mockIdentify = jest.fn();
+const mockRegisterRoute = jest.fn();
+const mockPostHog = {
+  capture: mockCapture,
+  get_distinct_id: () => "anonymous-id",
+  identify: mockIdentify,
+  register: mockRegister,
+};
 
 jest.mock("posthog-js/react", () => ({
-  usePostHog: () => ({
-    capture: mockCapture,
-  }),
+  usePostHog: () => mockPostHog,
 }));
 
 jest.mock("../Router/useRouteChange", () => ({
   useRouteChange: () => ({
-    register: jest.fn(),
+    register: mockRegisterRoute,
   }),
 }));
 
 describe("useAnalytics", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("keeps the event tracker stable between renders", () => {
     // Arrange
     const { result, rerender } = renderHook(() => useAnalytics());
@@ -27,5 +38,26 @@ describe("useAnalytics", () => {
 
     // Assert
     expect(result.current.trackEvent).toBe(initialTrackEvent);
+  });
+
+  it("registers version context without changing the anonymous identity policy", () => {
+    // Arrange
+    const { result } = renderHook(() => useAnalytics());
+    const context = {
+      dashboard_version: "v3.23.33",
+      saleor_version: "3.23.0",
+    };
+    const userProperties = {
+      domain: "example.saleor.cloud",
+      email_domain: "example.com",
+    };
+
+    // Act
+    result.current.initialize(userProperties, context);
+
+    // Assert
+    expect(mockRegisterRoute).toHaveBeenCalledTimes(1);
+    expect(mockRegister).toHaveBeenCalledWith(context);
+    expect(mockIdentify).toHaveBeenCalledWith("anonymous-id", userProperties);
   });
 });

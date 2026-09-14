@@ -9,8 +9,13 @@ interface UserProperties {
   email_domain: string;
 }
 
+interface AnalyticsContext {
+  dashboard_version: string;
+  saleor_version: string;
+}
+
 interface Analytics {
-  initialize: (userProperties: UserProperties) => void;
+  initialize: (userProperties: UserProperties, context: AnalyticsContext) => void;
   trackEvent: (event: string, properties?: Record<string, any>) => void;
 }
 
@@ -32,10 +37,11 @@ export function useAnalytics(): Analytics {
     });
   });
 
-  function initialize(userProperties: UserProperties) {
+  function initialize(userProperties: UserProperties, context: AnalyticsContext) {
     if (!posthog) return;
 
     register();
+    posthog.register(context);
 
     const id = posthog.get_distinct_id();
 
