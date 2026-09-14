@@ -2,6 +2,7 @@ import { usePostHog } from "posthog-js/react";
 import { useCallback } from "react";
 
 import { useRouteChange } from "../Router/useRouteChange";
+import { sanitizeAnalyticsPath } from "./sanitizeAnalyticsUrl";
 
 interface UserProperties {
   domain: string;
@@ -27,7 +28,7 @@ export function useAnalytics(): Analytics {
 
   const { register } = useRouteChange(location => {
     trackEvent("$pageview", {
-      normalized_path: location.pathname,
+      normalized_path: sanitizeAnalyticsPath(location.pathname),
     });
   });
 

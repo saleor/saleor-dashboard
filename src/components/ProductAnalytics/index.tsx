@@ -2,6 +2,18 @@ import { type PostHogConfig } from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import type * as React from "react";
 
+import { sanitizeAnalyticsUrl } from "./sanitizeAnalyticsUrl";
+
+const urlPropertyNames = [
+  "$current_url",
+  "$pathname",
+  "$referrer",
+  "$session_entry_url",
+  "$session_entry_pathname",
+  "$session_referrer",
+  "$session_pathname",
+] as const;
+
 const isDomainExcluded = () => {
   const domainsString = process.env.POSTHOG_EXCLUDED_DOMAINS;
 
@@ -29,6 +41,19 @@ const useConfig = (): UseConfig => {
     autocapture: false,
     advanced_disable_decide: true,
     cookie_expiration: 30, // 30 days,
+    before_send: event => {
+      if (!event) return null;
+
+      for (const propertyName of urlPropertyNames) {
+        const value = event.properties[propertyName];
+
+        if (typeof value === "string") {
+          event.properties[propertyName] = sanitizeAnalyticsUrl(value);
+        }
+      }
+
+      return event;
+    },
     loaded: posthog => {
       if (process.env.NODE_ENV === "development") posthog.debug();
     },
