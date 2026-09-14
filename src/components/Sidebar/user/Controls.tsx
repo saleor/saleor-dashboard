@@ -1,7 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { navigationLucideIconProps } from "@dashboard/components/icons";
 import { isProductAnalyticsEnabled } from "@dashboard/components/ProductAnalytics/config";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme/hook";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
@@ -11,7 +10,6 @@ import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { rippleGlobalFeedback } from "../ripples/globalFeedback";
 import { FeatureFlagsModal } from "./FeatureFlagsModal";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
@@ -50,35 +48,30 @@ const FeedbackButton = () => {
   }
 
   return (
-    <Box position="relative" display="inline-flex">
-      <Tooltip>
-        <Tooltip.Trigger>
-          <Button
-            variant="tertiary"
-            icon={<MessageSquareText {...navigationLucideIconProps} />}
-            aria-label={intl.formatMessage({
-              id: "41DrcD",
-              defaultMessage: "Send feedback",
-              description: "global Dashboard feedback button label",
-            })}
-            data-test-id="feedback-button"
-            data-posthog-feedback-trigger="true"
-            size="medium"
-          />
-        </Tooltip.Trigger>
-        <Tooltip.Content side="top">
-          <Tooltip.Arrow />
-          <FormattedMessage
-            id="41DrcD"
-            defaultMessage="Send feedback"
-            description="global Dashboard feedback button label"
-          />
-        </Tooltip.Content>
-      </Tooltip>
-      <Box position="absolute" __top="-4px" __right="-4px" __zIndex="1">
-        <Ripple model={rippleGlobalFeedback} />
-      </Box>
-    </Box>
+    <Tooltip>
+      <Tooltip.Trigger>
+        <Button
+          variant="tertiary"
+          icon={<MessageSquareText {...navigationLucideIconProps} />}
+          aria-label={intl.formatMessage({
+            id: "41DrcD",
+            defaultMessage: "Send feedback",
+            description: "global Dashboard feedback button label",
+          })}
+          data-test-id="feedback-button"
+          data-posthog-feedback-trigger="true"
+          size="medium"
+        />
+      </Tooltip.Trigger>
+      <Tooltip.Content side="top">
+        <Tooltip.Arrow />
+        <FormattedMessage
+          id="41DrcD"
+          defaultMessage="Send feedback"
+          description="global Dashboard feedback button label"
+        />
+      </Tooltip.Content>
+    </Tooltip>
   );
 };
 
