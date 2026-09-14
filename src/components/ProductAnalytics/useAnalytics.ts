@@ -1,4 +1,5 @@
 import { usePostHog } from "posthog-js/react";
+import { useCallback } from "react";
 
 import { useRouteChange } from "../Router/useRouteChange";
 
@@ -15,6 +16,15 @@ interface Analytics {
 export function useAnalytics(): Analytics {
   const posthog = usePostHog();
 
+  const trackEvent = useCallback(
+    (event: string, properties?: Record<string, any>) => {
+      if (!posthog) return;
+
+      posthog.capture(event, properties);
+    },
+    [posthog],
+  );
+
   const { register } = useRouteChange(location => {
     trackEvent("$pageview", {
       normalized_path: location.pathname,
@@ -29,12 +39,6 @@ export function useAnalytics(): Analytics {
     const id = posthog.get_distinct_id();
 
     posthog.identify(id, userProperties);
-  }
-
-  function trackEvent(event: string, properties?: Record<string, any>) {
-    if (!posthog) return;
-
-    posthog.capture(event, properties);
   }
 
   return { trackEvent, initialize };
