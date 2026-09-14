@@ -8,10 +8,12 @@ export const rippleCustomerTypes: Ripple = {
   ID: "customer-types",
   TTL_seconds: 60 * 60 * 24 * 14,
   dateAdded: new Date(2026, 7, 20),
-  contextualAction: {
-    label: defineMessage({ defaultMessage: "Set up types", id: "tfplrt" }),
-    url: customerTypeListUrl(),
-  },
+  actions: [
+    {
+      label: defineMessage({ defaultMessage: "Set up types", id: "tfplrt" }),
+      href: customerTypeListUrl(),
+    },
+  ],
   content: {
     oneLiner: "Customer types",
     contextual: (

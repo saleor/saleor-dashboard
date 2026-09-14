@@ -1,9 +1,7 @@
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { RippleAnimation } from "@dashboard/ripples/components/RippleAnimation";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
 import { Box, Button, Popover, Text } from "@saleor/macaw-ui-next";
-import { ArrowRight } from "lucide-react";
 import { useId } from "react";
 import { useIntl } from "react-intl";
 
@@ -11,9 +9,7 @@ import styles from "./Ripple.module.css";
 
 export const Ripple = ({ model }: { model: RippleModel }) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const titleId = useId();
-  const contextualAction = model.contextualAction;
   const { setFirstSeenFlag, getShouldShow, setManuallyHidden } = useRippleStorage();
 
   if (!getShouldShow(model)) {
@@ -59,19 +55,6 @@ export const Ripple = ({ model }: { model: RippleModel }) => {
             <Button size="small" variant="tertiary" onClick={() => setManuallyHidden(model)}>
               {intl.formatMessage({ defaultMessage: "Dismiss", id: "TDaF6J" })}
             </Button>
-            {contextualAction && (
-              <Button
-                size="small"
-                variant="secondary"
-                onClick={() => {
-                  navigate(contextualAction.url);
-                  setManuallyHidden(model);
-                }}
-              >
-                {intl.formatMessage(contextualAction.label)}
-                <ArrowRight size={14} />
-              </Button>
-            )}
             {model.actions?.map((action, index) => (
               <Button
                 key={index}

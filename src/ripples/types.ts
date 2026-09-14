@@ -67,11 +67,6 @@ export type Ripple = {
   TTL_seconds: number;
   // A unique ID to reference Ripple when checking it's state in the storage
   ID: string;
-  /** Optional in-app destination offered by the contextual hint. */
-  contextualAction?: {
-    label: MessageDescriptor;
-    url: string;
-  };
   /**
    * Extra buttons rendered apart from the default dismiss button.
    * Each action must have either onClick (for in-app actions) or href (for external links).
