@@ -2,6 +2,7 @@ import { useUser } from "@dashboard/auth/useUser";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
 import { navigationLucideIconProps } from "@dashboard/components/icons";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
@@ -59,6 +60,7 @@ import { useCustomerTypeMenuItems } from "./useCustomerTypeMenuItems";
 
 export function useMenuStructure() {
   const { handleAppsListItemClick, hasProblems } = useAppsAlert();
+  const { trackEvent } = useAnalytics();
 
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
@@ -70,7 +72,23 @@ export function useMenuStructure() {
     homeExtensions,
     user?.userPermissions ?? [],
     getState,
-  );
+  ).map(item => ({
+    ...item,
+    onClick: () => {
+      const extension = homeExtensions.find(candidate => `home-widget-${candidate.id}` === item.id);
+
+      trackEvent("home_widget_opened", {
+        extension_origin:
+          extension === undefined
+            ? undefined
+            : extension.isSaleorOfficial
+              ? "saleor"
+              : "third_party",
+        source: "sidebar",
+        widget_kind: "fullscreen",
+      });
+    },
+  }));
   const customerTypeMenuItems = useCustomerTypeMenuItems();
 
   const appExtensionsHeaderItem: SidebarMenuItem = {

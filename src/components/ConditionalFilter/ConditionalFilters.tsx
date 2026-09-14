@@ -1,6 +1,8 @@
 import { Box } from "@saleor/macaw-ui-next";
 import { type FC, useEffect, useRef, useState } from "react";
 
+import { useAnalytics } from "../ProductAnalytics/useAnalytics";
+import { getAnalyticsFilterKeys } from "./analytics";
 import { useConditionalFilterContext } from "./context/consumer";
 import { type FilterContainer } from "./FilterElement/FilterElement";
 import { FiltersArea } from "./FiltersArea";
@@ -17,7 +19,8 @@ export const ConditionalFilters: FC<ConditionalFiltersProps> = ({
   onClose,
   layout = "popover",
 }) => {
-  const { valueProvider, containerState } = useConditionalFilterContext();
+  const { valueProvider, containerState, queryApiType } = useConditionalFilterContext();
+  const { trackEvent } = useAnalytics();
   const [errors, setErrors] = useState<ErrorEntry[]>([]);
   const hasLoadedOnceRef = useRef(false);
 
@@ -38,12 +41,21 @@ export const ConditionalFilters: FC<ConditionalFiltersProps> = ({
     }
 
     valueProvider.persist(value);
+
+    const filterKeys = getAnalyticsFilterKeys(value);
+
+    trackEvent("list_filter_applied", {
+      filter_count: filterKeys.length,
+      filter_keys: filterKeys,
+      query_api_type: queryApiType,
+    });
     onClose();
 
     return true;
   };
   const handleClear = () => {
     valueProvider.clear();
+    trackEvent("list_filter_cleared", { query_api_type: queryApiType });
     containerState.resetToProvider();
     onClose();
   };

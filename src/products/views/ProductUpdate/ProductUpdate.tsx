@@ -5,6 +5,7 @@ import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttrib
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
@@ -69,6 +70,7 @@ interface ProductUpdateProps {
 }
 
 const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
+  const { trackEvent } = useAnalytics();
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -464,6 +466,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onShowSetupChecklist={
           product
             ? () => {
+                trackEvent("setup_checklist_reopened", { entity_type: "product" });
                 undismissSetupCard();
                 openModal("setup");
               }

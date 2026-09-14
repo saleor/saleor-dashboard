@@ -3,6 +3,7 @@ import { act, renderHook } from "@testing-library/react";
 import { useExtensionPreferences } from "./useExtensionPreferences";
 
 const mockMutate = jest.fn().mockResolvedValue({ data: {} });
+const mockTrackEvent = jest.fn();
 let mockUser: { id: string; metadata: Array<{ key: string; value: string }> } | null = null;
 
 jest.mock("@dashboard/auth/useUser", () => ({
@@ -13,11 +14,16 @@ jest.mock("@dashboard/graphql", () => ({
   useUpdateExtensionPreferencesMutation: () => [mockMutate, { loading: false }],
 }));
 
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
+
 const extension = { id: "ext", identifier: "e", app: { id: "app", identifier: "a" } };
 
 describe("useExtensionPreferences", () => {
   beforeEach(() => {
     mockMutate.mockClear();
+    mockTrackEvent.mockClear();
     mockUser = {
       id: "user-1",
       metadata: [
@@ -45,12 +51,15 @@ describe("useExtensionPreferences", () => {
     expect(result.current.getState(extension)).toBe("default");
   });
 
-  it("writes the updated blob via accountUpdate on setState", () => {
+  it("writes the updated blob via accountUpdate on setState", async () => {
     // Act
     const { result } = renderHook(() => useExtensionPreferences());
 
     act(() => {
       result.current.setState(extension, "hidden");
+    });
+    await act(async () => {
+      await Promise.resolve();
     });
 
     // Assert
@@ -68,6 +77,13 @@ describe("useExtensionPreferences", () => {
         },
       }),
     );
+    expect(mockTrackEvent).toHaveBeenCalledWith("extension_preference_changed", {
+      action: "hide",
+      extension_origin: "unknown",
+      mount: "unknown",
+      result: "success",
+      surface: "entity_page",
+    });
   });
 
   it("stacks a second setState on the first optimistic map", async () => {

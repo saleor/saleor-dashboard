@@ -7,8 +7,12 @@ import { render, screen } from "@testing-library/react";
 import { ChannelSetupCard } from "./ChannelSetupCard";
 
 const navigate = jest.fn();
+const mockTrackEvent = jest.fn();
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => navigate);
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
 
 const baseProps = {
   taxConfigurationId: "taxConf1",
@@ -31,6 +35,7 @@ const baseProps = {
 describe("ChannelSetupCard", () => {
   beforeEach(() => {
     navigate.mockClear();
+    mockTrackEvent.mockClear();
   });
 
   it("shows create warehouse when the shop has no warehouses", () => {
@@ -41,6 +46,23 @@ describe("ChannelSetupCard", () => {
     expect(screen.getByTestId("setup-create-warehouse")).toBeInTheDocument();
     expect(screen.queryByTestId("setup-assign-warehouse")).not.toBeInTheDocument();
     expect(screen.getByTestId("setup-checklist-progress")).toHaveTextContent("0 of 2");
+  });
+
+  it("tracks checklist actions without channel identifiers", () => {
+    // Arrange
+    render(<ChannelSetupCard {...baseProps} />, { wrapper: Wrapper });
+
+    // Act
+    screen.getByTestId("setup-create-warehouse").click();
+
+    // Assert
+    expect(mockTrackEvent).toHaveBeenCalledWith("setup_checklist_step_clicked", {
+      completed_steps: 0,
+      core_ready: false,
+      entity_type: "channel",
+      step_id: "create_warehouse",
+      total_steps: 2,
+    });
   });
 
   it("shows assign warehouse when unassigned warehouses exist", () => {

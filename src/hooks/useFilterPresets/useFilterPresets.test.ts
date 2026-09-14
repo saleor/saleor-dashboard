@@ -3,8 +3,12 @@ import { act, renderHook } from "@testing-library/react";
 import { useFilterPresets } from "./useFilterPresets";
 
 const mockNavigate = jest.fn();
+const mockTrackEvent = jest.fn();
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
 
 const baseUrl = "http://localhost";
 
@@ -95,6 +99,10 @@ describe("useFilterPresets", () => {
     });
     // Assert
     expect(mockNavigate).toHaveBeenCalledWith(`${baseUrl}?${savedPreset.data}&activeTab=1`);
+    expect(mockTrackEvent).toHaveBeenCalledWith("list_filter_preset_changed", {
+      action: "selected",
+      preset_kind: "custom",
+    });
   });
   it("should handle preset delete and navigate to base url when active preset is equal deleting preset", () => {
     // Arrange
