@@ -112,9 +112,9 @@ export const ProductDetailsForm = ({
           </Box>
           <Text size={2} color="warning1">
             {intl.formatMessage({
-              id: "mTr+ZM",
+              id: "3qIIGa",
               defaultMessage:
-                'Product rating will be removed from the API. Create a numeric "rating" attribute instead.',
+                'Product rating will be removed in the next minor version. Create a numeric "rating" attribute instead.',
               description: "hint explaining why a field is deprecated",
             })}
           </Text>

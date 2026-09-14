@@ -1486,6 +1486,10 @@
     "context": "attribute values list: slug column header",
     "string": "Admin"
   },
+  "3qIIGa": {
+    "context": "hint explaining why a field is deprecated",
+    "string": "Product rating will be removed in the next minor version. Create a numeric \"rating\" attribute instead."
+  },
   "3qaTMO": {
     "context": "assign shipping zone dialog title",
     "string": "Assign shipping zones"
@@ -13514,10 +13518,6 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
-  },
-  "mTr+ZM": {
-    "context": "hint explaining why a field is deprecated",
-    "string": "Product rating will be removed from the API. Create a numeric \"rating\" attribute instead."
   },
   "mVcZkr": {
     "context": "seo slug field hint",
