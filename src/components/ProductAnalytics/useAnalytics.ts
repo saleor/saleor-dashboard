@@ -32,16 +32,20 @@ export function useAnalytics(): Analytics {
   );
 
   const { register } = useRouteChange(location => {
+    const normalizedPath = sanitizeAnalyticsPath(location.pathname);
+    const dashboardArea = normalizedPath.split("/").find(Boolean) ?? "home";
+
+    posthog.register({ dashboard_area: dashboardArea });
     trackEvent("$pageview", {
-      normalized_path: sanitizeAnalyticsPath(location.pathname),
+      normalized_path: normalizedPath,
     });
   });
 
   function initialize(userProperties: UserProperties, context: AnalyticsContext) {
     if (!posthog) return;
 
-    register();
     posthog.register(context);
+    register();
 
     const id = posthog.get_distinct_id();
 

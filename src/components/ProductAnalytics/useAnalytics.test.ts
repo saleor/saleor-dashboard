@@ -6,6 +6,7 @@ const mockCapture = jest.fn();
 const mockRegister = jest.fn();
 const mockIdentify = jest.fn();
 const mockRegisterRoute = jest.fn();
+let mockRouteChangeCallback: ((location: { pathname: string }) => void) | undefined;
 const mockPostHog = {
   capture: mockCapture,
   get_distinct_id: () => "anonymous-id",
@@ -18,14 +19,19 @@ jest.mock("posthog-js/react", () => ({
 }));
 
 jest.mock("../Router/useRouteChange", () => ({
-  useRouteChange: () => ({
-    register: mockRegisterRoute,
-  }),
+  useRouteChange: (onChange: (location: { pathname: string }) => void) => {
+    mockRouteChangeCallback = onChange;
+
+    return {
+      register: mockRegisterRoute,
+    };
+  },
 }));
 
 describe("useAnalytics", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockRouteChangeCallback = undefined;
   });
 
   it("keeps the event tracker stable between renders", () => {
@@ -59,5 +65,23 @@ describe("useAnalytics", () => {
     expect(mockRegisterRoute).toHaveBeenCalledTimes(1);
     expect(mockRegister).toHaveBeenCalledWith(context);
     expect(mockIdentify).toHaveBeenCalledWith("anonymous-id", userProperties);
+  });
+
+  it.each([
+    ["/orders/T3JkZXI6MTIz", "orders", "/orders/:id"],
+    ["/configuration/taxes", "configuration", "/configuration/taxes"],
+    ["/", "home", "/"],
+  ])("registers dashboard area for route %s", (pathname, expectedArea, expectedNormalizedPath) => {
+    // Arrange
+    renderHook(() => useAnalytics());
+
+    // Act
+    mockRouteChangeCallback?.({ pathname });
+
+    // Assert
+    expect(mockRegister).toHaveBeenCalledWith({ dashboard_area: expectedArea });
+    expect(mockCapture).toHaveBeenCalledWith("$pageview", {
+      normalized_path: expectedNormalizedPath,
+    });
   });
 });
