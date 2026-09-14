@@ -7,7 +7,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
-import { Box, Input } from "@saleor/macaw-ui-next";
+import { Box, Chip, Input, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ProductDetailsFormProps {
@@ -80,22 +80,44 @@ export const ProductDetailsForm = ({
             name="description"
           />
         )}
-        <Box __width="25%">
-          <Input
-            label={intl.formatMessage({
-              id: "L7N+0y",
-              defaultMessage: "Product Rating",
-              description: "product rating",
-            })}
+        <Box display="flex" flexDirection="column" gap={2} marginTop={3}>
+          <Chip
+            backgroundColor="warning1"
+            borderColor="warning1"
+            color="warning1"
             size="small"
-            value={data.rating || ""}
-            onChange={onChange}
-            error={!!formErrors.rating}
-            name="rating"
-            type="number"
-            disabled={disabled}
-            helperText={getProductErrorMessage(formErrors.rating, intl)}
-          />
+            alignSelf="start"
+            __paddingX="8px"
+            __paddingY="4px"
+            data-test-id="product-rating-deprecated-badge"
+          >
+            {intl.formatMessage(commonMessages.deprecated)}
+          </Chip>
+          <Box __width="25%">
+            <Input
+              label={intl.formatMessage({
+                id: "L7N+0y",
+                defaultMessage: "Product Rating",
+                description: "product rating",
+              })}
+              size="small"
+              value={data.rating || ""}
+              onChange={onChange}
+              error={!!formErrors.rating}
+              name="rating"
+              type="number"
+              disabled={disabled}
+              helperText={getProductErrorMessage(formErrors.rating, intl)}
+            />
+          </Box>
+          <Text size={2} color="warning1">
+            {intl.formatMessage({
+              id: "mTr+ZM",
+              defaultMessage:
+                'Product rating will be removed from the API. Create a numeric "rating" attribute instead.',
+              description: "hint explaining why a field is deprecated",
+            })}
+          </Text>
         </Box>
       </DashboardCard.Content>
     </DashboardCard>

@@ -13515,6 +13515,10 @@
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
   },
+  "mTr+ZM": {
+    "context": "hint explaining why a field is deprecated",
+    "string": "Product rating will be removed from the API. Create a numeric \"rating\" attribute instead."
+  },
   "mVcZkr": {
     "context": "seo slug field hint",
     "string": "URL path used in localized storefront links"

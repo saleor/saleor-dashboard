@@ -6961,7 +6961,10 @@ export type ProductBulkCreateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID']['input'];
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -7078,7 +7081,10 @@ export type ProductCreateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID']['input'];
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -7211,7 +7217,10 @@ export type ProductInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -7322,7 +7331,10 @@ export enum ProductOrderField {
   PUBLISHED_AT = 'PUBLISHED_AT',
   /** Sort products by rank. Note: This option is available only with the `search` filter. */
   RANK = 'RANK',
-  /** Sort products by rating. */
+  /**
+   * Sort products by rating.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   RATING = 'RATING',
   /** Sort products by type. */
   TYPE = 'TYPE'
@@ -7637,6 +7649,12 @@ export type ProductVariantInput = {
 };
 
 export enum ProductVariantSortField {
+  /**
+   * Sort product variants by ID.
+   *
+   * Added in Saleor 3.23.
+   */
+  ID = 'ID',
   /** Sort product variants by last modification date. */
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
