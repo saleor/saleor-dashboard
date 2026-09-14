@@ -1,353 +1,94 @@
 # Saleor Dashboard
 
-## Project Overview
-
-Saleor Dashboard is a GraphQL-powered, single-page React application built with TypeScript that serves as the admin interface for the Saleor e-commerce platform. It is built on React, @saleor/macaw-ui-next, Apollo Client and Vite. Check `package.json` to resolve installed package versions and `package.json` `engines` for the required Node/pnpm versions.
-
-## Development Commands
-
-### Basic Development
-
-- `pnpm run dev` - Start development server on port 9000 with host binding, ALWAYS run this process in background, if you can't do that ask user
-- `pnpm run build` - Build production bundle
-- `pnpm run preview` - Preview production build locally
-
-### Code Quality & Testing
-
-Before completing changes make sure you run these commands:
-
-- `pnpm run lint` - Runs every `lint:*` script (ESLint with auto-fix, Prettier write, changeset check). Use `pnpm run lint:eslint` to run ESLint alone.
-- `pnpm run test:quiet <file_path>` - Run specific test file with console output suppressed
-- `pnpm run check-types` - Runs every `check-types:*` script (src + `tsc-strict`, playwright, scripts)
-- `pnpm run knip` - Check for unused files/dependencies/exports
-
-See `package.json` `scripts` for the full, current list.
-
-- ALWAYS run linter with autoformatter after you change the code, BEFORE you try to manually fix linter errors
-
-#### Test Scripts
-
-- `pnpm run test:quiet <file_path>` - RECOMMENDED: Run specific test with minimal output (--silent flag)
-- `pnpm run test:debug <file_path>` - Run specific test file with full console output and extended React Testing Library output (DEBUG_PRINT_LIMIT=20000)
-
-**Important for testing:**
-
-- Always use `pnpm run test:quiet <file_path>` for specific files
-- Use `pnpm run test:debug <file_path>` when you need to see full React component output for debugging
-- Console output is suppressed in quiet command
-- Tests automatically run from the `src/` directory (configured in jest.config.js)
-- When writing new fixtures (e.g. any objects used as test inputs) try to figure out their types and explicitly declare them:
-  `const fixture: FixtureType = {...}`
-
-### GraphQL & Code Generation
-
-The dashboard generates against two schemas: **main** (pinned Saleor version, see `config.saleor.schemaVersion` in `package.json`) and **staging** (Saleor `main` branch), selected at runtime by the `FF_USE_STAGING_SCHEMA` feature flag. See `docs/multi-schema.md`.
-
-- `pnpm run generate` - Generate GraphQL types and hooks for both schemas, after making changes in queries/mutations or updating schema
-- `pnpm run fetch-schema` - Download both main and staging schemas from the Saleor repository
-- `pnpm run fetch-local-schema` - Fetch schema from local Saleor instance
-
-### Internationalization
-
-- `pnpm run extract-messages` - Extract translatable messages from TypeScript files, run it after changing messages in `react-intl`
-
-## Architecture Overview
-
-### Module Structure
-
-The codebase follows a feature-based architecture with shared components:
-
-- **Feature Modules**: Each business domain (products, orders, customers, etc.) has its own directory containing:
-  - `index.tsx` - Route definitions for the section (a router component, not a barrel export)
-  - `views/` - Page components and view logic
-  - `components/` - Feature-specific components
-  - `mutations.ts` - GraphQL mutations
-  - `queries.ts` - GraphQL queries
-  - `urls.ts` - Route definitions and URL helpers
-  - `fixtures.ts` - Mock data for testing
-
-- **Shared Components**: Reusable UI components in `/components/` directory organized by function
-- **GraphQL Layer**: Generated types and hooks in `/graphql/` with fragment definitions in `/fragments/`
-- **Services**: Business logic and utilities in `/services/` and `/utils/`
-
-### Key Technologies
-
-Check `package.json` to resolve installed package versions.
-
-- **React** with TypeScript (strict mode disabled for old views using typescript-strict-plugin, new ones should use strict mode)
-- **Apollo Client** for GraphQL state management
-- **Vite** for build tooling and development server
-- **React Hook Form** for form management
-- **React Router** (v5 API: `Switch`, `RouteComponentProps`) for navigation
-- **React Intl** for internationalization
-- **Jotai** for shared client state
-- **Zod** for schema validation
-- **@saleor/macaw-ui-next** for UI components and design system
-- **@material-ui/core** (v4) + `makeStyles` — legacy, still present in many older views; do not add new usages
-
-### TypeScript Configuration
-
-- Path aliases are declared in `tsconfig.json` `compilerOptions.paths` (`@dashboard/*`, `@assets/*`, `@locale/*`, `@test/*`, `@storybookUtils/*`) — read that file rather than relying on this list
-- Strict mode disabled but typescript-strict-plugin provides gradual strictness adoption; `pnpm run check-strict-null-errors` reports remaining strict-null violations
-
-### Build Configuration
-
-- Vite with SWC for fast compilation and React refresh
-- Source maps enabled for debugging
-- Manual vendor chunk splitting for better caching
-- Node polyfills for browser compatibility
-- Sentry integration for error tracking in production
-
-### Testing Setup
-
-- Jest with SWC transformer for fast test execution; config in `jest.config.js` (roots, module name mapping, setup files)
-- Testing Library for React component testing
-- Playwright for E2E testing — see `docs/running-tests.md` for required env vars
-- Storybook stories run under Vitest (`pnpm run test-storybook`)
-- JSDOM test environment
-
-## Development Workflow
-
-### Before Starting Development
-
-1. Ensure you have a running Saleor backend instance
-2. Configure environment variables as described in `docs/configuration.md`
-3. Run `pnpm run generate` to generate GraphQL types
-4. Install dependencies with `pnpm i`
-
-### Adding New Features
-
-1. Create feature directory under appropriate domain (e.g., `/src/products/`)
-2. Follow existing patterns for queries, mutations, and component structure
-3. Use GraphQL fragments for consistent data fetching
-4. Add proper TypeScript types and utilize path aliases
-5. Include proper error handling and loading states
-
-### Code Standards
-
-- Use existing UI components from `/components/` directory
-- Style with `@saleor/macaw-ui-next` tokens and CSS Modules (see Styling below) — do not follow the legacy Material-UI theming patterns still present in older views
-- Utilize Apollo Client hooks for GraphQL operations
-- Implement proper form validation with React Hook Form
-- Add internationalization support for user-facing text
-
-### UI Design Guidelines
-
-**Before redesigning any component that displays a list, ask: "What happens with 50+ items?"**
-
-If the list could be long:
-
-- Add scrollable container with `max-height`
-- Keep headers outside the scroll area
-- Auto-scroll to active item on load
-
-Other considerations:
-
-- Loading states: Show skeletons
-- Empty states: Handle zero items gracefully
-
-### Testing Requirements
-
-- Write unit tests for utility functions and complex components
-- Use Playwright for E2E testing of critical user flows
-- Mock GraphQL operations in tests using fixtures
-- Ensure type safety with TypeScript strict plugin
-
-Add // Arrange // Act // Assert comments in tests to clarify test structure
-
-## Git Conflict Resolution
-
-### Auto-generated Files (DO NOT manually resolve)
-
-These files should be regenerated after resolving source conflicts:
-
-- `pnpm-lock.yaml` - Run `pnpm install` after resolving `package.json`
-- `src/graphql/*.generated.ts` (main and `*Staging.generated.ts` variants) - Run `pnpm run generate` after resolving GraphQL files
-
-### Package Version Conflicts
-
-Always use the latest version when resolving package version conflicts between branches.
-
-## Backend Integration
-
-This frontend connects to a Saleor GraphQL backend:
-
-- Default local backend URL: http://localhost:8000/graphql/ (`API_URL`, see `.env.template`)
-- Configure via environment variables (see `docs/configuration.md`)
-- Default development credentials for local Saleor instance: `admin@example.com` / `admin`
-- Use `pnpm run fetch-local-schema` to sync GraphQL schema from local backend
-
-## Package Updates
-
-When modifying `package.json`, always run `pnpm install` to update `pnpm-lock.yaml` and node_modules.
-
-### Dependency Overrides
-
-Dependency overrides (for security patches, version pinning, etc.) must be placed in `pnpm-workspace.yaml` under the `overrides:` key — **not** in `package.json` under `pnpm.overrides`. The workspace file is the single source of truth for overrides in this project.
-
-## Contributing
-
-### Changesets
-
-Use changesets CLI for user-facing changes that should appear in the changelog:
-
-**Include in changesets:**
-
-- Features: Provide detailed description with examples/screenshots
-- Enhancements: Concise description of the improvement
-- Bug fixes: Describe what didn't work → what works now
-
-**Skip changesets for:**
-
-- Internal refactors
-- Code style changes
-- Test additions
-- CI/CD changes
-- Documentation updates (unless user-facing)
-
-### Pull Request Guidelines
-
-PR descriptions should:
-
-- Provide context for reviewers to understand the changes
-- Explain non-obvious decisions or trade-offs
-- Focus on the "why" rather than the "what" (code shows what)
-- Include screenshots for UI changes
-- Reference related issues or discussions
-
-Once opening a pull request or working with GitHub directly, prefer to use `gh` cli to execute operations
-
-## Code review
-
-During code review, do not verify auto-generated files. Such files are suffixed with `.generated.ts`
-
-## React & TypeScript Guidelines
-
-### Component Patterns
-
-- **Storybook** - Add storybook file (componentName.stories.tsx) for new created components
-- **No default exports** - Use named exports for all components and functions
-- **No `// @ts-strict-ignore`** - Write properly typed code from the start
-- **Use object destructuring** - Prefer named attributes in function parameters
-- **Prefer `@saleor/macaw-ui-next`** - Use the new Macaw UI library, not the legacy `@saleor/macaw-ui`
-- **Use Lucide icons directly** - Macaw icons are deprecated; import from `lucide-react` instead
-
-```typescript
-// ❌ Avoid
-import { IconButton } from "@saleor/macaw-ui";
-import { DeleteIcon } from "@saleor/macaw-ui";
-
-// ✅ Prefer
-import { Button } from "@saleor/macaw-ui-next";
-import { Trash2 } from "lucide-react";
-```
-
-### React Best Practices
-
-- **Respect the React lifecycle** - Keep code idiomatic to React, correctly using `useEffect`, `useCallback`, `useRef`, `useMemo`
-- **Proper cleanup** - Handle mounting/unmounting cycles, cancel subscriptions and async operations
-- **Memoization** - Use `useCallback` for callbacks passed to children, `useMemo` for expensive computations
-
-```typescript
-// ✅ Proper useEffect with cleanup
-useEffect(() => {
-  const controller = new AbortController();
-  fetchData({ signal: controller.signal });
-  return () => controller.abort();
-}, [dependency]);
-```
-
-### Styling
-
-- **Use CSS Modules** - Use `.module.css` files instead of plain `.css` files to scope styles per-import without polluting the global CSS namespace
-
-```typescript
-// ✅ CSS Modules
-import styles from "./Component.module.css";
-<div className={styles.container}>
-```
-
-### Internationalization
-
-- **Reuse existing messages** - Check `src/intl.ts` and existing component messages before creating new ones
-- **Use `react-intl`** - All user-facing text must be internationalized
-
-### Module Organization
-
-- **No index files (barrel exports)** - Use direct imports instead. Index files are an anti-pattern being removed from this codebase
-
-```typescript
-// ❌ Avoid
-export { Component } from "./Component";
-import { Component } from "./components";
-
-// ✅ Prefer
-import { Component } from "./components/Component";
-```
-
-### TypeScript Style
-
-- **Prefer typed declarations over type assertions** - Annotate variable declarations rather than using `as`
-
-```typescript
-// ❌ Avoid: Type assertion bypasses type checking
-const style = {
-  display: "flex",
-  gap: 8,
-} as React.CSSProperties;
-
-// ✅ Prefer: Typed declaration ensures type safety at assignment
-const style: React.CSSProperties = {
-  display: "flex",
-  gap: 8,
-};
-```
-
-**Why:** Type assertions (`as`) tell TypeScript to trust you and skip validation. Typed declarations validate the object shape at the point of assignment, catching errors immediately if a property is misspelled or has the wrong type.
-
-### Component Template
-
-```typescript
-// Component.tsx
-import { Box, Text } from "@saleor/macaw-ui-next";
-import { Trash2 } from "lucide-react";
-import { useCallback } from "react";
-import { FormattedMessage } from "react-intl";
-
-import styles from "./Component.module.css";
-
-interface ComponentProps {
-  title: string;
-  onDelete: (id: string) => void;
-}
-
-export const Component = ({ title, onDelete }: ComponentProps) => {
-  const handleDelete = useCallback(() => {
-    onDelete(title);
-  }, [title, onDelete]);
-
-  return (
-    <Box className={styles.container}>
-      <Text>{title}</Text>
-      <button onClick={handleDelete}>
-        <Trash2 size={16} />
-        <FormattedMessage defaultMessage="Delete" id="deleteBtn" />
-      </button>
-    </Box>
-  );
-};
-```
-
-## Agent skills
-
-### Issue tracker
-
-Issues are **not tracked with agents** in this repo — the issue/PR-facing skills (`to-issues`, `triage`, `to-prd`, `qa`) have no tracker to write to. See `docs/agents/issue-tracker.md`.
-
-### Triage labels
-
-Not applicable — no agent-driven issue tracker is configured.
-
-### Domain docs
-
-Single-context: `CONTEXT.md` + `docs/adr/` at the repo root. Read them before exploring an area they cover. See `docs/agents/domain.md`.
+## Conventions
+
+- Use `@saleor/macaw-ui-next` components and tokens; do not add usages of legacy
+  `@saleor/macaw-ui`, Material-UI, or `makeStyles`.
+- Import icons directly from `lucide-react`; Macaw icons are deprecated.
+- Use CSS Modules (`.module.css`) for custom styles.
+- Write new code with strict TypeScript checking; do not add `// @ts-strict-ignore`.
+- Use named exports and direct imports. Do not introduce barrel exports;
+  route entry points named `index.tsx` are allowed.
+- Prefer destructured object parameters and typed declarations over type assertions.
+  Explicitly type test fixtures.
+- Internationalize user-facing text with `react-intl`. Check `src/intl.ts` and nearby
+  component messages for reusable messages before defining new ones.
+- Add a colocated `ComponentName.stories.tsx` for new UI components.
+- In tests, use `// Arrange`, `// Act`, and `// Assert` comments. Mock GraphQL
+  operations with typed fixtures.
+- For lists that can contain 50+ items, keep navigation and controls usable and
+  selected items discoverable. Choose scrolling, pagination, or virtualization to
+  suit the component. Use skeletons for loading and handle empty states.
+
+## Task-specific context
+
+Read documentation when its subject is relevant to the task:
+
+- `CONTEXT.md` for product terminology, especially modeling and navigation pins.
+  Use its dashboard-facing names even when API names differ.
+- Relevant decisions in `docs/adr/` when changing the behavior they govern.
+  Surface conflicts with those decisions rather than silently overriding them.
+- `docs/multi-schema.md` for GraphQL operations, generation, or schema selection.
+- `docs/configuration.md` and `.env.template` when configuring or running the app.
+- `docs/running-tests.md` when running Playwright tests.
+
+Read current commands, dependencies, and runtime requirements from `package.json`,
+including `packageManager` and `engines`; read aliases from `tsconfig.json`.
+
+## Conditional workflows
+
+- Install dependencies when missing or when dependency inputs change. Run
+  `pnpm install` after modifying `package.json` or workspace dependency settings.
+- Put dependency overrides in `pnpm-workspace.yaml` under `overrides`, never in
+  `package.json` under `pnpm.overrides`.
+- After changing GraphQL operations, fragments, or schemas, run `pnpm run generate`
+  for both main and staging schemas. Do not hand-edit `.generated.ts` files.
+- After changing `react-intl` messages, run `pnpm run extract-messages`.
+- Set up a backend only when the task needs a running application or integration
+  tests. Setup and code generation are not prerequisites for unrelated edits.
+- Run `pnpm run dev` in the background. If background execution is unavailable,
+  ask the user how to proceed. Its `predev` hook already runs code generation.
+
+## Verification
+
+Match verification to the affected code. Complete relevant checks before handing
+back implementation work, and report any checks that could not run.
+
+- Documentation-only changes: format the changed files with Prettier; application
+  tests, type checks, and knip are unnecessary.
+- Code changes: run ESLint with auto-fix and Prettier on the changed files before
+  manually fixing lint errors. Run affected tests and the relevant `check-types:*`
+  scripts from `package.json`.
+- Use `pnpm run test:quiet <file_path>` for individual Jest files. Switch to
+  `pnpm run test:debug <file_path>` when debugging requires console or DOM output.
+- Add or update unit tests for changed utility behavior and complex components;
+  use Playwright coverage for critical user flows.
+- When changing dependencies, exports, or file organization, run `pnpm run knip`.
+- For changes spanning application code, Playwright, and scripts, run
+  `pnpm run check-types`. Use `pnpm run lint` for repository-wide lint, formatting,
+  and changeset validation; it auto-fixes and formats files across the repository.
+- Rerun affected checks after fixes. Broaden verification when shared behavior,
+  configuration changes, or failures warrant it; avoid repeating successful checks
+  without new changes or evidence.
+
+## Conflict resolution and review
+
+- Resolve source conflicts first, then regenerate derived files:
+  `pnpm install` for `pnpm-lock.yaml`, and `pnpm run generate` for GraphQL outputs.
+  Do not manually merge generated content.
+- Resolve package-version conflicts against intended dependency constraints and
+  preserve deliberate pins. Do not turn conflict resolution into an unrelated
+  upgrade to the latest registry release.
+- During code review, skip inspecting `.generated.ts` contents; review the source
+  operations and generation configuration instead.
+
+## Contributions
+
+- Use the changesets CLI for user-facing features, enhancements, and bug fixes.
+  Explain the user-visible behavior; for fixes, describe what failed and what works
+  now. Skip changesets for internal refactors, style, tests, CI/CD, and internal docs.
+- PR descriptions should explain the problem and non-obvious decisions, include
+  screenshots for UI changes, and reference relevant issues or discussions.
+- Prefer the `gh` CLI for GitHub operations.
+- No agent-driven issue tracker is configured. Return issue or triage findings in
+  the conversation; see `docs/agents/issue-tracker.md` when a skill expects a tracker.
