@@ -46,20 +46,20 @@ export const sanitizeAnalyticsUrl = (value: string): string => {
     const url = new URL(value, window.location.origin);
 
     url.pathname = sanitizeAnalyticsPath(url.pathname);
+    url.search = "";
     url.hash = "";
 
     return value.startsWith("http://") || value.startsWith("https://")
       ? url.toString()
-      : `${url.pathname}${url.search}`;
+      : url.pathname;
   } catch {
     const fragmentIndex = value.indexOf("#");
     const valueWithoutFragment = fragmentIndex === -1 ? value : value.slice(0, fragmentIndex);
     const queryIndex = valueWithoutFragment.indexOf("?");
 
-    if (queryIndex === -1) {
-      return sanitizeAnalyticsPath(valueWithoutFragment);
-    }
+    const pathname =
+      queryIndex === -1 ? valueWithoutFragment : valueWithoutFragment.slice(0, queryIndex);
 
-    return `${sanitizeAnalyticsPath(valueWithoutFragment.slice(0, queryIndex))}${valueWithoutFragment.slice(queryIndex)}`;
+    return sanitizeAnalyticsPath(pathname);
   }
 };

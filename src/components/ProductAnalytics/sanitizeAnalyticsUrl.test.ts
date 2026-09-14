@@ -27,7 +27,7 @@ describe("sanitizeAnalyticsPath", () => {
 });
 
 describe("sanitizeAnalyticsUrl", () => {
-  it("preserves query parameters while removing fragments and entity IDs", () => {
+  it("removes query parameters, fragments, and entity IDs", () => {
     // Arrange
     const url = "https://example.com/orders/T3JkZXI6MTIz?q=customer@example.com#details";
 
@@ -35,7 +35,7 @@ describe("sanitizeAnalyticsUrl", () => {
     const result = sanitizeAnalyticsUrl(url);
 
     // Assert
-    expect(result).toBe("https://example.com/orders/:id?q=customer@example.com");
+    expect(result).toBe("https://example.com/orders/:id");
   });
 
   it("sanitizes relative URLs", () => {
@@ -43,6 +43,6 @@ describe("sanitizeAnalyticsUrl", () => {
     const result = sanitizeAnalyticsUrl("/products/UHJvZHVjdDoxMjM%3D?tab=variants");
 
     // Assert
-    expect(result).toBe("/products/:id?tab=variants");
+    expect(result).toBe("/products/:id");
   });
 });

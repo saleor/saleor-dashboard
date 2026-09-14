@@ -2,6 +2,7 @@ import { usePostHog } from "posthog-js/react";
 import { useCallback } from "react";
 
 import { useRouteChange } from "../Router/useRouteChange";
+import { type AnalyticsEventArguments, type AnalyticsEventName, type TrackEvent } from "./events";
 import { sanitizeAnalyticsPath } from "./sanitizeAnalyticsUrl";
 
 interface UserProperties {
@@ -16,14 +17,16 @@ interface AnalyticsContext {
 
 interface Analytics {
   initialize: (userProperties: UserProperties, context: AnalyticsContext) => void;
-  trackEvent: (event: string, properties?: Record<string, any>) => void;
+  trackEvent: TrackEvent;
 }
 
 export function useAnalytics(): Analytics {
   const posthog = usePostHog();
 
-  const trackEvent = useCallback(
-    (event: string, properties?: Record<string, any>) => {
+  const trackEvent: TrackEvent = useCallback(
+    <EventName extends AnalyticsEventName>(
+      ...[event, properties]: AnalyticsEventArguments<EventName>
+    ) => {
       if (!posthog) return;
 
       posthog.capture(event, properties);
@@ -41,7 +44,7 @@ export function useAnalytics(): Analytics {
     });
   });
 
-  function initialize(userProperties: UserProperties, context: AnalyticsContext) {
+  function initialize(userProperties: UserProperties, context: AnalyticsContext): void {
     if (!posthog) return;
 
     posthog.register(context);
