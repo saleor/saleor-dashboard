@@ -10,6 +10,8 @@ import { getRipplesSortedAndGroupedByMonths, RippleGlobalDescription } from "./A
 
 const mockNavigate = jest.fn();
 const mockOnChange = jest.fn();
+const mockTrackEvent = jest.fn();
+const mockSetManuallyHidden = jest.fn();
 
 jest.mock("@dashboard/hooks/useNavigator", () => ({
   __esModule: true,
@@ -18,14 +20,14 @@ jest.mock("@dashboard/hooks/useNavigator", () => ({
 
 jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
   useAnalytics: jest.fn(() => ({
-    trackEvent: jest.fn(),
+    trackEvent: mockTrackEvent,
   })),
 }));
 
 jest.mock("@dashboard/ripples/hooks/useRipplesStorage", () => ({
   useRippleStorage: jest.fn(() => ({
     hideAllRipples: jest.fn(),
-    setManuallyHidden: jest.fn(),
+    setManuallyHidden: mockSetManuallyHidden,
   })),
 }));
 
@@ -343,6 +345,24 @@ describe("AllRipplesModal", () => {
       intent: "install",
       loading: false,
     });
+  });
+
+  it("tracks each modal open once", () => {
+    // Arrange
+    const { rerender } = render(<AllRipplesModal open onChange={mockOnChange} />, {
+      wrapper: Wrapper,
+    });
+
+    // Act
+    rerender(<AllRipplesModal open onChange={mockOnChange} />);
+    rerender(<AllRipplesModal open={false} onChange={mockOnChange} />);
+    rerender(<AllRipplesModal open onChange={mockOnChange} />);
+
+    // Assert
+    expect(mockTrackEvent).toHaveBeenCalledTimes(2);
+    expect(mockTrackEvent).toHaveBeenNthCalledWith(1, "ripples.modal-opened");
+    expect(mockTrackEvent).toHaveBeenNthCalledWith(2, "ripples.modal-opened");
+    expect(mockSetManuallyHidden).toHaveBeenCalledTimes(2);
   });
 
   it("closes the modal and navigates when an internal action link is clicked", async () => {
