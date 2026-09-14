@@ -10,7 +10,7 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
-import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Chip, Input, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ProductDetailsFormProps {
@@ -91,7 +91,19 @@ export const ProductDetailsForm = ({
       )}
       <FormSpacer />
       <Box display="flex" alignItems="flex-end" gap={4} flexWrap="wrap">
-        <Box __width="16rem" flexShrink="0">
+        <Box __width="16rem" flexShrink="0" display="flex" flexDirection="column" gap={2}>
+          <Chip
+            backgroundColor="warning1"
+            borderColor="warning1"
+            color="warning1"
+            size="small"
+            alignSelf="start"
+            __paddingX="8px"
+            __paddingY="4px"
+            data-test-id="product-rating-deprecated-badge"
+          >
+            {intl.formatMessage(commonMessages.deprecated)}
+          </Chip>
           <Input
             label={intl.formatMessage({
               id: "L7N+0y",
@@ -108,6 +120,14 @@ export const ProductDetailsForm = ({
             data-test-id="product-rating"
             helperText={getProductErrorMessage(formErrors.rating, intl)}
           />
+          <Text size={2} color="warning1">
+            {intl.formatMessage({
+              id: "3qIIGa",
+              defaultMessage:
+                'Product rating will be removed in the next minor version. Create a numeric "rating" attribute instead.',
+              description: "hint explaining why a field is deprecated",
+            })}
+          </Text>
         </Box>
         {shippingWeight ? (
           <>
