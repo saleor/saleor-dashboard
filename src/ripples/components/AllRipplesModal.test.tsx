@@ -1,12 +1,19 @@
+import { type useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { type Ripple } from "@dashboard/ripples/types";
 import { Text, ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { type ReactNode } from "react";
+import { Provider } from "jotai";
+import { type ReactNode, StrictMode } from "react";
 import { defineMessage } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 
 import { getRipplesSortedAndGroupedByMonths, RippleGlobalDescription } from "./AllRipplesModal";
+
+// JSDOM does not provide structuredClone.
+if (!global.structuredClone) {
+  global.structuredClone = value => JSON.parse(JSON.stringify(value));
+}
 
 const mockNavigate = jest.fn();
 const mockOnChange = jest.fn();
@@ -363,6 +370,57 @@ describe("AllRipplesModal", () => {
     expect(mockTrackEvent).toHaveBeenNthCalledWith(1, "ripples.modal-opened");
     expect(mockTrackEvent).toHaveBeenNthCalledWith(2, "ripples.modal-opened");
     expect(mockSetManuallyHidden).toHaveBeenCalledTimes(2);
+  });
+
+  it("tracks each open once with real storage updates in Strict Mode", () => {
+    // Arrange
+    const { useRippleStorage: realUseRippleStorage } = jest.requireActual<{
+      useRippleStorage: typeof useRippleStorage;
+    }>("@dashboard/ripples/hooks/useRipplesStorage");
+
+    const { useRippleStorage: mockUseRippleStorage } = jest.requireMock<{
+      useRippleStorage: jest.MockedFunction<typeof useRippleStorage>;
+    }>("@dashboard/ripples/hooks/useRipplesStorage");
+
+    mockUseRippleStorage.mockImplementation(realUseRippleStorage);
+    localStorage.clear();
+
+    // Bound a regression so an event loop fails instead of hanging the test.
+    mockTrackEvent.mockImplementation(() => {
+      if (mockTrackEvent.mock.calls.length > 5) {
+        throw new Error("Repeated modal-open events");
+      }
+    });
+
+    try {
+      const { rerender } = render(<AllRipplesModal open={false} onChange={mockOnChange} />, {
+        wrapper: ({ children }) => (
+          <StrictMode>
+            <Provider>
+              <Wrapper>{children}</Wrapper>
+            </Provider>
+          </StrictMode>
+        ),
+      });
+
+      // Act
+      rerender(<AllRipplesModal open onChange={mockOnChange} />);
+      rerender(<AllRipplesModal open onChange={mockOnChange} />);
+      rerender(<AllRipplesModal open={false} onChange={mockOnChange} />);
+      rerender(<AllRipplesModal open onChange={mockOnChange} />);
+
+      // Assert
+      expect(mockTrackEvent).toHaveBeenCalledTimes(2);
+      expect(mockTrackEvent).toHaveBeenCalledWith("ripples.modal-opened");
+    } finally {
+      mockUseRippleStorage.mockImplementation(() => ({
+        hideAllRipples: jest.fn(),
+        setManuallyHidden: mockSetManuallyHidden,
+        setFirstSeenFlag: jest.fn(),
+        getShouldShow: jest.fn(),
+      }));
+      mockTrackEvent.mockReset();
+    }
   });
 
   it("closes the modal and navigates when an internal action link is clicked", async () => {
