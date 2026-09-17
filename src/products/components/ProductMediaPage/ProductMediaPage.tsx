@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth/useUser";
 import { savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import {
   TopNav,
@@ -11,11 +13,15 @@ import Form from "@dashboard/components/Form/Form";
 import Grid from "@dashboard/components/Grid/Grid";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { Savebar } from "@dashboard/components/Savebar";
-import { ProductMediaType } from "@dashboard/graphql";
+import { PermissionEnum, ProductMediaType } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { rippleProductMediaMetadata } from "@dashboard/products/ripples/productMediaMetadata";
 import { productUrl } from "@dashboard/products/urls";
 import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { productMediaUrl } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text, Textarea, vars } from "@saleor/macaw-ui-next";
 import { defineMessages, type IntlShape, useIntl } from "react-intl";
@@ -178,6 +184,10 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+  const { user } = useUser();
+  const canTranslate =
+    isMainSchema() && user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
 
   return (
@@ -188,6 +198,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
             href={productUrl(productId)}
             hrefIcon={<TopNavDestinationIcon.products />}
             hrefTitle={intl.formatMessage(topNavDestinationMessages.product)}
+            actionsGap={3}
             title={
               disabled && !productName ? (
                 <Skeleton __width="200px" />
@@ -211,6 +222,13 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
               title={intl.formatMessage(messages.editMediaMetadata)}
               ripple={rippleProductMediaMetadata}
             />
+            {canTranslate && mediaObj && (
+              <TranslationsButton
+                onClick={() =>
+                  navigate(productMediaUrl(lastUsedLocaleOrFallback, productId, mediaObj.id))
+                }
+              />
+            )}
           </TopNav>
           <Grid variant="inverted" className={classes.grid}>
             <div>

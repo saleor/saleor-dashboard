@@ -1607,6 +1607,13 @@ export const ProductVariantTranslateErrorFragmentFragmentDoc = gql`
   message
 }
     `;
+export const ProductMediaTranslateErrorFragmentFragmentDoc = gql`
+    fragment ProductMediaTranslateErrorFragment on ProductMediaTranslateError {
+  code
+  field
+  message
+}
+    `;
 export const CategoryTranslateErrorFragmentFragmentDoc = gql`
     fragment CategoryTranslateErrorFragment on TranslationError {
   code
@@ -4024,6 +4031,29 @@ export const ProductVariantTranslationFragmentDoc = gql`
   }
 }
     ${AttributeValueTranslatableFragmentDoc}`;
+export const ProductMediaTranslationFragmentDoc = gql`
+    fragment ProductMediaTranslation on ProductMediaTranslatableContent {
+  id
+  productMediaId
+  alt
+  productMedia {
+    id
+    productId
+    alt
+    url(size: 1024)
+    type
+    oembedData
+  }
+  translation(languageCode: $language) {
+    id
+    alt
+    language {
+      code
+      language
+    }
+  }
+}
+    `;
 export const SaleTranslationFragmentDoc = gql`
     fragment SaleTranslation on SaleTranslatableContent {
   sale {
@@ -22879,6 +22909,55 @@ export function useUpdateProductVariantTranslationsMutation(baseOptions?: Apollo
 export type UpdateProductVariantTranslationsMutationHookResult = ReturnType<typeof useUpdateProductVariantTranslationsMutation>;
 export type UpdateProductVariantTranslationsMutationResult = Apollo.MutationResult<Types.UpdateProductVariantTranslationsMutation>;
 export type UpdateProductVariantTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateProductVariantTranslationsMutation, Types.UpdateProductVariantTranslationsMutationVariables>;
+export const UpdateProductMediaTranslationDocument = gql`
+    mutation UpdateProductMediaTranslation($id: ID!, $input: ProductMediaTranslationInput!, $language: LanguageCodeEnum!) @lockSchema(schema: "main") {
+  productMediaTranslate(id: $id, input: $input, languageCode: $language) {
+    errors {
+      ...ProductMediaTranslateErrorFragment
+    }
+    productMedia {
+      id
+      alt
+      translation(languageCode: $language) {
+        id
+        alt
+        language {
+          code
+          language
+        }
+      }
+    }
+  }
+}
+    ${ProductMediaTranslateErrorFragmentFragmentDoc}`;
+export type UpdateProductMediaTranslationMutationFn = Apollo.MutationFunction<Types.UpdateProductMediaTranslationMutation, Types.UpdateProductMediaTranslationMutationVariables>;
+
+/**
+ * __useUpdateProductMediaTranslationMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductMediaTranslationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductMediaTranslationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductMediaTranslationMutation, { data, loading, error }] = useUpdateProductMediaTranslationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *      language: // value for 'language'
+ *   },
+ * });
+ */
+export function useUpdateProductMediaTranslationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateProductMediaTranslationMutation, Types.UpdateProductMediaTranslationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UpdateProductMediaTranslationMutation, Types.UpdateProductMediaTranslationMutationVariables>(UpdateProductMediaTranslationDocument, options);
+      }
+export type UpdateProductMediaTranslationMutationHookResult = ReturnType<typeof useUpdateProductMediaTranslationMutation>;
+export type UpdateProductMediaTranslationMutationResult = Apollo.MutationResult<Types.UpdateProductMediaTranslationMutation>;
+export type UpdateProductMediaTranslationMutationOptions = Apollo.BaseMutationOptions<Types.UpdateProductMediaTranslationMutation, Types.UpdateProductMediaTranslationMutationVariables>;
 export const UpdateCategoryTranslationsDocument = gql`
     mutation UpdateCategoryTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
   categoryTranslate(id: $id, input: $input, languageCode: $language) {
@@ -23870,6 +23949,94 @@ export function useProductVariantTranslationDetailsLazyQuery(baseOptions?: Apoll
 export type ProductVariantTranslationDetailsQueryHookResult = ReturnType<typeof useProductVariantTranslationDetailsQuery>;
 export type ProductVariantTranslationDetailsLazyQueryHookResult = ReturnType<typeof useProductVariantTranslationDetailsLazyQuery>;
 export type ProductVariantTranslationDetailsQueryResult = Apollo.QueryResult<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>;
+export const ProductTranslationContextDocument = gql`
+    query ProductTranslationContext($id: ID!) {
+  translation(kind: PRODUCT, id: $id) {
+    ... on ProductTranslatableContent {
+      id
+      product {
+        id
+        media {
+          id
+          alt
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductTranslationContextQuery__
+ *
+ * To run a query within a React component, call `useProductTranslationContextQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductTranslationContextQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductTranslationContextQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProductTranslationContextQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>(ProductTranslationContextDocument, options);
+      }
+export function useProductTranslationContextLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>(ProductTranslationContextDocument, options);
+        }
+export type ProductTranslationContextQueryHookResult = ReturnType<typeof useProductTranslationContextQuery>;
+export type ProductTranslationContextLazyQueryHookResult = ReturnType<typeof useProductTranslationContextLazyQuery>;
+export type ProductTranslationContextQueryResult = Apollo.QueryResult<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>;
+export const ProductMediaTranslationDetailsDocument = gql`
+    query ProductMediaTranslationDetails($id: ID!, $productId: ID!, $language: LanguageCodeEnum!) @lockSchema(schema: "main") {
+  translation(kind: PRODUCT_MEDIA, id: $id) {
+    ...ProductMediaTranslation
+  }
+  productTranslation: translation(kind: PRODUCT, id: $productId) {
+    ... on ProductTranslatableContent {
+      id
+      productId
+      name
+    }
+  }
+}
+    ${ProductMediaTranslationFragmentDoc}`;
+
+/**
+ * __useProductMediaTranslationDetailsQuery__
+ *
+ * To run a query within a React component, call `useProductMediaTranslationDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductMediaTranslationDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductMediaTranslationDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      productId: // value for 'productId'
+ *      language: // value for 'language'
+ *   },
+ * });
+ */
+export function useProductMediaTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>(ProductMediaTranslationDetailsDocument, options);
+      }
+export function useProductMediaTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>(ProductMediaTranslationDetailsDocument, options);
+        }
+export type ProductMediaTranslationDetailsQueryHookResult = ReturnType<typeof useProductMediaTranslationDetailsQuery>;
+export type ProductMediaTranslationDetailsLazyQueryHookResult = ReturnType<typeof useProductMediaTranslationDetailsLazyQuery>;
+export type ProductMediaTranslationDetailsQueryResult = Apollo.QueryResult<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>;
 export const CategoryTranslationDetailsDocument = gql`
     query CategoryTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: CATEGORY, id: $id) {

@@ -3607,6 +3607,9 @@
     "context": "header",
     "string": "Translation Collection \"{collectionName}\" - {languageCode}"
   },
+  "Bq7Gbi": {
+    "string": "Media {number}"
+  },
   "BrRGIJ": {
     "context": "Tooltip body for the direct-stock-mode-only badge in the webhook event picker. Quotes the exact label of the toggle on the site-settings page so the admin recognizes it when they click through.",
     "string": "Fires only while \"Use legacy shipping zone stock availability\" is disabled in site settings. Otherwise the subscription produces no deliveries."
@@ -3809,6 +3812,10 @@
   "CPiLc1": {
     "context": "confirm dialog bullet: don’t-send messages resume with defaults",
     "string": "Messages set to “Don’t send” will send again with Saleor default templates."
+  },
+  "CQDz75": {
+    "context": "product media alt text translation hint",
+    "string": "Describes this media for screen readers and unavailable previews"
   },
   "CQKgD/": {
     "context": "bulk actions button label",
@@ -8023,6 +8030,9 @@
     "context": "input label",
     "string": "SKU (Stock Keeping Unit)"
   },
+  "SMTX1t": {
+    "string": "Media {number}: {alt}"
+  },
   "SNSHFa": {
     "context": "settings search alias",
     "string": "approve fulfillments"
@@ -9175,6 +9185,9 @@
   },
   "Wj5TbN": {
     "string": "Issues"
+  },
+  "WjqtMG": {
+    "string": "Variant: {name}"
   },
   "Wlc67M": {
     "context": "error message",
@@ -14257,6 +14270,10 @@
   "pEf/m+": {
     "string": "There are no previews at the moment. Stay tuned!"
   },
+  "pFLrDo": {
+    "context": "product media translation page header",
+    "string": "Translation Product Media \"{productName}\" - {languageCode}"
+  },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
   },
@@ -14570,6 +14587,10 @@
   "qFCc+k": {
     "context": "assign model picker, client-side filter emptied the loaded pages",
     "string": "Every model loaded so far is already assigned. Search by name, or keep loading the list."
+  },
+  "qG6eS+": {
+    "context": "product media translation section subtitle",
+    "string": "Alternative text used by storefronts and assistive technologies"
   },
   "qGwKT/": {
     "string": "Extension disabled. Activate the extension from the settings."

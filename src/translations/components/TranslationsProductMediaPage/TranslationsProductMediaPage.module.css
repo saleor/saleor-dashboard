@@ -1,0 +1,40 @@
+.previewStage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  overflow: hidden;
+  padding: var(--mu-spacing-4);
+}
+
+.previewMedia {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.previewVideo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.previewVideo > div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 0 !important;
+  overflow: hidden;
+}
+
+.previewVideo iframe {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
