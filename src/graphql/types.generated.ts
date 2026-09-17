@@ -11638,7 +11638,7 @@ export type ListCustomersQueryVariables = Exact<{
 }>;
 
 
-export type ListCustomersQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, orders?: { __typename: 'OrderCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type ListCustomersQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', externalReference: string | null, id: string, email: string, firstName: string, lastName: string, defaultBillingAddress: { __typename: 'Address', id: string, companyName: string } | null, orders?: { __typename: 'OrderCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type CustomerDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];

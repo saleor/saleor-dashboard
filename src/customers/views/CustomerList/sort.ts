@@ -16,3 +16,11 @@ function getSortQueryField(sort: CustomerListUrlSortField): UserSortField | unde
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);
+
+const sortableColumns: CustomerListUrlSortField[] = Object.values(CustomerListUrlSortField).filter(
+  field => getSortQueryField(field) !== undefined,
+);
+
+/** Only columns backed by a `UserSortField` can be sorted, the API has no other ordering. */
+export const canBeSorted = (columnId: string): columnId is CustomerListUrlSortField =>
+  sortableColumns.some(field => field === columnId);
