@@ -1,0 +1,90 @@
+# The local-stack E2E suite: a disposable Saleor in docker, the dashboard built from this
+# branch, no Saleor Cloud involved.
+#
+# Dispatch-only for now. The suite is young, and a full run is dominated by a `vite build`
+# per target; putting it on every pull request before it has earned the time would mostly
+# buy queue. Moving it onto pull requests is a one-line change to the `on:` block.
+name: E2E (local stack)
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        type: choice
+        description: "Which Saleor to test against"
+        required: false
+        default: "both"
+        options:
+          - both
+          - stable
+          - main
+      grep:
+        type: string
+        description: "Playwright --grep filter (optional)"
+        required: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  e2e:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+
+    strategy:
+      # The targets are independent; a break in one is worth seeing alongside the other.
+      fail-fast: false
+      # Anything other than a single named target - "both", or a dispatch that sent no input
+      # at all - means run them both.
+      matrix:
+        target: ${{ fromJSON((inputs.target == 'stable' || inputs.target == 'main') &&
+          format('["{0}"]', inputs.target) || '["stable","main"]') }}
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: "package.json"
+          cache: "pnpm"
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run E2E
+        env:
+          E2E_TARGET: ${{ matrix.target }}
+          GREP: ${{ inputs.grep }}
+        run: |
+          # `pnpm run generate` runs both schemas; the staging tree is what the `main`
+          # target's bundle is built from, so it cannot be skipped for either target.
+          pnpm run generate
+          node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON e2e/run.ts \
+            --target="$E2E_TARGET" ${GREP:+--grep "$GREP"}
+
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: e2e-${{ matrix.target }}-report--attempt-${{ github.run_attempt }}
+          path: |
+            e2e/test-results
+            playwright-report
+          retention-days: 7
+
+      - name: Tear the stack down
+        if: always()
+        run: node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON e2e/run.ts --down --target=${{ matrix.target }}

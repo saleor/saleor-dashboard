@@ -141,7 +141,7 @@ runs:
         PREFIX="${ARTIFACT_PREFIX:+${ARTIFACT_PREFIX}-}"
         echo "reportName=${PREFIX}all-blob-reports-${SHARD_NUMBER%%/*}" >> "$GITHUB_OUTPUT"
         echo "ctrfReport=${PREFIX}ctrf-report-${SHARD_NUMBER%%/*}" >> "$GITHUB_OUTPUT"
-        pnpm exec playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
+        pnpm exec playwright test --config e2e-legacy/playwright.config.ts --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

@@ -244,7 +244,7 @@ The plugin supports iterative fixing - spawn another fixer agent with context ab
 # 9. Report results with verification commands
 
 # Verify fixes locally
-npx playwright test playwright/tests/attributes.spec.ts
+npx playwright test e2e-legacy/tests/attributes.spec.ts
 
 # Or trigger CI run
 gh workflow run run-test-manual.yml --ref my-branch
