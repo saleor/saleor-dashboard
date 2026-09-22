@@ -9,7 +9,7 @@
   "author": "Saleor Commerce",
   "main": "src/index.tsx",
   "scripts": {
-    "actionlint": "docker run --rm --volume \"$PWD\":/repo --workdir /repo rhysd/actionlint:1.7.12@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667",
+    "actionlint": "docker run --rm --volume \"$PWD\":/repo --workdir /repo docker.io/rhysd/actionlint:1.7.12@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667",
     "prebuild": "pnpm run generate",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "build-flags": "node scripts/build-flags.cjs",

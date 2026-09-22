@@ -51,11 +51,11 @@ jobs:
             git diff --name-only --diff-filter=ACMR "$BASE_SHA...$HEAD_SHA" -- '.github/workflows/**'
           )
 
-          if [[ ${#changed[@]} -eq 0 ]]; then
+          if [[ "${#changed[@]}" -eq 0 ]]; then
             echo "No workflow files changed."
             exit 0
           fi
 
           printf 'Linting:\n'
           printf '  %s\n' "${changed[@]}"
-          pnpm run actionlint -- -color "${changed[@]}"
+          pnpm run actionlint "${changed[@]}"

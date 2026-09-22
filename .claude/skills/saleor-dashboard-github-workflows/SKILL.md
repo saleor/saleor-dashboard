@@ -35,8 +35,13 @@ request **touches** — the repository predates the check and its older workflow
 still carry findings. Editing a workflow means inheriting whatever it already
 reports. Budget for that; do not silence it with `# actionlint-disable`.
 
-One gotcha: a `run:` comment whose first word is `shellcheck` is parsed as a
-shellcheck directive and fails the lint. Reword the comment.
+Two gotchas:
+
+- A `run:` comment whose first word is `shellcheck` is parsed as a shellcheck
+  directive and fails the lint. Reword the comment.
+- Do not write `pnpm run actionlint -- <files>`. pnpm forwards the `--` to the
+  script, where it is an end-of-options marker, so the next argument is read as a
+  file name. Pass arguments directly: `pnpm run actionlint <files>`.
 
 ## Never interpolate `${{ }}` into a `run:` block
 
@@ -111,6 +116,11 @@ run: |
   curl -fsSL -o tool.tar.gz "https://github.com/owner/tool/releases/download/v${TOOL_VERSION}/..."
   echo "${TOOL_SHA256}  tool.tar.gz" | sha256sum --check --strict
 ```
+
+A container image is the same idea: pin it by digest, and **write the registry
+host out in full**. `rhysd/actionlint` resolves under Docker, which assumes
+Docker Hub, but not under Podman, which does not guess a namespace it does not
+know. `docker.io/rhysd/actionlint:1.7.12@sha256:...` works under both.
 
 ## Runner images
 
