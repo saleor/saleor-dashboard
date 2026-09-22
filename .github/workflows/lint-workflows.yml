@@ -1,0 +1,68 @@
+# actionlint over the workflow files a pull request touches.
+#
+# Only the touched ones: the repository predates this check and its older workflows carry
+# findings of their own, so linting everything would fail every pull request regardless of
+# what it changed. Editing a workflow means inheriting whatever it already reports, which
+# keeps the blast radius to the file in front of you and retires the backlog as it is
+# touched. Switch to a bare `actionlint` once that backlog is empty.
+name: Lint workflows
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+env:
+  # Pinned, and the archive is checked against the digest published with that release.
+  ACTIONLINT_VERSION: 1.7.12
+  ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The diff against the merge base is what names the files to lint.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install actionlint
+        run: |
+          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL -o "$archive" \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/${archive}"
+          echo "${ACTIONLINT_SHA256}  ${archive}" | sha256sum --check --strict
+          tar -xzf "$archive" actionlint
+          install -m 0755 actionlint /usr/local/bin/actionlint
+
+      - name: Lint the workflows this pull request touches
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Deleted files cannot be linted, so only added/copied/modified/renamed ones.
+          mapfile -t changed < <(
+            git diff --name-only --diff-filter=ACMR "$BASE_SHA...$HEAD_SHA" -- '.github/workflows/**'
+          )
+
+          if [[ ${#changed[@]} -eq 0 ]]; then
+            echo "No workflow files changed."
+            exit 0
+          fi
+
+          printf 'Linting:\n'
+          printf '  %s\n' "${changed[@]}"
+          # actionlint shells out to the runner's preinstalled shellcheck for `run:` blocks.
+          actionlint -color "${changed[@]}"

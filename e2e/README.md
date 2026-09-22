@@ -136,8 +136,16 @@ in the serial phase.
 Specs that arrive **already signed in** are unaffected: a stored session refreshes its
 token, and nothing throttles that. Those are the ones worth tagging.
 
-The block lives in Django's cache, so `SALEOR_CACHE_URL=dummy://` removes it, and the login
-spec then passes 15-wide in 35s rather than 1.2m. It is offered as a lever, not a default,
+There is no setting for it. `authenticate_with_throttling` is called unconditionally from
+`CreateToken.get_user` (`saleor/graphql/account/mutations/authentication/create_token.py:53`),
+nothing in `settings.py` guards it, and the delays are module constants rather than settings
+(`MIN_DELAY`/`MAX_DELAY` in `saleor/account/throttling.py:14-16`). The image exposes no env
+var to turn it off.
+
+What it does use is the default Django cache (`throttling.py:5`), which Saleor builds from
+`CACHE_URL` (`settings.py:987-992`). Pointing that at a dummy backend therefore removes the
+block — `cache.add` always succeeds and stores nothing — so `SALEOR_CACHE_URL=dummy://` makes
+the login spec pass 15-wide in 35s rather than 1.2m. It is offered as a lever, not a default,
 because it disables Saleor's cache _everywhere_ — app dataloaders, the webhook circuit
 breaker, observability — and a suite whose Saleor is configured unlike production can
 mislead about exactly the features that depend on those.

@@ -47,14 +47,28 @@ export const STAFF_PASSWORD = "password";
 
 /**
  * Opts a block into the parallel phase for a scenario: `{ tag: parallel() }` on a
- * `describe`, or on a single test.
+ * `describe`, or on a single test. Untagged is the default and means serial.
  *
  * A tagged test gets no reset of its own. Its whole group shares one database, restored
  * once before the group starts, so every test in it must leave nothing behind that another
  * test in the group - or a later one - could notice.
  *
  * The argument names the database state the group runs on, which is a scenario, so the
- * group and the scenario are the same thing and cannot disagree. Groups run one after
+ * group and the scenario are the same thing and cannot disagree.
+ *
+ * Tests tagged for the same scenario are one group however far apart they are written, so
+ * seven tests - 1-3 tagged, 4 untagged, 5-7 tagged - run as:
+ *
+ *   restore, then 1 2 3 5 6 7 together   <- one group, one restore
+ *   restore, then 4                      <- serial, its own restore
+ *
+ * Two restores. The tagged tests do not run in two sittings around test 4, because the
+ * order between independent tests carries no meaning and splitting them would cost a third
+ * restore for nothing. What is guaranteed is the part that matters: a serial test never
+ * overlaps a parallel one, and never shares a database with anything.
+ *
+ * Tagging 5-7 as `parallel("other")` instead does split them - into a second group with a
+ * second restore, because they asked for a different database state. Groups run one after
  * another, each after its own restore; ungrouped tests run last, one at a time.
  */
 export const parallel = (scenario = "default"): string => `@parallel:${scenario}`;
