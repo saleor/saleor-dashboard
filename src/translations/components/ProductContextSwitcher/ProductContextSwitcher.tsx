@@ -1,12 +1,25 @@
+import { useProductTranslationContextQuery } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import {
   type ProductVariantSibling,
   useProductVariantSiblings,
 } from "@dashboard/products/hooks/useProductVariantSiblings";
 import { Box, DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 import { messages } from "./messages";
+
+type ProductContextSwitcherItemType = "main" | "variant" | "media";
+
+interface ProductContextMedia {
+  id: string;
+  alt: string;
+}
+
+interface ProductContextOption extends Option {
+  type: ProductContextSwitcherItemType;
+}
 
 interface ProductContextSwitcherProps {
   productId: string;
@@ -17,7 +30,8 @@ interface ProductContextSwitcherProps {
    * the combobox can keep the current value visible until scroll loads it.
    */
   selectedVariant?: Pick<ProductVariantSibling, "id" | "name" | "sku"> | null;
-  onItemChange: (id: string, type: "variant" | "main") => void;
+  selectedMedia?: ProductContextMedia | null;
+  onItemChange: (id: string, type: ProductContextSwitcherItemType) => void;
 }
 
 const toSibling = (
@@ -30,16 +44,29 @@ const toSibling = (
   media: null,
 });
 
-const variantOptionLabel = (variant: Pick<ProductVariantSibling, "id" | "name" | "sku">): string =>
-  variant.name || variant.sku || variant.id;
+const variantOptionLabel = (
+  variant: Pick<ProductVariantSibling, "id" | "name" | "sku">,
+  intl: IntlShape,
+): string =>
+  intl.formatMessage(messages.productVariant, {
+    name: variant.name || variant.sku || variant.id,
+  });
+
+const mediaOptionLabel = (media: ProductContextMedia, number: number, intl: IntlShape): string => {
+  const alt = media.alt.trim();
+
+  return alt
+    ? intl.formatMessage(messages.productMediaWithAlt, { alt, number })
+    : intl.formatMessage(messages.productMedia, { number });
+};
 
 /**
  * Downshift treats selectedItem by reference (itemToKey defaults to identity).
  * A new Option object on each options refresh rewrites the input back to the
  * selected label — keep the same reference while value/label are unchanged.
  */
-const useStableOption = (option: Option | null): Option | null => {
-  const ref = useRef<Option | null>(null);
+const useStableOption = <T extends Option>(option: T | null): T | null => {
+  const ref = useRef<T | null>(null);
 
   if (!option) {
     ref.current = null;
@@ -58,10 +85,12 @@ export const ProductContextSwitcher = ({
   productId,
   selectedId,
   selectedVariant = null,
+  selectedMedia = null,
   disabled,
   onItemChange,
 }: ProductContextSwitcherProps) => {
   const intl = useIntl();
+  const mediaTranslationsEnabled = isMainSchema();
   const mainProductLabel = intl.formatMessage(messages.mainProduct);
   /**
    * `undefined` = show the committed translation target.
@@ -69,7 +98,20 @@ export const ProductContextSwitcher = ({
    * Do not clear selection on every keystroke — that sets value→null and Downshift
    * resets inputValue to itemToString(null) (""), wiping the query.
    */
-  const [selectionOverride, setSelectionOverride] = useState<Option | null | undefined>(undefined);
+  const [selectionOverride, setSelectionOverride] = useState<
+    ProductContextOption | null | undefined
+  >(undefined);
+
+  const { data: contextData } = useProductTranslationContextQuery({
+    displayLoader: false,
+    skip: !mediaTranslationsEnabled || !productId,
+    variables: { id: productId },
+  });
+  const productTranslation = contextData?.translation;
+  const media =
+    mediaTranslationsEnabled && productTranslation?.__typename === "ProductTranslatableContent"
+      ? (productTranslation.product?.media ?? [])
+      : [];
 
   const currentVariant = useMemo(() => {
     if (!selectedVariant || selectedVariant.id === productId) {
@@ -98,20 +140,21 @@ export const ProductContextSwitcher = ({
     setSelectionOverride(undefined);
   }, [selectedId]);
 
-  const mainProductOption = useMemo<Option>(
-    () => ({ label: mainProductLabel, value: productId }),
+  const mainProductOption = useMemo<ProductContextOption>(
+    () => ({ label: mainProductLabel, value: productId, type: "main" }),
     [mainProductLabel, productId],
   );
 
   const options = useMemo(() => {
-    const variantOptions: Option[] = [];
+    const variantOptions: ProductContextOption[] = [];
     const seen = new Set<string>();
 
     if (offPageCurrent) {
       seen.add(offPageCurrent.id);
       variantOptions.push({
-        label: variantOptionLabel(offPageCurrent),
+        label: variantOptionLabel(offPageCurrent, intl),
         value: offPageCurrent.id,
+        type: "variant",
       });
     }
 
@@ -122,28 +165,51 @@ export const ProductContextSwitcher = ({
 
       seen.add(variant.id);
       variantOptions.push({
-        label: variantOptionLabel(variant),
+        label: variantOptionLabel(variant, intl),
         value: variant.id,
+        type: "variant",
       });
     }
 
+    const normalizedSearch = search.trim().toLocaleLowerCase();
+    const mediaOptions = media
+      .map<ProductContextOption>((mediaItem, index) => ({
+        label: mediaOptionLabel(mediaItem, index + 1, intl),
+        value: mediaItem.id,
+        type: "media",
+      }))
+      .filter(
+        option => !normalizedSearch || option.label.toLocaleLowerCase().includes(normalizedSearch),
+      );
+
     // Keep Main Product at the top when not filtering by search.
     if (!search.trim()) {
-      return [mainProductOption, ...variantOptions];
+      return [mainProductOption, ...variantOptions, ...mediaOptions];
     }
 
-    return variantOptions;
-  }, [mainProductOption, offPageCurrent, search, variants]);
+    return [...variantOptions, ...mediaOptions];
+  }, [intl, mainProductOption, media, offPageCurrent, search, variants]);
 
-  const selectedOption = useMemo<Option | null>(() => {
+  const selectedOption = useMemo<ProductContextOption | null>(() => {
     if (selectedId === productId) {
       return mainProductOption;
     }
 
     if (selectedVariant && selectedVariant.id === selectedId) {
       return {
-        label: variantOptionLabel(selectedVariant),
+        label: variantOptionLabel(selectedVariant, intl),
         value: selectedId,
+        type: "variant",
+      };
+    }
+
+    if (selectedMedia && selectedMedia.id === selectedId) {
+      const mediaIndex = media.findIndex(mediaItem => mediaItem.id === selectedMedia.id);
+
+      return {
+        label: mediaOptionLabel(selectedMedia, mediaIndex >= 0 ? mediaIndex + 1 : 1, intl),
+        value: selectedId,
+        type: "media",
       };
     }
 
@@ -157,9 +223,19 @@ export const ProductContextSwitcher = ({
       ? {
           label: selectedId,
           value: selectedId,
+          type: "variant",
         }
       : null;
-  }, [mainProductOption, options, productId, selectedId, selectedVariant]);
+  }, [
+    intl,
+    mainProductOption,
+    media,
+    options,
+    productId,
+    selectedId,
+    selectedMedia,
+    selectedVariant,
+  ]);
 
   const stableSelectedOption = useStableOption(selectedOption);
   const value = selectionOverride !== undefined ? selectionOverride : stableSelectedOption;
@@ -171,7 +247,7 @@ export const ProductContextSwitcher = ({
   }, [hasNextPage, loadMore, loadingMore]);
 
   const handleChange = useCallback(
-    (option: Option | null) => {
+    (option: ProductContextOption | null) => {
       if (!option) {
         setSelectionOverride(null);
 
@@ -180,9 +256,9 @@ export const ProductContextSwitcher = ({
 
       setSelectionOverride(undefined);
       setSearch("");
-      onItemChange(option.value, option.value === productId ? "main" : "variant");
+      onItemChange(option.value, option.type);
     },
-    [onItemChange, productId, setSearch],
+    [onItemChange, setSearch],
   );
 
   const handleBlur = useCallback(() => {

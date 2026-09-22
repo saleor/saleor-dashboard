@@ -55,5 +55,16 @@ export const productVariantUrl = (code: string, productId: string, variantId: st
     variantId,
   );
 
+export const productMediaPathSegment = "media";
+
+export const productMediaUrl = (code: string, productId: string, mediaId: string) =>
+  languageEntityPath(
+    code,
+    TranslatableEntities.products,
+    encodeURIComponent(productId),
+    productMediaPathSegment,
+    encodeURIComponent(mediaId),
+  );
+
 export const productUrl = (code: string, productId: string) =>
   languageEntityUrl(code, TranslatableEntities.products, productId);

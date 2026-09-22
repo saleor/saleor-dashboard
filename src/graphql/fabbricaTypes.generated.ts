@@ -14468,6 +14468,14 @@ export type Mutation = {
    */
   productMediaReorder: Maybe<ProductMediaReorder>;
   /**
+   * Creates or updates a product media translation.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_TRANSLATIONS.
+   */
+  productMediaTranslate: Maybe<ProductMediaTranslate>;
+  /**
    * Updates a product media.
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -16620,6 +16628,13 @@ export type MutationProductMediaDeleteArgs = {
 export type MutationProductMediaReorderArgs = {
   mediaIds: Array<Scalars['ID']['input']>;
   productId: Scalars['ID']['input'];
+};
+
+
+export type MutationProductMediaTranslateArgs = {
+  id: Scalars['ID']['input'];
+  input: ProductMediaTranslationInput;
+  languageCode: LanguageCodeEnum;
 };
 
 
@@ -22995,6 +23010,12 @@ export type ProductMedia = Node & ObjectWithMetadata & {
   productId: Maybe<Scalars['ID']['output']>;
   /** The sort order of the media. */
   sortOrder: Maybe<Scalars['Int']['output']>;
+  /**
+   * Returns translated product media fields for the given language code.
+   *
+   * Added in Saleor 3.23.
+   */
+  translation: Maybe<ProductMediaTranslation>;
   /** The type of the media. */
   type: ProductMediaType;
   /** The URL of the media. */
@@ -23023,6 +23044,12 @@ export type ProductMediaPrivateMetafieldArgs = {
 /** Represents a product media. */
 export type ProductMediaPrivateMetafieldsArgs = {
   keys: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+
+/** Represents a product media. */
+export type ProductMediaTranslationArgs = {
+  languageCode: LanguageCodeEnum;
 };
 
 
@@ -23127,6 +23154,96 @@ export type ProductMediaReorder = {
   product: Maybe<Product>;
   /** @deprecated Use `errors` field instead. */
   productErrors: Array<ProductError>;
+};
+
+/**
+ * Represents product media's original translatable fields and related translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslatableContent = Node & {
+  __typename: 'ProductMediaTranslatableContent';
+  /** Product media alt text to translate. */
+  alt: Scalars['String']['output'];
+  /** The ID of the product media translatable content. */
+  id: Scalars['ID']['output'];
+  /** Represents a product media. */
+  productMedia: Maybe<ProductMedia>;
+  /** The ID of the product media to translate. */
+  productMediaId: Scalars['ID']['output'];
+  /** Returns translated product media fields for the given language code. */
+  translation: Maybe<ProductMediaTranslation>;
+};
+
+
+/**
+ * Represents product media's original translatable fields and related translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslatableContentTranslationArgs = {
+  languageCode: LanguageCodeEnum;
+};
+
+/**
+ * Creates or updates a product media translation.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_TRANSLATIONS.
+ */
+export type ProductMediaTranslate = {
+  __typename: 'ProductMediaTranslate';
+  errors: Array<ProductMediaTranslateError>;
+  productMedia: Maybe<ProductMedia>;
+};
+
+/**
+ * Represents an error in product media translation input.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslateError = {
+  __typename: 'ProductMediaTranslateError';
+  /** The error code. */
+  code: ProductMediaTranslateErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']['output']>;
+};
+
+export type ProductMediaTranslateErrorCode =
+  | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'NOT_FOUND'
+  | 'REQUIRED';
+
+/**
+ * Represents product media translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslation = Node & {
+  __typename: 'ProductMediaTranslation';
+  /** Translated product media alt text. */
+  alt: Scalars['String']['output'];
+  /** The ID of the product media translation. */
+  id: Scalars['ID']['output'];
+  /** Translation language. */
+  language: LanguageDisplay;
+  /** Represents the product media fields to translate. */
+  translatableContent: Maybe<ProductMediaTranslatableContent>;
+};
+
+/**
+ * Fields required to translate product media.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslationInput = {
+  /** Translated product media alt text. */
+  alt: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductMediaType =
@@ -31588,7 +31705,7 @@ export type TransactionWhereInput = {
   pspReference: InputMaybe<StringFilterInput>;
 };
 
-export type TranslatableItem = AttributeTranslatableContent | AttributeValueTranslatableContent | CategoryTranslatableContent | CollectionTranslatableContent | MenuItemTranslatableContent | PageTranslatableContent | ProductTranslatableContent | ProductVariantTranslatableContent | PromotionRuleTranslatableContent | PromotionTranslatableContent | SaleTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent;
+export type TranslatableItem = AttributeTranslatableContent | AttributeValueTranslatableContent | CategoryTranslatableContent | CollectionTranslatableContent | MenuItemTranslatableContent | PageTranslatableContent | ProductMediaTranslatableContent | ProductTranslatableContent | ProductVariantTranslatableContent | PromotionRuleTranslatableContent | PromotionTranslatableContent | SaleTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent;
 
 export type TranslatableItemConnection = {
   __typename: 'TranslatableItemConnection';
@@ -31615,6 +31732,7 @@ export type TranslatableKinds =
   | 'MENU_ITEM'
   | 'PAGE'
   | 'PRODUCT'
+  | 'PRODUCT_MEDIA'
   | 'PROMOTION'
   | 'PROMOTION_RULE'
   | 'SALE'
@@ -31667,7 +31785,7 @@ export type TranslationInput = {
   slug: InputMaybe<Scalars['String']['input']>;
 };
 
-export type TranslationTypes = AttributeTranslation | AttributeValueTranslation | CategoryTranslation | CollectionTranslation | MenuItemTranslation | PageTranslation | ProductTranslation | ProductVariantTranslation | PromotionRuleTranslation | PromotionTranslation | SaleTranslation | ShippingMethodTranslation | VoucherTranslation;
+export type TranslationTypes = AttributeTranslation | AttributeValueTranslation | CategoryTranslation | CollectionTranslation | MenuItemTranslation | PageTranslation | ProductMediaTranslation | ProductTranslation | ProductVariantTranslation | PromotionRuleTranslation | PromotionTranslation | SaleTranslation | ShippingMethodTranslation | VoucherTranslation;
 
 /** Event sent when translation is updated. */
 export type TranslationUpdated = Event & {
