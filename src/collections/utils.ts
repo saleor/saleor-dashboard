@@ -1,12 +1,9 @@
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { type SearchProductsQuery } from "@dashboard/graphql";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-export type CollectionChannelListingFields = Pick<
-  ChannelCollectionData,
-  "isPublished" | "publishedAt"
->;
+type CollectionChannelListingFields = Pick<ChannelCollectionData, "isPublished" | "publishedAt">;
 
 /**
  * DateTimeTimezoneField emits UTC with a `Z` suffix; Saleor often returns the same
@@ -38,7 +35,7 @@ export const areCollectionPublishedAtEqual = (
   return leftTime === rightTime;
 };
 
-export const areCollectionChannelFieldsDifferent = (
+const areCollectionChannelFieldsDifferent = (
   current: CollectionChannelListingFields,
   baseline: CollectionChannelListingFields,
 ): boolean => {
@@ -142,7 +139,7 @@ export const getProductsFromSearchResults = (searchResults: SearchProductsQuery 
 };
 
 /** Only the shape the check reads, so a full search product satisfies it structurally. */
-export interface ProductCollections {
+interface ProductCollections {
   collections?: Array<{ id: string }> | null;
 }
 

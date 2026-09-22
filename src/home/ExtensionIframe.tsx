@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { APP_VERSION } from "@dashboard/config";
 import { IframePost } from "@dashboard/extensions/components/IframePost/IframePost";
 import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
@@ -51,6 +51,7 @@ export const ExtensionIframe = ({
           extensionUrl={extensionUrl}
           height={height}
           loaderType={loaderType}
+          refetch={extension.refetch}
         />
       </Box>
     );
@@ -64,6 +65,7 @@ export const ExtensionIframe = ({
         appToken={extension.accessToken}
         appId={extension.app.id}
         dashboardVersion={APP_VERSION}
+        refetch={extension.refetch}
       />
     </Box>
   );

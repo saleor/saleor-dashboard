@@ -1,4 +1,4 @@
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
 import {
   type AttributeDetailsQuery,
   AttributeInputTypeEnum,
@@ -11,7 +11,6 @@ type Attribute = NonNullable<AttributeDetailsQuery["attribute"]>;
 
 export interface AttributeUpdateComparableData {
   availableInGrid: boolean;
-  filterableInDashboard: boolean;
   filterableInStorefront: boolean;
   name: string;
   referenceTypes: string[];
@@ -30,7 +29,6 @@ export function getAttributePageInitialForm(
     return {
       availableInGrid: true,
       entityType: null,
-      filterableInDashboard: true,
       filterableInStorefront: true,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       metadata: [],
@@ -47,16 +45,17 @@ export function getAttributePageInitialForm(
   }
 
   return {
-    availableInGrid: attribute.availableInGrid,
+    // Faceted navigation settings are absent on the 3.24 schema, which does not select them.
+    // The form fields they back are gated behind isMainSchema().
+    availableInGrid: attribute.availableInGrid ?? true,
     entityType: attribute.entityType,
-    filterableInDashboard: attribute.filterableInDashboard,
-    filterableInStorefront: attribute.filterableInStorefront,
+    filterableInStorefront: attribute.filterableInStorefront ?? true,
     inputType: attribute.inputType ?? AttributeInputTypeEnum.DROPDOWN,
     metadata: [],
     name: attribute.name ?? "",
     privateMetadata: [],
     slug: attribute.slug ?? "",
-    storefrontSearchPosition: attribute.storefrontSearchPosition.toString(),
+    storefrontSearchPosition: attribute.storefrontSearchPosition?.toString() ?? "",
     type: attribute.type ?? AttributeTypeEnum.PRODUCT_TYPE,
     valueRequired: !!attribute.valueRequired,
     visibleInStorefront: attribute.visibleInStorefront,
@@ -73,7 +72,6 @@ export function getAttributeUpdateComparableData(
 
   return {
     availableInGrid: data.availableInGrid,
-    filterableInDashboard: data.filterableInDashboard,
     filterableInStorefront: data.filterableInStorefront,
     name: data.name,
     referenceTypes: [...data.referenceTypes.map(ref => ref.value)].sort(),

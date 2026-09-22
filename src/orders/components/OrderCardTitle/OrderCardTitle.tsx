@@ -22,7 +22,7 @@ type BaseOrderCardTitleProps = {
   hasToolbarMenu?: boolean;
 };
 
-export type OrderCardTitleProps = BaseOrderCardTitleProps & {
+type OrderCardTitleProps = BaseOrderCardTitleProps & {
   createdDate?: string;
   trackingNumber?: string;
   warehouseName?: string;
@@ -44,7 +44,7 @@ export const OrderCardTitle = ({
   restockWarehouseId,
   backgroundColor = "default1",
   hasToolbarMenu = false,
-}: OrderCardTitleProps): JSX.Element => {
+}: OrderCardTitleProps): React.ReactNode => {
   const intl = useIntl();
   const sourceWarehouseVariant =
     status === FulfillmentStatus.CANCELED ? "shippedFrom" : "fulfilledFrom";

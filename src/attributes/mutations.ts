@@ -60,6 +60,17 @@ export const attributeValueDelete = gql`
   }
 `;
 
+export const attributeValueBulkDelete = gql`
+  mutation AttributeValueBulkDelete($ids: [ID!]!) {
+    attributeValueBulkDelete(ids: $ids) {
+      count
+      errors {
+        ...AttributeError
+      }
+    }
+  }
+`;
+
 export const attributeValueUpdateMutation = gql`
   mutation AttributeValueUpdate(
     $id: ID!

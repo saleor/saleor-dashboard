@@ -1,4 +1,4 @@
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { type ChannelFragment, RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 
 export const channels = [

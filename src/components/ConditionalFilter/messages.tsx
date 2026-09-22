@@ -2,9 +2,9 @@ import { defineMessages, useIntl } from "react-intl";
 
 export const conditionalFilterMessages = defineMessages({
   popoverTrigger: {
-    defaultMessage: "Filters {count, plural, =0 {} other {({count})} }",
-    id: "RZDxej",
-    description: "Popover trigger text (button)",
+    defaultMessage: "Filters",
+    id: "FNpv6K",
+    description: "button",
   },
   popoverTitle: {
     defaultMessage: "Conditions",
@@ -31,10 +31,25 @@ export const conditionalFilterMessages = defineMessages({
     id: "pTOnzt",
     description: "Apply filters button text in modal picker",
   },
+  addCondition: {
+    defaultMessage: "Add condition",
+    id: "xzqW+K",
+    description: "Add condition button on the list filter panel",
+  },
+  closePanel: {
+    defaultMessage: "Close",
+    id: "9exKzi",
+    description: "Close the list filter panel without clearing applied filters",
+  },
+  applyPanelFilters: {
+    defaultMessage: "Apply",
+    id: "FK088X",
+    description: "Apply filters from the list filter panel",
+  },
   emptyFilters: {
-    defaultMessage: "Add filter to start",
-    id: "B5KI59",
-    description: "Empty filters text",
+    id: "4IVdnm",
+    defaultMessage: "No filters",
+    description: "Empty state when the filter panel or modal has no conditions",
   },
   filterWhereElement: {
     defaultMessage: "Where",
@@ -58,9 +73,12 @@ export const useFiltersAreaTranslations = () => {
 
   return {
     addFilter: formatMessage(conditionalFilterMessages.addFilter),
+    addCondition: formatMessage(conditionalFilterMessages.addCondition),
     clearFilters: formatMessage(conditionalFilterMessages.clearFilters),
+    closePanel: formatMessage(conditionalFilterMessages.closePanel),
     saveFilters: formatMessage(conditionalFilterMessages.saveFilters),
     applyFilters: formatMessage(conditionalFilterMessages.applyFilters),
+    applyPanelFilters: formatMessage(conditionalFilterMessages.applyPanelFilters),
     locale: {
       WHERE: formatMessage(conditionalFilterMessages.filterWhereElement),
       AND: formatMessage(conditionalFilterMessages.filterAndElement),

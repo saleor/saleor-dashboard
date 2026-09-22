@@ -2,8 +2,8 @@ import { useApolloClient } from "@apollo/client";
 import { useCategorySelectionController } from "@dashboard/categories/views/CategoryList/hooks/useCategorySelectionController";
 import { useCategoryTreeController } from "@dashboard/categories/views/CategoryList/hooks/useCategoryTreeController";
 import { collectDescendantIds } from "@dashboard/categories/views/CategoryList/utils/categoryTree";
-import { Pagination } from "@dashboard/collections/components/CollectionProducts/Pagination";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import { PAGINATE_BY } from "@dashboard/config";
 import { type CategoryDetailsQuery } from "@dashboard/graphql";
 import { type ListProps, type ListViews, type RelayToFlat } from "@dashboard/types";
@@ -12,7 +12,7 @@ import { type Dispatch, type SetStateAction, useCallback, useState } from "react
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
-import { CategoryListDatagrid } from "../CategoryListDatagrid";
+import { CategoryListDatagrid } from "../CategoryListDatagrid/CategoryListDatagrid";
 import styles from "./CategorySubcategories.module.css";
 import { messages } from "./messages";
 
@@ -45,7 +45,7 @@ export const CategorySubcategories = ({
   setClearDatagridRowSelectionCallback,
   settings,
   onUpdateListSettings,
-}: CategorySubcategoriesProps): JSX.Element => {
+}: CategorySubcategoriesProps): React.ReactNode => {
   const client = useApolloClient();
   const location = useLocation();
   const [storedExpandedIds, setStoredExpandedIds] = useState<string[]>([]);
@@ -161,7 +161,12 @@ export const CategorySubcategories = ({
           ) : null}
           <Box className={styles.actions}>
             {hasSubcategories && selectedCategoryIds.length > 0 ? (
-              <BulkDeleteButton onClick={onCategoriesDelete} disabled={disabled}>
+              <BulkDeleteButton
+                count={selectedCategoryIds.length}
+                onClick={onCategoriesDelete}
+                disabled={disabled}
+                size="small"
+              >
                 <FormattedMessage {...messages.deleteSelected} />
               </BulkDeleteButton>
             ) : null}
@@ -179,12 +184,11 @@ export const CategorySubcategories = ({
       </Box>
 
       {hasSubcategories ? (
-        <Box className={styles.pagination}>
-          <Pagination
-            numberOfRows={numberOfRows}
-            onUpdateListSettings={(key, value) => onUpdateListSettings?.(key, value)}
-          />
-        </Box>
+        <AssignableListPagination
+          inset="nested"
+          numberOfRows={numberOfRows}
+          onUpdateListSettings={(key, value) => onUpdateListSettings?.(key, value)}
+        />
       ) : null}
     </Box>
   );

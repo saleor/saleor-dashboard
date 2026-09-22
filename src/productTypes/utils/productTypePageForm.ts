@@ -1,25 +1,30 @@
 import { type ProductTypeKindEnum } from "@dashboard/graphql";
 import { type ProductTypeForm } from "@dashboard/productTypes/components/ProductTypeDetailsPage/ProductTypeDetailsPage";
-import isEqual from "lodash/isEqual";
-
-export interface ProductTypeUpdateComparableData {
-  name: string;
-  kind: ProductTypeKindEnum;
-  isShippingRequired: boolean;
-  taxClassId: string;
-  weight: number | undefined;
-  variantSelection: string[];
-}
+import {
+  buildProductTypeSaveComposition,
+  hasProductTypeSaveComposition,
+} from "@dashboard/productTypes/components/ProductTypeDetailsPage/saveComposition";
 
 interface AssignedVariantAttribute {
   variantSelection: boolean;
   attribute: {
     id: string;
+    name?: string | null;
   };
 }
 
-export function getVariantSelectionIds(selectedVariantAttributes: string[]): string[] {
-  return [...selectedVariantAttributes].sort();
+interface ProductTypeAttributeNameSource {
+  productAttributes?: Array<{ id: string; name?: string | null }> | null;
+  variantAttributes?: Array<{ id: string; name?: string | null }> | null;
+  assignedVariantAttributes?: AssignedVariantAttribute[] | null;
+}
+
+export interface ProductTypeSaveInput {
+  isShippingRequired: boolean;
+  name: string;
+  kind: ProductTypeKindEnum;
+  taxClass: string | null;
+  weight: number | undefined;
 }
 
 export function getVariantSelectionFromAssigned(
@@ -31,18 +36,61 @@ export function getVariantSelectionFromAssigned(
     .sort();
 }
 
-export function getProductTypeUpdateComparableData(
-  data: ProductTypeForm,
-  selectedVariantAttributes: string[],
-): ProductTypeUpdateComparableData {
+export function findProductTypeAttributeName(
+  productType: ProductTypeAttributeNameSource | null | undefined,
+  attributeId: string | null | undefined,
+): string | undefined {
+  if (!productType || !attributeId) {
+    return undefined;
+  }
+
+  const productName = productType.productAttributes?.find(
+    attribute => attribute.id === attributeId,
+  )?.name;
+
+  if (productName) {
+    return productName;
+  }
+
+  const assignedName = productType.assignedVariantAttributes?.find(
+    item => item.attribute.id === attributeId,
+  )?.attribute.name;
+
+  if (assignedName) {
+    return assignedName;
+  }
+
+  return (
+    productType.variantAttributes?.find(attribute => attribute.id === attributeId)?.name ??
+    undefined
+  );
+}
+
+/**
+ * Save writes general / shipping / taxes only. Attribute membership and
+ * `hasVariants` are live mutations — sending those lists from stale form
+ * state re-assigns attributes the merchant just unassigned.
+ */
+export function buildProductTypeSaveInput(
+  data: Pick<ProductTypeForm, "isShippingRequired" | "name" | "kind" | "taxClassId" | "weight">,
+): ProductTypeSaveInput {
   return {
+    isShippingRequired: data.isShippingRequired,
     name: data.name,
     kind: data.kind,
-    isShippingRequired: data.isShippingRequired,
-    taxClassId: data.taxClassId,
+    taxClass: data.taxClassId || null,
     weight: data.weight,
-    variantSelection: getVariantSelectionIds(selectedVariantAttributes),
   };
+}
+
+export function buildVariantSelectionOperations(
+  assignedVariantAttributes: AssignedVariantAttribute[] | null | undefined,
+  selectedVariantAttributes: string[],
+): Array<{ id: string; variantSelection: boolean }> {
+  return (assignedVariantAttributes ?? []).map(item => ({
+    id: item.attribute.id,
+    variantSelection: selectedVariantAttributes.includes(item.attribute.id),
+  }));
 }
 
 export function isProductTypeUpdateFormPristine(
@@ -51,8 +99,12 @@ export function isProductTypeUpdateFormPristine(
   selectedVariantAttributes: string[],
   initialVariantSelection: string[],
 ): boolean {
-  return isEqual(
-    getProductTypeUpdateComparableData(data, selectedVariantAttributes),
-    getProductTypeUpdateComparableData(initialData, initialVariantSelection),
+  return !hasProductTypeSaveComposition(
+    buildProductTypeSaveComposition(
+      data,
+      initialData,
+      selectedVariantAttributes,
+      initialVariantSelection,
+    ),
   );
 }

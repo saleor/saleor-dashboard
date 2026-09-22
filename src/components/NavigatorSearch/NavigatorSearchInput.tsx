@@ -5,13 +5,27 @@ import { Box, sprinkles } from "@saleor/macaw-ui-next";
 import { Search } from "lucide-react";
 import type * as React from "react";
 import { useState } from "react";
+import { defineMessages, useIntl } from "react-intl";
+
+import { NAVIGATOR_SEARCH_INPUT_ID, NAVIGATOR_SEARCH_LISTBOX_ID } from "./consts";
+
+const messages = defineMessages({
+  searchPlaceholder: {
+    id: "QTuSw/",
+    defaultMessage: "Search",
+    description: "navigator search input placeholder",
+  },
+});
 
 interface NavigatorSearchInputProps {
   onSearch: (query: string) => void;
   value: string;
+  /** Whether the results listbox is displayed; mirrored to `aria-expanded`. */
+  isExpanded: boolean;
 }
 
-const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) => {
+const NavigatorSearchInput = ({ onSearch, value, isExpanded }: NavigatorSearchInputProps) => {
+  const intl = useIntl();
   const [inputValue, setInputValue] = useState(value);
   const onSearchDebounced = useDebounce(onSearch);
 
@@ -19,6 +33,8 @@ const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) =>
     setInputValue(e.target.value);
     onSearchDebounced(e.target.value);
   };
+
+  const label = intl.formatMessage(messages.searchPlaceholder);
 
   return (
     <Box
@@ -40,9 +56,12 @@ const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) =>
         })}
       />
       <Box
-        id="navigator-search-input"
+        id={NAVIGATOR_SEARCH_INPUT_ID}
         as="input"
-        role="input"
+        type="text"
+        // `combobox` is the only role that legally carries the popup attributes
+        // below; `aria-activedescendant` is managed by useCommandMenuInput.
+        role="combobox"
         autoFocus
         onChange={handleSearch}
         value={inputValue}
@@ -54,9 +73,11 @@ const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) =>
           backgroundColor: "transparent",
           padding: 0,
         }}
-        placeholder="Search"
-        aria-activedescendant="/orders/"
-        aria-expanded
+        placeholder={label}
+        aria-label={label}
+        aria-autocomplete="list"
+        aria-controls={NAVIGATOR_SEARCH_LISTBOX_ID}
+        aria-expanded={isExpanded}
       />
     </Box>
   );

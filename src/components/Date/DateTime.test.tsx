@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { render, screen } from "@testing-library/react";
 
-import { TimezoneProvider } from "../Timezone";
+import { TimezoneProvider } from "../Timezone/Timezone";
 import { DateTime } from "./DateTime";
 
 const testDateTime = "2024-01-15T14:30:00Z";

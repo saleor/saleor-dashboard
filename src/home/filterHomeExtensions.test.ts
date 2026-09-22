@@ -13,6 +13,7 @@ const buildExtension = (overrides: Partial<Extension>): Extension => ({
   app: {
     __typename: "App",
     id: "app-1",
+    identifier: null,
     appUrl: "https://app.example",
     name: "App 1",
     brand: null,
@@ -177,6 +178,7 @@ describe("filterHomeExtensions", () => {
         app: {
           __typename: "App",
           id: "app-1",
+          identifier: null,
           appUrl: null,
           name: "App 1",
           brand: null,

@@ -1,6 +1,6 @@
 import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 import { useFileUploadMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { errorMessages } from "@dashboard/intl";
 import { useState } from "react";
 import { useIntl } from "react-intl";

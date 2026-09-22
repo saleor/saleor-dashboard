@@ -20,7 +20,7 @@ const ExitFormDialog = ({
   onClose,
   isOpen,
   description,
-}: ExitFormDialogProps): JSX.Element => {
+}: ExitFormDialogProps): React.ReactNode => {
   const intl = useIntl();
   // Ignore-changes calls onLeave, which sets `open` false. Modal onChange(false) must not
   // also run onClose ("keep editing") — that clears the pending navigation target.

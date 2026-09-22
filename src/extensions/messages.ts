@@ -119,6 +119,11 @@ export const infoMessages = defineMessages({
     defaultMessage: "Grant this extension full access to the store",
     id: "Yuv3Ou",
   },
+  newExtension: {
+    defaultMessage: "New",
+    id: "JBglRB",
+    description: "badge on recently installed extension",
+  },
 });
 
 export const formLabels = defineMessages({
@@ -632,6 +637,11 @@ export const localAppErrorMessages = defineMessages({
 });
 
 export const appMessages = defineMessages({
+  failedToResolveAppIdentifier: {
+    defaultMessage: "Couldn’t open this extension. Try again.",
+    id: "3orvWR",
+    description: "error when resolving an app manifest identifier from the URL fails",
+  },
   failedToFetchAppSettings: {
     id: "S1u2pa",
     defaultMessage: "Failed to fetch extension settings",

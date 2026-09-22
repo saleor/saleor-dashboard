@@ -1,12 +1,13 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import { LIST_INSET_ROW_MARKER_WIDTH } from "@dashboard/components/Datagrid/const";
 import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { type Customer, type Customers } from "@dashboard/customers/types";
 import { type CustomerListUrlSortField } from "@dashboard/customers/urls";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -27,6 +28,7 @@ interface CustomerListDatagridProps extends ListProps, SortPage<CustomerListUrlS
   onSelectCustomerIds: (rowsIndex: number[], clearSelection: () => void) => void;
   onRowClick: (id: string) => void;
   rowAnchor?: (id: string) => string;
+  searchQuery?: string;
 }
 
 export const CustomerListDatagrid = ({
@@ -41,6 +43,7 @@ export const CustomerListDatagrid = ({
   disabled,
   onSelectCustomerIds,
   onSort,
+  searchQuery,
 }: CustomerListDatagridProps) => {
   const intl = useIntl();
   const location = useLocation();
@@ -113,6 +116,7 @@ export const CustomerListDatagrid = ({
         readonly
         loading={loading}
         rowMarkers="checkbox-visible"
+        rowMarkerWidth={LIST_INSET_ROW_MARKER_WIDTH}
         columnSelect="single"
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}
@@ -120,7 +124,11 @@ export const CustomerListDatagrid = ({
         verticalBorder={false}
         rows={customers?.length ?? 0}
         availableColumns={visibleColumns}
-        emptyText={intl.formatMessage(messages.empty)}
+        emptyText={
+          searchQuery
+            ? intl.formatMessage(messages.emptySearch, { query: searchQuery })
+            : intl.formatMessage(messages.empty)
+        }
         onRowSelectionChange={onSelectCustomerIds}
         getCellContent={getCellContent}
         getCellError={() => false}

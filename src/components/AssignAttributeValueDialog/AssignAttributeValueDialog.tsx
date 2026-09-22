@@ -12,14 +12,16 @@ import { type RelayToFlat } from "@dashboard/types";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import AssignCategoryDialog from "../AssignCategoryDialog";
+import AssignCategoryDialog from "../AssignCategoryDialog/AssignCategoryDialog";
 import AssignCollectionDialog, {
   type AssignCollectionFilterChangeHandler,
-} from "../AssignCollectionDialog";
-import AssignModelDialog from "../AssignModelDialog";
-import AssignProductDialog, { type AssignProductDialogProps } from "../AssignProductDialog";
-import AssignVariantDialog from "../AssignVariantDialog";
-import { type AttributeInput } from "../Attributes";
+} from "../AssignCollectionDialog/AssignCollectionDialog";
+import AssignModelDialog from "../AssignModelDialog/AssignModelDialog";
+import AssignProductDialog, {
+  type AssignProductDialogProps,
+} from "../AssignProductDialog/AssignProductDialog";
+import AssignVariantDialog from "../AssignVariantDialog/AssignVariantDialog";
+import { type AttributeInput } from "../Attributes/Attributes";
 import { type InitialPageConstraints } from "../ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import {

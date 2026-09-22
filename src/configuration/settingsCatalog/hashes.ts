@@ -35,9 +35,16 @@ export const settingsHashes = {
   storeWebhookEmission: "webhook-emission",
   storeStockAvailability: "stock-availability",
   storeAddressValidation: "address-validation",
+
+  // Notifications
+  notificationsStaff: "staff-emails",
+  notificationsCustomer: "customer-emails",
+  notificationsDelivery: "email-delivery",
+  notificationsOrderAlerts: "new-order-alerts",
+  notificationsMessages: "staff-messages",
 } as const;
 
-export type SettingsHash = (typeof settingsHashes)[keyof typeof settingsHashes];
+type SettingsHash = (typeof settingsHashes)[keyof typeof settingsHashes];
 
 export const settingsHref = (path: string, hash?: SettingsHash | string): string =>
   hash ? `${path}#${hash}` : path;

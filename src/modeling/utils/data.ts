@@ -3,7 +3,7 @@ import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
 } from "@dashboard/attributes/utils/data";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { type PageDetailsFragment } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 

@@ -11,7 +11,7 @@ interface PlaceholderProps {
 
 // Note: `borderStyle: "dashed"` lives in a CSS module because
 // macaw-ui-next's `borderStyle` sprinkle only ships `"none" | "solid"`.
-export const Placeholder = ({ children, icon }: PlaceholderProps): JSX.Element => (
+export const Placeholder = ({ children, icon }: PlaceholderProps): React.ReactNode => (
   <Box
     className={styles.placeholder}
     borderRadius={4}

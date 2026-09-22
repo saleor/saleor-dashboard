@@ -1,1 +1,0 @@
-export { DiscountProducts } from "./DiscountProducts";

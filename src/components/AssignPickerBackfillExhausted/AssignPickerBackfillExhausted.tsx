@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from "@material-ui/core";
+import { TableCell, TableRow } from "@dashboard/components/Table/Table";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
@@ -23,7 +23,7 @@ export const AssignPickerBackfillExhaustedRow = ({
   message,
   buttonLabel,
   onLoadMore,
-}: AssignPickerBackfillExhaustedProps): JSX.Element => (
+}: AssignPickerBackfillExhaustedProps): React.ReactNode => (
   <TableRow>
     <TableCell colSpan={colSpan} className={styles.cell}>
       <Box

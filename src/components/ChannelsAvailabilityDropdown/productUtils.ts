@@ -13,9 +13,9 @@ export type ProductChannelListing = Pick<
   "isPublished" | "publishedAt" | "availableForPurchaseAt" | "channel"
 >;
 
-export type ProductAvailabilityStatus = "live" | "scheduled" | "hidden";
+type ProductAvailabilityStatus = "live" | "scheduled" | "hidden";
 
-export interface ProductChannelAvailabilityDetail {
+interface ProductChannelAvailabilityDetail {
   description: MessageDescriptor;
   dotStatus: DotStatus;
 }

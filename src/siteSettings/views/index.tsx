@@ -6,7 +6,7 @@ import {
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 
@@ -15,7 +15,7 @@ import {
   areAddressInputFieldsModified,
   SiteSettingsPage,
   type SiteSettingsPageFormData,
-} from "../components/SiteSettingsPage";
+} from "../components/SiteSettingsPage/SiteSettingsPage";
 
 const SiteSettings = () => {
   const notify = useNotifier();

@@ -16,7 +16,7 @@ interface ModalCollectionFilterContextValue
 
 const ModalCollectionFilterContext = createContext<ModalCollectionFilterContextValue | null>(null);
 
-export interface ModalCollectionFilterProviderProps {
+interface ModalCollectionFilterProviderProps {
   children: ReactNode;
   excludedFilters?: string[];
 }

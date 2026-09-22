@@ -25,5 +25,3 @@ export const getChannelCreateDefaults = () => ({
   automaticCompletionCutOffDate: "",
   automaticCompletionCutOffTime: "",
 });
-
-export type ChannelCreateDefaults = ReturnType<typeof getChannelCreateDefaults>;

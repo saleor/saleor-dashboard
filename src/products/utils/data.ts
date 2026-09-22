@@ -3,7 +3,8 @@ import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
 } from "@dashboard/attributes/utils/data";
-import { type AttributeInput, VariantAttributeScope } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import { VariantAttributeScope } from "@dashboard/components/Attributes/types";
 import {
   type ProductDetailsVariantFragment,
   type ProductFragment,
@@ -20,7 +21,7 @@ import { maybe } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { type Option } from "@saleor/macaw-ui-next";
 
-import { type ProductStockInput } from "../components/ProductStocks";
+import { type ProductStockInput } from "../components/ProductStocks/ProductStocks";
 import { type ProductUpdateFormData } from "../components/ProductUpdatePage/types";
 
 interface Node {
@@ -213,11 +214,6 @@ export function getProductUpdatePageFormData(
     slug: product?.slug || "",
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
-    isPreorder: !!variant?.preorder || false,
-    globalThreshold: variant?.preorder?.globalThreshold?.toString() || "",
-    globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
-    hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDateTime: variant?.preorder?.endDate,
   };
 }
 

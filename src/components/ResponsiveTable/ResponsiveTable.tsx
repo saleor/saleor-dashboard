@@ -1,5 +1,5 @@
+import { Table } from "@dashboard/components/Table/Table";
 import useDebounce from "@dashboard/hooks/useDebounce";
-import { Table } from "@material-ui/core";
 import { Box, SearchInput, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { X } from "lucide-react";
@@ -152,4 +152,10 @@ ResponsiveTable.displayName = "ResponsiveTable";
 export const tableStyles = {
   colAction: styles.colAction,
   cellFlush: styles.cellFlush,
+  assignableTable: styles.assignableTable,
+  checkboxCell: styles.checkboxCell,
+  dragCell: styles.dragCell,
+  actionsCell: styles.actionsCell,
+  row: styles.row,
+  rowDelete: styles.rowDelete,
 };

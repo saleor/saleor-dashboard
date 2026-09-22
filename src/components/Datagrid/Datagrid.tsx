@@ -34,9 +34,9 @@ import {
 } from "react";
 
 import { DashboardCard } from "../Card";
-import { type CardMenuItem } from "../CardMenu";
-import { Placeholder } from "../Placeholder";
-import { SaleorThrobber } from "../Throbber";
+import { type CardMenuItem } from "../CardMenu/CardMenu";
+import { Placeholder } from "../Placeholder/Placeholder";
+import { SaleorThrobber } from "../Throbber/SaleorThrobber";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
 import { RowActions } from "./components/RowActions";
@@ -49,11 +49,13 @@ import useDatagridChange, {
   type OnDatagridChange,
 } from "./hooks/useDatagridChange";
 import { useFullScreenMode } from "./hooks/useFullScreenMode";
+import { usePointerDragClickGuard } from "./hooks/usePointerDragClickGuard";
 import { usePortalClasses } from "./hooks/usePortalClasses";
-import { useRowAnchor } from "./hooks/useRowAnchor";
+import { activateRowAnchor, hideRowAnchorElement, useRowAnchor } from "./hooks/useRowAnchor";
 import { useRowHover } from "./hooks/useRowHover";
 import { useScrollRight } from "./hooks/useScrollRight";
 import { type TooltipSide, useTooltipContainer } from "./hooks/useTooltipContainer";
+import { getForwardedWheelDelta } from "./rowAnchorWheel";
 import useStyles, {
   cellHeight,
   rowActionBarWidth as defaultRowActionBarWidth,
@@ -61,7 +63,7 @@ import useStyles, {
   useFullScreenStyles,
 } from "./styles";
 import { type AvailableColumn } from "./types";
-import { preventRowClickOnSelectionCheckbox } from "./utils";
+import { getVisibleGridSelection, preventRowClickOnSelectionCheckbox } from "./utils";
 
 export interface GetCellContentOpts {
   changes: MutableRefObject<DatagridChange[]>;
@@ -202,6 +204,7 @@ export const Datagrid = ({
     [themeValues, rowMarkerThemeOverride],
   );
   const editor = useRef<DataEditorRef | null>(null);
+  const editorContainerRef = useRef<HTMLDivElement | null>(null);
   const customRenderers = useCustomCellRenderers();
   const { scrolledToRight } = useScrollRight();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -224,12 +227,44 @@ export const Datagrid = ({
   );
   const [areCellsDirty, setCellsDirty] = useState(true);
 
+  // Wheel lands on the overlay, not the grid. Forward axes the scroller can
+  // move; leave the rest to the page. Always hide afterwards — page or grid
+  // scroll moves the row out from under the cursor, and a parked href is stale.
+  const handleRowAnchorWheel = useCallback((event: WheelEvent) => {
+    const scroller = editorContainerRef.current?.querySelector<HTMLElement>(".dvn-scroller");
+    const delta = scroller ? getForwardedWheelDelta(scroller, event) : null;
+
+    if (scroller && delta) {
+      scroller.scrollBy({ left: delta.left, top: delta.top, behavior: "auto" });
+      event.preventDefault();
+    }
+
+    const anchor = event.currentTarget;
+
+    if (anchor instanceof HTMLAnchorElement) {
+      hideRowAnchorElement(anchor);
+    }
+  }, []);
   const { rowAnchorRef, setRowAnchorRef, setAnchorPosition } = useRowAnchor({
     getRowAnchorUrl: rowAnchor,
     rowMarkers,
     availableColumns,
+    onWheel: handleRowAnchorWheel,
   });
   const rowAnchorHandler = useRowAnchorHandler(navigatorOpts);
+  const hideActiveRowAnchor = useCallback((): void => {
+    if (rowAnchorRef.current) {
+      hideRowAnchorElement(rowAnchorRef.current);
+    }
+  }, [rowAnchorRef]);
+  const {
+    onClickCapture,
+    onPointerCancelCapture,
+    onPointerDownCapture,
+    onPointerMoveCapture,
+    onPointerUpCapture,
+    shouldSuppressClick,
+  } = usePointerDragClickGuard(hideActiveRowAnchor);
 
   const { handleRowHover, hoverRow } = useRowHover({
     hasRowHover,
@@ -277,15 +312,6 @@ export const Datagrid = ({
     };
   }, [clearTooltip, tooltip]);
 
-  // Allow to listen to which row is selected and notfiy parent component
-  useEffect(() => {
-    if (onRowSelectionChange && selection) {
-      // Second parameter is callback to clear selection from parent component
-      onRowSelectionChange(Array.from(selection.rows), () => {
-        setSelectionState(undefined);
-      });
-    }
-  }, [onRowSelectionChange, selection, setSelectionState]);
   useEffect(() => {
     if (recentlyAddedColumn && editor.current) {
       const columnIndex = availableColumns.findIndex(column => column.id === recentlyAddedColumn);
@@ -329,6 +355,33 @@ export const Datagrid = ({
       setCellsDirty(areCellsDirty),
     );
   const rowsTotal = rows - removed.length + added.length;
+
+  // Glide tracks selection by index and keeps it when the rows behind the grid
+  // change. Report only indices that still exist so consumers cannot crash, and
+  // rewrite the selection itself once loading is over — otherwise a refetch that
+  // briefly reports 1 placeholder row would permanently drop a real selection.
+  useEffect(
+    function pruneAndReportVisibleRowSelection() {
+      if (!selection) {
+        return;
+      }
+
+      const { visibleRows, prunedSelection } = getVisibleGridSelection(selection, rowsTotal);
+
+      if (!loading && prunedSelection) {
+        setSelectionState(prunedSelection);
+      }
+
+      if (onRowSelectionChange) {
+        // Second parameter is callback to clear selection from parent component
+        onRowSelectionChange(visibleRows, () => {
+          setSelectionState(undefined);
+        });
+      }
+    },
+    [loading, onRowSelectionChange, selection, setSelectionState, rowsTotal],
+  );
+
   const hasMenuItem = !!menuItems(0).length;
   const hasColumnGroups = availableColumns.some(col => col.group);
   const handleGetCellContent = useCallback(
@@ -390,6 +443,10 @@ export const Datagrid = ({
 
   const handleCellClick = useCallback(
     (item: Item, args: CellClickedEventArgs) => {
+      if (shouldSuppressClick()) {
+        return;
+      }
+
       if (preventRowClickOnSelectionCheckbox(rowMarkers, item[0])) {
         return;
       }
@@ -412,23 +469,11 @@ export const Datagrid = ({
       }
 
       handleRowHover(args);
-
-      if (rowAnchorRef.current) {
-        /**
-         * Dispatch click event with modifier keys preserved
-         * This allows CMD/CTRL+click to open in new tab
-         */
-        const clickEvent = new MouseEvent("click", {
-          metaKey: args.metaKey,
-          ctrlKey: args.ctrlKey,
-          shiftKey: args.shiftKey,
-          bubbles: true,
-        });
-
-        rowAnchorRef.current.dispatchEvent(clickEvent);
-      }
+      activateRowAnchor(rowAnchorRef.current, {
+        openInNewTab: Boolean(args.metaKey || args.ctrlKey),
+      });
     },
-    [rowMarkers, onRowClick, handleRowHover, rowAnchorRef],
+    [rowMarkers, onRowClick, handleRowHover, rowAnchorRef, shouldSuppressClick, availableColumns],
   );
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
@@ -605,30 +650,6 @@ export const Datagrid = ({
         : null,
     [selection, selectionActions, handleRemoveRows],
   );
-  // Hide the link when scrolling over it so that the scroll/wheel events go through to the Datagrid
-  // Show the link quickly after the last scroll/wheel event
-  const hideLinkAndShowAfterDelay = useCallback(
-    (() => {
-      let timer: ReturnType<typeof setTimeout> | null = null;
-
-      return () => {
-        if (timer) {
-          clearTimeout(timer);
-        }
-
-        if (rowAnchorRef.current) {
-          rowAnchorRef.current.style.display = "none";
-        }
-
-        timer = setTimeout(() => {
-          if (rowAnchorRef.current) {
-            rowAnchorRef.current.style.display = "block";
-          }
-        }, 100);
-      };
-    })(),
-    [rowAnchorRef],
-  );
 
   if (loading) {
     return (
@@ -640,7 +661,13 @@ export const Datagrid = ({
 
   return (
     <FullScreenContainer open={isOpen} className={fullScreenClasses.fullScreenContainer}>
-      <PreventHistoryBack __height={isOpen ? "100%" : "auto"}>
+      <PreventHistoryBack
+        __height={isOpen ? "100%" : "auto"}
+        onPointerCancelCapture={onPointerCancelCapture}
+        onPointerDownCapture={onPointerDownCapture}
+        onPointerMoveCapture={onPointerMoveCapture}
+        onPointerUpCapture={onPointerUpCapture}
+      >
         <DashboardCard position="relative" __height={isOpen ? "100%" : "auto"} gap={0}>
           {renderHeader?.({
             toggleFullscreen: toggle,
@@ -660,7 +687,7 @@ export const Datagrid = ({
                 {selection?.rows && selection?.rows.length > 0 && selectionActionsComponent && (
                   <div className={classes.actionBtnBar}>{selectionActionsComponent}</div>
                 )}
-                <div className={classes.editorContainer}>
+                <div className={classes.editorContainer} ref={editorContainerRef}>
                   <Box
                     backgroundColor="default1"
                     borderTopWidth={showTopBorder ? 1 : 0}
@@ -775,11 +802,14 @@ export const Datagrid = ({
         {rowAnchor && (
           <a
             ref={setRowAnchorRef}
-            style={{ position: "absolute", top: "-1000px", left: "-1000px" }}
+            className={classes.rowAnchor}
+            data-test-id="datagrid-row-anchor"
             tabIndex={-1}
             aria-hidden={true}
-            onWheelCapture={hideLinkAndShowAfterDelay}
             onClick={rowAnchorHandler}
+            // Only the overlay. Capture on PreventHistoryBack would also swallow
+            // header, column-picker, and row-action clicks after a 6px slop.
+            onClickCapture={onClickCapture}
           />
         )}
       </PreventHistoryBack>

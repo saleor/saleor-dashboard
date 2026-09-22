@@ -8,9 +8,18 @@ import {
   useInstalledAppsQuery,
   usePluginsQuery,
 } from "@dashboard/graphql";
+import {
+  ADMIN_EMAIL_PLUGIN_ID,
+  USER_EMAIL_PLUGIN_ID,
+} from "@dashboard/notificationsSettings/constants";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
+
+const CONFIGURATION_OWNED_PLUGIN_IDS = new Set<string>([
+  ADMIN_EMAIL_PLUGIN_ID,
+  USER_EMAIL_PLUGIN_ID,
+]);
 
 const isPluginEnabled = (plugin: PluginBaseFragment | undefined) => {
   if (!plugin) {
@@ -68,7 +77,12 @@ const getFilteredExtensions = ({
 
   allPlugins: PluginBaseFragment[] | undefined;
 }) => {
-  return extensions.map(extension => toExtension(extension, installedApps, allPlugins));
+  return extensions
+    .filter(
+      extension =>
+        !(extension.type === "PLUGIN" && CONFIGURATION_OWNED_PLUGIN_IDS.has(extension.id)),
+    )
+    .map(extension => toExtension(extension, installedApps, allPlugins));
 };
 
 export const useExploreExtensions = () => {

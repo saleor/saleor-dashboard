@@ -1,8 +1,8 @@
 import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
-import { TopNav } from "@dashboard/components/AppLayout";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,

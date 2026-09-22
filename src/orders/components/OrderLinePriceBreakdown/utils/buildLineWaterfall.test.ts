@@ -115,7 +115,6 @@ function makeLine({
       id: "V1",
       name: variantName,
       quantityAvailable: 100,
-      preorder: null,
       stocks: null,
       product: { __typename: "Product", id: "P1", isAvailableForPurchase: true },
     },

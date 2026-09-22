@@ -10,7 +10,7 @@ export interface CaptureStateInput {
   orderBalance?: IMoney;
 }
 
-export interface CaptureState {
+interface CaptureState {
   availableToCapture: number;
   alreadyCharged: number;
   remainingToPay: number;

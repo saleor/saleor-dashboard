@@ -1,4 +1,4 @@
-import { stringifyQs } from "@dashboard/utils/urls";
+import { withQuery } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import {
@@ -20,7 +20,7 @@ enum PageTypeListUrlFiltersEnum {
   query = "query",
 }
 export type PageTypeListUrlFilters = Filters<PageTypeListUrlFiltersEnum>;
-export type PageTypeListUrlDialog = "remove" | TabActionDialog;
+export type PageTypeListUrlDialog = "remove" | "create" | TabActionDialog;
 export enum PageTypeListUrlSortField {
   name = "name",
 }
@@ -32,7 +32,7 @@ export type PageTypeListUrlQueryParams = ActiveTab &
   PageTypeListUrlFilters &
   PageTypeListUrlSort;
 export const pageTypeListUrl = (params?: PageTypeListUrlQueryParams) =>
-  modelTypesPath + "?" + stringifyQs(params);
+  withQuery(modelTypesPath, params);
 
 export const pageTypeAddPath = urlJoin(modelTypesSection, "add");
 export const pageTypeAddUrl = pageTypeAddPath;
@@ -51,4 +51,4 @@ export type PageTypeUrlQueryParams = BulkAction &
     type?: string;
   };
 export const pageTypeUrl = (id: string, params?: PageTypeUrlQueryParams) =>
-  pageTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+  withQuery(pageTypePath(encodeURIComponent(id)), params);

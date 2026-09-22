@@ -1,4 +1,4 @@
-import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown/ButtonWithDropdown";
 import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";

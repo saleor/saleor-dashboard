@@ -2,7 +2,7 @@ import { ATTRIBUTES } from "@data/e2eTestData";
 import { AttributesPage } from "@pages/attributesPage";
 import { ConfigurationPage } from "@pages/configurationPage";
 import { expect } from "@playwright/test";
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
@@ -15,7 +15,7 @@ test.beforeEach(({ page }) => {
   configurationPage = new ConfigurationPage(page);
 });
 
-const SALEOR_124_uuid = faker.datatype.uuid();
+const SALEOR_124_uuid = faker.string.uuid();
 const attributeClasses: ("PRODUCT_TYPE" | "PAGE_TYPE")[] = ["PRODUCT_TYPE", "PAGE_TYPE"];
 
 for (const attr of attributeClasses) {
@@ -53,7 +53,7 @@ for (const attr of attributeClasses) {
   }
 }
 
-const SALEOR_125_uuid = faker.datatype.uuid();
+const SALEOR_125_uuid = faker.string.uuid();
 
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithoutAbilityToAddValues.names) {
@@ -91,7 +91,7 @@ for (const attr of attributeClasses) {
   }
 }
 
-const SALEOR_126_uuid = faker.datatype.uuid();
+const SALEOR_126_uuid = faker.string.uuid();
 
 for (const attr of attributeClasses) {
   for (const entity of ATTRIBUTES.attributeReferencesEntities.names) {

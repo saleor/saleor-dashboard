@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import {
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
@@ -9,7 +8,7 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -21,13 +20,14 @@ import { ListViews } from "@dashboard/types";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
+import { Button } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuBulkDeleteDialog } from "../../components/MenuBulkDeleteDialog/MenuBulkDeleteDialog";
 import { MenuCreateDialog } from "../../components/MenuCreateDialog/MenuCreateDialog";
 import { MenuDeleteDialog } from "../../components/MenuDeleteDialog/MenuDeleteDialog";
-import MenuListPage from "../../components/MenuListPage";
+import MenuListPage from "../../components/MenuListPage/MenuListPage";
 import { menuListUrl, type MenuListUrlQueryParams, menuUrl } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 
@@ -139,6 +139,7 @@ const MenuList = ({ params }: MenuListProps) => {
         toggleAll={toggleAll}
         toolbar={
           <Button
+            variant="secondary"
             onClick={() =>
               navigate(
                 menuListUrl({

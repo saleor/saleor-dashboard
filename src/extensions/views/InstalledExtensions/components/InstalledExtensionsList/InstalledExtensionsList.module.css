@@ -1,0 +1,54 @@
+/* Subtle accent sweeps in from the left, rests as a wide left-to-right fade, then
+   disappears. Points the user at a freshly installed extension that alphabetical
+   sorting pushed into the middle of the table. */
+@keyframes justInstalledHighlight {
+  0% {
+    background-position: 100% 0;
+    opacity: 0.16;
+  }
+  45% {
+    background-position: 0 0;
+    opacity: 0.16;
+  }
+  70% {
+    background-position: 0 0;
+    opacity: 0.12;
+  }
+  100% {
+    background-position: 0 0;
+    opacity: 0;
+  }
+}
+
+.justInstalled {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Background image is twice the row width, so at rest (position 0) only its left half
+   shows - the stop percentages are in image space, i.e. half of the row width they
+   cover: solid until 7% of the row, fully transparent by 57%. */
+.justInstalled::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    var(--mu-colors-background-accent1) 0%,
+    var(--mu-colors-background-accent1) 3.5%,
+    transparent 28.5%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: justInstalledHighlight 3.6s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .justInstalled::after {
+    animation: none;
+    background-position: 0 0;
+    opacity: 0.12;
+  }
+}

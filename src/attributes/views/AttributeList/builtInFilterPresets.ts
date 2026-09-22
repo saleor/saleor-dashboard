@@ -1,6 +1,6 @@
 import { attributeListUrlWithAttributeType } from "@dashboard/attributes/urls";
 import { AttributeTypeEnum } from "@dashboard/graphql";
-import { type GetFilterTabsOutput } from "@dashboard/utils/filters";
+import { type GetFilterTabsOutput } from "@dashboard/utils/filters/storage";
 import { defineMessages, type IntlShape } from "react-intl";
 
 const messages = defineMessages({
@@ -12,6 +12,11 @@ const messages = defineMessages({
   modelAttributes: {
     id: "v17EX7",
     defaultMessage: "Model attributes",
+    description: "built-in attribute list filter preset",
+  },
+  customerAttributes: {
+    id: "SbbVLS",
+    defaultMessage: "Customer attributes",
     description: "built-in attribute list filter preset",
   },
 });
@@ -31,5 +36,9 @@ export const getBuiltInAttributeFilterPresets = (intl: IntlShape): GetFilterTabs
   {
     name: intl.formatMessage(messages.modelAttributes),
     data: getAttributeTypeFilterPresetQuery(AttributeTypeEnum.PAGE_TYPE),
+  },
+  {
+    name: intl.formatMessage(messages.customerAttributes),
+    data: getAttributeTypeFilterPresetQuery(AttributeTypeEnum.CUSTOMER_TYPE),
   },
 ];

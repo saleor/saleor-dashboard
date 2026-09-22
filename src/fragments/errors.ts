@@ -47,6 +47,7 @@ export const accountErrorFragment = gql`
     field
     addressType
     message
+    attributes
   }
 `;
 
@@ -355,6 +356,56 @@ export const pageTypeDeleteErrorFragment = gql`
     code
     field
     message
+  }
+`;
+
+export const customerTypeCreateErrorFragment = gql`
+  fragment CustomerTypeCreateError on CustomerTypeCreateError {
+    code
+    field
+    message
+  }
+`;
+
+export const customerTypeUpdateErrorFragment = gql`
+  fragment CustomerTypeUpdateError on CustomerTypeUpdateError {
+    code
+    field
+    message
+  }
+`;
+
+export const customerTypeDeleteErrorFragment = gql`
+  fragment CustomerTypeDeleteError on CustomerTypeDeleteError {
+    code
+    field
+    message
+  }
+`;
+
+export const customerTypeAssignAttributesErrorFragment = gql`
+  fragment CustomerTypeAssignAttributesError on CustomerTypeAssignAttributesError {
+    code
+    field
+    message
+    attributes
+  }
+`;
+
+export const customerTypeUnassignAttributesErrorFragment = gql`
+  fragment CustomerTypeUnassignAttributesError on CustomerTypeUnassignAttributesError {
+    code
+    field
+    message
+  }
+`;
+
+export const customerTypeReorderAttributesErrorFragment = gql`
+  fragment CustomerTypeReorderAttributesError on CustomerTypeReorderAttributesError {
+    code
+    field
+    message
+    attributes
   }
 `;
 

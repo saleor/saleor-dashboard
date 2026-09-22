@@ -2,7 +2,7 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductWhereInput } from "@dashboard/graphql";
 import { type Container, type FetchMoreProps } from "@dashboard/types";

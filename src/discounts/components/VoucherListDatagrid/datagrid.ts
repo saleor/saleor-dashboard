@@ -6,7 +6,7 @@ import {
   statusCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { type VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {
@@ -168,7 +168,7 @@ export const getVoucherListScopeLabel = (voucher: VoucherFragment, intl: IntlSha
   return intl.formatMessage(messages.scopeOrder);
 };
 
-export interface VoucherListNameParts {
+interface VoucherListNameParts {
   primary: string;
   secondary?: string;
 }

@@ -21,12 +21,19 @@ const messages = defineMessages({
   },
 });
 
-const parseExtensionViews = (
+const parseExtensionOptions = (
   settings: ExtensionWithParams["settings"],
-): AppExtensionView[] | undefined => {
+): { views: AppExtensionView[] | undefined; aliases: string[] | undefined } => {
   const result = appExtensionManifestOptionsSchema.safeParse(settings);
 
-  return result.success ? (result.data.views ?? undefined) : undefined;
+  if (!result.success) {
+    return { views: undefined, aliases: undefined };
+  }
+
+  return {
+    views: result.data.views ?? undefined,
+    aliases: result.data.aliases ?? undefined,
+  };
 };
 
 /**
@@ -48,16 +55,21 @@ export const useSearchActions = () => {
     // Extension.open loses its params in the map's type; the runtime objects accept them.
     const extensions: ExtensionWithParams[] = SEARCH_ACTION;
 
-    const extensionActions: ContextualSearchAction[] = extensions.map(extension => ({
-      id: `extension-${extension.id}`,
-      label: extension.label,
-      section: intl.formatMessage(messages.appActionsSection),
-      views: parseExtensionViews(extension.settings),
-      permissions: extension.permissions,
-      appName: extension.app.name ?? undefined,
-      avatar: extension.app.brand?.logo.default,
-      onSelect: context => extension.open(context.params),
-    }));
+    const extensionActions: ContextualSearchAction[] = extensions.map(extension => {
+      const { views, aliases } = parseExtensionOptions(extension.settings);
+
+      return {
+        id: `extension-${extension.id}`,
+        label: extension.label,
+        section: intl.formatMessage(messages.appActionsSection),
+        views,
+        aliases,
+        permissions: extension.permissions,
+        appName: extension.app.name ?? undefined,
+        avatar: extension.app.brand?.logo.default,
+        onSelect: context => extension.open(context.params),
+      };
+    });
 
     return filterSearchActions([...nativeActions, ...extensionActions], context, user);
   }, [SEARCH_ACTION, nativeActions, context, user, intl]);

@@ -2,8 +2,8 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Input } from "@saleor/macaw-ui-next";
@@ -30,7 +30,7 @@ export const SaveFilterTabDialog = ({
   onClose,
   onSubmit,
   open,
-}: SaveFilterTabDialogProps): JSX.Element => {
+}: SaveFilterTabDialogProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
 

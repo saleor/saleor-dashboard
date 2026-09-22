@@ -3,7 +3,7 @@ export interface ProductChannelListings {
   channelListings?: Array<{ channel: { id: string } }> | null;
 }
 
-export interface ProductWithCategory {
+interface ProductWithCategory {
   category?: { id: string } | null;
 }
 

@@ -124,7 +124,7 @@ const isChannelDirty = (
 };
 
 // Check if any channels have changes compared to original product
-export const hasChannelChanges = (
+const hasChannelChanges = (
   channels: ProductChannelListingUpdateInput,
   originalListings: ProductFragment["channelListings"],
 ): boolean => {

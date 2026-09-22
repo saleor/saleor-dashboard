@@ -23,7 +23,7 @@ import { OrdersIcon } from "./Orders";
 import PermissionGroups from "./PermissionGroups";
 import { PluginIcon } from "./PluginIcon";
 import { ProductsIcon } from "./Products";
-import ProductTypes from "./ProductTypes";
+import { ConfigurationProductTypesIcon } from "./ProductTypes";
 import { RefundedIcon } from "./RefundedIcon";
 import { RetryIcon } from "./RetryIcon";
 import { ReturnedIcon } from "./ReturnedIcon";
@@ -60,7 +60,7 @@ const icons: IconEntry[] = [
   { name: "Attributes", group: "configuration", render: () => <Attributes /> },
   { name: "Channels", group: "configuration", render: () => <Channels /> },
   { name: "PermissionGroups", group: "configuration", render: () => <PermissionGroups /> },
-  { name: "ProductTypes", group: "configuration", render: () => <ProductTypes /> },
+  { name: "ProductTypes", group: "configuration", render: () => <ConfigurationProductTypesIcon /> },
   { name: "ShippingMethods", group: "configuration", render: () => <ShippingMethods /> },
   { name: "SiteSettings", group: "configuration", render: () => <SiteSettings /> },
   { name: "StaffMembers", group: "configuration", render: () => <StaffMembers /> },

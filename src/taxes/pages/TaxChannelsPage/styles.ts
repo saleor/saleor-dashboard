@@ -27,11 +27,6 @@ export const useStyles = makeStyles(
       display: "grid",
       gridTemplateColumns: "1fr 500px 1fr 1fr",
     },
-    toolbarMargin: {
-      "&:last-child": {
-        marginRight: 0,
-      },
-    },
   }),
   { name: "TaxChannelsPage" },
 );

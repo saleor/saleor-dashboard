@@ -1,4 +1,4 @@
-import { Locale } from "@dashboard/components/Locale";
+import { Locale } from "@dashboard/components/Locale/Locale";
 import { act, render, renderHook, screen } from "@testing-library/react";
 import { Provider as JotaiProvider } from "jotai";
 import { IntlProvider } from "react-intl";
@@ -27,6 +27,11 @@ jest.mock(
       ) : null,
   }),
 );
+
+// Needs an Apollo client, tested separately
+jest.mock("@dashboard/extensions/installed-apps-snapshot", () => ({
+  useRefreshInstalledAppsSnapshot: jest.fn(),
+}));
 
 jest.mock("@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame", () => ({
   AppFrame: ({ src, appToken, appId, params, dashboardVersion, coreVersion }: any) => (

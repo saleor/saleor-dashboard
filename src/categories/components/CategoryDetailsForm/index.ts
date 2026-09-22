@@ -1,1 +1,0 @@
-export { CategoryDetailsForm } from "./CategoryDetailsForm";

@@ -1,4 +1,20 @@
-import { getTruncatedTextValue } from "./utils";
+import { getTruncatedTextValue, resolveByAttributeId } from "./utils";
+
+describe("resolveByAttributeId", () => {
+  it("should call a lookup function with the attribute id", () => {
+    // Arrange
+    const getChoices = (attributeId: string) => (attributeId === "attr-1" ? [{ slug: "red" }] : []);
+
+    // Act / Assert
+    expect(resolveByAttributeId(getChoices, "attr-1")).toEqual([{ slug: "red" }]);
+    expect(resolveByAttributeId(getChoices, "attr-2")).toEqual([]);
+  });
+
+  it("should return an empty list when the value is missing", () => {
+    // Arrange / Act / Assert
+    expect(resolveByAttributeId(undefined, "attr-1")).toEqual([]);
+  });
+});
 
 describe("getTruncatedTextValue", () => {
   it("should truncate the value if it is longer than the specified length", () => {

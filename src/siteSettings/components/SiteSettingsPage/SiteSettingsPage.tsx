@@ -2,8 +2,8 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
 import { topNavDestinationMessages } from "@dashboard/components/AppLayout/TopNav/destinationMessages";
 import { CompanyAddressForm } from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { Link } from "@dashboard/components/Link";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsFieldStack } from "@dashboard/components/Settings/SettingsFieldStack";
@@ -99,7 +99,7 @@ export const SiteSettingsPage = ({
   saveButtonBarState,
   shop,
   onSubmit,
-}: SiteSettingsPageProps): JSX.Element => {
+}: SiteSettingsPageProps): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [displayCountry, setDisplayCountry] = useStateFromProps(

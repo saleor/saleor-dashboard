@@ -43,6 +43,8 @@ export const SettingsActions = ({
             data-href={entry.href}
             id={`navigator-settings-${entry.id}`}
             className="command-menu-item"
+            role="option"
+            tabIndex={-1}
           >
             <Box
               className="command-menu-item-content"
@@ -52,8 +54,6 @@ export const SettingsActions = ({
               color="default1"
               paddingX={6}
               paddingY={1.5}
-              role="option"
-              tabIndex={-1}
             >
               {entry.breadcrumbPath ? (
                 <Text size={1} color="default2">

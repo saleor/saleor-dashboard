@@ -21,7 +21,7 @@ export interface ProductSaveComposition {
   variantDeleteCount: number;
 }
 
-export interface BuildProductSaveCompositionInput {
+interface BuildProductSaveCompositionInput {
   changedFieldNames: ReadonlyArray<string>;
   descriptionDirty: boolean;
   attributesDirty: boolean;

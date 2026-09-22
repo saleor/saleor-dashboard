@@ -1,4 +1,7 @@
-import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown/ButtonWithDropdown";
+import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { Box, Checkbox, Dropdown, Input, List, Popover, Text } from "@saleor/macaw-ui-next";
 import { Check, ChevronDown, Layers, Pin, PinOff, Settings2 } from "lucide-react";
@@ -39,9 +42,10 @@ const PINNED_TABS_STORAGE_KEY = "modelTypeTabs.pinnedIds";
 export interface ModelTypeTabItem {
   id: string;
   name: string;
+  metadata?: Array<{ key: string; value: string }> | null;
 }
 
-export interface ModelTypeTabsProps {
+interface ModelTypeTabsProps {
   pageTypes: ModelTypeTabItem[] | undefined;
   selectedIds: string[];
   counts: Record<string, ModelTypeTabCount | undefined>;
@@ -50,10 +54,18 @@ export interface ModelTypeTabsProps {
    * Grouping state owned by the parent so a single source of truth drives both the
    * tab strip and the parent's count bookkeeping. Falls back to a local hook instance
    * when rendered standalone (Storybook, tests).
+   * Pass `false` to keep a flat type strip (no name-splitting) and hide grouping settings
+   * — used by customers today, and the hook to turn grouping on later.
    */
-  grouping?: ModelTypeTabGrouping;
+  grouping?: ModelTypeTabGrouping | false;
   /** Optional slot anchored to the right of the strip, sharing the bottom border. */
   rightSlot?: ReactNode;
+  /** localStorage key for pinned tabs. Defaults to the models list key. */
+  pinStorageKey?: string;
+  /** data-test-id on the tablist. */
+  testId?: string;
+  /** Prefix for per-tab test ids (`{prefix}-{id}`). */
+  testIdPrefix?: string;
 }
 
 type ModelTypeTabStripItem = { kind: "all"; id: string; name: string } | ModelTabNode;
@@ -296,6 +308,8 @@ const GroupTabDropdown = ({ group, selectedIds, counts, onTabChange }: GroupTabD
   );
 };
 
+const DISABLED_GROUPING_OPTIONS = { enabled: false } as const;
+
 export const ModelTypeTabs = ({
   pageTypes,
   selectedIds,
@@ -303,17 +317,29 @@ export const ModelTypeTabs = ({
   onTabChange,
   grouping,
   rightSlot,
+  pinStorageKey = PINNED_TABS_STORAGE_KEY,
+  testId = "model-type-tabs",
+  testIdPrefix = "model-type-tab",
 }: ModelTypeTabsProps) => {
   const intl = useIntl();
   const stripRef = useRef<HTMLDivElement>(null);
   const measureTabRefs = useRef<Array<HTMLElement | null>>([]);
   const [visibleCount, setVisibleCount] = useState<number | null>(null);
   const visibleCountRef = useRef<number | null>(null);
-  const [pinnedIds, setPinnedIds] = useLocalStorage<string[]>(PINNED_TABS_STORAGE_KEY, []);
+  const [pinnedIds, setPinnedIds] = useLocalStorage<string[]>(pinStorageKey, []);
   // Used only when no parent-owned grouping is supplied (standalone rendering).
   const fallbackGrouping = useModelTypeTabGrouping();
+  const groupingEnabledFlag = grouping !== false;
   const { separator, setSeparator, groupingEnabled, setGroupingEnabled, groupingOptions } =
-    grouping ?? fallbackGrouping;
+    grouping === false
+      ? {
+          separator: "",
+          setSeparator: () => undefined,
+          groupingEnabled: false,
+          setGroupingEnabled: () => undefined,
+          groupingOptions: DISABLED_GROUPING_OPTIONS,
+        }
+      : (grouping ?? fallbackGrouping);
 
   visibleCountRef.current = visibleCount;
 
@@ -332,6 +358,31 @@ export const ModelTypeTabs = ({
     () => groupModelTypeTabs(pageTypes ?? [], groupingOptions),
     [groupingOptions, pageTypes],
   );
+
+  // Looked up by id rather than threaded through grouping, which only deals in names.
+  const iconsById = useMemo(
+    () =>
+      (pageTypes ?? []).reduce<Record<string, ModelTypeIconValue>>(
+        (acc, pageType) => ({ ...acc, [pageType.id]: getModelTypeIcon(pageType.metadata) }),
+        {},
+      ),
+    [pageTypes],
+  );
+
+  const getStripItemIcon = (item: ModelTypeTabStripItem): ModelTypeIconValue | undefined => {
+    if (item.kind === "type") {
+      return iconsById[item.id];
+    }
+
+    // A group spans several model types, so it only takes an icon once one of them is active.
+    if (item.kind === "group") {
+      const activeSubtype = getActiveSubtypeInGroup(item, selectedIds);
+
+      return activeSubtype ? iconsById[activeSubtype.id] : undefined;
+    }
+
+    return undefined;
+  };
 
   const items: ModelTypeTabStripItem[] = useMemo(() => {
     const all: ModelTypeTabStripItem = {
@@ -451,11 +502,11 @@ export const ModelTypeTabs = ({
               <CountPill count={count} active={isActive} />
             </Box>
           ),
-          testId: `model-type-tab-${getStripItemId(item)}`,
+          testId: `${testIdPrefix}-${getStripItemId(item)}`,
           onSelect: () => onTabChange(getStripItemSelection(item)),
         };
       }),
-    [counts, onTabChange, overflowItems, selectedIds],
+    [counts, onTabChange, overflowItems, selectedIds, testIdPrefix],
   );
 
   const renderTabPin = (item: ModelTypeTabStripItem, isActive: boolean) => {
@@ -475,7 +526,7 @@ export const ModelTypeTabs = ({
         aria-label={intl.formatMessage(
           pinned ? modelTypeTabsMessages.unpinTab : modelTypeTabsMessages.pinTab,
         )}
-        data-test-id={`model-type-tab-pin-${itemId}`}
+        data-test-id={`${testIdPrefix}-pin-${itemId}`}
         onClick={event => {
           event.stopPropagation();
           togglePin(itemId);
@@ -497,9 +548,15 @@ export const ModelTypeTabs = ({
     const label = getStripItemLabel(item, selectedIds);
     const count = getStripItemCount(item, counts);
 
+    const icon = getStripItemIcon(item);
+
     return (
       <>
-        {item.kind === "group" && <Layers size={14} className={styles.groupIcon} aria-hidden />}
+        {icon ? (
+          <ModelTypeIcon icon={icon} size={14} className={styles.groupIcon} />
+        ) : (
+          item.kind === "group" && <Layers size={14} className={styles.groupIcon} aria-hidden />
+        )}
         <span className={styles.tabLabel} title={label}>
           {label}
         </span>
@@ -518,7 +575,7 @@ export const ModelTypeTabs = ({
           role="tab"
           aria-selected={isActive}
           className={styles.groupTab}
-          data-test-id={`model-type-tab-${itemId}`}
+          data-test-id={`${testIdPrefix}-${itemId}`}
         >
           <button
             type="button"
@@ -546,7 +603,7 @@ export const ModelTypeTabs = ({
         aria-selected={isActive}
         className={styles.tab}
         onClick={() => onTabChange(getStripItemSelection(item))}
-        data-test-id={`model-type-tab-${itemId}`}
+        data-test-id={`${testIdPrefix}-${itemId}`}
       >
         {renderTabLabel(item, isActive)}
         {renderTabPin(item, isActive)}
@@ -592,7 +649,7 @@ export const ModelTypeTabs = ({
         role="tablist"
         ref={stripRef}
         className={styles.strip}
-        data-test-id="model-type-tabs"
+        data-test-id={testId}
         style={measuring ? { visibility: "hidden" } : undefined}
       >
         {displayItems.map(item => renderTab(item, isStripItemActive(item, selectedIds)))}
@@ -603,7 +660,7 @@ export const ModelTypeTabs = ({
             variant="tertiary"
             size="small"
             options={overflowOptions}
-            testId="model-type-tabs-more"
+            testId={`${testId}-more`}
             className={styles.moreButton}
           >
             {intl.formatMessage(modelTypeTabsMessages.moreTab)}
@@ -612,12 +669,14 @@ export const ModelTypeTabs = ({
       )}
       <div className={styles.trailingSlot}>
         {rightSlot}
-        <ModelTypeTabsSettings
-          separator={separator}
-          groupingEnabled={groupingEnabled}
-          onSeparatorChange={setSeparator}
-          onGroupingEnabledChange={setGroupingEnabled}
-        />
+        {groupingEnabledFlag ? (
+          <ModelTypeTabsSettings
+            separator={separator}
+            groupingEnabled={groupingEnabled}
+            onSeparatorChange={setSeparator}
+            onGroupingEnabledChange={setGroupingEnabled}
+          />
+        ) : null}
       </div>
     </div>
   );

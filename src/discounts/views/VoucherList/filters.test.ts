@@ -1,8 +1,8 @@
-import { createFilterStructure } from "@dashboard/discounts/components/VoucherListPage";
+import { createFilterStructure } from "@dashboard/discounts/components/VoucherListPage/filters";
 import { type VoucherListUrlFilters } from "@dashboard/discounts/urls";
 import { date } from "@dashboard/fixtures";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { getFilterQueryParams } from "@dashboard/utils/filters/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { testIntlInstance } from "@test/intl";

@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import avatarImage from "@assets/images/avatars/avatar.png";
-import { permissions } from "@dashboard/fixtures";
 import {
   type StaffListQuery,
   type StaffMemberAvatarFragment,
@@ -18,6 +17,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Chris",
     id: "VXNlcjoyMQ==",
     isActive: true,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Cooper",
   },
   {
@@ -29,6 +29,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: false,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -40,6 +41,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -51,6 +53,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -62,6 +65,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -73,6 +77,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -84,6 +89,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: false,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -95,6 +101,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -106,6 +113,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -117,6 +125,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: false,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -128,6 +137,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: false,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
   {
@@ -139,6 +149,7 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     firstName: "Jacob",
     id: "VXNlcjoyMQ==",
     isActive: true,
+    lastLogin: "2024-01-01T00:00:00+00:00",
     lastName: "Smith",
   },
 ].map((staffMember, index) => ({
@@ -167,13 +178,11 @@ export const staffMember: StaffMemberDetailsFragment = {
   firstName: "Jacob",
   id: "VXNlcjoyMQ==",
   isActive: true,
+  lastLogin: "2024-01-01T00:00:00+00:00",
   lastName: "Smith",
   permissionGroups: [],
-  userPermissions: permissions.map(p => ({
-    ...p,
-    __typename: "UserPermission",
-  })),
   metadata: [],
+  privateMetadata: [],
 };
 
 export const staffMemberAvatar: StaffMemberAvatarFragment = {
@@ -182,6 +191,7 @@ export const staffMemberAvatar: StaffMemberAvatarFragment = {
   firstName: "Jacob",
   id: "VXNlcjoyMQ==",
   isActive: true,
+  lastLogin: "2024-01-01T00:00:00+00:00",
   lastName: "Smith",
   __typename: "User",
 };

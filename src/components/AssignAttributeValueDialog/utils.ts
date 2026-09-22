@@ -1,6 +1,6 @@
 import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { type AttributeInput } from "../Attributes";
+import { type AttributeInput } from "../Attributes/Attributes";
 
 /**
  * Predicate for multi-reference attributes: hide values already on the attribute so the

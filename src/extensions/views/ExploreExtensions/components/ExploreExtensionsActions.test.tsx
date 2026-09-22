@@ -1,6 +1,6 @@
 import { CONST_TYPEFORM_URL } from "@dashboard/extensions/components/RequestExtensionsButton";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { useFlag } from "@dashboard/featureFlags";
+import { useFlag } from "@dashboard/featureFlags/useFlag";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { render, screen } from "@testing-library/react";
@@ -8,7 +8,7 @@ import userEvent from "@testing-library/user-event";
 
 import { ExploreExtensionsActions } from "./ExploreExtensionsActions";
 
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: jest.fn(),
 }));
 

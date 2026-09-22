@@ -1,7 +1,7 @@
-import { type FormData } from "@dashboard/channels/components/ChannelForm";
+import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getByUnmatchingId } from "@dashboard/misc";
 import { type ReorderAction, type ReorderEvent } from "@dashboard/types";
-import { move } from "@dashboard/utils/lists";
+import { move } from "@dashboard/utils/lists/lists";
 
 import { type ChannelShippingZones, type ChannelWarehouses } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";

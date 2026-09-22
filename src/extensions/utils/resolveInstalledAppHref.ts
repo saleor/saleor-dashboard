@@ -1,7 +1,7 @@
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppTypeEnum } from "@dashboard/graphql";
 
-export type AlreadyInstalledAppLinkTarget = "app" | "settings";
+type AlreadyInstalledAppLinkTarget = "app" | "settings";
 
 export const resolveAlreadyInstalledAppLinkTarget = ({
   type,

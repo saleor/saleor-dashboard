@@ -1,4 +1,4 @@
-import { UserAvatar } from "@dashboard/components/UserAvatar";
+import { UserAvatar } from "@dashboard/components/UserAvatar/UserAvatar";
 import { type AppAvatarFragment, type StaffMemberAvatarFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, vars } from "@saleor/macaw-ui-next";

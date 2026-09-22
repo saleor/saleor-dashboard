@@ -15,6 +15,10 @@ jest.mock("@dashboard/extensions/components/AppWidgetCard/AppWidgetCard", () => 
   AppWidgetCard: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
+jest.mock("@dashboard/extensions/preferences/InlineExtensionPreferenceControls", () => ({
+  InlineExtensionPreferenceControls: () => <div data-test-id="inline-preference-controls" />,
+}));
+
 const buildExtension = (overrides: Partial<ExtensionWithParams> = {}): ExtensionWithParams =>
   ({
     id: "ext1",

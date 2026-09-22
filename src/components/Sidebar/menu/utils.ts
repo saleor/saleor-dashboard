@@ -4,6 +4,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { orderDraftListUrl, orderDraftPath, orderListUrl, orderPath } from "@dashboard/orders/urls";
 import { matchPath } from "react-router";
 
+import { getQueryListFilterValues, isCustomerTypeNavItem } from "./createCustomerTypeMenuItems";
 import { type SidebarMenuItem } from "./types";
 
 const ORDER_RESERVED_PATH_SEGMENTS = ["drafts", "settings"];
@@ -84,6 +85,22 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     return false;
   }
 
+  // Filter shortcuts share a list path and differ only by query (pageTypes / customerTypes),
+  // so path matching alone would light every sibling at once.
+  if (isMenuItemNavigationPin(menuItem)) {
+    return (
+      activeUrl === (menuItem.url ?? "").split("?")[0] &&
+      isSameQueryListFilter(location, menuItem.url ?? "", "pageTypes")
+    );
+  }
+
+  if (isCustomerTypeNavItem(menuItem)) {
+    return (
+      activeUrl === (menuItem.url ?? "").split("?")[0] &&
+      isSameQueryListFilter(location, menuItem.url ?? "", "customerTypes")
+    );
+  }
+
   const orderDraftListPath = orderDraftListUrl().split("?")[0];
   const orderListPath = orderListUrl().split("?")[0];
   const isDraftOrderDetailPage = getOrderDraftDetailId(activeUrl) !== null;
@@ -127,6 +144,16 @@ const getPureUrl = (url: string) => {
   return url;
 };
 const isMenuItemExtension = (menuItem: SidebarMenuItem) => menuItem.id.startsWith("extension-");
+
+const isMenuItemNavigationPin = (menuItem: SidebarMenuItem) =>
+  menuItem.id.startsWith("navigation-pin-");
+
+const queryListFilterSignature = (url: string, filterKey: string): string =>
+  getQueryListFilterValues(url, filterKey).sort().join(",");
+
+const isSameQueryListFilter = (location: string, menuItemUrl: string, filterKey: string) =>
+  queryListFilterSignature(location, filterKey) ===
+  queryListFilterSignature(menuItemUrl, filterKey);
 
 export const getMenuItemExtension = (
   extensions: Record<

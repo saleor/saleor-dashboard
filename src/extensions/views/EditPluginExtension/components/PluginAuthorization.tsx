@@ -1,9 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import Hr from "@dashboard/components/Hr";
 import { type ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Divider, Text } from "@saleor/macaw-ui-next";
 import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -81,7 +80,7 @@ export const PluginAuthorization = (props: PluginAuthorizationProps) => {
                 </>
               )}
             </div>
-            {fieldIndex !== secretFields.length - 1 && <Hr className={classes.hr} />}
+            {fieldIndex !== secretFields.length - 1 && <Divider className={classes.hr} />}
           </Fragment>
         ))}
       </DashboardCard.Content>

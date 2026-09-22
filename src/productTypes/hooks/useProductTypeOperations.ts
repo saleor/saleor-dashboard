@@ -5,7 +5,6 @@ import {
   type ProductTypeAttributeReorderMutation,
   type ProductTypeDeleteMutation,
   type ProductTypeDetailsFragment,
-  type ReorderInput,
   type UnassignProductAttributeMutation,
   useAssignProductAttributeMutation,
   useProductTypeAttributeReorderMutation,
@@ -14,24 +13,7 @@ import {
 } from "@dashboard/graphql";
 
 import { getMutationProviderData } from "../../misc";
-
-function moveAttribute(
-  attributes: ProductTypeDetailsFragment["productAttributes"],
-  move: ReorderInput,
-) {
-  const attributeIndex = attributes.findIndex(attribute => attribute.id === move.id);
-  const newIndex = attributeIndex + move.sortOrder;
-  const attributesWithoutMovedOne = [
-    ...attributes.slice(0, attributeIndex),
-    ...attributes.slice(attributeIndex + 1),
-  ];
-
-  return [
-    ...attributesWithoutMovedOne.slice(0, newIndex),
-    attributes[attributeIndex],
-    ...attributesWithoutMovedOne.slice(newIndex),
-  ];
-}
+import { moveListItem } from "../utils/moveListItem";
 
 interface ProductTypeOperationsProps {
   productType: ProductTypeDetailsFragment;
@@ -59,24 +41,52 @@ function useProductTypeOperations({
   });
   const [...reorderAttribute] = useProductTypeAttributeReorderMutation({
     onCompleted: onProductTypeAttributeReorder,
-    optimisticResponse: variables => ({
-      __typename: "Mutation",
-      productTypeReorderAttributes: {
-        __typename: "ProductTypeReorderAttributes" as const,
-        errors: [],
-        productType: {
-          ...productType,
-          productAttributes:
-            variables.type === ProductAttributeType.PRODUCT
-              ? moveAttribute(productType.productAttributes, variables.move)
+    optimisticResponse: variables => {
+      if (!productType) {
+        return {
+          __typename: "Mutation" as const,
+          productTypeReorderAttributes: {
+            __typename: "ProductTypeReorderAttributes" as const,
+            errors: [],
+            productType: null,
+          },
+        };
+      }
+
+      const isProduct = variables.type === ProductAttributeType.PRODUCT;
+
+      return {
+        __typename: "Mutation" as const,
+        productTypeReorderAttributes: {
+          __typename: "ProductTypeReorderAttributes" as const,
+          errors: [],
+          productType: {
+            ...productType,
+            productAttributes: isProduct
+              ? moveListItem(
+                  productType.productAttributes,
+                  variables.move,
+                  attribute => attribute.id,
+                )
               : productType.productAttributes,
-          variantAttributes:
-            variables.type === ProductAttributeType.VARIANT
-              ? moveAttribute(productType.variantAttributes, variables.move)
-              : productType.variantAttributes,
+            variantAttributes: isProduct
+              ? productType.variantAttributes
+              : moveListItem(
+                  productType.variantAttributes,
+                  variables.move,
+                  attribute => attribute.id,
+                ),
+            assignedVariantAttributes: isProduct
+              ? productType.assignedVariantAttributes
+              : moveListItem(
+                  productType.assignedVariantAttributes,
+                  variables.move,
+                  assigned => assigned.attribute.id,
+                ),
+          },
         },
-      },
-    }),
+      };
+    },
   });
 
   return {

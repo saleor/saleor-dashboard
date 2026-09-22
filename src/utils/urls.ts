@@ -10,6 +10,18 @@ export function stringifyQs(
   });
 }
 
+/**
+ * Build a url, omitting the query string entirely when there are no params.
+ * A bare trailing "?" is not just cosmetic: url helpers are sometimes passed as
+ * `LocationDescriptor.pathname`, where it ends up inside the path and a later
+ * dialog navigation appends a second "?", making the query unparseable.
+ */
+export function withQuery(path: string, params?: unknown): string {
+  const query = stringifyQs(params);
+
+  return query ? `${path}?${query}` : path;
+}
+
 export function getArrayQueryParam(
   param: string | string[] | Record<string, string> | undefined,
 ): string[] | undefined {
@@ -40,3 +52,11 @@ export const getMultipleUrlValues = (urlSearch: string, fieldName: string): stri
 
   return params.getAll(fieldName);
 };
+
+/**
+ * Router-relative paths (e.g. productUrl()) are resolved by react-router against its
+ * basename. Anything that leaves the router - window.open, anchor href - must prepend
+ * APP_MOUNT_URI itself, otherwise the link drops the dashboard mount point.
+ */
+export const withAppMountUri = (path: string) =>
+  getAppMountUri() + (path.startsWith("/") ? path.slice(1) : path);

@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(

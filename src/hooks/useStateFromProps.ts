@@ -3,12 +3,15 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
 interface UseStateFromPropsOpts<T> {
   mergeFunc?: (prevData: T, state: T, newData: T) => T;
-  onRefresh?: (prevData: T, data: T) => void;
 }
 /**
- * @deprecated This function updates state every time initial
- * value changes, but uses deep comparisons to detect changes.
- * You're most likely looking for `useStateUpdate` instead.
+ * useState, but resets state whenever `data` changes by *value*.
+ *
+ * The deep comparison is load-bearing, not an optimisation: most call sites pass
+ * a freshly-built object or array (`users ?? []`, `getChoices(...)`, an inline
+ * literal). A reference-equality version resets state on every render at those
+ * sites, which is an infinite render loop. Don't "simplify" it to
+ * `useEffect(() => setState(data), [data])`.
  */
 function useStateFromProps<T>(
   data: T,
@@ -16,7 +19,7 @@ function useStateFromProps<T>(
 ): [T, Dispatch<SetStateAction<T>>] {
   const [state, setState] = useState(data);
   const [prevData, setPrevData] = useState(data);
-  const { mergeFunc, onRefresh } = opts;
+  const { mergeFunc } = opts;
 
   useEffect(() => {
     const shouldUpdate = !isEqual(prevData, data);
@@ -26,10 +29,6 @@ function useStateFromProps<T>(
 
       setState(newData);
       setPrevData(data);
-
-      if (typeof onRefresh === "function") {
-        onRefresh(data, newData);
-      }
     }
   }, [data]);
 

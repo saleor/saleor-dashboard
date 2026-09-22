@@ -1,13 +1,16 @@
 // @ts-strict-ignore
 import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
+import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
+import { customerTypeListUrl } from "@dashboard/customerTypes/urls";
 import { giftCardSettingsPath } from "@dashboard/giftCards/urls";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import { createConfigurationLucideIcon } from "@dashboard/icons/createNavigationLucideIcon";
 import { ConfigurationModelingIcon } from "@dashboard/icons/Modeling";
-import { ConfigurationProductsIcon } from "@dashboard/icons/Products";
+import { ConfigurationProductTypesIcon } from "@dashboard/icons/ProductTypes";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
+import { notificationsSettingsUrl } from "@dashboard/notificationsSettings/urls";
 import { orderSettingsPath } from "@dashboard/orders/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
@@ -17,6 +20,7 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
 import {
+  Bell,
   Gift,
   Globe,
   Package,
@@ -25,6 +29,7 @@ import {
   Shield,
   Tags,
   Truck,
+  UserRound,
   Users,
   Warehouse,
 } from "lucide-react";
@@ -42,6 +47,8 @@ const ConfigurationOrderSettingsIcon = createConfigurationLucideIcon(Package);
 const ConfigurationChannelsIcon = createConfigurationLucideIcon(Globe);
 const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
 const ConfigurationGiftCardsIcon = createConfigurationLucideIcon(Gift);
+const ConfigurationNotificationsIcon = createConfigurationLucideIcon(Bell);
+const ConfigurationCustomerTypesIcon = createConfigurationLucideIcon(UserRound);
 
 /**
  * Configuration IA: merchant jobs, not engineering modules.
@@ -79,6 +86,19 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.giftCards),
           url: giftCardSettingsPath,
           testId: "configuration-menu-gift-cards",
+        },
+        {
+          description: intl.formatMessage({
+            id: "1zZG0I",
+            defaultMessage:
+              "Staff and customer email messages, who gets new-order alerts, and how they are delivered",
+            description: "configuration menu item description for notifications",
+          }),
+          icon: <ConfigurationNotificationsIcon />,
+          permissions: [PermissionEnum.MANAGE_PLUGINS],
+          title: intl.formatMessage(sectionNames.notifications),
+          url: notificationsSettingsUrl(),
+          testId: "configuration-menu-notifications",
         },
       ],
     },
@@ -124,7 +144,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "n0RwMK",
             defaultMessage: "Define types of products you sell",
           }),
-          icon: <ConfigurationProductsIcon />,
+          icon: <ConfigurationProductTypesIcon />,
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
           title: intl.formatMessage(sectionNames.productTypes),
           url: productTypeListUrl(),
@@ -234,6 +254,44 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.ordersAndFulfillment),
           url: orderSettingsPath,
           testId: "configuration-menu-order-settings",
+        },
+      ],
+    },
+    {
+      label: intl.formatMessage({
+        id: "P6k5H+",
+        defaultMessage: "Customers",
+        description: "configuration section for customer types and attributes",
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            id: "Aab1Pd",
+            defaultMessage: "Define types of customers and the attributes they share",
+            description: "configuration menu item description for customer types",
+          }),
+          icon: <ConfigurationCustomerTypesIcon />,
+          permissions: [PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES],
+          title: intl.formatMessage(sectionNames.customerTypes),
+          url: customerTypeListUrl(),
+          testId: "configuration-menu-customer-types",
+          ripple: rippleCustomerTypes,
+        },
+        {
+          description: intl.formatMessage({
+            id: "qP/udV",
+            defaultMessage: "Manage attributes used for customer types",
+            description: "configuration menu item description for customer attributes",
+          }),
+          icon: <ConfigurationAttributesIcon />,
+          permissions: [PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES],
+          title: intl.formatMessage({
+            id: "LaFUxE",
+            defaultMessage: "Customer attributes",
+            description: "configuration menu item title",
+          }),
+          url: attributeListUrlWithAttributeTypePreset(AttributeTypeEnum.CUSTOMER_TYPE),
+          testId: "configuration-menu-customer-attributes",
         },
       ],
     },

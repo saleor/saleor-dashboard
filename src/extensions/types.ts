@@ -70,6 +70,8 @@ export type InstalledExtension = {
   isActive?: boolean | null;
   activeProblemCount: number;
   criticalProblemCount: number;
+  /** Installed within the last 48 hours - renders a "New" badge in the list. */
+  isNew?: boolean;
 };
 
 export interface Extension {
@@ -82,6 +84,9 @@ export interface Extension {
    * App-defined identifier, unique per app. Used to reference a specific
    * extension - e.g. when a widget opens a POPUP extension via the `openPopup`
    * App Bridge action. Null for apps/extensions that don't declare it.
+   *
+   * Also the stable half of the extension preference key; the resolver falls
+   * back to `id` when it is null.
    */
   identifier: string | null;
   mountName: AllAppExtensionMounts;

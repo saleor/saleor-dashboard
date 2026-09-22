@@ -1,6 +1,6 @@
 import { type Handler, NoopValuesHandler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
 import { isTuple } from "../../FilterElement/ConditionValue";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { type WhereOnlyQueryVarsBuilder } from "./types";
 
 type MetadataFilterInput = {

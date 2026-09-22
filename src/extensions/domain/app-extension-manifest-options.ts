@@ -33,6 +33,14 @@ export const appExtensionManifestOptionsSchema = z
       .min(1, { message: "views must contain at least one view when provided" })
       .optional()
       .nullable(),
+    // Only valid on the SEARCH_ACTION mount (enforced in app-extension-manifest.ts).
+    // Extra terms the command palette matches against, never displayed. Deliberately
+    // liberal: a useless alias only costs a missed match, while a stricter rule would
+    // fail the whole options parse at runtime and silently drop `views` with it.
+    aliases: z
+      .array(z.string(), { message: "aliases must be an array of strings" })
+      .optional()
+      .nullable(),
   })
   .refine(
     data => {

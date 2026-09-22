@@ -31,7 +31,7 @@ const rewardValueRequired = (intl: IntlShape) =>
       required_error: intl.formatMessage(validationMessages.rewardValueRequired),
       invalid_type_error: intl.formatMessage(validationMessages.rewardValueRequired),
     })
-    .min(1, intl.formatMessage(validationMessages.rewardValueRequired));
+    .gt(0, intl.formatMessage(validationMessages.rewardValueRequired));
 const getDefaultSchema = (intl: IntlShape) =>
   z.object({
     id: z.string().optional(),

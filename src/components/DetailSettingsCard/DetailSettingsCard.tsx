@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { coerceHeaderEndActions } from "./coerceHeaderEndActions";
 import styles from "./DetailSettingsCard.module.css";
 
 interface DetailSettingsCardProps {
@@ -19,7 +20,7 @@ interface DetailSettingsCardProps {
   "data-test-id"?: string;
 }
 
-export const DetailSettingsOptionalLabel = (): JSX.Element => (
+export const DetailSettingsOptionalLabel = (): React.ReactNode => (
   <Text as="span" size={2} color="default2" fontWeight="regular">
     <FormattedMessage {...commonMessages.optionalField} />
   </Text>
@@ -36,14 +37,14 @@ export const DetailSettingsCardTitle = ({
 }: {
   children: ReactNode;
   optional?: boolean;
-}): JSX.Element => (
+}): React.ReactNode => (
   <Box display="inline-flex" alignItems="baseline" gap={2} flexWrap="wrap" as="span">
     <Box as="span">{children}</Box>
     {optional ? <DetailSettingsOptionalLabel /> : null}
   </Box>
 );
 
-export const DetailSettingsCardIntro = ({ children }: { children: ReactNode }): JSX.Element => (
+export const DetailSettingsCardIntro = ({ children }: { children: ReactNode }): React.ReactNode => (
   <Box className={styles.intro}>{children}</Box>
 );
 
@@ -55,7 +56,7 @@ export const DetailSettingsCard = ({
   children,
   contentFlush = false,
   "data-test-id": dataTestId,
-}: DetailSettingsCardProps): JSX.Element => (
+}: DetailSettingsCardProps): React.ReactNode => (
   <Box className={styles.card} data-test-id={dataTestId}>
     <Box className={clsx(styles.header, headerEnd && styles.headerWithEnd)}>
       <Box className={styles.headerMain}>
@@ -68,7 +69,11 @@ export const DetailSettingsCard = ({
           </Text>
         ) : null}
       </Box>
-      {headerEnd ? <Box className={styles.headerEnd}>{headerEnd}</Box> : null}
+      {headerEnd ? (
+        <Box className={styles.headerEnd} data-test-id="detail-settings-card-header-end">
+          {coerceHeaderEndActions(headerEnd)}
+        </Box>
+      ) : null}
     </Box>
     {intro ? <DetailSettingsCardIntro>{intro}</DetailSettingsCardIntro> : null}
     <Box className={contentFlush ? styles.contentFlush : styles.content}>{children}</Box>

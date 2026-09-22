@@ -3,7 +3,7 @@ import {
   numberCellEmptyValue,
   type NumberCellProps,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import {
   type CustomCell,
@@ -15,7 +15,8 @@ import {
 import { type Option } from "@saleor/macaw-ui-next";
 
 import { type DropdownCell, type DropdownCellProps } from "./DropdownCell";
-import { type MoneyCell, type MoneyDiscuntedCell } from "./Money";
+import { type MoneyCell } from "./Money/MoneyCell";
+import { type MoneyDiscuntedCell } from "./Money/MoneyDiscountedCell";
 import { hueToPillColorLight, type PillCell, type PillColor, stringToHue } from "./PillCell";
 import { type PrimarySecondaryTextCell } from "./PrimarySecondaryTextCell";
 import { type StatusCell } from "./StatusCell";

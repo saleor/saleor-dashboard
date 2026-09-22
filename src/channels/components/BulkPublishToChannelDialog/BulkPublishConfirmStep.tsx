@@ -14,6 +14,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import styles from "./BulkPublishConfirmStep.module.css";
 import {
   type BulkPublishNumericRange,
+  countBulkPublishDraftsKeepingPrice,
   countBulkPublishDraftsWithCostPrice,
   countBulkPublishDraftsWithStock,
   getBulkPublishCostPriceRange,
@@ -112,6 +113,7 @@ export const BulkPublishConfirmStep = ({
   const priceRange = getBulkPublishPriceRange(productDrafts);
   const costPriceRange = getBulkPublishCostPriceRange(productDrafts);
   const costPricesCount = countBulkPublishDraftsWithCostPrice(productDrafts);
+  const keepingPriceCount = countBulkPublishDraftsKeepingPrice(productDrafts);
   const stockQuantityRange = getBulkPublishStockQuantityRange(productDrafts);
   const productsWithStockCount = countBulkPublishDraftsWithStock(productDrafts);
   const { previewNames, remainingCount } = getBulkPublishProductNamePreview(productDrafts);
@@ -157,8 +159,14 @@ export const BulkPublishConfirmStep = ({
       previewNames
     );
 
+  // Keeping existing prices is the headline for a partial update, so it outranks cost-price detail.
   const pricingDetail =
-    costPricesCount === 0 ? (
+    keepingPriceCount > 0 ? (
+      <FormattedMessage
+        {...messages.confirmPricesUnchanged}
+        values={{ count: keepingPriceCount }}
+      />
+    ) : costPricesCount === 0 ? (
       <FormattedMessage {...messages.confirmNoCostPrices} />
     ) : costPricesCount < productDrafts.length ? (
       <FormattedMessage
@@ -274,13 +282,15 @@ export const BulkPublishConfirmStep = ({
         <SummarySection
           label={<FormattedMessage {...messages.confirmSectionPricing} />}
           title={
-            priceRange
-              ? formatBulkPublishMoneyRange({
-                  range: priceRange,
-                  currency: channel.currencyCode,
-                  locale,
-                })
-              : "—"
+            priceRange ? (
+              formatBulkPublishMoneyRange({
+                range: priceRange,
+                currency: channel.currencyCode,
+                locale,
+              })
+            ) : (
+              <FormattedMessage {...messages.confirmNoPriceChanges} />
+            )
           }
           detail={pricingDetail}
         />

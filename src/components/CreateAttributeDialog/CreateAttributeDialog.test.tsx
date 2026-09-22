@@ -19,7 +19,7 @@ jest.mock("react-intl", () => ({
   defineMessages: (messages: Record<string, unknown>) => messages,
 }));
 
-jest.mock("@dashboard/hooks/useModalDialogOpen", () => ({
+jest.mock("@dashboard/hooks/useModalDialogOpen/useModalDialogOpen", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
@@ -70,7 +70,9 @@ let mockValues: Array<{ name: string; value?: string | null }> = [];
 jest.mock("@dashboard/attributes/hooks/useAttributeCreateValues/useAttributeCreateValues", () => ({
   useAttributeCreateValues: () => ({
     deleteValueById: jest.fn(),
+    deleteValuesByIds: jest.fn(),
     handleValueCreate: jest.fn(),
+    handleValueCreateMany: jest.fn(),
     handleValueReorder: jest.fn(),
     pageInfo: { hasNextPage: false, hasPreviousPage: false, startCursor: 0 },
     pageValues: mockValues,
@@ -110,7 +112,7 @@ jest.mock(
   }),
 );
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <ThemeProvider>{children}</ThemeProvider>
 );
 
@@ -204,7 +206,6 @@ describe("CreateAttributeDialog", () => {
     (getAttributePageInitialForm as jest.Mock).mockReturnValueOnce({
       availableInGrid: true,
       entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
-      filterableInDashboard: true,
       filterableInStorefront: true,
       inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
       metadata: [],

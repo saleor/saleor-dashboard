@@ -1,5 +1,5 @@
 import { useOrderTransactionsDataQuery, useRefundSettingsQuery } from "@dashboard/graphql";
-import { OrderManualTransactionRefundPage } from "@dashboard/orders/components/OrderManualTransactionRefundPage";
+import { OrderManualTransactionRefundPage } from "@dashboard/orders/components/OrderManualTransactionRefundPage/OrderManualTransactionRefundPage";
 
 interface OrderManualTransactionRefundProps {
   orderId: string;

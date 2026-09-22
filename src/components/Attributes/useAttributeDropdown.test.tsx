@@ -65,6 +65,7 @@ describe("useAttributeDropdown", () => {
       expect(result.current.customValueOption).toHaveLength(1);
       expect(result.current.customValueOption[0].value).toBe("orange");
       expect(result.current.customValueOption[0].label).toContain("Add new value");
+      expect(result.current.customValueOption[0].startAdornment).toBeTruthy();
     });
 
     it("should hide 'Add new value' option when user types the already selected value", () => {
@@ -252,7 +253,7 @@ describe("useAttributeDropdown", () => {
       expect(mockFetchOptions).toHaveBeenCalledWith(DEFAULT_INITIAL_SEARCH_DATA.query);
     });
 
-    it("should only fetch once on multiple focus calls", () => {
+    it("should refetch on every focus so reopen after blur still has options", () => {
       // Arrange
       const { result } = renderHook(() =>
         useAttributeDropdown({
@@ -268,7 +269,8 @@ describe("useAttributeDropdown", () => {
       result.current.handleFocus();
 
       // Assert
-      expect(mockFetchOptions).toHaveBeenCalledTimes(1);
+      expect(mockFetchOptions).toHaveBeenCalledTimes(3);
+      expect(mockFetchOptions).toHaveBeenCalledWith(DEFAULT_INITIAL_SEARCH_DATA.query);
     });
   });
 

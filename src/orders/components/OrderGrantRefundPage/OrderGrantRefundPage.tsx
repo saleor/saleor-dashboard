@@ -4,10 +4,10 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { formatMoneyAmount } from "@dashboard/components/Money";
-import PriceField from "@dashboard/components/PriceField";
+import PriceField from "@dashboard/components/PriceField/PriceField";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   type OrderDetailsGrantedRefundFragment,

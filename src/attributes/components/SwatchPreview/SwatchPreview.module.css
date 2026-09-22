@@ -1,5 +1,6 @@
 .swatchPreview {
   display: block;
+  flex: none;
   flex-shrink: 0;
   box-sizing: border-box;
   border: 1px solid var(--mu-colors-border-default1);

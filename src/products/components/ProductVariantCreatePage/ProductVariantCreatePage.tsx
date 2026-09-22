@@ -11,26 +11,27 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
-} from "@dashboard/components/AssignAttributeValueDialog";
+} from "@dashboard/components/AssignAttributeValueDialog/AssignAttributeValueDialog";
 import {
   type AttributeInput,
   Attributes,
-  VariantAttributeScope,
-} from "@dashboard/components/Attributes";
+  type AttributeValueChoices,
+  type AttributeValueFetchMore,
+} from "@dashboard/components/Attributes/Attributes";
+import { VariantAttributeScope } from "@dashboard/components/Attributes/types";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Grid from "@dashboard/components/Grid";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Grid from "@dashboard/components/Grid/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import Link from "@dashboard/components/Link";
-import { Metadata } from "@dashboard/components/Metadata";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   type ProductErrorWithAttributesFragment,
   type ProductVariantCreateDataQuery,
-  type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -40,21 +41,22 @@ import {
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { productUrl } from "@dashboard/products/urls";
+import { expandRequiredAttributeErrors } from "@dashboard/products/utils/validation";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { ProductShipping } from "../ProductShipping";
-import { ProductStocks } from "../ProductStocks";
+import { ProductShipping } from "../ProductShipping/ProductShipping";
+import { ProductStocks } from "../ProductStocks/ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
-import ProductVariantName from "../ProductVariantName";
-import ProductVariantNavigation from "../ProductVariantNavigation";
+import ProductVariantName from "../ProductVariantName/ProductVariantName";
 import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
-import { ProductVariantPrice } from "../ProductVariantPrice";
+import { ProductVariantNavigation } from "../ProductVariantNavigation/ProductVariantNavigation";
+import { ProductVariantPrice } from "../ProductVariantPrice/ProductVariantPrice";
 import {
   type ProductVariantCreateData,
   ProductVariantCreateForm,
@@ -103,7 +105,7 @@ interface ProductVariantCreatePageProps {
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
   referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: AttributeValueChoices;
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   onVariantClick: (variantId: string) => void;
   onVariantReorder: (move: VariantReorderMove) => void;
@@ -119,7 +121,7 @@ interface ProductVariantCreatePageProps {
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreReferenceCategories?: FetchMoreProps;
   fetchMoreReferenceCollections?: FetchMoreProps;
-  fetchMoreAttributeValues?: FetchMoreProps;
+  fetchMoreAttributeValues?: AttributeValueFetchMore;
   onCloseDialog: () => void;
   onAttributeSelectBlur: () => void;
   fetchMoreWarehouses: () => void;
@@ -218,7 +220,10 @@ export const ProductVariantCreatePage = ({
         isSaveDisabled,
         attributeRichTextGetters,
       }) => {
-        const errors = [...apiErrors, ...validationErrors];
+        const errors = expandRequiredAttributeErrors(
+          [...apiErrors, ...validationErrors],
+          data.attributes,
+        );
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>

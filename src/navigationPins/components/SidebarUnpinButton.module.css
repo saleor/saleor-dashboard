@@ -1,0 +1,27 @@
+/**
+ * Hidden until the pointer rests on the row for a second, so pins stay quiet while the
+ * cursor travels across the sidebar. Hiding is instant — only the reveal is delayed.
+ * `visibility` also keeps the button unclickable while invisible.
+ */
+.wrapper {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 100ms ease,
+    visibility 0s linear 100ms;
+}
+
+:global(.sidebar-single-item):hover .wrapper {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 100ms ease 1000ms,
+    visibility 0s linear 1000ms;
+}
+
+/* Keyboard users get it as soon as the row's link takes focus — no hover, no delay. */
+:global(.sidebar-single-item):focus-within .wrapper {
+  opacity: 1;
+  visibility: visible;
+  transition: none;
+}

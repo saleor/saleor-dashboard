@@ -6,5 +6,6 @@ import { isMenuActive } from "../utils";
 export const useIsMenuActive = (menuItem: SidebarMenuItem): boolean => {
   const location = useLocation();
 
-  return isMenuActive(location.pathname, menuItem);
+  // Navigation pins are distinguished by query string, so the search has to travel along.
+  return isMenuActive(location.pathname + location.search, menuItem);
 };

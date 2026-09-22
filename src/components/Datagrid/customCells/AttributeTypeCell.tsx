@@ -22,7 +22,7 @@ interface AttributeTypeCellProps {
   readonly label: string;
 }
 
-export type AttributeTypeCell = CustomCell<AttributeTypeCellProps>;
+type AttributeTypeCell = CustomCell<AttributeTypeCellProps>;
 
 const getIconDataUri = (attributeType: AttributeTypeEnum, color: string): string =>
   `data:image/svg+xml;charset=utf-8,${encodeURIComponent(

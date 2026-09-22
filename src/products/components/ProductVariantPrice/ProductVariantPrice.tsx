@@ -1,11 +1,12 @@
 import {
   type ChannelData,
-  type ChannelPriceAndPreorderArgs,
   type ChannelPriceArgs,
+  type IChannelPriceArgs,
   sortChannelShippingDataByName,
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelIcon } from "@dashboard/components/ChannelAvailability/primitives";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
 import {
@@ -45,7 +46,7 @@ interface ProductVariantPriceProps {
   errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   loading?: boolean;
   disabled?: boolean;
-  onChange?: (id: string, data: ChannelPriceArgs | ChannelPriceAndPreorderArgs) => void;
+  onChange?: (id: string, data: ChannelPriceArgs | IChannelPriceArgs) => void;
   onChannelsReplace?: (listings: ChannelData[]) => void;
   onManageClick?: () => void;
   listedInChannelsCount?: number;
@@ -64,7 +65,7 @@ export const ProductVariantPrice = ({
   listedInChannelsCount,
   availableChannelsCount,
   disabledMessage,
-}: ProductVariantPriceProps): JSX.Element => {
+}: ProductVariantPriceProps): React.ReactNode => {
   const intl = useIntl();
   const channelApiErrors = errors.filter(
     (error): error is ProductChannelListingErrorFragment => "channels" in error,
@@ -169,18 +170,12 @@ export const ProductVariantPrice = ({
       <DashboardCard>
         <DashboardCard.Header>
           <DashboardCard.Title>{cardTitle}</DashboardCard.Title>
-        </DashboardCard.Header>
-        <DashboardCard.Content>
-          {(emptyStateMessage || manageChannelsButton) && (
-            <Box display="flex" flexDirection="column" gap={4} alignItems="flex-start">
-              {emptyStateMessage && (
-                <Text size={2} color="default2">
-                  {emptyStateMessage}
-                </Text>
-              )}
-              {manageChannelsButton}
-            </Box>
+          {manageChannelsButton && (
+            <DashboardCard.Toolbar>{manageChannelsButton}</DashboardCard.Toolbar>
           )}
+        </DashboardCard.Header>
+        <DashboardCard.Content paddingBottom={6}>
+          {emptyStateMessage ? <Placeholder>{emptyStateMessage}</Placeholder> : null}
         </DashboardCard.Content>
       </DashboardCard>
     );
@@ -294,7 +289,6 @@ export const ProductVariantPrice = ({
                       onChange?.(listing.id, {
                         costPrice: listing.costPrice ?? "",
                         price: value,
-                        preorderThreshold: listing.preorderThreshold ?? null,
                       })
                     }
                   />
@@ -324,7 +318,6 @@ export const ProductVariantPrice = ({
                       onChange?.(listing.id, {
                         costPrice: value,
                         price: listing.price ?? "",
-                        preorderThreshold: listing.preorderThreshold ?? null,
                       })
                     }
                   />

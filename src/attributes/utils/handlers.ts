@@ -1,16 +1,14 @@
 import { type FetchResult } from "@apollo/client";
-import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeInputData,
+} from "@dashboard/components/Attributes/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  type AttributeValueDeleteMutation,
-  type AttributeValueDeleteMutationVariables,
   type AttributeValueInput,
   type FileUploadMutation,
   type FileUploadMutationVariables,
-  type PageSelectedAttributeFragment,
-  type ProductFragment,
-  type ProductVariantDetailsQuery,
 } from "@dashboard/graphql";
 import {
   type FormsetAdditionalDataChange,
@@ -21,11 +19,11 @@ import {
 } from "@dashboard/hooks/useFormset";
 import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { type FetchMoreProps, type ReorderEvent } from "@dashboard/types";
-import { move, toggle } from "@dashboard/utils/lists";
+import { move, toggle } from "@dashboard/utils/lists/lists";
 import isEqual from "lodash/isEqual";
 import uniqBy from "lodash/uniqBy";
 
-import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
+import { getFileValuesToUploadFromAttributes } from "./data";
 
 export function createAttributeChangeHandler(
   attributesFormData: UseFormsetOutput<AttributeInputData>,
@@ -51,7 +49,7 @@ export function createAttributeMultiChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   attributes: FormsetData<AttributeInputData, string[]>,
   triggerChange: () => void,
-): FormsetChange<string> {
+): FormsetChange<string | string[]> {
   return (attributeId: string, value: string | string[]) => {
     const attribute = attributes.find(attribute => attribute.id === attributeId);
 
@@ -190,7 +188,7 @@ export function createFetchMoreReferencesHandler(
 
 export function createAttributeFileChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
-  attributesWithNewFileValue: FormsetData<FormsetData<null, File>>,
+  attributesWithNewFileValue: FormsetData<null, File>,
   addAttributeNewFileValue: (data: FormsetAtomicData<null, File>) => void,
   changeAttributeNewFileValue: FormsetChange<File>,
   triggerChange: () => void,
@@ -297,9 +295,9 @@ export const prepareAttributesInput = ({
     if (inputType === AttributeInputTypeEnum.FILE) {
       const fileInput = getFileInput(attr, updatedFileAttributes);
 
-      if (fileInput.file || attr.data.isRequired) {
-        attrInput.push(fileInput);
-      }
+      // A cleared file must still be sent as `file: null` — an attribute
+      // omitted from the update input is left untouched server-side.
+      attrInput.push({ ...fileInput, file: fileInput.file ?? null });
 
       return attrInput;
     }
@@ -424,36 +422,3 @@ export const handleUploadMultipleFiles = async (
       }),
     ),
   );
-
-export const handleDeleteMultipleAttributeValues = async (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  attributes:
-    | Array<
-        | PageSelectedAttributeFragment
-        | ProductFragment["attributes"][0]
-        | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
-      >
-    | undefined,
-  deleteAttributeValue: (
-    variables: AttributeValueDeleteMutationVariables,
-  ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
-) => {
-  if (!attributes) {
-    return [];
-  }
-
-  return Promise.all(
-    attributes.map(existingAttribute => {
-      const fileValueUnused = isFileValueUnused(attributesWithNewFileValue, existingAttribute);
-
-      if (fileValueUnused) {
-        return deleteAttributeValue({
-          id: existingAttribute.values[0].id,
-          firstValues: 20,
-        });
-      }
-
-      return undefined;
-    }),
-  );
-};

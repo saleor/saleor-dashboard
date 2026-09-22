@@ -6,6 +6,7 @@ export const staffMemberFragment = gql`
     email
     firstName
     isActive
+    lastLogin
     lastName
   }
 `;
@@ -17,14 +18,14 @@ export const staffMemberDetailsFragment = gql`
       name
       userCanManage
     }
-    userPermissions {
-      code
-      name
-    }
     avatar(size: 512) {
       url
     }
     metadata {
+      key
+      value
+    }
+    privateMetadata {
       key
       value
     }

@@ -1,13 +1,13 @@
-import AccountPermissions from "@dashboard/components/AccountPermissions";
+import AccountPermissions from "@dashboard/components/AccountPermissions/AccountPermissions";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { ChannelPermission } from "@dashboard/components/ChannelPermission";
-import Form from "@dashboard/components/Form";
+import { ChannelPermission } from "@dashboard/components/ChannelPermission/ChannelPermission";
+import Form from "@dashboard/components/Form/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   type ChannelFragment,
@@ -23,8 +23,8 @@ import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGr
 import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { type PermissionData } from "../PermissionGroupDetailsPage";
-import PermissionGroupInfo from "../PermissionGroupInfo";
+import { type PermissionData } from "../PermissionGroupDetailsPage/PermissionGroupDetailsPage";
+import PermissionGroupInfo from "../PermissionGroupInfo/PermissionGroupInfo";
 
 export interface PermissionGroupCreateFormData {
   name: string;

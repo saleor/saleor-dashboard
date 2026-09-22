@@ -1,5 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { type ReactNode } from "react";
 
 import { useScrollToSettingsHash } from "./useScrollToSettingsHash";
@@ -24,7 +24,7 @@ export const SettingsHubLayout = ({
   backHrefIcon,
   backHrefTitle,
   children,
-}: SettingsHubLayoutProps): JSX.Element => {
+}: SettingsHubLayoutProps): React.ReactNode => {
   useScrollToSettingsHash();
 
   return (

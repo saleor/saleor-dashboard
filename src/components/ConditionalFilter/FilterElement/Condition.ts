@@ -1,6 +1,6 @@
 import { errorTracker } from "@dashboard/services/errorTracking";
 
-import { type InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
+import { hasAttributeLookup } from "../API/initialState/product/InitialProductStateResponse";
 import { type LeftOperand } from "../LeftOperandsProvider";
 import { type InitialResponseType } from "../types";
 import { type UrlToken } from "./../ValueProvider/UrlToken";
@@ -29,6 +29,10 @@ export class Condition {
 
   public isEmpty() {
     return this.options.isEmpty() || this.selected.isEmpty();
+  }
+
+  public clone(): Condition {
+    return new Condition(this.options, this.selected.clone(), this.loading);
   }
 
   public static createEmpty() {
@@ -108,7 +112,18 @@ export class Condition {
     }
 
     if (token.isAttribute()) {
-      const attribute = (response as InitialProductStateResponse).attributeByName(token.name);
+      if (!hasAttributeLookup(response)) {
+        const error = new Error(
+          `Attribute "${token.name}" not found when parsing URL filter token. This may indicate a race condition or invalid URL parameter.`,
+        );
+
+        console.error(error.message, { token, response });
+        errorTracker.captureException(error);
+
+        return Condition.createEmpty();
+      }
+
+      const attribute = response.attributeByName(token.name);
 
       if (!attribute) {
         const error = new Error(

@@ -25,7 +25,7 @@ export function getChannelOrderSettingsFormData(
   };
 }
 
-export function getChannelsOrderSettingsFormData(
+function getChannelsOrderSettingsFormData(
   channels: OrderSettingsChannelRow[] | undefined,
 ): ChannelOrderSettingsFormMap {
   if (!channels?.length) {
@@ -54,7 +54,7 @@ export function getOrderSettingsFormData(
 }
 
 /** Normalize so stringy number inputs compare equal to GraphQL numbers. */
-export function normalizeChannelOrderSettingsFormData(
+function normalizeChannelOrderSettingsFormData(
   data: ChannelOrderSettingsFormData,
 ): ChannelOrderSettingsFormData {
   return {

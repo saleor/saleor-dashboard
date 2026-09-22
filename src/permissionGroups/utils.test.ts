@@ -7,7 +7,7 @@ import {
   type UserFragment,
 } from "@dashboard/graphql";
 
-import { type PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+import { type PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
 import { permissionGroup, permissionGroupWithChannels } from "./fixtures";
 import {
   arePermissionsExceeded,

@@ -1,8 +1,8 @@
-import { createFilterStructure } from "@dashboard/customers/components/CustomerListPage";
+import { createFilterStructure } from "@dashboard/customers/components/CustomerListPage/filters";
 import { type CustomerListUrlFilters } from "@dashboard/customers/urls";
 import { date } from "@dashboard/fixtures";
 import { PermissionEnum } from "@dashboard/graphql";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { getFilterQueryParams } from "@dashboard/utils/filters/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { testIntlInstance } from "@test/intl";

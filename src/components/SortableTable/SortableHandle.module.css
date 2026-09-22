@@ -1,0 +1,21 @@
+.cell {
+  width: 40px;
+  padding: 0 !important;
+  cursor: grab;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  touch-action: none;
+  user-select: none;
+}

@@ -29,7 +29,7 @@ export const useInitialPageState = () => {
         client.query<_SearchPageTypesOperandsQuery, _SearchPageTypesOperandsQueryVariables>({
           query: _SearchPageTypesOperandsDocument,
           variables: {
-            first: 5,
+            first: pageTypes.length,
             pageTypesSlugs: pageTypes,
           },
         }),

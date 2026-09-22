@@ -12,7 +12,9 @@ import { useEffect, type ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 import { configure } from "storybook/test";
+import { DevModeProvider } from "../src/components/DevModePanel/DevModeProvider";
 import { LocaleContext } from "../src/components/Locale/Locale";
+import { SavebarRefProvider } from "../src/components/Savebar/SavebarRefContext";
 import { apolloClient } from "../src/graphql/client";
 import { PaginatorContext } from "../src/hooks/usePaginator";
 import "../src/index.css";
@@ -59,25 +61,29 @@ const preview: Preview = {
                 <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
                   <MacawThemeProvider defaultTheme={theme}>
                     <ThemeSync theme={theme}>
-                      <PaginatorContext.Provider
-                        value={{
-                          hasNextPage: false,
-                          hasPreviousPage: false,
-                          paginatorType: "link",
-                          nextHref: undefined,
-                          prevHref: undefined,
-                        }}
-                      >
-                        <div
-                          style={{
-                            backgroundColor: vars.colors.background.default1,
-                            color: vars.colors.text.default1,
-                            minHeight: "100vh",
-                          }}
-                        >
-                          <Story />
-                        </div>
-                      </PaginatorContext.Provider>
+                      <DevModeProvider>
+                        <SavebarRefProvider>
+                          <PaginatorContext.Provider
+                            value={{
+                              hasNextPage: false,
+                              hasPreviousPage: false,
+                              paginatorType: "link",
+                              nextHref: undefined,
+                              prevHref: undefined,
+                            }}
+                          >
+                            <div
+                              style={{
+                                backgroundColor: vars.colors.background.default1,
+                                color: vars.colors.text.default1,
+                                minHeight: "100vh",
+                              }}
+                            >
+                              <Story />
+                            </div>
+                          </PaginatorContext.Provider>
+                        </SavebarRefProvider>
+                      </DevModeProvider>
                     </ThemeSync>
                   </MacawThemeProvider>
                 </LegacyThemeProvider>

@@ -24,7 +24,7 @@ import {
   useChannelsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
@@ -35,8 +35,8 @@ import { getSortParams } from "@dashboard/utils/sort";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { ChannelDeleteDialog } from "../../components/ChannelDeleteDialog";
-import { ChannelsListPage } from "../../pages/ChannelsListPage";
+import { ChannelDeleteDialog } from "../../components/ChannelDeleteDialog/ChannelDeleteDialog";
+import { ChannelsListPage } from "../../pages/ChannelsListPage/ChannelsListPage";
 import {
   channelsListUrl,
   type ChannelsListUrlDialog,

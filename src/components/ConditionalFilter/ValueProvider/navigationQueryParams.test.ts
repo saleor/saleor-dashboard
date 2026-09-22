@@ -2,6 +2,7 @@ import { stringify } from "qs";
 
 import {
   getAttributeListNavigationQueryParams,
+  getNavigationQueryParams,
   stripNavigationQueryParams,
 } from "./navigationQueryParams";
 import { TokenArray } from "./TokenArray";
@@ -76,5 +77,53 @@ describe("navigationQueryParams", () => {
 
     // Assert
     expect(tokens.map(token => token.name)).toEqual(["pageTypes"]);
+  });
+
+  it("should strip customer type tab params before tokenizing customer list URLs", () => {
+    // Arrange
+    const locationSearch = `?${stringify(
+      {
+        0: { "s2.dateJoined": ["2024-01-01", "2024-12-31"] },
+        customerTypes: ["Q3VzdG9tZXJUeXBlOjE="],
+        sort: "name",
+        asc: true,
+      },
+      { arrayFormat: "indices" },
+    )}`;
+    const params = new URLSearchParams(locationSearch);
+
+    params.delete("asc");
+    params.delete("sort");
+    stripNavigationQueryParams(params, "customer");
+
+    // Act
+    const tokens = new TokenArray(params.toString()).asFlatArray();
+
+    // Assert
+    expect(tokens.map(token => token.name)).toEqual(["dateJoined"]);
+    expect(getNavigationQueryParams(locationSearch, "customer")).toEqual({
+      customerTypes: ["Q3VzdG9tZXJUeXBlOjE="],
+    });
+  });
+
+  it("should not treat a customer type tab as a filter token", () => {
+    // Arrange
+    const locationSearch = `?${stringify(
+      {
+        customerTypes: ["Q3VzdG9tZXJUeXBlOjE="],
+      },
+      { arrayFormat: "indices" },
+    )}`;
+    const params = new URLSearchParams(locationSearch);
+
+    stripNavigationQueryParams(params, "customer");
+
+    // Act
+    const tokens = new TokenArray(params.toString()).asFlatArray();
+    const filterValues = new TokenArray(params.toString()).asFilterValueFromEmpty();
+
+    // Assert
+    expect(tokens).toEqual([]);
+    expect(filterValues).toEqual([]);
   });
 });

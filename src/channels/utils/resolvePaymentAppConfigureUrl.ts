@@ -1,7 +1,7 @@
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppTypeEnum } from "@dashboard/graphql";
 
-export interface PaymentAppConfigureTarget {
+interface PaymentAppConfigureTarget {
   id: string;
   type: AppTypeEnum | null;
   isActive: boolean | null;

@@ -13,7 +13,7 @@ import {
 } from "@dashboard/components/Datagrid/customCells/SkeletonCell";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";

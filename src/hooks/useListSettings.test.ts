@@ -125,4 +125,34 @@ describe("useListSettings", () => {
     expect(result.current.settings.columns).toEqual(["code", "status", "value", "type", "limit"]);
     expect(localStorage.getItem(voucherListColumnsMigrationKey)).toBe("1");
   });
+
+  it("keeps an existing product list column setup instead of applying new defaults", () => {
+    // Arrange
+    const storedColumns = [
+      "name",
+      "availability",
+      "description",
+      "price",
+      "productType",
+      "date",
+      "created",
+    ];
+
+    localStorage.setItem(
+      listSettingsStorageKey,
+      JSON.stringify({
+        ...defaultListSettings,
+        [ListViews.PRODUCT_LIST]: {
+          rowNumber: PAGINATE_BY,
+          columns: storedColumns,
+        },
+      }),
+    );
+
+    // Act
+    const { result } = renderHook(() => useListSettings(ListViews.PRODUCT_LIST));
+
+    // Assert
+    expect(result.current.settings.columns).toEqual(storedColumns);
+  });
 });

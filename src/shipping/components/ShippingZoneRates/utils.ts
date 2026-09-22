@@ -11,7 +11,7 @@ export interface ZoneChannel {
 
 export type ShippingRate = NonNullable<ShippingZoneDetailsFragment["shippingMethods"]>[number];
 
-export type ShippingRateChannelListing = NonNullable<ShippingRate["channelListings"]>[number];
+type ShippingRateChannelListing = NonNullable<ShippingRate["channelListings"]>[number];
 
 export const getChannelListing = (
   rate: ShippingRate,
@@ -35,7 +35,7 @@ export const getAssignedZoneChannels = (
 export const getPricedChannelCount = (rate: ShippingRate, channels: ZoneChannel[]): number =>
   channels.filter(channel => hasChannelPrice(rate, channel.id)).length;
 
-export interface PriceSpan {
+interface PriceSpan {
   currency: string;
   min: number;
   max: number;

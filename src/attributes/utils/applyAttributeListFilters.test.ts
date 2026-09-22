@@ -7,13 +7,11 @@ describe("applyAttributeListFilters", () => {
     {
       visibleInStorefront: true,
       filterableInStorefront: true,
-      filterableInDashboard: true,
       valueRequired: false,
     },
     {
       visibleInStorefront: false,
       filterableInStorefront: false,
-      filterableInDashboard: false,
       valueRequired: true,
     },
   ];

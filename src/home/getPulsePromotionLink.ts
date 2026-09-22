@@ -18,14 +18,6 @@ export type PulsePromotionLink =
   | { kind: "internal"; to: string; intent: PulsePromotionIntent }
   | { kind: "external"; href: string; intent: "explore" };
 
-export const isPulseManifestUrl = (manifestUrl: string): boolean => {
-  try {
-    return new URL(manifestUrl).href === new URL(PULSE_MANIFEST_URL).href;
-  } catch {
-    return manifestUrl === PULSE_MANIFEST_URL;
-  }
-};
-
 /**
  * Cloud: deep-link into the Dashboard install flow for Pulse on the current env.
  * Open source: send merchants to the App Store listing (Pulse install is Cloud-hosted).

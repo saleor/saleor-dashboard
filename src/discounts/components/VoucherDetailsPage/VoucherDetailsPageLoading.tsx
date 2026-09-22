@@ -5,7 +5,7 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { VOUCHER_CODES_PAGINATE_BY } from "@dashboard/config";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";

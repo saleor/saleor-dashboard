@@ -3,15 +3,18 @@ import { Box, Skeleton } from "@saleor/macaw-ui-next";
 
 export const ListSkeleton = () => {
   return (
-    <GridTable>
+    // The shimmer is a decorative stand-in for rows that have not arrived, so it
+    // stays out of the accessibility tree. That also keeps the Navigator's
+    // listbox from owning a table while results are loading.
+    <GridTable role="presentation">
       <GridTable.Colgroup>
         <GridTable.Col __width="60px" />
         <GridTable.Col />
         <GridTable.Col __width="160px" />
       </GridTable.Colgroup>
-      <GridTable.Body>
+      <GridTable.Body role="presentation">
         {Array.from({ length: 10 }).map((_, index) => (
-          <GridTable.Row __height="38px" key={index}>
+          <GridTable.Row __height="38px" key={index} role="presentation">
             <GridTable.Cell __height="inherit" padding={0}>
               <Box paddingLeft={6}>
                 <Skeleton height={4} />

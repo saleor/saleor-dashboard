@@ -1,17 +1,17 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type WarehouseWithShippingFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { renderCollection } from "@dashboard/misc";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/urls";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { WarehouseListUrlSortField, warehousePath } from "@dashboard/warehouses/urls";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
@@ -102,7 +102,7 @@ const WarehouseList = (props: WarehouseListProps) => {
               href={
                 warehouse
                   ? {
-                      pathname: warehouseUrl(warehouse.id),
+                      pathname: warehousePath(encodeURIComponent(warehouse.id)),
                       state: getPrevLocationState(location),
                     }
                   : undefined

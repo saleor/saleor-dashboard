@@ -1,4 +1,4 @@
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { type KeyboardEvent, useCallback } from "react";
 import { useIntl } from "react-intl";

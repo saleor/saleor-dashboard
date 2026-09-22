@@ -39,7 +39,7 @@ interface ModalProductFilterContextValue extends ModalFilterResult<ProductWhereI
 
 const ModalProductFilterContext = createContext<ModalProductFilterContextValue | null>(null);
 
-export interface ModalProductFilterProviderProps {
+interface ModalProductFilterProviderProps {
   children: ReactNode;
   excludedFilters?: string[];
   initialConstraints?: InitialConstraints;

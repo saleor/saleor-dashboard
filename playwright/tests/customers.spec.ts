@@ -7,7 +7,7 @@ import { DeleteAddressDialog } from "@pages/dialogs/deleteAddressDialog";
 import { AddressForm } from "@pages/forms/addressForm";
 import { GiftCardsPage } from "@pages/giftCardsPage";
 import { expect } from "@playwright/test";
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
@@ -29,8 +29,8 @@ test.beforeEach(({ page }) => {
 });
 
 test("TC: SALEOR_199 Create customer #e2e #customer", async () => {
-  const firstName = faker.name.firstName();
-  const lastName = faker.name.lastName();
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
   const note = faker.lorem.sentence();
   const email = faker.internet.email();
 
@@ -57,8 +57,8 @@ test("TC: SALEOR_199 Create customer #e2e #customer", async () => {
 });
 
 test("TC: SALEOR_200 As an admin I should not be able to create customer with duplicated email #e2e #customer", async () => {
-  const firstName = faker.name.firstName();
-  const lastName = faker.name.lastName();
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
   const note = faker.lorem.sentence();
 
   await customersPage.goToCustomersListView();
@@ -79,8 +79,8 @@ test("TC: SALEOR_200 As an admin I should not be able to create customer with du
 });
 
 test("TC: SALEOR_201 Update customer account info #e2e #customer", async () => {
-  const firstName = faker.name.firstName();
-  const lastName = faker.name.lastName();
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
   const email = faker.internet.email();
   const note = faker.lorem.sentence();
 
@@ -212,7 +212,7 @@ test("TC: SALEOR_210 Delete customer's address #e2e #customer", async () => {
 });
 
 test("TC: SALEOR_207 Issue a new gift card for the customer #e2e #customer", async () => {
-  const amount = faker.datatype.number(1000).toPrecision(2).toString();
+  const amount = faker.number.int(1000).toPrecision(2).toString();
 
   await customersPage.gotoCustomerDetailsPage(CUSTOMERS.editCustomer.id);
   await customersPage.clickIssueNewGiftCard();

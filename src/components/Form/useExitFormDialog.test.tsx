@@ -8,7 +8,7 @@ import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { useExitFormDialog } from "./useExitFormDialog";
 import { isDialogOnlyQueryChange, useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
-jest.mock("../../hooks/useNotifier", () => ({
+jest.mock("../../hooks/useNotifier/useNotifier", () => ({
   useNotifier: () => jest.fn(),
 }));
 
@@ -560,6 +560,13 @@ describe("useExitFormDialog", () => {
 describe("isDialogOnlyQueryChange", () => {
   it("treats opening a dialog as a dialog-only change", () => {
     expect(isDialogOnlyQueryChange("", "?action=assign-attribute-value&id=123")).toBe(true);
+  });
+  it("treats product-type assign dialog type param as dialog-only", () => {
+    expect(isDialogOnlyQueryChange("", "?action=assign-attribute&type=PRODUCT")).toBe(true);
+    expect(isDialogOnlyQueryChange("", "?action=create-attribute&type=VARIANT")).toBe(true);
+  });
+  it("treats switching dialog actions as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("?action=setup", "?action=remove")).toBe(true);
   });
   it("treats closing a dialog as a dialog-only change", () => {
     expect(isDialogOnlyQueryChange("?action=assign-attribute-value&id=123", "")).toBe(true);

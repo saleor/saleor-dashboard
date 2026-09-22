@@ -1,4 +1,5 @@
 import {
+  type AccountErrorFragment,
   type AttributeValueFragment,
   type PageErrorWithAttributesFragment,
   type ProductErrorWithAttributesFragment,
@@ -8,6 +9,11 @@ import { type FetchMoreProps, type ReorderEvent } from "@dashboard/types";
 import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
 import { type AttributeInput } from "./Attributes";
+
+export type AttributeFieldError =
+  | ProductErrorWithAttributesFragment
+  | PageErrorWithAttributesFragment
+  | AccountErrorFragment;
 
 export enum VariantAttributeScope {
   ALL = "ALL",
@@ -30,7 +36,7 @@ export interface AttributeRowProps extends AttributeRowHandlers {
   attribute: AttributeInput;
   attributeValues: AttributeValueFragment[];
   disabled: boolean;
-  error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment | undefined;
+  error: AttributeFieldError | undefined;
   loading: boolean;
   onAttributeSelectBlur?: () => void;
   richTextGetters: RichTextGetters<string>;

@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 
-export interface VoucherSetupCardDisplayReadyInput {
+interface VoucherSetupCardDisplayReadyInput {
   serverChannelCount: number;
   channelListingsCount: number;
   savedCodesCount: number;

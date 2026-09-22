@@ -1,6 +1,6 @@
 import { joinDateTime } from "@dashboard/misc";
 
-export type VoucherSchedulePhase = "scheduled" | "active" | "ended";
+type VoucherSchedulePhase = "scheduled" | "active" | "ended";
 
 export interface VoucherScheduleDateData {
   startDate: string;

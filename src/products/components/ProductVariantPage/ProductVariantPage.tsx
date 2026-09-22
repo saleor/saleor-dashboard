@@ -14,17 +14,19 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
-} from "@dashboard/components/AssignAttributeValueDialog";
+} from "@dashboard/components/AssignAttributeValueDialog/AssignAttributeValueDialog";
 import {
   type AttributeInput,
   Attributes,
-  VariantAttributeScope,
-} from "@dashboard/components/Attributes";
+  type AttributeValueChoices,
+  type AttributeValueFetchMore,
+} from "@dashboard/components/Attributes/Attributes";
+import { VariantAttributeScope } from "@dashboard/components/Attributes/types";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Grid from "@dashboard/components/Grid";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Grid from "@dashboard/components/Grid/Grid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import Link from "@dashboard/components/Link";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
@@ -34,7 +36,6 @@ import {
   type ProductChannelListingErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductVariantFragment,
-  type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -45,6 +46,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { rippleProductVariantMetadata } from "@dashboard/products/ripples/productVariantMetadata";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
+import { expandRequiredAttributeErrors } from "@dashboard/products/utils/validation";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productVariantUrl } from "@dashboard/translations/urls";
@@ -56,19 +58,18 @@ import { CircleHelp } from "lucide-react";
 import { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { ProductShipping } from "../ProductShipping";
-import { ProductStocks } from "../ProductStocks";
+import { ProductShipping } from "../ProductShipping/ProductShipping";
+import { ProductStocks } from "../ProductStocks/ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
-import { ProductVariantEndPreorderDialog } from "../ProductVariantEndPreorderDialog/ProductVariantEndPreorderDialog";
 import { ProductVariantMediaSelectDialog } from "../ProductVariantImageSelectDialog/ProductVariantMediaSelectDialog";
-import ProductVariantMedia from "../ProductVariantMedia";
-import ProductVariantName from "../ProductVariantName";
-import ProductVariantNavigation from "../ProductVariantNavigation";
+import ProductVariantMedia from "../ProductVariantMedia/ProductVariantMedia";
+import ProductVariantName from "../ProductVariantName/ProductVariantName";
 import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
-import { ProductVariantPrice } from "../ProductVariantPrice";
-import ProductVariantSetDefault from "../ProductVariantSetDefault";
+import { ProductVariantNavigation } from "../ProductVariantNavigation/ProductVariantNavigation";
+import { ProductVariantPrice } from "../ProductVariantPrice/ProductVariantPrice";
+import ProductVariantSetDefault from "../ProductVariantSetDefault/ProductVariantSetDefault";
 import {
   type ProductVariantUpdateData,
   ProductVariantUpdateForm,
@@ -125,12 +126,12 @@ interface ProductVariantPageProps {
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
   referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: AttributeValueChoices;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreReferenceCategories?: FetchMoreProps;
   fetchMoreReferenceCollections?: FetchMoreProps;
-  fetchMoreAttributeValues?: FetchMoreProps;
+  fetchMoreAttributeValues?: AttributeValueFetchMore;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
   fetchReferenceCategories?: (data: string) => void;
@@ -140,8 +141,6 @@ interface ProductVariantPageProps {
   onCloseDialog: () => void;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   initialConstraints?: InitialConstraints & InitialPageConstraints;
-  onVariantPreorderDeactivate: (id: string) => void;
-  variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: (move: VariantReorderMove) => void;
   onAttributeSelectBlur: () => void;
   onDelete: () => any;
@@ -177,8 +176,6 @@ export const ProductVariantPage = ({
   onDelete,
   onShowMetadata,
   onSubmit,
-  onVariantPreorderDeactivate,
-  variantDeactivatePreoderButtonState,
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
@@ -210,15 +207,10 @@ export const ProductVariantPage = ({
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
   const [isModalOpened, setModalStatus] = useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
-  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] = useState(false);
   const productMedia = [...(variant?.product?.media ?? [])]?.sort((prev, next) =>
     prev.sortOrder > next.sortOrder ? 1 : -1,
   );
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-  const handleDeactivatePreorder = async () => {
-    await onVariantPreorderDeactivate(variant.id);
-    setIsEndPreorderModalOpened(false);
-  };
   const handleAssignReferenceAttribute = (
     attributeValues: Container[],
     data: ProductVariantUpdateData,
@@ -344,7 +336,10 @@ export const ProductVariantPage = ({
                   byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
                 );
                 const media = getSelectedMedia(productMedia, data.media);
-                const errors = [...apiErrors, ...validationErrors];
+                const errors = expandRequiredAttributeErrors(
+                  [...apiErrors, ...validationErrors],
+                  data.attributes,
+                );
                 const priceVariantErrors = [...channelErrors, ...validationErrors];
 
                 return (
@@ -559,15 +554,6 @@ export const ProductVariantPage = ({
           </div>
         </Grid>
       </DetailPageLayout.Content>
-      {!!variant?.preorder && (
-        <ProductVariantEndPreorderDialog
-          confirmButtonState={variantDeactivatePreoderButtonState}
-          onClose={() => setIsEndPreorderModalOpened(false)}
-          onConfirm={handleDeactivatePreorder}
-          open={isEndPreorderModalOpened}
-          variantGlobalSoldUnits={variant?.preorder?.globalSoldUnits}
-        />
-      )}
     </DetailPageLayout>
   );
 };

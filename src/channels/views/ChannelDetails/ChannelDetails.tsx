@@ -2,7 +2,7 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { useUser } from "@dashboard/auth/useUser";
 import { BulkPublishToChannelDialog } from "@dashboard/channels/components/BulkPublishToChannelDialog/BulkPublishToChannelDialog";
-import { ChannelDeleteDialog } from "@dashboard/channels/components/ChannelDeleteDialog";
+import { ChannelDeleteDialog } from "@dashboard/channels/components/ChannelDeleteDialog/ChannelDeleteDialog";
 import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { ChannelMetadataDialog } from "@dashboard/channels/components/ChannelMetadataDialog/ChannelMetadataDialog";
 import {
@@ -35,7 +35,7 @@ import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDe
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AssignShippingZoneDialog } from "@dashboard/components/AssignShippingZoneDialog/AssignShippingZoneDialog";
 import { AssignWarehouseDialog } from "@dashboard/components/AssignWarehouseDialog/AssignWarehouseDialog";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
@@ -58,7 +58,7 @@ import {
   getSearchFetchMoreProps,
 } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
@@ -69,7 +69,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
+import ChannelDetailsPage from "../../pages/ChannelDetailsPage/ChannelDetailsPage";
 import { messages as channelDetailsPageMessages } from "../../pages/ChannelDetailsPage/messages";
 import {
   channelsListUrl,

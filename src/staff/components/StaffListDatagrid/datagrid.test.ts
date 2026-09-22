@@ -22,6 +22,7 @@ const createStaffMember = (orderIds: string[]): StaffMember => ({
   email: "admin@example.com",
   firstName: "Chris",
   isActive: true,
+  lastLogin: "2024-01-01T00:00:00+00:00",
   lastName: "Cooper",
   avatar: null,
   orders: {

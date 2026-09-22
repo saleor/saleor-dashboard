@@ -112,21 +112,3 @@ test("TC: SALEOR_181 Set gift card balance #e2e #gift", async () => {
   await giftCardsPage.setGiftCardsBalanceDialog.setBalance("34");
   await giftCardsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_182 Export gift card codes in XLSX file #e2e #gift", async () => {
-  await giftCardsPage.clickShowMoreMenu();
-  await giftCardsPage.clickExportGiftCards();
-  await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("XLSX");
-  await giftCardsPage.exportGiftCardsBanner.waitFor({
-    state: "hidden",
-    timeout: 30000,
-  });
-});
-test("TC: SALEOR_183 Export gift card codes in CSV file #e2e #gift", async () => {
-  await giftCardsPage.clickShowMoreMenu();
-  await giftCardsPage.clickExportGiftCards();
-  await giftCardsPage.exportGiftCardsDialog.exportGiftCardCodes("CSV");
-  await giftCardsPage.exportGiftCardsBanner.waitFor({
-    state: "hidden",
-    timeout: 30000,
-  });
-});

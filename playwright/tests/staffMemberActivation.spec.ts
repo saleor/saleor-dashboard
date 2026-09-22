@@ -18,10 +18,12 @@ test.beforeEach(async ({ page, request }) => {
 
 test("TC: SALEOR_137 Admin User should be able to deactivate other user #e2e #staff-members", async () => {
   await staffMembersPage.goToStaffDetailsPage(USERS.userToBeDeactivated.id);
-  await staffMembersPage.clickIsActiveCheckbox();
-  await staffMembersPage.clickSaveButton();
+  await expect(staffMembersPage.staffStatusButton).toHaveText("Deactivate");
+  await staffMembersPage.clickStaffStatusButton();
+  await staffMembersPage.confirmStaffStatusDialog();
   await staffMembersPage.basePage.expectSuccessBanner();
-  expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(false);
+  await expect(staffMembersPage.staffStatusButton).toHaveText("Activate");
+  await expect(staffMembersPage.staffMemberStatus).toContainText("Not active");
 
   const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
     email: USERS.userToBeDeactivated.email,
@@ -32,10 +34,11 @@ test("TC: SALEOR_137 Admin User should be able to deactivate other user #e2e #st
 });
 test("TC: SALEOR_38 Admin User should be able to activate other user #e2e #staff-members", async () => {
   await staffMembersPage.goToStaffDetailsPage(USERS.userToBeActivated.id);
-  await staffMembersPage.clickIsActiveCheckbox();
-  await staffMembersPage.clickSaveButton();
+  await expect(staffMembersPage.staffStatusButton).toHaveText("Activate");
+  await staffMembersPage.clickStaffStatusButton();
+  await staffMembersPage.confirmStaffStatusDialog();
   await staffMembersPage.basePage.expectSuccessBanner();
-  expect(await staffMembersPage.isActiveCheckbox.isChecked()).toEqual(true);
+  await expect(staffMembersPage.staffStatusButton).toHaveText("Deactivate");
 
   const loginViaApiDeactivatedUserResponse = await basicApiService.logInUserViaApi({
     email: USERS.userToBeActivated.email,

@@ -1,5 +1,5 @@
 import { getApiUrl } from "@dashboard/config";
-import { createFetch } from "@dashboard/legacy-sdk";
+import { createFetch } from "@dashboard/graphql/authFetch";
 import { createGraphiQLFetcher, type FetcherOpts } from "@graphiql/toolkit";
 
 import { getFetcher } from "./utils";
@@ -8,7 +8,7 @@ jest.mock("@graphiql/toolkit", () => ({
   createGraphiQLFetcher: jest.fn(),
 }));
 
-jest.mock("@dashboard/legacy-sdk", () => ({
+jest.mock("@dashboard/graphql/authFetch", () => ({
   createFetch: jest.fn().mockReturnValue(jest.fn()),
 }));
 

@@ -1,7 +1,7 @@
-import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
+import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider/GiftCardListProvider";
 import { type BulkDeleteGiftCardMutation, useBulkDeleteGiftCardMutation } from "@dashboard/graphql";
 import { type MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { useIntl } from "react-intl";
 

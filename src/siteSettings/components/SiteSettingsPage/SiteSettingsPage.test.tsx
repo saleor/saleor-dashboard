@@ -17,7 +17,7 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <ApolloMockedProvider>
     <MemoryRouter>
       <IntlProvider defaultLocale="en" locale="en">

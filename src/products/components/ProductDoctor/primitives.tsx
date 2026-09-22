@@ -1,14 +1,14 @@
 import { SCHEDULED_BACKGROUND_COLOR, SCHEDULED_COLOR, SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { AlertTriangle, CircleAlert } from "lucide-react";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
 export { SCHEDULED_BACKGROUND_COLOR, SCHEDULED_COLOR };
 
-export type AvailabilityStatus = "live" | "scheduled" | "hidden";
+type AvailabilityStatus = "live" | "scheduled" | "hidden";
 
 interface StatusDotProps {
   status: AvailabilityStatus;
@@ -216,36 +216,5 @@ export const InfoCallout = ({ children }: InfoCalloutProps) => (
     <Text size={2} color="default2">
       {children}
     </Text>
-  </Box>
-);
-
-/**
- * Reusable icon wrapper that provides consistent sizing and color based on state.
- */
-interface IconWrapperProps {
-  isActive: boolean;
-  activeColor?: string;
-  children: React.ReactNode;
-}
-
-export const IconWrapper = ({
-  isActive,
-  activeColor = SUCCESS_ICON_COLOR,
-  children,
-}: IconWrapperProps) => (
-  <Box display="flex" alignItems="center" color={isActive ? undefined : "default2"}>
-    {React.Children.map(children, child => {
-      if (React.isValidElement(child)) {
-        return React.cloneElement(
-          child as React.ReactElement<{ color?: string; strokeWidth?: number }>,
-          {
-            color: isActive ? activeColor : "var(--mu-colors-text-default2)",
-            strokeWidth: isActive ? 2 : 1.5,
-          },
-        );
-      }
-
-      return child;
-    })}
   </Box>
 );

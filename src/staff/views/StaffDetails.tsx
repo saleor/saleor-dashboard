@@ -1,15 +1,23 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth/useUser";
-import ActionDialog from "@dashboard/components/ActionDialog";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { getNewPasswordResetRedirectUrl } from "@dashboard/auth/utils";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { customerUrl } from "@dashboard/customers/urls";
-import { PermissionEnum, useStaffMemberDetailsQuery } from "@dashboard/graphql";
+import {
+  PermissionEnum,
+  useRequestPasswordResetMutation,
+  useStaffMemberDetailsQuery,
+  useStaffMemberUpdateMutation,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
+import { isStaffInvitePending } from "@dashboard/staff/staffMemberStatus";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -17,24 +25,27 @@ import {
   type StaffDetailsFormData,
   StaffDetailsPage,
 } from "../components/StaffDetailsPage/StaffDetailsPage";
+import { StaffMetadataDialog } from "../components/StaffMetadataDialog/StaffMetadataDialog";
 import { StaffPasswordResetDialog } from "../components/StaffPasswordResetDialog/StaffPasswordResetDialog";
-import { useProfileOperations, useStaffUserOperations } from "../hooks";
+import { useProfileOperations } from "../hooks/useProfileOperations";
+import { useStaffUserOperations } from "../hooks/useStaffUserOperations";
 import {
   staffListUrl,
   staffMemberDetailsUrl,
   type StaffMemberDetailsUrlQueryParams,
 } from "../urls";
-import { groupsDiff } from "../utils";
+import { groupsDiff, isMemberActive } from "../utils";
 
-interface OrderListProps {
+interface StaffDetailsViewProps {
   id: string;
   params: StaffMemberDetailsUrlQueryParams;
 }
 
-export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
+export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();
+  const notify = useNotifier();
   const closeModal = () =>
     navigate(
       staffMemberDetailsUrl(id, {
@@ -42,17 +53,73 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
         action: undefined,
       }),
     );
+  const openModal = (action: NonNullable<StaffMemberDetailsUrlQueryParams["action"]>) =>
+    navigate(
+      staffMemberDetailsUrl(id, {
+        ...params,
+        action,
+      }),
+    );
   const isUserSameAsViewer = user.user?.id === id;
   const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [
     PermissionEnum.MANAGE_STAFF,
   ]);
+  // `user(id:)` and `me` normalize to the same Apollo User. A cache write from
+  // staff details can replace `userPermissions` and empty the sidebar (only
+  // Home / Extensions have no permission gate). Skip when we do not need the
+  // extra staff fields; otherwise keep the result out of the cache.
   const { data, loading, refetch } = useStaffMemberDetailsQuery({
     displayLoader: true,
     variables: { id },
     skip: isUserSameAsViewer && !hasManageStaffPermission,
+    fetchPolicy: isUserSameAsViewer ? "no-cache" : "cache-first",
   });
   const { deleteResult, deleteStaffMember, updateStaffMember, updateStaffMemberOpts } =
-    useStaffUserOperations();
+    useStaffUserOperations({ isOwnAccount: isUserSameAsViewer });
+  // Separate from form save so Activate/Deactivate does not drive the Savebar
+  // or paint status errors onto name/email/permission fields.
+  const [updateStaffStatus, updateStaffStatusOpts] = useStaffMemberUpdateMutation({
+    onCompleted: data => {
+      const errors = data.staffUpdate?.errors ?? [];
+
+      if (errors.length) {
+        notify({
+          status: "error",
+          text:
+            errors
+              .map(error => error.message)
+              .filter(Boolean)
+              .join(", ") ||
+            intl.formatMessage({
+              id: "3kJE8G",
+              defaultMessage: "Something went wrong. Try again.",
+            }),
+        });
+
+        return;
+      }
+
+      const activated = !!data.staffUpdate?.user?.isActive;
+
+      notify({
+        status: "success",
+        text: intl.formatMessage(
+          activated
+            ? {
+                id: "mQ8v1C",
+                defaultMessage: "Staff member activated",
+                description: "success toast after activating a staff member",
+              }
+            : {
+                id: "kP2n4A",
+                defaultMessage: "Staff member deactivated",
+                description: "success toast after deactivating a staff member",
+              },
+        ),
+      });
+      closeModal();
+    },
+  });
   const {
     updateUserAccount,
     updateUserAccountOpts,
@@ -60,8 +127,11 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
     deleteUserAvatar,
     updateUserAvatar,
   } = useProfileOperations({ closeModal, id, refetch });
-  const staffMember = isUserSameAsViewer ? user.user : data?.user;
+  const staffMember = isUserSameAsViewer ? (data?.user ?? user.user) : data?.user;
   const canViewCustomerProfile = (data?.user?.orders?.edges.length ?? 0) > 0;
+  const canEditMetadata = !!data?.user;
+  const isActive = isMemberActive(staffMember);
+  const invitePending = isStaffInvitePending(staffMember);
   const {
     loadMore: loadMorePermissionGroups,
     search: searchPermissionGroups,
@@ -70,28 +140,87 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
     skip: !hasManageStaffPermission,
   });
+  // Saleor has no staffResendInvite; requestPasswordReset reuses the set-password token flow.
+  const [resendStaffInvite, resendStaffInviteOpts] = useRequestPasswordResetMutation({
+    onCompleted: result => {
+      if (result?.requestPasswordReset?.errors?.length) {
+        notify({
+          status: "error",
+          text: result.requestPasswordReset.errors.map(error => error.message).join(", "),
+          title: intl.formatMessage({
+            id: "WQ7yWS",
+            defaultMessage: "Couldn’t resend invitation",
+            description: "toast title when resend invite fails",
+          }),
+        });
+
+        return;
+      }
+
+      notify({
+        status: "success",
+        title: intl.formatMessage({
+          id: "RjDmqa",
+          defaultMessage: "Invitation resent",
+          description: "toast title after resending staff invite",
+        }),
+        text: intl.formatMessage({
+          id: "cMyuOj",
+          defaultMessage: "They’ll get a password reset email with a link to set their password.",
+          description: "toast body after resending staff invite",
+        }),
+      });
+      closeModal();
+    },
+    onError: () => {
+      notify({
+        status: "error",
+        text: intl.formatMessage({
+          id: "WQ7yWS",
+          defaultMessage: "Couldn’t resend invitation",
+          description: "toast title when resend invite fails",
+        }),
+      });
+    },
+  });
 
   if (staffMember === null) {
     return <NotFoundPage backHref={staffListUrl()} />;
   }
 
-  const handleStaffUpdate = (formData: StaffDetailsFormData) =>
-    extractMutationErrors(
+  // Email is on staffUpdate only. accountUpdate (own-profile) cannot change it.
+  // MANAGE_STAFF can update any staff email, including their own.
+  const canEditEmail = hasManageStaffPermission;
+  const saveViaStaffUpdate = !isUserSameAsViewer || canEditEmail;
+  const handleStaffUpdate = async (formData: StaffDetailsFormData) => {
+    const errors = await extractMutationErrors(
       updateStaffMember({
         variables: {
           id,
           input: {
             email: formData.email,
             firstName: formData.firstName,
-            isActive: formData.isActive,
             lastName: formData.lastName,
-            ...(hasManageStaffPermission ? groupsDiff(data?.user, formData) : {}),
+            // Own account hides permission groups — never send a groupsDiff from this page.
+            ...(!isUserSameAsViewer && hasManageStaffPermission
+              ? groupsDiff(data?.user, formData)
+              : {}),
           },
         },
+        // StaffMemberDetails does not include userPermissions. A cache write on
+        // `me` can empty the sidebar until refetchUser lands.
+        ...(isUserSameAsViewer ? { fetchPolicy: "no-cache" as const } : {}),
       }),
     );
-  const handleUserUpdate = (formData: StaffDetailsFormData) =>
-    extractMutationErrors(
+
+    if (!errors.length && isUserSameAsViewer) {
+      await Promise.all([refetch(), user.refetchUser?.()]);
+    }
+
+    return errors;
+  };
+  const handleUserUpdate = async (formData: StaffDetailsFormData) => {
+    const errors = await extractMutationErrors(
       updateUserAccount({
         variables: {
           input: {
@@ -102,33 +231,73 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
       }),
     );
 
+    // accountUpdate does not return name fields; refresh `me` so the form
+    // and sidebar identity match what was saved.
+    if (!errors.length) {
+      await user.refetchUser?.();
+    }
+
+    return errors;
+  };
+  const handleToggleStaffStatus = () =>
+    extractMutationErrors(
+      updateStaffStatus({
+        variables: {
+          id,
+          input: {
+            isActive: !isActive,
+          },
+        },
+      }),
+    );
+  const handleResendInvite = () => {
+    const email = staffMember?.email;
+
+    if (!email) {
+      return;
+    }
+
+    return resendStaffInvite({
+      variables: {
+        email,
+        redirectUrl: getNewPasswordResetRedirectUrl(),
+      },
+    });
+  };
+
+  const formErrors = saveViaStaffUpdate
+    ? updateStaffMemberOpts?.data?.staffUpdate?.errors || []
+    : (updateUserAccountOpts?.data?.accountUpdate?.errors ?? []).map(error => ({
+        __typename: "StaffError" as const,
+        code: error.code,
+        field: error.field,
+        message: error.message,
+      }));
+
   return (
     <>
       <WindowTitle title={getStringOrPlaceholder(staffMember?.email)} />
       <StaffDetailsPage
-        errors={updateStaffMemberOpts?.data?.staffUpdate?.errors || []}
+        errors={formErrors}
         canEditAvatar={isUserSameAsViewer}
         canEditPreferences={isUserSameAsViewer}
+        canEditEmail={canEditEmail}
         canEditStatus={!isUserSameAsViewer}
         canRemove={!isUserSameAsViewer}
         canViewCustomerProfile={canViewCustomerProfile}
         disabled={loading}
+        disabledStatus={updateStaffStatusOpts.loading}
         initialSearch=""
-        onResetPassword={() =>
-          navigate(
-            staffMemberDetailsUrl(id, {
-              action: "reset-password",
-            }),
-          )
+        onResetPassword={() => openModal("reset-password")}
+        onDelete={() => openModal("remove")}
+        onToggleStaffStatus={() => openModal(isActive ? "deactivate" : "activate")}
+        onResendInvite={
+          invitePending && isActive && !isUserSameAsViewer
+            ? () => openModal("resend-invite")
+            : undefined
         }
-        onDelete={() =>
-          navigate(
-            staffMemberDetailsUrl(id, {
-              action: "remove",
-            }),
-          )
-        }
-        onSubmit={isUserSameAsViewer ? handleUserUpdate : handleStaffUpdate}
+        onShowMetadata={canEditMetadata ? () => openModal("view-metadata") : undefined}
+        onSubmit={saveViaStaffUpdate ? handleStaffUpdate : handleUserUpdate}
         onImageUpload={file =>
           updateUserAvatar({
             variables: {
@@ -136,18 +305,12 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
             },
           })
         }
-        onImageDelete={() =>
-          navigate(
-            staffMemberDetailsUrl(id, {
-              action: "remove-avatar",
-            }),
-          )
-        }
+        onImageDelete={() => openModal("remove-avatar")}
         onViewCustomerProfile={() => navigate(customerUrl(id))}
         availablePermissionGroups={mapEdgesToItems(searchPermissionGroupsOpts?.data?.search)}
         staffMember={staffMember}
         saveButtonBarState={
-          isUserSameAsViewer ? updateUserAccountOpts.status : updateStaffMemberOpts.status
+          saveViaStaffUpdate ? updateStaffMemberOpts.status : updateUserAccountOpts.status
         }
         fetchMorePermissionGroups={{
           hasMore: searchPermissionGroupsOpts.data?.search?.pageInfo.hasNextPage,
@@ -155,6 +318,11 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
           onFetchMore: loadMorePermissionGroups,
         }}
         onSearchChange={searchPermissionGroups}
+      />
+      <StaffMetadataDialog
+        open={params.action === "view-metadata"}
+        onClose={closeModal}
+        staffMember={data?.user}
       />
       <ActionDialog
         open={params.action === "remove"}
@@ -181,6 +349,76 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
         />
       </ActionDialog>
       <ActionDialog
+        open={params.action === "activate"}
+        title={intl.formatMessage({
+          id: "5MmwNP",
+          defaultMessage: "Activate staff member",
+          description: "dialog header",
+        })}
+        confirmButtonState={updateStaffStatusOpts.status}
+        onClose={closeModal}
+        onConfirm={handleToggleStaffStatus}
+      >
+        <FormattedMessage
+          id="hbNxgV"
+          defaultMessage="Are you sure you want to activate {email}?"
+          values={{
+            email: getStringOrPlaceholder(data?.user?.email),
+          }}
+        />
+      </ActionDialog>
+      <ActionDialog
+        open={params.action === "deactivate"}
+        title={intl.formatMessage({
+          id: "BcKoQ9",
+          defaultMessage: "Deactivate staff member",
+          description: "dialog header",
+        })}
+        confirmButtonState={updateStaffStatusOpts.status}
+        confirmButtonLabel={intl.formatMessage({
+          id: "MMPgsZ",
+          defaultMessage: "Deactivate",
+          description: "staff deactivate dialog confirm button",
+        })}
+        variant="delete"
+        onClose={closeModal}
+        onConfirm={handleToggleStaffStatus}
+      >
+        <FormattedMessage
+          id="gIDsue"
+          defaultMessage="Deactivate {email}? They won’t be able to sign in to the dashboard until you activate them again. Their account and permissions are kept."
+          description="staff deactivate confirmation — explains effect for merchants"
+          values={{
+            email: <strong>{getStringOrPlaceholder(staffMember?.email)}</strong>,
+          }}
+        />
+      </ActionDialog>
+      <ActionDialog
+        open={params.action === "resend-invite"}
+        title={intl.formatMessage({
+          id: "8ZFJV+",
+          defaultMessage: "Resend invitation",
+          description: "dialog header for resending staff invite",
+        })}
+        confirmButtonState={resendStaffInviteOpts.status}
+        confirmButtonLabel={intl.formatMessage({
+          id: "n9bERs",
+          defaultMessage: "Resend invitation",
+          description: "staff details top nav CTA for pending invite",
+        })}
+        onClose={closeModal}
+        onConfirm={handleResendInvite}
+      >
+        <FormattedMessage
+          id="v+tpSR"
+          defaultMessage="We’ll email {email} a link to set their password. It arrives as a password reset message, but works the same as the original invite."
+          description="dialog body explaining password-reset email for resend invite"
+          values={{
+            email: <strong>{getStringOrPlaceholder(staffMember?.email)}</strong>,
+          }}
+        />
+      </ActionDialog>
+      <ActionDialog
         open={params.action === "remove-avatar"}
         title={intl.formatMessage({
           id: "VKWPBf",
@@ -200,7 +438,10 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
           }}
         />
       </ActionDialog>
-      <StaffPasswordResetDialog open={params.action === "reset-password"} onClose={closeModal} />
+      <StaffPasswordResetDialog
+        open={isUserSameAsViewer && params.action === "reset-password"}
+        onClose={closeModal}
+      />
     </>
   );
 };

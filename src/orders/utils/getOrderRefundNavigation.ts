@@ -3,11 +3,11 @@ import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { orderPaymentRefundUrl, orderTransactionRefundUrl } from "../urls";
 import { OrderDetailsViewModel } from "./OrderDetailsViewModel";
 
-export interface OrderRefundNavigationOptions {
+interface OrderRefundNavigationOptions {
   lineId?: string;
 }
 
-export interface OrderRefundNavigation {
+interface OrderRefundNavigation {
   url: string;
   canRefund: boolean;
   usesTransactionRefund: boolean;

@@ -128,6 +128,7 @@ export const voucherCatalogue = gql`
     $includeCollections: Boolean!
     $includeCategories: Boolean!
     $includeVariants: Boolean!
+    $PERMISSION_MANAGE_PRODUCTS: Boolean!
   ) {
     voucher(id: $id) {
       id

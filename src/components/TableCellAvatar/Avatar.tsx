@@ -4,8 +4,6 @@ import type * as React from "react";
 import AvatarImage from "./AvatarImage";
 import { useAvatarStyles } from "./styles";
 
-export const AVATAR_MARGIN = 40;
-
 export interface AvatarProps {
   initials?: string;
   thumbnail?: string;

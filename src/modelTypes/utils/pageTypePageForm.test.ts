@@ -4,6 +4,7 @@ import { isPageTypeUpdateFormPristine } from "./pageTypePageForm";
 
 const initialData: PageTypeForm = {
   attributes: [{ label: "Title", value: "attr-1" }],
+  icon: null,
   metadata: [],
   name: "Blog",
   privateMetadata: [],

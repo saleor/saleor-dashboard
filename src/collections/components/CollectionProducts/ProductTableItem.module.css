@@ -38,8 +38,12 @@
   transition: opacity 0.12s ease;
 }
 
+.rowDelete svg {
+  color: var(--mu-colors-text-default1);
+}
+
 .row:hover .rowDelete,
-.row:focus-within .rowDelete {
+.rowDelete:focus-within {
   opacity: 1;
 }
 

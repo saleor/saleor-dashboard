@@ -1,9 +1,13 @@
-import { CodegenConfig } from "@graphql-codegen/cli";
+import { type CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "./schema-staging.graphql",
+  // schema-directives declares @lockSchema, which the API does not know about
+  schema: ["./schema-staging.graphql", "./schema-directives.graphql"],
   ignoreNoDocuments: true,
   documents: [
+    // Shared fragments are deliberately not loaded here: they carry @lockSchema, and the
+    // import-types preset drops `documentTransforms`, so codegen cannot resolve it before
+    // validating. src/graphql/lockSchema.test.ts validates every document against 3.24 instead.
     "./src/**/queries.staging.ts",
     "./src/**/mutations.staging.ts",
     "./src/**/fragments/*.staging.ts",

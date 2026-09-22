@@ -4,12 +4,12 @@ import { type AccountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Input } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { type CustomerCreatePageFormData } from "../CustomerCreatePage";
+import { type CustomerCreatePageFormData } from "../CustomerCreatePage/CustomerCreatePage";
 
 const useStyles = makeStyles(
   theme => ({
@@ -51,50 +51,44 @@ const CustomerCreateDetails = (props: CustomerCreateDetailsProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         <div className={classes.root}>
-          <TextField
+          <Input
             data-test-id="customer-first-name"
             disabled={disabled}
             error={!!formErrors.customerFirstName}
-            fullWidth
+            aria-invalid={!!formErrors.customerFirstName}
             name="customerFirstName"
             label={intl.formatMessage(commonMessages.firstName)}
             helperText={getAccountErrorMessage(formErrors.customerFirstName, intl)}
             type="text"
             value={data.customerFirstName}
             onChange={onChange}
-            inputProps={{
-              spellCheck: false,
-            }}
+            spellCheck={false}
           />
-          <TextField
+          <Input
             data-test-id="customer-last-name"
             disabled={disabled}
             error={!!formErrors.customerLastName}
-            fullWidth
+            aria-invalid={!!formErrors.customerLastName}
             name="customerLastName"
             label={intl.formatMessage(commonMessages.lastName)}
             helperText={getAccountErrorMessage(formErrors.customerLastName, intl)}
             type="text"
             value={data.customerLastName}
             onChange={onChange}
-            inputProps={{
-              spellCheck: false,
-            }}
+            spellCheck={false}
           />
-          <TextField
+          <Input
             data-test-id="customer-email"
             disabled={disabled}
             error={!!formErrors.email}
-            fullWidth
+            aria-invalid={!!formErrors.email}
             name="email"
             label={intl.formatMessage(commonMessages.email)}
             helperText={getAccountErrorMessage(formErrors.email, intl)}
             type="email"
             value={data.email}
             onChange={onChange}
-            inputProps={{
-              spellCheck: false,
-            }}
+            spellCheck={false}
           />
         </div>
       </DashboardCard.Content>

@@ -1,25 +1,39 @@
-import { Pagination } from "@dashboard/collections/components/CollectionProducts/Pagination";
+import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
 import {
   AssignableListCell,
   AssignableListLinkCell,
   AssignableListTable,
 } from "@dashboard/components/AssignableListTable/AssignableListTable";
-import { ASSIGNABLE_LIST_TABLE_LEADING_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown";
+import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductChannelsAvailability";
+import { type ProductChannelListing } from "@dashboard/components/ChannelsAvailabilityDropdown/productUtils";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { PAGINATE_BY } from "@dashboard/config";
-import { type SearchProductFragment } from "@dashboard/graphql";
+import { PermissionEnum } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { productUrl } from "@dashboard/products/urls";
+import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { type ListActions, type ListProps } from "@dashboard/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
+/**
+ * Structural row rather than SearchProductFragment — the voucher catalogue query selects a
+ * narrower product. `channelListings` is absent (not empty) when the viewer lacks
+ * MANAGE_PRODUCTS, since it is behind `@include(if: $PERMISSION_MANAGE_PRODUCTS)`.
+ */
+type DiscountProductRow = {
+  id: string;
+  name: string;
+  thumbnail?: { url: string } | null;
+  productType: { name: string };
+  channelListings?: ProductChannelListing[] | null;
+};
+
 interface SaleProductsProps extends Omit<ListProps, "onUpdateListSettings">, ListActions {
-  products: SearchProductFragment[];
+  products: DiscountProductRow[];
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
   numberOfRows?: number;
@@ -41,12 +55,15 @@ export const DiscountProducts = ({
   numberOfRows = PAGINATE_BY,
   onUpdateListSettings,
   embedded = false,
-}: SaleProductsProps): JSX.Element => {
+}: SaleProductsProps): React.ReactNode => {
   const intl = useIntl();
+  // Product.channelListings is behind MANAGE_PRODUCTS and simply absent otherwise, so drop the
+  // column instead of filling every row with a placeholder.
+  const canManageProducts = useHasPermission()(PermissionEnum.MANAGE_PRODUCTS);
 
   const body = (
     <>
-      <AssignableListTable<SearchProductFragment>
+      <AssignableListTable<DiscountProductRow>
         data-test-id="assigned-specific-products-table"
         rowTestId="assigned-specific-product"
         items={products}
@@ -57,26 +74,33 @@ export const DiscountProducts = ({
         toggleAll={(items, count) => toggleAll(items, count)}
         onUnassign={onProductUnassign}
         toolbar={toolbar}
+        density="media"
         emptyMessage={<FormattedMessage {...messages.discountProductsNotFound} />}
         columns={[
           {
             id: "name",
             // Slightly prefer name, but keep type/availability readable in the catalogue panel.
-            width: "42%",
+            width: canManageProducts ? "42%" : "60%",
             header: <FormattedMessage {...messages.discountProductsTableProductHeader} />,
           },
           {
             id: "type",
-            width: "24%",
+            width: canManageProducts ? "24%" : "32%",
             header: <FormattedMessage {...messages.discountProductsTableTypeHeader} />,
             hideHeaderWhenSelected: true,
           },
-          {
-            id: "availability",
-            width: "26%",
-            header: <FormattedMessage {...messages.discountProductsTableAvailabilityHeader} />,
-            hideHeaderWhenSelected: true,
-          },
+          ...(canManageProducts
+            ? [
+                {
+                  id: "availability",
+                  width: "26%",
+                  header: (
+                    <FormattedMessage {...messages.discountProductsTableAvailabilityHeader} />
+                  ),
+                  hideHeaderWhenSelected: true,
+                },
+              ]
+            : []),
         ]}
         renderCells={product => (
           <>
@@ -114,21 +138,23 @@ export const DiscountProducts = ({
                 {maybe(() => product.productType.name)}
               </Text>
             </AssignableListCell>
-            <AssignableListCell truncate>
-              {product.channelListings?.length ? (
-                <ProductChannelsAvailability channels={product.channelListings} />
-              ) : (
-                "-"
-              )}
-            </AssignableListCell>
+            {canManageProducts && (
+              <AssignableListCell truncate>
+                {product.channelListings?.length ? (
+                  <ProductChannelsAvailability channels={product.channelListings} />
+                ) : (
+                  "-"
+                )}
+              </AssignableListCell>
+            )}
           </>
         )}
       />
       {products?.length && onUpdateListSettings ? (
-        <Pagination
+        <AssignableListPagination
+          inset="nested"
           numberOfRows={numberOfRows}
           onUpdateListSettings={onUpdateListSettings}
-          paddingLeft={ASSIGNABLE_LIST_TABLE_LEADING_INSET}
         />
       ) : null}
     </>

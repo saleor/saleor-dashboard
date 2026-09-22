@@ -11,9 +11,9 @@ export class ProductTypePage extends BasePage {
     readonly addProductTypeButton = page.getByTestId("add-product-type"),
     readonly notificationSuccess = page.getByTestId("notification-message"),
     readonly nameInput = page.locator("[name='name']"),
-    readonly isShippingRequired = page.getByTestId("isShippingRequired"),
+    readonly isShippingRequired = page.getByTestId("isShippingRequired").getByRole("button"),
     readonly assignProductAttributeButton = page.getByTestId("assign-products-attributes"),
-    readonly hasVariantsButton = page.locator("[name='hasVariants']"),
+    readonly hasVariantsButton = page.getByTestId("hasVariants").getByRole("button"),
     readonly shippingWeightInput = page.locator("[name='weight']"),
     readonly giftCardKindCheckbox = page.getByTestId("GIFT_CARD"),
     readonly variantSelectionCheckbox = page.getByTestId("variant-selection-checkbox"),
@@ -21,6 +21,9 @@ export class ProductTypePage extends BasePage {
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-product-types"),
     readonly productTypeList = page.getByTestId("product-types-list"),
     readonly rowCheckbox = page.getByTestId("checkbox"),
+    readonly createProductTypeDialog = page.getByTestId("create-product-type-dialog"),
+    readonly cogsMenuButton = page.getByTestId("menu").getByTestId("show-more-button"),
+    readonly deleteProductTypeMenuItem = page.getByTestId("delete-product-type"),
   ) {
     super(page);
     this.deleteProductTypeDialog = new DeleteDialog(page);
@@ -36,7 +39,12 @@ export class ProductTypePage extends BasePage {
   }
 
   async makeProductShippableWithWeight(weight = "10") {
-    await this.isShippingRequired.click();
+    const pressed = await this.isShippingRequired.getAttribute("aria-pressed");
+
+    if (pressed !== "true") {
+      await this.isShippingRequired.click();
+    }
+
     await this.shippingWeightInput.fill(weight);
   }
 
@@ -51,6 +59,7 @@ export class ProductTypePage extends BasePage {
   async gotoAddProductTypePage() {
     console.log(`Navigating to add product type page: ${URL_LIST.productTypesAdd}`);
     await this.page.goto(URL_LIST.productTypesAdd);
+    await this.createProductTypeDialog.waitFor();
   }
 
   async gotoProductTypeListPage() {
@@ -59,6 +68,7 @@ export class ProductTypePage extends BasePage {
 
   async clickCreateProductTypeButton() {
     await this.addProductTypeButton.click();
+    await this.createProductTypeDialog.waitFor();
   }
 
   async gotoExistingProductTypePage(productTypeId: string) {
@@ -70,6 +80,11 @@ export class ProductTypePage extends BasePage {
 
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
+  }
+
+  async clickDeleteProductType() {
+    await this.cogsMenuButton.click();
+    await this.deleteProductTypeMenuItem.click();
   }
 
   async checkProductTypesOnList(listRows: string[]) {

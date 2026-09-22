@@ -1,4 +1,4 @@
-import CardMenu, { type CardMenuItem } from "@dashboard/components/CardMenu";
+import CardMenu, { type CardMenuItem } from "@dashboard/components/CardMenu/CardMenu";
 import Link from "@dashboard/components/Link";
 import {
   bulkEnableDisableSectionMessages,

@@ -1,0 +1,9 @@
+.hoverRow .hoverControls {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.hoverRow:hover .hoverControls,
+.hoverRow:focus-within .hoverControls {
+  opacity: 1;
+}

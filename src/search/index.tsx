@@ -1,8 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { useGlobalSearchQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { useEffect } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { useIntl } from "react-intl";
 
 import { WindowTitle } from "../components/WindowTitle";
@@ -36,19 +36,8 @@ const Component = () => {
     changeQuery(value);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        window.history.back();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  // Search input is autofocused, so the shortcut must stay active inside form tags.
+  useHotkeys("escape", () => window.history.back(), { enableOnFormTags: true });
 
   return (
     <>

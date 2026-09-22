@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import { EventItem } from "./EventItem";
 
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: jest.fn(() => ({ enabled: true })),
 }));
 

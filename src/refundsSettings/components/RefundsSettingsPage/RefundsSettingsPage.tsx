@@ -1,5 +1,5 @@
 import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
 import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";
@@ -37,7 +37,7 @@ export const RefundsSettingsPage = ({
   refundReasonReferenceType,
   returnReasonReferenceType,
   saveButtonBarState,
-}: RefundsSettingsPageProps): JSX.Element => {
+}: RefundsSettingsPageProps): React.ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
 

@@ -21,7 +21,13 @@ TokenArray [
           "value": "input-5",
         },
         "loading": false,
-        "options": Array [],
+        "options": Array [
+          Object {
+            "label": "Channel PLN",
+            "slug": "channel-pln",
+            "value": "channel-pln",
+          },
+        ],
         "value": Object {
           "label": "Channel PLN",
           "slug": "channel-pln",
@@ -112,7 +118,13 @@ TokenArray [
           "value": "input-5",
         },
         "loading": false,
-        "options": Array [],
+        "options": Array [
+          Object {
+            "label": "Channel PLN",
+            "slug": "channel-pln",
+            "value": "channel-pln",
+          },
+        ],
         "value": Object {
           "label": "Channel PLN",
           "slug": "channel-pln",

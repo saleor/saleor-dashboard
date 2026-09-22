@@ -23,7 +23,7 @@ const StatefulField = ({
 }: {
   disabled?: boolean;
   image: EntityBackgroundImage | null | undefined;
-}): JSX.Element => {
+}): React.ReactNode => {
   const [alt, setAlt] = useState(image?.alt ?? "");
 
   return (

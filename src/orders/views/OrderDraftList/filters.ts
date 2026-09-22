@@ -5,14 +5,14 @@ import { maybe } from "@dashboard/misc";
 import {
   OrderDraftFilterKeys,
   type OrderDraftListFilterOpts,
-} from "@dashboard/orders/components/OrderDraftListPage";
+} from "@dashboard/orders/components/OrderDraftListPage/filters";
 
 import {
-  createFilterTabUtils,
   getGteLteVariables,
   getMinMaxQueryParam,
   getSingleValueQueryParam,
-} from "../../../utils/filters";
+} from "../../../utils/filters/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import { type OrderDraftListUrlFilters, OrderDraftListUrlFiltersEnum } from "../../urls";
 
 const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";

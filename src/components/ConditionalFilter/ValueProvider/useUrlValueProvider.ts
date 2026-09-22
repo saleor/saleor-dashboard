@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { stringify } from "qs";
 import { useEffect, useMemo, useState } from "react";
-import useRouter from "use-react-router";
+import { useHistory, useLocation } from "react-router";
 
 import { type InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
 import { type InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
+import { type InitialCustomerAPIState } from "../API/initialState/customers/useInitialCustomerState";
 import { type InitialDiscountAPIState } from "../API/initialState/discounts/useInitialDiscountsState";
 import { type InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { type InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
@@ -13,17 +14,19 @@ import { type InitialProductAPIState } from "../API/initialState/product/useProd
 import { type InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
 import { type InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
 import { type InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
-import { type FilterContainer, FilterElement } from "../FilterElement";
+import {
+  cloneFilterContainer,
+  type FilterContainer,
+  FilterElement,
+} from "../FilterElement/FilterElement";
 import { type FilterValueProvider } from "../FilterValueProvider";
 import { type FilterProviderType, type InitialAPIState } from "../types";
-import {
-  getAttributeListNavigationQueryParams,
-  stripNavigationQueryParams,
-} from "./navigationQueryParams";
+import { getNavigationQueryParams, stripNavigationQueryParams } from "./navigationQueryParams";
 import { TokenArray } from "./TokenArray";
 import {
   type AttributesFetchingParams,
   type CollectionFetchingParams,
+  type CustomerFetchingParams,
   type DiscountFetchingParams,
   type FetchingParams,
   getEmptyFetchingPrams,
@@ -41,13 +44,14 @@ export const useUrlValueProvider = (
   type: FilterProviderType,
   initialState?: InitialAPIState,
 ): FilterValueProvider => {
-  const router = useRouter();
+  const history = useHistory();
+  const location = useLocation();
   const params = new URLSearchParams(locationSearch);
   const [value, setValue] = useState<FilterContainer>([]);
   const activeTab = params.get("activeTab");
   const query = params.get("query");
-  const before = params.get("before");
-  const after = params.get("after");
+  const sort = params.get("sort");
+  const asc = params.get("asc");
 
   params.delete("asc");
   params.delete("sort");
@@ -86,6 +90,11 @@ export const useUrlValueProvider = (
           break;
         case "page":
           (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
+          break;
+        case "customer":
+          (initialState as InitialCustomerAPIState).fetchQueries(
+            fetchingParams as CustomerFetchingParams,
+          );
           break;
         case "gift-cards":
           (initialState as InitialGiftCardsAPIState).fetchQueries(
@@ -134,31 +143,31 @@ export const useUrlValueProvider = (
   }, [locationSearch, tokenizedUrl, initialState]);
 
   const persist = (filterValue: FilterContainer) => {
-    const navigationParams =
-      type === "attributes" ? getAttributeListNavigationQueryParams(router.location.search) : {};
+    const navigationParams = getNavigationQueryParams(location.search, type);
 
-    router.history.replace({
-      pathname: router.location.pathname,
+    history.replace({
+      pathname: location.pathname,
       search: stringify({
         ...prepareStructure(filterValue),
         ...{ activeTab: activeTab || undefined },
         ...{ query: query || undefined },
-        ...{ before: before || undefined },
-        ...{ after: after || undefined },
+        ...{ sort: sort || undefined },
+        ...{ asc: asc || undefined },
         ...navigationParams,
       }),
     });
-    setValue(filterValue);
+    setValue(cloneFilterContainer(filterValue));
   };
 
   const clear = () => {
-    const navigationParams =
-      type === "attributes" ? getAttributeListNavigationQueryParams(router.location.search) : {};
+    const navigationParams = getNavigationQueryParams(location.search, type);
 
-    router.history.replace({
-      pathname: router.location.pathname,
+    history.replace({
+      pathname: location.pathname,
       search: stringify({
         ...{ activeTab: activeTab || undefined },
+        ...{ sort: sort || undefined },
+        ...{ asc: asc || undefined },
         ...navigationParams,
       }),
     });

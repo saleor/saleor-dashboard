@@ -1,10 +1,10 @@
-import {
-  Condition,
-  type FilterContainer,
-  FilterElement,
-} from "../../ConditionalFilter/FilterElement";
+import { Condition } from "../../ConditionalFilter/FilterElement/Condition";
 import { ConditionOptions } from "../../ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../ConditionalFilter/FilterElement/ConditionSelected";
+import {
+  type FilterContainer,
+  FilterElement,
+} from "../../ConditionalFilter/FilterElement/FilterElement";
 import { ExpressionValue } from "../../ConditionalFilter/FilterElement/FilterElement";
 import { createPageWhereQueryVariables } from "./pageFilterConfig";
 

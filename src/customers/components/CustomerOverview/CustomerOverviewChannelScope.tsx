@@ -27,7 +27,6 @@ export const CustomerOverviewChannelScope = ({
       alignItems="center"
       gap={2}
       flexWrap="wrap"
-      paddingBottom={4}
       data-test-id="customer-overview-channel-scope"
     >
       <Text size={2} color="default2">

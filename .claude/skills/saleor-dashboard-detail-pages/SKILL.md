@@ -31,6 +31,7 @@ On entity detail pages, group fields in **`DetailSettingsCard`** (not `Dashboard
 - **Card vs open section** — when to skip the border
 - Channel availability tiers, foldables, SEO `unwrapped`
 - **SEO last** in the main column by default (identity → primary content → SEO)
+- **Fixed-at-creation fields** — `FixedAtCreationField` (disabled Input + lock + “Fixed at creation. …” helper), never a disabled Combobox
 - [Vercel design](https://vercel.com/design) restraint rules (earn a surface, no nesting)
 
 → [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md)

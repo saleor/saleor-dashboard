@@ -1,6 +1,6 @@
-import AttributeDetails from "@dashboard/attributes/components/AttributeDetails";
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
-import AttributeProperties from "@dashboard/attributes/components/AttributeProperties";
+import AttributeDetails from "@dashboard/attributes/components/AttributeDetails/AttributeDetails";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
+import AttributeProperties from "@dashboard/attributes/components/AttributeProperties/AttributeProperties";
 import { AttributeReferenceTypesSection } from "@dashboard/attributes/components/AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import { AttributeValues } from "@dashboard/attributes/components/AttributeValues/AttributeValues";
 import {
@@ -9,7 +9,7 @@ import {
   REFERENCE_ATTRIBUTE_TYPES,
 } from "@dashboard/attributes/utils/data";
 import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
-import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { type ListSettingsUpdate } from "@dashboard/components/TablePagination/TablePagination";
 import {
   type AttributeErrorFragment,
   type AttributeInputTypeEnum,
@@ -18,6 +18,7 @@ import {
 import { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
 import {
   type FetchMoreProps,
+  type ListActions,
   type ListSettings,
   type RelayToFlat,
   type ReorderAction,
@@ -28,7 +29,7 @@ import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 
-export type AttributeCreateFormStep = 1 | 2;
+type AttributeCreateFormStep = 1 | 2;
 
 interface AttributeCreateFormContentProps
   extends Pick<
@@ -40,12 +41,14 @@ interface AttributeCreateFormContentProps
   inputType: AttributeInputTypeEnum;
   onEntityTypeChange: FormChange;
   onInlineValueAdd?: (data: AttributeValueEditDialogFormData) => void;
+  onInlineValuesAdd?: (data: AttributeValueEditDialogFormData[]) => void;
   fetchMoreReferenceTypes?: FetchMoreProps;
   fetchReferenceTypes?: (query: string) => void;
   referenceTypeOptions?: Option[];
   referenceTypesLoading?: boolean;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
+  valueList: ListActions;
   pageInfo: {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
@@ -69,6 +72,7 @@ export const AttributeCreateFormContent = ({
   inputType,
   onEntityTypeChange,
   onInlineValueAdd,
+  onInlineValuesAdd,
   fetchMoreReferenceTypes,
   fetchReferenceTypes,
   referenceTypeOptions = [],
@@ -78,6 +82,7 @@ export const AttributeCreateFormContent = ({
   onUpdateListSettings,
   onValueDelete,
   onValueReorder,
+  valueList,
   pageInfo,
   settings,
   set,
@@ -127,7 +132,6 @@ export const AttributeCreateFormContent = ({
           onChange={event => set({ referenceTypes: event.target.value })}
           options={referenceTypeOptions}
           value={data.referenceTypes}
-          variant="embedded"
         />
       ) : null}
 
@@ -139,6 +143,7 @@ export const AttributeCreateFormContent = ({
           inlineValueAddError={valueAddError}
           inputType={inputType}
           onInlineValueAdd={onInlineValueAdd}
+          onInlineValuesAdd={onInlineValuesAdd}
           onNextPage={onNextPage}
           onPreviousPage={onPreviousPage}
           onUpdateListSettings={onUpdateListSettings}
@@ -150,16 +155,11 @@ export const AttributeCreateFormContent = ({
           settings={settings}
           values={values}
           variant="embedded"
+          {...valueList}
         />
       ) : null}
 
-      <AttributeProperties
-        errors={apiErrors}
-        data={data}
-        disabled={disabled}
-        onChange={change}
-        variant="embedded"
-      />
+      <AttributeProperties errors={apiErrors} data={data} disabled={disabled} onChange={change} />
 
       <Text size={2} color="default2">
         <FormattedMessage {...messages.footerHint} />

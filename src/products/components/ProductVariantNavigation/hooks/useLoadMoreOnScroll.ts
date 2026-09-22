@@ -9,7 +9,7 @@ interface UseLoadMoreOnScrollProps {
 }
 
 /** Set on the scroll container while we adjust scrollTop for the active item. */
-export const SUPPRESS_SCROLL_LOAD_ATTR = "data-suppress-scroll-load";
+const SUPPRESS_SCROLL_LOAD_ATTR = "data-suppress-scroll-load";
 
 /**
  * Loads the next page when the user scrolls near the bottom.

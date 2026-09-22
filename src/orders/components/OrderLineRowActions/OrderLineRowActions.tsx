@@ -22,7 +22,7 @@ export const OrderLineRowActions = ({
   onShowMetadata,
   disabled,
   intl,
-}: OrderLineRowActionsProps): JSX.Element => {
+}: OrderLineRowActionsProps): React.ReactNode => {
   const classes = useStyles({ showMetadataButton: true });
   const hasLineActionsMenu = menuItems.length > 1;
   const productMenuItem = menuItems[0];

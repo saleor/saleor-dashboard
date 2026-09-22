@@ -8,7 +8,7 @@ import {
 import { type MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
 import useForm, { type UseFormResult } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { createContext, type ReactNode, useEffect } from "react";
@@ -38,7 +38,7 @@ export interface GiftCardUpdateFormConsumerData extends GiftCardUpdateFormErrors
   isSaveDisabled: boolean;
 }
 
-export interface GiftCardUpdateFormErrors {
+interface GiftCardUpdateFormErrors {
   formErrors: Record<"tags" | "expiryDate", GiftCardErrorFragment | undefined>;
 }
 

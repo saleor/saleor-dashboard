@@ -111,6 +111,30 @@ describe("resolveSearchActionContext", () => {
     expect(result).toEqual({ view: "MENU_DETAILS", params: { menuId: "TWVudTox" } });
   });
 
+  it("resolves a channel detail route to CHANNEL_DETAILS with channelId", () => {
+    // Act
+    const result = resolveSearchActionContext("/channels/Q2hhbm5lbDox");
+
+    // Assert
+    expect(result).toEqual({ view: "CHANNEL_DETAILS", params: { channelId: "Q2hhbm5lbDox" } });
+  });
+
+  it("resolves the channel list route to no view (no CHANNEL_LIST exists)", () => {
+    // Act
+    const result = resolveSearchActionContext("/channels/");
+
+    // Assert
+    expect(result).toEqual({ view: null, params: {} });
+  });
+
+  it("treats the legacy channel add path as a non-detail route", () => {
+    // Act
+    const result = resolveSearchActionContext("/channels/add");
+
+    // Assert
+    expect(result).toEqual({ view: null, params: {} });
+  });
+
   it("decodes a percent-encoded id so apps receive the raw global id", () => {
     // Arrange
     const pathname = "/products/UHJvZHVjdDo3Mw%3D%3D";

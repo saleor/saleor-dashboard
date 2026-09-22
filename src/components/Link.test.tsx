@@ -242,6 +242,17 @@ describe("Link component", () => {
 
       // Verify link renders (sprinkles styles applied via CSS classes)
       expect(link).toBeInTheDocument();
+      expect(link).toHaveStyle({ textDecorationColor: "currentColor" });
+    });
+
+    it("should not underline by default so button and menu wrappers stay clean", () => {
+      // Arrange & Act
+      renderWithRouter(<Link href="/products">Plain Link</Link>);
+
+      // Assert
+      const link = screen.getByRole("link", { name: "Plain Link" });
+
+      expect(link).toHaveStyle({ textDecorationColor: "currentColor" });
     });
 
     it("should apply custom className", () => {

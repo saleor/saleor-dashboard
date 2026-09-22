@@ -1,13 +1,12 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
 import { type WebhookErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { WEBHOOK_PAYLOAD_SIGNATURE_DOCS_URL } from "@dashboard/links";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
-import { Box, Chip, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Chip, Divider, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -54,7 +53,7 @@ export const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: Webh
           onChange={onChange}
         />
         <FormSpacer />
-        <Hr />
+        <Divider />
         <FormSpacer />
         <Input
           disabled={disabled}

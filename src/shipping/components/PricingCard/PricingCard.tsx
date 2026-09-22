@@ -37,7 +37,7 @@ interface PricingCardProps {
   onChannelsReplace: (channels: ChannelShippingData[]) => void;
 }
 
-export const PricingCard = ({
+const PricingCard = ({
   channels,
   disabled,
   errors,
@@ -46,7 +46,7 @@ export const PricingCard = ({
   onFocusChannelComplete,
   onChange,
   onChannelsReplace,
-}: PricingCardProps): JSX.Element => {
+}: PricingCardProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price"], errors as ChannelError[]);
   const sortedChannels = useMemo(() => sortChannelShippingDataByName(channels), [channels]);

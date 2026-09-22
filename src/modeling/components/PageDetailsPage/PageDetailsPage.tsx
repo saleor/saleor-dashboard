@@ -12,18 +12,23 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
-} from "@dashboard/components/AssignAttributeValueDialog";
-import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
+} from "@dashboard/components/AssignAttributeValueDialog/AssignAttributeValueDialog";
+import {
+  type AttributeInput,
+  Attributes,
+  type AttributeValueChoices,
+  type AttributeValueFetchMore,
+} from "@dashboard/components/Attributes/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
-import { SeoForm } from "@dashboard/components/SeoForm";
-import VisibilityCard from "@dashboard/components/VisibilityCard";
+import { SeoForm } from "@dashboard/components/SeoForm/SeoForm";
+import VisibilityCard from "@dashboard/components/VisibilityCard/VisibilityCard";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemForPageDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -31,7 +36,6 @@ import {
   type PageDetailsFragment,
   type PageErrorWithAttributesFragment,
   PermissionEnum,
-  type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -54,7 +58,7 @@ import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import PageInfo from "../PageInfo";
+import PageInfo from "../PageInfo/PageInfo";
 import { PageOrganizeContent } from "../PageOrganizeContent/PageOrganizeContent";
 import PageForm, { type PageData, type PageSubmitData, type PageUpdateHandlers } from "./form";
 import { messages } from "./messages";
@@ -72,7 +76,7 @@ interface PageDetailsPageProps {
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedPageType?: PageDetailsFragment["pageType"];
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: AttributeValueChoices;
   onRemove: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: PageSubmitData) => SubmitPromise;
@@ -89,7 +93,7 @@ interface PageDetailsPageProps {
   fetchReferenceCollections?: (data: string) => void;
   fetchMoreReferenceCollections?: FetchMoreProps;
   fetchAttributeValues: (query: string, attributeId: string) => void;
-  fetchMoreAttributeValues?: FetchMoreProps;
+  fetchMoreAttributeValues?: AttributeValueFetchMore;
   onCloseDialog: () => void;
   onSelectPageType?: (pageTypeId: string) => void;
   onAttributeSelectBlur: () => void;

@@ -1,11 +1,14 @@
-import AttributeSwatchField from "@dashboard/attributes/components/AttributeSwatchField";
+import AttributeSwatchField from "@dashboard/attributes/components/AttributeSwatchField/AttributeSwatchField";
+import { AttributeValuePasteProposal } from "@dashboard/attributes/components/AttributeValuePasteProposal/AttributeValuePasteProposal";
+import { attributeValuePasteMessages } from "@dashboard/attributes/components/AttributeValuePasteProposal/messages";
 import { SwatchPreview } from "@dashboard/attributes/components/SwatchPreview/SwatchPreview";
 import { getAttributeValueErrorMessage } from "@dashboard/attributes/errors";
+import { useAttributeValuePaste } from "@dashboard/attributes/hooks/useAttributeValuePaste";
 import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 import { tableStyles } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableCell, TableFooter, TableRow } from "@dashboard/components/Table/Table";
 import { type AttributeErrorFragment, AttributeInputTypeEnum } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Plus } from "lucide-react";
@@ -42,7 +45,7 @@ const messages = defineMessages({
   },
 });
 
-export type AttributeValueInlineAddVariant = "tableFooter" | "section";
+type AttributeValueInlineAddVariant = "tableFooter" | "section";
 
 interface AttributeValueInlineAddProps {
   columnSpan: number;
@@ -51,10 +54,15 @@ interface AttributeValueInlineAddProps {
   hasRowsAbove: boolean;
   inputType: AttributeInputTypeEnum;
   onAdd: (data: AttributeValueEditDialogFormData) => void;
+  onAddMany?: (data: AttributeValueEditDialogFormData[]) => void;
   variant?: AttributeValueInlineAddVariant;
 }
 
 const emptyForm: AttributeValueEditDialogFormData = { name: "" };
+
+// Stable identity: ColorPicker keys an effect on `errors`, and a fresh literal here
+// re-fires it on every render, which loops through its onColorChange -> setForm.
+const noFieldErrors = {};
 
 export const AttributeValueInlineAdd = ({
   columnSpan,
@@ -63,25 +71,71 @@ export const AttributeValueInlineAdd = ({
   hasRowsAbove,
   inputType,
   onAdd,
+  onAddMany,
   variant = "tableFooter",
-}: AttributeValueInlineAddProps) => {
+}: AttributeValueInlineAddProps): React.ReactNode => {
   const intl = useIntl();
   const [form, setForm] = useState<AttributeValueEditDialogFormData>(emptyForm);
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
+  const canPasteMany = Boolean(onAddMany) && !isSwatch;
+  const { pendingPaste, handlePaste, keepAsOneName, clearPendingPaste } = useAttributeValuePaste({
+    disabled,
+    enabled: canPasteMany,
+  });
   const formErrors = getFormErrors(["name"], error ? [error] : []);
   const canAdd = form.name.trim().length > 0 && !disabled;
   const nameError = getAttributeValueErrorMessage(formErrors.name, intl);
 
-  const handleAdd = () => {
+  const handleAdd = (): void => {
     if (!canAdd) {
       return;
     }
 
     onAdd(form);
     setForm(emptyForm);
+    clearPendingPaste();
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleNameChange = (name: string): void => {
+    clearPendingPaste();
+    setForm(current => ({ ...current, name }));
+  };
+
+  const handleAddPasted = (): void => {
+    if (!pendingPaste || !onAddMany) {
+      return;
+    }
+
+    onAddMany(pendingPaste.map(name => ({ name })));
+    setForm(emptyForm);
+    clearPendingPaste();
+  };
+
+  const handleKeepAsOne = (): void => {
+    const name = keepAsOneName();
+
+    if (name === null) {
+      return;
+    }
+
+    setForm({ name });
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === "Escape" && pendingPaste) {
+      event.preventDefault();
+      handleKeepAsOne();
+
+      return;
+    }
+
+    if (event.key === "Enter" && pendingPaste) {
+      event.preventDefault();
+      handleAddPasted();
+
+      return;
+    }
+
     if (event.key === "Enter" && !isSwatch) {
       event.preventDefault();
       handleAdd();
@@ -131,7 +185,7 @@ export const AttributeValueInlineAdd = ({
       <AttributeSwatchField
         clearErrors={() => undefined}
         data={form}
-        errors={{}}
+        errors={noFieldErrors}
         hidePreview
         set={updates => setForm(current => ({ ...current, ...updates }))}
         setError={() => undefined}
@@ -145,7 +199,7 @@ export const AttributeValueInlineAdd = ({
   const defaultContent = (
     <Box display="flex" flexDirection="column" gap={2}>
       <Box display="flex" alignItems="center" gap={3}>
-        <Box flexGrow="1" __minWidth={0}>
+        <Box flexGrow="1" __minWidth={0} onPaste={handlePaste}>
           <Input
             autoComplete="off"
             autoFocus
@@ -153,7 +207,7 @@ export const AttributeValueInlineAdd = ({
             disabled={disabled}
             error={!!formErrors.name}
             name="name"
-            onChange={event => setForm(current => ({ ...current, name: event.target.value }))}
+            onChange={event => handleNameChange(event.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={intl.formatMessage(messages.placeholder)}
             value={form.name}
@@ -162,9 +216,20 @@ export const AttributeValueInlineAdd = ({
         </Box>
         <Box flexShrink="0">{addButton}</Box>
       </Box>
-      {nameError ? (
+      {pendingPaste ? (
+        <AttributeValuePasteProposal
+          disabled={disabled}
+          values={pendingPaste}
+          onAdd={handleAddPasted}
+          onKeepAsOne={handleKeepAsOne}
+        />
+      ) : nameError ? (
         <Text size={2} color="critical1">
           {nameError}
+        </Text>
+      ) : canPasteMany ? (
+        <Text size={2} color="default2">
+          <FormattedMessage {...attributeValuePasteMessages.hint} />
         </Text>
       ) : null}
     </Box>

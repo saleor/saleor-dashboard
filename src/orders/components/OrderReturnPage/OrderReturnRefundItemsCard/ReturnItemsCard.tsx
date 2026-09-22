@@ -2,8 +2,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { QuantityInput } from "@dashboard/components/QuantityInput";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import {
   type OrderDetailsFragment,
   type OrderErrorFragment,
@@ -11,7 +12,6 @@ import {
 } from "@dashboard/graphql";
 import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { Button, Checkbox, Skeleton } from "@saleor/macaw-ui-next";
 import { type CSSProperties, useState } from "react";
@@ -171,7 +171,6 @@ const ItemsCard = ({
               const { isSelected } = getReplacementDataFromItems(itemsSelections, id);
               const isReplacable = !!variant && !isRefunded;
               const isReturnable = !!variant;
-              const isPreorder = !!variant?.preorder;
               const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;
               const anyLineWithoutVariant = lines.some(({ variant }) => !variant);
               const productNameCellWidth = anyLineWithoutVariant ? "30%" : "50%";
@@ -196,7 +195,6 @@ const ItemsCard = ({
                   <TableCell align="right">
                     {isReturnable && (
                       <QuantityInput
-                        disabled={isPreorder}
                         className={classes.quantityField}
                         data-test-id={"quantityInput" + line?.id}
                         value={currentQuantity}
@@ -209,7 +207,7 @@ const ItemsCard = ({
                     )}
                   </TableCell>
                   <TableCell align="center">
-                    {isReplacable && !isPreorder && (
+                    {isReplacable && (
                       <Checkbox
                         checked={isSelected}
                         onCheckedChange={value => onChangeSelected(id, value as boolean)}

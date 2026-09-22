@@ -1,4 +1,4 @@
-import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
+import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip/ButtonWithTooltip";
 import Link from "@dashboard/components/Link";
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { messages } from "@dashboard/extensions/messages";

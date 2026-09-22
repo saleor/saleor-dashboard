@@ -8,7 +8,7 @@ export interface MergedAssignedType {
   roles: AssignedTypeRole[];
 }
 
-export interface ProductAssignedTypeUsage {
+interface ProductAssignedTypeUsage {
   types: MergedAssignedType[];
   productTypeCount: number;
   variantTypeCount: number;

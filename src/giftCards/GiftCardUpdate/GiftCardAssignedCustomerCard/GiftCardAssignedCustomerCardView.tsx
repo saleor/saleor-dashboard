@@ -18,7 +18,7 @@ const EMAIL_ONLY_ITEM_ID = "assigned-to-email";
 const customerIcon = <User size={iconSize.small} strokeWidth={iconStrokeWidth} />;
 const emailIcon = <Mail size={iconSize.small} strokeWidth={iconStrokeWidth} />;
 
-export interface GiftCardAssignedCustomerCardViewProps {
+interface GiftCardAssignedCustomerCardViewProps {
   giftCard: ExtendedGiftCard<GiftCardDetails> | undefined;
   loading?: boolean;
   removing?: boolean;
@@ -32,7 +32,7 @@ export const GiftCardAssignedCustomerCardView = ({
   removing = false,
   onAssign,
   onRemove,
-}: GiftCardAssignedCustomerCardViewProps): JSX.Element => {
+}: GiftCardAssignedCustomerCardViewProps): React.ReactNode => {
   const items = useMemo(() => {
     if (!giftCard) {
       return [];

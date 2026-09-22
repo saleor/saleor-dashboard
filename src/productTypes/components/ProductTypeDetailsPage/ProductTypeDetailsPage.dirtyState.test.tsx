@@ -25,18 +25,12 @@ jest.mock("../ProductTypeAttributes/ProductTypeAttributes", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-attributes-mock" />,
 }));
-jest.mock("../ProductTypeConfiguration/ProductTypeConfiguration", () => ({
-  ProductTypeConfiguration: () => <div data-test-id="product-type-configuration-mock" />,
-}));
 jest.mock("../ProductTypeShipping/ProductTypeShipping", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-shipping-mock" />,
 }));
 jest.mock("../ProductTypeTaxes/ProductTypeTaxes", () => ({
   ProductTypeTaxes: () => <div data-test-id="product-type-taxes-mock" />,
-}));
-jest.mock("../ProductTypeVariantMode/ProductTypeVariantMode", () => ({
-  ProductTypeVariantMode: () => <div data-test-id="product-type-variant-mode-mock" />,
 }));
 jest.mock("../ProductTypeVariantAttributes/ProductTypeVariantAttributes", () => ({
   __esModule: true,
@@ -156,10 +150,29 @@ describe("ProductTypeDetailsPage dirty state", () => {
     );
 
     // Act
-    const nameInput = screen.getByLabelText("Product Type Name");
+    const nameInput = screen.getByLabelText("Name");
 
     await user.clear(nameInput);
     await user.type(nameInput, "Updated product type");
+    await user.click(screen.getByTestId("app-header-back-button"));
+
+    // Assert
+    expect(screen.getByTestId("ignore-changes")).toBeInTheDocument();
+    expect(history.location.pathname).toBe(detailPath);
+  });
+
+  it("blocks navigation when kind changes", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const history = createMemoryHistory({ initialEntries: [detailPath] });
+
+    renderPage(
+      history,
+      <ProductTypeDetailsPage {...defaultProps} productType={productTypeFixture} />,
+    );
+
+    // Act
+    await user.click(screen.getByTestId("GIFT_CARD"));
     await user.click(screen.getByTestId("app-header-back-button"));
 
     // Assert

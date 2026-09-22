@@ -1,6 +1,5 @@
 import { URL_LIST } from "@data/url";
 import { DeleteDialog } from "@dialogs/deleteDialog";
-import { ExportGiftCardsDialog } from "@dialogs/exportGiftCardsDialog";
 import { IssueGiftCardDialog } from "@dialogs/issueGiftCardDialog";
 import { ResendGiftCardCodeDialog } from "@dialogs/resendGiftCardCodeDialog";
 import { SetGiftCardsBalanceDialog } from "@dialogs/setGiftCardBalanceDialog";
@@ -20,8 +19,6 @@ export class GiftCardsPage extends BasePage {
 
   readonly deleteDialog: DeleteDialog;
 
-  readonly exportGiftCardsDialog: ExportGiftCardsDialog;
-
   readonly setGiftCardsBalanceDialog: SetGiftCardsBalanceDialog;
 
   readonly filtersPage!: FiltersPage;
@@ -40,13 +37,8 @@ export class GiftCardsPage extends BasePage {
     readonly giftCardExpiresCheckbox = page
       .getByTestId("gift-card-expire-section")
       .locator("button"),
-    readonly exportCardCodesButton = page.getByTestId("exportCodesMenuItem"),
     readonly setBalanceButton = page.getByTestId("set-balance-button"),
-    readonly showMoreMenuButton = page.getByTestId("show-more-button"),
     readonly giftCardDialog = page.getByTestId("gift-card-dialog"),
-    readonly exportGiftCardsBanner = page.getByText(
-      "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address",
-    ),
     readonly tagsInput = page.getByTestId("gift-card-tag-select-field"),
     readonly tagsInputOptions = page.locator('[data-test-id*="select-option"]'),
   ) {
@@ -56,7 +48,6 @@ export class GiftCardsPage extends BasePage {
     this.resendGiftCardCodeDialog = new ResendGiftCardCodeDialog(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.deleteDialog = new DeleteDialog(page);
-    this.exportGiftCardsDialog = new ExportGiftCardsDialog(page);
     this.setGiftCardsBalanceDialog = new SetGiftCardsBalanceDialog(page);
     this.filtersPage = new FiltersPage(page);
   }
@@ -89,20 +80,12 @@ export class GiftCardsPage extends BasePage {
     await this.deactivateButton.click();
   }
 
-  async clickExportGiftCards() {
-    await this.exportCardCodesButton.click();
-  }
-
   async clickResendCodeButton() {
     await this.resendCodeButton.click();
   }
 
   async clickSetBalance() {
     await this.setBalanceButton.click();
-  }
-
-  async clickShowMoreMenu() {
-    await this.showMoreMenuButton.click();
   }
 
   async openTagInput() {

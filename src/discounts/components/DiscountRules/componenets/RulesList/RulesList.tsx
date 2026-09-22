@@ -1,23 +1,23 @@
 import { ChannelDisplay } from "@dashboard/components/Channel/Channel";
 import { formatMoney } from "@dashboard/components/Money";
 import { formatPercantage } from "@dashboard/components/Percent/utils";
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { type CommonError } from "@dashboard/utils/errors/common";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { useDiscountRulesContext } from "../../context";
+import { useDiscountRulesContext } from "../../context/consumer";
 import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
-import { Placeholder } from "../Placeholder";
-import { RuleActions } from "./components/RuleActions";
-import { RuleLabel } from "./components/RuleLabel";
-import { RuleListContainer } from "./components/RuleListContainer";
-import { RuleListLoading } from "./components/RuleListLoading";
-import { RuleSummary } from "./components/RuleSummary";
-import { RuleWrapper } from "./components/RuleWrapper";
+import { Placeholder } from "../Placeholder/Placeholder";
+import { RuleActions } from "./components/RuleActions/RuleActions";
+import { RuleLabel } from "./components/RuleLabel/RuleLabel";
+import { RuleListContainer } from "./components/RuleListContainer/RuleListContainer";
+import { RuleListLoading } from "./components/RuleListLoading/RuleListLoading";
+import { RuleSummary } from "./components/RuleSummary/RuleSummary";
+import { RuleWrapper } from "./components/RuleWrapper/RuleWrapper";
 
 interface RulesListProps<ErrorCode> {
   rules: Rule[];

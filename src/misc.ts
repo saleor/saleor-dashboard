@@ -21,7 +21,7 @@ import moment from "moment-timezone";
 import { type IntlShape } from "react-intl";
 
 import { SCHEDULED_COLOR } from "./colors";
-import { type ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
 import {
   hueToPillColorDark,
   hueToPillColorLight,

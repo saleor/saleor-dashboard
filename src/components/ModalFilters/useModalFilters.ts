@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 
-import { type FilterContainer } from "../ConditionalFilter/FilterElement";
+import { type FilterContainer } from "../ConditionalFilter/FilterElement/FilterElement";
 import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 import { getEditableFilterContainer } from "../ConditionalFilter/globalConstraints";
 import { type InitialResponseType } from "../ConditionalFilter/types";

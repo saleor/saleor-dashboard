@@ -1,8 +1,8 @@
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { SwatchPreview } from "@dashboard/attributes/components/SwatchPreview/SwatchPreview";
 import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
-import { ColorPicker, type ColorPickerProps } from "@dashboard/components/ColorPicker";
-import FileUploadField from "@dashboard/components/FileUploadField";
+import { ColorPicker, type ColorPickerProps } from "@dashboard/components/ColorPicker/ColorPicker";
+import FileUploadField from "@dashboard/components/FileUploadField/FileUploadField";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";

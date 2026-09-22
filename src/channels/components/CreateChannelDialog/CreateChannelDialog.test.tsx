@@ -36,6 +36,25 @@ describe("CreateChannelDialog", () => {
     });
   });
 
+  it("focuses the channel name field when opened", () => {
+    // Arrange & Act
+    render(
+      <Wrapper>
+        <CreateChannelDialog
+          open
+          confirmButtonState="default"
+          countries={countries}
+          errors={[]}
+          onClose={jest.fn()}
+          onSubmit={jest.fn(async () => [])}
+        />
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("channel-name-input")).toHaveFocus();
+  });
+
   it("renders basic fields and auto-fills slug from name", async () => {
     // Arrange
     const user = userEvent.setup();

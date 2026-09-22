@@ -49,7 +49,7 @@ export const CountryList = ({
   errorMessage,
   onCountryAssign,
   onCountryUnassign,
-}: CountryListProps): JSX.Element => {
+}: CountryListProps): React.ReactNode => {
   const intl = useIntl();
   const sortedCountries = useMemo(
     () =>

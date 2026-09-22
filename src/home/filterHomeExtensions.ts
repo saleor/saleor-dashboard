@@ -4,7 +4,9 @@ import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { type Extension } from "@dashboard/extensions/types";
 import { type UserPermissionFragment } from "@dashboard/graphql";
 
-export interface HomeExtensionsSplit {
+export const HOMEPAGE_WIDGETS_MOUNT = ["HOMEPAGE_WIDGETS"] as const;
+
+interface HomeExtensionsSplit {
   fullscreen: Extension[];
   widgets: Extension[];
 }

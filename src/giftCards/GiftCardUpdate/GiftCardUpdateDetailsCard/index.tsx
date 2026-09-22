@@ -1,1 +1,0 @@
-export { GiftCardUpdateDetailsCard } from "./GiftCardUpdateDetailsCard";

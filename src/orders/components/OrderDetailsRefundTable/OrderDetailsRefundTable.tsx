@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { GridTable } from "@dashboard/components/GridTable";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderRefundsViewModel } from "@dashboard/orders/utils/OrderRefundsViewModel";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";

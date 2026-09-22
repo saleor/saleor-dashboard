@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { Multiselect } from "@dashboard/components/Combobox";
+import { Multiselect } from "@dashboard/components/Combobox/components/Multiselect";
 import { type ChannelFragment } from "@dashboard/graphql";
 import { useChannelsSearch } from "@dashboard/hooks/useChannelsSearch";
 import { type FormChange } from "@dashboard/hooks/useForm";

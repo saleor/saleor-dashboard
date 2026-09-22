@@ -3,7 +3,7 @@ import {
   topNavDestinationMessages,
   TopNavLink,
   TopNavWrapper,
-} from "@dashboard/components/AppLayout";
+} from "@dashboard/components/AppLayout/TopNav";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
 import { type AppLogo } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";

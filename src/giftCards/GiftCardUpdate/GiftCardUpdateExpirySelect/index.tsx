@@ -1,1 +1,0 @@
-export { GiftCardUpdateExpirySelect } from "./GiftCardUpdateExpirySelect";

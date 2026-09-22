@@ -1,5 +1,6 @@
+import { TableCell } from "@dashboard/components/Table/Table";
 import ErrorExclamationCircleIcon from "@dashboard/icons/ErrorExclamationCircle";
-import { Popper, TableCell } from "@material-ui/core";
+import { Popper } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import { useRef, useState } from "react";
@@ -56,7 +57,7 @@ interface ProductErrorCellProps {
 const ProductErrorCell = ({ hasVariant }: ProductErrorCellProps) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const popperAnchorRef = useRef<HTMLButtonElement | null>(null);
+  const popperAnchorRef = useRef<HTMLTableCellElement | null>(null);
   const [showErrorBox, setShowErrorBox] = useState<boolean>(false);
 
   if (hasVariant) {

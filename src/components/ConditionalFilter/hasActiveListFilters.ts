@@ -1,4 +1,4 @@
-import { type FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { type FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 
 interface HasActiveListFiltersParams<TFilter> {
   filterContainer: FilterContainer;

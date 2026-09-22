@@ -7,7 +7,7 @@ import { Toast } from "./Toast";
 /** Max toasts shown at once; overflow waits until a slot frees (FIFO). */
 export const MAX_VISIBLE_TOASTS = 3;
 
-export type EnqueueToastInput = Omit<ToastProps, "id" | "onRemoved">;
+type EnqueueToastInput = Omit<ToastProps, "id" | "onRemoved">;
 
 type ActiveToast = {
   clientId: string;

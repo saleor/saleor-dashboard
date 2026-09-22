@@ -3,7 +3,7 @@ import { lazy, type ReactNode, Suspense } from "react";
 import { Switch } from "react-router-dom";
 
 import { newPasswordPath } from "../urls";
-import LoginLoading from "./LoginLoading";
+import LoginLoading from "./LoginLoading/LoginLoading";
 
 const NewPasswordStandalone = lazy(() => import("../views/NewPasswordStandalone"));
 

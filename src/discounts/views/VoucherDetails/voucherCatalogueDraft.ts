@@ -19,7 +19,7 @@ export interface VoucherCatalogueDraft {
   countryCodes: string[] | null;
 }
 
-export const createEmptyCatalogueMembershipBucket = <
+const createEmptyCatalogueMembershipBucket = <
   T extends { id: string } = { id: string },
 >(): CatalogueMembershipBucket<T> => ({
   idsToAdd: [],
@@ -45,7 +45,7 @@ export const EMPTY_VOUCHER_CATALOGUE_DRAFT: VoucherCatalogueDraft =
 const withId = (ids: string[], id: string): string[] => (ids.includes(id) ? ids : [...ids, id]);
 const withoutId = (ids: string[], id: string): string[] => ids.filter(existing => existing !== id);
 
-export const hasCatalogueMembershipChanges = (bucket: CatalogueMembershipBucket): boolean =>
+const hasCatalogueMembershipChanges = (bucket: CatalogueMembershipBucket): boolean =>
   bucket.idsToAdd.length > 0 || bucket.idsToRemove.length > 0;
 
 export const hasVoucherCatalogueDraftChanges = (draft: VoucherCatalogueDraft): boolean =>

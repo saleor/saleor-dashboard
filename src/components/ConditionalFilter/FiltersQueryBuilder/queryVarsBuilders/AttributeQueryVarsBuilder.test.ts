@@ -14,6 +14,7 @@ import { type ConditionItem, ConditionOptions } from "../../FilterElement/Condit
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { AttributeQueryVarsBuilder } from "./AttributeQueryVarsBuilder";
+import { supportsFilterApi, supportsWhereApi } from "./types";
 
 describe("AttributeQueryVarsBuilder", () => {
   describe("canHandle", () => {
@@ -390,7 +391,84 @@ describe("AttributeQueryVarsBuilder", () => {
       const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
-      expect(result).toEqual({ attributes: [{ slug: attributeSlug, values: [optionValue] }] });
+      expect(result).toEqual({
+        attributes: [{ slug: attributeSlug, value: { slug: { eq: optionValue } } }],
+      });
+    });
+
+    it("should map SWATCH attributes through value.slug so they can mix with references", () => {
+      // Arrange
+      const selectedAttribute = new ExpressionValue(
+        "color",
+        "Color",
+        AttributeInputTypeEnum.SWATCH,
+      );
+      const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, [
+        {
+          label: "Pure blue",
+          value: "blue-id",
+          slug: "blue-id",
+          originalSlug: "pure-blue",
+        },
+        {
+          label: "Light blue",
+          value: "light-id",
+          slug: "light-id",
+          originalSlug: "light-blue",
+        },
+      ]);
+      const condition = new Condition(
+        ConditionOptions.fromName(AttributeInputTypeEnum.SWATCH),
+        selected,
+        false,
+      );
+      const swatchElement = new FilterElement(
+        baseValue,
+        condition,
+        false,
+        undefined,
+        selectedAttribute,
+      );
+      const referenceElement = new FilterElement(
+        baseValue,
+        new Condition(
+          ConditionOptions.fromName(AttributeInputTypeEnum.REFERENCE),
+          ConditionSelected.fromConditionItemAndValue(baseConditionItem, [
+            { label: "Product 1", value: "UHJvZHVjdDox", slug: "product-1" },
+          ]),
+          false,
+        ),
+        false,
+        undefined,
+        new ExpressionValue(
+          "product-ref",
+          "Product Ref",
+          AttributeInputTypeEnum.REFERENCE,
+          AttributeEntityTypeEnum.PRODUCT,
+        ),
+      );
+
+      // Act
+      const result = def.updateWhereQueryVariables(
+        def.updateWhereQueryVariables({}, swatchElement),
+        referenceElement,
+      );
+
+      // Assert
+      expect(result.attributes).toEqual([
+        { slug: "color", value: { slug: { oneOf: ["pure-blue", "light-blue"] } } },
+        {
+          slug: "product-ref",
+          value: {
+            reference: {
+              referencedIds: {
+                containsAny: ["UHJvZHVjdDox"],
+              },
+            },
+          },
+        },
+      ]);
+      expect(result.attributes?.every(attribute => attribute.values === undefined)).toBe(true);
     });
 
     it("should correctly build query for NUMERIC attributes with range", () => {
@@ -421,7 +499,7 @@ describe("AttributeQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({
-        attributes: [{ slug: attributeSlug, valuesRange: { gte: 10, lte: 20 } }],
+        attributes: [{ slug: attributeSlug, value: { numeric: { range: { gte: 10, lte: 20 } } } }],
       });
     });
 
@@ -455,7 +533,7 @@ describe("AttributeQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({
-        attributes: [{ slug: attributeSlug, date: { gte: startDate, lte: endDate } }],
+        attributes: [{ slug: attributeSlug, value: { date: { gte: startDate, lte: endDate } } }],
       });
     });
 
@@ -489,7 +567,12 @@ describe("AttributeQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({
-        attributes: [{ slug: attributeSlug, dateTime: { gte: startDateTime, lte: endDateTime } }],
+        attributes: [
+          {
+            slug: attributeSlug,
+            value: { dateTime: { gte: startDateTime, lte: endDateTime } },
+          },
+        ],
       });
     });
 
@@ -518,7 +601,9 @@ describe("AttributeQueryVarsBuilder", () => {
       const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
-      expect(result).toEqual({ attributes: [{ slug: attributeSlug, boolean: boolValue }] });
+      expect(result).toEqual({
+        attributes: [{ slug: attributeSlug, value: { boolean: boolValue } }],
+      });
     });
 
     it("should return query unchanged if attribute slug is missing", () => {
@@ -536,6 +621,59 @@ describe("AttributeQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({});
+    });
+  });
+
+  describe("updateFilterQueryVariables", () => {
+    const def = new AttributeQueryVarsBuilder();
+
+    it("supports both WHERE and FILTER APIs", () => {
+      expect(supportsWhereApi(def)).toBe(true);
+      expect(supportsFilterApi(def)).toBe(true);
+    });
+
+    it("should map NUMERIC ranges to value.numeric for product export FILTER API", () => {
+      // Arrange
+      const attributeSlug = "fabric-weight-gsm";
+      const selectedAttribute = new ExpressionValue(
+        attributeSlug,
+        "Fabric weight",
+        AttributeInputTypeEnum.NUMERIC,
+      );
+      const rangeConditionItem: ConditionItem = {
+        type: "number.range",
+        label: "between",
+        value: "input-4",
+      };
+      const selected = ConditionSelected.fromConditionItemAndValue(rangeConditionItem, [
+        "120",
+        "300",
+      ]);
+      const condition = new Condition(
+        ConditionOptions.fromName(AttributeInputTypeEnum.NUMERIC),
+        selected,
+        false,
+      );
+      const element = new FilterElement(
+        new ExpressionValue("attribute", "Attribute", "attribute"),
+        condition,
+        false,
+        undefined,
+        selectedAttribute,
+      );
+
+      // Act
+      const result = def.updateFilterQueryVariables({}, element);
+
+      // Assert
+      expect(result).toEqual({
+        attributes: [
+          {
+            slug: attributeSlug,
+            value: { numeric: { range: { gte: 120, lte: 300 } } },
+          },
+        ],
+      });
     });
   });
 });

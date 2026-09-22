@@ -1,11 +1,11 @@
-import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
-import { TimezoneProvider } from "@dashboard/components/Timezone";
+import { Locale, RawLocaleProvider } from "@dashboard/components/Locale/Locale";
+import { TimezoneProvider } from "@dashboard/components/Timezone/Timezone";
 import { IntlProvider } from "react-intl";
 
 import { ApolloMockedProvider } from "./ApolloMockedProvider";
 import { ThemeWrapper } from "./themeWrapper";
 import { AppExtensionPopupProvider } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 const Wrapper = ({ children }: { children: ReactNode }) => (
   <ApolloMockedProvider>

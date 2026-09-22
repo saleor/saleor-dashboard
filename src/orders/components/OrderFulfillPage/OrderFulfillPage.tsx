@@ -6,12 +6,13 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import {
   type FulfillOrderMutation,
   OrderErrorCode,
@@ -39,7 +40,6 @@ import {
   getToFulfillOrderLines,
   type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
@@ -111,14 +111,12 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
         data: null,
         id: line.id,
         label: getAttributesCaption(line?.variant?.attributes),
-        value: line?.variant?.preorder
-          ? null
-          : [
-              {
-                quantity: line.quantityToFulfill,
-                warehouse: getDefaultFulfillWarehouse(line),
-              },
-            ],
+        value: [
+          {
+            quantity: line.quantityToFulfill,
+            warehouse: getDefaultFulfillWarehouse(line),
+          },
+        ],
       })),
     [linesToFulfill],
   );
@@ -151,7 +149,6 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   const notAllowedToFulfillUnpaid =
     shopSettings?.fulfillmentAutoApprove && !shopSettings?.fulfillmentAllowUnpaid && !order?.isPaid;
   const areWarehousesSet = formsetData
-    .filter(item => !!item?.value) // preorder case
     .filter(item => item?.value?.[0]?.quantity)
     .every(line => line.value.every(v => v.warehouse));
   const shouldEnableSave = () => {
@@ -164,21 +161,19 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     }
 
     const isAtLeastOneFulfilled = formsetData?.some(el => el.value?.[0]?.quantity > 0);
-    const overfulfill = formsetData
-      .filter(item => !!item?.value) // this can be removed after preorder is dropped
-      .some(item => {
-        const formQuantityFulfilled = item?.value?.[0]?.quantity;
-        const quantityToFulfill = order?.lines?.find(line => line.id === item.id).quantityToFulfill;
+    const overfulfill = formsetData.some(item => {
+      const formQuantityFulfilled = item?.value?.[0]?.quantity;
+      const quantityToFulfill = order?.lines?.find(line => line.id === item.id).quantityToFulfill;
 
-        return formQuantityFulfilled > quantityToFulfill;
-      });
+      return formQuantityFulfilled > quantityToFulfill;
+    });
 
     return !overfulfill && isAtLeastOneFulfilled && areWarehousesSet;
   };
 
   const changeWarehouseLine =
     params.action === "change-warehouse"
-      ? order?.lines.find(orderLine => orderLine.id === params.lineId)
+      ? order?.lines.find(orderLine => orderLine.id === params.warehouseLineId)
       : undefined;
 
   return (
@@ -264,7 +259,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
                               formsetChange={formsetChange}
                               onWarehouseChange={() =>
                                 openModal("change-warehouse", {
-                                  lineId: line.id,
+                                  warehouseLineId: line.id,
                                   warehouseId: formsetData[lineIndex]?.value?.[0]?.warehouse?.id,
                                 })
                               }
@@ -351,14 +346,14 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
             line={changeWarehouseLine}
             currentWarehouseId={params.warehouseId}
             onConfirm={warehouse => {
-              if (!params.lineId || !warehouse) {
+              if (!params.warehouseLineId || !warehouse) {
                 return;
               }
 
-              const lineFormQuantity = formsetData.find(item => item.id === params.lineId)
+              const lineFormQuantity = formsetData.find(item => item.id === params.warehouseLineId)
                 ?.value?.[0]?.quantity;
 
-              formsetChange(params.lineId, [
+              formsetChange(params.warehouseLineId, [
                 {
                   quantity: lineFormQuantity,
                   warehouse,

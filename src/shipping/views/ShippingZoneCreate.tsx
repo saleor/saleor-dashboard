@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { useCreateShippingZoneMutation, useShopCountriesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";
@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import ShippingZoneCreatePage, {
   type ShippingZoneCreateFormData,
-} from "../components/ShippingZoneCreatePage";
+} from "../components/ShippingZoneCreatePage/ShippingZoneCreatePage";
 import { shippingZoneUrl } from "../urls";
 
 const ShippingZoneCreate = () => {

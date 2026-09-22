@@ -14,6 +14,7 @@ const staffUser: UserFragment = {
   email: "admin@example.com",
   firstName: "Admin",
   lastName: "User",
+  isActive: true,
   isStaff: true,
   dateJoined: "2024-01-01T00:00:00Z",
   metadata: [],
@@ -29,7 +30,7 @@ const staffUser: UserFragment = {
   restrictedAccessToChannels: false,
 };
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <MemoryRouter>
     <UserContext.Provider
       value={{
@@ -107,20 +108,20 @@ jest.mock("./form", () => ({
       attributeRichTextGetters: {},
     }),
 }));
-jest.mock("../PageInfo", () => ({
+jest.mock("../PageInfo/PageInfo", () => ({
   __esModule: true,
   default: () => <div data-test-id="page-info-mock" />,
 }));
-jest.mock("@dashboard/components/SeoForm", () => ({
+jest.mock("@dashboard/components/SeoForm/SeoForm", () => ({
   SeoForm: () => <div data-test-id="seo-form-mock" />,
 }));
-jest.mock("@dashboard/components/Metadata", () => ({
+jest.mock("@dashboard/components/Metadata/Metadata", () => ({
   Metadata: () => <div data-test-id="metadata-mock" />,
 }));
 jest.mock("../PageOrganizeContent/PageOrganizeContent", () => ({
   PageOrganizeContent: () => <div data-test-id="page-organize-content-mock" />,
 }));
-jest.mock("@dashboard/components/VisibilityCard", () => ({
+jest.mock("@dashboard/components/VisibilityCard/VisibilityCard", () => ({
   __esModule: true,
   default: () => <div data-test-id="visibility-card-mock" />,
 }));

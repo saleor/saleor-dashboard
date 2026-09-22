@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { infoMessages } from "@dashboard/extensions/messages";
 import { FormattedMessage } from "react-intl";
 

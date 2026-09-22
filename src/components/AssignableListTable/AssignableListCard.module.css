@@ -1,0 +1,4 @@
+.search {
+  padding: var(--mu-spacing-3) var(--mu-spacing-6);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}

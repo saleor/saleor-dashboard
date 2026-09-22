@@ -1,6 +1,7 @@
 import { APP_VERSION } from "@dashboard/config";
 import { useExtensionFormPayloadUpdate } from "@dashboard/extensions/app-extension-form-payload-update";
 import { useRegisteredExtensions } from "@dashboard/extensions/extension-registry";
+import { useRefreshInstalledAppsSnapshot } from "@dashboard/extensions/installed-apps-snapshot";
 import { isTokenFresh } from "@dashboard/extensions/isTokenFresh";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { findOpenPopupExtension, validateOpenPopupParams } from "@dashboard/extensions/open-popup";
@@ -18,6 +19,9 @@ import {
 
 export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   const { setInactive, state } = useAppExtensionPopup();
+
+  // Mounted once per authenticated session - keeps identifier -> app resolution working.
+  useRefreshInstalledAppsSnapshot();
 
   const shop = useShop();
   const handleClose = () => {
@@ -48,7 +52,7 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-export interface OpenPopupByIdentifierResult {
+interface OpenPopupByIdentifierResult {
   ok: boolean;
   /** Failure description, set when `ok` is false. */
   reason?: string;

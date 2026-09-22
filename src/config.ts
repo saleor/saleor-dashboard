@@ -84,6 +84,7 @@ export interface AppListViewSettings {
   [ListViews.CATEGORY_LIST]: ListSettings;
   [ListViews.COLLECTION_LIST]: ListSettings;
   [ListViews.CUSTOMER_LIST]: ListSettings;
+  [ListViews.CUSTOMER_TYPE_LIST]: ListSettings;
   [ListViews.DRAFT_LIST]: ListSettings;
   [ListViews.NAVIGATION_LIST]: ListSettings;
   [ListViews.ORDER_LIST]: ListSettings;
@@ -134,6 +135,9 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY,
     columns: ["name", "email", "orders"],
   },
+  [ListViews.CUSTOMER_TYPE_LIST]: {
+    rowNumber: PAGINATE_BY,
+  },
   [ListViews.DRAFT_LIST]: {
     rowNumber: PAGINATE_BY,
     columns: ["number", "date", "customer", "total", "channel"],
@@ -153,7 +157,7 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.PRODUCT_LIST]: {
-    columns: ["name", "availability", "description", "price", "productType", "date", "created"],
+    columns: ["name", "availability", "price", "productCategory", "productType", "date", "created"],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.SALES_LIST]: {

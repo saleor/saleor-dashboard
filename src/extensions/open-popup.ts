@@ -13,7 +13,7 @@ export const OPEN_POPUP_MAX_PARAMS_LENGTH = OpenPopupParams.maxParamsLength;
  * non-strict files where boolean-literal discriminants don't narrow, so callers
  * read the optional `reason` directly after checking `ok`.
  */
-export interface ValidateOpenPopupParamsResult {
+interface ValidateOpenPopupParamsResult {
   ok: boolean;
   /** Failure description, set when `ok` is false. */
   reason?: string;

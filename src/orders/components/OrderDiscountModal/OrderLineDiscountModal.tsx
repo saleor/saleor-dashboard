@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type MoneyFragment } from "@dashboard/graphql";
 import { type AutomaticDiscountInfo } from "@dashboard/products/components/OrderDiscountProviders/types";

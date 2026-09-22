@@ -6,20 +6,16 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { CountryList } from "@dashboard/components/CountryList";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { CountryList } from "@dashboard/components/CountryList/CountryList";
 import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
-import { FormDirtyStateSync } from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { FormDirtyStateSync } from "@dashboard/components/Form/FormDirtyStateSync";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { type ExtensionWithParams } from "@dashboard/extensions/types";
-import {
-  type DiscountErrorFragment,
-  PermissionEnum,
-  type SearchProductFragment,
-} from "@dashboard/graphql";
+import { type DiscountErrorFragment, PermissionEnum } from "@dashboard/graphql";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
@@ -36,12 +32,12 @@ import { VoucherCatalogueSection } from "../VoucherCatalogueSection/VoucherCatal
 import { VoucherChannelAvailabilityCard } from "../VoucherChannelAvailabilityCard/VoucherChannelAvailabilityCard";
 import { VoucherCodesCard } from "../VoucherCodesCard/VoucherCodesCard";
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
-import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
+import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog/VoucherCodesGenerateDialog";
 import { formatVoucherCountriesErrorMessage } from "../VoucherCountriesErrors/voucherCountriesErrors";
 import { VoucherDetailsTitle } from "../VoucherDetailsTitle/VoucherDetailsTitle";
 import { VoucherDiscountSection } from "../VoucherDiscountSection/VoucherDiscountSection";
-import VoucherInfo from "../VoucherInfo";
-import VoucherLimits from "../VoucherLimits";
+import VoucherInfo from "../VoucherInfo/VoucherInfo";
+import VoucherLimits from "../VoucherLimits/VoucherLimits";
 import { VoucherRedemptionsCard } from "../VoucherRedemptionsCard/VoucherRedemptionsCard";
 import { VoucherRequirements } from "../VoucherRequirements/VoucherRequirements";
 import { VoucherScheduleCard } from "../VoucherScheduleCard/VoucherScheduleCard";
@@ -360,7 +356,7 @@ export const VoucherDetailsPageFormContent = ({
                 onTabClick={onTabClick}
                 categories={mapEdgesToItems(voucher?.categories)}
                 collections={mapEdgesToItems(voucher?.collections)}
-                products={mapEdgesToItems(voucher?.products) as unknown as SearchProductFragment[]}
+                products={mapEdgesToItems(voucher?.products) ?? []}
                 variants={voucher?.variants}
                 onCategoryAssign={onCategoryAssign}
                 onCategoryUnassign={onCategoryUnassign}

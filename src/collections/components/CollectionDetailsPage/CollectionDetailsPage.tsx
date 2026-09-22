@@ -10,13 +10,13 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
-import { SeoForm } from "@dashboard/components/SeoForm";
+import { SeoForm } from "@dashboard/components/SeoForm/SeoForm";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForCollectionDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -117,11 +117,7 @@ const CollectionDetailsPage = ({
     context.setDevModeVisibility(true);
   }, [collection?.id, context]);
   const menuItems = useMemo((): TopNavMenuItem[] => {
-    const items: TopNavMenuItem[] = extensionMenuItems.map(item => ({
-      label: item.label,
-      onSelect: item.onSelect,
-      testId: item.testId,
-    }));
+    const items: TopNavMenuItem[] = [...extensionMenuItems];
 
     if (collection?.id) {
       items.push({

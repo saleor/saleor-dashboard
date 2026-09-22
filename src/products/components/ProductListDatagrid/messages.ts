@@ -17,6 +17,11 @@ export const messages = defineMessages({
     defaultMessage: "Products",
     id: "7NFfmz",
   },
+  pagination: {
+    id: "MU0Zmt",
+    defaultMessage: "No. of products",
+    description: "product list pagination label",
+  },
 });
 
 export const columnsMessages = defineMessages({

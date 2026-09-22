@@ -17,10 +17,10 @@ import {
 } from "@dashboard/attributes/utils/handlers";
 import {
   type ChannelData,
-  type ChannelPriceAndPreorderData,
-  type IChannelPriceAndPreorderArgs,
+  type IChannelPriceArgs,
+  type VariantChannelPriceData,
 } from "@dashboard/channels/utils";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import {
   type ProductErrorWithAttributesFragment,
@@ -32,7 +32,6 @@ import {
 } from "@dashboard/graphql";
 import useForm, {
   type CommonUseFormResultWithHandlers,
-  type FormChange,
   type FormErrors,
   type SubmitPromise,
 } from "@dashboard/hooks/useForm";
@@ -42,7 +41,6 @@ import useFormset, {
   type FormsetData,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { errorMessages } from "@dashboard/intl";
 import {
   type AttributeValuesMetadata,
   getAttributeInputFromVariant,
@@ -50,20 +48,20 @@ import {
 } from "@dashboard/products/utils/data";
 import {
   createMediaChangeHandler,
-  createPreorderEndDateChangeHandler,
   getChannelsInput,
   replaceFormsetChannelListings,
   replaceFormsetStockValues,
 } from "@dashboard/products/utils/handlers";
+import { scrollToVariantAttributeErrors } from "@dashboard/products/utils/scrollToVariantAttributeErrors";
 import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import type * as React from "react";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { type ProductStockInput, type ProductStockPasteRow } from "../ProductStocks";
+import { type ProductStockInput, type ProductStockPasteRow } from "../ProductStocks/ProductStocks";
 import {
   concatChannelsBySelection,
   extractChannelPricesFromVariantChannel,
@@ -73,17 +71,12 @@ interface ProductVariantUpdateFormData {
   sku: string;
   trackInventory: boolean;
   weight: string;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
   quantityLimitPerCustomer: number | null;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime?: string;
   variantName: string;
   media: string[];
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
-  channelListings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+  channelListings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
   attributes: AttributeInput[];
   stocks: ProductStockInput[];
 }
@@ -91,13 +84,13 @@ export interface ProductVariantUpdateSubmitData extends ProductVariantUpdateForm
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
   addStocks: ProductStockInput[];
-  channelListings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+  channelListings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
   updateStocks: ProductStockInput[];
   removeStocks: string[];
 }
 
 interface UseProductVariantUpdateFormOpts {
-  currentChannels: ChannelPriceAndPreorderData[];
+  currentChannels: VariantChannelPriceData[];
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   referenceCategories: RelayToFlat<SearchCategoriesQuery["search"]>;
@@ -123,7 +116,6 @@ export interface ProductVariantUpdateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock", (id: string, label: string) => void>,
     Record<"deleteStock", (id: string) => void> {
-  changePreorderEndDate: FormChange;
   changeMedia: (ids: string[]) => void;
   replaceChannels: (listings: ChannelData[]) => void;
   replaceStocks: (stocks: ProductStockPasteRow[]) => void;
@@ -138,7 +130,6 @@ interface UseProductVariantUpdateFormResult
     Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantUpdateData>;
   validationErrors: ProductErrorWithAttributesFragment[];
-  disabled: boolean;
 }
 
 interface ProductVariantUpdateFormProps extends UseProductVariantUpdateFormOpts {
@@ -160,26 +151,10 @@ function useProductVariantUpdateForm(
   const [validationErrors, setValidationErrors] = useState<ProductErrorWithAttributesFragment[]>(
     [],
   );
-  const currentChannelsWithPreorderInfo = opts.currentChannels?.map(channel => {
-    const variantChannel = variant?.channelListings?.find(
-      channelListing => channelListing.channel.id === channel.id,
-    );
-
-    return {
-      ...channel,
-      preorderThreshold: variantChannel?.preorderThreshold?.quantity,
-      soldUnits: variantChannel?.preorderThreshold?.soldUnits,
-    };
-  });
-  const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
+  const channelsInput = getChannelsInput(opts.currentChannels);
   const initial: ProductVariantUpdateFormData = {
     sku: variant?.sku || "",
     trackInventory: variant?.trackInventory,
-    isPreorder: !!variant?.preorder || false,
-    globalThreshold: variant?.preorder?.globalThreshold?.toString() || null,
-    globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
-    hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDateTime: variant?.preorder?.endDate,
     weight: variant?.weight?.value.toString() || "",
     quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null,
     variantName: variant?.name ?? "",
@@ -279,11 +254,6 @@ function useProductVariantUpdateForm(
     channels.set(replaceFormsetChannelListings(channels.data, listings));
     triggerChange();
   };
-  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
-    form,
-    triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
-  );
   const handleMediaChange = createMediaChangeHandler(form, triggerChange);
   const handleUpdateChannels = (selectedIds: string[]) => {
     const allChannels = variant.product.channelListings.map(listing => {
@@ -299,8 +269,6 @@ function useProductVariantUpdateForm(
           currency: variantChannel.channel.currencyCode,
           isActive: listing.channel.isActive ?? true,
           isPublished: listing.isPublished,
-          preorderThreshold: variantChannel?.preorderThreshold.quantity,
-          soldUnits: variantChannel?.preorderThreshold?.soldUnits,
           price,
           costPrice,
         };
@@ -312,8 +280,6 @@ function useProductVariantUpdateForm(
         isActive: listing.channel.isActive ?? true,
         isPublished: listing.isPublished,
         price: "",
-        preorderThreshold: null,
-        soldUnits: null,
       };
     });
 
@@ -341,7 +307,6 @@ function useProductVariantUpdateForm(
     stocks: stocks.data,
   };
 
-  const disabled = data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime;
   const getSubmitData = async (): Promise<ProductVariantUpdateSubmitData> => ({
     ...formData,
     addStocks,
@@ -360,6 +325,8 @@ function useProductVariantUpdateForm(
     setValidationErrors(validationProductErrors);
 
     if (validationProductErrors.length > 0) {
+      scrollToVariantAttributeErrors(validationProductErrors);
+
       return validationProductErrors;
     }
 
@@ -379,14 +346,13 @@ function useProductVariantUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const isSaveDisabled = loading || disabled;
+  const isSaveDisabled = loading;
 
   setIsSubmitDisabled(isSaveDisabled);
 
   return {
     change: handleChange,
     data,
-    disabled,
     formErrors: form.errors,
     validationErrors,
     handlers: {
@@ -396,7 +362,6 @@ function useProductVariantUpdateForm(
       updateChannels: handleUpdateChannels,
       changeStock: handleStockChange,
       replaceStocks: handleStocksReplace,
-      changePreorderEndDate: handlePreorderEndDateChange,
       changeMedia: handleMediaChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,

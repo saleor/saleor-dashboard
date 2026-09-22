@@ -1,4 +1,3 @@
-import { describe, expect, it } from "@jest/globals";
 import { createIntl } from "react-intl";
 
 import { getVariantPricingChannelStatus } from "./channelStatus";

@@ -11,6 +11,12 @@ export interface AttributeDTO {
     value: string;
     slug: string;
     originalSlug?: string;
+    productName?: string;
+    variantName?: string;
+    productId?: string;
+    productThumbnailUrl?: string;
+    swatchColor?: string;
+    swatchFileUrl?: string;
   }>;
   inputType: AttributeInputType;
   label: string;
@@ -18,6 +24,56 @@ export interface AttributeDTO {
   value: string;
   entityType?: AttributeEntityTypeEnum;
 }
+
+export interface AttributeLookup {
+  attributeByName(name: string): AttributeDTO | undefined;
+}
+
+export const hasAttributeLookup = (response: unknown): response is AttributeLookup =>
+  typeof response === "object" &&
+  response !== null &&
+  "attributeByName" in response &&
+  typeof (response as AttributeLookup).attributeByName === "function";
+
+export const resolveAttributeTokenValue = (
+  attributes: Record<string, AttributeDTO>,
+  token: UrlToken,
+) => {
+  if (!token.isAttribute()) {
+    return undefined;
+  }
+
+  const attribute = attributes[token.name];
+
+  if (token.hasDynamicValues()) {
+    if (!attribute) {
+      return [];
+    }
+
+    const isReference =
+      attribute.inputType === "REFERENCE" || attribute.inputType === "SINGLE_REFERENCE";
+
+    if (isReference) {
+      return attribute.choices.filter(({ slug }) => {
+        if (!slug) return false;
+
+        return Array.isArray(token.value) ? token.value.includes(slug) : token.value === slug;
+      });
+    }
+
+    return attribute.choices.filter(({ value }) => {
+      return Array.isArray(token.value) ? token.value.includes(value) : token.value === value;
+    });
+  }
+
+  if (!attribute) {
+    return token.value;
+  }
+
+  return attribute.inputType === "BOOLEAN"
+    ? createBooleanOption(token.value === "true", AttributeInputTypeEnum.BOOLEAN)
+    : token.value;
+};
 
 export interface InitialProductState {
   category: ItemOption[];
@@ -59,35 +115,14 @@ export class InitialProductStateResponse implements InitialProductState {
   }
 
   public filterByUrlToken(token: UrlToken) {
-    if (token.isAttribute() && token.hasDynamicValues()) {
-      const attribute = this.attribute[token.name];
-      const isReference =
-        attribute?.inputType === "REFERENCE" || attribute?.inputType === "SINGLE_REFERENCE";
+    const attributeValue = resolveAttributeTokenValue(this.attribute, token);
 
-      if (isReference) {
-        return attribute.choices.filter(({ slug }) => {
-          if (!slug) return false;
-
-          return Array.isArray(token.value) ? token.value.includes(slug) : token.value === slug;
-        });
-      }
-
-      // Handle non-reference attributes - match by value
-      return attribute.choices.filter(({ value }) => {
-        return Array.isArray(token.value) ? token.value.includes(value) : token.value === value;
-      });
+    if (attributeValue !== undefined) {
+      return attributeValue;
     }
 
     if (isDateField(token.name) || isNumericField(token.name)) {
       return token.value;
-    }
-
-    if (token.isAttribute()) {
-      const attr = this.attribute[token.name];
-
-      return attr.inputType === "BOOLEAN"
-        ? createBooleanOption(token.value === "true", AttributeInputTypeEnum.BOOLEAN)
-        : token.value;
     }
 
     // Special handling for metadata fields - preserve tuple structure

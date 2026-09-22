@@ -1,4 +1,4 @@
-import { ConditionalGiftCardsFilterProver } from "@dashboard/components/ConditionalFilter";
+import { ConditionalGiftCardsFilterProver } from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { sectionNames } from "@dashboard/intl";
@@ -7,10 +7,10 @@ import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
 import { type RouteComponentProps, Switch } from "react-router-dom";
 
-import GiftCardSettings from "./GiftCardSettings";
-import GiftCardListComponent from "./GiftCardsList";
+import { GiftCardSettingsPage as GiftCardSettings } from "./GiftCardSettings/GiftCardSettingsPage";
+import GiftCardListComponent from "./GiftCardsList/GiftCardsList";
 import { type GiftCardListUrlQueryParams, GiftCardUrlSortField } from "./GiftCardsList/types";
-import GiftCardUpdateComponent from "./GiftCardUpdate";
+import GiftCardUpdateComponent from "./GiftCardUpdate/GiftCardUpdate";
 import { type GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
 import { giftCardPath, giftCardSettingsPath, giftCardsListPath } from "./urls";
 

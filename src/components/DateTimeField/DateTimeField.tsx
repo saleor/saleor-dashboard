@@ -1,9 +1,6 @@
 // @ts-strict-ignore
+import { type AttributeFieldError } from "@dashboard/components/Attributes/types";
 import { getErrorMessage } from "@dashboard/components/Attributes/utils";
-import {
-  type PageErrorWithAttributesFragment,
-  type ProductErrorWithAttributesFragment,
-} from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
 import { Box, Input } from "@saleor/macaw-ui-next";
@@ -11,7 +8,7 @@ import { useIntl } from "react-intl";
 
 interface DateTimeFieldProps {
   onChange: (value: string) => void;
-  error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
+  error: AttributeFieldError;
   value: string;
   disabled: boolean;
   name: string;

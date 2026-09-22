@@ -56,7 +56,7 @@ export interface OrderCustomerAddressesEditHandlers {
   selectBillingCountry: FormChange;
 }
 
-export interface OrderCustomerAddressesEditFormContextValue
+interface OrderCustomerAddressesEditFormContextValue
   extends CommonUseFormResultWithHandlers<
     OrderCustomerAddressesEditData,
     OrderCustomerAddressesEditHandlers

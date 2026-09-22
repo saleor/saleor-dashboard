@@ -2,7 +2,7 @@ import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Switch, type SwitchItemProps } from "@saleor/macaw-ui-next";
 import { useEffect, useRef } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { useHasPermission } from "./useHasPermission";
 
@@ -26,15 +26,12 @@ export const SearchForm = ({
   query: string;
 }) => {
   const hasPermission = useHasPermission();
+  const intl = useIntl();
   const inputSearchContainer = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!inputSearchContainer.current) return;
-
-    const searchInput = inputSearchContainer.current.getElementsByTagName("input")[0];
-
-    searchInput.focus();
-  }, [inputSearchContainer]);
+  useEffect(function focusSearchInput() {
+    inputSearchContainer.current?.getElementsByTagName("input")[0]?.focus();
+  }, []);
 
   return (
     <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4} paddingBottom={2} paddingX={6}>
@@ -42,8 +39,13 @@ export const SearchForm = ({
         <Box __width="320px" ref={inputSearchContainer}>
           <SearchInput
             initialSearch={query}
-            placeholder={"Search"}
+            placeholder={intl.formatMessage({
+              id: "QTuSw/",
+              defaultMessage: "Search",
+              description: "navigator search input placeholder",
+            })}
             onSearchChange={onSearchChange}
+            showSearchTooltip
           />
         </Box>
       </Box>

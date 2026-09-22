@@ -171,6 +171,38 @@ describe("ConditionalFilter / FilterElement / FilterElement", () => {
     });
   });
 
+  it("clones so later edits do not change the original", () => {
+    // Arrange
+    const element = FilterElement.createStaticBySlug("category");
+
+    element.updateRightOperator({
+      label: "Apparel",
+      slug: "apparel",
+      value: "cat-1",
+    });
+
+    // Act
+    const copy = element.clone();
+
+    copy.updateRightOperator({
+      label: "Accessories",
+      slug: "accessories",
+      value: "cat-2",
+    });
+
+    // Assert
+    expect(element.condition.selected.value).toEqual({
+      label: "Apparel",
+      slug: "apparel",
+      value: "cat-1",
+    });
+    expect(copy.condition.selected.value).toEqual({
+      label: "Accessories",
+      slug: "accessories",
+      value: "cat-2",
+    });
+  });
+
   it("returns null rowType for empty filter", () => {
     const emptyElement = new FilterElement(
       new ExpressionValue("", "", ""),

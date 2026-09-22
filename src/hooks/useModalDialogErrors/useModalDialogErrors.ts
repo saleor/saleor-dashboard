@@ -1,4 +1,4 @@
-import useModalDialogOpen from "../useModalDialogOpen";
+import useModalDialogOpen from "../useModalDialogOpen/useModalDialogOpen";
 import useStateFromProps from "../useStateFromProps";
 
 function useModalDialogErrors<TError>(errors: TError[], open: boolean): TError[] {

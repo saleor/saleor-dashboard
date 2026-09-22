@@ -1,12 +1,12 @@
 import { PRODUCT_TYPES } from "@data/e2eTestData";
 import { ProductTypePage } from "@pages/productTypePage";
 import { expect } from "@playwright/test";
-import * as faker from "faker";
+import { faker } from "@faker-js/faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
 
-const productTypeName = `e2e-product-type-${faker.datatype.number()}`;
+const productTypeName = `e2e-product-type-${faker.number.int(99999)}`;
 
 test("TC: SALEOR_1 Create basic product type #e2e #product-type", async ({ page }) => {
   const productTypePage = new ProductTypePage(page);
@@ -14,10 +14,13 @@ test("TC: SALEOR_1 Create basic product type #e2e #product-type", async ({ page 
   await productTypePage.gotoProductTypeListPage();
   await productTypePage.clickCreateProductTypeButton();
   await productTypePage.typeProductTypeName(productTypeName);
+  await productTypePage.clickSubmitButton();
+  await productTypePage.expectSuccessBanner();
+  await expect(productTypePage.page).toHaveURL(/\/product-types\/[^?]+/);
+  await expect(productTypePage.nameInput).toHaveValue(productTypeName);
   await productTypePage.makeProductShippableWithWeight();
   await productTypePage.clickSaveButton();
   await productTypePage.expectSuccessBanner();
-  await expect(productTypePage.nameInput).toHaveValue(productTypeName);
 });
 test("TC: SALEOR_2 Create gift card product type #e2e #product-type", async ({ page }) => {
   const productTypePage = new ProductTypePage(page);
@@ -25,20 +28,21 @@ test("TC: SALEOR_2 Create gift card product type #e2e #product-type", async ({ p
   await productTypePage.gotoAddProductTypePage();
   await productTypePage.typeProductTypeName(productTypeName);
   await productTypePage.selectGiftCardButton();
-  await productTypePage.clickSaveButton();
+  await productTypePage.clickSubmitButton();
   await productTypePage.expectSuccessBanner();
+  await expect(productTypePage.page).toHaveURL(/\/product-types\/[^?]+/);
   await expect(productTypePage.nameInput).toHaveValue(productTypeName);
 });
 test("TC: SALEOR_184 As a admin I can edit product type #e2e #product-type", async ({ page }) => {
   const productTypePage = new ProductTypePage(page);
-  const updatedProductTypeName = `updated-e2e-product-type-${faker.datatype.number()}`;
+  const updatedProductTypeName = `updated-e2e-product-type-${faker.number.int(99999)}`;
 
   await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeEdited.id);
   await productTypePage.updateProductTypeName(updatedProductTypeName);
   await productTypePage.makeProductShippableWithWeight();
   await productTypePage.clickSaveButton();
   await productTypePage.expectSuccessBanner();
-  await expect(productTypePage.isShippingRequired).toBeChecked();
+  await expect(productTypePage.isShippingRequired).toHaveAttribute("aria-pressed", "true");
   await expect(productTypePage.shippingWeightInput).toHaveValue("10");
   await expect(productTypePage.nameInput).toHaveValue(updatedProductTypeName);
 });
@@ -49,7 +53,7 @@ test("TC: SALEOR_185 As a admin user I can delete product type with assigned pro
   const productTypeName = PRODUCT_TYPES.productTypeToBeRemoved.name;
 
   await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeRemoved.id);
-  await productTypePage.clickDeleteButton();
+  await productTypePage.clickDeleteProductType();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeletionCheckbox();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();

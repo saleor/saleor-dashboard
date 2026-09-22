@@ -1,5 +1,5 @@
 import { type FilterAPIProvider } from "../ConditionalFilter/API/FilterAPIProvider";
-import { type FilterContainer } from "../ConditionalFilter/FilterElement";
+import { type FilterContainer } from "../ConditionalFilter/FilterElement/FilterElement";
 import { type QueryApiType } from "../ConditionalFilter/FiltersQueryBuilder/types";
 import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 import {

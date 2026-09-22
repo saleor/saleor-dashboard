@@ -36,6 +36,24 @@ describe("App Extension Manifest Schema - SEARCH_ACTION mount", () => {
     expect(result.success).toBe(true);
   });
 
+  it("accepts a SEARCH_ACTION extension scoped to CHANNEL_DETAILS", () => {
+    // Arrange
+    const data: AppExtensionManifest = {
+      label: "Channel config",
+      url: "https://example.com/action",
+      mountName: "SEARCH_ACTION",
+      targetName: "POPUP",
+      permissions: [],
+      options: { views: ["CHANNEL_DETAILS"] },
+    };
+
+    // Act
+    const result = appExtensionManifest.safeParse(data);
+
+    // Assert
+    expect(result.success).toBe(true);
+  });
+
   it("accepts SEARCH_ACTION with NEW_TAB and APP_PAGE targets", () => {
     // Act / Assert
     expect(
@@ -103,6 +121,78 @@ describe("App Extension Manifest Schema - SEARCH_ACTION mount", () => {
       targetName: "POPUP",
       permissions: [],
       options: { views: ["NOT_A_VIEW"] },
+    };
+
+    // Act
+    const result = appExtensionManifest.safeParse(data);
+
+    // Assert
+    expect(result.success).toBe(false);
+  });
+
+  it("accepts a SEARCH_ACTION extension with search aliases", () => {
+    // Arrange
+    const data: AppExtensionManifest = {
+      label: "Configure Avalara",
+      url: "https://example.com/action",
+      mountName: "SEARCH_ACTION",
+      targetName: "POPUP",
+      permissions: [],
+      options: { aliases: ["taxes", "legal", "avatax"] },
+    };
+
+    // Act
+    const result = appExtensionManifest.safeParse(data);
+
+    // Assert
+    expect(result.success).toBe(true);
+  });
+
+  it("accepts an empty aliases array as a no-op", () => {
+    // Arrange
+    const data: AppExtensionManifest = {
+      label: "Search action",
+      url: "https://example.com/action",
+      mountName: "SEARCH_ACTION",
+      targetName: "POPUP",
+      permissions: [],
+      options: { aliases: [] },
+    };
+
+    // Act
+    const result = appExtensionManifest.safeParse(data);
+
+    // Assert
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects aliases that are not strings", () => {
+    // Arrange
+    const data = {
+      label: "Search action",
+      url: "https://example.com/action",
+      mountName: "SEARCH_ACTION",
+      targetName: "POPUP",
+      permissions: [],
+      options: { aliases: [{ term: "taxes" }] },
+    };
+
+    // Act
+    const result = appExtensionManifest.safeParse(data);
+
+    // Assert
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects the aliases option on a non-SEARCH_ACTION mount", () => {
+    // Arrange
+    const data = {
+      label: "Product action",
+      url: "https://example.com/action",
+      mountName: "PRODUCT_DETAILS_MORE_ACTIONS",
+      targetName: "POPUP",
+      permissions: [],
+      options: { aliases: ["taxes"] },
     };
 
     // Act

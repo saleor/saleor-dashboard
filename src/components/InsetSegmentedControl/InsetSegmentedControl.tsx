@@ -57,7 +57,7 @@ export interface InsetSegmentedControlProps<T extends string = string> {
   "data-test-id"?: string;
 }
 
-export const renderInsetSegmentLabel = (
+const renderInsetSegmentLabel = (
   label: InsetSegmentedControlOption["label"],
   isActive: boolean,
 ): ReactNode => {
@@ -86,7 +86,7 @@ export const InsetSegmentedControl = <T extends string>({
   "aria-label": ariaLabel,
   className,
   "data-test-id": dataTestId,
-}: InsetSegmentedControlProps<T>): JSX.Element => {
+}: InsetSegmentedControlProps<T>): React.ReactNode => {
   const sizeStyles = SIZE_STYLES[size];
 
   return (

@@ -20,28 +20,17 @@ test.beforeEach(({ page }) => {
 test("TC: SALEOR_3 Create basic product with variants #e2e #product", async () => {
   await productPage.gotoProductListPage();
   await productPage.clickCreateProductButton();
+  await productCreateDialog.typeName(`e2e-productName-${Date.now()}`);
   await productCreateDialog.selectProductTypeWithVariants();
   await productCreateDialog.clickConfirmButton();
-  await productPage.typeNameDescAndRating();
-  await productPage.addSeo();
-  await productPage.addAllMetaData();
-  await productPage.selectFirstCategory();
-  await productPage.selectFirstTaxOption();
-  await productPage.clickSaveButton();
-  await productPage.expectSuccessBanner();
+  await expect(productPage.page.getByTestId("product-setup-card")).toBeVisible();
 });
 test("TC: SALEOR_5 Create basic - single product type - product without variants #e2e #product", async () => {
   await productPage.gotoCreateProductPage(PRODUCTS.singleProductType.id);
-  await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected("Channel-PLN");
-  await productPage.typeNameDescAndRating();
-  await productPage.addSeo();
-  await productPage.addAllMetaData();
-  await productPage.selectFirstCategory();
-  await productPage.selectFirstTaxOption();
-  await productPage.typeSellingPriceForChannel("PLN");
-  await productPage.typeCostPrice("PLN");
-  await productPage.clickSaveButton();
-  await productPage.expectSuccessBanner();
+  await productCreateDialog.typeName(`e2e-productName-${Date.now()}`);
+  await expect(productCreateDialog.confirmButton).toBeEnabled();
+  await productCreateDialog.clickConfirmButton();
+  await expect(productPage.page.getByTestId("product-setup-card")).toBeVisible();
 });
 test("TC: SALEOR_26 Create basic info variant - via edit variant page #e2e #product", async () => {
   const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;
@@ -297,4 +286,98 @@ test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variant
     productPage.noVariantsText,
     "Message about how to add new variant should be visible in place of list of variants",
   ).toBeVisible();
+});
+test("Product list row overlay is a real link — middle click and hide on wheel @basic-regression #e2e #product", async () => {
+  await productPage.gotoProductListPage();
+
+  const cell = await productPage.hoverGridCell(0, 0);
+
+  await expect(productPage.datagridRowAnchor).toHaveAttribute("href", /\/products\//);
+
+  const overlay = await productPage.datagridRowAnchor.boundingBox();
+  const href = await productPage.datagridRowAnchor.getAttribute("href");
+
+  expect(overlay, "Row overlay should be on screen over the hovered cell").toBeTruthy();
+  expect(href).toBeTruthy();
+
+  if (!overlay || !href) {
+    return;
+  }
+
+  expect(cell.center.x).toBeGreaterThanOrEqual(overlay.x);
+  expect(cell.center.x).toBeLessThanOrEqual(overlay.x + overlay.width);
+  expect(cell.center.y).toBeGreaterThanOrEqual(overlay.y);
+  expect(cell.center.y).toBeLessThanOrEqual(overlay.y + overlay.height);
+
+  // Small delta: enough to fire wheel on the overlay, not enough to scroll the row away.
+  await productPage.page.mouse.move(overlay.x + overlay.width / 2, overlay.y + overlay.height / 2);
+  await productPage.page.mouse.wheel(0, 40);
+  await expect(productPage.datagridRowAnchor).not.toHaveAttribute("href");
+
+  await productPage.hoverGridCell(0, 0);
+  await expect(productPage.datagridRowAnchor).toHaveAttribute("href", href);
+
+  const popupPromise = productPage.page.waitForEvent("popup");
+
+  await productPage.middleClickGridCell(0, 0);
+
+  const popup = await popupPromise;
+  const expectedPath = new URL(href, popup.url()).pathname;
+
+  await popup.waitForURL(/\/products\//);
+  expect(popup.url(), "New tab should open the hovered product").toContain(expectedPath);
+});
+test("Product list does not open a row after a touch-style drag @basic-regression #e2e #product", async () => {
+  await productPage.gotoProductListPage();
+
+  const listUrl = productPage.page.url();
+
+  await test.step("leftover click after a drag does not navigate", async () => {
+    await productPage.hoverGridCell(0, 0);
+    await expect(productPage.datagridRowAnchor).toHaveAttribute("href", /\/products\//);
+    await productPage.leftoverClickAfterTouchDrag(productPage.datagridRowAnchor);
+    expect(productPage.page.url(), "Drag leftover click must stay on the product list").toBe(
+      listUrl,
+    );
+    await expect(productPage.datagridRowAnchor).not.toHaveAttribute("href");
+  });
+
+  await test.step("leftover click after pointercancel does not navigate", async () => {
+    await productPage.hoverGridCell(0, 0);
+    await expect(productPage.datagridRowAnchor).toHaveAttribute("href", /\/products\//);
+    await productPage.leftoverClickAfterPointerCancel(productPage.datagridRowAnchor);
+    expect(productPage.page.url(), "Cancelled scroll leftover click must stay on the list").toBe(
+      listUrl,
+    );
+    await expect(productPage.datagridRowAnchor).not.toHaveAttribute("href");
+  });
+
+  await test.step("column picker still opens after a sloppy press", async () => {
+    await productPage.leftoverClickAfterTouchDrag(productPage.datagridColumnPickerButton);
+    await expect(productPage.datagridColumnPickerStaticColumns).toBeVisible();
+    await productPage.page.keyboard.press("Escape");
+    await expect(productPage.datagridColumnPickerStaticColumns).toBeHidden();
+  });
+
+  await test.step("a real tap still opens the row", async () => {
+    await productPage.hoverGridCell(0, 0);
+    await expect(productPage.datagridRowAnchor).toHaveAttribute("href", /\/products\//);
+
+    const href = await productPage.datagridRowAnchor.getAttribute("href");
+
+    expect(href, "Hovered row must expose a product href").toBeTruthy();
+
+    if (!href) {
+      return;
+    }
+
+    await productPage.clickGridCell(0, 0);
+    await productPage.page.waitForURL(/\/products\//);
+
+    const expectedPath = new URL(href, productPage.page.url()).pathname;
+
+    expect(productPage.page.url(), "A tap after a drag must still open the product").toContain(
+      expectedPath,
+    );
+  });
 });

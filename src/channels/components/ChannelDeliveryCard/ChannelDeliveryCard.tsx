@@ -1,6 +1,6 @@
 import { type ChannelShippingZones } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { AssignListCard } from "@dashboard/components/AssignListCard/AssignListCard";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { Box, Button } from "@saleor/macaw-ui-next";

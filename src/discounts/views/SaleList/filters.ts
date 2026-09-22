@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type FilterElement, type FilterElementRegular } from "@dashboard/components/Filter/types";
-import { SaleFilterKeys } from "@dashboard/discounts/components/SaleListPage";
+import { SaleFilterKeys } from "@dashboard/discounts/components/SaleListPage/filters";
 import {
   DiscountStatusEnum,
   DiscountValueTypeEnum,
@@ -14,7 +14,7 @@ import {
   getMultipleEnumValueQueryParam,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-} from "../../../utils/filters";
+} from "../../../utils/filters/filters";
 import {
   type SaleListUrlFilters,
   SaleListUrlFiltersEnum,

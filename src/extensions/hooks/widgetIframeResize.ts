@@ -4,7 +4,7 @@ import type { DispatchResponseEvent, WidgetResize } from "@saleor/app-sdk/app-br
 export const WIDGET_DEFAULT_HEIGHT = 200;
 
 /** Upper bound so a buggy or hostile app cannot blow up the Dashboard layout. */
-export const WIDGET_MAX_HEIGHT = 5000;
+const WIDGET_MAX_HEIGHT = 5000;
 
 /** Matches `@saleor/app-sdk` `actions.WidgetResize` height rules. */
 export const isPositiveFiniteWidgetHeight = (height: number): boolean =>

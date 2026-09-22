@@ -1,6 +1,6 @@
+import { AssignableListCard } from "@dashboard/components/AssignableListTable/AssignableListCard";
 import { Callout } from "@dashboard/components/Callout/Callout";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type DiscountErrorFragment } from "@dashboard/graphql";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
@@ -12,16 +12,16 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { type VoucherCodesUrlDialog } from "../VoucherCodes/types";
 import { VoucherCodesAddButton } from "../VoucherCodesAddButton/VoucherCodesAddButton";
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
-import { VoucherCodesDeleteDialog } from "../VoucherCodesDeleteDialog";
+import { VoucherCodesDeleteDialog } from "../VoucherCodesDeleteDialog/VoucherCodesDeleteDialog";
 import {
   type GenerateMultipleVoucherCodeFormData,
   VoucherCodesGenerateDialog,
-} from "../VoucherCodesGenerateDialog";
-import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
+} from "../VoucherCodesGenerateDialog/VoucherCodesGenerateDialog";
+import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog/VoucherCodesManualDialog";
 import { VoucherCodesTable } from "../VoucherCodesTable/VoucherCodesTable";
 import { formatVoucherCodesErrorMessage } from "./voucherCodesErrors";
 
-export interface VoucherCodesCardProps {
+interface VoucherCodesCardProps {
   codes: VoucherCode[];
   loading?: boolean;
   disabled?: boolean;
@@ -52,7 +52,7 @@ export const VoucherCodesCard = ({
   settings,
   onSettingsChange,
   errors = [],
-}: VoucherCodesCardProps): JSX.Element => {
+}: VoucherCodesCardProps): React.ReactNode => {
   const intl = useIntl();
   const { pageInfo, ...paginationValues } = voucherCodesPagination;
   const [openModal, setOpenModal] = useState<VoucherCodesUrlDialog | null>(null);
@@ -68,7 +68,7 @@ export const VoucherCodesCard = ({
 
   return (
     <>
-      <DetailSettingsCard
+      <AssignableListCard
         data-test-id="voucher-codes-section"
         title={<FormattedMessage defaultMessage="Voucher codes" id="kVL3LM" />}
         intro={
@@ -86,7 +86,6 @@ export const VoucherCodesCard = ({
             onSingleCodesGenerate={() => setOpenModal("single-codes")}
           />
         }
-        contentFlush
       >
         {codesErrorMessage ? (
           <Box paddingX={6} paddingY={4} data-test-id="voucher-codes-error">
@@ -106,7 +105,7 @@ export const VoucherCodesCard = ({
             onSettingsChange={onSettingsChange}
           />
         </PaginatorContext.Provider>
-      </DetailSettingsCard>
+      </AssignableListCard>
 
       <VoucherCodesManualDialog
         open={openModal === "single-codes"}

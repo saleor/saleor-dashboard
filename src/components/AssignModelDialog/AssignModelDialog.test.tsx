@@ -1,8 +1,12 @@
-import { render, screen, within } from "@testing-library/react";
+import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { render as rtlRender, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type React from "react";
 
 import AssignModelDialog from "./AssignModelDialog";
+
+// Rows carry the model type's icon, which resolves its colour from the macaw theme.
+const render = (ui: React.ReactElement) => rtlRender(ui, { wrapper: ThemeProvider });
 
 jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
@@ -24,7 +28,7 @@ jest.mock("../ModalFilters/ModalFilters", () => ({
   ModalFilters: () => <div data-testid="modal-filters">Modal Filters</div>,
 }));
 
-jest.mock("@dashboard/hooks/useModalDialogOpen", () => ({
+jest.mock("@dashboard/hooks/useModalDialogOpen/useModalDialogOpen", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
@@ -37,21 +41,30 @@ jest.mock("@dashboard/hooks/useModalSearchWithFilters", () => ({
   }),
 }));
 
+const mockPageType = {
+  __typename: "PageType" as const,
+  id: "page-type-1",
+  metadata: [],
+};
+
 const mockPages = [
   {
     __typename: "Page" as const,
     id: "page-1",
     title: "Test Page 1",
+    pageType: mockPageType,
   },
   {
     __typename: "Page" as const,
     id: "page-2",
     title: "Test Page 2",
+    pageType: mockPageType,
   },
   {
     __typename: "Page" as const,
     id: "page-3",
     title: "Test Page 3",
+    pageType: mockPageType,
   },
 ];
 
@@ -219,7 +232,8 @@ describe("AssignModelDialog", () => {
 
     // Assert
     const searchInput = screen.getByPlaceholderText("Search Models");
-    const inputContainer = searchInput.closest(".MuiInputBase-root") as HTMLElement;
+    // macaw Input wraps the field and its adornments in a <label>
+    const inputContainer = searchInput.closest("label") as HTMLElement;
 
     expect(inputContainer).toBeInTheDocument();
     expect(within(inputContainer).getByRole("progressbar")).toBeInTheDocument();

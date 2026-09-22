@@ -1,6 +1,7 @@
 import { channelsCatalogEntries } from "./channels";
 import { giftCardsCatalogEntries } from "./giftCards";
 import { configurationHubsCatalogEntries } from "./hubs";
+import { notificationsCatalogEntries } from "./notifications";
 import { ordersCatalogEntries } from "./orders";
 import { refundsCatalogEntries } from "./refunds";
 import { storeCatalogEntries } from "./store";
@@ -17,16 +18,9 @@ export const settingsCatalogEntries: SettingsCatalogEntry[] = [
   ...storeCatalogEntries,
   ...giftCardsCatalogEntries,
   ...channelsCatalogEntries,
+  ...notificationsCatalogEntries,
   ...configurationHubsCatalogEntries,
 ];
 
-export { allSettingsHashes, settingsHashes, settingsHref } from "./hashes";
-export { resolveSettingsCatalog, resolveSettingsCatalogEntry } from "./resolve";
-export { searchSettingsCatalog } from "./search";
-export type {
-  ResolvedSettingsCatalogEntry,
-  SettingsCatalogEntry,
-  SettingsCatalogKind,
-  SettingsCatalogOwnership,
-} from "./types";
-export { useResolvedSettingsCatalog, useSettingsCatalogSearch } from "./useSettingsCatalogSearch";
+export type { ResolvedSettingsCatalogEntry } from "./types";
+export { useSettingsCatalogSearch } from "./useSettingsCatalogSearch";

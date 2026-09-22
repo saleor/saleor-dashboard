@@ -5,10 +5,7 @@ import {
   type TranslationInputFieldName,
   TranslationSubmitScope,
 } from "@dashboard/translations/types";
-import {
-  getAttributeValueTranslationsInputData,
-  getParsedTranslationInputData,
-} from "@dashboard/translations/utils";
+import { getParsedTranslationInputData } from "@dashboard/translations/utils";
 import { type OutputData } from "@editorjs/editorjs";
 
 import {
@@ -152,14 +149,7 @@ export async function submitBulkAttributeTranslations({
   return createBulkSubmitResult(fieldErrors);
 }
 
-export function getAttributeValueBulkInput(
-  field: TranslationField,
-  data: string | OutputData,
-): ReturnType<typeof getAttributeValueTranslationsInputData> {
-  return getAttributeValueTranslationsInputData(field.type, data);
-}
-
-export function groupBulkValuesByScope(values: BulkTranslationValue[]) {
+function groupBulkValuesByScope(values: BulkTranslationValue[]) {
   return values.reduce<Record<TranslationSubmitScope, BulkTranslationValue[]>>(
     (accumulator, value) => {
       accumulator[value.section.submitScope].push(value);

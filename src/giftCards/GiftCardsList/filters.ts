@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import { type FilterElement } from "@dashboard/components/Filter/types";
 import {
-  createFilterTabUtils,
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
   getSingleValueQueryParam,
-} from "@dashboard/utils/filters";
+} from "@dashboard/utils/filters/filters";
+import { createFilterTabUtils } from "@dashboard/utils/filters/storage";
 import { defineMessages } from "react-intl";
 
 import {

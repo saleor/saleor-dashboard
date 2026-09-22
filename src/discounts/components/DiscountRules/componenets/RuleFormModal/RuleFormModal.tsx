@@ -2,16 +2,16 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { buttonMessages } from "@dashboard/intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type ReactNode, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useDiscountRulesContext } from "../../context";
+import { useDiscountRulesContext } from "../../context/consumer";
 import { messages } from "../../messages";
 import { getDefaultValue } from "./defaultFormValues";
 import { getValidationSchema } from "./validationSchema";
@@ -30,7 +30,7 @@ export const RuleFormModal = ({
   initialFormValues,
   onClose,
   onSubmit,
-}: RuleFormModalProps): JSX.Element => {
+}: RuleFormModalProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
   const { discountType } = useDiscountRulesContext();

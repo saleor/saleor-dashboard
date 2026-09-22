@@ -1,7 +1,4 @@
-import {
-  scrollToDetailSection,
-  useDetailSectionScrollSpy,
-} from "@dashboard/components/DetailSectionNav/useDetailSectionScrollSpy";
+import { useDetailSectionScrollSpy } from "@dashboard/components/DetailSectionNav/useDetailSectionScrollSpy";
 
 import { type ChannelSectionId } from "./channelSectionIds";
 
@@ -9,10 +6,6 @@ interface UseChannelSectionScrollSpyArgs {
   sectionIds: ChannelSectionId[];
   enabled?: boolean;
 }
-
-export const scrollToChannelSection = (sectionId: ChannelSectionId): void => {
-  scrollToDetailSection(sectionId);
-};
 
 export const useChannelSectionScrollSpy = ({
   sectionIds,

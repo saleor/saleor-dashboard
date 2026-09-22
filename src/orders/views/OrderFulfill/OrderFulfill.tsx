@@ -7,11 +7,11 @@ import {
   useOrderFulfillSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import OrderFulfillPage, {
   type OrderFulfillSubmitData,
-} from "@dashboard/orders/components/OrderFulfillPage";
+} from "@dashboard/orders/components/OrderFulfillPage/OrderFulfillPage";
 import {
   orderFulfillUrl,
   type OrderFulfillUrlDialog,
@@ -33,7 +33,10 @@ const OrderFulfill = ({ orderId, params }: OrderFulfillProps) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderFulfillUrlDialog,
     OrderFulfillUrlQueryParams
-  >(navigate, params => orderFulfillUrl(orderId, params), params);
+  >(navigate, params => orderFulfillUrl(orderId, params), params, [
+    "warehouseLineId",
+    "warehouseId",
+  ]);
   const { data: settings, loading: settingsLoading } = useOrderFulfillSettingsQuery({});
   const { data, loading } = useOrderFulfillDataQuery({
     displayLoader: true,

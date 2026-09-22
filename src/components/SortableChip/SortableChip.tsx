@@ -19,6 +19,7 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
 
 type SortableChipProps = {
   label: ReactNode;
+  startAdornment?: ReactNode;
   onClose?: () => void;
   loading?: boolean;
   url?: string;
@@ -33,7 +34,18 @@ type SortableChipProps = {
  * Draggable component which returns correct handlers from @dnd-kit */
 export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
   (
-    { label, onClose, loading, url, isDragged, isDraggedOverlay, className, style, ...props },
+    {
+      label,
+      startAdornment,
+      onClose,
+      loading,
+      url,
+      isDragged,
+      isDraggedOverlay,
+      className,
+      style,
+      ...props
+    },
     ref,
   ) => {
     const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,14 +76,10 @@ export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
         <Box
           display="flex"
           alignItems="center"
+          gap={1}
           style={{ visibility: isDraggedOverlay ? "hidden" : "visible" }}
         >
-          <Box
-            display="flex"
-            alignItems="center"
-            __cursor={loading ? "not-allowed" : "grab"}
-            marginRight={1}
-          >
+          <Box display="flex" alignItems="center" __cursor={loading ? "not-allowed" : "grab"}>
             <GripVertical
               size={iconSize.small}
               strokeWidth={iconStrokeWidthBySize.small}
@@ -79,18 +87,17 @@ export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
               style={{ cursor: isDragged ? "grabbing" : "grab", outline: "none" }}
             />
           </Box>
+          {startAdornment}
           <ChipLabel label={label} url={url} />
-          <Box marginLeft={1}>
-            <Button
-              variant="tertiary"
-              size="small"
-              onClick={handleClose}
-              data-test-id="button-close"
-              disabled={loading}
-              type="button"
-              icon={<X size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
-            />
-          </Box>
+          <Button
+            variant="tertiary"
+            size="small"
+            onClick={handleClose}
+            data-test-id="button-close"
+            disabled={loading}
+            type="button"
+            icon={<X size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          />
         </Box>
       </Box>
     );

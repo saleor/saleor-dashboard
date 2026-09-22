@@ -8,7 +8,7 @@ interface GiftCardStatusFields {
   isExpired: boolean;
 }
 
-export interface GiftCardStatusPresentation {
+interface GiftCardStatusPresentation {
   color: PillStatusType;
   label: MessageDescriptor;
 }

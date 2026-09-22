@@ -31,7 +31,7 @@ jest.mock("./components/WelcomePageStocksAnalytics/useWelcomePageStocksAnalytics
   })),
 }));
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn(() => () => undefined),
 }));
 

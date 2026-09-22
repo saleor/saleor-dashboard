@@ -37,7 +37,7 @@ export const SettingsToggleRow = ({
   onCheckedChange,
   id,
   "data-test-id": dataTestId,
-}: SettingsToggleRowProps): JSX.Element => {
+}: SettingsToggleRowProps): React.ReactNode => {
   const handleRowClick = (event: MouseEvent): void => {
     if (disabled || isInteractiveTarget(event.target)) {
       return;

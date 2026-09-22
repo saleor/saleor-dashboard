@@ -1,20 +1,31 @@
 import { ApolloError } from "@apollo/client";
+import { useAuthState } from "@dashboard/auth/authState";
 import { AccountErrorCode } from "@dashboard/graphql";
-import { useAuth, useAuthState } from "@dashboard/legacy-sdk";
 import { act, renderHook, waitFor } from "@testing-library/react";
 
 import { useAuthProvider } from "./useAuthProvider";
 
 // Mock dependencies
-jest.mock("@dashboard/legacy-sdk");
+jest.mock("@dashboard/auth/authState", () => ({
+  useAuthState: jest.fn(),
+}));
+
+const mockLogin = jest.fn();
+
+jest.mock("@dashboard/graphql/client", () => ({
+  saleorAuth: {
+    login: (...args: unknown[]) => mockLogin(...args),
+    logout: jest.fn(),
+    getExternalAuthUrl: jest.fn(),
+    getExternalAccessToken: jest.fn(),
+  },
+}));
 
 const useAuthStateMock = {
   authenticated: false,
   authenticating: false,
-  user: null,
+  isStaff: false,
 };
-
-const mockLogin = jest.fn();
 
 jest.mock("@dashboard/utils/credentialsManagement", () => ({
   login: jest.fn(),
@@ -47,9 +58,6 @@ jest.mock("@dashboard/graphql", () => {
 });
 
 (useAuthState as jest.Mock).mockReturnValue(useAuthStateMock);
-(useAuth as jest.Mock).mockReturnValue({
-  login: mockLogin,
-});
 describe("useAuthProvider", () => {
   describe("handleLogin", () => {
     it("should handle successful login", async () => {
@@ -86,7 +94,6 @@ describe("useAuthProvider", () => {
         expect(mockLogin).toHaveBeenCalledWith({
           email: "admin@example.com",
           password: "password",
-          includeDetails: false,
         });
       });
     });

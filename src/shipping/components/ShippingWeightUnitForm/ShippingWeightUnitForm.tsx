@@ -1,4 +1,4 @@
-import Form from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
 import { WeightUnitsEnum } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";

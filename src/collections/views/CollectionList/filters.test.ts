@@ -1,8 +1,8 @@
-import { createFilterStructure } from "@dashboard/collections/components/CollectionListPage";
+import { createFilterStructure } from "@dashboard/collections/components/CollectionListPage/filters";
 import { type CollectionListUrlFilters } from "@dashboard/collections/urls";
 import { CollectionPublished } from "@dashboard/graphql";
 import { type FilterOpts } from "@dashboard/types";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { getFilterQueryParams } from "@dashboard/utils/filters/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { type Option } from "@saleor/macaw-ui-next";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

@@ -23,7 +23,7 @@ export const canAccessSettingsEntry = (
   return hasAnyPermissions(entry.permissions, user);
 };
 
-export const resolveSettingsCatalogEntry = (
+const resolveSettingsCatalogEntry = (
   entry: SettingsCatalogEntry,
   intl: IntlShape,
 ): ResolvedSettingsCatalogEntry => {

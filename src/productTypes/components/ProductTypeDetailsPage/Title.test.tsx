@@ -8,7 +8,7 @@ const productType = {
   name: "E-books",
 };
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <ThemeProvider>{children}</ThemeProvider>
 );
 

@@ -1,4 +1,4 @@
-import { createFilterTabUtils } from "@dashboard/utils/filters";
+import { createFilterTabUtils } from "@dashboard/utils/filters/storage";
 
 const DISCOUNT_FILTERS_KEY = "saleFilters";
 

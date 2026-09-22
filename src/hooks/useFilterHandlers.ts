@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { type IFilter } from "@dashboard/components/Filter/types";
 import { type ActiveTab, type Pagination, type Search, type Sort } from "@dashboard/types";
-import { type GetFilterQueryParam, getFilterQueryParams } from "@dashboard/utils/filters";
+import { type GetFilterQueryParam, getFilterQueryParams } from "@dashboard/utils/filters/filters";
 import { useEffect, useRef } from "react";
 
 import useNavigator from "./useNavigator";

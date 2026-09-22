@@ -8,13 +8,13 @@ import {
   getProductsFromSearchResults,
   isProductAssignedToCategory,
 } from "@dashboard/categories/utils";
-import { Pagination } from "@dashboard/collections/components/CollectionProducts/Pagination";
 import { ProductsTable } from "@dashboard/collections/components/CollectionProducts/ProductsTable";
 import { ProductTableSkeleton } from "@dashboard/collections/components/CollectionProducts/ProductTableSkeleton";
 import { useOptimisticPendingIds } from "@dashboard/collections/components/CollectionProducts/useOptimisticPendingIds";
 import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import { AssignableListCard } from "@dashboard/components/AssignableListTable/AssignableListCard";
+import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
-import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { Skeleton } from "@dashboard/components/Skeleton/Skeleton";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
@@ -28,7 +28,7 @@ import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
 import useProductSearch from "@dashboard/searches/useProductSearch";
@@ -60,7 +60,7 @@ export const CategoryProducts = ({
   categoryId,
   params,
   disabled,
-}: CategoryProductsProps): JSX.Element => {
+}: CategoryProductsProps): React.ReactNode => {
   const navigate = useNavigator();
   const [openModal, closeModal] = createDialogActionHandlers<
     CategoryUrlDialog,
@@ -277,7 +277,7 @@ export const CategoryProducts = ({
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
-      <DetailSettingsCard
+      <AssignableListCard
         title={
           category ? (
             intl.formatMessage(
@@ -299,14 +299,21 @@ export const CategoryProducts = ({
             data-test-id="assign-product"
             disabled={disabled}
             variant="secondary"
-            size="small"
             type="button"
             onClick={() => openModal("assign")}
           >
             <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
           </Button>
         }
-        contentFlush
+        footer={
+          !showProductsSkeleton && visibleProducts.length > 0 ? (
+            <AssignableListPagination
+              inset="drag"
+              numberOfRows={numberOfRows}
+              onUpdateListSettings={updateListSettings}
+            />
+          ) : null
+        }
         data-test-id="category-products"
       >
         {showProductsSkeleton ? (
@@ -332,10 +339,7 @@ export const CategoryProducts = ({
             reorderable={false}
           />
         )}
-        {!showProductsSkeleton && visibleProducts.length > 0 ? (
-          <Pagination numberOfRows={numberOfRows} onUpdateListSettings={updateListSettings} />
-        ) : null}
-      </DetailSettingsCard>
+      </AssignableListCard>
       <AssignProductDialog
         confirmButtonState={updateProductOpts.status}
         hasMore={result.data?.search?.pageInfo?.hasNextPage ?? false}

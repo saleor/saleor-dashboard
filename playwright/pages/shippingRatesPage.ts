@@ -16,12 +16,12 @@ export class ShippingRatesPage extends BasePage {
 
   constructor(
     page: Page,
-    readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input").locator("input"),
+    readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
     readonly shippingRateDescriptionField = page
       .getByTestId("rich-text-editor-description")
       .locator('[contenteditable="true"]'),
-    readonly maxDeliveryTimeInput = page.getByTestId("max-delivery-time-input").locator("input"),
-    readonly minDeliveryTimeInput = page.getByTestId("min-delivery-time-input").locator("input"),
+    readonly maxDeliveryTimeInput = page.getByTestId("max-delivery-time-input"),
+    readonly minDeliveryTimeInput = page.getByTestId("min-delivery-time-input"),
     readonly addPostalCodeRangeButton = page.getByTestId("add-postal-code-range"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly assignProductButton = page.getByTestId("assign-product-button"),
@@ -29,9 +29,9 @@ export class ShippingRatesPage extends BasePage {
     readonly assignDialogProductRow = page.getByTestId("assign-product-table-row"),
     readonly priceInput = page.getByTestId("price-input"),
     readonly minValueInput = page.getByTestId("min-value-price-input"),
-    readonly minWeightInput = page.getByTestId("min-order-weight-input").locator("input"),
+    readonly minWeightInput = page.getByTestId("min-order-weight-input"),
     readonly maxValueInput = page.getByTestId("max-value-price-input"),
-    readonly maxWeightInput = page.getByTestId("max-order-weight-input").locator("input"),
+    readonly maxWeightInput = page.getByTestId("max-order-weight-input"),
     readonly excludedProductsRows = page.getByTestId("excluded-products-rows"),
     readonly includePostalCodesRadioButton = page.getByTestId("INCLUDE"),
     readonly assignedPostalCodesRows = page.getByTestId("assigned-postal-codes-rows"),

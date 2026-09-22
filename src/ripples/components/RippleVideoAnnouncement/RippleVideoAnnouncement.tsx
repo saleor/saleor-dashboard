@@ -7,7 +7,7 @@ import { type ReactNode, useEffect, useRef } from "react";
 
 import styles from "./RippleVideoAnnouncement.module.css";
 
-export interface RippleVideoAnnouncementAction {
+interface RippleVideoAnnouncementAction {
   label: ReactNode;
   href: string;
   external?: boolean;
@@ -29,7 +29,7 @@ const ActionLink = ({
 }: {
   action: RippleVideoAnnouncementAction;
   children: ReactNode;
-}): JSX.Element => {
+}): React.ReactNode => {
   if (action.external) {
     return (
       <Link href={action.href} target="_blank" rel="noopener noreferrer" inline={false}>

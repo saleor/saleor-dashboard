@@ -8,6 +8,7 @@ import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checko
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
+import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { rippleSaleorPulse } from "@dashboard/home/ripples/saleorPulse";
@@ -15,6 +16,8 @@ import { rippleGroupedModelTypeTabs } from "@dashboard/modeling/ripples/groupedM
 import { rippleModelMetadata } from "@dashboard/modeling/ripples/modelMetadata";
 import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
+import { rippleNavigationPins } from "@dashboard/navigationPins/ripples/navigationPins";
+import { rippleStaffOrderAlertRecipients } from "@dashboard/notificationsSettings/ripples/staffOrderAlertRecipients";
 import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMetadata";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
@@ -99,9 +102,11 @@ export const allRipples: Ripple[] = [
   // Customers
   rippleNewCustomersView,
   rippleCustomerOverview,
+  rippleCustomerTypes,
 
   // Staff
   rippleStaffCustomerProfiles,
+  rippleStaffOrderAlertRecipients,
 
   // Translations
   rippleSlugTranslation,
@@ -109,6 +114,7 @@ export const allRipples: Ripple[] = [
 
   // Sidebar
   rippleCloudEnvLink,
+  rippleNavigationPins,
 ];
 
 /**

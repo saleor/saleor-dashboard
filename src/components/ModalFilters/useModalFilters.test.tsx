@@ -83,8 +83,14 @@ const emptyFetchingParams: FetchingParams = {
 };
 
 const createMockApiProvider = (): FilterAPIProvider => ({
-  fetchRightOptions: jest.fn().mockResolvedValue([]),
-  fetchAttributeOptions: jest.fn().mockResolvedValue([]),
+  fetchRightOptions: jest.fn().mockResolvedValue({
+    options: [],
+    pageInfo: { hasNextPage: false, endCursor: null },
+  }),
+  fetchAttributeOptions: jest.fn().mockResolvedValue({
+    options: [],
+    pageInfo: { hasNextPage: false, endCursor: null },
+  }),
 });
 
 const createMockInitialState = (

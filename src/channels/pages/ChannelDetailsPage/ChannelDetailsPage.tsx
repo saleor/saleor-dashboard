@@ -27,15 +27,16 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
+import { FormDirtyStateSync } from "@dashboard/components/Form/FormDirtyStateSync";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { hasOneOfPermissions, hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import {
   type ChannelDetailsFragment,
   type ChannelErrorFragment,
@@ -55,7 +56,7 @@ import { Copy, ListChecks, Receipt, Trash2 } from "lucide-react";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { ChannelForm, type FormData } from "../../components/ChannelForm";
+import { ChannelForm, type FormData } from "../../components/ChannelForm/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
 import {
   type ChannelAssignmentActionsRef,

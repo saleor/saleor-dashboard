@@ -1,6 +1,6 @@
 import { type BulkPublishWarehouse } from "./types";
 
-export type BulkPublishStockScope =
+type BulkPublishStockScope =
   | { kind: "no_shop_warehouses" }
   | { kind: "no_channel_warehouses" }
   | { kind: "channel_warehouses"; warehouses: BulkPublishWarehouse[] };

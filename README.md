@@ -71,6 +71,26 @@ pnpm run dev
 > Note:
 > If you see CORS errors, check [CORS configuration](https://docs.saleor.io/setup/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
 
+## Named URLs with portless (optional)
+
+[portless](https://portless.sh) serves the dev server on a stable `https://dashboard.localhost` instead of `http://localhost:9000`. Useful when you run several checkouts or worktrees at once — each one gets its own URL instead of fighting over port 9000.
+
+The repo is already configured (`portless.json`), but portless itself is not a dependency — install it globally:
+
+```bash
+npm install -g portless
+```
+
+Then, instead of `pnpm run dev`:
+
+```bash
+portless
+```
+
+The first run asks for your password once, to bind port 443 and trust a local CA. It runs the `dev` script and prints the URL. In a git worktree the branch name is prepended, e.g. `https://my-branch.dashboard.localhost`.
+
+`pnpm run dev` keeps working as before — portless is opt-in.
+
 ## Docs
 
 - [Configuration ⚙️](docs/configuration.md)

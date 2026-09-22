@@ -4,6 +4,8 @@ import { type InitialCategoryStateResponse } from "./API/initialState/category/I
 import { type InitialCategoryAPIState } from "./API/initialState/category/useInitialCategoryState";
 import { type InitialCollectionStateResponse } from "./API/initialState/collections/InitialCollectionState";
 import { type InitialCollectionAPIState } from "./API/initialState/collections/useInitialCollectionsState";
+import { type InitialCustomerStateResponse } from "./API/initialState/customers/InitialCustomerState";
+import { type InitialCustomerAPIState } from "./API/initialState/customers/useInitialCustomerState";
 import { type InitialDiscountsStateResponse } from "./API/initialState/discounts/InitialDiscountsState";
 import { type InitialDiscountAPIState } from "./API/initialState/discounts/useInitialDiscountsState";
 import { type InitialGiftCardsStateResponse } from "./API/initialState/giftCards/InitialGiftCardsState";
@@ -28,6 +30,7 @@ export type InitialResponseType =
   | InitialVouchersStateResponse
   | InitialDiscountsStateResponse
   | InitialPageStateResponse
+  | InitialCustomerStateResponse
   | InitialProductTypesStateResponse
   | InitialGiftCardsStateResponse
   | InitialStaffMembersStateResponse
@@ -40,6 +43,7 @@ export type InitialAPIState =
   | InitialVoucherAPIState
   | InitialDiscountAPIState
   | InitialPageAPIState
+  | InitialCustomerAPIState
   | InitialGiftCardsAPIState
   | InitialCollectionAPIState
   | InitialProductTypesAPIState

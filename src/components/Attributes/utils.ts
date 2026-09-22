@@ -1,17 +1,18 @@
 // @ts-strict-ignore
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
-import { type FileChoiceType } from "@dashboard/components/FileUploadField";
-import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
-import {
-  type AttributeValueFragment,
-  type PageErrorWithAttributesFragment,
-  type ProductErrorWithAttributesFragment,
-} from "@dashboard/graphql";
+import { type FileChoiceType } from "@dashboard/components/FileUploadField/FileUploadField";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField/SortableChipsField";
+import { type AttributeValueFragment } from "@dashboard/graphql";
+import { type FetchMoreProps } from "@dashboard/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { getEntityUrl } from "@dashboard/utils/maps";
 import { type Option } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
+
+import { type AttributeFieldError } from "./types";
 
 export function getAttributeRowLabelProps(attribute: AttributeInput) {
   return {
@@ -40,7 +41,10 @@ export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   };
 }
 
-export function getReferenceDisplayValue(attribute: AttributeInput): SortableChipsFieldValueType[] {
+export function getReferenceDisplayValue(
+  attribute: AttributeInput,
+  icons?: Map<string, ModelTypeIcon>,
+): SortableChipsFieldValueType[] {
   if (!attribute.value || attribute.value.length === 0) {
     return [];
   }
@@ -53,6 +57,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
     return {
       label: referenceData.label,
       value: referenceData.value,
+      icon: icons?.get(referenceData.value) ?? referenceData.icon,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: referenceData.value,
@@ -63,6 +68,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
 
 export function getSingleReferenceDisplayValue(
   attribute: AttributeInput,
+  icons?: Map<string, ModelTypeIcon>,
 ): SortableChipsFieldValueType {
   if (!attribute.value || attribute.value.length === 0) {
     return null;
@@ -74,6 +80,7 @@ export function getSingleReferenceDisplayValue(
     return {
       label: reference.label,
       value: reference.value,
+      icon: icons?.get(reference.value) ?? reference.icon,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: reference.value,
@@ -91,11 +98,34 @@ export function getMultiChoices(values: AttributeValueFragment[]): Option[] {
   }));
 }
 
+export function resolveByAttributeId<T>(
+  value: T[] | ((attributeId: string) => T[]) | undefined,
+  attributeId: string,
+): T[] {
+  if (typeof value === "function") {
+    return value(attributeId);
+  }
+
+  return value ?? [];
+}
+
+export function resolveFetchMoreByAttributeId(
+  value: FetchMoreProps | ((attributeId: string) => FetchMoreProps) | undefined,
+  attributeId: string,
+): FetchMoreProps | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  return typeof value === "function" ? value(attributeId) : value;
+}
+
 export function getSingleDisplayValue(
   attribute: AttributeInput,
   attributeValues: AttributeValueFragment[],
 ): string {
   return (
+    attribute.data.selectedValues?.find(value => value.slug === attribute.value[0])?.name ||
     attributeValues.find(value => value.slug === attribute.value[0])?.name ||
     attribute.data.values.find(value => value.slug === attribute.value[0])?.name ||
     attribute.value[0] ||
@@ -130,15 +160,14 @@ export function getMultiDisplayValue(
   });
 }
 
-export function getErrorMessage(
-  err: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment | undefined,
-  intl: IntlShape,
-): string {
+export function getErrorMessage(err: AttributeFieldError | undefined, intl: IntlShape): string {
   switch (err?.__typename) {
     case "ProductError":
       return getProductErrorMessage(err, intl);
     case "PageError":
       return getPageErrorMessage(err, intl);
+    case "AccountError":
+      return getAccountErrorMessage(err, intl);
   }
 }
 

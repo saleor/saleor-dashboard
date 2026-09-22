@@ -7,7 +7,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
 import { type IntlShape } from "react-intl";
 
-import CardMenu, { type CardMenuItem } from "../../../components/CardMenu";
+import CardMenu, { type CardMenuItem } from "../../../components/CardMenu/CardMenu";
 import useStyles from "../../../components/Datagrid/styles";
 import { messages } from "./messages";
 

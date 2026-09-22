@@ -1,4 +1,4 @@
-import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { VoucherTypeEnum } from "@dashboard/graphql";
 
@@ -8,14 +8,14 @@ export const voucherDiscountScope = {
   shipping: "SHIPPING",
 } as const;
 
-export type VoucherDiscountScope = (typeof voucherDiscountScope)[keyof typeof voucherDiscountScope];
+type VoucherDiscountScope = (typeof voucherDiscountScope)[keyof typeof voucherDiscountScope];
 
 export const voucherDiscountAmountType = {
   percentage: "PERCENTAGE",
   fixed: "FIXED",
 } as const;
 
-export type VoucherDiscountAmountType =
+type VoucherDiscountAmountType =
   (typeof voucherDiscountAmountType)[keyof typeof voucherDiscountAmountType];
 
 export const isShippingVoucher = (

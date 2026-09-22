@@ -1,8 +1,9 @@
-import { TopNav } from "@dashboard/components/AppLayout";
-import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
+import { ContextualHelpIcon } from "@dashboard/components/AppLayout/ContextualLinks/ContextualHelpIcon";
+import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks/messages";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import {
   type ExtensionsListUrlDialog,
@@ -13,9 +14,10 @@ import { useInstalledExtensionsFilter } from "@dashboard/extensions/views/Instal
 import { useAppAllProblemsLazyQuery, useAppProblemDismissMutation } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
+import { EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -36,7 +38,9 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { markOnboardingStepAsCompleted } = useOnboarding();
-  const subtitle = useContextualLink("extensions");
+  const extensionsHelpLabel = intl.formatMessage(contextualLinks.extensions, {
+    extensions: intl.formatMessage(contextualLinks.extensionsDocs),
+  });
 
   useEffect(() => {
     markOnboardingStepAsCompleted("view-extensions");
@@ -106,6 +110,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     deleteInProgressAppStatus,
     pendingInstallationsLoading,
     handleRemoveInProgress,
+    justInstalledName,
   } = usePendingInstallation({
     searchQuery: query,
     onCloseModal: closeModal,
@@ -119,7 +124,6 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(headerTitles.extensions)}
-        subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex" alignItems="center" gap={2}>
@@ -129,14 +133,21 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
             <ProblemsHeaderBadge totalCount={totalCount} criticalCount={criticalCount} />
           </Box>
         </Box>
-        <Box display="flex" gap={4} alignItems="center">
+        <Box display="flex" alignItems="center" gap={2}>
+          <Box display="flex" alignItems="center" marginRight={3}>
+            <ContextualHelpIcon
+              href={EXTENSIONS_DOCS_URL}
+              label={extensionsHelpLabel}
+              analyticsType="extensions_docs"
+              dataTestId="extensions-docs"
+            />
+          </Box>
           {hasManagedAppsPermission && <AddExtensionDropdown />}
         </Box>
       </TopNav>
       <DashboardCard paddingX={6}>
         <Box __width="370px">
           <SearchInput
-            size="medium"
             initialSearch={query}
             placeholder={intl.formatMessage(messages.searchPlaceholder)}
             onSearchChange={newQuery => handleQueryChange(newQuery)}
@@ -151,6 +162,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
           hasManagedAppsPermission={hasManagedAppsPermission}
           onClearProblem={handleClearProblem}
           onFetchAllProblems={handleFetchAllProblems}
+          justInstalledName={justInstalledName}
         />
 
         <DeleteFailedInstallationDialog

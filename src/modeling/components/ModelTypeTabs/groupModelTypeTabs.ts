@@ -1,6 +1,6 @@
 export const ALL_MODELS_TAB_ID = "__all__";
 
-export interface ModelTypeRef {
+interface ModelTypeRef {
   id: string;
   name: string;
 }
@@ -23,9 +23,9 @@ export interface GroupModelTypeTabsOptions {
 /** Default value shown in the separator input (comma-separated list). */
 export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = "—, :, -";
 
-export const MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER = ",";
+const MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER = ",";
 
-export const GROUP_TAB_ID_PREFIX = "group:";
+const GROUP_TAB_ID_PREFIX = "group:";
 
 export const getGroupTabId = (prefix: string) =>
   `${GROUP_TAB_ID_PREFIX}${prefix.toLocaleLowerCase()}`;

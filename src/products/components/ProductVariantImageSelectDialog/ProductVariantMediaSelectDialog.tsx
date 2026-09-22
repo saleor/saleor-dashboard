@@ -1,9 +1,9 @@
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductMediaFragment } from "@dashboard/graphql";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { areMediaSelectionsEqual } from "@dashboard/products/utils/handlers";
 import { parseOembedData } from "@dashboard/products/utils/parseOembedData";

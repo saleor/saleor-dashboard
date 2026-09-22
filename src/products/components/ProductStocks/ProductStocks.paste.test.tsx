@@ -15,7 +15,6 @@ const baseData = {
   trackInventory: true,
   globalThreshold: "",
   globalSoldUnits: 0,
-  hasPreorderEndDate: false,
 };
 
 const stocks: ProductStockInput[] = [

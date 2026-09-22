@@ -1,0 +1,40 @@
+.root {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.menu {
+  --variant-ref-thumb: 20px;
+  --variant-ref-thumb-gap: 6px;
+  font-style: normal;
+  width: 100%;
+}
+
+.option,
+.optionSelected {
+  display: flex;
+  align-items: center;
+  gap: var(--variant-ref-thumb-gap);
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--mu-spacing-1-5) var(--mu-spacing-2);
+  text-align: left;
+  color: inherit;
+}
+
+.option:hover,
+.option[data-highlighted],
+.optionSelected {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.optionLabel {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

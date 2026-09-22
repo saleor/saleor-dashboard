@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 
 export type AddressType = {
   addressUK: AddressFieldsType;
@@ -21,21 +21,21 @@ export type AddressFieldsType = {
 
 export const ADDRESS: AddressType = {
   addressUS: {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    companyName: faker.company.companyName(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    companyName: faker.company.name(),
     phone: "+12125771133",
     addressLine1: "69 W 9th Street",
-    addressLine2: faker.address.county(),
+    addressLine2: faker.location.county(),
     city: "New York",
     zip: "10001",
     country: "United States of America",
     countryArea: "New York",
   },
   addressPL: {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    companyName: faker.company.companyName(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    companyName: faker.company.name(),
     phone: "+48225042123",
     addressLine1: "Teczowa",
     addressLine2: "7",
@@ -45,9 +45,9 @@ export const ADDRESS: AddressType = {
     countryArea: "",
   },
   addressUK: {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    companyName: faker.company.companyName(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    companyName: faker.company.name(),
     phone: "+445556667777",
     addressLine1: "Albert Street",
     addressLine2: "78/2",

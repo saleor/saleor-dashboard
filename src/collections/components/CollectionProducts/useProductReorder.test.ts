@@ -1,6 +1,6 @@
 import { useReorderProductsInCollectionMutation } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { act, renderHook } from "@testing-library/react";
 
 import { type Product } from "./types";
@@ -23,7 +23,7 @@ jest.mock("./useCollectionId", () => ({
   useCollectionId: jest.fn(() => "collection-id-1"),
 }));
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn(),
 }));
 

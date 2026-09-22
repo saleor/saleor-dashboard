@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { type FilterContainer } from "./FilterElement";
+import { type FilterContainer } from "./FilterElement/FilterElement";
 import { OccurrenceLimiter } from "./FilterElement/OccurrenceLimiter";
 import { type LeftOperand } from "./LeftOperandsProvider";
 

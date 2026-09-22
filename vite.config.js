@@ -64,6 +64,8 @@ export default defineConfig(({ command, mode }) => {
 
     npm_package_version,
     PORT_DEVSERVER,
+    // Set by process managers/proxies (e.g. portless) that assign a port to the child process
+    PORT,
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -102,9 +104,7 @@ export default defineConfig(({ command, mode }) => {
     copyNoopSW(),
   ];
 
-  if (!isDev) {
-    console.log("Enabling service worker...");
-
+  if (!isDev && SENTRY_AUTH_TOKEN) {
     plugins.push(
       sentryVitePlugin({
         authToken: SENTRY_AUTH_TOKEN,
@@ -131,7 +131,9 @@ export default defineConfig(({ command, mode }) => {
     publicDir: "../public",
     envDir: "..",
     server: {
-      port: PORT_DEVSERVER || 9000,
+      port: PORT || PORT_DEVSERVER || 9000,
+      // When a port is assigned to us, fail loudly instead of drifting to another one
+      strictPort: Boolean(PORT),
       fs: {
         allow: [searchForWorkspaceRoot(process.cwd()), "../.."],
       },
@@ -187,6 +189,19 @@ export default defineConfig(({ command, mode }) => {
         output: {
           sourcemap,
           manualChunks: id => {
+            /*
+              Model type icons are picked by name at runtime, so every Lucide icon is reachable
+              through `dynamicIconImports`. That keeps all ~1900 icon modules alive, and the
+              blanket "vendor" rule below would then inline them into the main bundle (+750kB
+              minified). An explicit chunk per icon keeps them out of it: only the icons a page
+              actually renders get fetched, each about 700 bytes.
+            */
+            const lucideIcon = id.match(/lucide-react\/dist\/esm\/icons\/([a-z0-9-]+)\.js$/);
+
+            if (lucideIcon && lucideIcon[1] !== "index") {
+              return `lucide-icon-${lucideIcon[1]}`;
+            }
+
             if (id.includes("node_modules")) {
               return "vendor";
             }

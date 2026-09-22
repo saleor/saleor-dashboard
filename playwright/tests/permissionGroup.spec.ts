@@ -5,7 +5,7 @@ import { UnassignPermissionGroupMembersDialog } from "@pages/dialogs/unassignPer
 import { PermissionGroupDetailsPage } from "@pages/permissionGroupDetailsPage";
 import { PermissionGroupsPage } from "@pages/permissionGroupsPage";
 import { expect } from "@playwright/test";
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
@@ -85,7 +85,7 @@ test("TC: SALEOR_133 Should be able to create new permission group #permissions 
   await permissions.gotoPermissionGroupsView();
   await permissions.clickCreatePermissionGroupButton();
 
-  const name = faker.random.words(2);
+  const name = faker.lorem.words(2);
 
   await permissionDetails.fillPermissionGroupNameInput(name);
 
@@ -128,7 +128,7 @@ test("TC: SALEOR_133 Should be able to create new permission group #permissions 
   }
 });
 test("TC: SALEOR_134 Should be able to edit an existing permission group #permissions #e2e", async () => {
-  const oldName = `e2e-permission-group-to-update-${faker.datatype.uuid()}`;
+  const oldName = `e2e-permission-group-to-update-${faker.string.uuid()}`;
   const assignedPermissions = ["MANAGE_PRODUCTS", "MANAGE_PLUGINS", "MANAGE_STAFF"];
 
   await createPermissionGroup({
@@ -138,7 +138,7 @@ test("TC: SALEOR_134 Should be able to edit an existing permission group #permis
   await expect(permissionDetails.permissionGroupNameInput).toHaveValue(oldName);
   await permissionDetails.permissionGroupNameInput.clear();
 
-  const newName = `updated-e2e-permission-group-${faker.datatype.uuid()}`;
+  const newName = `updated-e2e-permission-group-${faker.string.uuid()}`;
 
   await permissionDetails.fillPermissionGroupNameInput(newName);
   await permissionDetails.clickChannelPermissionsCheckbox();
@@ -162,7 +162,7 @@ test("TC: SALEOR_134 Should be able to edit an existing permission group #permis
 });
 
 test("TC: SALEOR_218 Should be able to edit members of existing permission group #permissions #e2e", async () => {
-  const permissionGroupName = `e2e-permission-group-members-${faker.datatype.uuid()}`;
+  const permissionGroupName = `e2e-permission-group-members-${faker.string.uuid()}`;
   const assignedMembers = PERMISSION_GROUPS.permissionGroupMembers.map(member => member.name);
 
   await createPermissionGroup({
@@ -181,7 +181,7 @@ test("TC: SALEOR_218 Should be able to edit members of existing permission group
   await expect(permissions.successBanner).toBeVisible();
 });
 test("TC: SALEOR_135 Should be able to delete single permission group #permissions #e2e", async () => {
-  const permissionGroupName = `e2e-permission-group-to-delete-${faker.datatype.uuid()}`;
+  const permissionGroupName = `e2e-permission-group-to-delete-${faker.string.uuid()}`;
 
   await createPermissionGroup({
     name: permissionGroupName,

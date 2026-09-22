@@ -1,5 +1,5 @@
 import { type DocumentNode, useApolloClient } from "@apollo/client";
-import { type MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
   OrderDetailsDocument,
   useUpdateMetadataMutation,
@@ -13,7 +13,7 @@ import { useHandleMetadataSubmit } from "./useHandleMetadataSubmit";
 // Mocks
 const mockNotify = jest.fn();
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: () => mockNotify,
 }));
 

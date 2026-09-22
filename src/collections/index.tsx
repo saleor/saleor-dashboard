@@ -1,4 +1,4 @@
-import { ConditionalCollectionFilterProvider } from "@dashboard/components/ConditionalFilter";
+import { ConditionalCollectionFilterProvider } from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
@@ -17,7 +17,7 @@ import {
   type CollectionUrlQueryParams,
 } from "./urls";
 import CollectionDetailsView from "./views/CollectionDetails";
-import CollectionListView from "./views/CollectionList";
+import CollectionListView from "./views/CollectionList/CollectionList";
 
 const CollectionList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;

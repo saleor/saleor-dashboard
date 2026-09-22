@@ -16,9 +16,9 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { type MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
   type PageDetailsFragment,
   type PageErrorWithAttributesFragment,

@@ -1,4 +1,4 @@
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
@@ -7,7 +7,7 @@ import {
   useWarehouseUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import {
   extractMutationErrors,
@@ -16,10 +16,10 @@ import {
   getStringOrPlaceholder,
 } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog";
+import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
 import WarehouseDetailsPage, {
   type WarehouseDetailsPageFormData,
-} from "@dashboard/warehouses/components/WarehouseDetailsPage";
+} from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPage";
 import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
 import {
   warehouseListUrl,

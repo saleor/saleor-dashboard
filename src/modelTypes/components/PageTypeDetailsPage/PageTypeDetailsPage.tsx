@@ -4,13 +4,16 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
+import { FormDirtyStateSync } from "@dashboard/components/Form/FormDirtyStateSync";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+import { readModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { Savebar } from "@dashboard/components/Savebar";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForPageTypeDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -35,11 +38,16 @@ import { useIntl } from "react-intl";
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
 import { messages } from "./messages";
+import { PageTypeDetailsPageLoading } from "./PageTypeDetailsPageLoading";
 import { PageTypeDetailsTitle } from "./Title";
+
+const emptyPageTypeAttributes: NonNullable<PageTypeDetailsFragment["attributes"]> = [];
 
 export interface PageTypeForm extends MetadataFormData {
   name: string;
   attributes: Option[];
+  /** Null when the model type has no icon and should render the fallback. */
+  icon: ModelTypeIcon | null;
 }
 
 interface PageTypeDetailsPageProps {
@@ -87,6 +95,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
           label: attribute.name,
           value: attribute.id,
         })) || [],
+      icon: readModelTypeIcon(pageType?.metadata),
       metadata: [],
       name: pageType?.name || "",
       privateMetadata: [],
@@ -119,7 +128,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   );
   const menuItems = useMemo(
     () => [
-      ...mapExtensionMenuItemsToTopNavItems(extensionMenuItems),
+      ...extensionMenuItems,
       {
         label: intl.formatMessage(messages.openGraphiQL),
         onSelect: openPlaygroundURL,
@@ -137,15 +146,25 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
     [extensionMenuItems, intl, onDelete, openPlaygroundURL],
   );
 
+  if (!pageType) {
+    return (
+      <PageTypeDetailsPageLoading
+        pageTypeListBackLink={pageTypeListBackLink}
+        onShowMetadata={onShowMetadata}
+      />
+    );
+  }
+
   return (
     <Form
+      key={pageType.id}
       confirmLeave
       initial={formInitialData}
       onSubmit={onSubmit}
       disabled={disabled}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, isSaveDisabled, submit, triggerChange }) => (
+      {({ change, data, isSaveDisabled, set, submit, triggerChange }) => (
         <>
           <FormDirtyStateSync
             enabled={!!pageType}
@@ -159,7 +178,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
               hrefTitle={intl.formatMessage(topNavDestinationMessages.allModelTypes)}
               title={
                 <PageTypeDetailsTitle
-                  pageType={pageType ? { name: pageType.name } : null}
+                  pageType={pageType ? { name: pageType.name, metadata: pageType.metadata } : null}
                   loading={disabled}
                 />
               }
@@ -173,22 +192,33 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
               />
               <TopNav.Menu items={menuItems} dataTestId="menu" />
             </TopNav>
-            <DetailPageLayout.Content paddingBottom={10}>
-              <PageTypeAttributes
-                attributes={pageType?.attributes}
-                disabled={disabled}
-                type={AttributeTypeEnum.PAGE_TYPE}
-                onAttributeAssign={onAttributeAdd}
-                onAttributeCreate={onAttributeCreate}
-                onAttributeReorder={(event: ReorderEvent) =>
-                  onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
-                }
-                onAttributeUnassign={onAttributeUnassign}
-                {...attributeList}
-              />
+            <DetailPageLayout.Content>
+              <DetailPageContent>
+                <PageTypeAttributes
+                  attributes={pageType.attributes ?? emptyPageTypeAttributes}
+                  disabled={disabled}
+                  type={AttributeTypeEnum.PAGE_TYPE}
+                  onAttributeAssign={onAttributeAdd}
+                  onAttributeCreate={onAttributeCreate}
+                  onAttributeReorder={(event: ReorderEvent) =>
+                    onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
+                  }
+                  onAttributeUnassign={onAttributeUnassign}
+                  {...attributeList}
+                />
+              </DetailPageContent>
             </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <PageTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
+            <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
+              <PageTypeDetails
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                onIconChange={icon => {
+                  set({ icon });
+                  triggerChange();
+                }}
+              />
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />

@@ -1,5 +1,6 @@
 import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
+import { customerTypeListUrl } from "@dashboard/customerTypes/urls";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
@@ -97,6 +98,26 @@ const hubMessages = defineMessages({
     defaultMessage: "Users & permissions",
     description: "configuration section for staff and permission groups",
   },
+  customersSection: {
+    id: "P6k5H+",
+    defaultMessage: "Customers",
+    description: "configuration section for customer types and attributes",
+  },
+  customerTypesDescription: {
+    id: "Aab1Pd",
+    defaultMessage: "Define types of customers and the attributes they share",
+    description: "configuration menu item description for customer types",
+  },
+  customerAttributesTitle: {
+    id: "LaFUxE",
+    defaultMessage: "Customer attributes",
+    description: "configuration menu item title",
+  },
+  customerAttributesDescription: {
+    id: "qP/udV",
+    defaultMessage: "Manage attributes used for customer types",
+    description: "configuration menu item description for customer attributes",
+  },
 });
 
 export const configurationHubsCatalogEntries: SettingsCatalogEntry[] = [
@@ -170,6 +191,24 @@ export const configurationHubsCatalogEntries: SettingsCatalogEntry[] = [
     breadcrumbs: [hubMessages.shippingSection],
     href: warehouseSection,
     permissions: [PermissionEnum.MANAGE_PRODUCTS],
+  },
+  {
+    id: "hubs.customer-types",
+    kind: "hub",
+    title: sectionNames.customerTypes,
+    description: hubMessages.customerTypesDescription,
+    breadcrumbs: [hubMessages.customersSection],
+    href: customerTypeListUrl(),
+    permissions: [PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES],
+  },
+  {
+    id: "hubs.customer-attributes",
+    kind: "hub",
+    title: hubMessages.customerAttributesTitle,
+    description: hubMessages.customerAttributesDescription,
+    breadcrumbs: [hubMessages.customersSection],
+    href: attributeListUrlWithAttributeTypePreset(AttributeTypeEnum.CUSTOMER_TYPE),
+    permissions: [PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES],
   },
   {
     id: "hubs.staff",

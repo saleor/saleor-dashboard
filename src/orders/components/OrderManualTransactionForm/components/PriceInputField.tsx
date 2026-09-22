@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import PriceField, { type PriceFieldProps } from "@dashboard/components/PriceField";
+import PriceField, { type PriceFieldProps } from "@dashboard/components/PriceField/PriceField";
 
 import { useManualTransactionContext } from "../context";
 

@@ -13,7 +13,7 @@ export const TimelineStem = ({
   top,
   bottom,
   "data-test-id": dataTestId,
-}: TimelineStemProps): JSX.Element => (
+}: TimelineStemProps): React.ReactNode => (
   <Box
     as="span"
     className={styles.stem}

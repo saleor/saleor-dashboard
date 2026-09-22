@@ -1,5 +1,5 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { type ListSettingsUpdate } from "@dashboard/components/TablePagination/TablePagination";
 import { type LanguageFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type Ripple } from "@dashboard/ripples/types";

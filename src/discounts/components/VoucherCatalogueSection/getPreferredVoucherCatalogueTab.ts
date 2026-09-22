@@ -4,7 +4,7 @@ import {
 } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 
 /** Catalogue accordion order — same as Eligible products rows. */
-export const VOUCHER_CATALOGUE_TAB_ORDER: readonly VoucherDetailsPageTab[] = [
+const VOUCHER_CATALOGUE_TAB_ORDER: readonly VoucherDetailsPageTab[] = [
   VoucherDetailsPageTab.categories,
   VoucherDetailsPageTab.collections,
   VoucherDetailsPageTab.products,

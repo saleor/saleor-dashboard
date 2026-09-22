@@ -158,6 +158,11 @@ export const attributeTypesMessages = defineMessages({
     id: "U/vaYf",
     description: "attribute model type (PAGE_TYPE enum value in filters)",
   },
+  customerType: {
+    defaultMessage: "Customer type",
+    id: "UbQMxi",
+    description: "attribute customer type (CUSTOMER_TYPE enum value in filters)",
+  },
 });
 
 export const paymentMethodTypeMessages = defineMessages({

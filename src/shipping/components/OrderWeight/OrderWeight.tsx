@@ -5,8 +5,7 @@ import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import useShop from "@dashboard/hooks/useShop";
 import { getShippingWeightRateErrorMessage } from "@dashboard/shipping/errors";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { InputAdornment, TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -54,53 +53,37 @@ const OrderWeight = ({
       </DashboardCard.Header>
       <DashboardCard.Content>
         <div className={classes.grid}>
-          <TextField
+          <Input
             data-test-id="min-order-weight-input"
             disabled={disabled}
             helperText={getShippingWeightRateErrorMessage(formErrors.minimumOrderWeight, intl)}
             error={!!formErrors.minimumOrderWeight}
-            fullWidth
+            aria-invalid={!!formErrors.minimumOrderWeight}
             label={intl.formatMessage({
               id: "w+5Djm",
               defaultMessage: "Min. Order Weight",
             })}
             name="minValue"
             type="number"
-            inputProps={{
-              min: 0,
-              type: "number",
-            }}
-            InputProps={{
-              inputProps: { min: 0 },
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Text>{shop?.defaultWeightUnit}</Text>
-                </InputAdornment>
-              ),
-            }}
+            min={0}
+            endAdornment={<Text color="default2">{shop?.defaultWeightUnit}</Text>}
             value={minValue}
             onChange={onChange}
           />
-          <TextField
+          <Input
             data-test-id="max-order-weight-input"
             disabled={disabled}
             helperText={getShippingWeightRateErrorMessage(formErrors.maximumOrderWeight, intl)}
             error={!!formErrors.maximumOrderWeight}
-            fullWidth
+            aria-invalid={!!formErrors.maximumOrderWeight}
             label={intl.formatMessage({
               id: "u0V06N",
               defaultMessage: "Max. Order Weight",
             })}
             name="maxValue"
             type="number"
-            InputProps={{
-              inputProps: { min: minValue },
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Text>{shop?.defaultWeightUnit}</Text>
-                </InputAdornment>
-              ),
-            }}
+            min={minValue}
+            endAdornment={<Text color="default2">{shop?.defaultWeightUnit}</Text>}
             value={maxValue}
             onChange={onChange}
           />

@@ -1,4 +1,5 @@
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
+import { EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 
 import { useInstalledExtensionsFilter } from "./hooks/useInstalledExtensionsFilter";
@@ -43,20 +44,22 @@ jest.mock("@dashboard/graphql", () => ({
   ...(jest.requireActual("@dashboard/graphql") as object),
   useAppProblemDismissMutation: jest.fn(() => [jest.fn(), {}]),
 }));
-jest.mock("@dashboard/components/AppLayout/ContextualLinks/useContextualLink", () => ({
-  useContextualLink: () => "Extensions",
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: () => ({ trackEvent: jest.fn() }),
 }));
 
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: () => true,
-  useFlags: () => ({}),
 }));
 
-jest.mock("@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext", () => ({
-  useOnboarding: () => ({
-    markOnboardingStepAsCompleted: mockMarkOnboardingStepAsCompleted,
+jest.mock(
+  "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext",
+  () => ({
+    useOnboarding: () => ({
+      markOnboardingStepAsCompleted: mockMarkOnboardingStepAsCompleted,
+    }),
   }),
-}));
+);
 
 const mockUsePendingInstallation = usePendingInstallation as jest.Mock;
 const mockUseInstalledExtensionsFilter = useInstalledExtensionsFilter as jest.Mock;
@@ -90,6 +93,7 @@ describe("InstalledExtensions", () => {
 
     // Assert
     expect(mockMarkOnboardingStepAsCompleted).toHaveBeenCalledWith("view-extensions");
+    expect(screen.getByTestId("extensions-docs")).toHaveAttribute("href", EXTENSIONS_DOCS_URL);
   });
 
   it("displays installed and pending extensions in the list initially", () => {

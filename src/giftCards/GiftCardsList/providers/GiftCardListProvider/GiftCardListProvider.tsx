@@ -1,5 +1,5 @@
 import { type ApolloError } from "@apollo/client";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { type IFilter } from "@dashboard/components/Filter/types";
 import { type ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
@@ -10,10 +10,13 @@ import {
   type GiftCardListQueryVariables,
   useGiftCardListQuery,
 } from "@dashboard/graphql";
-import { type UseFilterPresets, useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import {
+  type UseFilterPresets,
+  useFilterPresets,
+} from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings, { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import {
   createPaginationState,

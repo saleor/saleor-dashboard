@@ -4,7 +4,7 @@ import { filterSelectedAsyncEvents, type IntrospectionNode } from "@dashboard/ex
 import { type WebhookEventTypeAsyncEnum, type WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
-import { toggle } from "@dashboard/utils/lists";
+import { toggle } from "@dashboard/utils/lists/lists";
 import {
   type DocumentNode,
   type FieldNode,

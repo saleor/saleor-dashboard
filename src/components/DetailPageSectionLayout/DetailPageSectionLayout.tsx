@@ -4,10 +4,10 @@ import { type ReactNode } from "react";
 import styles from "./DetailPageSectionLayout.module.css";
 
 /** Sticky section-nav rail width — keep in sync with channel details. */
-export const DETAIL_PAGE_SECTION_NAV_WIDTH = "25%";
+const DETAIL_PAGE_SECTION_NAV_WIDTH = "25%";
 
 /** Minimum nav rail width before the main column takes the rest. */
-export const DETAIL_PAGE_SECTION_NAV_MIN_WIDTH = "10rem";
+const DETAIL_PAGE_SECTION_NAV_MIN_WIDTH = "10rem";
 
 interface DetailPageSectionLayoutProps {
   nav: ReactNode;
@@ -24,7 +24,7 @@ interface DetailPageSectionLayoutProps {
 export const DetailPageSectionLayout = ({
   nav,
   children,
-}: DetailPageSectionLayoutProps): JSX.Element => (
+}: DetailPageSectionLayoutProps): React.ReactNode => (
   <Box className={styles.root} display="flex" gap={4} paddingTop={6} paddingBottom={6}>
     <Box
       display={{ mobile: "none", tablet: "block", desktop: "block" }}

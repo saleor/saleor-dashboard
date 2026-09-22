@@ -14,7 +14,7 @@ interface TrackingNumberDisplayProps {
 export const TrackingNumberDisplay = ({
   trackingNumber,
   separator = ", ",
-}: TrackingNumberDisplayProps): JSX.Element => {
+}: TrackingNumberDisplayProps): React.ReactNode => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const [showCopyButton, setShowCopyButton] = useState(false);

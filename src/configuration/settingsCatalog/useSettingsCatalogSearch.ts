@@ -7,7 +7,7 @@ import { resolveSettingsCatalog } from "./resolve";
 import { searchSettingsCatalog } from "./search";
 import { type ResolvedSettingsCatalogEntry } from "./types";
 
-export const useResolvedSettingsCatalog = (): ResolvedSettingsCatalogEntry[] => {
+const useResolvedSettingsCatalog = (): ResolvedSettingsCatalogEntry[] => {
   const intl = useIntl();
   const { user } = useUser();
 

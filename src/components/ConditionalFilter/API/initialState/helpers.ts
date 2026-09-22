@@ -6,6 +6,7 @@ import {
   type _SearchCategoriesOperandsQuery,
   type _SearchCollectionsOperandsQuery,
   type _SearchCustomersOperandsQuery,
+  type _SearchCustomerTypesOperandsQuery,
   type _SearchPageTypesOperandsQuery,
   type _SearchProductOperandsQuery,
   type _SearchProductTypesOperandsQuery,
@@ -16,9 +17,15 @@ import {
 import { createBooleanOptions } from "../../constants";
 import { type AttributeInputType } from "../../FilterElement/ConditionOptions";
 import { type ItemOption } from "../../FilterElement/ConditionValue";
-import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
+import {
+  createCustomerOptionsFromAPI,
+  createOptionsFromAPI,
+  createProductOptionsFromAPI,
+} from "../Handler";
+import { createAttributeChoiceOptionsFromAPI } from "../swatchAttributeOption";
 import { type InitialAttributesState } from "./attributes/InitialAttributesState";
 import { type InitialCollectionState } from "./collections/InitialCollectionState";
+import { type InitialCustomerState } from "./customers/InitialCustomerState";
 import { type InitialGiftCardsState } from "./giftCards/InitialGiftCardsState";
 import { type InitialOrderState } from "./orders/InitialOrderState";
 import { type InitialPageState } from "./page/InitialPageState";
@@ -26,6 +33,7 @@ import { type AttributeDTO, type InitialProductState } from "./product/InitialPr
 import {
   type InitialAttributesAPIResponse,
   type InitialCollectionAPIResponse,
+  type InitialCustomerAPIResponse,
   type InitialGiftCardsAPIResponse,
   type InitialOrderAPIResponse,
   type InitialPageAPIResponse,
@@ -48,6 +56,30 @@ const convertItemOptionsToAttributeChoices = (
     // Only include originalSlug if it exists and is not null
     if (option.originalSlug != null) {
       choice.originalSlug = option.originalSlug;
+    }
+
+    if (option.productName != null) {
+      choice.productName = option.productName;
+    }
+
+    if (option.variantName != null) {
+      choice.variantName = option.variantName;
+    }
+
+    if (option.productId != null) {
+      choice.productId = option.productId;
+    }
+
+    if (option.productThumbnailUrl != null) {
+      choice.productThumbnailUrl = option.productThumbnailUrl;
+    }
+
+    if (option.swatchColor != null) {
+      choice.swatchColor = option.swatchColor;
+    }
+
+    if (option.swatchFileUrl != null) {
+      choice.swatchFileUrl = option.swatchFileUrl;
     }
 
     return choice;
@@ -75,12 +107,47 @@ const isProductTypeQuery = (
 ): query is ApolloQueryResult<_SearchProductTypesOperandsQuery> => "productTypes" in query.data;
 
 const isAttributeQuery = (
-  query: InitialProductAPIResponse,
-): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
+  query: ApolloQueryResult<unknown>,
+): query is ApolloQueryResult<_SearchAttributeOperandsQuery> =>
+  !!query.data &&
+  typeof query.data === "object" &&
+  query.data !== null &&
+  "attributes" in query.data;
+
+export const createAttributeMapFromQuery = (
+  query: ApolloQueryResult<_SearchAttributeOperandsQuery>,
+  existing: Record<string, AttributeDTO> = {},
+): Record<string, AttributeDTO> =>
+  query.data?.attributes?.edges.reduce((accAttr, { node }) => {
+    if (!node.slug || !node.inputType) return accAttr;
+
+    const attributeChoices =
+      node.inputType === "BOOLEAN"
+        ? convertItemOptionsToAttributeChoices(createBooleanOptions())
+        : convertItemOptionsToAttributeChoices(
+            createAttributeChoiceOptionsFromAPI(node.choices?.edges ?? [], node.inputType),
+          );
+
+    return {
+      ...accAttr,
+      [node.slug]: {
+        choices: attributeChoices,
+        slug: node.slug,
+        value: node.id,
+        label: node.name ?? "",
+        inputType: node.inputType as AttributeInputType,
+        entityType: node.entityType ?? undefined,
+      },
+    };
+  }, existing) ?? existing;
 
 const isPageTypesQuery = (
   query: InitialPageAPIResponse,
 ): query is ApolloQueryResult<_SearchPageTypesOperandsQuery> => "pageTypes" in query.data;
+
+const isCustomerTypesQuery = (
+  query: InitialCustomerAPIResponse,
+): query is ApolloQueryResult<_SearchCustomerTypesOperandsQuery> => "customerTypes" in query.data;
 
 const isCustomerQuery = (
   query: InitialGiftCardsAPIResponse,
@@ -141,29 +208,7 @@ export const createInitialProductStateFromData = (
       if (isAttributeQuery(query)) {
         return {
           ...acc,
-          attribute:
-            query.data?.attributes?.edges.reduce((accAttr, { node }) => {
-              if (!node.slug || !node.inputType) return accAttr;
-
-              const attributeChoices =
-                node.inputType === "BOOLEAN"
-                  ? convertItemOptionsToAttributeChoices(createBooleanOptions())
-                  : convertItemOptionsToAttributeChoices(
-                      createOptionsFromAPI(node.choices?.edges ?? []),
-                    );
-
-              return {
-                ...accAttr,
-                [node.slug]: {
-                  choices: attributeChoices,
-                  slug: node.slug,
-                  value: node.id,
-                  label: node.name ?? "",
-                  inputType: node.inputType as AttributeInputType,
-                  entityType: node.entityType ?? undefined,
-                },
-              };
-            }, acc.attribute || {}) ?? acc.attribute,
+          attribute: createAttributeMapFromQuery(query, acc.attribute || {}),
         };
       }
 
@@ -185,10 +230,12 @@ export const createInitialProductStateFromData = (
 };
 
 export type ReferenceAttributeChoices = { slug: string; itemOptions: ItemOption[] };
-export const mergeInitialProductsStateReferenceAttributes = (
-  initialState: InitialProductState,
+export const mergeInitialProductsStateReferenceAttributes = <
+  T extends { attribute: Record<string, AttributeDTO> },
+>(
+  initialState: T,
   referenceChoices: ReferenceAttributeChoices[],
-) => {
+): T => {
   return referenceChoices.reduce((acc, { slug, itemOptions }) => {
     if (acc.attribute[slug]) {
       // Convert choices to ensure type compatibility
@@ -301,6 +348,24 @@ export const createInitialPageState = (data: InitialPageAPIResponse[]) =>
     },
   );
 
+export const createInitialCustomerState = (data: InitialCustomerAPIResponse[]) =>
+  data.reduce<InitialCustomerState>(
+    (acc, query) => {
+      if (isCustomerTypesQuery(query)) {
+        return {
+          ...acc,
+          customerType: createOptionsFromAPI(query.data?.customerTypes?.edges ?? []),
+        };
+      }
+
+      return acc;
+    },
+    {
+      customerType: [],
+      attribute: {},
+    },
+  );
+
 export const createInitialGiftCardsState = (
   data: InitialGiftCardsAPIResponse[],
   tags: string[],
@@ -318,7 +383,7 @@ export const createInitialGiftCardsState = (
       if (isProductQuery(query)) {
         return {
           ...acc,
-          products: createOptionsFromAPI(query.data?.products?.edges ?? []),
+          products: createProductOptionsFromAPI(query.data?.products?.edges ?? []),
         };
       }
 

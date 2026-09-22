@@ -5,6 +5,11 @@ export const messages = defineMessages({
     id: "FpIcp9",
     defaultMessage: "No customers found",
   },
+  emptySearch: {
+    id: "0QG3GQ",
+    defaultMessage: "No customers found for {query}",
+    description: "empty search results on the customer list",
+  },
 });
 
 export const columnsMessages = defineMessages({

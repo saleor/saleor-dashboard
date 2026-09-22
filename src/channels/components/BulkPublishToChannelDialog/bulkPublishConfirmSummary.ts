@@ -3,6 +3,7 @@ import { type ProductPublishDraft } from "@dashboard/channels/components/BulkPub
 import {
   getEffectiveStockQuantity,
   hasBulkPublishCostPrice,
+  hasBulkPublishPrice,
   hasBulkPublishStock,
 } from "./bulkPublishDrafts";
 
@@ -57,6 +58,9 @@ export const getBulkPublishStockQuantityRange = (
 
 export const countBulkPublishDraftsWithCostPrice = (drafts: ProductPublishDraft[]): number =>
   drafts.filter(draft => hasBulkPublishCostPrice(draft.costPrice)).length;
+
+export const countBulkPublishDraftsKeepingPrice = (drafts: ProductPublishDraft[]): number =>
+  drafts.filter(draft => !hasBulkPublishPrice(draft.price)).length;
 
 export const countBulkPublishDraftsWithStock = (drafts: ProductPublishDraft[]): number =>
   drafts.filter(draft => hasBulkPublishStock(draft.stock)).length;

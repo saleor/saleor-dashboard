@@ -21,7 +21,7 @@ export const ReasonModelsPreview = ({
   previewTitle,
   emptyModelsLabel,
   createModelLabel,
-}: ReasonModelsPreviewProps): JSX.Element => {
+}: ReasonModelsPreviewProps): React.ReactNode => {
   const { data: exampleModelData, loading } = useModelsOfTypeQuery({
     variables: {
       pageTypeId,

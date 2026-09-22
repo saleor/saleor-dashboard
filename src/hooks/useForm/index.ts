@@ -1,11 +1,11 @@
+import { type CheckIfSaveIsDisabledFnType } from "@dashboard/components/Form/Form";
+import { type FormId } from "@dashboard/components/Form/types";
 import {
-  type CheckIfSaveIsDisabledFnType,
-  type FormId,
   useExitFormDialog,
   type UseExitFormDialogResult,
-} from "@dashboard/components/Form";
+} from "@dashboard/components/Form/useExitFormDialog";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { toggle } from "@dashboard/utils/lists";
+import { toggle } from "@dashboard/utils/lists/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import type * as React from "react";

@@ -1,4 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
 import { type ReorderAction } from "@dashboard/types";
 import {
   DndContext,
@@ -17,6 +18,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useIntl } from "react-intl";
 
+import { ModelTypeChipIcon } from "../ChipField/ModelTypeChipIcon";
 import { Draggable } from "../Draggable/Draggable";
 import { SortableChip } from "../SortableChip/SortableChip";
 import { useActiveDragId } from "./useActiveDragId";
@@ -26,6 +28,7 @@ export interface SortableChipsFieldValueType {
   label: string;
   value: string;
   url?: string;
+  icon?: ModelTypeIcon;
 }
 
 interface SortableChipsFieldProps {
@@ -121,6 +124,7 @@ const SortableChipsField = ({
                     {({ isDragging, ...props }) => (
                       <SortableChip
                         label={value.label}
+                        startAdornment={<ModelTypeChipIcon icon={value.icon} />}
                         url={value.url}
                         loading={loading}
                         onClose={() => onValueDelete(value.value)}
@@ -144,6 +148,7 @@ const SortableChipsField = ({
               {activeId && activeItem ? (
                 <SortableChip
                   label={activeItem.label}
+                  startAdornment={<ModelTypeChipIcon icon={activeItem.icon} />}
                   url={activeItem.url}
                   loading={loading}
                   isDragged

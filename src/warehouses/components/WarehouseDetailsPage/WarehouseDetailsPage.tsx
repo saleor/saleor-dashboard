@@ -6,11 +6,11 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+import CompanyAddressInput from "@dashboard/components/CompanyAddressInput/CompanyAddressInput";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
@@ -31,8 +31,8 @@ import { Button } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import WarehouseInfo from "../WarehouseInfo";
-import WarehouseSettings from "../WarehouseSettings";
+import WarehouseInfo from "../WarehouseInfo/WarehouseInfo";
+import WarehouseSettings from "../WarehouseSettings/WarehouseSettings";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;

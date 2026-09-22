@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 
 import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";
 import { useComboboxHandlers } from "../hooks/useComboboxHandlers";
-import { toWithCustomValues } from "../utils";
+import { isAddNewValueOption, toWithCustomValues } from "../utils";
 
 type MultiselectProps = Omit<DynamicMultiselectProps<Option>, "onChange"> & {
   options: Option[];
@@ -60,7 +60,7 @@ const MultiselectRoot = forwardRef<HTMLInputElement, MultiselectProps>(
       selectedValue: selectedValues,
     });
     const handleOnChange = (values: Option[]) => {
-      const hasCustomValue = values.find(value => value.label.includes(customValueLabel));
+      const hasCustomValue = values.find(value => isAddNewValueOption(value, customValueLabel));
       const valuesWithCustom = values.map(toWithCustomValues(customValueLabel));
 
       onChange({

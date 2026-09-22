@@ -12,7 +12,7 @@ import {
 } from "@dashboard/components/Datagrid/customCells/SkeletonCell";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { getDatagridRowDataIndex } from "@dashboard/misc";
 import {
   isLineDiscounted,
@@ -44,7 +44,9 @@ const QUANTITY_COLUMN_IDS = new Set([
 ]);
 
 export const STATUS_COLUMN_ID = "status";
-export const PRODUCT_COLUMN_ID = "product";
+
+const PRODUCT_COLUMN_ID = "product";
+
 export const MATRIX_PRODUCT_COLUMN_MIGRATION_KEY = "orderLineMatrix.productColumnMigrated";
 
 export const PINNED_MATRIX_COLUMN_IDS = [STATUS_COLUMN_ID];

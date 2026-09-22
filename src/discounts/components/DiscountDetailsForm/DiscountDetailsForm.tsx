@@ -1,4 +1,4 @@
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import {

@@ -5,6 +5,7 @@ import {
   type _SearchCategoriesOperandsQuery,
   type _SearchCollectionsOperandsQuery,
   type _SearchCustomersOperandsQuery,
+  type _SearchCustomerTypesOperandsQuery,
   type _SearchPageTypesOperandsQuery,
   type _SearchProductOperandsQuery,
   type _SearchProductTypesOperandsQuery,
@@ -26,6 +27,8 @@ export type InitialOrderAPIResponse = ApolloQueryResult<
 export type InitialVoucherAPIResponse = ApolloQueryResult<_GetChannelOperandsQuery>;
 
 export type InitialPageAPIResponse = ApolloQueryResult<_SearchPageTypesOperandsQuery>;
+
+export type InitialCustomerAPIResponse = ApolloQueryResult<_SearchCustomerTypesOperandsQuery>;
 
 export type InitialGiftCardsAPIResponse = ApolloQueryResult<
   _SearchProductOperandsQuery | _SearchCustomersOperandsQuery | ChannelCurrenciesQuery

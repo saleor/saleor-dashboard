@@ -2,27 +2,23 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import {
   getAttributesAfterFileAttributesUpdate,
-  mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
 } from "@dashboard/attributes/utils/data";
 import {
-  handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import { createVariantChannels } from "@dashboard/channels/utils";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AttributeInput } from "@dashboard/components/Attributes";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type ProductErrorWithAttributesFragment,
-  useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductVariantDetailsQuery,
-  useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
   useVariantDeleteMutation,
   useVariantMediaAssignMutation,
@@ -30,7 +26,7 @@ import {
   useVariantUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useOnSetDefaultVariant from "@dashboard/hooks/useOnSetDefaultVariant";
 import useShop from "@dashboard/hooks/useShop";
 import { weight } from "@dashboard/misc";
@@ -131,7 +127,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
       setErrors(data.productVariantUpdate.errors);
     },
   });
-  const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
 
   const variant = data?.productVariant;
@@ -152,10 +147,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     skip: !channels.length,
   });
 
-  const [deactivatePreorder, deactivatePreoderOpts] = useProductVariantPreorderDeactivateMutation(
-    {},
-  );
-  const handleDeactivateVariantPreorder = (id: string) => deactivatePreorder({ variables: { id } });
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
   const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
@@ -166,18 +157,11 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     updateVariantOpts.loading ||
     assignMediaOpts.loading ||
     unassignMediaOpts.loading ||
-    deactivatePreoderOpts.loading ||
-    reorderProductVariantsOpts.loading ||
-    deleteAttributeValueOpts.loading;
+    reorderProductVariantsOpts.loading;
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
-    );
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      variant?.nonSelectionAttributes,
-      variables => deleteAttributeValue({ variables }),
     );
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
@@ -203,12 +187,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         quantityLimitPerCustomer: Number(data.quantityLimitPerCustomer) || null,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
         trackInventory: data.trackInventory,
-        preorder: data.isPreorder
-          ? {
-              globalThreshold: data.globalThreshold ? parseInt(data.globalThreshold, 10) : null,
-              endDate: data?.preorderEndDateTime || null,
-            }
-          : null,
         weight: weight(data.weight),
         firstValues: 10,
         name: data.variantName,
@@ -218,7 +196,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
 
     return [
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
       ...(result.data?.productVariantStocksCreate.errors ?? []),
       ...(result.data?.productVariantStocksDelete.errors ?? []),
       ...(result.data?.productVariantStocksUpdate.errors ?? []),
@@ -268,9 +245,9 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     result: searchCollectionsOpts,
   } = useReferenceCollectionSearch(refAttr);
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
@@ -300,12 +277,8 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
+  const attributeValues = getAttributeValues;
 
   if (variant === null) {
     return <NotFoundPage backHref={productUrl(productId)} />;
@@ -341,8 +314,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         searchWarehousesResult={searchWarehousesResult}
         searchWarehouses={searchWarehouses}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
-        variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}
         assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}

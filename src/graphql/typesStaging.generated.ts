@@ -516,28 +516,12 @@ export type AttributeChoicesSortingInput = {
   field: AttributeChoicesSortField;
 };
 
-/**
- * Represents an input for create of attribute.
- *
- * NOTE: Deprecated fields `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are not supported in bulk mutations: `attributeBulkCreate`, `attributeBulkUpdate`.
- */
+/** Represents an input for create of attribute. */
 export type AttributeCreateInput = {
-  /**
-   * Whether the attribute can be displayed in the admin product list.
-   * @deprecated Field no longer supported
-   */
-  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
   /** The entity type which can be used as a reference. */
   entityType?: InputMaybe<AttributeEntityTypeEnum>;
   /** External ID of this attribute. */
   externalReference?: InputMaybe<Scalars['String']['input']>;
-  /** Whether the attribute can be filtered in dashboard. */
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Whether the attribute can be filtered in storefront.
-   * @deprecated Field no longer supported
-   */
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: InputMaybe<AttributeInputTypeEnum>;
   /** Whether the attribute is for variants only. */
@@ -554,11 +538,6 @@ export type AttributeCreateInput = {
   referenceTypes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * The position of the attribute in the storefront navigation (0 by default).
-   * @deprecated Field no longer supported
-   */
-  storefrontSearchPosition?: InputMaybe<Scalars['Int']['input']>;
   /** The attribute type. */
   type: AttributeTypeEnum;
   /** The unit of attribute values. */
@@ -596,14 +575,11 @@ export enum AttributeErrorCode {
 }
 
 export type AttributeFilterInput = {
-  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Specifies the channel by which the data should be filtered.
    * @deprecated Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']['input']>;
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   inCategory?: InputMaybe<Scalars['ID']['input']>;
   inCollection?: InputMaybe<Scalars['ID']['input']>;
@@ -671,20 +647,12 @@ export type AttributeInputTypeEnumFilterInput = {
 };
 
 export enum AttributeSortField {
-  /** Sort attributes based on whether they can be displayed or not in a product grid. */
-  AVAILABLE_IN_GRID = 'AVAILABLE_IN_GRID',
-  /** Sort attributes by the filterable in dashboard flag */
-  FILTERABLE_IN_DASHBOARD = 'FILTERABLE_IN_DASHBOARD',
-  /** Sort attributes by the filterable in storefront flag */
-  FILTERABLE_IN_STOREFRONT = 'FILTERABLE_IN_STOREFRONT',
   /** Sort attributes by the variant only flag */
   IS_VARIANT_ONLY = 'IS_VARIANT_ONLY',
   /** Sort attributes by name */
   NAME = 'NAME',
   /** Sort attributes by slug */
   SLUG = 'SLUG',
-  /** Sort attributes by their position in storefront */
-  STOREFRONT_SEARCH_POSITION = 'STOREFRONT_SEARCH_POSITION',
   /** Sort attributes by the value required flag */
   VALUE_REQUIRED = 'VALUE_REQUIRED',
   /** Sort attributes by visibility in the storefront */
@@ -706,6 +674,7 @@ export enum AttributeTranslateErrorCode {
 }
 
 export enum AttributeTypeEnum {
+  CUSTOMER_TYPE = 'CUSTOMER_TYPE',
   PAGE_TYPE = 'PAGE_TYPE',
   PRODUCT_TYPE = 'PRODUCT_TYPE'
 }
@@ -717,28 +686,12 @@ export type AttributeTypeEnumFilterInput = {
   oneOf?: InputMaybe<Array<AttributeTypeEnum>>;
 };
 
-/**
- * Represents an input for update of attribute.
- *
- * NOTE: Deprecated fields `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are not supported in bulk mutations: `attributeBulkCreate`, `attributeBulkUpdate`.
- */
+/** Represents an input for update of attribute. */
 export type AttributeUpdateInput = {
   /** New values to be created for this attribute. */
   addValues?: InputMaybe<Array<AttributeValueUpdateInput>>;
-  /**
-   * Whether the attribute can be displayed in the admin product list.
-   * @deprecated Field no longer supported
-   */
-  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
   /** External ID of this product. */
   externalReference?: InputMaybe<Scalars['String']['input']>;
-  /** Whether the attribute can be filtered in dashboard. */
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Whether the attribute can be filtered in storefront.
-   * @deprecated Field no longer supported
-   */
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of an attribute displayed in the interface. */
@@ -755,11 +708,6 @@ export type AttributeUpdateInput = {
   removeValues?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * The position of the attribute in the storefront navigation (0 by default).
-   * @deprecated Field no longer supported
-   */
-  storefrontSearchPosition?: InputMaybe<Scalars['Int']['input']>;
   /** The unit of attribute values. */
   unit?: InputMaybe<MeasurementUnitsEnum>;
   /** Whether the attribute requires values to be passed or not. */
@@ -930,7 +878,6 @@ export type AttributeWhereInput = {
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<AttributeWhereInput>>;
   entityType?: InputMaybe<AttributeEntityTypeEnumFilterInput>;
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   inCategory?: InputMaybe<Scalars['ID']['input']>;
   inCollection?: InputMaybe<Scalars['ID']['input']>;
@@ -1171,8 +1118,6 @@ export type ChannelListingUpdateInput = {
   channelListing: Scalars['ID']['input'];
   /** Cost price of the variant in channel. */
   costPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
-  /** The threshold for preorder variant in channel. */
-  preorderThreshold?: InputMaybe<Scalars['Int']['input']>;
   /** Price of the particular variant in channel. */
   price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Price of the variant before discount. */
@@ -2265,6 +2210,18 @@ export type CustomerFilterInput = {
 };
 
 export type CustomerInput = {
+  /**
+   * List of attribute values to assign to the user. The attributes must belong to the customer type the user ends up with.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AttributeValueInput>>;
+  /**
+   * ID of the customer type to assign to the user. If not provided when creating a customer, the default customer type is assigned.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<Scalars['ID']['input']>;
   /** Billing address of the customer. */
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
@@ -2355,6 +2312,97 @@ export type CustomerOrderWhereInput = {
   voucherCode?: InputMaybe<StringFilterInput>;
 };
 
+export enum CustomerTypeAssignAttributesErrorCode {
+  ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeCreateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
+}
+
+export type CustomerTypeCreateInput = {
+  /** Determines if the customer type should become the default one, assigned to every newly created user. Passing `true` clears the flag on the current default customer type - exactly one default customer type always exists. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Name of the customer type. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Slug of the customer type. If not provided, it will be generated from the name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum CustomerTypeDeleteErrorCode {
+  CANNOT_DELETE_DEFAULT = 'CANNOT_DELETE_DEFAULT',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeReorderAttributesErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeSortField {
+  /** Sort customer types by name. */
+  NAME = 'NAME',
+  /** Sort customer types by slug. */
+  SLUG = 'SLUG'
+}
+
+export type CustomerTypeSortingInput = {
+  /** Specifies the direction in which to sort customer types. */
+  direction: OrderDirection;
+  /** Sort customer types by the selected field. */
+  field: CustomerTypeSortField;
+};
+
+export enum CustomerTypeUnassignAttributesErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeUpdateErrorCode {
+  CANNOT_UNSET_DEFAULT = 'CANNOT_UNSET_DEFAULT',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
+}
+
+export type CustomerTypeUpdateInput = {
+  /** Determines if the customer type should become the default one, assigned to every newly created user. Passing `true` clears the flag on the current default customer type - exactly one default customer type always exists. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Name of the customer type. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Slug of the customer type. If not provided, it will be generated from the name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CustomerTypeWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<CustomerTypeWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<CustomerTypeWhereInput>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /** Filter by whether the customer type is the default one. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+  /** Filter by customer type name. */
+  name?: InputMaybe<StringFilterInput>;
+  /** Filter by customer type slug. */
+  slug?: InputMaybe<StringFilterInput>;
+};
+
 export type CustomerWhereInput = {
   /** List of conditions that must be met. */
   AND?: InputMaybe<Array<CustomerWhereInput>>;
@@ -2362,6 +2410,18 @@ export type CustomerWhereInput = {
   OR?: InputMaybe<Array<CustomerWhereInput>>;
   /** Filter by addresses data associated with user. */
   addresses?: InputMaybe<AddressFilterInput>;
+  /**
+   * Filter by attributes associated with the customer.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
+  /**
+   * Filter by customer type. Filtering by the default customer type also matches users without an explicitly assigned customer type.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by date joined. */
   dateJoined?: InputMaybe<DateTimeRangeInput>;
   /** Filter by email address. */
@@ -2710,17 +2770,6 @@ export type ExportFileSortingInput = {
   field: ExportFileSortField;
 };
 
-export type ExportGiftCardsInput = {
-  /** Type of exported file. */
-  fileType: FileTypesEnum;
-  /** Filtering options for gift cards. */
-  filter?: InputMaybe<GiftCardFilterInput>;
-  /** List of gift cards IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
-  /** Determine which gift cards should be exported. */
-  scope: ExportScope;
-};
-
 export type ExportInfoInput = {
   /** List of attribute ids witch should be exported. */
   attributes?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -2753,15 +2802,6 @@ export enum ExportScope {
   /** Export products with given ids. */
   IDS = 'IDS'
 }
-
-export type ExportVoucherCodesInput = {
-  /** Type of exported file. */
-  fileType: FileTypesEnum;
-  /** List of voucher code IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
-  /** The ID of the voucher. If provided, exports all codes belonging to the voucher. */
-  voucherId?: InputMaybe<Scalars['ID']['input']>;
-};
 
 export enum ExternalNotificationErrorCodes {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
@@ -4987,11 +5027,6 @@ export enum OrderAction {
   VOID = 'VOID'
 }
 
-export type OrderAddNoteInput = {
-  /** Note message. */
-  message: Scalars['String']['input'];
-};
-
 /**
  * Determine a current authorize status for order.
  *
@@ -5485,7 +5520,6 @@ export type OrderFilterInput = {
   giftCardUsed?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   isClickAndCollect?: InputMaybe<Scalars['Boolean']['input']>;
-  isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   numbers?: InputMaybe<Array<Scalars['String']['input']>>;
   /**
@@ -6420,6 +6454,7 @@ export enum PermissionEnum {
   MANAGE_APPS = 'MANAGE_APPS',
   MANAGE_CHANNELS = 'MANAGE_CHANNELS',
   MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
+  MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES = 'MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES',
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
@@ -6550,13 +6585,6 @@ export enum PostalCodeRuleInclusionTypeEnum {
   EXCLUDE = 'EXCLUDE',
   INCLUDE = 'INCLUDE'
 }
-
-export type PreorderSettingsInput = {
-  /** The end date for preorder. */
-  endDate?: InputMaybe<Scalars['DateTime']['input']>;
-  /** The global threshold for preorder variant. */
-  globalThreshold?: InputMaybe<Scalars['Int']['input']>;
-};
 
 export type PriceFilterInput = {
   /** The amount of the price to filter by. */
@@ -6809,7 +6837,6 @@ export enum ProductErrorCode {
   NOT_FOUND = 'NOT_FOUND',
   NOT_PRODUCTS_IMAGE = 'NOT_PRODUCTS_IMAGE',
   NOT_PRODUCTS_VARIANT = 'NOT_PRODUCTS_VARIANT',
-  PREORDER_VARIANT_CANNOT_BE_DEACTIVATED = 'PREORDER_VARIANT_CANNOT_BE_DEACTIVATED',
   PRODUCT_NOT_ASSIGNED_TO_CHANNEL = 'PRODUCT_NOT_ASSIGNED_TO_CHANNEL',
   PRODUCT_WITHOUT_CATEGORY = 'PRODUCT_WITHOUT_CATEGORY',
   REQUIRED = 'REQUIRED',
@@ -6847,7 +6874,6 @@ export type ProductFilterInput = {
   /** Filter on whether product is a gift card or not. */
   giftCard?: InputMaybe<Scalars['Boolean']['input']>;
   hasCategory?: InputMaybe<Scalars['Boolean']['input']>;
-  hasPreorderedVariants?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by availability for purchase. */
   isAvailable?: InputMaybe<Scalars['Boolean']['input']>;
@@ -7116,8 +7142,6 @@ export type ProductVariantBulkCreateInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']['input']>;
-  /** Determines if variant is in preorder. */
-  preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -7181,8 +7205,6 @@ export type ProductVariantBulkUpdateInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']['input']>;
-  /** Determines if variant is in preorder. */
-  preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -7206,8 +7228,6 @@ export type ProductVariantChannelListingAddInput = {
   channelId: Scalars['ID']['input'];
   /** Cost price of the variant in channel. */
   costPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
-  /** The threshold for preorder variant in channel. */
-  preorderThreshold?: InputMaybe<Scalars['Int']['input']>;
   /** Price of the particular variant in channel. */
   price: Scalars['PositiveDecimal']['input'];
   /** Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive. */
@@ -7236,8 +7256,6 @@ export type ProductVariantCreateInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']['input']>;
-  /** Determines if variant is in preorder. */
-  preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -7259,7 +7277,6 @@ export type ProductVariantCreateInput = {
 };
 
 export type ProductVariantFilterInput = {
-  isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   search?: InputMaybe<Scalars['String']['input']>;
   sku?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -7279,8 +7296,6 @@ export type ProductVariantInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']['input']>;
-  /** Determines if variant is in preorder. */
-  preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -7373,8 +7388,6 @@ export type ProductWhereInput = {
   giftCard?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by product with category assigned. */
   hasCategory?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Filter by product with preordered variants. */
-  hasPreorderedVariants?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by availability for purchase. */
   isAvailable?: InputMaybe<Scalars['Boolean']['input']>;
@@ -8854,8 +8867,20 @@ export enum UploadErrorCode {
 }
 
 export type UserCreateInput = {
+  /**
+   * List of attribute values to assign to the user. The attributes must belong to the customer type the user ends up with.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** Slug of a channel which will be used for notify user. Optional when only one channel exists. */
   channel?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * ID of the customer type to assign to the user. If not provided when creating a customer, the default customer type is assigned.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<Scalars['ID']['input']>;
   /** Billing address of the customer. */
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
@@ -9308,6 +9333,24 @@ export enum WebhookEventTypeAsyncEnum {
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   /** A customer account metadata is updated. */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  /**
+   * A new customer type is created.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  /**
+   * A customer type is deleted.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  /**
+   * A customer type is updated.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   /** A draft order is created. */
@@ -9329,8 +9372,6 @@ export enum WebhookEventTypeAsyncEnum {
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /** A gift card export is completed. */
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   /** A gift card metadata is updated. */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A gift card has been sent. */
@@ -9413,7 +9454,10 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /** A product export is completed. */
+  /**
+   * A product export is completed.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   /** A new product media is created. */
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
@@ -9528,8 +9572,6 @@ export enum WebhookEventTypeAsyncEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  /** A voucher code export is completed. */
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is deleted. */
@@ -9647,6 +9689,24 @@ export enum WebhookEventTypeEnum {
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   /** A customer account metadata is updated. */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  /**
+   * A new customer type is created.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  /**
+   * A customer type is deleted.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  /**
+   * A customer type is updated.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   /** A draft order is created. */
@@ -9668,8 +9728,6 @@ export enum WebhookEventTypeEnum {
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /** A gift card export is completed. */
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   /** A gift card metadata is updated. */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A gift card has been sent. */
@@ -9796,7 +9854,10 @@ export enum WebhookEventTypeEnum {
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /** A product export is completed. */
+  /**
+   * A product export is completed.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   /** A new product media is created. */
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
@@ -9922,8 +9983,6 @@ export enum WebhookEventTypeEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  /** A voucher code export is completed. */
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is deleted. */
@@ -10046,6 +10105,9 @@ export enum WebhookSampleEventTypeEnum {
   CUSTOMER_CREATED = 'CUSTOMER_CREATED',
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
@@ -10057,7 +10119,6 @@ export enum WebhookSampleEventTypeEnum {
   FULFILLMENT_TRACKING_NUMBER_UPDATED = 'FULFILLMENT_TRACKING_NUMBER_UPDATED',
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   GIFT_CARD_SENT = 'GIFT_CARD_SENT',
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
@@ -10098,6 +10159,7 @@ export enum WebhookSampleEventTypeEnum {
   PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   PRODUCT_DELETED = 'PRODUCT_DELETED',
+  /** @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools. */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
   PRODUCT_MEDIA_DELETED = 'PRODUCT_MEDIA_DELETED',
@@ -10149,7 +10211,6 @@ export enum WebhookSampleEventTypeEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   VOUCHER_DELETED = 'VOUCHER_DELETED',
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',

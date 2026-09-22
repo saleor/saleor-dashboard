@@ -107,9 +107,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install deps
-        run: pnpm install
-
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:

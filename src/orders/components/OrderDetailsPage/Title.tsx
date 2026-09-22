@@ -1,6 +1,6 @@
 import { ClickableChannel } from "@dashboard/components/Channel/Channel";
 import { MerchantDate } from "@dashboard/components/Date/MerchantDate";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";

@@ -1,6 +1,18 @@
 import { getDefaultByControlName } from "../controlsType";
 import { type ConditionItem } from "./ConditionOptions";
-import { type ConditionValue, isItemOptionArray, isTuple } from "./ConditionValue";
+import { type ConditionValue, isItemOption, isItemOptionArray, isTuple } from "./ConditionValue";
+
+const optionsFromSelectedValue = (value: ConditionValue): ConditionValue[] => {
+  if (isItemOption(value)) {
+    return [value];
+  }
+
+  if (isItemOptionArray(value)) {
+    return value;
+  }
+
+  return [];
+};
 
 export class ConditionSelected {
   public constructor(
@@ -32,7 +44,7 @@ export class ConditionSelected {
   }
 
   public static fromConditionItemAndValue(conditionItem: ConditionItem, value: ConditionValue) {
-    return new ConditionSelected(value, conditionItem, [], false);
+    return new ConditionSelected(value, conditionItem, optionsFromSelectedValue(value), false);
   }
 
   public enableLoading() {
@@ -54,4 +66,29 @@ export class ConditionSelected {
   public setOptions(options: ConditionValue[]) {
     this.options = options;
   }
+
+  public clone(): ConditionSelected {
+    return new ConditionSelected(
+      cloneConditionValue(this.value),
+      this.conditionValue,
+      this.options.map(cloneConditionValue),
+      this.loading,
+    );
+  }
 }
+
+const cloneConditionValue = (value: ConditionValue): ConditionValue => {
+  if (isItemOptionArray(value)) {
+    return value.map(item => ({ ...item }));
+  }
+
+  if (isItemOption(value)) {
+    return { ...value };
+  }
+
+  if (isTuple(value)) {
+    return [value[0], value[1]];
+  }
+
+  return value;
+};

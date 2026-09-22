@@ -22,6 +22,7 @@ const mockUser: UserFragment = {
   email: "admin@example.com",
   firstName: "Admin",
   lastName: "User",
+  isActive: true,
   isStaff: true,
   dateJoined: "2024-01-01T00:00:00Z",
   metadata: [],
@@ -37,7 +38,7 @@ const mockUser: UserFragment = {
   restrictedAccessToChannels: false,
 };
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   <MemoryRouter>
     <UserContext.Provider
       value={{

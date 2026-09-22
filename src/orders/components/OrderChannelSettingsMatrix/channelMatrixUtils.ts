@@ -4,14 +4,14 @@ export const CHANNEL_MATRIX_SEARCH_THRESHOLD = 10;
 /** Up to this many visible rows fit without vertical scroll. */
 export const CHANNEL_MATRIX_SCROLL_THRESHOLD = 5;
 
-export interface ChannelMatrixRow {
+interface ChannelMatrixRow {
   id: string;
   name: string;
   slug: string;
   isActive: boolean;
 }
 
-export interface ChannelMatrixFilterOptions {
+interface ChannelMatrixFilterOptions {
   query: string;
   hideInactive: boolean;
 }

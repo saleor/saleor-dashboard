@@ -137,3 +137,12 @@ export const productTypeListWithAssignedAttributeCounts = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query AttributeDetails($id: ID!) {
+  attribute(id: $id) {
+    id
+    name
+    slug
+    inputType
+  }
+}`;

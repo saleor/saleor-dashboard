@@ -1,6 +1,6 @@
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductErrorFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -19,7 +19,7 @@ const initialValues: FormValues = {
   mediaUrl: "",
 };
 
-export interface ProductExternalMediaDialogProps extends DialogProps {
+interface ProductExternalMediaDialogProps extends DialogProps {
   onSubmit: (mediaUrl: string) => SubmitPromise<ProductErrorFragment[]>;
 }
 
@@ -27,7 +27,7 @@ export const ProductExternalMediaDialog = ({
   open,
   onClose,
   onSubmit,
-}: ProductExternalMediaDialogProps): JSX.Element => {
+}: ProductExternalMediaDialogProps): React.ReactNode => {
   const intl = useIntl();
   const urlInputRef = useRef<HTMLInputElement>(null);
   const isSubmittingRef = useRef(false);

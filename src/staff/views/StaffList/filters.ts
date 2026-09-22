@@ -4,9 +4,10 @@ import { findValueInEnum } from "@dashboard/misc";
 import {
   StaffFilterKeys,
   type StaffListFilterOpts,
-} from "@dashboard/staff/components/StaffListPage";
+} from "@dashboard/staff/components/StaffListPage/filters";
 
-import { createFilterTabUtils, getSingleEnumValueQueryParam } from "../../../utils/filters";
+import { getSingleEnumValueQueryParam } from "../../../utils/filters/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import { type StaffListUrlFilters, StaffListUrlFiltersEnum } from "../../urls";
 
 const STAFF_FILTERS_KEY = "staffFilters";

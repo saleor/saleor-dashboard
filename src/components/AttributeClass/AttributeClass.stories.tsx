@@ -12,6 +12,7 @@ const mockUser: UserFragment = {
   email: "admin@example.com",
   firstName: "Admin",
   lastName: "User",
+  isActive: true,
   isStaff: true,
   dateJoined: "2024-01-01T00:00:00Z",
   metadata: [],
@@ -56,6 +57,12 @@ export const Default: Story = {};
 export const ModelAttribute: Story = {
   args: {
     attributeType: AttributeTypeEnum.PAGE_TYPE,
+  },
+};
+
+export const CustomerAttribute: Story = {
+  args: {
+    attributeType: AttributeTypeEnum.CUSTOMER_TYPE,
   },
 };
 

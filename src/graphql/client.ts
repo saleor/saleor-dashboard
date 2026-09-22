@@ -1,12 +1,13 @@
-// DON'T TOUCH THIS
-// These are separate clients and do not share configs between themselves
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
+import { initAuth } from "@dashboard/auth/initAuth";
 import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
-import { createFetch, createSaleorClient } from "@dashboard/legacy-sdk";
 import { createUploadLink } from "apollo-upload-client";
+import { type DocumentNode } from "graphql";
 
+import { createFetch } from "./authFetch";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import introspectionQueryResultDataStaging from "./fragmentTypesStaging.generated";
+import { resolveLockedSchemaFieldsForBuild } from "./lockSchema";
 import { isStagingSchema } from "./schemaVersion";
 import { type TypedTypePolicies } from "./typePolicies.generated";
 
@@ -46,9 +47,32 @@ const link = attachVariablesLink.concat(
   }) as unknown as ApolloLink, // type mismatch between apollo-upload-client and @apollo/cient
 );
 
+/**
+ * Resolves `@lockSchema` before anything else touches the document.
+ *
+ * This has to happen on the cache rather than in a link: Apollo runs links *after* the cache, so
+ * a link-level transform would leave InMemoryCache normalising against fields the API was never
+ * asked for — every write logs "Missing field ...", every cache-first read misses, and the query
+ * refetches on every mount. `transformDocument` feeds both the cache and the link, so stripping
+ * here keeps the two in sync.
+ *
+ * Apollo Client 3.8 has a first-class `documentTransform` option for this; drop the subclass when
+ * we get there.
+ *
+ * ponytail: covers everything that goes through QueryManager, i.e. every hook and every
+ * mutation. `cache.readQuery`/`writeQuery`/`readFragment`/`writeFragment` call `read`/`write`
+ * directly and would see an unresolved document — no caller does that with a `@lockSchema`
+ * document today. Override `read`/`write` (memoised) if one ever needs to.
+ */
+class SchemaAwareCache extends InMemoryCache {
+  transformDocument(document: DocumentNode): DocumentNode {
+    return super.transformDocument(resolveLockedSchemaFieldsForBuild(document));
+  }
+}
+
 export const apolloClient = new ApolloClient({
   connectToDevTools: process.env.NODE_ENV === "development",
-  cache: new InMemoryCache({
+  cache: new SchemaAwareCache({
     possibleTypes: introspectionData.possibleTypes,
     typePolicies: {
       CountryDisplay: {
@@ -88,12 +112,24 @@ export const apolloClient = new ApolloClient({
       App: {
         keyFields: false,
       },
+      User: {
+        // `User.addresses` is a plain list; without this Apollo logs an "overwriting array"
+        // warning every time the customer detail view refetches.
+        fields: {
+          addresses: {
+            merge: false,
+          },
+        },
+      },
     } as TypedTypePolicies,
   }),
   link,
 });
 
-export const saleorClient = createSaleorClient({
-  apiUrl: getApiUrl(),
-  channel: "",
-});
+/**
+ * Auth runs on the same client and the same cache as everything else. It used to have its own,
+ * whose `User: { keyFields: [] }` policy treated "the user" as a singleton — a storefront
+ * assumption the Dashboard cannot share, since it reads `User` by id in staff lists, customer
+ * lists and permission groups. Session flags live in `src/auth/authState.ts` instead.
+ */
+export const saleorAuth = initAuth(apolloClient);

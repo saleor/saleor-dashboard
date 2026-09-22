@@ -15,7 +15,7 @@ const getDecimalSeparator = (locale: string): string => {
   return parts.find(part => part.type === "decimal")?.value ?? ".";
 };
 
-export const AlignedChannelPrice = ({ money }: AlignedChannelPriceProps): JSX.Element => {
+export const AlignedChannelPrice = ({ money }: AlignedChannelPriceProps): React.ReactNode => {
   const { locale } = useLocale();
   const decimalSeparator = useMemo(() => getDecimalSeparator(locale), [locale]);
   const formatted = formatMoneyAmount(money, locale);

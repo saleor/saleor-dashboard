@@ -5,6 +5,17 @@
   top: 0;
 }
 
+/*
+ * Kill UA link chrome. Color and decoration belong to Link / macaw, not the
+ * browser. :where() keeps this at zero specificity so sprinkle/module classes win.
+ * currentColor keeps any remaining underline on the text, not :link / :visited blue.
+ */
+:where(a, a:visited) {
+  color: inherit;
+  text-decoration: none;
+  text-decoration-color: currentColor;
+}
+
 html {
   /* set base font size to 13px */
   font-size: 50.782% !important;
@@ -117,6 +128,8 @@ body {
 
 a.command-menu-item {
   display: block;
+  color: inherit;
+  text-decoration: none;
 }
 
 button.command-menu-item {

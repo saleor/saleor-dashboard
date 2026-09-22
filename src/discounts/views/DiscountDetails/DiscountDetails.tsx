@@ -1,7 +1,7 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DiscountDeleteModal } from "@dashboard/discounts/components/DiscountDeleteModal";
-import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
+import { DiscountDeleteModal } from "@dashboard/discounts/components/DiscountDeleteModal/DiscountDeleteModal";
+import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage/DiscountDetailsPage";
 import {
   discountSalesListPath,
   type DiscountUrlQueryParams,

@@ -1,4 +1,4 @@
-import { type FilterContainer, FilterElement } from "../FilterElement";
+import { type FilterContainer, FilterElement } from "../FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 import {
   type FilterQuery,

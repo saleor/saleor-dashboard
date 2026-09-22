@@ -46,7 +46,8 @@ test("TC: SALEOR_211 Create a staff member #e2e #staff-members", async () => {
   await expect(staffMembersPage.firstName).toHaveValue(staffMember.name);
   await expect(staffMembersPage.lastName).toHaveValue(staffMember.lastName);
   await expect(staffMembersPage.email).toHaveValue(staffMember.email);
-  await expect(await staffMembersPage.isActiveCheckbox.isChecked()).toBeTruthy();
+  await expect(staffMembersPage.staffStatusButton).toHaveText("Deactivate");
+  await expect(staffMembersPage.staffMemberStatus).toContainText("Pending invite");
 
   await staffMembersPage.clickPermissionsGroupSelectButton();
 

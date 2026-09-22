@@ -36,7 +36,7 @@ interface ChannelLike {
   isActive?: boolean;
 }
 
-export interface GiftCardProvenanceCardViewProps {
+interface GiftCardProvenanceCardViewProps {
   giftCard: ExtendedGiftCard<GiftCardDetails> | undefined;
   loading?: boolean;
   /** Resolved channel for `boughtInChannel` slug, when available. */
@@ -47,7 +47,7 @@ export const GiftCardProvenanceCardView = ({
   giftCard,
   loading = false,
   channel = null,
-}: GiftCardProvenanceCardViewProps): JSX.Element => {
+}: GiftCardProvenanceCardViewProps): React.ReactNode => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 
@@ -98,18 +98,18 @@ export const GiftCardProvenanceCardView = ({
               inline={false}
               className={styles.productRow}
             >
-              <Box className={styles.productThumb}>
-                {product.thumbnail?.url ? (
+              {product.thumbnail?.url ? (
+                <Box className={styles.productThumb}>
                   <Box
                     as="img"
                     src={product.thumbnail.url}
                     alt=""
                     className={styles.productThumbImg}
                   />
-                ) : (
-                  <EmptyImage />
-                )}
-              </Box>
+                </Box>
+              ) : (
+                <EmptyImage />
+              )}
               <Text size={3} ellipsis className={styles.productName}>
                 {product.name}
               </Text>

@@ -1,5 +1,5 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { getFieldsProgress, getProgressPercentage } from "@dashboard/translations/progress";

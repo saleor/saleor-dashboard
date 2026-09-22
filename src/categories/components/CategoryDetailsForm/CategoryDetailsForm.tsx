@@ -1,7 +1,7 @@
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { EntityBackgroundImageField } from "@dashboard/components/EntityBackgroundImageField/EntityBackgroundImageField";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import RichTextEditor from "@dashboard/components/RichTextEditor";
+import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type CategoryDetailsFragment, type ProductErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";

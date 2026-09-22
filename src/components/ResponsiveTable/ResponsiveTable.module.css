@@ -43,7 +43,8 @@
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }
 
-/* !important overrides MUI TableCell defaults */
+/* `!important` is no longer strictly needed (Table.module.css cells are single-class)
+ * but is kept so the `.assignableTable` overrides below keep winning. */
 .table th {
   vertical-align: middle;
   padding: 0 8px !important;
@@ -99,6 +100,109 @@
   text-align: right;
 }
 
+/*
+ * Standard density for in-card assignable lists (collection products,
+ * AssignableListTable, product-type attribute tables).
+ *
+ * Header matches compact column-label subheads (Pricing / channel tables):
+ * `Text size={2}`, Y spacing-1, no locked 40px. Body is text-only so it uses
+ * compact cell padding instead of the 50px product-row height.
+ */
+.assignableTable :global(thead tr),
+.assignableTable :global(thead th) {
+  height: unset !important;
+  max-height: none !important;
+  box-sizing: border-box;
+}
+
+.assignableTable :global(tbody tr) {
+  height: unset !important;
+  min-height: 0;
+}
+
+.assignableTable :global(thead th) {
+  line-height: 1;
+  vertical-align: middle;
+  padding: var(--mu-spacing-1) var(--mu-spacing-2) !important;
+}
+
+.assignableTable :global(thead th:first-child),
+.assignableTable :global(td:first-child) {
+  padding: 0 !important;
+}
+
+.assignableTable :global(td:first-child) > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.assignableTable :global(thead th:nth-child(2)) {
+  padding: 0 !important;
+}
+
+.assignableTable :global(thead th:nth-child(2) > *) {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.assignableTable :global(thead th:last-child) {
+  padding: 0 !important;
+}
+
+.assignableTable :global(tbody td) {
+  padding: var(--mu-spacing-2) !important;
+}
+
+.assignableTable td.checkboxCell,
+.assignableTable td.checkboxCell:first-child,
+.assignableTable td.actionsCell,
+.assignableTable td.actionsCell:last-child {
+  padding: 0 !important;
+}
+
+.checkboxCell {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+}
+
+.dragCell {
+  width: 40px;
+  min-width: 40px;
+}
+
+.actionsCell {
+  width: 48px;
+  min-width: 48px;
+}
+
+.row {
+}
+
+.rowDelete {
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.rowDelete svg {
+  color: var(--mu-colors-text-default1);
+}
+
+/* Reveal on hover, or when the delete control itself is focused. Not row :focus-within — checkbox focus would pin the icon. */
+.row:hover .rowDelete,
+.rowDelete:focus-within {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .rowDelete {
+    opacity: 1;
+  }
+}
+
 .colActionWide {
   width: 120px;
   text-align: right;
@@ -116,10 +220,4 @@
   flex: 1 1 auto;
   flex-direction: column;
   min-height: 0;
-}
-
-@media (min-width: 960px) {
-  .table {
-    table-layout: fixed;
-  }
 }

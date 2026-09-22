@@ -1,6 +1,6 @@
 import { type ProductVariantStocksUpdateInput } from "@dashboard/graphql";
 
-export type BulkPublishVariantStockSource = {
+type BulkPublishVariantStockSource = {
   stocks?: Array<{
     id: string;
     warehouse: { id: string };

@@ -4,11 +4,8 @@ import {
   getAssignedVariantIdsFromForm,
   mapLocalVariantsToSavedVariants,
 } from "@dashboard/discounts/components/VoucherCreatePage/utils";
-import { v4 as uuidv4 } from "uuid";
 
 import { type FormData } from "./types";
-
-jest.mock("uuid");
 
 describe("generateDraftVoucherCode", () => {
   it("should return draft voucher code", () => {
@@ -26,15 +23,15 @@ describe("generateDraftVoucherCode", () => {
 describe("generateMultipleVoucherCodes", () => {
   it("should return multiple voucher codes", () => {
     // Arrange
-    (uuidv4 as jest.Mock).mockImplementation(() => "uuid");
+    jest.spyOn(crypto, "randomUUID").mockReturnValue("1-2-3-4-5");
 
     // Act
     const draftVoucherCodes = generateMultipleVoucherCodes("2", "test");
 
     // Assert
     expect(draftVoucherCodes).toEqual([
-      { code: "test-uuid", status: "Draft" },
-      { code: "test-uuid", status: "Draft" },
+      { code: "test-1-2-3-4-5", status: "Draft" },
+      { code: "test-1-2-3-4-5", status: "Draft" },
     ]);
   });
 });

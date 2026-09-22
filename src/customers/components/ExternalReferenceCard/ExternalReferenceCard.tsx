@@ -1,5 +1,5 @@
-import { DashboardCard } from "@dashboard/components/Card";
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { type CustomerDetailsFragment } from "@dashboard/graphql";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
@@ -21,26 +21,24 @@ export const ExternalReferenceCard = ({
   }
 
   return (
-    <DashboardCard data-test-id="external-reference">
-      <DashboardCard.Header>
-        <DashboardCard.Title size={6} fontWeight="medium">
-          <FormattedMessage
-            defaultMessage="External reference"
-            description="customer detail sidebar, section header"
-            id="nAm4XY"
-          />
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        {loading ? (
-          <Skeleton __width="120px" __height="20px" />
-        ) : (
-          <Box data-test-id="external-reference-value">
-            <CopyableText text={customer.externalReference ?? ""} />
-          </Box>
-        )}
-      </DashboardCard.Content>
-    </DashboardCard>
+    <DetailSettingsCard
+      data-test-id="external-reference"
+      title={
+        <FormattedMessage
+          defaultMessage="External reference"
+          description="customer detail sidebar, section header"
+          id="nAm4XY"
+        />
+      }
+    >
+      {loading ? (
+        <Skeleton __width="120px" __height="20px" />
+      ) : (
+        <Box data-test-id="external-reference-value">
+          <CopyableText text={customer.externalReference ?? ""} />
+        </Box>
+      )}
+    </DetailSettingsCard>
   );
 };
 

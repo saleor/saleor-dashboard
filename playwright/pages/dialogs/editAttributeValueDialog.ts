@@ -1,5 +1,5 @@
 import type { Page } from "@playwright/test";
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 
 export class EditAttributeValueDialog {
   readonly page: Page;

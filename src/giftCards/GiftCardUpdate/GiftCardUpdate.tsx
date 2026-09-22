@@ -1,6 +1,6 @@
 import GiftCardUpdatePage from "./GiftCardUpdatePage";
-import GiftCardDetailsProvider from "./providers/GiftCardDetailsProvider";
-import GiftCardUpdateDialogsProvider from "./providers/GiftCardUpdateDialogsProvider";
+import GiftCardDetailsProvider from "./providers/GiftCardDetailsProvider/GiftCardDetailsProvider";
+import GiftCardUpdateDialogsProvider from "./providers/GiftCardUpdateDialogsProvider/GiftCardUpdateDialogsProvider";
 import GiftCardUpdateFormProvider from "./providers/GiftCardUpdateFormProvider/GiftCardUpdateFormProvider";
 import { type GiftCardUpdatePageUrlQueryParams } from "./types";
 

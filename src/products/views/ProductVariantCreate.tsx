@@ -6,8 +6,8 @@ import {
 } from "@dashboard/attributes/utils/handlers";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AttributeInput } from "@dashboard/components/Attributes";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -20,7 +20,7 @@ import {
   useVariantCreateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import {
   useReferenceCategorySearch,
@@ -84,7 +84,12 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const product = data?.product;
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({
     onCompleted: data => {
-      const variantId = data.productVariantCreate.productVariant.id;
+      const errors = data.productVariantCreate.errors ?? [];
+      const variantId = data.productVariantCreate.productVariant?.id;
+
+      if (errors.length > 0) {
+        return;
+      }
 
       if (!variantId) {
         notify({
@@ -139,14 +144,6 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
           trackInventory: true,
           weight: weight(formData.weight),
           quantityLimitPerCustomer: Number(formData.quantityLimitPerCustomer) || null,
-          preorder: formData.isPreorder
-            ? {
-                globalThreshold: formData.globalThreshold
-                  ? parseInt(formData.globalThreshold, 10)
-                  : null,
-                endDate: formData.preorderEndDateTime || null,
-              }
-            : undefined,
         },
         firstValues: 10,
       },
@@ -170,7 +167,6 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
           channelId: listing.id,
           costPrice: listing.value.costPrice || null,
           price: listing.value.price,
-          preorderThreshold: listing.value.preorderThreshold,
         })),
       },
     });
@@ -230,9 +226,9 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const fetchMoreReferencePages = {
@@ -255,12 +251,8 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
+  const attributeValues = getAttributeValues;
   const disableForm =
     productLoading ||
     uploadFileOpts.loading ||

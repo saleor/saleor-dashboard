@@ -1,9 +1,10 @@
 // @ts-strict-ignore
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
@@ -11,25 +12,31 @@ import {
   DEFAULT_INITIAL_SEARCH_DATA,
   defaultListSettings,
   type ProductListColumns,
+  VALUES_PAGINATE_BY,
 } from "@dashboard/config";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   AttributeTypeEnum,
+  type ProductErrorWithAttributesFragment,
   type ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
   useGridAttributesLazyQuery,
   useProductBulkDeleteMutation,
   useProductCountQuery,
+  useProductCreateMutation,
+  useProductDeleteMutation,
   useProductExportMutation,
   useProductListQuery,
+  useProductTypeQuery,
+  useVariantCreateMutation,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -37,31 +44,37 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages } from "@dashboard/intl";
+import { CreateProductDialog } from "@dashboard/products/components/CreateProductDialog/CreateProductDialog";
+import { messages as createProductMessages } from "@dashboard/products/components/CreateProductDialog/messages";
 import { ProductBulkDeleteDialog } from "@dashboard/products/components/ProductBulkDeleteDialog/ProductBulkDeleteDialog";
 import { ProductExportDialog } from "@dashboard/products/components/ProductExportDialog/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue,
 } from "@dashboard/products/components/ProductListPage/utils";
-import { ProductTypePickerDialog } from "@dashboard/products/components/ProductTypePickerDialog/ProductTypePickerDialog";
 import {
-  productAddUrl,
   productListUrl,
   type ProductListUrlDialog,
   type ProductListUrlQueryParams,
   type ProductListUrlSortField,
+  productUrl,
 } from "@dashboard/products/urls";
+import { CreateProductTypeDialog } from "@dashboard/productTypes/components/CreateProductTypeDialog/CreateProductTypeDialog";
+import { useCreateProductType } from "@dashboard/productTypes/hooks/useCreateProductType";
 import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";
+import { ProductFilterKeys } from "../../components/ProductListPage/filters";
+import ProductListPage from "../../components/ProductListPage/ProductListPage";
+import { createMinimalProduct } from "./createMinimalProduct";
 import { ProductsExportParameters } from "./export";
 import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
@@ -74,6 +87,7 @@ interface ProductListProps {
 const ProductList = ({ params }: ProductListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
   const { queue } = useBackgroundTask();
   const { valueProvider } = useConditionalFilterContext();
   const selectedChannelSlug = obtainChannelFromFilter(valueProvider);
@@ -126,6 +140,7 @@ const ProductList = ({ params }: ProductListProps) => {
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
+  const createProductTypeDialog = useCreateProductType({ onClose: closeModal });
   const {
     clearRowSelection,
     selectedRowIds,
@@ -253,7 +268,7 @@ const ProductList = ({ params }: ProductListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => products[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, products);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
@@ -290,6 +305,37 @@ const ProductList = ({ params }: ProductListProps) => {
     loading: searchDialogProductTypesOpts.loading,
     onFetchMore: loadMoreDialogProductTypes,
   };
+  const productTypeChoices =
+    mapEdgesToItems(searchDialogProductTypesOpts?.data?.search)?.map(productType => ({
+      label: productType.name,
+      value: productType.id,
+      hasVariants: productType.hasVariants,
+    })) ?? [];
+  const initialProductTypeId = params["product-type-id"];
+  const { data: initialProductTypeData } = useProductTypeQuery({
+    variables: {
+      id: initialProductTypeId ?? "",
+      firstValues: VALUES_PAGINATE_BY,
+    },
+    skip: params.action !== "create-product" || !initialProductTypeId,
+  });
+  const initialProductType = initialProductTypeId
+    ? (productTypeChoices.find(type => type.value === initialProductTypeId) ??
+      (initialProductTypeData?.productType
+        ? {
+            label: initialProductTypeData.productType.name,
+            value: initialProductTypeData.productType.id,
+            hasVariants: initialProductTypeData.productType.hasVariants,
+          }
+        : undefined))
+    : undefined;
+  const [createProduct, createProductOpts] = useProductCreateMutation();
+  const [createVariant, createVariantOpts] = useVariantCreateMutation();
+  const [deleteProduct, deleteProductOpts] = useProductDeleteMutation();
+  const createProductButtonState =
+    createProductOpts.loading || createVariantOpts.loading || deleteProductOpts.loading
+      ? "loading"
+      : createProductOpts.status;
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
     paginationState,
@@ -314,11 +360,10 @@ const ProductList = ({ params }: ProductListProps) => {
         disabled={!data}
         limits={limitOpts.data?.shop.limits}
         products={products}
-        onUpdateListSettings={(...props) => {
-          clearRowSelection();
-          updateListSettings(...props);
-        }}
+        // Keep selection on page-size/column updates; Datagrid drops stale indices.
+        onUpdateListSettings={updateListSettings}
         onAdd={() => openModal("create-product")}
+        onCreateProductType={() => openModal("create-product-type")}
         onAll={resetFilters}
         onSearchChange={handleSearchChange}
         filterDependency={channelFilterDependency}
@@ -394,20 +439,51 @@ const ProductList = ({ params }: ProductListProps) => {
         onSubmit={onPresetDelete}
         tabName={getPresetNameToDelete()}
       />
-      <ProductTypePickerDialog
-        confirmButtonState="success"
+      <CreateProductDialog
+        confirmButtonState={createProductButtonState}
         open={params.action === "create-product"}
-        productTypes={mapNodeToChoice(mapEdgesToItems(searchDialogProductTypesOpts?.data?.search))}
+        productTypes={productTypeChoices}
         fetchProductTypes={searchDialogProductTypes}
         fetchMoreProductTypes={fetchMoreDialogProductTypes}
-        onClose={closeModal}
-        onConfirm={productTypeId =>
-          navigate(
-            productAddUrl({
-              "product-type-id": productTypeId,
-            }),
-          )
+        initialProductType={initialProductType}
+        disabled={
+          createProductOpts.loading || createVariantOpts.loading || deleteProductOpts.loading
         }
+        errors={
+          (createProductOpts.data?.productCreate?.errors ??
+            []) as ProductErrorWithAttributesFragment[]
+        }
+        onClose={closeModal}
+        onCreateProductType={() => openModal("create-product-type")}
+        onSubmit={async ({ name, productTypeId, hasVariants }) => {
+          const { productId, errors } = await createMinimalProduct({
+            name,
+            productTypeId,
+            hasVariants,
+            productCreate: variables => createProduct({ variables }),
+            productVariantCreate: variables => createVariant({ variables }),
+            productDelete: variables => deleteProduct({ variables }),
+          });
+
+          if (errors.length > 0 || !productId) {
+            return errors;
+          }
+
+          markOnboardingStepAsCompleted("create-product");
+          notify({
+            status: "success",
+            text: intl.formatMessage(createProductMessages.created),
+          });
+          closeModal();
+          navigate(productUrl(productId, { action: "setup" }));
+
+          return [];
+        }}
+      />
+      <CreateProductTypeDialog
+        open={params.action === "create-product-type"}
+        onClose={closeModal}
+        {...createProductTypeDialog}
       />
     </PaginatorContext.Provider>
   );

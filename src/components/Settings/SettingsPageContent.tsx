@@ -19,7 +19,7 @@ export const SettingsPageContent = ({
   title,
   description,
   children,
-}: SettingsPageContentProps): JSX.Element => {
+}: SettingsPageContentProps): React.ReactNode => {
   const hasAside = title != null || description != null;
 
   return (

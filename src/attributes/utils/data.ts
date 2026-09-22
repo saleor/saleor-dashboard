@@ -1,10 +1,13 @@
 import { type FetchResult } from "@apollo/client";
-import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeInputData,
+} from "@dashboard/components/Attributes/Attributes";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import {
   AttributeEntityTypeEnum,
-  type AttributeErrorFragment,
   AttributeInputTypeEnum,
-  type AttributeValueDeleteMutation,
   type AttributeValueFragment,
   type AttributeValueInput,
   type FileUploadMutation,
@@ -17,6 +20,7 @@ import {
   type SelectedVariantAttributeFragment,
   type UploadErrorFragment,
 } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { type Container, type RelayToFlat } from "@dashboard/types";
@@ -27,7 +31,8 @@ import {
   type RichTextGetters,
 } from "@dashboard/utils/richText/useMultipleRichText";
 
-import { type AttributePageFormData } from "../components/AttributePage";
+import { type AttributePageFormData } from "../components/AttributePage/AttributePage";
+import { formatVariantReferenceLabel } from "./formatVariantReferenceLabel";
 import { productVariantCacheManager } from "./productVariantCache";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
@@ -67,6 +72,8 @@ export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
 export interface AttributeReference {
   label: string;
   value: string;
+  /** Model references only — the icon configured on the referenced model's type. */
+  icon?: ModelTypeIcon;
 }
 
 export interface AttributeValueEditDialogFormData {
@@ -135,22 +142,32 @@ function getFileOrReferenceAttributeData(
     ...getSimpleAttributeData(data, values),
     values: [],
     availableInGrid: undefined,
-    filterableInDashboard: undefined,
     filterableInStorefront: undefined,
     referenceTypes: data.referenceTypes?.map(ref => ref.value) ?? [],
   };
 }
+
+/**
+ * `filterableInStorefront` and `storefrontSearchPosition` are removed from the API in 3.24,
+ * so the staging schema build stops sending them. Drop this (and the form fields) once staging becomes main.
+ */
+export const DEPRECATED_FACETED_NAVIGATION_INPUT = isMainSchema()
+  ? {}
+  : { filterableInStorefront: undefined, storefrontSearchPosition: undefined };
 
 export function getAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[],
 ) {
   if (data.inputType === AttributeInputTypeEnum.SWATCH) {
-    return getSwatchAttributeData(data, values);
+    return { ...getSwatchAttributeData(data, values), ...DEPRECATED_FACETED_NAVIGATION_INPUT };
   } else if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
-    return getSimpleAttributeData(data, values);
+    return { ...getSimpleAttributeData(data, values), ...DEPRECATED_FACETED_NAVIGATION_INPUT };
   } else {
-    return getFileOrReferenceAttributeData(data, values);
+    return {
+      ...getFileOrReferenceAttributeData(data, values),
+      ...DEPRECATED_FACETED_NAVIGATION_INPUT,
+    };
   }
 }
 
@@ -195,28 +212,6 @@ export function getSelectedAttributeValues(
   }
 }
 
-export const isFileValueUnused = (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  existingAttribute:
-    | PageSelectedAttributeFragment
-    | ProductFragment["attributes"][0]
-    | SelectedVariantAttributeFragment,
-) => {
-  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
-    return false;
-  }
-
-  if (existingAttribute.values.length === 0) {
-    return false;
-  }
-
-  const modifiedAttribute = attributesWithNewFileValue.find(
-    dataAttribute => dataAttribute.id === existingAttribute.attribute.id,
-  );
-
-  return !!modifiedAttribute;
-};
-
 export const mergeFileUploadErrors = (
   uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
 ): UploadErrorFragment[] =>
@@ -229,19 +224,6 @@ export const mergeFileUploadErrors = (
 
     return errors;
   }, [] as UploadErrorFragment[]);
-
-export const mergeAttributeValueDeleteErrors = (
-  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDeleteMutation>>,
-): AttributeErrorFragment[] =>
-  deleteAttributeValuesResult.reduce((errors, deleteValueResult) => {
-    const deleteErrors = deleteValueResult?.data?.attributeValueDelete?.errors;
-
-    if (deleteErrors) {
-      return [...errors, ...deleteErrors];
-    }
-
-    return errors;
-  }, [] as AttributeErrorFragment[]);
 
 export const mergeChoicesWithValues = (
   attribute:
@@ -483,6 +465,7 @@ const findPageReference = (
     return {
       label: page.title,
       value: valueId,
+      icon: getModelTypeIcon(page.pageType?.metadata),
     };
   }
 
@@ -555,7 +538,7 @@ const findProductVariantReference = (
 
     if (variant) {
       return {
-        label: `${product.name} ${variant.name}`,
+        label: formatVariantReferenceLabel(product.name, variant.name),
         value: valueId,
       };
     }
@@ -601,7 +584,9 @@ export const getReferenceAttributeDisplayData = (
                * and whenever the user assigns references in the dialog into useFormset data. */
               const meta = attribute.additionalData?.find(m => m.value === valueId);
 
-              if (meta) {
+              // Skip labels that are just the raw id (common when assign metadata
+              // never resolved). Search / saved values can still supply a name.
+              if (meta?.label && meta.label !== meta.value) {
                 return {
                   label: meta.label,
                   value: meta.value,

@@ -1,7 +1,7 @@
 import { type CollectionDetailsQuery, CollectionPublished } from "@dashboard/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
-import { type CollectionListFilterOpts } from "./components/CollectionListPage";
+import { type CollectionListFilterOpts } from "./components/CollectionListPage/filters";
 import { type Collections } from "./types";
 
 const content = richTextEditorFixtures.richTextEditor;

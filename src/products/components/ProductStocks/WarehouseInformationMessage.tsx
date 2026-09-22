@@ -6,6 +6,8 @@ import { messages } from "./messages";
 
 interface WarehouseInformationMessageProps {
   isCreate: boolean;
+  /** When false on create, stock rows cannot be assigned yet (no channels). */
+  canAssignWarehouses?: boolean;
   hasVariants: boolean;
   hasStocks: boolean;
   onWarehouseConfigure: () => void;
@@ -13,11 +15,13 @@ interface WarehouseInformationMessageProps {
 
 export const WarehouseInformationMessage = ({
   isCreate,
+  canAssignWarehouses = false,
   hasVariants,
   hasStocks,
   onWarehouseConfigure,
 }: WarehouseInformationMessageProps) => {
-  if (isCreate) {
+  // Create without sales channels — assign stays gated until listings exist.
+  if (isCreate && !canAssignWarehouses) {
     const message = hasVariants
       ? messages.warehouseMessageVariantOnCreate
       : messages.warehouseMessageProductOnCreate;

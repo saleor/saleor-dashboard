@@ -1,4 +1,4 @@
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
 import {
   AttributeErrorCode,
   AttributeInputTypeEnum,
@@ -14,7 +14,6 @@ import {
 const formData: AttributePageFormData = {
   availableInGrid: true,
   entityType: null,
-  filterableInDashboard: true,
   filterableInStorefront: true,
   inputType: AttributeInputTypeEnum.PLAIN_TEXT,
   metadata: [],

@@ -25,8 +25,8 @@ jest.mock("@dashboard/graphql", () => ({
 }));
 
 jest.mock("@dashboard/auth/hooks/useUserPermissions");
-jest.mock("@dashboard/featureFlags", () => ({
-  ...(jest.requireActual("@dashboard/featureFlags") as object),
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
+  ...(jest.requireActual("@dashboard/featureFlags/useFlag") as object),
   useFlag: jest.fn(() => ({ enabled: true })),
 }));
 

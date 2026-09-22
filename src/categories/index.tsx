@@ -17,7 +17,7 @@ import {
   type CategoryUrlQueryParams,
 } from "./urls";
 import CategoryDetailsView from "./views/CategoryDetails";
-import CategoryListComponent from "./views/CategoryList";
+import CategoryListComponent from "./views/CategoryList/CategoryList";
 
 interface CategoryDetailsRouteParams {
   id: string;

@@ -5,7 +5,7 @@ export class AssignPermissionGroupMembersDialog {
 
   constructor(
     page: Page,
-    readonly searchMembersInput = page.getByTestId("search-members-input").locator("input"),
+    readonly searchMembersInput = page.getByTestId("search-members-input"),
     readonly userRow = page.getByTestId("user-row"),
     readonly assignButton = page.getByTestId("submit"),
     readonly searchResults = page.getByTestId("search-results"),

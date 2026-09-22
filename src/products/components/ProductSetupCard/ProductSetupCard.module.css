@@ -1,0 +1,20 @@
+/**
+ * Elevated surface for the product setup checklist.
+ * Same smooth-shadow-ring stack as ChannelSetupCard — never pair with a border.
+ */
+.elevated {
+  --smooth-ring-color: rgba(0, 0, 0, 0.05);
+  border: none;
+  box-shadow:
+    0 18px 47px 0 rgba(0, 0, 0, 0.03),
+    0 7.5px 19px 0 rgba(0, 0, 0, 0.02),
+    0 4px 10.5px 0 rgba(0, 0, 0, 0.02),
+    0 2.3px 5.8px 0 rgba(0, 0, 0, 0.01),
+    0 1.2px 3.1px 0 rgba(0, 0, 0, 0.01),
+    0 0.5px 1.3px 0 rgba(0, 0, 0, 0.01),
+    0 0 0 1px var(--smooth-ring-color);
+}
+
+.elevatedDark {
+  --smooth-ring-color: rgba(255, 255, 255, 0.18);
+}

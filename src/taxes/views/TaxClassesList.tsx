@@ -11,7 +11,7 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import createMetadataCreateHandler, {
   type CreateMetadataHandlerFunctionResult,
 } from "@dashboard/utils/handlers/metadataCreateHandler";
@@ -21,7 +21,7 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { taxesMessages } from "../messages";
-import TaxClassesPage from "../pages/TaxClassesPage";
+import TaxClassesPage from "../pages/TaxClassesPage/TaxClassesPage";
 import { type TaxClassesPageFormData } from "../types";
 import { taxClassesListUrl, type TaxTab, taxTabPath } from "../urls";
 import { createTaxClassCreateInput, createTaxClassUpdateInput } from "../utils/data";

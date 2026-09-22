@@ -59,6 +59,16 @@
   border-bottom: none;
 }
 
+/* Marks rows the merchant has actually edited, so a partial update reads as a diff. */
+.row[data-price-changed="true"] {
+  box-shadow: inset 2px 0 0 0 var(--mu-colors-background-accent1);
+}
+
+/* Warning, not error: these runs are destructive but intended, and nothing blocks Next. */
+.rowWarning {
+  color: var(--mu-colors-text-warning1);
+}
+
 .rowMain {
   min-width: 0;
   display: flex;

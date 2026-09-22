@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
+import { toModelTypeOption } from "@dashboard/components/ModelTypeIcon/toModelTypeOption";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   OrderDirection,
@@ -12,19 +14,21 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { useLastCreatedEntityTypeStorage } from "@dashboard/hooks/useLastCreatedEntityTypeStorage";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerDialog";
+import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerDialog/PageTypePickerDialog";
+import { CreateModelTypeDialog } from "@dashboard/modelTypes/components/CreateModelTypeDialog/CreateModelTypeDialog";
+import { useCreateModelType } from "@dashboard/modelTypes/hooks/useCreateModelType";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
@@ -226,6 +230,7 @@ const PageList = ({ params }: PageListProps) => {
     PageListUrlDialog,
     PageListUrlQueryParams
   >(navigate, pageListUrl, params);
+  const createModelTypeDialog = useCreateModelType({ onClose: closeModal });
   const [bulkPageRemove, bulkPageRemoveOpts] = usePageBulkRemoveMutation({
     onCompleted: data => {
       if (data.pageBulkDelete?.errors.length === 0) {
@@ -315,7 +320,7 @@ const PageList = ({ params }: PageListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => pages[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, pages);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
@@ -368,6 +373,7 @@ const PageList = ({ params }: PageListProps) => {
         pages={pages}
         onUpdateListSettings={updateListSettings}
         onPageCreate={handlePageCreate}
+        onCreateModelType={() => openModal("create-model-type")}
         activePageTypeName={activePageType?.name}
         onSort={handleSort}
         sort={getSortParams(params)}
@@ -413,10 +419,17 @@ const PageList = ({ params }: PageListProps) => {
         }
         open={params.action === "remove"}
       />
+      <CreateModelTypeDialog
+        open={params.action === "create-model-type"}
+        onClose={closeModal}
+        {...createModelTypeDialog}
+      />
       <PageTypePickerDialog
         confirmButtonState="success"
         open={params.action === "create-page"}
-        pageTypes={mapNodeToChoice(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search))}
+        pageTypes={(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search) ?? []).map(
+          toModelTypeOption,
+        )}
         defaultOption={defaultPickerOption}
         fetchPageTypes={searchDialogPageTypes}
         fetchMorePageTypes={fetchMoreDialogPageTypes}

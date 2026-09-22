@@ -20,6 +20,8 @@ export interface ContextualSearchAction {
   permissions?: PermissionEnum[];
   /** Owning app's name for extension-provided actions. Searchable, not displayed. */
   appName?: string;
+  /** Extra terms the action should match on, e.g. ["taxes", "avatax"]. Searchable, not displayed. */
+  aliases?: string[];
   /** Optional icon (app logo for extension-provided actions). */
   avatar?: string;
   /** Invoked when the action is activated, receiving the current view + entity context. */

@@ -166,6 +166,34 @@ export const messages = defineMessages({
     defaultMessage: "Price",
     description: "bulk publish review table price column",
   },
+  reviewColumnPriceUnchangedHint: {
+    defaultMessage: "Blank keeps current",
+    id: "C1+aT0",
+    description: "bulk publish review table price column hint",
+  },
+  reviewPriceUnchangedPlaceholder: {
+    defaultMessage: "Unchanged",
+    id: "1xn94O",
+    description: "bulk publish review price placeholder when the price is kept",
+  },
+  reviewPriceOverwritesMixed: {
+    defaultMessage:
+      "Overwrites {count, plural, one {# variant price} other {# different variant prices}}",
+    id: "/NkQFN",
+    description: "bulk publish review warning when one price replaces varied variant prices",
+  },
+  reviewVariantsStayUnlisted: {
+    defaultMessage:
+      "{count, plural, one {# variant has no price here and stays unlisted} other {# variants have no price here and stay unlisted}}. Set a price to publish {count, plural, one {it} other {them}}.",
+    id: "BhLnBj",
+    description: "bulk publish review warning about variants left without a channel listing",
+  },
+  reviewPriceUpdateCount: {
+    defaultMessage:
+      "{count, plural, =0 {No price changes} one {# price change} other {# price changes}}",
+    id: "FmZAfR",
+    description: "bulk publish review count of products whose price will change",
+  },
   reviewColumnCostPrice: {
     id: "7E7y/o",
     defaultMessage: "Cost price (optional)",
@@ -279,6 +307,17 @@ export const messages = defineMessages({
     defaultMessage: "Cost prices set for {count, plural, one {# product} other {# products}}",
     description: "bulk publish confirm partial cost prices",
   },
+  confirmPricesUnchanged: {
+    defaultMessage:
+      "{count, plural, one {# product keeps its current prices} other {# products keep their current prices}}",
+    id: "6e2YdE",
+    description: "bulk publish confirm products with no price change",
+  },
+  confirmNoPriceChanges: {
+    defaultMessage: "Prices unchanged",
+    id: "GYXouB",
+    description: "bulk publish confirm title when no price is set",
+  },
   confirmStockSkippedTitle: {
     id: "RB7zH3",
     defaultMessage: "Stock will not be changed",
@@ -367,9 +406,9 @@ export const messages = defineMessages({
     description: "bulk publish product already listed badge",
   },
   alreadyInChannelTooltip: {
-    id: "VnPjPG",
     defaultMessage:
-      "{hasStock, select, true {Prices and stock will be updated across all variants.} other {Prices will be updated across all variants.}}",
+      "{hasStock, select, true {Already in this channel. Leave price or stock blank to keep the current values.} other {Already in this channel. Leave the price blank to keep the current prices.}}",
+    id: "BZyOKE",
     description: "bulk publish already listed badge tooltip",
   },
   publishLabel: {
@@ -425,9 +464,14 @@ export const messages = defineMessages({
     description: "bulk publish stock disabled without any warehouses",
   },
   priceRequired: {
-    id: "Oct6t4",
-    defaultMessage: "Enter a valid price for every product.",
+    defaultMessage: "Enter a price for products that are not in this channel yet.",
+    id: "Em4Fzl",
     description: "bulk publish price validation",
+  },
+  priceInvalid: {
+    defaultMessage: "Enter a valid price or leave it blank to keep the current one.",
+    id: "H31h5O",
+    description: "bulk publish price format validation",
   },
   costPriceInvalid: {
     id: "bJ8HZb",

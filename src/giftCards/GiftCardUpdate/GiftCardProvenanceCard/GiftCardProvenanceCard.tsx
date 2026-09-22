@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { GiftCardProvenanceCardView } from "./GiftCardProvenanceCardView";
 
-export const GiftCardProvenanceCard = (): JSX.Element => {
+export const GiftCardProvenanceCard = (): React.ReactNode => {
   const { giftCard, loading } = useGiftCardDetails();
   const { data: channelsData } = useChannelsQuery({
     skip: !giftCard?.boughtInChannel,

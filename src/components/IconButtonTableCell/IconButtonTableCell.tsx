@@ -1,4 +1,4 @@
-import { TableCell } from "@material-ui/core";
+import { TableCell } from "@dashboard/components/Table/Table";
 import { Button } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 

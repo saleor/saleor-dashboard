@@ -1,3 +1,4 @@
+import { ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { GridTable } from "@dashboard/components/GridTable";
 import { Skeleton } from "@dashboard/components/Skeleton/Skeleton";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -24,7 +25,7 @@ interface ProductTableSkeletonProps {
 }
 
 const ProductTableItemSkeleton = ({ reorderable = true }: { reorderable?: boolean }): ReactNode => (
-  <GridTable.Row __height="50px" backgroundColor="default1">
+  <GridTable.Row __height={ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT} backgroundColor="default1">
     <GridTable.Cell __height="inherit" padding={0}>
       {reorderable ? (
         <Box display="flex" alignItems="center" justifyContent="center" height="100%">
@@ -87,17 +88,17 @@ export const ProductTableSkeleton = ({
         <GridTable.Cell padding={0} borderWidth={0} />
         <GridTable.Cell padding={0} borderWidth={0} />
         <GridTable.Cell borderWidth={0} padding={0}>
-          <Text size={2} lineHeight={2} color="default2">
+          <Text size={2} color="default2">
             <FormattedMessage id="6AMFki" defaultMessage="Name" description="product name" />
           </Text>
         </GridTable.Cell>
         <GridTable.Cell borderWidth={0} padding={0}>
-          <Text size={2} lineHeight={2} color="default2">
+          <Text size={2} color="default2">
             <FormattedMessage id="k+HcTv" defaultMessage="Type" description="product type" />
           </Text>
         </GridTable.Cell>
         <GridTable.Cell borderWidth={0} padding={0}>
-          <Text size={2} lineHeight={2} color="default2">
+          <Text size={2} color="default2">
             <FormattedMessage
               id="Oe62bR"
               defaultMessage="Availability"

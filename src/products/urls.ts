@@ -31,11 +31,14 @@ import { stringifyQs } from "../utils/urls";
 const productSection = "/products/";
 
 export const productAddPath = urlJoin(productSection, "add");
-export const productAddUrl = (params?: ProductCreateUrlQueryParams) =>
-  productAddPath + "?" + stringifyQs(params);
 
 export const productListPath = productSection;
-export type ProductListUrlDialog = "delete" | "export" | "create-product" | TabActionDialog;
+export type ProductListUrlDialog =
+  | "delete"
+  | "export"
+  | "create-product"
+  | "create-product-type"
+  | TabActionDialog;
 export enum ProductListUrlFiltersEnum {
   priceFrom = "priceFrom",
   priceTo = "priceTo",
@@ -86,6 +89,7 @@ export interface ProductListUrlQueryParams
     ActiveTab {
   attributeId?: string;
   presestesChanged?: string;
+  "product-type-id"?: string;
 }
 export const productListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);
@@ -189,6 +193,7 @@ export type ProductUrlDialog =
   | "remove-media"
   | "assign-attribute-value"
   | "view-metadata"
+  | "setup"
   | ChannelsAction;
 export type ProductUrlQueryParams = BulkAction & Dialog<ProductUrlDialog> & SingleAction;
 export type ProductCreateUrlDialog = "assign-attribute-value" | ChannelsAction;

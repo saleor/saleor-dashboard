@@ -1,5 +1,5 @@
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
+import { Locale } from "@dashboard/components/Locale/Locale";
 import { type OrderDraft } from "@dashboard/orders/types";
 
 import { createGetCellContent, formatDateTime, getCustomerName } from "./datagrid";

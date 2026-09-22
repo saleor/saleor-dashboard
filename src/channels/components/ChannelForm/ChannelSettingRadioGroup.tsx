@@ -3,7 +3,7 @@ import { type ReactNode } from "react";
 
 import styles from "./ChannelSettingRadioGroup.module.css";
 
-export interface ChannelSettingRadioOption<T extends string> {
+interface ChannelSettingRadioOption<T extends string> {
   value: T;
   label: ReactNode;
   description: ReactNode;

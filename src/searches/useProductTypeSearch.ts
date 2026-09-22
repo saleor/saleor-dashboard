@@ -5,7 +5,7 @@ import {
   type SearchProductTypesQuery,
   type SearchProductTypesQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch/makeTopLevelSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export const searchProductTypes = gql`
@@ -15,6 +15,7 @@ export const searchProductTypes = gql`
         node {
           id
           name
+          hasVariants
         }
       }
       pageInfo {

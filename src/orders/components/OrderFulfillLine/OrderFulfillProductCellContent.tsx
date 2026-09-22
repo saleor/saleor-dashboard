@@ -14,7 +14,7 @@ export const OrderFulfillProductCellContent = ({
   productName,
   attributesCaption,
   children,
-}: OrderFulfillProductCellContentProps): JSX.Element => {
+}: OrderFulfillProductCellContentProps): React.ReactNode => {
   const { elementRef: productNameRef, isOverflowing: isProductNameOverflowing } =
     useOverflowDetection<HTMLDivElement>();
   const { elementRef: attributesRef, isOverflowing: isAttributesOverflowing } =

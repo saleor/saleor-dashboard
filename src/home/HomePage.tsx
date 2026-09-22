@@ -1,17 +1,16 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { useExtensionsWithLoadingState } from "@dashboard/extensions/hooks/useExtensions";
+import { applyExtensionPreferences } from "@dashboard/extensions/preferences/applyExtensionPreferences";
+import { useExtensionPreferences } from "@dashboard/extensions/preferences/useExtensionPreferences";
 import { Box } from "@saleor/macaw-ui-next";
 import { useParams, useRouteMatch } from "react-router";
 import { Redirect } from "react-router-dom";
 
-import { filterHomeExtensions } from "./filterHomeExtensions";
+import { filterHomeExtensions, HOMEPAGE_WIDGETS_MOUNT } from "./filterHomeExtensions";
 import { HomeEmptyState } from "./HomeEmptyState";
-import { HomeWidgetsGrid } from "./HomeWidgetsGrid";
-import { type HomeActiveTab, HomeWidgetTabs } from "./HomeWidgetTabs";
-import { HomeWidgetView } from "./HomeWidgetView";
+import { HomeTabPanels } from "./HomeTabPanels";
+import { type HomeActiveTab } from "./HomeWidgetTabs";
 import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
-
-const HOMEPAGE_MOUNT = ["HOMEPAGE_WIDGETS"] as const;
 
 export const useHomeRouteParams = () => {
   const { extensionId: rawExtensionId } = useParams<{ extensionId?: string }>();
@@ -24,9 +23,11 @@ export const useHomeRouteParams = () => {
   };
 };
 
+type HomeExtensionsSplit = ReturnType<typeof filterHomeExtensions>;
+
 const resolveLeftmostTabUrl = (
-  fullscreen: ReturnType<typeof filterHomeExtensions>["fullscreen"],
-  widgets: ReturnType<typeof filterHomeExtensions>["widgets"],
+  fullscreen: HomeExtensionsSplit["fullscreen"],
+  widgets: HomeExtensionsSplit["widgets"],
 ): string | null => {
   if (fullscreen.length > 0) {
     return homeWidgetUrl(fullscreen[0].id);
@@ -39,15 +40,64 @@ const resolveLeftmostTabUrl = (
   return null;
 };
 
+const leftmostTab = (fullscreen: HomeExtensionsSplit["fullscreen"]): HomeActiveTab =>
+  fullscreen.length > 0 ? { kind: "extension", id: fullscreen[0].id } : { kind: "widgets" };
+
+/**
+ * Canonicalize /home and stale widget URLs with <Redirect>, but keep rendering
+ * HomeTabPanels for the destination tab. Returning <Redirect> alone unmounts
+ * keep-alive iframes — the sidebar Home item always goes to /home.
+ */
+const resolveHomeTab = ({
+  extensionId,
+  isWidgetsRoute,
+  fullscreen,
+  widgets,
+  leftmostUrl,
+}: {
+  extensionId: string | undefined;
+  isWidgetsRoute: boolean;
+  fullscreen: HomeExtensionsSplit["fullscreen"];
+  widgets: HomeExtensionsSplit["widgets"];
+  leftmostUrl: string;
+}): { activeTab: HomeActiveTab; redirectTo: string | null } => {
+  if (!extensionId && !isWidgetsRoute) {
+    return { activeTab: leftmostTab(fullscreen), redirectTo: leftmostUrl };
+  }
+
+  if (isWidgetsRoute) {
+    if (widgets.length === 0) {
+      return { activeTab: leftmostTab(fullscreen), redirectTo: leftmostUrl };
+    }
+
+    return { activeTab: { kind: "widgets" }, redirectTo: null };
+  }
+
+  const match = fullscreen.find(extension => extension.id === extensionId);
+
+  if (!match) {
+    return { activeTab: leftmostTab(fullscreen), redirectTo: leftmostUrl };
+  }
+
+  return { activeTab: { kind: "extension", id: match.id }, redirectTo: null };
+};
+
 export const HomePage = () => {
   const { extensionId, isWidgetsRoute } = useHomeRouteParams();
 
   const { user } = useUser();
   const userPermissions = user?.userPermissions ?? [];
 
-  const { extensions: extensionsByMount, loading } = useExtensionsWithLoadingState(HOMEPAGE_MOUNT);
+  const { extensions: extensionsByMount, loading } =
+    useExtensionsWithLoadingState(HOMEPAGE_WIDGETS_MOUNT);
   const extensions = extensionsByMount.HOMEPAGE_WIDGETS;
-  const { fullscreen, widgets } = filterHomeExtensions(extensions, userPermissions);
+  const { getState } = useExtensionPreferences();
+
+  const split = filterHomeExtensions(extensions, userPermissions);
+  // Drop hidden extensions and float pinned ones — for fullscreen that also
+  // decides which tab is leftmost, and therefore the default tab.
+  const fullscreen = applyExtensionPreferences(split.fullscreen, getState);
+  const widgets = applyExtensionPreferences(split.widgets, getState);
 
   if (loading) {
     // No live data yet and no non-empty snapshot: stay blank so the Pulse
@@ -61,49 +111,27 @@ export const HomePage = () => {
 
   const leftmostUrl = resolveLeftmostTabUrl(fullscreen, widgets);
 
-  // Root path - redirect to leftmost tab
-  if (!extensionId && !isWidgetsRoute) {
-    return <Redirect to={leftmostUrl!} />;
+  if (!leftmostUrl) {
+    return <HomeEmptyState />;
   }
 
-  // /home/widgets but no widget extensions - redirect away
-  if (isWidgetsRoute && widgets.length === 0) {
-    return <Redirect to={leftmostUrl!} />;
-  }
-
-  let activeTab: HomeActiveTab;
-  let activeFullscreenExtension: (typeof fullscreen)[number] | undefined;
-
-  if (isWidgetsRoute) {
-    activeTab = { kind: "widgets" };
-  } else {
-    activeFullscreenExtension = fullscreen.find(extension => extension.id === extensionId);
-
-    // URL points to a missing or unauthorized fullscreen extension - redirect to leftmost tab
-    if (!activeFullscreenExtension) {
-      return <Redirect to={leftmostUrl!} />;
-    }
-
-    activeTab = { kind: "extension", id: activeFullscreenExtension.id };
-  }
-
-  const showWidgetsTab = widgets.length > 0;
-  const isFullscreenTab = activeTab.kind === "extension";
+  const { activeTab, redirectTo } = resolveHomeTab({
+    extensionId,
+    isWidgetsRoute,
+    fullscreen,
+    widgets,
+    leftmostUrl,
+  });
 
   return (
-    <Box display="flex" flexDirection="column" height="100%">
-      <HomeWidgetTabs
-        fullscreenExtensions={fullscreen}
-        showWidgetsTab={showWidgetsTab}
+    <>
+      {redirectTo ? <Redirect to={redirectTo} /> : null}
+      <HomeTabPanels
+        fullscreen={fullscreen}
+        widgets={widgets}
         activeTab={activeTab}
+        showWidgetsTab={widgets.length > 0}
       />
-      <Box padding={isFullscreenTab ? 0 : 6} width="100%" __flex="1" __minHeight={0}>
-        {activeTab.kind === "widgets" ? (
-          <HomeWidgetsGrid extensions={widgets} />
-        ) : (
-          <HomeWidgetView extension={activeFullscreenExtension!} />
-        )}
-      </Box>
-    </Box>
+    </>
   );
 };

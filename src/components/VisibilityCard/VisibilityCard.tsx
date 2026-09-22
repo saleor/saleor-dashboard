@@ -1,14 +1,13 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
-import RadioSwitchField from "@dashboard/components/RadioSwitchField";
+import { RadioSwitchField } from "@dashboard/components/RadioSwitchField/RadioSwitchField";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Divider, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import type * as React from "react";
 import { useState } from "react";
@@ -259,33 +258,35 @@ const VisibilityCard = (props: VisibilityCardProps) => {
         )}
         {hasAvailableProps && (
           <>
-            <Hr />
+            <Divider />
             <RadioSwitchField
               className={classes.switchField}
               disabled={disabled}
               error={!!getFieldError(errors, "isAvailableForPurchase")}
               firstOptionLabel={
-                <>
-                  <p className={classes.label}>{messages.availableLabel}</p>
+                <Box display="flex" __alignItems="baseline" gap={2}>
+                  <Text>{messages.availableLabel}</Text>
                   {isAvailableOrPublished({
                     condition: isAvailableForPurchase,
                     date: availableForPurchaseAt,
                     now: dateNow,
                   }) && (
-                    <span className={classes.secondLabel}>
+                    <Text size={2} color="default2">
                       {visibleMessage(availableForPurchaseAt)}
-                    </span>
+                    </Text>
                   )}
-                </>
+                </Box>
               }
-              name={"isAvailableForPurchase" as keyof FormData}
+              name="isAvailableForPurchase"
               secondOptionLabel={
-                <>
-                  <p className={classes.label}>{messages.unavailableLabel}</p>
+                <Box display="flex" __alignItems="baseline" gap={2}>
+                  <Text>{messages.unavailableLabel}</Text>
                   {availableForPurchaseAt && !isAvailableForPurchase && (
-                    <span className={classes.secondLabel}>{messages.availableSecondLabel}</span>
+                    <Text size={2} color="default2">
+                      {messages.availableSecondLabel}
+                    </Text>
                   )}
-                </>
+                </Box>
               }
               value={isAvailableForPurchase}
               onChange={handleRadioFieldChange("availableForPurchaseAt")}
@@ -330,7 +331,7 @@ const VisibilityCard = (props: VisibilityCardProps) => {
         )}
         {visibleInListings !== undefined && (
           <>
-            <Hr />
+            <Divider />
             <ControlledCheckbox
               className={classes.checkbox}
               name="visibleInListings"

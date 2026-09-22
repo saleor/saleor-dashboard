@@ -4,10 +4,10 @@ import { ChannelsAvailabilitySearchField } from "@dashboard/components/ChannelsA
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalDivider } from "@dashboard/components/Modal/ModalDivider";
-import { CustomerAddressChoiceCard } from "@dashboard/customers/components/CustomerAddressChoiceCard";
+import { CustomerAddressChoiceCard } from "@dashboard/customers/components/CustomerAddressChoiceCard/CustomerAddressChoiceCard";
 import { type AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";

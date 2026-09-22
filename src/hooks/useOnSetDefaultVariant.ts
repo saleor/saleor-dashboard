@@ -1,5 +1,5 @@
 import { type Node, useProductVariantSetDefaultMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import { useIntl } from "react-intl";
 

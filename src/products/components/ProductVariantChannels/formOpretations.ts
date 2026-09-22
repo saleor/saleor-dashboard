@@ -1,14 +1,14 @@
 // @ts-strict-ignore
-import { type ChannelPriceAndPreorderData } from "@dashboard/channels/utils";
+import { type VariantChannelPriceData } from "@dashboard/channels/utils";
 import { type ProductVariantCreateDataQuery } from "@dashboard/graphql";
 import { type UseFormsetOutput } from "@dashboard/hooks/useFormset";
 import { getChannelsInput } from "@dashboard/products/utils/handlers";
 
 import { type VariantChannelListing } from "./types";
 
-type FormChannels = UseFormsetOutput<ChannelPriceAndPreorderData>;
+type FormChannels = UseFormsetOutput<VariantChannelPriceData>;
 
-export const createChannelsWithPreorderInfo = (
+export const createVariantChannelsFromProduct = (
   product: ProductVariantCreateDataQuery["product"],
 ) =>
   product
@@ -24,7 +24,7 @@ export const createChannelsWithPreorderInfo = (
 export const concatChannelsBySelection = (
   selectedIds: string[],
   formChannels: FormChannels,
-  allChannels: ChannelPriceAndPreorderData[],
+  allChannels: VariantChannelPriceData[],
 ) => {
   const includedAndSelected = formChannels.data.filter(ch => selectedIds.includes(ch.id));
   const includedAndSelectedIds = includedAndSelected.map(ch => ch.id);

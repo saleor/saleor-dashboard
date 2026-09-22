@@ -17,7 +17,7 @@ import { variantsWithProductDataMock } from "./componenets/RuleForm/components/R
 import { DiscountRules } from "./DiscountRules";
 import { catalogComplexRules, catalogRules, channels, orderRules } from "./mocksData";
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn((): (() => void) => {
     return (): void => undefined;
   }),
@@ -42,7 +42,7 @@ jest.mock("./hooks/useGraphQLPlayground", () => ({
 }));
 jest.setTimeout(30000); // Timeout was increased because of error throw in update test when run all tests
 
-const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => {
+const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => {
   return (
     <MemoryRouter>
       <MockedProvider

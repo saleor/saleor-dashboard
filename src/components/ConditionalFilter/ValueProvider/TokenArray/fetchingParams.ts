@@ -51,6 +51,12 @@ export interface PageFetchingParams {
   pageTypes: string[];
 }
 
+export interface CustomerFetchingParams {
+  customerType: string[];
+  attribute: Record<string, string[]>;
+  attributeReference: Record<string, string[]>;
+}
+
 export interface GiftCardsFetchingParams {
   currency: string[];
   products: string[];
@@ -89,6 +95,7 @@ type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type DiscountParamsKeys = keyof DiscountFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
+type CustomerParamsKeys = keyof Omit<CustomerFetchingParams, "attribute" | "attributeReference">;
 type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
 type ProductTypesParamsKeys = keyof ProductTypesFetchingParams;
 type StaffMembersParamsKeys = keyof StaffMembersFetchingParams;
@@ -144,6 +151,12 @@ const emptyPageFetchingParams: PageFetchingParams = {
   pageTypes: [],
 };
 
+const emptyCustomerFetchingParams: CustomerFetchingParams = {
+  customerType: [],
+  attribute: {},
+  attributeReference: {},
+};
+
 const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
   currency: [],
   products: [],
@@ -186,9 +199,15 @@ const includedInParams = (c: UrlToken) =>
   TokenType.ATTRIBUTE_MULTISELECT === c.type ||
   TokenType.ATTRIBUTE_REFERENCE === c.type;
 
-export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
-  const key = c.name as FetchingParamsKeys;
+const isAttributeTokenType = (type: UrlToken["type"]) =>
+  type !== TokenType.STATIC && Object.values(TokenType).includes(type);
 
+const applyAttributeFetchingParams = <
+  T extends { attribute: Record<string, string[]>; attributeReference: Record<string, string[]> },
+>(
+  p: T,
+  c: UrlToken,
+): T | null => {
   if (c.type === TokenType.ATTRIBUTE_REFERENCE) {
     if (!p.attributeReference[c.name]) {
       p.attributeReference[c.name] = [];
@@ -199,24 +218,32 @@ export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
     return p;
   }
 
-  if (!c.isAttribute() && !p[key]) {
-    p[key] = [];
+  if (!isAttributeTokenType(c.type)) {
+    return null;
   }
 
-  if (c.isAttribute() && !p.attribute[c.name]) {
+  if (!p.attribute[c.name]) {
     p.attribute[c.name] = [];
   }
 
-  if (c.isAttribute() && includedInParams(c)) {
+  if (includedInParams(c)) {
     p.attribute[c.name] = unique(p.attribute[c.name].concat(c.value));
-
-    return p;
   }
 
-  if (c.isAttribute() && !includedInParams(c)) {
-    p.attribute[c.name] = [];
+  return p;
+};
 
-    return p;
+export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
+  const attributeParams = applyAttributeFetchingParams(p, c);
+
+  if (attributeParams) {
+    return attributeParams;
+  }
+
+  const key = c.name as FetchingParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
   }
 
   p[key] = unique(p[key].concat(c.value));
@@ -268,6 +295,24 @@ export const toDiscountsFetchingParams = (p: DiscountFetchingParams, c: UrlToken
 
 export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
   const key = c.name as PageParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
+export const toCustomerFetchingParams = (p: CustomerFetchingParams, c: UrlToken) => {
+  const attributeParams = applyAttributeFetchingParams(p, c);
+
+  if (attributeParams) {
+    return attributeParams;
+  }
+
+  const key = c.name as CustomerParamsKeys;
 
   if (!p[key]) {
     p[key] = [];
@@ -338,24 +383,13 @@ export const toAttributesFetchingParams = (p: AttributesFetchingParams, c: UrlTo
   return p;
 };
 
-export const toCategoryFetchingParams = (p: CategoryFetchingParams, c: UrlToken) => {
-  const key = c.name as keyof CategoryFetchingParams;
-
-  if (!p[key]) {
-    p[key] = [];
-  }
-
-  p[key] = unique(p[key].concat(c.value));
-
-  return p;
-};
-
 export type FetchingParamsType =
   | OrderFetchingParams
   | FetchingParams
   | CollectionFetchingParams
   | GiftCardsFetchingParams
   | PageFetchingParams
+  | CustomerFetchingParams
   | VoucherFetchingParams
   | DiscountFetchingParams
   | ProductTypesFetchingParams
@@ -375,6 +409,8 @@ export const getEmptyFetchingPrams = (type: FilterProviderType) => {
       return emptyDiscountFetchingParams;
     case "page":
       return emptyPageFetchingParams;
+    case "customer":
+      return emptyCustomerFetchingParams;
     case "gift-cards":
       return emptyGiftCardsFetchingParams;
     case "collection":

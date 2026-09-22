@@ -59,6 +59,9 @@ export const pageTypeQuery = gql`
     pageType(id: $id) {
       id
       name
+      metadata {
+        ...MetadataItem
+      }
       attributes {
         ...AttributeDetails
       }

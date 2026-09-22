@@ -1,5 +1,7 @@
 import { readonlyTextCell, tagsCell } from "@dashboard/components/Datagrid/customCells/cells";
+import { modelTypeCell } from "@dashboard/components/Datagrid/customCells/ModelTypeCell";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { getStatusColor } from "@dashboard/misc";
 import { type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField } from "@dashboard/modeling/urls";
@@ -67,7 +69,11 @@ export const createGetCellContent =
       case "slug":
         return readonlyTextCell(rowData?.slug ?? "");
       case "contentType":
-        return readonlyTextCell(rowData?.pageType?.name ?? "");
+        return modelTypeCell(
+          getModelTypeIcon(rowData?.pageType?.metadata),
+          rowData?.pageType?.name ?? "",
+          currentTheme === "defaultDark",
+        );
       case "visible": {
         const tag = rowData?.isPublished
           ? intl.formatMessage(messages.published)

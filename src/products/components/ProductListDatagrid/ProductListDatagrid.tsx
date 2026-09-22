@@ -10,7 +10,6 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { type ProductListColumns } from "@dashboard/config";
 import {
@@ -39,6 +38,7 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { getAttributeIdFromColumnValue, isAttributeColumnValue } from "../ProductListPage/utils";
+import { ProductListPagination } from "../ProductListPagination/ProductListPagination";
 import {
   createGetCellContent,
   getAttributesFetchMoreProps,
@@ -327,9 +327,7 @@ export const ProductListDatagrid = ({
           navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
-        <DatagridPagination
-          component="div"
-          colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
+        <ProductListPagination
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}

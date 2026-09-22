@@ -1,11 +1,99 @@
-.inlineRow {
-  width: 100%;
-  min-width: 0;
-}
-
-.inlineRow > * {
+.row {
   min-width: 0;
   max-width: 100%;
+}
+
+.row > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.valueField {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.valueField > * {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.valueField :global([data-macaw-ui-component="Multiselect"]) {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.row :global([data-test-id^="selected-option-"]) {
+  max-width: min(160px, 100%);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.row
+  :global(
+    [data-test-id^="selected-option-"]
+      > *:first-child:not([aria-hidden]):not([data-test-id="swatch-preview"])
+  ) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row :global(input:not([type="date"]):not([type="datetime-local"]):not([type="time"])) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*
+ * Chrome/WebKit date controls use an inner edit layout that grows to a tall
+ * empty box when overflow is hidden (the "between" fields looked huge).
+ */
+.row :global(input[type="date"]),
+.row :global(input[type="datetime-local"]),
+.row :global(input[type="time"]) {
+  min-width: 0;
+  overflow: visible;
+}
+
+.inlineRow {
+  width: 100%;
+}
+
+/*
+ * Macaw portals list options; DynamicCombobox/Multiselect set data-portal-for
+ * to the field id (see FILTER_CONTROL_ID_PREFIX). Scope to that prefix so
+ * product/variant Color dropdowns are not restyled.
+ *
+ * Grow only leaf label spans. startAdornment wrappers are spans with children
+ * — flex: 1 on them shoves the name to the far right. Bare color swatches are
+ * empty spans; exclude them by test id. Currency options opt out.
+ */
+:global(
+  [data-portal-for^="conditional-filter"]
+    [data-test-id="select-option"]:not(:has([data-currency-option-leading]))
+) {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+:global(
+  [data-portal-for^="conditional-filter"]
+    [data-test-id="select-option"]:not(:has([data-currency-option-leading]))
+    > span:not([aria-hidden]):not([data-test-id="swatch-preview"]):not(:has(*))
+) {
+  min-width: 0;
+  flex: 1 1 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .inlineRemoveButton {
@@ -15,6 +103,7 @@
   background: transparent;
   cursor: pointer;
   padding: 0;
+  margin-inline-start: var(--mu-spacing-2);
   line-height: 1;
   color: var(--mu-colors-text-default2);
 }

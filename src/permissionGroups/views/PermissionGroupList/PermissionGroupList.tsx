@@ -12,7 +12,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { useMemo } from "react";
 
-import PermissionGroupListPage from "../../components/PermissionGroupListPage";
+import PermissionGroupListPage from "../../components/PermissionGroupListPage/PermissionGroupListPage";
 import { permissionGroupListUrl, type PermissionGroupListUrlQueryParams } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 

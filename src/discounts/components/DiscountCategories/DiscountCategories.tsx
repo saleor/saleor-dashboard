@@ -1,11 +1,10 @@
 import { categoryUrl } from "@dashboard/categories/urls";
-import { Pagination } from "@dashboard/collections/components/CollectionProducts/Pagination";
+import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
 import {
   AssignableListCell,
   AssignableListLinkCell,
   AssignableListTable,
 } from "@dashboard/components/AssignableListTable/AssignableListTable";
-import { ASSIGNABLE_LIST_TABLE_LEADING_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { PAGINATE_BY } from "@dashboard/config";
 import { type CategoryWithTotalProductsFragment } from "@dashboard/graphql";
@@ -38,7 +37,7 @@ export const DiscountCategories = ({
   numberOfRows = PAGINATE_BY,
   onUpdateListSettings,
   embedded = false,
-}: DiscountCategoriesProps): JSX.Element => {
+}: DiscountCategoriesProps): React.ReactNode => {
   const intl = useIntl();
 
   const body = (
@@ -84,10 +83,10 @@ export const DiscountCategories = ({
         )}
       />
       {categories?.length && onUpdateListSettings ? (
-        <Pagination
+        <AssignableListPagination
+          inset="nested"
           numberOfRows={numberOfRows}
           onUpdateListSettings={onUpdateListSettings}
-          paddingLeft={ASSIGNABLE_LIST_TABLE_LEADING_INSET}
         />
       ) : null}
     </>

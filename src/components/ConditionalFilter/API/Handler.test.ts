@@ -5,6 +5,7 @@ import {
   type _GetWarehouseChoicesQueryVariables,
 } from "@dashboard/graphql";
 
+import { FILTER_CHOICES_PAGE_SIZE } from "./filterChoicesPage";
 import { WarehouseHandler } from "./Handler";
 
 describe("WarehouseHandler", () => {
@@ -25,6 +26,11 @@ describe("WarehouseHandler", () => {
       __typename: "Query" as const,
       warehouses: {
         __typename: "WarehouseCountableConnection",
+        pageInfo: {
+          __typename: "PageInfo",
+          hasNextPage: false,
+          endCursor: null,
+        },
         edges: [
           {
             __typename: "WarehouseCountableEdge",
@@ -59,7 +65,8 @@ describe("WarehouseHandler", () => {
     expect(mockClient.query).toHaveBeenCalledWith({
       query: _GetWarehouseChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after: undefined,
         query: searchQuery,
       } as _GetWarehouseChoicesQueryVariables,
     });
@@ -78,6 +85,53 @@ describe("WarehouseHandler", () => {
         originalSlug: undefined,
       },
     ]);
+    expect(handler.pageInfo).toEqual({ hasNextPage: false, endCursor: null });
+  });
+
+  it("requests the next page when after is provided", async () => {
+    // Arrange
+    const handler = new WarehouseHandler(mockClient, "main");
+    const mockResponse: _GetWarehouseChoicesQuery = {
+      __typename: "Query" as const,
+      warehouses: {
+        __typename: "WarehouseCountableConnection",
+        pageInfo: {
+          __typename: "PageInfo",
+          hasNextPage: true,
+          endCursor: "cursor-2",
+        },
+        edges: [
+          {
+            __typename: "WarehouseCountableEdge",
+            node: {
+              __typename: "Warehouse",
+              id: "WRH789",
+              name: "Overflow Warehouse",
+              slug: "overflow",
+            },
+          },
+        ],
+      },
+    };
+
+    mockClient.query.mockResolvedValueOnce({
+      data: mockResponse,
+    } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
+
+    // Act
+    const result = await handler.fetch("cursor-1");
+
+    // Assert
+    expect(mockClient.query).toHaveBeenCalledWith({
+      query: _GetWarehouseChoicesDocument,
+      variables: {
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after: "cursor-1",
+        query: "main",
+      } as _GetWarehouseChoicesQueryVariables,
+    });
+    expect(result).toHaveLength(1);
+    expect(handler.pageInfo).toEqual({ hasNextPage: true, endCursor: "cursor-2" });
   });
 
   it("handles empty search query", async () => {
@@ -88,6 +142,11 @@ describe("WarehouseHandler", () => {
       __typename: "Query" as const,
       warehouses: {
         __typename: "WarehouseCountableConnection",
+        pageInfo: {
+          __typename: "PageInfo",
+          hasNextPage: false,
+          endCursor: null,
+        },
         edges: [
           {
             __typename: "WarehouseCountableEdge",
@@ -113,7 +172,8 @@ describe("WarehouseHandler", () => {
     expect(mockClient.query).toHaveBeenCalledWith({
       query: _GetWarehouseChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after: undefined,
         query: "",
       },
     });
@@ -136,6 +196,11 @@ describe("WarehouseHandler", () => {
       __typename: "Query" as const,
       warehouses: {
         __typename: "WarehouseCountableConnection",
+        pageInfo: {
+          __typename: "PageInfo",
+          hasNextPage: false,
+          endCursor: null,
+        },
         edges: [],
       },
     };

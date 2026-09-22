@@ -4,6 +4,7 @@ import {
   getEmptyFetchingPrams,
   toAttributesFetchingParams,
   toCollectionFetchingParams,
+  toCustomerFetchingParams,
   toFetchingParams,
   toGiftCardsFetchingParams,
   toPageFetchingParams,
@@ -94,6 +95,21 @@ describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
     });
   });
 
+  it("should return customer fetching params", () => {
+    // Arrange
+    const type = "customer";
+
+    // Act
+    const fetchingParams = getEmptyFetchingPrams(type);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      customerType: [],
+      attribute: {},
+      attributeReference: {},
+    });
+  });
+
   it("should return gift cards fetching params", () => {
     // Arrange
     const type = "gift-cards";
@@ -150,6 +166,62 @@ describe("TokenArray / fetchingParams / toVouchersFetchingParams", () => {
       channel: ["channel-1"],
       discountType: [],
       voucherStatus: [],
+    });
+  });
+});
+
+describe("TokenArray / fetchingParams / toCustomerFetchingParams", () => {
+  it("should return fetching params", () => {
+    // Arrange
+    const params = {
+      customerType: [],
+      attribute: {},
+      attributeReference: {},
+    };
+
+    const token = {
+      conditionKind: "is",
+      name: "customerType",
+      type: "s",
+      value: "b2b",
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toCustomerFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      customerType: ["b2b"],
+      attribute: {},
+      attributeReference: {},
+    });
+  });
+
+  it("should collect attribute tokens onto attribute, not customerType", () => {
+    // Arrange
+    const params = {
+      customerType: [],
+      attribute: {},
+      attributeReference: {},
+    };
+    const token = {
+      conditionKind: "in",
+      name: "industry",
+      type: TokenType.ATTRIBUTE_DROPDOWN,
+      value: ["choice-1"],
+      isAttribute: () => true,
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toCustomerFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      customerType: [],
+      attribute: {
+        industry: ["choice-1"],
+      },
+      attributeReference: {},
     });
   });
 });

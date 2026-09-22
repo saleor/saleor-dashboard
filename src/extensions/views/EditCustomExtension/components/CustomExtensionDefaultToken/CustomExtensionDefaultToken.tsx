@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
 import { FormattedMessage } from "react-intl";

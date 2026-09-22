@@ -56,17 +56,3 @@ export function shouldLoadMoreFromScrollMetrics({
 
   return clientHeight <= maxHeightPx + 1;
 }
-
-export function readMaxHeightPx(element: Element): number | null {
-  const raw = getComputedStyle(element).maxHeight;
-
-  if (!raw || raw === "none") {
-    return null;
-  }
-
-  const parsed = Number.parseFloat(raw);
-
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
-}
-
-export { LOAD_MORE_THRESHOLD_PX };

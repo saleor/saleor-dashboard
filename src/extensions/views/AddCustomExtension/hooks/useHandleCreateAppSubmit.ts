@@ -1,7 +1,7 @@
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppErrorCode, type PermissionEnum, useAppCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { type SubmitHandler, type UseFormSetError } from "react-hook-form";
 import { useIntl } from "react-intl";

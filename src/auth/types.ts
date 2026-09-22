@@ -1,10 +1,40 @@
-import { type ApolloQueryResult } from "@apollo/client";
-import { type UserDetailsQuery, type UserFragment } from "@dashboard/graphql";
+import { type ApolloQueryResult, type FetchResult } from "@apollo/client";
 import {
-  type GetExternalAccessTokenData,
-  type GetExternalAuthUrlData,
-  type LoginData,
-} from "@dashboard/legacy-sdk";
+  type ExternalAuthenticationUrlMutation,
+  type ExternalAuthenticationUrlMutationVariables,
+  type ExternalLogoutMutation,
+  type ExternalLogoutMutationVariables,
+  type ExternalObtainAccessTokensMutation,
+  type ExternalObtainAccessTokensMutationVariables,
+  type ExternalRefreshMutation,
+  type LoginMutation,
+  type LoginMutationVariables,
+  type RefreshTokenMutation,
+  type SetPasswordMutation,
+  type SetPasswordMutationVariables,
+  type UserDetailsQuery,
+  type UserFragment,
+} from "@dashboard/graphql";
+
+// Auth SDK method opts
+export type LoginOpts = LoginMutationVariables;
+export type SetPasswordOpts = SetPasswordMutationVariables;
+export type GetExternalAuthUrlOpts = ExternalAuthenticationUrlMutationVariables;
+export type GetExternalAccessTokenOpts = ExternalObtainAccessTokensMutationVariables;
+export type LogoutOpts = Pick<ExternalLogoutMutationVariables, "input">;
+
+// Auth SDK method results
+export type LoginResult = FetchResult<LoginMutation>;
+export type LoginData = LoginMutation["tokenCreate"];
+export type LogoutResult = FetchResult<ExternalLogoutMutation> | null;
+export type RefreshTokenResult = FetchResult<RefreshTokenMutation>;
+export type SetPasswordResult = FetchResult<SetPasswordMutation>;
+export type GetExternalAuthUrlResult = FetchResult<ExternalAuthenticationUrlMutation>;
+export type GetExternalAuthUrlData = ExternalAuthenticationUrlMutation["externalAuthenticationUrl"];
+export type GetExternalAccessTokenResult = FetchResult<ExternalObtainAccessTokensMutation>;
+export type GetExternalAccessTokenData =
+  ExternalObtainAccessTokensMutation["externalObtainAccessTokens"];
+export type RefreshExternalTokenResult = FetchResult<ExternalRefreshMutation>;
 
 export interface RequestExternalLoginInput {
   redirectUri: string;

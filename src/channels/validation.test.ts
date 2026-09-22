@@ -6,7 +6,7 @@ import {
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 
-import { type FormData } from "./components/ChannelForm";
+import { type FormData } from "./components/ChannelForm/ChannelForm";
 import { validateChannelFormData } from "./validation";
 
 describe("validateChannelFormData", () => {

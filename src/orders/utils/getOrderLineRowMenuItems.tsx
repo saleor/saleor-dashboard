@@ -10,7 +10,8 @@ import {
   shouldOfferLineReturnAction,
 } from "@dashboard/orders/utils/getOrderLineActionUrls";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
-import { productPath } from "@dashboard/products/urls";
+import { productUrl } from "@dashboard/products/urls";
+import { withAppMountUri } from "@dashboard/utils/urls";
 import { ExternalLink, PackageIcon, Undo2 } from "lucide-react";
 import { type IntlShape } from "react-intl";
 
@@ -41,7 +42,7 @@ export const getOrderLineRowMenuItems = ({
       icon: <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
       onSelect: () => {
         if (productId) {
-          window.open(productPath(productId), "_blank", "noopener,noreferrer");
+          window.open(withAppMountUri(productUrl(productId)), "_blank", "noopener,noreferrer");
         }
       },
     },

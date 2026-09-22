@@ -5,7 +5,7 @@ import {
   type SearchAttributesQuery,
   type SearchAttributesQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch/makeTopLevelSearch";
 
 export const searchAttributes = gql`
   query SearchAttributes($after: String, $first: Int!, $query: String!) {

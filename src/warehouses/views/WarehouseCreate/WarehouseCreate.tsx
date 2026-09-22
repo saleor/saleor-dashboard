@@ -1,12 +1,12 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CountryCode, useWarehouseCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
 import WarehouseCreatePage, {
   type WarehouseCreatePageFormData,
-} from "@dashboard/warehouses/components/WarehouseCreatePage";
+} from "@dashboard/warehouses/components/WarehouseCreatePage/WarehouseCreatePage";
 import { warehouseUrl } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";
 

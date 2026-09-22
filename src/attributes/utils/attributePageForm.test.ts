@@ -1,4 +1,4 @@
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
 import { AttributeInputTypeEnum, AttributeTypeEnum } from "@dashboard/graphql";
 
 import {
@@ -10,7 +10,6 @@ import {
 const baseFormData: AttributePageFormData = {
   availableInGrid: true,
   entityType: null,
-  filterableInDashboard: true,
   filterableInStorefront: true,
   inputType: AttributeInputTypeEnum.DROPDOWN,
   metadata: [],

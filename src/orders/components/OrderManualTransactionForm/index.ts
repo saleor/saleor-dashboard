@@ -1,13 +1,11 @@
 import { type ReactElement } from "react";
 
-import {
-  DescriptionField,
-  ErrorText,
-  Form,
-  PriceInputField,
-  PspReferenceField,
-  SubmitButton,
-} from "./components";
+import { DescriptionField } from "./components/DescriptionField";
+import { ErrorText } from "./components/ErrorText";
+import { Form } from "./components/Form";
+import { PriceInputField } from "./components/PriceInputField";
+import { PspReferenceField } from "./components/PspReferenceField";
+import { SubmitButton } from "./components/SubmitButton";
 import {
   OrderManualTransactionForm as MainComponent,
   type OrderManualTransactionFormProps as MainComponentProps,

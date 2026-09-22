@@ -6,7 +6,7 @@ import {
 } from "@dashboard/attributes/utils/handlers";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
@@ -20,7 +20,7 @@ import {
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { useLastCreatedEntityTypeStorage } from "@dashboard/hooks/useLastCreatedEntityTypeStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import {
@@ -38,8 +38,8 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
-import PageDetailsPage from "../components/PageDetailsPage";
 import { type PageSubmitData } from "../components/PageDetailsPage/form";
+import PageDetailsPage from "../components/PageDetailsPage/PageDetailsPage";
 import { pageCreateUrl, type PageCreateUrlQueryParams, pageUrl } from "../urls";
 
 interface PageCreateProps {
@@ -87,9 +87,9 @@ const PageCreate = ({ params }: PageCreateProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const { data: selectedPageType } = usePageTypeQuery({
@@ -99,7 +99,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
     },
     skip: !selectedPageTypeId,
   });
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues = getAttributeValues;
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
   const [pageCreate, pageCreateOpts] = usePageCreateMutation({
     disableErrorHandling: true,
@@ -244,11 +244,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
   const errors = getMutationErrors(pageCreateOpts) as PageErrorWithAttributesFragment[];

@@ -5,12 +5,17 @@ export class ProductCreateDialog extends BasePage {
   constructor(
     page: Page,
     readonly dialogProductTypeInput = page.locator("[data-test-id='dialog-product-type']"),
+    readonly productNameInput = page.getByTestId("product-name-input"),
     readonly promptedOptions = page.getByTestId("select-option"),
     readonly dropdown = page.getByTestId("autocomplete-dropdown"),
     readonly confirmButton = page.getByTestId("submit"),
     readonly tooltipResult = page.getByRole("tooltip"),
   ) {
     super(page);
+  }
+
+  async typeName(name: string) {
+    await this.productNameInput.fill(name);
   }
 
   async selectProductTypeWithVariants(productType = "Beer") {

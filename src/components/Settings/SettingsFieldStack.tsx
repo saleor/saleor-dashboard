@@ -9,7 +9,10 @@ interface SettingsFieldStackProps {
 /**
  * Stack of form fields inside a SettingsSection, with consistent padding.
  */
-export const SettingsFieldStack = ({ children, intro }: SettingsFieldStackProps): JSX.Element => {
+export const SettingsFieldStack = ({
+  children,
+  intro,
+}: SettingsFieldStackProps): React.ReactNode => {
   return (
     <Box paddingX={6} paddingY={5} display="flex" flexDirection="column" gap={4}>
       {intro}

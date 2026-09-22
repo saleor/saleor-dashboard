@@ -2,10 +2,11 @@ import Link from "@dashboard/components/Link";
 import { globalSearchUrl } from "@dashboard/search/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getShortcutLeadingKey } from "../Sidebar/shortcuts/utils";
 import { Actions } from "./Actions";
+import { NAVIGATOR_SEARCH_LISTBOX_ID } from "./consts";
 import NavigatorSearchInput from "./NavigatorSearchInput";
 import { ResourcesTable } from "./ResourcesTable";
 import { SearchActions } from "./SearchActions";
@@ -13,8 +14,17 @@ import { SettingsActions } from "./SettingsActions";
 import { useKeyboardNavigation } from "./useKeyboardNavigation";
 import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
 
+const messages = defineMessages({
+  resultsLabel: {
+    id: "Yjs/a4",
+    defaultMessage: "Navigator results",
+    description: "accessible name of the Navigator results listbox",
+  },
+});
+
 export const CommandContent = () => {
-  const { setNavigatorVisibility } = useNavigatorSearchContext();
+  const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
+  const intl = useIntl();
 
   const [query, setQuery] = useState("");
   const { scope, refreshItems, resetFocus } = useKeyboardNavigation({ query });
@@ -35,8 +45,11 @@ export const CommandContent = () => {
 
   return (
     <Box width="100%" position="relative" ref={scope}>
-      <NavigatorSearchInput onSearch={handleSearch} value={query} />
+      <NavigatorSearchInput onSearch={handleSearch} value={query} isExpanded={isNavigatorVisible} />
       <Box
+        id={NAVIGATOR_SEARCH_LISTBOX_ID}
+        role="listbox"
+        aria-label={intl.formatMessage(messages.resultsLabel)}
         __height="370px"
         style={{
           scrollbarWidth: "thin",
@@ -60,7 +73,12 @@ export const CommandContent = () => {
           <Link
             href={globalSearchUrl({ query, trigger: true })}
             data-href={globalSearchUrl({ query, trigger: true })}
+            // Every option needs an id: aria-activedescendant points at it once
+            // keyboard navigation reaches this item.
+            id="navigator-option-global-search"
             className="command-menu-item"
+            role="option"
+            tabIndex={-1}
           >
             <Box
               className="command-menu-item-content"

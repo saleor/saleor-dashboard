@@ -1,0 +1,547 @@
+/**
+ * Elevated surface matching the setup-checklist top card.
+ * Smooth-shadow-ring — never pair with a border.
+ */
+.card {
+  --schematic-options: color-mix(
+    in srgb,
+    var(--mu-colors-border-accent1) 55%,
+    var(--mu-colors-border-default1)
+  );
+  /* Same as SCHEDULED_COLOR in src/colors.ts — scheduled publication violet */
+  --schematic-specs: oklch(60.6% 0.25 292.717);
+  --schematic-facts: color-mix(
+    in srgb,
+    var(--mu-colors-text-success1) 50%,
+    var(--mu-colors-border-default1)
+  );
+  --schematic-options-text: var(--mu-colors-text-accent1);
+  --schematic-specs-text: oklch(60.6% 0.25 292.717);
+  --schematic-facts-text: var(--mu-colors-text-success1);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-rows: auto auto auto;
+  align-items: stretch;
+  border-radius: var(--mu-spacing-3);
+  background-color: var(--mu-colors-background-default1);
+  overflow: hidden;
+}
+
+.elevated {
+  --smooth-ring-color: rgba(0, 0, 0, 0.05);
+  border: none;
+  box-shadow:
+    0 18px 47px 0 rgba(0, 0, 0, 0.03),
+    0 7.5px 19px 0 rgba(0, 0, 0, 0.02),
+    0 4px 10.5px 0 rgba(0, 0, 0, 0.02),
+    0 2.3px 5.8px 0 rgba(0, 0, 0, 0.01),
+    0 1.2px 3.1px 0 rgba(0, 0, 0, 0.01),
+    0 0.5px 1.3px 0 rgba(0, 0, 0, 0.01),
+    0 0 0 1px var(--smooth-ring-color);
+}
+
+.elevatedDark {
+  --smooth-ring-color: rgba(255, 255, 255, 0.18);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-2);
+  min-width: 0;
+  padding: var(--mu-spacing-6);
+  grid-column: 1;
+  grid-row: 1;
+  background-color: var(--mu-colors-background-default2);
+}
+
+.subtitleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mu-spacing-2);
+  min-width: 0;
+}
+
+.visual {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: var(--mu-spacing-6);
+  overflow: visible;
+  border-left: 1px solid var(--mu-colors-border-default1);
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.pdp {
+  display: grid;
+  grid-template-columns: minmax(0, 65fr) minmax(0, 35fr);
+  grid-template-rows: minmax(8rem, 1fr) auto;
+  column-gap: var(--mu-spacing-3);
+  row-gap: var(--mu-spacing-3);
+  width: 100%;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.pdpLoading {
+  min-height: 16.5rem;
+}
+
+.optionNameSkeleton {
+  width: 3.5rem;
+  height: 10px;
+}
+
+.galleryCol {
+  display: flex;
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.buyBox {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-2);
+  min-width: 0;
+}
+
+.specsCol {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+}
+
+.gallery {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  gap: var(--mu-spacing-2);
+  width: 100%;
+  min-height: 8.5rem;
+  overflow: hidden;
+}
+
+.galleryFrame {
+  display: flex;
+  flex: 0 0 68%;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: var(--mu-spacing-2);
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-text-default2);
+}
+
+.galleryFrameCut {
+  flex: 0 0 52%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.productName {
+  width: 5.5rem;
+  height: 8px;
+  border-radius: 2px;
+  background-color: color-mix(
+    in srgb,
+    var(--mu-colors-text-default1) 32%,
+    var(--mu-colors-background-default1)
+  );
+}
+
+.price {
+  width: 2.5rem;
+  height: 6px;
+  border-radius: 2px;
+  background-color: color-mix(
+    in srgb,
+    var(--mu-colors-text-default1) 20%,
+    var(--mu-colors-background-default1)
+  );
+}
+
+.region {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--mu-spacing-2);
+  border: 1px dashed transparent;
+  border-radius: var(--mu-spacing-1);
+  background-color: transparent;
+}
+
+.region::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px dashed var(--mu-colors-border-default1);
+  border-radius: inherit;
+  pointer-events: none;
+  transition:
+    inset 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+}
+
+.regionOptions::after {
+  border-color: var(--schematic-options);
+}
+
+.regionSpecs::after {
+  border-color: var(--schematic-specs);
+}
+
+.regionFacts::after {
+  border-color: var(--schematic-facts);
+}
+
+.pdp .regionLabel,
+.pdp .optionName,
+.pdp .specName,
+.pdp .specValue,
+.pdp .emptyHint,
+.pdp .badgeChip,
+.pdp .pillLabel {
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.regionLabel {
+  font-weight: 600;
+}
+
+.regionOptions .regionLabel {
+  color: var(--schematic-options-text);
+}
+
+.regionSpecs .regionLabel {
+  color: var(--schematic-specs-text);
+}
+
+.regionFacts .regionLabel {
+  color: var(--schematic-facts-text);
+}
+
+.optionRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.optionName {
+  color: var(--mu-colors-text-default1);
+}
+
+.optionControls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  max-width: 5.5rem;
+  height: 14px;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 4px;
+  background-color: var(--mu-colors-background-default1);
+}
+
+.pillLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 4px;
+}
+
+.pillSelected {
+  border-color: var(--mu-colors-text-default1);
+  background-color: var(--mu-colors-text-default1);
+  color: var(--mu-colors-background-default1);
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 999px;
+  background-color: var(--mu-colors-background-default2);
+}
+
+.swatchSelected {
+  background-color: var(--mu-colors-text-default1);
+  box-shadow:
+    0 0 0 2px var(--mu-colors-background-default1),
+    0 0 0 3px var(--mu-colors-text-default1);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.badgeChip {
+  display: inline-flex;
+  max-width: 7.5rem;
+  padding: 1px 6px;
+  overflow: hidden;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 999px;
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-text-default2);
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emptyHint {
+  font-style: italic;
+  color: var(--mu-colors-text-default2);
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  margin-top: auto;
+  border-radius: 6px;
+  background-color: var(--mu-colors-background-button-default-primary);
+  color: var(--mu-colors-text-button-default-primary);
+}
+
+.specList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.specRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--mu-spacing-2);
+}
+
+.specName {
+  color: var(--mu-colors-text-default2);
+}
+
+.specValue {
+  max-width: 50%;
+  overflow: hidden;
+  color: var(--mu-colors-text-default1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sampleSkeleton {
+  width: 2.75rem;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  background-color: color-mix(
+    in srgb,
+    var(--mu-colors-text-default1) 18%,
+    var(--mu-colors-background-default1)
+  );
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.legendHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--mu-spacing-2);
+  padding: var(--mu-spacing-1) var(--mu-spacing-6);
+  background-color: color-mix(
+    in srgb,
+    var(--mu-colors-background-default2) 45%,
+    var(--mu-colors-background-default1)
+  );
+  border-top: 1px solid var(--mu-colors-border-default1);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.legendHeaderTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mu-colors-text-default2);
+}
+
+.legendList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: var(--mu-spacing-2);
+  align-items: center;
+  width: 100%;
+  padding: var(--mu-spacing-3) var(--mu-spacing-6);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  cursor: default;
+  transition: background-color 0.2s ease;
+}
+
+.legendItem:hover {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.card:has([data-schematic-region="options"]:hover) .regionOptions::after,
+.card:has([data-schematic-region="specs"]:hover) .regionSpecs::after,
+.card:has([data-schematic-region="facts"]:hover) .regionFacts::after {
+  inset: -2px;
+}
+
+.card:has([data-schematic-region="options"]:hover) .regionOptions::after {
+  border-color: var(--schematic-options-text);
+}
+
+.card:has([data-schematic-region="specs"]:hover) .regionSpecs::after {
+  border-color: var(--schematic-specs-text);
+}
+
+.card:has([data-schematic-region="facts"]:hover) .regionFacts::after {
+  border-color: var(--schematic-facts-text);
+}
+
+.legendItem:last-child {
+  border-bottom: none;
+}
+
+.legendLeading {
+  display: flex;
+  align-items: center;
+  width: 44px;
+  flex-shrink: 0;
+}
+
+.legendIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 1px dashed var(--mu-colors-border-default1);
+  border-radius: var(--mu-spacing-1);
+  background-color: transparent;
+}
+
+.legendIconOptions {
+  border-color: var(--schematic-options);
+  background-color: color-mix(in srgb, var(--mu-colors-border-accent1) 18%, transparent);
+}
+
+.legendIconSpecs {
+  border-color: var(--schematic-specs);
+  background-color: color-mix(in srgb, var(--schematic-specs) 18%, transparent);
+}
+
+.legendIconFacts {
+  border-color: var(--schematic-facts);
+  background-color: color-mix(in srgb, var(--mu-colors-text-success1) 18%, transparent);
+}
+
+.legendCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.legendTitleOptions {
+  color: var(--schematic-options-text);
+}
+
+.legendTitleSpecs {
+  color: var(--schematic-specs-text);
+}
+
+.legendTitleFacts {
+  color: var(--schematic-facts-text);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  grid-column: 1 / -1;
+  grid-row: 3;
+  padding: var(--mu-spacing-3) var(--mu-spacing-6);
+  border-top: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+@media (max-width: 768px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .copy,
+  .visual,
+  .legend,
+  .footer {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .visual {
+    border-left: none;
+    border-top: 1px solid var(--mu-colors-border-default1);
+  }
+
+  .pdp {
+    grid-template-columns: 1fr;
+  }
+
+  .galleryCol,
+  .buyBox,
+  .specsCol {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .gallery {
+    min-height: 8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .region::after {
+    transition: none;
+  }
+
+  .card:has([data-schematic-region="options"]:hover) .regionOptions::after,
+  .card:has([data-schematic-region="specs"]:hover) .regionSpecs::after,
+  .card:has([data-schematic-region="facts"]:hover) .regionFacts::after {
+    inset: 0;
+  }
+}

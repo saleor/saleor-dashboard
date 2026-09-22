@@ -1,5 +1,5 @@
 import { ProductAvailabilityStatusLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductAvailabilityStatusLabel";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { getPromotionStatus, getRelativePromotionTimeParts } from "@dashboard/discounts/utils";
 import { type VoucherDetailsFragment } from "@dashboard/graphql";

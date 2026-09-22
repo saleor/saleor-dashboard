@@ -1,13 +1,11 @@
-import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import React from "react";
+import { MockedProvider, type MockedResponse } from "@apollo/client/testing";
+import type React from "react";
 
-import {
-  addressMocks,
-  appsMocks,
-  introspectionMocks,
-  pageTypesMocks,
-  warehousesMocks,
-} from "./mocks";
+import { addressMocks } from "./mocks/address";
+import { appsMocks } from "./mocks/apps";
+import { introspectionMocks } from "./mocks/introspection";
+import { pageTypesMocks } from "./mocks/pageTypes";
+import { warehousesMocks } from "./mocks/warehouses";
 
 const mocks: MockedResponse[] = [
   ...appsMocks,

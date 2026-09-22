@@ -1,10 +1,11 @@
 import { attributeListUrlWithAttributeType } from "@dashboard/attributes/urls";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { hasOneOfPermissions } from "@dashboard/components/RequirePermissions";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import Attributes from "@dashboard/icons/Attributes";
 import { ModelingIcon } from "@dashboard/icons/Modeling";
 import { Box, Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
+import { UserRound } from "lucide-react";
 import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -64,6 +65,10 @@ const AttributeClassIcon = ({ attributeType }: { attributeType: AttributeTypeEnu
     return <ModelingIcon />;
   }
 
+  if (attributeType === AttributeTypeEnum.CUSTOMER_TYPE) {
+    return <UserRound />;
+  }
+
   return <Attributes />;
 };
 
@@ -74,7 +79,7 @@ export const AttributeClassDisplay = ({
   color = "default2",
   "data-test-id": dataTestId = "attribute-class-display",
   title,
-}: AttributeClassProps): JSX.Element => {
+}: AttributeClassProps): React.ReactNode => {
   const intl = useIntl();
 
   if (!attributeType) {
@@ -118,12 +123,14 @@ export const AttributeClassDisplay = ({
   );
 };
 
-export const ClickableAttributeClass = (props: AttributeClassProps): JSX.Element => {
+export const ClickableAttributeClass = (props: AttributeClassProps): React.ReactNode => {
   const { attributeType } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();
-  const canViewAttributes = hasPermissions(userPermissions ?? [], [
+  const canViewAttributes = hasOneOfPermissions(userPermissions ?? [], [
     PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+    PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
   ]);
 
   if (!attributeType || !canViewAttributes) {

@@ -1,12 +1,16 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import {
   readonlyTextCell,
+  statusCell,
   tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { commonStatusMessages } from "@dashboard/intl";
 import { getStatusColor, getUserName } from "@dashboard/misc";
+import {
+  getStaffMemberStatusDisplay,
+  isStaffInvitePending,
+} from "@dashboard/staff/staffMemberStatus";
 import { type StaffMember, type StaffMembers } from "@dashboard/staff/types";
 import { type StaffListUrlSortField } from "@dashboard/staff/urls";
 import { type Sort } from "@dashboard/types";
@@ -32,7 +36,7 @@ export const staffMembersListStaticColumnsAdapter = (
     {
       id: "status",
       title: intl.formatMessage(columnsMessages.status),
-      width: 150,
+      width: 180,
     },
     {
       id: "customer",
@@ -75,29 +79,17 @@ export const createGetCellContent =
           cursor: "pointer",
         });
       case "status": {
-        const isActive = rowData?.isActive;
-        const color = getStatusColor({
-          status: isActive ? "success" : "error",
-          currentTheme,
+        const statusDisplay = getStaffMemberStatusDisplay({
+          isActive: Boolean(rowData.isActive),
+          invitePending: isStaffInvitePending(rowData),
+          intl,
         });
-        const status = isActive
-          ? intl.formatMessage(commonStatusMessages.active)
-          : intl.formatMessage(commonStatusMessages.notActive);
 
-        return tagsCell(
-          [
-            {
-              tag: status,
-              color: color.base,
-            },
-          ],
-          [status],
-          {
-            readonly: true,
-            allowOverlay: false,
-            cursor: "pointer",
-          },
-        );
+        return statusCell(statusDisplay.dot, statusDisplay.label, {
+          readonly: true,
+          allowOverlay: false,
+          cursor: "pointer",
+        });
       }
       case "customer": {
         const isCustomer = (rowData.orders?.edges.length ?? 0) > 0;

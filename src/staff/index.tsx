@@ -1,4 +1,4 @@
-import { ConditionalStaffMembersFilterProvider } from "@dashboard/components/ConditionalFilter";
+import { ConditionalStaffMembersFilterProvider } from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
@@ -15,7 +15,7 @@ import {
   type StaffMemberDetailsUrlQueryParams,
 } from "./urls";
 import { StaffDetailsView } from "./views/StaffDetails";
-import StaffListComponent from "./views/StaffList";
+import StaffListComponent from "./views/StaffList/StaffList";
 
 const StaffList = () => {
   const qs = parseQs(location.search.substr(1)) as any;

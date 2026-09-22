@@ -1,8 +1,7 @@
-import {
-  conditionalFilterMessages,
-  ConditionalFilters,
-  useConditionalFilterContext,
-} from "@dashboard/components/ConditionalFilter";
+import { ConditionalFilters } from "@dashboard/components/ConditionalFilter/ConditionalFilters";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
+import { conditionalFilterMessages } from "@dashboard/components/ConditionalFilter/messages";
+import { CountPill, countPillFromNumber } from "@dashboard/components/CountPill/CountPill";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ModelTypeDisplay } from "@dashboard/components/ModelType/ModelType";
 import { ProductTypeDisplay } from "@dashboard/components/ProductType/ProductType";
@@ -34,7 +33,7 @@ const getLockedValueOptions = (element: FilterElement): ItemOption[] =>
 
 /** Renders a locked value with the canonical read-only type component so the
  * restriction hint matches how model/product types appear in detail page headers. */
-const LockedValue = ({ field, option }: { field: string; option: ItemOption }): JSX.Element => {
+const LockedValue = ({ field, option }: { field: string; option: ItemOption }): React.ReactNode => {
   if (field === "pageTypes") {
     return <ModelTypeDisplay modelType={{ id: option.value, name: option.label }} />;
   }
@@ -50,7 +49,7 @@ const LockedValue = ({ field, option }: { field: string; option: ItemOption }): 
   );
 };
 
-const LockedRestrictionHint = ({ elements }: { elements: FilterElement[] }): JSX.Element => {
+const LockedRestrictionHint = ({ elements }: { elements: FilterElement[] }): React.ReactNode => {
   const { formatMessage } = useIntl();
 
   return (
@@ -135,9 +134,10 @@ export const ModalFilters: FC = () => {
         data-test-id="modal-filters-button"
         onClick={handleToggle}
       >
-        {formatMessage(conditionalFilterMessages.popoverTrigger, {
-          count: valueProvider.count,
-        })}
+        <Box as="span" display="inline-flex" alignItems="center" gap={1}>
+          {formatMessage(conditionalFilterMessages.popoverTrigger)}
+          <CountPill count={countPillFromNumber(valueProvider.count)} active />
+        </Box>
       </DropdownButton>
 
       {filterWindow.isOpen ? (

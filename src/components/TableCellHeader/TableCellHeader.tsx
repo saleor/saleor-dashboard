@@ -1,5 +1,4 @@
-import { TableCell } from "@material-ui/core";
-import { type TableCellProps } from "@material-ui/core/TableCell";
+import { TableCell, type TableCellProps } from "@dashboard/components/Table/Table";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -64,7 +63,7 @@ interface TableCellHeaderProps extends TableCellProps {
   disabled?: boolean;
 }
 
-const TableCellHeader = forwardRef<unknown, TableCellHeaderProps>((props, ref) => {
+const TableCellHeader = forwardRef<HTMLTableCellElement, TableCellHeaderProps>((props, ref) => {
   const classes = useStyles(props);
   const {
     arrowPosition,
@@ -80,7 +79,7 @@ const TableCellHeader = forwardRef<unknown, TableCellHeaderProps>((props, ref) =
   return (
     <TableCell
       {...rest}
-      innerRef={ref}
+      ref={ref}
       onClick={e => {
         if (disabled || !onClick) {
           e.preventDefault();

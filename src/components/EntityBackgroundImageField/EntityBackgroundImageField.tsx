@@ -73,7 +73,7 @@ const BackgroundImagePreview = ({
   testIds,
   onImageDelete,
   onUploadPreviewLoaded,
-}: BackgroundImagePreviewProps): JSX.Element => {
+}: BackgroundImagePreviewProps): React.ReactNode => {
   const intl = useIntl();
   const showDelete = hasSavedImage && !disabled && !isUploading;
 
@@ -143,7 +143,7 @@ export const EntityBackgroundImageField = ({
   onImageDelete,
   onImageUpload,
   onUploadPreviewLoaded,
-}: EntityBackgroundImageFieldProps): JSX.Element => {
+}: EntityBackgroundImageFieldProps): React.ReactNode => {
   const intl = useIntl();
   const hasSavedImage = image != null;
   const hasPendingUpload = Boolean(uploadPreviewUrl);

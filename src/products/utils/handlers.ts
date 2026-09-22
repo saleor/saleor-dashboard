@@ -2,11 +2,10 @@
 import { type FetchResult } from "@apollo/client";
 import {
   type ChannelData,
-  type ChannelPriceAndPreorderData,
   type ChannelPriceArgs,
+  type VariantChannelPriceData,
 } from "@dashboard/channels/utils";
 import {
-  type ProductChannelListingAddInput,
   type ProductVariantFragment,
   type VariantMediaAssignMutation,
   type VariantMediaAssignMutationVariables,
@@ -15,7 +14,7 @@ import {
 } from "@dashboard/graphql";
 import { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
-import { type ProductStockFormsetData } from "@dashboard/products/components/ProductStocks";
+import { type ProductStockFormsetData } from "@dashboard/products/components/ProductStocks/ProductStocks";
 import { diff } from "fast-array-diff";
 
 export function createChannelsPriceChangeHandler(
@@ -52,7 +51,6 @@ export function createChannelsReplaceHandler(
         ...channel,
         costPrice: updated.costPrice,
         price: updated.price,
-        preorderThreshold: updated.preorderThreshold,
       };
     });
 
@@ -65,12 +63,11 @@ export function replaceFormsetChannelListings<
   TValue extends {
     price?: string;
     costPrice?: string;
-    preorderThreshold?: number | null;
   },
 >(
-  formsetRows: FormsetData<ChannelPriceAndPreorderData, TValue>,
+  formsetRows: FormsetData<VariantChannelPriceData, TValue>,
   listings: ChannelData[],
-): FormsetData<ChannelPriceAndPreorderData, TValue> {
+): FormsetData<VariantChannelPriceData, TValue> {
   const nextById = new Map(listings.map(listing => [listing.id, listing]));
 
   return formsetRows.map(row => {
@@ -86,7 +83,6 @@ export function replaceFormsetChannelListings<
         ...row.value,
         price: updated.price ?? "",
         costPrice: updated.costPrice ?? "",
-        preorderThreshold: updated.preorderThreshold ?? row.value.preorderThreshold ?? null,
       },
     };
   });
@@ -146,7 +142,7 @@ export function createProductTypeSelectHandler(
   };
 }
 
-export const getChannelsInput = (channels: ChannelPriceAndPreorderData[]) =>
+export const getChannelsInput = (channels: VariantChannelPriceData[]) =>
   channels?.map(channel => ({
     data: channel,
     id: channel.id,
@@ -154,52 +150,8 @@ export const getChannelsInput = (channels: ChannelPriceAndPreorderData[]) =>
     value: {
       costPrice: channel.costPrice || "",
       price: channel.price || "",
-      preorderThreshold: channel.preorderThreshold || null,
     },
   }));
-
-export const getAvailabilityVariables = (
-  channels: ChannelData[],
-): ProductChannelListingAddInput[] =>
-  channels.map(channel => {
-    const {
-      isAvailableForPurchase,
-      availableForPurchaseAt,
-      isPublished,
-      publishedAt,
-      visibleInListings,
-    } = channel;
-    const isAvailable =
-      availableForPurchaseAt && !isAvailableForPurchase ? true : isAvailableForPurchase;
-
-    return {
-      availableForPurchaseAt:
-        isAvailableForPurchase || availableForPurchaseAt === "" ? null : availableForPurchaseAt,
-      channelId: channel.id,
-      isAvailableForPurchase: isAvailable,
-      isPublished,
-      publishedAt,
-      visibleInListings,
-    };
-  });
-
-export const createPreorderEndDateChangeHandler =
-  (
-    form: UseFormResult<{ preorderEndDateTime?: string }>,
-    triggerChange: () => void,
-    preorderPastDateErrorMessage: string,
-  ): FormChange =>
-  event => {
-    form.change(event);
-
-    if (new Date(event.target.value) <= new Date()) {
-      form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
-    } else {
-      form.clearErrors("preorderEndDateTime");
-    }
-
-    triggerChange();
-  };
 
 export const areMediaSelectionsEqual = (left: string[] = [], right: string[] = []): boolean => {
   if (left.length !== right.length) {

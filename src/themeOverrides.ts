@@ -79,16 +79,6 @@ export const themeOverrides: Partial<Theme> = {
         color: vars.colors.text.default1,
       },
     },
-    MuiTable: {
-      root: {
-        tableLayout: "auto !important" as "auto",
-      },
-    },
-    MuiTableCell: {
-      root: {
-        borderBottomColor: vars.colors.border.default1,
-      },
-    },
     MuiIconButton: {
       edgeEnd: {
         marginRight: 0,

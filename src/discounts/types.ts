@@ -1,6 +1,6 @@
 import { type DecimalFilterInput, type PromotionTypeEnum } from "@dashboard/graphql";
 
-import { type Rule } from "./models";
+import { type Rule } from "./models/Rule";
 
 export enum RequirementsPicker {
   ORDER = "ORDER",

@@ -1,7 +1,10 @@
 import { stringify } from "qs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { type FilterContainer, FilterElement } from "../ConditionalFilter/FilterElement";
+import {
+  type FilterContainer,
+  FilterElement,
+} from "../ConditionalFilter/FilterElement/FilterElement";
 import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 import { type FilterProviderType, type InitialResponseType } from "../ConditionalFilter/types";
 import { TokenArray } from "../ConditionalFilter/ValueProvider/TokenArray";

@@ -9,8 +9,8 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {
@@ -41,7 +41,7 @@ const createSlugTakenError = (): ChannelErrorFragment => ({
   message: null,
 });
 
-export type CreateChannelDialogInitialValues = ChannelCreateFormData & {
+type CreateChannelDialogInitialValues = ChannelCreateFormData & {
   countryDisplayName?: string;
 };
 
@@ -203,7 +203,7 @@ const CreateChannelDialogFormContent = ({
     !isSlugChecking;
 
   return (
-    <DashboardModal.Content size="sm" data-test-id="create-channel-dialog">
+    <DashboardModal.Content disableAutofocus size="sm" data-test-id="create-channel-dialog">
       <DashboardModal.Header
         subtitle={
           <FormattedMessage
@@ -233,6 +233,7 @@ const CreateChannelDialogFormContent = ({
               onChange={handleNameChange}
               disabled={disabled}
               data-test-id="channel-name-input"
+              autoFocus
             />
             <Input
               name="slug"

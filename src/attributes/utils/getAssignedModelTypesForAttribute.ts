@@ -2,7 +2,7 @@ import { type PageTypeListWithAssignedAttributeCountsQuery } from "@dashboard/gr
 
 import { type AssignedTypeItem } from "./mapAssignedTypeConnection";
 
-export interface AssignedModelTypesResult {
+interface AssignedModelTypesResult {
   items: AssignedTypeItem[];
   typesListHasMore: boolean;
 }

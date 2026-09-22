@@ -1,8 +1,4 @@
 import { AccountErrorCode } from "@dashboard/graphql";
-import {
-  type AccountError,
-  type AccountErrorCode as SdkAccountErrorCode,
-} from "@dashboard/legacy-sdk/apollo/types";
 import { defineMessages, type IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
@@ -40,6 +36,14 @@ const messages = defineMessages({
     id: "TDhHMi",
     defaultMessage: "This needs to be unique",
   },
+  uniqueEmail: {
+    id: "froISM",
+    defaultMessage: "User with this email already exists",
+  },
+  invalidEmail: {
+    id: "YRe93Y",
+    defaultMessage: "Enter a valid email address",
+  },
   invalidToken: {
     id: "ByYtFB",
     defaultMessage: "Invalid or expired token. Please check your token in URL",
@@ -53,12 +57,10 @@ const messages = defineMessages({
 interface ErrorFragment {
   code: AccountErrorCode;
   field: string | null;
+  message?: string | null;
 }
 
-function getAccountErrorMessage(
-  err: ErrorFragment | Omit<AccountError, "addressType">,
-  intl: IntlShape,
-): string | undefined {
+function getAccountErrorMessage(err: ErrorFragment, intl: IntlShape): string | undefined {
   if (err) {
     switch (err.code) {
       case AccountErrorCode.INVALID_PASSWORD:
@@ -76,15 +78,24 @@ function getAccountErrorMessage(
       case AccountErrorCode.PASSWORD_TOO_SIMILAR:
         return intl.formatMessage(messages.tooSimilar);
       case AccountErrorCode.UNIQUE:
+        if (err.field === "email") {
+          return intl.formatMessage(messages.uniqueEmail);
+        }
+
         return intl.formatMessage(messages.unique);
       case AccountErrorCode.INVALID:
+        if (err.field === "email") {
+          return intl.formatMessage(messages.invalidEmail);
+        }
+
+        // Password-reset / set-password flows use INVALID for bad tokens.
         return intl.formatMessage(messages.invalidToken);
       case AccountErrorCode.NOT_FOUND:
         return intl.formatMessage(messages.userNotFound);
     }
   }
 
-  return getCommonFormFieldErrorMessage<AccountErrorCode | SdkAccountErrorCode>(err, intl);
+  return getCommonFormFieldErrorMessage<AccountErrorCode>(err, intl);
 }
 
 export default getAccountErrorMessage;

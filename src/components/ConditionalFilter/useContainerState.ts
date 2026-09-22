@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
-import { type FilterContainer, FilterElement } from "./FilterElement";
+import {
+  cloneFilterContainer,
+  type FilterContainer,
+  FilterElement,
+} from "./FilterElement/FilterElement";
 import { type FilterValueProvider } from "./FilterValueProvider";
 import { getFilterContainerKey } from "./ValueProvider/utils";
 
@@ -56,7 +60,7 @@ const removeEmptyElements = (container: FilterContainer): FilterContainer => {
 
 export const useContainerState = (valueProvider: FilterValueProvider) => {
   const [value, setValue] = useState<FilterContainer>(() =>
-    valueProvider.loading ? [] : valueProvider.value,
+    valueProvider.loading ? [] : cloneFilterContainer(valueProvider.value),
   );
   const providerSyncKeyRef = useRef(getProviderSyncKey(valueProvider));
 
@@ -70,7 +74,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     providerSyncKeyRef.current = nextProviderSyncKey;
 
     if (!valueProvider.loading) {
-      setValue(valueProvider.value);
+      setValue(cloneFilterContainer(valueProvider.value));
     }
   }, [valueProvider]);
 
@@ -175,14 +179,16 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     setValue([]);
   };
 
-  const resetToProvider = (): void => {
+  const resetToProvider = (options?: { seedEmpty?: boolean }): void => {
     if (valueProvider.loading) {
-      setValue([]);
+      setValue(options?.seedEmpty ? [FilterElement.createEmpty()] : []);
 
       return;
     }
 
-    setValue(valueProvider.value);
+    const next = cloneFilterContainer(valueProvider.value);
+
+    setValue(options?.seedEmpty && next.length === 0 ? [FilterElement.createEmpty()] : next);
     providerSyncKeyRef.current = getProviderSyncKey(valueProvider);
   };
 

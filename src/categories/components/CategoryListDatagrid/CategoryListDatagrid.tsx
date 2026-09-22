@@ -10,7 +10,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { type PageListProps, type SortPage } from "@dashboard/types";
@@ -110,7 +110,7 @@ export const CategoryListDatagrid = ({
   onLoadMoreSubcategories,
   hidePagination = false,
   variant = "default",
-}: CategoryListDatagridProps): JSX.Element => {
+}: CategoryListDatagridProps): React.ReactNode => {
   const isSidebar = variant === "sidebar";
   const containerRef = useRef<HTMLDivElement>(null);
   const [sidebarColumnWidths, setSidebarColumnWidths] = useState(DEFAULT_SIDEBAR_COLUMN_WIDTHS);

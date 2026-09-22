@@ -1,4 +1,4 @@
-export interface VoucherRedemptionsProgress {
+interface VoucherRedemptionsProgress {
   used: number;
   limit: number;
   remaining: number;

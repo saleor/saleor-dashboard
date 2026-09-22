@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
 
-import { type FilterContainer, FilterElement } from "./FilterElement";
+import { type FilterContainer, FilterElement } from "./FilterElement/FilterElement";
 import { leftOperatorsMessages } from "./intl";
 import { type LeftOperand } from "./LeftOperandsProvider";
 

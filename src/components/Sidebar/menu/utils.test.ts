@@ -25,6 +25,7 @@ describe("mapToExtensionsItems", () => {
   const mockApp: Extension["app"] = {
     __typename: "App",
     id: "app-1",
+    identifier: null,
     appUrl: "https://app.example.com",
     name: "App name",
     brand: null,
@@ -276,6 +277,7 @@ describe("getMenuItemExtension", () => {
   const mockAppDefinition: Extension["app"] = {
     __typename: "App",
     id: "app-1",
+    identifier: null,
     appUrl: "https://app.example.com",
     name: "App name",
     brand: null,
@@ -456,6 +458,7 @@ describe("getMenuItemExtension", () => {
     const catalogExtensionApp: Extension["app"] = {
       __typename: "App",
       id: "app-2",
+      identifier: null,
       appUrl: "https://app2.example.com",
       name: "App name",
       brand: null,
@@ -488,5 +491,121 @@ describe("getMenuItemExtension", () => {
     const result = getMenuItemExtension(mockExtensionsRecord, "test-extension"); // Same id as mockExtension, but no prefix
 
     expect(result).toBeUndefined();
+  });
+});
+
+describe("isMenuActive with navigation pins", () => {
+  const pinFor = (id: string): SidebarMenuItem => ({
+    id: `navigation-pin-favorites-${id}`,
+    label: "Pinned type",
+    url: `/models/?pageTypes%5B0%5D=${id}`,
+    type: "item",
+  });
+
+  it("marks only the pin matching the selected model type", () => {
+    // Arrange
+    const location = "/models/?pageTypes%5B0%5D=type-a";
+
+    // Act & Assert
+    expect(isMenuActive(location, pinFor("type-a"))).toBe(true);
+    expect(isMenuActive(location, pinFor("type-b"))).toBe(false);
+  });
+
+  it("does not mark any pin on the unfiltered model list", () => {
+    // Act & Assert
+    expect(isMenuActive("/models/", pinFor("type-a"))).toBe(false);
+  });
+
+  it("does not mark a pin when a group selects several model types", () => {
+    // Arrange
+    const location = "/models/?pageTypes%5B0%5D=type-a&pageTypes%5B1%5D=type-b";
+
+    // Act & Assert
+    expect(isMenuActive(location, pinFor("type-a"))).toBe(false);
+  });
+
+  it("still marks the plain Models item while a pin is selected", () => {
+    // Arrange
+    const models: SidebarMenuItem = {
+      id: "models",
+      label: "Models",
+      url: "/models/",
+      type: "item",
+    };
+
+    // Act & Assert
+    expect(isMenuActive("/models/?pageTypes%5B0%5D=type-a", models)).toBe(true);
+  });
+});
+
+describe("isMenuActive with customer type shortcuts", () => {
+  const typeItem = (id: string): SidebarMenuItem => ({
+    id: `customer-type-nav-${id}`,
+    label: "Type",
+    url: `/customers/?customerTypes%5B0%5D=${id}`,
+    type: "item",
+  });
+
+  it("marks only the shortcut matching the selected customer type", () => {
+    // Arrange
+    const location = "/customers/?customerTypes%5B0%5D=type-b2b";
+
+    // Act & Assert
+    expect(isMenuActive(location, typeItem("type-b2b"))).toBe(true);
+    expect(isMenuActive(location, typeItem("type-default"))).toBe(false);
+  });
+
+  it("does not mark any type shortcut on the unfiltered customer list", () => {
+    // Act & Assert
+    expect(isMenuActive("/customers/", typeItem("type-b2b"))).toBe(false);
+  });
+
+  it("marks All only on the unfiltered customer list", () => {
+    // Arrange
+    const allItem: SidebarMenuItem = {
+      id: "customer-type-nav-all",
+      label: "All",
+      url: "/customers/",
+      type: "item",
+    };
+
+    // Act & Assert
+    expect(isMenuActive("/customers/", allItem)).toBe(true);
+    expect(isMenuActive("/customers/?query=ada", allItem)).toBe(true);
+    expect(isMenuActive("/customers/?customerTypes%5B0%5D=type-b2b", allItem)).toBe(false);
+    expect(isMenuActive("/customers/UHNlcjox", allItem)).toBe(false);
+  });
+
+  it("still marks the Customers group while a type is selected", () => {
+    // Arrange
+    const customers: SidebarMenuItem = {
+      id: "customers",
+      label: "Customers",
+      url: "/customers/",
+      type: "itemGroup",
+    };
+
+    // Act & Assert
+    expect(isMenuActive("/customers/?customerTypes%5B0%5D=type-b2b", customers)).toBe(true);
+  });
+});
+
+describe("isMenuActive for the Favorites group header", () => {
+  const favorites: SidebarMenuItem = {
+    id: "navigation-pin-favorites-section",
+    label: "Favorites",
+    url: "/models/?pageTypes%5B0%5D=type-a",
+    type: "itemGroup",
+  };
+
+  it("is not active on an unfiltered model list", () => {
+    // Act & Assert — regression: the header lit up on every model list page
+    expect(isMenuActive("/models/?asc=true&sort=title", favorites)).toBe(false);
+    expect(isMenuActive("/models/", favorites)).toBe(false);
+  });
+
+  it("is not active when a different pinned type is selected", () => {
+    // Act & Assert
+    expect(isMenuActive("/models/?pageTypes%5B0%5D=type-b", favorites)).toBe(false);
   });
 });

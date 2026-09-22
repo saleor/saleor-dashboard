@@ -52,7 +52,7 @@ describe("CustomerNumberOfOrdersQueryVarsBuilder", () => {
   const conditionItem: ConditionItem = { type: "number.range", label: "between", value: "input-2" };
 
   describe("updateWhereQueryVariables", () => {
-    it("should create a gte/lte object from a tuple value", () => {
+    it("should create an IntFilterInput range from a tuple value", () => {
       // Arrange
       const itemOption1: ItemOption = { label: "Five", value: "5", slug: "5" };
       const itemOption2: ItemOption = { label: "Ten", value: "10", slug: "10" };
@@ -66,7 +66,7 @@ describe("CustomerNumberOfOrdersQueryVarsBuilder", () => {
       const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
-      expect(result.numberOfOrders).toEqual({ gte: "5", lte: "10" });
+      expect(result.numberOfOrders).toEqual({ range: { gte: 5, lte: 10 } });
     });
     it("should return the query unchanged if value is not a 2-element tuple", () => {
       // Arrange

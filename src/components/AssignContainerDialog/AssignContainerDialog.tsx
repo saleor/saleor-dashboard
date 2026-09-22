@@ -1,16 +1,17 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableBody } from "@dashboard/components/Table/Table";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
-import { TableBody, TextField } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui-next";
 import { type ChangeEvent, type ReactNode, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -44,6 +45,8 @@ export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps 
   backfillResetKey?: string;
   /** Shown instead of `emptyMessage` when exclusion emptied every loaded page. */
   backfillExhaustedMessage?: string;
+  /** Renders before a row's name — used by the model dialog to show the model type's icon. */
+  renderContainerAdornment?: (container: Container) => ReactNode;
   selectionMode?: "single" | "multiple";
   selectedId?: string;
   filtersSlot?: ReactNode;
@@ -72,6 +75,7 @@ const AssignContainerDialog = ({
   excludeContainer,
   backfillResetKey,
   backfillExhaustedMessage,
+  renderContainerAdornment,
   selectionMode = "multiple",
   selectedId,
   filtersSlot,
@@ -161,17 +165,14 @@ const AssignContainerDialog = ({
         <DashboardModal.PickerHeader
           toolbar={
             <>
-              <TextField
+              <Input
                 name="query"
                 value={query}
                 onChange={onQueryChange}
                 label={labels.label}
                 placeholder={labels.placeholder}
-                fullWidth
-                InputProps={{
-                  autoComplete: "off",
-                  endAdornment: loading && <SaleorThrobber size={16} />,
-                }}
+                autoComplete="off"
+                endAdornment={loading && <SaleorThrobber size={16} />}
               />
 
               {filtersSlot}
@@ -217,12 +218,14 @@ const AssignContainerDialog = ({
                         containers={displayedContainers}
                         selectedItemId={singleSelection.selectedItemId}
                         onSelect={singleSelection.handleSelect}
+                        renderAdornment={renderContainerAdornment}
                       />
                     ) : (
                       <MultiSelectionRows
                         containers={displayedContainers}
                         isSelected={multiSelection.isSelected}
                         onToggle={multiSelection.handleToggle}
+                        renderAdornment={renderContainerAdornment}
                       />
                     )}
                   </>

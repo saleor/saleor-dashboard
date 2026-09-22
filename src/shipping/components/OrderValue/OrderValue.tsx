@@ -41,13 +41,13 @@ interface OrderValueProps {
   onChannelsReplace: (channels: ChannelShippingData[]) => void;
 }
 
-export const OrderValue = ({
+const OrderValue = ({
   channels,
   errors,
   disabled,
   onChannelChange,
   onChannelsReplace,
-}: OrderValueProps): JSX.Element => {
+}: OrderValueProps): React.ReactNode => {
   const intl = useIntl();
   const formErrors = getFormChannelErrors(
     ["maximumOrderPrice", "minimumOrderPrice"],

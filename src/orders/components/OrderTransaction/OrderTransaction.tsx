@@ -7,8 +7,8 @@ import { ChevronDown } from "lucide-react";
 import type * as React from "react";
 import { useState } from "react";
 
-import { OrderTransactionCardTitle } from "./components";
-import { TransactionEvents } from "./components/TransactionEvents";
+import { OrderTransactionCardTitle } from "./components/CardTitle/CardTitle";
+import { TransactionEvents } from "./components/TransactionEvents/TransactionEvents";
 import styles from "./OrderTransaction.module.css";
 import { type ExtendedOrderTransaction } from "./types";
 import { getTransactionEvents } from "./utils";

@@ -7,7 +7,7 @@ interface MicrocopyLinkProps {
   children: ReactNode;
 }
 
-export function MicrocopyLink({ to, children }: MicrocopyLinkProps): JSX.Element {
+export function MicrocopyLink({ to, children }: MicrocopyLinkProps): React.ReactNode {
   return (
     <Link to={to} style={{ textDecoration: "none" }}>
       <Text

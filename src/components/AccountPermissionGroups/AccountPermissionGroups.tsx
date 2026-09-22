@@ -7,7 +7,7 @@ import getStaffErrorMessage from "@dashboard/utils/errors/staff";
 import { type Option, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { Multiselect } from "../Combobox";
+import { Multiselect } from "../Combobox/components/Multiselect";
 
 interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPageProps {
   formData: {

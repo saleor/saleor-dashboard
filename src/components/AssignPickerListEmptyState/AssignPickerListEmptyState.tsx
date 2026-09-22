@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from "@material-ui/core";
+import { TableCell, TableRow } from "@dashboard/components/Table/Table";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
@@ -10,7 +10,7 @@ interface AssignPickerListEmptyStateProps {
 
 export const AssignPickerListEmptyState = ({
   children,
-}: AssignPickerListEmptyStateProps): JSX.Element => (
+}: AssignPickerListEmptyStateProps): React.ReactNode => (
   <Box
     className={styles.container}
     display="flex"
@@ -32,7 +32,7 @@ interface AssignPickerListEmptyStateRowProps {
 export const AssignPickerListEmptyStateRow = ({
   colSpan = 3,
   children,
-}: AssignPickerListEmptyStateRowProps): JSX.Element => (
+}: AssignPickerListEmptyStateRowProps): React.ReactNode => (
   <TableRow>
     <TableCell colSpan={colSpan} className={styles.cell}>
       <AssignPickerListEmptyState>{children}</AssignPickerListEmptyState>

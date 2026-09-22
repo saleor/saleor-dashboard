@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SavebarCompositionHint } from "@dashboard/components/Savebar/SavebarCompositionHint";
 import { useIntl } from "react-intl";
@@ -26,7 +26,7 @@ export const DiscountSavebar = ({
   onCancel,
   submitButtonState,
   composition = EMPTY_PROMOTION_SAVE_COMPOSITION,
-}: DiscountSavebarProps): JSX.Element => {
+}: DiscountSavebarProps): React.ReactNode => {
   const intl = useIntl();
   const hasUnsavedChanges = hasPromotionSaveComposition(composition);
   const isSaveDisabled = disabled || !hasUnsavedChanges;

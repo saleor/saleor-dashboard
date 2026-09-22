@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
+import { type ComponentProps } from "react";
+import { expect, fn, userEvent, within } from "storybook/test";
 
 import VisibilityCard from "./VisibilityCard";
 
@@ -26,6 +27,7 @@ const meta: Meta<typeof VisibilityCard> = {
 
 export default meta;
 type Story = StoryObj<typeof VisibilityCard>;
+type Props = ComponentProps<typeof VisibilityCard>;
 
 export const Visible: Story = {
   args: {
@@ -90,5 +92,88 @@ export const WithVisibleInListings: Story = {
       availableForPurchaseAt: null,
       visibleInListings: true,
     },
+  },
+};
+
+/** Picking "Hidden" clears any schedule and reports the new published state. */
+export const PickingHiddenReportsIsPublished: Story = {
+  args: {
+    data: {
+      isPublished: true,
+      publishedAt: null,
+    },
+  },
+  play: async ({ args, canvasElement }: { args: Props; canvasElement: HTMLElement }) => {
+    // Arrange
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByLabelText("Visible")).toHaveAttribute("aria-checked", "true");
+
+    // Act
+    await userEvent.click(canvas.getByLabelText("Hidden"));
+
+    // Assert
+    await expect(args.onChange).toHaveBeenCalledWith({
+      target: { name: "publishedAt", value: null },
+    });
+    await expect(args.onChange).toHaveBeenCalledWith({
+      target: { name: "isPublished", value: false },
+    });
+  },
+};
+
+/** The availability switch reports a boolean under its own field name. */
+export const PickingAvailableForPurchaseReportsTrue: Story = {
+  args: {
+    data: {
+      isPublished: true,
+      publishedAt: null,
+      isAvailableForPurchase: false,
+      availableForPurchaseAt: null,
+    },
+  },
+  play: async ({ args, canvasElement }: { args: Props; canvasElement: HTMLElement }) => {
+    // Arrange
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByLabelText("Unavailable for purchase")).toHaveAttribute(
+      "aria-checked",
+      "true",
+    );
+
+    // Act
+    await userEvent.click(canvas.getByLabelText("Available for purchase"));
+
+    // Assert
+    await expect(args.onChange).toHaveBeenCalledExactlyOnceWith({
+      target: { name: "isAvailableForPurchase", value: true },
+    });
+  },
+};
+
+/** Turning availability off also clears the scheduled availability date. */
+export const PickingUnavailableClearsScheduledDate: Story = {
+  args: {
+    data: {
+      isPublished: true,
+      publishedAt: null,
+      isAvailableForPurchase: true,
+      availableForPurchaseAt: null,
+    },
+  },
+  play: async ({ args, canvasElement }: { args: Props; canvasElement: HTMLElement }) => {
+    // Arrange
+    const canvas = within(canvasElement);
+
+    // Act
+    await userEvent.click(canvas.getByLabelText("Unavailable for purchase"));
+
+    // Assert
+    await expect(args.onChange).toHaveBeenCalledWith({
+      target: { name: "availableForPurchaseAt", value: null },
+    });
+    await expect(args.onChange).toHaveBeenCalledWith({
+      target: { name: "isAvailableForPurchase", value: false },
+    });
   },
 };

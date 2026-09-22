@@ -37,7 +37,7 @@ export const DetailGroupBox = ({
   marginTop,
   triggerButtonTestId,
   variant = "primary",
-}: DetailGroupBoxProps): JSX.Element => {
+}: DetailGroupBoxProps): React.ReactNode => {
   const [expanded, setExpanded] = useState<string | undefined>(
     defaultExpanded ? groupId : undefined,
   );
@@ -51,6 +51,7 @@ export const DetailGroupBox = ({
       marginTop={resolvedMarginTop}
       data-test-id={dataTestId}
       data-test-is-private={dataTestIsPrivate}
+      data-expanded={isExpanded ? "true" : "false"}
     >
       <Accordion value={expanded} onValueChange={setExpanded}>
         <Accordion.Item value={groupId}>

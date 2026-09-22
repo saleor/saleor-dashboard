@@ -37,8 +37,8 @@ describe("WarehouseInfo", () => {
       </Wrapper>,
     );
 
-    const nameInput = screen.getByTestId("warehouse-name-input").querySelector("input");
-    const emailInput = screen.getByTestId("company-email-input").querySelector("input");
+    const nameInput = screen.getByTestId("warehouse-name-input");
+    const emailInput = screen.getByTestId("company-email-input");
 
     expect(nameInput).toBeInTheDocument();
     expect(emailInput).toBeInTheDocument();
@@ -53,10 +53,10 @@ describe("WarehouseInfo", () => {
       </Wrapper>,
     );
 
-    const nameInput = screen.getByTestId("warehouse-name-input").querySelector("input");
+    const nameInput = screen.getByTestId("warehouse-name-input");
 
     expect(nameInput).toBeInstanceOf(HTMLInputElement);
-    fireEvent.change(nameInput as HTMLInputElement, { target: { value: "Updated Warehouse" } });
+    fireEvent.change(nameInput, { target: { value: "Updated Warehouse" } });
     expect(mockOnChange).toHaveBeenCalled();
   });
 
@@ -67,10 +67,10 @@ describe("WarehouseInfo", () => {
       </Wrapper>,
     );
 
-    const emailInput = screen.getByTestId("company-email-input").querySelector("input");
+    const emailInput = screen.getByTestId("company-email-input");
 
     expect(emailInput).toBeInstanceOf(HTMLInputElement);
-    fireEvent.change(emailInput as HTMLInputElement, {
+    fireEvent.change(emailInput, {
       target: { value: "updated@warehouse.com" },
     });
     expect(mockOnChange).toHaveBeenCalled();
@@ -90,7 +90,7 @@ describe("WarehouseInfo", () => {
 
     expect(screen.getByText("Name is required")).toBeInTheDocument();
 
-    const nameInput = screen.getByTestId("warehouse-name-input").querySelector("input");
+    const nameInput = screen.getByTestId("warehouse-name-input");
 
     expect(nameInput).toHaveAttribute("aria-invalid", "true");
   });
@@ -109,7 +109,7 @@ describe("WarehouseInfo", () => {
 
     expect(screen.getByText("Invalid email format")).toBeInTheDocument();
 
-    const emailInput = screen.getByTestId("company-email-input").querySelector("input");
+    const emailInput = screen.getByTestId("company-email-input");
 
     expect(emailInput).toHaveAttribute("aria-invalid", "true");
   });

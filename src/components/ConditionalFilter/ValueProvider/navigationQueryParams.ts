@@ -3,50 +3,86 @@ import { getArrayQueryParam } from "@dashboard/utils/urls";
 
 import { type FilterProviderType } from "../types";
 
-const ATTRIBUTE_LIST_NAVIGATION_QUERY_KEYS = ["typeIds", "pageTypes"] as const;
+const NAVIGATION_QUERY_KEYS_BY_PROVIDER: Partial<Record<FilterProviderType, readonly string[]>> = {
+  attributes: ["typeIds", "pageTypes"],
+  customer: ["customerTypes"],
+};
+
+const isNavigationQueryKey = (key: string, names: readonly string[]): boolean =>
+  names.some(name => key === name || key.startsWith(`${name}[`));
 
 export const stripNavigationQueryParams = (
   params: URLSearchParams,
   providerType: FilterProviderType,
 ): void => {
-  if (providerType !== "attributes") {
+  const names = NAVIGATION_QUERY_KEYS_BY_PROVIDER[providerType];
+
+  if (!names) {
     return;
   }
 
   [...params.keys()].forEach(key => {
-    const isNavigationKey = ATTRIBUTE_LIST_NAVIGATION_QUERY_KEYS.some(
-      name => key === name || key.startsWith(`${name}[`),
-    );
-
-    if (isNavigationKey) {
+    if (isNavigationQueryKey(key, names)) {
       params.delete(key);
     }
   });
+};
+
+const readArrayQueryParam = (qs: Record<string, unknown>, name: string): string[] | undefined => {
+  const param = qs[name];
+
+  if (param === undefined || param === null) {
+    return undefined;
+  }
+
+  const values = getArrayQueryParam(param as string | string[] | Record<string, string>);
+
+  return values?.length ? values : undefined;
 };
 
 const readNavigationTypeIds = (
   locationSearch: string,
 ): { typeIds?: string[]; pageTypes?: string[] } => {
   const qs = parseQs(locationSearch.startsWith("?") ? locationSearch.slice(1) : locationSearch);
-  const typeIdsParam = qs.typeIds;
+  const typeIds = readArrayQueryParam(qs, "typeIds");
 
-  if (typeIdsParam !== undefined && typeIdsParam !== null) {
-    const typeIds = getArrayQueryParam(typeIdsParam as string | string[]);
-
-    return typeIds?.length ? { typeIds } : {};
+  if (typeIds) {
+    return { typeIds };
   }
 
-  const pageTypesParam = qs.pageTypes;
+  const pageTypes = readArrayQueryParam(qs, "pageTypes");
 
-  if (pageTypesParam === undefined || pageTypesParam === null) {
-    return {};
-  }
-
-  const pageTypes = getArrayQueryParam(pageTypesParam as string | string[]);
-
-  return pageTypes?.length ? { pageTypes } : {};
+  return pageTypes ? { pageTypes } : {};
 };
 
 export const getAttributeListNavigationQueryParams = (
   locationSearch: string,
 ): { typeIds?: string[]; pageTypes?: string[] } => readNavigationTypeIds(locationSearch);
+
+export const getNavigationQueryParams = (
+  locationSearch: string,
+  providerType: FilterProviderType,
+): Record<string, string[]> => {
+  if (providerType === "attributes") {
+    return getAttributeListNavigationQueryParams(locationSearch);
+  }
+
+  const names = NAVIGATION_QUERY_KEYS_BY_PROVIDER[providerType];
+
+  if (!names) {
+    return {};
+  }
+
+  const qs = parseQs(locationSearch.startsWith("?") ? locationSearch.slice(1) : locationSearch);
+  const result: Record<string, string[]> = {};
+
+  names.forEach(name => {
+    const values = readArrayQueryParam(qs, name);
+
+    if (values) {
+      result[name] = values;
+    }
+  });
+
+  return result;
+};

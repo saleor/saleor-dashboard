@@ -1,6 +1,6 @@
-export type ProductMediaFileValidationReason = "invalidType";
+type ProductMediaFileValidationReason = "invalidType";
 
-export interface ProductMediaFileValidationResult {
+interface ProductMediaFileValidationResult {
   validFiles: File[];
   rejected: Array<{ file: File; reason: ProductMediaFileValidationReason }>;
 }

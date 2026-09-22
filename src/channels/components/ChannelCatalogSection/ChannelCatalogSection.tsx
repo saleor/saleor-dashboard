@@ -11,6 +11,7 @@ import {
 import { SetupChecklistReviewList } from "@dashboard/components/SetupChecklist/SetupChecklistReviewList";
 import { type SetupChecklistReviewItem } from "@dashboard/components/SetupChecklist/types";
 import { ProductsIcon } from "@dashboard/icons/Products";
+import { withAppMountUri } from "@dashboard/utils/urls";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Eye, Plus } from "lucide-react";
 import { useCallback, useMemo } from "react";
@@ -79,7 +80,7 @@ export const ChannelCatalogSection = ({
     (isPublished: boolean) => {
       // New tab keeps channel details open and avoids SPA filter-state races.
       window.open(
-        productListUrlWithChannelCatalogFilters({ channel, isPublished }),
+        withAppMountUri(productListUrlWithChannelCatalogFilters({ channel, isPublished })),
         "_blank",
         "noopener,noreferrer",
       );

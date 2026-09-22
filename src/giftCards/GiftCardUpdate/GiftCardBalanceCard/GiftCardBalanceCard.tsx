@@ -2,7 +2,7 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import { GiftCardBalanceCardView } from "./GiftCardBalanceCardView";
 
-export const GiftCardBalanceCard = (): JSX.Element => {
+export const GiftCardBalanceCard = (): React.ReactNode => {
   const { loading, giftCard } = useGiftCardDetails();
   const { openSetBalanceDialog } = useGiftCardUpdateDialogs();
 

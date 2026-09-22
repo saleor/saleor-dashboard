@@ -1,6 +1,6 @@
 import { type PageTypeFilterInput } from "@dashboard/graphql";
 
-import { createFilterTabUtils } from "../../../utils/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import { type PageTypeListUrlFilters } from "../../urls";
 
 const PAGE_TYPE_FILTERS_KEY = "pageTypeFilters";

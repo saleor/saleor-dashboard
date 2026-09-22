@@ -1,6 +1,5 @@
 import { type FilterAPIProvider } from "../ConditionalFilter/API/FilterAPIProvider";
 import { getFilterElement } from "../ConditionalFilter/API/utils";
-import { type FilterContainer, FilterElement } from "../ConditionalFilter/FilterElement";
 import { Condition } from "../ConditionalFilter/FilterElement/Condition";
 import { ConditionSelected } from "../ConditionalFilter/FilterElement/ConditionSelected";
 import {
@@ -8,6 +7,10 @@ import {
   isItemOptionArray,
   type ItemOption,
 } from "../ConditionalFilter/FilterElement/ConditionValue";
+import {
+  type FilterContainer,
+  FilterElement,
+} from "../ConditionalFilter/FilterElement/FilterElement";
 import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 
 export type OperandValueExclusions = Partial<Record<"collection", string[]>>;
@@ -124,15 +127,18 @@ export const createOperandExclusionApiProvider = (
 
   return {
     ...base,
-    fetchRightOptions: async (position, value, inputValue) => {
-      const options = await base.fetchRightOptions(position, value, inputValue);
+    fetchRightOptions: async (position, value, inputValue, after) => {
+      const page = await base.fetchRightOptions(position, value, inputValue, after);
       const filterElement = getFilterElement(value, parseInt(position, 10));
 
       if (filterElement?.value.value !== "collection") {
-        return options;
+        return page;
       }
 
-      return filterItemOptions(options, excludedIds);
+      return {
+        ...page,
+        options: filterItemOptions(page.options, excludedIds),
+      };
     },
   };
 };

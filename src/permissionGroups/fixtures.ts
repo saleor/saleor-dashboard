@@ -151,6 +151,7 @@ export const permissionGroup: PermissionGroupDetailsFragment = {
       __typename: "User",
       email: "joshua.mitchell@example.com",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: null,
     },
     {
@@ -160,6 +161,7 @@ export const permissionGroup: PermissionGroupDetailsFragment = {
       __typename: "User",
       email: "bryan.rodgers@example.com",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: null,
     },
   ],
@@ -187,6 +189,7 @@ export const permissionGroupWithChannels: NonNullable<PermissionGroupDetailsFrag
       __typename: "User",
       email: "joshua.mitchell@example.com",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: null,
     },
     {
@@ -196,6 +199,7 @@ export const permissionGroupWithChannels: NonNullable<PermissionGroupDetailsFrag
       __typename: "User",
       email: "bryan.rodgers@example.com",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: null,
     },
   ],
@@ -219,6 +223,7 @@ export const users: RelayToFlat<NonNullable<SearchStaffMembersQuery["search"]>> 
       firstName: "",
       lastName: "",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: {
         alt: null,
         url: avatarImg,
@@ -235,6 +240,7 @@ export const users: RelayToFlat<NonNullable<SearchStaffMembersQuery["search"]>> 
       firstName: "Bryan",
       lastName: "Rodgers",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: {
         alt: null,
         url: avatarImg,
@@ -251,6 +257,7 @@ export const users: RelayToFlat<NonNullable<SearchStaffMembersQuery["search"]>> 
       firstName: "Joshua",
       lastName: "Mitchell",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: {
         alt: null,
         url: avatarImg,
@@ -267,6 +274,7 @@ export const users: RelayToFlat<NonNullable<SearchStaffMembersQuery["search"]>> 
       firstName: "Joshua",
       lastName: "Mitchell",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: {
         alt: null,
         url: avatarImg,

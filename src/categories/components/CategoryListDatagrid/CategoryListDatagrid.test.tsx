@@ -15,7 +15,7 @@ jest.mock("@dashboard/hooks/useBackLinkWithState", () => ({
 jest.mock("@dashboard/components/Datagrid/ColumnPicker/ColumnPicker", () => ({
   ColumnPicker: () => null,
 }));
-jest.mock("@dashboard/components/TablePagination", () => ({
+jest.mock("@dashboard/components/TablePagination/DatagridPagination", () => ({
   DatagridPagination: () => null,
 }));
 jest.mock("@dashboard/components/Datagrid/Datagrid", () => ({

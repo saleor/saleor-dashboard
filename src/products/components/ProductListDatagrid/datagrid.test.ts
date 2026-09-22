@@ -1,4 +1,37 @@
-import { getDescriptionValue } from "./datagrid";
+import { ProductListUrlSortField } from "@dashboard/products/urls";
+import { testIntlInstance } from "@test/intl";
+
+import { getDescriptionValue, productListStaticColumnAdapter } from "./datagrid";
+
+describe("productListStaticColumnAdapter", () => {
+  it("keeps merchandising columns compact and grows the product name", () => {
+    // Arrange & Act
+    const columns = productListStaticColumnAdapter({
+      intl: testIntlInstance,
+      sort: { sort: ProductListUrlSortField.name, asc: true },
+      onPriceClick: undefined,
+    });
+
+    // Assert
+    expect(
+      columns.map(column => ({
+        id: column.id,
+        width: column.width,
+        grow: column.grow,
+      })),
+    ).toEqual([
+      { id: "name", width: 280, grow: 1 },
+      { id: "productType", width: 160, grow: undefined },
+      { id: "description", width: 240, grow: undefined },
+      { id: "availability", width: 200, grow: undefined },
+      { id: "date", width: 200, grow: undefined },
+      { id: "created", width: 200, grow: undefined },
+      { id: "price", width: 140, grow: undefined },
+      { id: "productCategory", width: 180, grow: undefined },
+      { id: "productCollections", width: 200, grow: undefined },
+    ]);
+  });
+});
 
 describe("getDescriptionValue", () => {
   it("should return description value", () => {

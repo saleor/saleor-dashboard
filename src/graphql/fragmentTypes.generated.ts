@@ -85,6 +85,9 @@
       "CustomerCreated",
       "CustomerDeleted",
       "CustomerMetadataUpdated",
+      "CustomerTypeCreated",
+      "CustomerTypeDeleted",
+      "CustomerTypeUpdated",
       "CustomerUpdated",
       "DraftOrderCreated",
       "DraftOrderDeleted",
@@ -245,6 +248,7 @@
       "CollectionTranslatableContent",
       "CollectionTranslation",
       "CustomerEvent",
+      "CustomerType",
       "EventDelivery",
       "EventDeliveryAttempt",
       "ExportEvent",
@@ -322,7 +326,8 @@
     "ObjectWithAttributes": [
       "Page",
       "Product",
-      "ProductVariant"
+      "ProductVariant",
+      "User"
     ],
     "ObjectWithMetadata": [
       "Address",
@@ -333,6 +338,7 @@
       "Checkout",
       "CheckoutLine",
       "Collection",
+      "CustomerType",
       "Fulfillment",
       "GiftCard",
       "Invoice",

@@ -1,5 +1,6 @@
 import { type FetchResult } from "@apollo/client";
-import { type Rule, toAPI } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
+import { toAPI } from "@dashboard/discounts/models/transformRule";
 import {
   type PromotionDetailsFragment,
   type PromotionRuleCreateErrorFragment,

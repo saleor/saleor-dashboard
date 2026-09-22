@@ -7,7 +7,10 @@
 }
 
 .headerRow > td {
-  padding: var(--mu-spacing-2) !important;
+  box-sizing: border-box;
+  line-height: 1;
+  vertical-align: middle;
+  padding: var(--mu-spacing-1) var(--mu-spacing-2) !important;
   border-top-width: 0 !important;
   border-bottom-width: 1px !important;
   border-bottom-style: solid !important;
@@ -20,9 +23,14 @@
 }
 
 .headerRow > td:last-child {
-  padding: 0 var(--mu-spacing-2) 0 0 !important;
+  padding: var(--mu-spacing-1) var(--mu-spacing-2) var(--mu-spacing-1) 0 !important;
 }
 
 .headerRow + tr > td {
   border-top-width: 0 !important;
+}
+
+/* Pagination (or the card edge) owns the separator — last row must not add a second line. */
+.table tr:last-child > td {
+  border-bottom-width: 0 !important;
 }

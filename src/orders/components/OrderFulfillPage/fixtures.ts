@@ -2,7 +2,7 @@ import * as placeholderImage from "@assets/images/sample-product.jpg";
 import { type OrderFulfillDataQuery } from "@dashboard/graphql";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
 
-export const orderToFulfill: OrderFulfillDataQuery["order"] = {
+export const orderToFulfill: NonNullable<OrderFulfillDataQuery["order"]> = {
   __typename: "Order",
   id: "T3JkZXI6Mg==",
   isPaid: true,
@@ -22,7 +22,6 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
         id: "UHJvZHVjdFZhcmlhbnQ6Mjk2",
         name: "S",
         sku: "62783187",
-        preorder: null,
         attributes: [
           {
             __typename: "SelectedAttribute",
@@ -86,7 +85,6 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
         id: "UHJvZHVjdFZhcmlhbnQ6MTgx",
         name: "2.5l",
         sku: "998323583",
-        preorder: null,
         attributes: [
           {
             __typename: "SelectedAttribute",
@@ -143,7 +141,6 @@ export const orderToFulfill: OrderFulfillDataQuery["order"] = {
         id: "UHJvZHVjdFZhcmlhbnQ6MTgy",
         name: "5l",
         sku: "998323584",
-        preorder: null,
         attributes: [
           {
             __typename: "SelectedAttribute",

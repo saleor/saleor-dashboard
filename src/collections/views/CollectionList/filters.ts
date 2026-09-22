@@ -2,17 +2,17 @@
 import {
   CollectionFilterKeys,
   type CollectionListFilterOpts,
-} from "@dashboard/collections/components/CollectionListPage";
+} from "@dashboard/collections/components/CollectionListPage/filters";
 import { type FilterElement, type FilterElementRegular } from "@dashboard/components/Filter/types";
 import { type CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
 import { findValueInEnum, maybe } from "@dashboard/misc";
 import { type Option } from "@saleor/macaw-ui-next";
 
 import {
-  createFilterTabUtils,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-} from "../../../utils/filters";
+} from "../../../utils/filters/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import { type CollectionListUrlFilters, CollectionListUrlFiltersEnum } from "../../urls";
 
 const COLLECTION_FILTERS_KEY = "collectionFilters";

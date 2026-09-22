@@ -18,7 +18,7 @@ import { giftCardBalanceCardMessages as messages } from "./messages";
 
 type GiftCardDetails = NonNullable<GiftCardDetailsQuery["giftCard"]>;
 
-export interface GiftCardBalanceCardViewProps {
+interface GiftCardBalanceCardViewProps {
   giftCard: ExtendedGiftCard<GiftCardDetails> | undefined;
   loading?: boolean;
   onSetBalance: () => void;
@@ -28,7 +28,7 @@ export const GiftCardBalanceCardView = ({
   giftCard,
   loading = false,
   onSetBalance,
-}: GiftCardBalanceCardViewProps): JSX.Element => {
+}: GiftCardBalanceCardViewProps): React.ReactNode => {
   const intl = useIntl();
   const { locale } = useLocale();
   const localizeDate = useDateLocalize();

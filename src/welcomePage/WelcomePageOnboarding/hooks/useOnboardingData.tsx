@@ -8,7 +8,7 @@ import { WelcomePageCreateProductButton } from "../components/WelcomePageCreateP
 import { WelcomePageInviteStaffButton } from "../components/WelcomePageInviteStaffButton";
 import { WelcomePageOrdersButton } from "../components/WelcomePageOrdersButton";
 import { WelcomePageWebhooksButton } from "../components/WelcomePageWebhooksButton";
-import { useOnboarding } from "../onboardingContext";
+import { useOnboarding } from "../onboardingContext/OnboardingContext";
 import { type OnboardingStepsIDs } from "../onboardingContext/types";
 
 interface OnboardingStepData {

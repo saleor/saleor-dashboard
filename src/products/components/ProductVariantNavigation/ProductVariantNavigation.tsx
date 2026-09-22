@@ -1,6 +1,5 @@
 import { borderHeight, savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
-import { Divider } from "@dashboard/components/Divider";
 import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -11,7 +10,7 @@ import {
 import { productVariantAddUrl } from "@dashboard/products/urls";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import {
   type ChangeEvent,
   type CSSProperties,
@@ -112,7 +111,6 @@ export const ProductVariantNavigation = ({
     scrollContainerRef,
   });
 
-  const hasVariants = variants.length > 0;
   const pinnedThumbnail = pinnedVariant?.media?.filter(mediaObj => mediaObj.type === "IMAGE")[0];
 
   const handleSearchChange = useCallback(
@@ -162,7 +160,7 @@ export const ProductVariantNavigation = ({
               sortable={canReorder}
               draggable={canReorder && !isSaving && !selectionPending}
             />
-            <Divider height={0} />
+            <Divider />
           </Fragment>
         );
       });
@@ -217,7 +215,7 @@ export const ProductVariantNavigation = ({
             </Text>
           )}
         </Box>
-        <Divider height={0} />
+        <Divider />
 
         {shouldPin && pinnedVariant && (
           <Box data-test-id="variant-siblings-pinned-current" flexShrink="0">
@@ -237,7 +235,7 @@ export const ProductVariantNavigation = ({
                 </Text>
               }
             />
-            <Divider height={0} />
+            <Divider />
           </Box>
         )}
 
@@ -278,7 +276,7 @@ export const ProductVariantNavigation = ({
               )}
 
               {isCreate && (
-                <ProductVariantEmptyItem hasVariants={hasVariants}>
+                <ProductVariantEmptyItem>
                   <Text>
                     <FormattedMessage {...messages.newVariant} />
                   </Text>

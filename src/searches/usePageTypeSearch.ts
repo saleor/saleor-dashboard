@@ -5,7 +5,7 @@ import {
   type SearchPageTypesQuery,
   type SearchPageTypesQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch/makeTopLevelSearch";
 
 export const searchPageTypes = gql`
   query SearchPageTypes($after: String, $first: Int!, $query: String!) {
@@ -14,6 +14,9 @@ export const searchPageTypes = gql`
         node {
           id
           name
+          metadata {
+            ...MetadataItem
+          }
         }
       }
       pageInfo {

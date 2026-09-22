@@ -1,4 +1,4 @@
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { buttonMessages } from "@dashboard/intl";
 import { Box } from "@saleor/macaw-ui-next";
 import { Pencil, Trash2 } from "lucide-react";

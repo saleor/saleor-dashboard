@@ -9,7 +9,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import useHandleFormSubmit from "./useHandleFormSubmit";
 
-jest.mock("./useNotifier", () => ({
+jest.mock("./useNotifier/useNotifier", () => ({
   useNotifier: () => jest.fn(),
 }));
 

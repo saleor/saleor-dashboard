@@ -14,7 +14,7 @@ import { MarkAsPaid } from "./MarkAsPaid";
 import { messages } from "./messages";
 
 /** Default hours when enabling release-funds-for-expired-checkouts. */
-export const DEFAULT_CHECKOUT_TTL_BEFORE_RELEASING_FUNDS_HOURS = 6;
+const DEFAULT_CHECKOUT_TTL_BEFORE_RELEASING_FUNDS_HOURS = 6;
 
 interface ChannelPaymentsCheckoutSectionProps {
   data: FormData;

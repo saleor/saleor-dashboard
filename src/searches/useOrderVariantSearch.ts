@@ -5,7 +5,7 @@ import {
   type SearchOrderVariantQuery,
   type SearchOrderVariantQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch/makeTopLevelSearch";
 
 /**
  * Variants page size for the order add-line dialog (initial search embed and

@@ -1,4 +1,4 @@
-import { type TypeDeleteMessages } from "@dashboard/components/TypeDeleteWarningDialog";
+import { type TypeDeleteMessages } from "@dashboard/components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
 import { type Ids } from "@dashboard/types";
 
 export interface UseTypeDeleteData extends TypeDeleteMessages {

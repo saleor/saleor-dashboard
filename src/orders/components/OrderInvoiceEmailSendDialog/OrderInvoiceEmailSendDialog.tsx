@@ -2,10 +2,10 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type InvoiceErrorFragment, type InvoiceFragment } from "@dashboard/graphql";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { type DialogProps } from "@dashboard/types";
 import getInvoiceErrorMessage from "@dashboard/utils/errors/invoice";

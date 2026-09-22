@@ -93,14 +93,18 @@
   background-color: var(--mu-colors-background-default1);
 }
 
-/* Keep layout stable; reveal on hover / keyboard focus. Always show on touch. */
+/* Keep layout stable; reveal on hover or delete-control focus. Always show on touch. */
 .rowDelete {
   opacity: 0;
   transition: opacity 0.12s ease;
 }
 
+.rowDelete svg {
+  color: var(--mu-colors-text-default1);
+}
+
 .row:hover .rowDelete,
-.row:focus-within .rowDelete {
+.rowDelete:focus-within {
   opacity: 1;
 }
 
@@ -115,6 +119,18 @@
   align-items: center;
   gap: var(--mu-spacing-2);
   min-width: 0;
+}
+
+/* Drag handle owns the dnd listeners and keyboard focus (space/arrows to reorder). */
+.rowHandle {
+  display: flex;
+  align-items: center;
+  border-radius: var(--mu-spacing-1);
+}
+
+.rowHandle:focus-visible {
+  outline: 2px solid var(--mu-colors-border-info1);
+  outline-offset: 2px;
 }
 
 .rowIndex {

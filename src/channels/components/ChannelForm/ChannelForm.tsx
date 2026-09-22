@@ -3,7 +3,8 @@ import {
   type ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { FixedAtCreationField } from "@dashboard/components/FixedAtCreationField/FixedAtCreationField";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import {
   type ChannelErrorFragment,
   type CountryCode,
@@ -17,7 +18,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import { Box, Button, DynamicCombobox, Input, type Option } from "@saleor/macaw-ui-next";
-import { Copy, Lock } from "lucide-react";
+import { Copy } from "lucide-react";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
@@ -183,24 +184,12 @@ export const ChannelForm = ({
             />
           </Box>
           <Box __flex="1 1 0" __minWidth="0" width="100%">
-            <Input
+            <FixedAtCreationField
               data-test-id="channel-currency-locked-input"
-              disabled
+              helperText={intl.formatMessage(messages.channelCurrencyHintLocked)}
               label={intl.formatMessage(messages.channelCurrency)}
               name="currencyCode"
               value={data.currencyCode}
-              helperText={intl.formatMessage(messages.channelCurrencyHintLocked)}
-              endAdornment={
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  color="default2"
-                  paddingRight={1}
-                  aria-hidden
-                >
-                  <Lock size={iconSize.small} strokeWidth={iconStrokeWidth} />
-                </Box>
-              }
             />
           </Box>
         </Box>

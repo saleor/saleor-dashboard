@@ -2,16 +2,15 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type OrderErrorFragment } from "@dashboard/graphql";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { orderFulfillmentTrackingDialogMessages } from "./messages";
@@ -60,8 +59,9 @@ export const OrderFulfillmentTrackingDialog = ({
             <DashboardModal.Body>
               <DashboardModal.Inset>
                 <Box display="flex" flexDirection="column" gap={4}>
-                  <TextField
+                  <Input
                     error={!!formErrors.trackingNumber}
+                    aria-invalid={!!formErrors.trackingNumber}
                     helperText={getOrderErrorMessage(formErrors.trackingNumber, intl)}
                     label={intl.formatMessage(
                       orderFulfillmentTrackingDialogMessages.trackingNumber,
@@ -69,7 +69,6 @@ export const OrderFulfillmentTrackingDialog = ({
                     name="trackingNumber"
                     onChange={change}
                     value={data.trackingNumber}
-                    fullWidth
                     data-test-id="tracking-number-input"
                   />
 

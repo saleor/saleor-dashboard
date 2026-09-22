@@ -2,8 +2,9 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AttributeInput } from "@dashboard/components/Attributes";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
@@ -20,7 +21,7 @@ import {
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages, errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
@@ -44,7 +45,8 @@ import { getMutationState } from "../../../misc";
 import { ProductDeleteDialog } from "../../components/ProductDeleteDialog/ProductDeleteDialog";
 import { ProductMediaDeleteDialog } from "../../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMetadataDialog } from "../../components/ProductMetadataDialog/ProductMetadataDialog";
-import ProductUpdatePage from "../../components/ProductUpdatePage";
+import { useProductSetupCardDismiss } from "../../components/ProductSetupCard/useProductSetupCardDismiss";
+import ProductUpdatePage from "../../components/ProductUpdatePage/ProductUpdatePage";
 import { useProductVariantsGrid } from "../../hooks/useProductVariantsGrid";
 import {
   productListUrl,
@@ -70,6 +72,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { resetFormsState } = useExitFormDialog();
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -85,9 +88,9 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const { data, loading, refetch } = useProductDetailsQuery({
@@ -161,6 +164,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           defaultMessage: "Product removed",
         }),
       });
+      resetFormsState();
       navigate(productListUrl());
     },
   });
@@ -206,6 +210,12 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
+  const setupEmphasized = params.action === "setup";
+  const {
+    isDismissed: setupCardDismissed,
+    dismiss: dismissSetupCard,
+    undismiss: undismissSetupCard,
+  } = useProductSetupCardDismiss(id);
   const [bulkDeleteProductMedia, bulkDeleteProductMediaOpts] = useProductMediaBulkDeleteMutation({
     onCompleted: data => {
       const result = data.productMediaBulkDelete;
@@ -391,7 +401,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const referenceCategories = mapEdgesToItems(searchReferenceCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues = getAttributeValues;
   const fetchMoreCollections = getSearchFetchMoreProps(searchCollectionsOpts, loadMoreCollections);
   const fetchMoreCategories = getSearchFetchMoreProps(searchCategoriesOpts, loadMoreCategories);
   const fetchMoreReferenceCategories = getSearchFetchMoreProps(
@@ -404,11 +414,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   );
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
   if (product === null) {
@@ -455,6 +461,24 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         variantsLoading={variantsLoading}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata")}
+        onShowSetupChecklist={
+          product
+            ? () => {
+                undismissSetupCard();
+                openModal("setup");
+              }
+            : undefined
+        }
+        setupEmphasized={setupEmphasized}
+        setupCardDismissed={setupCardDismissed}
+        setupCardDisplayReady={Boolean(product) && !loading}
+        onDismissSetupCard={() => {
+          dismissSetupCard();
+
+          if (setupEmphasized) {
+            closeModal();
+          }
+        }}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={submit}

@@ -6,6 +6,7 @@ import {
   type BulkAction,
   type Dialog,
   type Filters,
+  type FiltersWithMultipleValues,
   type Pagination,
   type SingleAction,
   type Sort,
@@ -22,8 +23,14 @@ export enum CustomerListUrlFiltersEnum {
   numberOfOrdersTo = "numberOfOrdersTo",
   query = "query",
 }
-export type CustomerListUrlFilters = Filters<CustomerListUrlFiltersEnum>;
-export type CustomerListUrlDialog = "remove" | TabActionDialog;
+
+enum CustomerListUrlFiltersWithMultipleValues {
+  customerTypes = "customerTypes",
+}
+
+export type CustomerListUrlFilters = Filters<CustomerListUrlFiltersEnum> &
+  FiltersWithMultipleValues<CustomerListUrlFiltersWithMultipleValues>;
+export type CustomerListUrlDialog = "remove" | "create-customer-type" | TabActionDialog;
 export enum CustomerListUrlSortField {
   name = "name",
   email = "email",
@@ -39,14 +46,35 @@ export type CustomerListUrlQueryParams = ActiveTab &
 export const customerListUrl = (params?: CustomerListUrlQueryParams) =>
   customerListPath + "?" + stringifyQs(params);
 
+/**
+ * Builds the customer list URL pre-filtered by a single customer type tab.
+ */
+export const customerListUrlWithCustomerType = (customerType?: { id: string }) => {
+  if (!customerType?.id) {
+    return customerListPath;
+  }
+
+  return customerListUrl({ customerTypes: [customerType.id] });
+};
+
 export const customerPath = (id: string) => urlJoin(customerSection, id);
-type CustomerUrlDialog = "remove" | "activate" | "deactivate" | "view-metadata";
-export type CustomerUrlQueryParams = Dialog<CustomerUrlDialog>;
+type CustomerUrlDialog =
+  | "remove"
+  | "activate"
+  | "deactivate"
+  | "view-metadata"
+  | "assign-attribute-value";
+export type CustomerUrlQueryParams = Dialog<CustomerUrlDialog> & SingleAction;
 export const customerUrl = (id: string, params?: CustomerUrlQueryParams) =>
   customerPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const customerAddPath = urlJoin(customerSection, "add");
-export const customerAddUrl = customerAddPath;
+interface CustomerCreateUrlCustomerType {
+  "customer-type-id"?: string;
+}
+export type CustomerCreateUrlQueryParams = CustomerCreateUrlCustomerType;
+export const customerAddUrl = (params?: CustomerCreateUrlQueryParams) =>
+  customerAddPath + (params ? "?" + stringifyQs(params) : "");
 
 export const customerAddressesPath = (id: string) => urlJoin(customerPath(id), "addresses");
 export type CustomerAddressesUrlDialog = "add" | "edit" | "remove";

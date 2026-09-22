@@ -1,13 +1,13 @@
 // @ts-strict-ignore
-import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
+import { CodeMirrorFontSizeOverrides } from "@dashboard/components/GraphiQL/shared";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 import { type FetcherOpts, type FetcherParams } from "@graphiql/toolkit";
 import { useIntl } from "react-intl";
 
 import { ContextualLine } from "../AppLayout/ContextualLinks/ContextualLine";
 import { useContextualLink } from "../AppLayout/ContextualLinks/useContextualLink";
-import PlainGraphiQL from "../GraphiQLPlain";
+import PlainGraphiQL from "../GraphiQLPlain/GraphiQL";
 import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
 import { getFetcher } from "./utils";
@@ -15,7 +15,6 @@ import { getFetcher } from "./utils";
 export const DevModePanel = () => {
   const intl = useIntl();
   const subtitle = useContextualLink("dev_panel");
-  const { rootStyle } = useDashboardTheme();
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
   const fetcher = async (graphQLParams: FetcherParams, opts: FetcherOpts) => {
@@ -29,17 +28,6 @@ export const DevModePanel = () => {
 
     return result;
   };
-  const overwriteCodeMirrorCSSVariables = {
-    __html: `
-      .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
-        --font-size-hint: ${rootStyle["--font-size-hint"]} !important;
-        --font-size-inline-code: ${rootStyle["--font-size-inline-code"]} !important;
-        --font-size-body: ${rootStyle["--font-size-body"]} !important;
-        --font-size-h4: ${rootStyle["--font-size-h4"]} !important;
-        --font-size-h3: ${rootStyle["--font-size-h3"]} !important;
-        --font-size-h2: ${rootStyle["--font-size-h2"]} !important;
-    `,
-  };
 
   return (
     <DashboardModal open={isDevModeVisible} onChange={() => setDevModeVisibility(false)}>
@@ -49,7 +37,7 @@ export const DevModePanel = () => {
         height="100%"
         disableEscapeKeyDown
       >
-        <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
+        <CodeMirrorFontSizeOverrides />
         <DashboardModal.Header>
           {intl.formatMessage(messages.title)}
 

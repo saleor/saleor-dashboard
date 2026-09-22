@@ -1,6 +1,6 @@
 import { categoryUrl } from "@dashboard/categories/urls";
 import { collectionUrl } from "@dashboard/collections/urls";
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { type DefaultTheme } from "@saleor/macaw-ui-next";

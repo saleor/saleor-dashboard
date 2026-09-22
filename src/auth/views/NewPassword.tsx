@@ -1,6 +1,6 @@
 import { type AccountErrorFragment } from "@dashboard/graphql";
+import { saleorAuth } from "@dashboard/graphql/client";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useAuth } from "@dashboard/legacy-sdk";
 import { parseQs } from "@dashboard/url-utils";
 import { useState } from "react";
 import { type RouteComponentProps } from "react-router";
@@ -13,7 +13,7 @@ import { type NewPasswordUrlQueryParams } from "../urls";
 
 const NewPassword = ({ location }: RouteComponentProps) => {
   const navigate = useNavigator();
-  const { setPassword } = useAuth();
+  const { setPassword } = saleorAuth;
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<AccountErrorFragment[]>([]);
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1)) as any;

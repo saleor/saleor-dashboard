@@ -1,4 +1,4 @@
-import { type FilterContainer, type FilterElement } from "./FilterElement";
+import { type FilterContainer, type FilterElement } from "./FilterElement/FilterElement";
 import { type UrlToken } from "./ValueProvider/UrlToken";
 
 export interface FilterValueProvider {

@@ -121,7 +121,7 @@ export const resolveInitialCustomerAddress = (
   return matchingAddress ?? fallback;
 };
 
-export const ADDRESS_FORM_FIELDS = [
+const ADDRESS_FORM_FIELDS = [
   "city",
   "cityArea",
   "country",

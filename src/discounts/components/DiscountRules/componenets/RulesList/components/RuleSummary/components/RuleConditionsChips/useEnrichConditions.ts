@@ -1,8 +1,8 @@
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/hooks/useConditionNames";
 import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionType/useConditionTypes";
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { type Condition } from "@dashboard/discounts/models";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { type Condition } from "@dashboard/discounts/models/Condition";
 import useLocale from "@dashboard/hooks/useLocale";
 import { type IntlShape, useIntl } from "react-intl";
 

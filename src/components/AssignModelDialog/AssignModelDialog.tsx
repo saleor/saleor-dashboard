@@ -1,4 +1,6 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import { type PageWhereInput, type SearchPagesQuery } from "@dashboard/graphql";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import {
@@ -11,7 +13,9 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { hasReferenceTypeConstraints } from "../AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import AssignContainerDialog, { type AssignContainerDialogProps } from "../AssignContainerDialog";
+import AssignContainerDialog, {
+  type AssignContainerDialogProps,
+} from "../AssignContainerDialog/AssignContainerDialog";
 import {
   type InitialPageConstraints,
   ModalPageFilterProvider,
@@ -62,6 +66,13 @@ const AssignModelDialogInner = ({
     [pages],
   );
 
+  // Kept off `Container`: that shape is also the submit payload, so the icon is looked up per row
+  // at render time rather than riding along with the selection.
+  const iconsByPageId = useMemo(
+    () => new Map(pages?.map(page => [page.id, getModelTypeIcon(page.pageType?.metadata)]) ?? []),
+    [pages],
+  );
+
   const labels: AssignContainerDialogProps["labels"] = {
     title: intl.formatMessage(messages.assignModelDialogHeader),
     label: intl.formatMessage(messages.assignModelDialogSearch),
@@ -78,6 +89,11 @@ const AssignModelDialogInner = ({
     <AssignContainerDialog
       {...restProps}
       containers={containers}
+      renderContainerAdornment={container => {
+        const icon = iconsByPageId.get(container.id);
+
+        return icon ? <ModelTypeIcon icon={icon} /> : null;
+      }}
       labels={labels}
       open={open}
       onClose={onClose}

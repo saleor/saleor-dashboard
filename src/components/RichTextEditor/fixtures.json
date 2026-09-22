@@ -10,6 +10,16 @@
         }
       },
       {
+        "type": "image",
+        "data": {
+          "file": { "url": "https://placehold.co/600x400" },
+          "caption": "Placeholder image",
+          "withBorder": false,
+          "stretched": false,
+          "withBackground": false
+        }
+      },
+      {
         "type": "list",
         "data": {
           "style": "ordered",

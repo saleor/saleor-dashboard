@@ -20,7 +20,7 @@ jest.mock("@dashboard/components/Link", () => {
   );
 });
 
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: jest.fn(() => ({ enabled: true })),
 }));
 

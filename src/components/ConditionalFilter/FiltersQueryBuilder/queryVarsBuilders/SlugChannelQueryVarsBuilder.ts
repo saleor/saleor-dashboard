@@ -1,8 +1,8 @@
 import { type ApolloClient } from "@apollo/client";
 
 import { ChannelHandler, type Handler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
 /** This query vars builder for `channel` is using slug instead of value (which is base64 ID)

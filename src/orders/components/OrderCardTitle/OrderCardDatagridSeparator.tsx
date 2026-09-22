@@ -1,5 +1,5 @@
 import styles from "./OrderCardTitle.module.css";
 
-export const OrderCardDatagridSeparator = (): JSX.Element => (
+export const OrderCardDatagridSeparator = (): React.ReactNode => (
   <hr className={styles.datagridSeparator} aria-hidden />
 );

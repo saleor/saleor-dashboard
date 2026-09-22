@@ -1,6 +1,6 @@
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 
 export interface VoucherSaveComposition {
   hasGeneral: boolean;

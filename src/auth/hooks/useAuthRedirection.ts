@@ -1,7 +1,7 @@
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
+import { useLocation } from "react-router";
 import urlJoin from "url-join";
-import useRouter from "use-react-router";
 
 import { loginCallbackPath } from "../urls";
 import { useUser } from "../useUser";
@@ -10,8 +10,8 @@ import { useAuthParameters } from "./useAuthParameters";
 const PLUGIN_ID_PARAM = "saleorPluginId";
 
 export const useAuthRedirection = () => {
-  const router = useRouter();
-  const params = new URLSearchParams(router.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const shouldRedirect = params.has(PLUGIN_ID_PARAM);
   const { authenticated, authenticating, requestLoginByExternalPlugin, isCredentialsLogin } =
     useUser();
