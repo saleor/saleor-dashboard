@@ -16,12 +16,19 @@ expressions, validates `runs-on` labels, and catches `needs`/`matrix` references
 that do not resolve. **Run it before handing work back.**
 
 ```bash
-actionlint .github/workflows/your-file.yml   # one file
-actionlint                                   # every workflow
+pnpm run actionlint .github/workflows/your-file.yml   # one file
+pnpm run actionlint                                   # every workflow
 ```
 
-Not installed: `brew install actionlint` (macOS) or see
-<https://github.com/rhysd/actionlint>.
+Nothing to install: the script runs the author's official image, pinned by digest
+in `package.json`, and Docker is already a prerequisite for `pnpm e2e`. The image
+bundles its own shellcheck, so results do not vary with what is on the host.
+
+There is no usable npm distribution — the `actionlint` and `node-actionlint`
+packages are unrelated 2022 forks that predate `ubuntu-24.04` as a known runner
+label, so they would reject workflows that are in fact correct. If you want a
+native binary for editor integration, `brew install actionlint` — but the
+`package.json` script is what CI runs, so it is the one that decides.
 
 `lint-workflows.yml` enforces this in CI, but only on the workflow files a pull
 request **touches** — the repository predates the check and its older workflows
