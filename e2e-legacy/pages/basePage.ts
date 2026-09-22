@@ -2,7 +2,7 @@ import { LOCATORS } from "@data/commonLocators";
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
-import { SUCCESS_BANNER_TIMEOUT } from "../../playwright.config";
+import { SUCCESS_BANNER_TIMEOUT } from "../playwright.config";
 
 export class BasePage {
   readonly page: Page;

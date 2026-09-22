@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  // Standalone config for the local-stack E2E suite. The orchestration scripts
+  // (`run.ts`, `lib/`, `scenarios/`) are executed directly by Node's TypeScript
+  // type stripping (Node >= 24), so relative imports keep their `.ts` extension.
+  // Playwright compiles `tests/` and `pages/` itself and resolves the aliases below.
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "types": ["node"],
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["**/*.ts"]
+}
