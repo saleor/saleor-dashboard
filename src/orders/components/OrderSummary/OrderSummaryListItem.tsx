@@ -38,9 +38,19 @@ export const OrderSummaryListItem = ({
       title={title}
       {...props}
     >
-      <Text as="div" size={4} fontWeight={fontWeight} minWidth={0}>
+      {/* Box, not Text: the shipping row nests a div, and Text's `as` cannot be a div.
+          Match Text size 4 (font, line-height, letter-spacing) so rows stay aligned. */}
+      <Box
+        fontSize={4}
+        lineHeight={4}
+        letterSpacing={4}
+        fontWeight={fontWeight}
+        color="default1"
+        margin={0}
+        minWidth={0}
+      >
         {children}
-      </Text>
+      </Box>
       <Box title={amountTitle}>
         <Text fontWeight={fontWeight} color="default2" size={3}>
           {currency}
