@@ -5,6 +5,7 @@ import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTy
 import { getStatusColor } from "@dashboard/misc";
 import { type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField } from "@dashboard/modeling/urls";
+import { canBeSorted } from "@dashboard/modeling/views/PageList/sort";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
@@ -40,7 +41,7 @@ export const pageListStaticColumnsAdapter = (
     },
   ].map(column => ({
     ...column,
-    icon: getColumnSortDirectionIcon(sort, column.id, { nonSortableColumns: ["contentType"] }),
+    icon: canBeSorted(column.id) ? getColumnSortDirectionIcon(sort, column.id) : undefined,
   }));
 
 export const createGetCellContent =

@@ -10,6 +10,7 @@ import {
 import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { type Customer, type Customers } from "@dashboard/customers/types";
 import { type CustomerListUrlSortField } from "@dashboard/customers/urls";
+import { canBeSorted } from "@dashboard/customers/views/CustomerList/sort";
 import { PermissionEnum } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { type ListProps, type SortPage } from "@dashboard/types";
@@ -103,7 +104,11 @@ export const CustomerListDatagrid = ({
   );
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const columnName = visibleColumns[col].id as CustomerListUrlSortField;
+      const columnName = visibleColumns[col]?.id;
+
+      if (!columnName || !canBeSorted(columnName)) {
+        return;
+      }
 
       onSort(columnName);
     },
