@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.23.34
+
+### Patch Changes
+
+- [#6935](https://github.com/saleor/saleor-dashboard/pull/6935) [`3096c22`](https://github.com/saleor/saleor-dashboard/commit/3096c22f290fcf7f2825dc398283f8c89e0e02e2) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed logging in with an external authentication plugin (OpenID Connect, "Login with Saleor Cloud") failing with "You don't have permission to login". The external login and external token refresh mutations asked for user data that only an already-authenticated request may read, so Saleor rejected them. They now request the same minimal user payload as before 3.23.33, and existing SSO sessions no longer get logged out on reload.
+
 ## 3.23.33
 
 ### Patch Changes

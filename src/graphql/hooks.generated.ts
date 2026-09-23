@@ -9472,6 +9472,11 @@ export const ListCustomersDocument = gql`
     edges {
       node {
         ...Customer
+        externalReference
+        defaultBillingAddress {
+          id
+          companyName
+        }
         orders @include(if: $PERMISSION_MANAGE_ORDERS) {
           totalCount
         }

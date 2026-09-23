@@ -1,0 +1,61 @@
+# actionlint over the workflow files a pull request touches.
+#
+# Only the touched ones: the repository predates this check and its older workflows carry
+# findings of their own, so linting everything would fail every pull request regardless of
+# what it changed. Editing a workflow means inheriting whatever it already reports, which
+# keeps the blast radius to the file in front of you and retires the backlog as it is
+# touched. Switch to a bare `actionlint` once that backlog is empty.
+name: Lint workflows
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The diff against the merge base is what names the files to lint.
+          fetch-depth: 0
+          persist-credentials: false
+
+      # `pnpm run actionlint` is a docker invocation, so no dependency install is needed -
+      # only pnpm itself, to read the pinned image out of package.json.
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: "package.json"
+
+      - name: Lint the workflows this pull request touches
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Deleted files cannot be linted, so only added/copied/modified/renamed ones.
+          mapfile -t changed < <(
+            git diff --name-only --diff-filter=ACMR "$BASE_SHA...$HEAD_SHA" -- '.github/workflows/**'
+          )
+
+          if [[ "${#changed[@]}" -eq 0 ]]; then
+            echo "No workflow files changed."
+            exit 0
+          fi
+
+          printf 'Linting:\n'
+          printf '  %s\n' "${changed[@]}"
+          pnpm run actionlint "${changed[@]}"
