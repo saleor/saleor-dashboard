@@ -360,6 +360,13 @@ Layout numbers: `src/components/AssignableListTable/assignableListTableLayout.ts
 
 Do **not** add a one-off `.listHeader` / `.pagination { border-top }` in a feature `module.css`.
 
+## Date and time
+
+Coarse label on the page (name the event; today and yesterday keep a short time).
+**UTC + local offset** in the tooltip, each with its own date and time.
+See [`saleor-datetime-display`](../saleor-datetime-display/SKILL.md). Extend
+`MerchantDate` or `DateTime` rather than adding a new primitive.
+
 ## Anti-patterns
 
 - **No inline `style={{}}`** - Use Box props or CSS Modules instead
