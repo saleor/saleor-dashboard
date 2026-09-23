@@ -39,6 +39,7 @@
 - Node.js v24
 - A running instance of [Saleor](https://github.com/saleor/saleor/)
 - PNPM package manager - preferably installed via [corepack](https://pnpm.io/installation#using-corepack)
+- Docker, to run the E2E suite (it starts its own Saleor)
 
 ## Development
 
@@ -90,6 +91,40 @@ portless
 The first run asks for your password once, to bind port 443 and trust a local CA. It runs the `dev` script and prints the URL. In a git worktree the branch name is prepended, e.g. `https://my-branch.dashboard.localhost`.
 
 `pnpm run dev` keeps working as before — portless is opt-in.
+
+## Testing
+
+Unit and component tests need nothing running:
+
+```bash
+pnpm test                         # everything
+pnpm run test:quiet <file_path>   # one file
+```
+
+The E2E suite brings up its own Saleor in Docker, seeds it, builds the dashboard from your
+working tree and drives it in a browser — no Saleor Cloud, no credentials, nothing to
+configure:
+
+```bash
+pnpm e2e         # against the latest stable Saleor (3.23)
+pnpm e2e:main    # against Saleor's unreleased main branch
+pnpm e2e:all     # both
+pnpm e2e --ui    # ...and anything else Playwright understands
+pnpm e2e:fresh   # start over from an empty database
+pnpm e2e:down    # stop the stacks when you are done
+```
+
+The dashboard supports both Saleor generations at once, and which one a build speaks to is
+decided at build time, so each target is a separate Saleor _and_ a separate bundle. The
+first run pulls an image, migrates and seeds — a few minutes; afterwards a run reaches the
+first test in seconds. The database is restored before every test, so a failing test
+reproduces on its own.
+
+See [e2e/README.md](e2e/README.md) for the seeds, the actors and how to port a spec.
+
+> Note:
+> `e2e-legacy/` is the previous suite, which runs against a provisioned Saleor Cloud
+> instance (`pnpm run e2e:legacy`). It is frozen — new tests belong in `e2e/`.
 
 ## Docs
 

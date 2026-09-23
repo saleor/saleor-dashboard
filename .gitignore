@@ -52,7 +52,7 @@ django-queries-results.html
 !.featureFlags
 /test-results/
 /playwright-report/
-/playwright/.cache/
+/e2e-legacy/.cache/
 
 introspection.json
 
@@ -64,3 +64,8 @@ storybook-static/
 !.agents
 !.agents/**
 playwright-failures*/
+
+# Local-stack E2E: dashboard bundles under test, and the seed/session cache.
+/build-e2e-*/
+/e2e/.cache/
+/e2e/test-results/

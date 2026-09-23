@@ -144,7 +144,7 @@ const decrypt = (password, text) => {
   }
 
   if (command == "restore") {
-    const tempDir = path.join(__dirname, "../playwright/.auth");
+    const tempDir = path.join(__dirname, ".auth");
 
     if (!fs.existsSync(tempDir)) {
       fs.mkdirSync(tempDir, { recursive: true });

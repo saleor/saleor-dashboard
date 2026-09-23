@@ -4493,6 +4493,10 @@
     "context": "customer type chip, opens the customer type settings page",
     "string": "View {customerTypeName} type"
   },
+  "FMUGjs": {
+    "context": "column header",
+    "string": "External reference"
+  },
   "FN+iLO": {
     "string": "Suggest a change"
   },
@@ -13579,6 +13583,10 @@
   "miimrR": {
     "context": "button, assign product picker",
     "string": "Load more products"
+  },
+  "mj0RUG": {
+    "context": "column header",
+    "string": "Company name"
   },
   "mkBgDe": {
     "string": "Product types deleted"
