@@ -737,7 +737,15 @@ export const OrderValue = (props: Props): ReactNode => {
   };
 
   return (
-    <Box padding={5} borderRadius={4} borderStyle="solid" borderColor="default1" borderWidth={1}>
+    <Box
+      padding={5}
+      borderRadius={4}
+      borderStyle="solid"
+      borderColor="default1"
+      borderWidth={1}
+      // Grid item in the summary: without this, the nowrap method name widens the card.
+      minWidth={0}
+    >
       <OrderValueHeader
         description={intl.formatMessage({
           defaultMessage: "All lines as ordered by the client.",
@@ -745,7 +753,7 @@ export const OrderValue = (props: Props): ReactNode => {
         })}
       />
 
-      <Box as="ul" display="grid" gap={1} marginTop={4}>
+      <Box as="ul" display="grid" gap={1} marginTop={4} minWidth={0}>
         <OrderSummaryListItem
           amount={orderSubtotal.gross.amount}
           amountTitle={intl.formatMessage(messages.subtotalTitle)}

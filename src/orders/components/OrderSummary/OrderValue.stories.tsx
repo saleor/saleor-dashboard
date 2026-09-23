@@ -69,9 +69,9 @@ const shippingMethods: OrderLinesUpdateFragment["shippingMethods"] = [
   },
 ];
 
-/** Carrier apps often store raw product codes as the method name. */
-export const LONG_CARRIER_METHOD_NAME =
-  "UK Standard Delivery - ROYALMAILTRKNOOBA/RMTRACKEDSTDNOSIG";
+/** Carrier apps often store raw product codes as the method name.
+ *  Unexported on purpose: Storybook treats every named export as a story. */
+const LONG_CARRIER_METHOD_NAME = "UK Standard Delivery - ROYALMAILTRKNOOBA/RMTRACKEDSTDNOSIG";
 
 const readOnlyBase = {
   orderSubtotal: taxed(5),
