@@ -15,7 +15,7 @@ const shardNumber = env.SHARD_NUMBER?.match(/^\d*/)?.[0] || "0";
 export const SUCCESS_BANNER_TIMEOUT = process.env.CI ? 20000 : 10000;
 
 export default defineConfig({
-  testDir: "playwright/tests",
+  testDir: "./tests",
   fullyParallel: true,
   forbidOnly: !!env.CI,
   retries: 0,
@@ -64,19 +64,19 @@ export default defineConfig({
       name: "e2e",
       dependencies: ["setup"],
       use: { ...devices["Desktop Chrome"] },
-      testIgnore: ["playwright/tests/apps.spec.ts", "playwright/tests/appSmokeTests.spec.ts"],
+      testIgnore: ["e2e-legacy/tests/apps.spec.ts", "e2e-legacy/tests/appSmokeTests.spec.ts"],
     },
     {
       name: "apps-e2e",
       dependencies: ["setup"],
       use: { ...devices["Desktop Chrome"] },
-      testMatch: "playwright/tests/apps.spec.ts",
+      testMatch: "e2e-legacy/tests/apps.spec.ts",
     },
     {
       name: "app-smoke",
       dependencies: ["setup"],
       use: { ...devices["Desktop Chrome"] },
-      testMatch: "playwright/tests/appSmokeTests.spec.ts",
+      testMatch: "e2e-legacy/tests/appSmokeTests.spec.ts",
     },
   ],
 });

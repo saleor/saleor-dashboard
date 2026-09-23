@@ -27,7 +27,7 @@ export default tseslint.config(
     "coverage/",
     "**/types/**/*",
     "type-policies.ts",
-    "playwright/auth.js",
+    "e2e-legacy/auth.js",
     "**/*.generated.ts",
     ".github/**/*.js",
     ".featureFlags/",
@@ -231,7 +231,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["playwright/**/*.ts"],
+    files: ["e2e/**/*.ts", "e2e-legacy/**/*.ts"],
     rules: {
       "no-console": "off",
     },

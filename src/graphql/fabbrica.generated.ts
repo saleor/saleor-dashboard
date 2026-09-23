@@ -805,6 +805,11 @@ import type {
   ProductMediaDelete,
   ProductMediaDeleted,
   ProductMediaReorder,
+  ProductMediaTranslatableContent,
+  ProductMediaTranslate,
+  ProductMediaTranslateError,
+  ProductMediaTranslation,
+  ProductMediaTranslationInput,
   ProductMediaUpdate,
   ProductMediaUpdateInput,
   ProductMediaUpdated,
@@ -1133,6 +1138,7 @@ import type {
   TransactionRequestRefundForGrantedRefund,
   TransactionRequestRefundForGrantedRefundError,
   TransactionSortingInput,
+  TransactionSummary,
   TransactionUpdate,
   TransactionUpdateError,
   TransactionUpdateInput,
@@ -17777,6 +17783,14 @@ export type OptionalMutation = {
  */
   productMediaReorder?: Maybe<OptionalProductMediaReorder> | undefined;
   /**
+ * Creates or updates a product media translation.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_TRANSLATIONS.
+ */
+  productMediaTranslate?: Maybe<OptionalProductMediaTranslate> | undefined;
+  /**
  * Updates a product media.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -18643,7 +18657,7 @@ export const defineNameTranslationInputFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /** An object with an ID */
-export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalCustomerType | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
+export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalCustomerType | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductMediaTranslatableContent | OptionalProductMediaTranslation | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
 
 /**
  * An object with attributes.
@@ -18843,6 +18857,12 @@ export type OptionalOrder = {
   totalRemainingGrant?: OptionalMoney | undefined;
   /** Google Analytics tracking client ID. */
   trackingClientId?: Order['trackingClientId'] | undefined;
+  /**
+ * Payment history of the order, with one entry per payment transaction that moved any money. Unlike `transactions`, it requires no permission and exposes only the payment method and the amounts, so it can be used to display payment details to the customer without exposing internal information.
+ *
+ * Added in Saleor 3.23.
+ */
+  transactionSummaries?: OptionalTransactionSummary[] | undefined;
   /** List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. */
   transactions?: OptionalTransactionItem[] | undefined;
   /** Translated discount name. */
@@ -25992,6 +26012,12 @@ export type OptionalProductMedia = {
   productId?: ProductMedia['productId'] | undefined;
   /** The sort order of the media. */
   sortOrder?: ProductMedia['sortOrder'] | undefined;
+  /**
+ * Returns translated product media fields for the given language code.
+ *
+ * Added in Saleor 3.23.
+ */
+  translation?: Maybe<OptionalProductMediaTranslation> | undefined;
   /** The type of the media. */
   type?: ProductMedia['type'] | undefined;
   /** The URL of the media. */
@@ -26177,6 +26203,136 @@ export type OptionalProductMediaReorder = {
  */
 export const defineProductMediaReorderFactory: DefineTypeFactoryInterface<
   OptionalProductMediaReorder,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents product media's original translatable fields and related translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductMediaTranslatableContent = {
+  __typename?: 'ProductMediaTranslatableContent';
+  /** Product media alt text to translate. */
+  alt?: ProductMediaTranslatableContent['alt'] | undefined;
+  /** The ID of the product media translatable content. */
+  id?: ProductMediaTranslatableContent['id'] | undefined;
+  /** Represents a product media. */
+  productMedia?: Maybe<OptionalProductMedia> | undefined;
+  /** The ID of the product media to translate. */
+  productMediaId?: ProductMediaTranslatableContent['productMediaId'] | undefined;
+  /** Returns translated product media fields for the given language code. */
+  translation?: Maybe<OptionalProductMediaTranslation> | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslatableContent} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslatableContentFactoryInterface}
+ */
+export const defineProductMediaTranslatableContentFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslatableContent,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Creates or updates a product media translation.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_TRANSLATIONS.
+ */
+export type OptionalProductMediaTranslate = {
+  __typename?: 'ProductMediaTranslate';
+  errors?: OptionalProductMediaTranslateError[] | undefined;
+  productMedia?: Maybe<OptionalProductMedia> | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslate} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslateFactoryInterface}
+ */
+export const defineProductMediaTranslateFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslate,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents an error in product media translation input.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductMediaTranslateError = {
+  __typename?: 'ProductMediaTranslateError';
+  /** The error code. */
+  code?: ProductMediaTranslateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: ProductMediaTranslateError['field'] | undefined;
+  /** The error message. */
+  message?: ProductMediaTranslateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslateError} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslateErrorFactoryInterface}
+ */
+export const defineProductMediaTranslateErrorFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslateError,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents product media translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductMediaTranslation = {
+  __typename?: 'ProductMediaTranslation';
+  /** Translated product media alt text. */
+  alt?: ProductMediaTranslation['alt'] | undefined;
+  /** The ID of the product media translation. */
+  id?: ProductMediaTranslation['id'] | undefined;
+  /** Translation language. */
+  language?: OptionalLanguageDisplay | undefined;
+  /** Represents the product media fields to translate. */
+  translatableContent?: Maybe<OptionalProductMediaTranslatableContent> | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslation} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslationFactoryInterface}
+ */
+export const defineProductMediaTranslationFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslation,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Fields required to translate product media.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductMediaTranslationInput = {
+  __typename?: 'ProductMediaTranslationInput';
+  /** Translated product media alt text. */
+  alt?: ProductMediaTranslationInput['alt'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslationInput} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslationInputFactoryInterface}
+ */
+export const defineProductMediaTranslationInputFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslationInput,
   {}
 > = defineTypeFactory;
 
@@ -36034,6 +36190,42 @@ export const defineTransactionSortingInputFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /**
+ * Customer-facing summary of a single payment transaction. Exposes the payment method and the amounts, without the identifiers, events and actions available on `TransactionItem`.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalTransactionSummary = {
+  __typename?: 'TransactionSummary';
+  /** Total amount of ongoing authorization requests for the transaction. */
+  authorizePendingAmount?: OptionalMoney | undefined;
+  /** Total amount authorized for this payment. */
+  authorizedAmount?: OptionalMoney | undefined;
+  /** Total amount canceled for this payment. */
+  canceledAmount?: OptionalMoney | undefined;
+  /** Total amount of ongoing charge requests for the transaction. */
+  chargePendingAmount?: OptionalMoney | undefined;
+  /** Total amount charged for this payment. */
+  chargedAmount?: OptionalMoney | undefined;
+  /** Date and time at which payment transaction was created. */
+  createdAt?: TransactionSummary['createdAt'] | undefined;
+  /** The payment method used for this transaction. As this field is public, card number digits and expiration date are stripped: `firstDigits`, `lastDigits`, `expMonth` and `expYear` of `CardPaymentMethodDetails` are always `null` here. Read them through `Order.transactions` instead, which requires MANAGE_ORDERS or HANDLE_PAYMENTS. */
+  paymentMethodDetails?: Maybe<OptionalPaymentMethodDetails> | undefined;
+  /** Total amount refunded for this payment. */
+  refundedAmount?: OptionalMoney | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionSummary} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionSummaryFactoryInterface}
+ */
+export const defineTransactionSummaryFactory: DefineTypeFactoryInterface<
+  OptionalTransactionSummary,
+  {}
+> = defineTypeFactory;
+
+/**
  * Update transaction.
  *
  * Requires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.
@@ -36169,7 +36361,7 @@ export const defineTransactionWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-export type OptionalTranslatableItem = OptionalAttributeTranslatableContent | OptionalAttributeValueTranslatableContent | OptionalCategoryTranslatableContent | OptionalCollectionTranslatableContent | OptionalMenuItemTranslatableContent | OptionalPageTranslatableContent | OptionalProductTranslatableContent | OptionalProductVariantTranslatableContent | OptionalPromotionRuleTranslatableContent | OptionalPromotionTranslatableContent | OptionalSaleTranslatableContent | OptionalShippingMethodTranslatableContent | OptionalVoucherTranslatableContent;
+export type OptionalTranslatableItem = OptionalAttributeTranslatableContent | OptionalAttributeValueTranslatableContent | OptionalCategoryTranslatableContent | OptionalCollectionTranslatableContent | OptionalMenuItemTranslatableContent | OptionalPageTranslatableContent | OptionalProductMediaTranslatableContent | OptionalProductTranslatableContent | OptionalProductVariantTranslatableContent | OptionalPromotionRuleTranslatableContent | OptionalPromotionTranslatableContent | OptionalSaleTranslatableContent | OptionalShippingMethodTranslatableContent | OptionalVoucherTranslatableContent;
 
 export type OptionalTranslatableItemConnection = {
   __typename?: 'TranslatableItemConnection';
@@ -36282,7 +36474,7 @@ export const defineTranslationInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-export type OptionalTranslationTypes = OptionalAttributeTranslation | OptionalAttributeValueTranslation | OptionalCategoryTranslation | OptionalCollectionTranslation | OptionalMenuItemTranslation | OptionalPageTranslation | OptionalProductTranslation | OptionalProductVariantTranslation | OptionalPromotionRuleTranslation | OptionalPromotionTranslation | OptionalSaleTranslation | OptionalShippingMethodTranslation | OptionalVoucherTranslation;
+export type OptionalTranslationTypes = OptionalAttributeTranslation | OptionalAttributeValueTranslation | OptionalCategoryTranslation | OptionalCollectionTranslation | OptionalMenuItemTranslation | OptionalPageTranslation | OptionalProductMediaTranslation | OptionalProductTranslation | OptionalProductVariantTranslation | OptionalPromotionRuleTranslation | OptionalPromotionTranslation | OptionalSaleTranslation | OptionalShippingMethodTranslation | OptionalVoucherTranslation;
 
 /** Event sent when translation is updated. */
 export type OptionalTranslationUpdated = {
