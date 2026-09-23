@@ -56,11 +56,11 @@ export const useCreateCustomerType = ({
         },
       },
     });
-    const typedErrors: CustomerTypeCreateErrorFragment[] =
-      result.data?.customerTypeCreate?.errors ?? [];
+    const payload = result.data?.customerTypeCreate;
+    const typedErrors: CustomerTypeCreateErrorFragment[] = payload?.errors ?? [];
 
     trackEvent("customer_type_created", {
-      result: typedErrors.length === 0 ? "success" : "error",
+      result: payload && !result.errors?.length && typedErrors.length === 0 ? "success" : "error",
     });
 
     return typedErrors;

@@ -1,17 +1,31 @@
+import { type FetchResult } from "@apollo/client";
+import { AccountErrorCode, type UpdateExtensionPreferencesMutation } from "@dashboard/graphql";
+import type * as GraphqlTypes from "@dashboard/graphql/types.generated";
 import { act, renderHook } from "@testing-library/react";
+import { GraphQLError } from "graphql";
 
 import { useExtensionPreferences } from "./useExtensionPreferences";
 
-const mockMutate = jest.fn().mockResolvedValue({ data: {} });
+const successfulResponse: FetchResult<UpdateExtensionPreferencesMutation> = {
+  data: {
+    __typename: "Mutation",
+    accountUpdate: { __typename: "AccountUpdate", errors: [], user: null },
+  },
+};
+const mockMutate = jest.fn().mockResolvedValue(successfulResponse);
 const mockTrackEvent = jest.fn();
 let mockUser: { id: string; metadata: Array<{ key: string; value: string }> } | null = null;
 
 jest.mock("@dashboard/auth/useUser", () => ({
-  useUser: () => ({ user: mockUser }),
+  useUser: (): { user: typeof mockUser } => ({ user: mockUser }),
 }));
 
 jest.mock("@dashboard/graphql", () => ({
-  useUpdateExtensionPreferencesMutation: () => [mockMutate, { loading: false }],
+  ...jest.requireActual<typeof GraphqlTypes>("@dashboard/graphql/types.generated"),
+  useUpdateExtensionPreferencesMutation: (): [jest.Mock, { loading: boolean }] => [
+    mockMutate,
+    { loading: false },
+  ],
 }));
 
 jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
@@ -84,6 +98,50 @@ describe("useExtensionPreferences", () => {
       result: "success",
       surface: "entity_page",
     });
+  });
+
+  const failedResponses: Array<[string, FetchResult<UpdateExtensionPreferencesMutation>]> = [
+    ["missing data", {}],
+    ["null payload", { data: { __typename: "Mutation", accountUpdate: null } }],
+    ["operation errors", { ...successfulResponse, errors: [new GraphQLError("Failed")] }],
+    [
+      "payload errors",
+      {
+        data: {
+          __typename: "Mutation",
+          accountUpdate: {
+            __typename: "AccountUpdate",
+            user: null,
+            errors: [
+              {
+                __typename: "AccountError",
+                code: AccountErrorCode.INVALID,
+                field: null,
+                message: "Failed",
+              },
+            ],
+          },
+        },
+      },
+    ],
+  ];
+
+  it.each(failedResponses)("reports an error for %s", async (_description, response) => {
+    // Arrange
+    mockMutate.mockResolvedValueOnce(response);
+
+    const { result } = renderHook(() => useExtensionPreferences());
+
+    // Act
+    await act(async () => {
+      result.current.setState(extension, "hidden");
+    });
+
+    // Assert
+    expect(mockTrackEvent).toHaveBeenCalledWith(
+      "extension_preference_changed",
+      expect.objectContaining({ result: "error" }),
+    );
   });
 
   it("stacks a second setState on the first optimistic map", async () => {

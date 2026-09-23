@@ -108,7 +108,9 @@ export const useExtensionPreferences = (
               },
             },
           });
-          const analyticsResult = result.data?.accountUpdate?.errors.length ? "error" : "success";
+          const payload = result.data?.accountUpdate;
+          const analyticsResult =
+            payload && !result.errors?.length && payload.errors.length === 0 ? "success" : "error";
 
           analyticsEvents.forEach(properties =>
             trackEvent("extension_preference_changed", {
