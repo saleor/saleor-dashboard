@@ -82,6 +82,12 @@ back implementation work, and report any checks that could not run.
 - During code review, skip inspecting `.generated.ts` contents; review the source
   operations and generation configuration instead.
 
+## Analytics
+
+- When adding a substantial product feature, implement PostHog tracking for its key
+  user interactions and outcomes, following existing analytics patterns.
+- Do not add tracking for bug fixes, removals, refactors, or other maintenance-only changes.
+
 ## Contributions
 
 - Use the changesets CLI for user-facing features, enhancements, and bug fixes.

@@ -2,17 +2,18 @@ import { type PostHogConfig } from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import type * as React from "react";
 
-const isDomainExcluded = () => {
-  const domainsString = process.env.POSTHOG_EXCLUDED_DOMAINS;
+import { isProductAnalyticsEnabled } from "./config";
+import { sanitizeAnalyticsUrl } from "./sanitizeAnalyticsUrl";
 
-  if (!domainsString) {
-    return false;
-  }
-
-  const excludedDomains = domainsString.split(",");
-
-  return excludedDomains.some(domain => window.location.hostname.includes(domain));
-};
+const urlPropertyNames = [
+  "$current_url",
+  "$pathname",
+  "$referrer",
+  "$session_entry_url",
+  "$session_entry_pathname",
+  "$session_referrer",
+  "$session_pathname",
+] as const;
 
 interface UseConfig {
   config: {
@@ -27,37 +28,33 @@ const useConfig = (): UseConfig => {
     api_host: process.env.POSTHOG_HOST,
     capture_pageview: false,
     autocapture: false,
-    advanced_disable_decide: true,
+    advanced_only_evaluate_survey_feature_flags: true,
     cookie_expiration: 30, // 30 days,
+    before_send: event => {
+      if (!event) return null;
+
+      for (const propertyName of urlPropertyNames) {
+        const value = event.properties[propertyName];
+
+        if (typeof value === "string") {
+          event.properties[propertyName] = sanitizeAnalyticsUrl(value);
+        }
+      }
+
+      return event;
+    },
     loaded: posthog => {
       if (process.env.NODE_ENV === "development") posthog.debug();
     },
   };
   const apiKey = process.env.POSTHOG_KEY;
-  const isCloudInstance = process.env.IS_CLOUD_INSTANCE;
-
-  const canRenderAnalytics = () => {
-    if (!isCloudInstance) {
-      return false;
-    }
-
-    if (isDomainExcluded()) {
-      return false;
-    }
-
-    if (!options.api_host || !apiKey) {
-      return false;
-    }
-
-    return true;
-  };
 
   return {
     config: {
       options,
       apiKey,
     },
-    canRenderAnalytics,
+    canRenderAnalytics: isProductAnalyticsEnabled,
   };
 };
 
