@@ -5,13 +5,19 @@ on:
     - cron: "0 7 * * 1-5" # Mon-Fri at 7 AM UTC
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
   update-schema:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # The pull request is opened with a Vault-issued token, so GITHUB_TOKEN only reads.
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -30,7 +36,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # Main schema comes from the newest published Saleor release, not the release branch
       - name: Fetch schema
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm run fetch-schema
 
       - name: Generate GraphQL code
@@ -40,29 +49,32 @@ jobs:
         id: git-check
         run: |
           if git diff --exit-code --quiet; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
           else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Get current date
         if: steps.git-check.outputs.has_changes == 'true'
         id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
 
       - name: Get Saleor schema version
         if: steps.git-check.outputs.has_changes == 'true'
         id: schema-version
-        run: echo "version=$(node -p "require('./package.json').config.saleor.schemaVersion")" >> $GITHUB_OUTPUT
+        run: echo "version=$(node -p "require('./package.json').config.saleor.schemaVersion")" >> "$GITHUB_OUTPUT"
 
       - name: Generate github access token
         id: generate-token
         if: steps.git-check.outputs.has_changes == 'true'
+        env:
+          VAULT_URL: ${{ secrets.VAULT_URL }}
+          VAULT_JWT: ${{ secrets.VAULT_JWT }}
         run: |
           token=$(
-            curl --request GET --url ${{ secrets.VAULT_URL }} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token
+            curl --request GET --url "$VAULT_URL" --header "Authorization: JWT $VAULT_JWT" | jq -r .token
           )
-          echo "token=${token}" >> $GITHUB_OUTPUT
+          echo "token=${token}" >> "$GITHUB_OUTPUT"
 
       - name: Create Pull Request
         if: steps.git-check.outputs.has_changes == 'true'
@@ -76,7 +88,7 @@ jobs:
 
             ## Changes
 
-            - Updated `schema.graphql` with the latest schema from Saleor (schema version: **${{ steps.schema-version.outputs.version }}**)
+            - Updated `schema-main.graphql` from the newest published Saleor release (schema version: **${{ steps.schema-version.outputs.version }}**)
             - Regenerated TypeScript types and Apollo Client hooks using GraphQL Code Generator
 
             ## Verification
