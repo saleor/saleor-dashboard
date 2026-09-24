@@ -35373,6 +35373,12 @@ export type OptionalTransactionCancelationRequested = {
   __typename?: 'TransactionCancelationRequested';
   /** Requested action data. */
   action?: OptionalTransactionAction | undefined;
+  /**
+ * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+ *
+ * Added in Saleor 3.23.
+ */
+  idempotencyKey?: TransactionCancelationRequested['idempotencyKey'] | undefined;
   /** Time of the event. */
   issuedAt?: TransactionCancelationRequested['issuedAt'] | undefined;
   /** The user or application that triggered the event. */
@@ -35401,6 +35407,12 @@ export type OptionalTransactionChargeRequested = {
   __typename?: 'TransactionChargeRequested';
   /** Requested action data. */
   action?: OptionalTransactionAction | undefined;
+  /**
+ * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+ *
+ * Added in Saleor 3.23.
+ */
+  idempotencyKey?: TransactionChargeRequested['idempotencyKey'] | undefined;
   /** Time of the event. */
   issuedAt?: TransactionChargeRequested['issuedAt'] | undefined;
   /** The user or application that triggered the event. */
@@ -36061,6 +36073,12 @@ export type OptionalTransactionRefundRequested = {
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
   grantedRefund?: Maybe<OptionalOrderGrantedRefund> | undefined;
+  /**
+ * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+ *
+ * Added in Saleor 3.23.
+ */
+  idempotencyKey?: TransactionRefundRequested['idempotencyKey'] | undefined;
   /** Time of the event. */
   issuedAt?: TransactionRefundRequested['issuedAt'] | undefined;
   /** The user or application that triggered the event. */
