@@ -36,6 +36,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AssignShippingZoneDialog } from "@dashboard/components/AssignShippingZoneDialog/AssignShippingZoneDialog";
 import { AssignWarehouseDialog } from "@dashboard/components/AssignWarehouseDialog/AssignWarehouseDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
@@ -88,6 +89,7 @@ interface ChannelDetailsProps {
 }
 
 const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
+  const { trackEvent } = useAnalytics();
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -592,6 +594,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         onShowSetupChecklist={
           data?.channel && !showSetupCard
             ? () => {
+                trackEvent("setup_checklist_reopened", { entity_type: "channel" });
                 undismissSetupCard();
                 openModal("setup");
               }

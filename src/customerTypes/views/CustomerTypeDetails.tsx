@@ -12,6 +12,7 @@ import {
 } from "@dashboard/components/CreateAttributeDialog/CreateAttributeDialog";
 import { messages as createAttributeMessages } from "@dashboard/components/CreateAttributeDialog/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { type CustomerTypeForm } from "@dashboard/customerTypes/components/CustomerTypeDetailsPage/CustomerTypeDetailsPage";
@@ -65,6 +66,7 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
   const attributeListActions = useBulkActions();
   const assignAttributesActions = useListSelectedItems<string>();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const [openModal, closeModal] = createDialogActionHandlers<
     CustomerTypeUrlDialog,
     CustomerTypeUrlQueryParams
@@ -97,6 +99,9 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
     disableErrorHandling: true,
     onCompleted: updateData => {
       const errors = updateData.customerTypeUpdate.errors ?? [];
+      const result = errors.length > 0 ? "error" : "success";
+
+      trackEvent("customer_type_set_as_default", { result });
 
       if (errors.length > 0) {
         notify({
@@ -118,7 +123,10 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
         ),
       });
     },
-    onError: notifyUnexpectedError,
+    onError: () => {
+      trackEvent("customer_type_set_as_default", { result: "error" });
+      notifyUnexpectedError();
+    },
   });
   const [deleteCustomerType, deleteCustomerTypeOpts] = useCustomerTypeDeleteMutation({
     onCompleted: deleteData => {
@@ -136,7 +144,14 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
   });
   const [assignAttribute, assignAttributeOpts] = useCustomerTypeAssignAttributesMutation({
     onCompleted: data => {
-      if (data.customerTypeAssignAttributes.errors.length === 0) {
+      const succeeded = data.customerTypeAssignAttributes.errors.length === 0;
+
+      trackEvent("customer_type_attribute_assignment_changed", {
+        action: "assign",
+        result: succeeded ? "success" : "error",
+      });
+
+      if (succeeded) {
         notifySaved();
         closeModal();
       }
@@ -147,7 +162,14 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation();
   const [unassignAttribute, unassignAttributeOpts] = useCustomerTypeUnassignAttributesMutation({
     onCompleted: data => {
-      if (data.customerTypeUnassignAttributes.errors.length === 0) {
+      const succeeded = data.customerTypeUnassignAttributes.errors.length === 0;
+
+      trackEvent("customer_type_attribute_assignment_changed", {
+        action: "unassign",
+        result: succeeded ? "success" : "error",
+      });
+
+      if (succeeded) {
         notifySaved();
         pendingUnassign.clear();
         closeModal();
@@ -157,7 +179,14 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
   });
   const [reorderAttribute] = useCustomerTypeReorderAttributesMutation({
     onCompleted: data => {
-      if (data.customerTypeReorderAttributes.errors.length === 0) {
+      const succeeded = data.customerTypeReorderAttributes.errors.length === 0;
+
+      trackEvent("customer_type_attribute_assignment_changed", {
+        action: "reorder",
+        result: succeeded ? "success" : "error",
+      });
+
+      if (succeeded) {
         notifySaved();
       }
     },

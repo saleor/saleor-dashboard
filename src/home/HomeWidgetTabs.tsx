@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Tab } from "@dashboard/components/Tab/Tab";
 import { TabContainer } from "@dashboard/components/Tab/TabContainer";
 import { InlineExtensionPreferenceControls } from "@dashboard/extensions/preferences/InlineExtensionPreferenceControls";
@@ -37,6 +38,7 @@ export const HomeWidgetTabs = ({
 }: HomeWidgetTabsProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   // Fullscreen extensions have no card header, so the tab row is where their
   // name lives — hang the pin/hide controls off it, acting on the open tab.
   const activeExtension =
@@ -52,7 +54,14 @@ export const HomeWidgetTabs = ({
           <HomeTab
             key={extension.id}
             isActive={activeTab.kind === "extension" && activeTab.id === extension.id}
-            changeTab={() => navigate(homeWidgetUrl(extension.id))}
+            changeTab={() => {
+              trackEvent("home_widget_opened", {
+                extension_origin: extension.isSaleorOfficial ? "saleor" : "third_party",
+                source: "home_tab",
+                widget_kind: "fullscreen",
+              });
+              navigate(homeWidgetUrl(extension.id));
+            }}
             testId={`home-widget-tab-${extension.id}`}
             className={styles.tab}
           >
@@ -81,7 +90,13 @@ export const HomeWidgetTabs = ({
         {showWidgetsTab && (
           <HomeTab
             isActive={activeTab.kind === "widgets"}
-            changeTab={() => navigate(homeWidgetsUrl())}
+            changeTab={() => {
+              trackEvent("home_widget_opened", {
+                source: "home_tab",
+                widget_kind: "grid",
+              });
+              navigate(homeWidgetsUrl());
+            }}
             testId="home-widgets-tab"
             className={styles.tab}
           >
@@ -104,7 +119,7 @@ export const HomeWidgetTabs = ({
       </Box>
       {activeExtension ? (
         <Box className={styles.actions} data-test-id="home-widget-tab-actions">
-          <InlineExtensionPreferenceControls extension={activeExtension} />
+          <InlineExtensionPreferenceControls extension={activeExtension} surface="home" />
         </Box>
       ) : null}
     </TabContainer>

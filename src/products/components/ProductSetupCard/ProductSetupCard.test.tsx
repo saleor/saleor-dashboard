@@ -1,8 +1,15 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { type ProductSetupReadiness } from "./getProductSetupReadiness";
 import { ProductSetupCard } from "./ProductSetupCard";
+
+const mockTrackEvent = jest.fn();
+
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
 
 const incompleteReadiness: ProductSetupReadiness = {
   hasChannels: false,
@@ -21,6 +28,10 @@ const incompleteReadiness: ProductSetupReadiness = {
 };
 
 describe("ProductSetupCard", () => {
+  beforeEach(() => {
+    mockTrackEvent.mockClear();
+  });
+
   it("shows the channel step as the primary CTA when no channels are assigned", () => {
     // Arrange & Act
     render(
@@ -39,6 +50,36 @@ describe("ProductSetupCard", () => {
     expect(screen.getByTestId("product-setup-card")).toBeInTheDocument();
     expect(screen.getByTestId("setup-product-channels")).toBeInTheDocument();
     expect(screen.getByTestId("setup-checklist-progress")).toHaveTextContent("0 of 5");
+  });
+
+  it("tracks checklist steps without product identifiers", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const onManageChannels = jest.fn();
+
+    render(
+      <ProductSetupCard
+        readiness={incompleteReadiness}
+        onManageChannels={onManageChannels}
+        onFinishChannelSetup={jest.fn()}
+        onMakeAvailable={jest.fn()}
+        isShippingRequired
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Act
+    await user.click(screen.getByTestId("setup-product-channels"));
+
+    // Assert
+    expect(mockTrackEvent).toHaveBeenCalledWith("setup_checklist_step_clicked", {
+      completed_steps: 0,
+      core_ready: false,
+      entity_type: "product",
+      step_id: "channel",
+      total_steps: 5,
+    });
+    expect(onManageChannels).toHaveBeenCalledTimes(1);
   });
 
   it("shows make-available when earlier sell steps are complete", () => {
