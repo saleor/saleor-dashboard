@@ -6660,18 +6660,20 @@ export type TransactionActionFieldPolicy = {
 	amount?: FieldPolicy<any> | FieldReadFunction<any>,
 	currency?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TransactionCancelationRequestedKeySpecifier = ('action' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'transaction' | 'version' | TransactionCancelationRequestedKeySpecifier)[];
+export type TransactionCancelationRequestedKeySpecifier = ('action' | 'idempotencyKey' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'transaction' | 'version' | TransactionCancelationRequestedKeySpecifier)[];
 export type TransactionCancelationRequestedFieldPolicy = {
 	action?: FieldPolicy<any> | FieldReadFunction<any>,
+	idempotencyKey?: FieldPolicy<any> | FieldReadFunction<any>,
 	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	transaction?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TransactionChargeRequestedKeySpecifier = ('action' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'transaction' | 'version' | TransactionChargeRequestedKeySpecifier)[];
+export type TransactionChargeRequestedKeySpecifier = ('action' | 'idempotencyKey' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'transaction' | 'version' | TransactionChargeRequestedKeySpecifier)[];
 export type TransactionChargeRequestedFieldPolicy = {
 	action?: FieldPolicy<any> | FieldReadFunction<any>,
+	idempotencyKey?: FieldPolicy<any> | FieldReadFunction<any>,
 	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6826,10 +6828,11 @@ export type TransactionProcessSessionFieldPolicy = {
 	transaction?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TransactionRefundRequestedKeySpecifier = ('action' | 'grantedRefund' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'transaction' | 'version' | TransactionRefundRequestedKeySpecifier)[];
+export type TransactionRefundRequestedKeySpecifier = ('action' | 'grantedRefund' | 'idempotencyKey' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'transaction' | 'version' | TransactionRefundRequestedKeySpecifier)[];
 export type TransactionRefundRequestedFieldPolicy = {
 	action?: FieldPolicy<any> | FieldReadFunction<any>,
 	grantedRefund?: FieldPolicy<any> | FieldReadFunction<any>,
+	idempotencyKey?: FieldPolicy<any> | FieldReadFunction<any>,
 	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
