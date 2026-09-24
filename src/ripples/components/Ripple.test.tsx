@@ -1,5 +1,5 @@
 import { type Ripple as RippleModel } from "@dashboard/ripples/types";
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { defineMessage } from "react-intl";
@@ -31,11 +31,7 @@ const model: RippleModel = {
 };
 
 const renderRipple = (ripple: RippleModel = model): ReturnType<typeof render> =>
-  render(
-    <ThemeProvider>
-      <Ripple model={ripple} />
-    </ThemeProvider>,
-  );
+  render(<Ripple model={ripple} />, { wrapper: Wrapper });
 
 describe("Ripple", () => {
   beforeEach(() => {
