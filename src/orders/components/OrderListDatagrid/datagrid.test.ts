@@ -13,7 +13,12 @@ import { type TextCell } from "@glideapps/glide-data-grid";
 import { testIntlInstance } from "@test/intl";
 import { renderHook } from "@testing-library/react";
 
-import { getCustomerCellContent, getPaymentCellContent, useGetCellContent } from "./datagrid";
+import {
+  getCustomerCellContent,
+  getDeliveryCellContent,
+  getPaymentCellContent,
+  useGetCellContent,
+} from "./datagrid";
 
 jest.mock("@saleor/macaw-ui-next", () => ({
   useTheme: () => ({ theme: "defaultLight" }),
@@ -77,6 +82,7 @@ describe("useGetCellContent", () => {
     { id: "date", title: "Date", width: 100 },
     { id: "customer", title: "Customer", width: 100 },
     { id: "payment", title: "Payment", width: 100 },
+    { id: "delivery", title: "Delivery", width: 100 },
     { id: "status", title: "Status", width: 100 },
     { id: "net", title: "Net", width: 100 },
     { id: "total", title: "Total", width: 100 },
@@ -91,6 +97,7 @@ describe("useGetCellContent", () => {
       userEmail: "john@example.com",
       paymentStatus: "PAID" as PaymentChargeStatusEnum,
       status: "FULFILLED" as OrderStatus,
+      deliveryMethod: { __typename: "ShippingMethod" },
       billingAddress: null,
       subtotal: { net: { amount: 80, currency: "USD" } },
       total: { gross: { amount: 100, currency: "USD" } },
@@ -149,6 +156,18 @@ describe("useGetCellContent", () => {
     });
     expect(getCellContent([4, 0], contentOpts)).toEqual({
       allowOverlay: true,
+      copyData: "Shipping",
+      cursor: "pointer",
+      data: {
+        color: getStatusColor({ status: "info", currentTheme: "defaultLight" }),
+        kind: "auto-tags-cell",
+        value: "Shipping",
+      },
+      kind: "custom",
+      readonly: false,
+    });
+    expect(getCellContent([5, 0], contentOpts)).toEqual({
+      allowOverlay: true,
       copyData: "Fulfilled",
       cursor: "pointer",
       data: {
@@ -159,7 +178,7 @@ describe("useGetCellContent", () => {
       kind: "custom",
       readonly: false,
     });
-    expect(getCellContent([5, 0], contentOpts)).toEqual({
+    expect(getCellContent([6, 0], contentOpts)).toEqual({
       allowOverlay: true,
       copyData: "80",
       cursor: "pointer",
@@ -167,7 +186,7 @@ describe("useGetCellContent", () => {
       kind: "custom",
       readonly: false,
     });
-    expect(getCellContent([6, 0], contentOpts)).toEqual({
+    expect(getCellContent([7, 0], contentOpts)).toEqual({
       allowOverlay: true,
       copyData: "100",
       cursor: "pointer",
@@ -228,5 +247,46 @@ describe("getPaymentCellContent", () => {
 
     // Assert
     expect((result.data as PillCell["data"]).value).toEqual("Overcharged");
+  });
+});
+
+describe("getDeliveryCellContent", () => {
+  it("should return Shipping pill when delivery method is a ShippingMethod", () => {
+    // Arrange
+    const data = {
+      deliveryMethod: { __typename: "ShippingMethod" },
+    } as RowDataType;
+
+    // Act
+    const result = getDeliveryCellContent(testIntlInstance, "defaultLight", data);
+
+    // Assert
+    expect((result.data as PillCell["data"]).value).toEqual("Shipping");
+  });
+
+  it("should return Pickup pill when delivery method is a Warehouse", () => {
+    // Arrange
+    const data = {
+      deliveryMethod: { __typename: "Warehouse" },
+    } as RowDataType;
+
+    // Act
+    const result = getDeliveryCellContent(testIntlInstance, "defaultLight", data);
+
+    // Assert
+    expect((result.data as PillCell["data"]).value).toEqual("Pickup");
+  });
+
+  it("should return dash when delivery method is null", () => {
+    // Arrange
+    const data = {
+      deliveryMethod: null,
+    } as RowDataType;
+
+    // Act
+    const result = getDeliveryCellContent(testIntlInstance, "defaultLight", data);
+
+    // Assert
+    expect((result as TextCell).data).toEqual("-");
   });
 });

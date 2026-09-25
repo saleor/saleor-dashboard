@@ -147,7 +147,17 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.ORDER_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["number", "date", "customer", "payment", "status", "net", "total", "channel"],
+    columns: [
+      "number",
+      "date",
+      "customer",
+      "payment",
+      "delivery",
+      "status",
+      "net",
+      "total",
+      "channel",
+    ],
   },
   [ListViews.PAGES_LIST]: {
     rowNumber: PAGINATE_BY,
