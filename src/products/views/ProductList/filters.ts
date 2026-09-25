@@ -80,6 +80,12 @@ export type FilterParam =
   | DefaultFilterParam
   | NumericFilterParam;
 
+const parseNumericFilterValue = (value: string | undefined) => {
+  const parsedValue = parseFloat(value ?? "");
+
+  return Number.isNaN(parsedValue) ? undefined : parsedValue;
+};
+
 export const parseFilterValue = (
   params: ProductListUrlFilters,
   key: string,
@@ -109,13 +115,14 @@ export const parseFilterValue = (
         }),
       };
     case ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes: {
-      const [gte, lte] = value.map(v => parseFloat(v));
+      const gte = parseNumericFilterValue(value[0]);
+      const lte = isMulti ? parseNumericFilterValue(value[1]) : gte;
 
       return {
         ...name,
         valuesRange: {
-          gte: gte || undefined,
-          lte: isMulti ? lte || undefined : gte || undefined,
+          gte,
+          lte,
         },
       };
     }
