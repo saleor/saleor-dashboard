@@ -2673,6 +2673,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
   },
+  "8MNBJ0": {
+    "context": "order add product picker, after channel-listed variant ids are known; shown counts priced variants, available counts every variant listed in the channel",
+    "string": "{shown} of {available} channel {available, plural, one {variant has} other {variants have}} a price"
+  },
   "8MSYNw": {
     "context": "order send refund, manual transaction refund was created",
     "string": "Manual refund created"

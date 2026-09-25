@@ -34,7 +34,8 @@ describe("OrderProductAddDialog utils", () => {
     thumbnail: null,
     variantsTotalCount: 2,
     variantsHasNextPage: false,
-    variantsEndCursor: null,
+    channelVariantIds: null,
+    missingVariantIds: [],
     variants: [createVariant("variant-priced", true), createVariant("variant-unpriced", false)],
   };
 
@@ -57,7 +58,8 @@ describe("OrderProductAddDialog utils", () => {
       ...product,
       variantsTotalCount: 50,
       variantsHasNextPage: true,
-      variantsEndCursor: "cursor-1",
+      channelVariantIds: null,
+      missingVariantIds: [],
     };
 
     // Act
