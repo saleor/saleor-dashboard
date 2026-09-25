@@ -6,6 +6,7 @@ import {
   useWebhookUpdateMutation,
   WebhookEventTypeAsyncEnum,
 } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { useIntl } from "react-intl";
@@ -54,7 +55,8 @@ export const EditCustomExtensionWebhook = ({ id }: EditCustomExtensionWebhookPro
               : data.asyncEvents,
             isActive: data.isActive,
             name: data.name,
-            secretKey: data.secretKey,
+            // Removed from the input in 3.24; staging builds stop sending it
+            secretKey: isMainSchema() ? data.secretKey : undefined,
             targetUrl: data.targetUrl,
             query: data.subscriptionQuery,
             customHeaders: data.customHeaders,
