@@ -19577,34 +19577,65 @@ export function useGlobalSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type GlobalSearchQueryHookResult = ReturnType<typeof useGlobalSearchQuery>;
 export type GlobalSearchLazyQueryHookResult = ReturnType<typeof useGlobalSearchLazyQuery>;
 export type GlobalSearchQueryResult = Apollo.QueryResult<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>;
-export const OrderProductVariantsForAddDocument = gql`
-    query OrderProductVariantsForAdd($id: ID!, $first: Int!, $after: String, $channel: String!, $address: AddressInput) {
+export const OrderProductChannelVariantIdsDocument = gql`
+    query OrderProductChannelVariantIds($id: ID!, $channel: String!) {
   product(id: $id, channel: $channel) {
     id
-    productVariants(first: $first, after: $after) {
-      totalCount
-      pageInfo {
-        hasNextPage
-        endCursor
+    variants {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useOrderProductChannelVariantIdsQuery__
+ *
+ * To run a query within a React component, call `useOrderProductChannelVariantIdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderProductChannelVariantIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderProductChannelVariantIdsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useOrderProductChannelVariantIdsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>(OrderProductChannelVariantIdsDocument, options);
       }
-      edges {
-        node {
-          id
-          name
-          sku
-          pricing(address: $address) {
-            priceUndiscounted {
-              gross {
-                ...Money
-              }
+export function useOrderProductChannelVariantIdsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>(OrderProductChannelVariantIdsDocument, options);
+        }
+export type OrderProductChannelVariantIdsQueryHookResult = ReturnType<typeof useOrderProductChannelVariantIdsQuery>;
+export type OrderProductChannelVariantIdsLazyQueryHookResult = ReturnType<typeof useOrderProductChannelVariantIdsLazyQuery>;
+export type OrderProductChannelVariantIdsQueryResult = Apollo.QueryResult<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>;
+export const OrderProductVariantsForAddDocument = gql`
+    query OrderProductVariantsForAdd($ids: [ID!]!, $first: Int!, $channel: String!, $address: AddressInput) {
+  productVariants(first: $first, channel: $channel, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        sku
+        pricing(address: $address) {
+          priceUndiscounted {
+            gross {
+              ...Money
             }
-            price {
-              gross {
-                ...Money
-              }
-            }
-            onSale
           }
+          price {
+            gross {
+              ...Money
+            }
+          }
+          onSale
         }
       }
     }
@@ -19624,9 +19655,8 @@ export const OrderProductVariantsForAddDocument = gql`
  * @example
  * const { data, loading, error } = useOrderProductVariantsForAddQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      ids: // value for 'ids'
  *      first: // value for 'first'
- *      after: // value for 'after'
  *      channel: // value for 'channel'
  *      address: // value for 'address'
  *   },

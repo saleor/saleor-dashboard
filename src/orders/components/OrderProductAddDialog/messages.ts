@@ -64,4 +64,11 @@ export const messages = defineMessages({
     description:
       "Explains that only priced variants are listed, while loaded counts every fetched variant page",
   },
+  loadMoreVariantsChannelProgress: {
+    id: "eUXgTE",
+    defaultMessage:
+      "{shown} of {available} channel {available, plural, one {variant has} other {variants have}} a price",
+    description:
+      "order add product picker, after channel-listed variant ids are known; shown counts priced variants, available counts every variant listed in the channel",
+  },
 });
