@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.23.35
+
+### Patch Changes
+
+- [#6951](https://github.com/saleor/saleor-dashboard/pull/6951) [`a1c34ce`](https://github.com/saleor/saleor-dashboard/commit/a1c34ce380cabaa737211c52f907ad16cdde927a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The customers list now offers "Company name" and "External reference" columns in the column picker. Company name comes from the customer's default billing address. Both columns are hidden by default — enable them from the column picker to have them persist in your list settings.
+
+  Column headers that the API cannot order by no longer respond to clicks or show a sort arrow. Previously, clicking such a header (for example "Content type" on the models list) wrote a sort into the URL and drew a sort direction arrow while the rows stayed in their original order.
+
+- [#6950](https://github.com/saleor/saleor-dashboard/pull/6950) [`c4b4306`](https://github.com/saleor/saleor-dashboard/commit/c4b43061b87b7a5a283c52f504700fbf06b78ae7) Thanks [@peelar](https://github.com/peelar)! - Prevent the unsaved changes dialog from appearing after successfully creating a discount.
+
+- [#6959](https://github.com/saleor/saleor-dashboard/pull/6959) [`fbef31b`](https://github.com/saleor/saleor-dashboard/commit/fbef31bccec2420a3e25bcfab23b565ed543614e) Thanks [@mirekm](https://github.com/mirekm)! - Products can be added to an order again when their variants priced in the order's channel are not among the first 50 variants. Previously, the "Add products" dialog loaded only the first 50 variants of a product and hid the product entirely when none of them had a price in the channel, so those products could not be added at all.
+
+  The dialog now loads the variants assigned to the order's channel for such products and shows them, with "Load more variants" fetching only channel variants. This is a temporary workaround until Saleor core can filter a product's variants by their channel listing; the dashboard will drop it once that exists.
+
+- [#6955](https://github.com/saleor/saleor-dashboard/pull/6955) [`20f1769`](https://github.com/saleor/saleor-dashboard/commit/20f17693233be697115c4cc16639b04397ca4c02) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The Docker image now serves the dashboard's HTML with `Cache-Control: no-cache`. Previously, after upgrading the image (for example in Saleor Core's `.devcontainer` setup), the browser could keep reusing the cached HTML of the previous release. It then requested files that no longer existed and crashed with "Unable to preload CSS". Now the browser checks for a new version on every load, so it always gets the current release.
+
 ## 3.23.34
 
 ### Patch Changes
