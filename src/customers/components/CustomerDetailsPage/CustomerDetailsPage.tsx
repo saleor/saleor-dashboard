@@ -568,6 +568,7 @@ const CustomerTypeAndAttributes = ({
     >
       {attributeForm.attributes.length > 0 ? (
         <Attributes
+          chrome="card"
           referenceLayoutView="customer"
           unwrapped
           attributes={attributeForm.attributes}

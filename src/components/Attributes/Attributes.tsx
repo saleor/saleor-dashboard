@@ -174,9 +174,11 @@ export const Attributes = ({
 
   if (unwrapped) {
     return (
-      <Box data-test-id="attributes" display="flex" flexDirection="column" gap={1}>
-        {list}
-      </Box>
+      <AttributeRowChromeContext.Provider value={isCard ? "card" : "legacy"}>
+        <Box data-test-id="attributes" display="flex" flexDirection="column" gap={1}>
+          {list}
+        </Box>
+      </AttributeRowChromeContext.Provider>
     );
   }
 

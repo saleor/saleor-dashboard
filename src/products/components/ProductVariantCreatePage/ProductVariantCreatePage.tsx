@@ -260,9 +260,9 @@ export const ProductVariantCreatePage = ({
                     onManageClick={product ? toggleManageChannels : undefined}
                     availableChannelsCount={product?.channelListings?.length}
                   />
-                  <CardSpacer />
                   {product?.productType?.hasVariants && (
                     <Attributes
+                      chrome="card"
                       referenceLayoutView="variant"
                       title={intl.formatMessage(messages.attributesHeader)}
                       attributes={data.attributes.filter(
@@ -287,32 +287,30 @@ export const ProductVariantCreatePage = ({
                     />
                   )}
                   {product?.productType?.hasVariants && (
-                    <>
-                      <CardSpacer />
-                      <Attributes
-                        referenceLayoutView="variant"
-                        title={intl.formatMessage(messages.attributesSelectionHeader)}
-                        attributes={data.attributes.filter(
-                          attribute =>
-                            attribute.data.variantAttributeScope ===
-                            VariantAttributeScope.VARIANT_SELECTION,
-                        )}
-                        attributeValues={attributeValues}
-                        loading={disabled}
-                        disabled={disabled}
-                        errors={errors}
-                        onChange={handlers.selectAttribute}
-                        onMultiChange={handlers.selectAttributeMultiple}
-                        onFileChange={handlers.selectAttributeFile}
-                        onReferencesRemove={handlers.selectAttributeReference}
-                        onReferencesAddClick={onAssignReferencesClick}
-                        onReferencesReorder={handlers.reorderAttributeValue}
-                        fetchAttributeValues={fetchAttributeValues}
-                        fetchMoreAttributeValues={fetchMoreAttributeValues}
-                        onAttributeSelectBlur={onAttributeSelectBlur}
-                        richTextGetters={attributeRichTextGetters}
-                      />
-                    </>
+                    <Attributes
+                      chrome="card"
+                      referenceLayoutView="variant"
+                      title={intl.formatMessage(messages.attributesSelectionHeader)}
+                      attributes={data.attributes.filter(
+                        attribute =>
+                          attribute.data.variantAttributeScope ===
+                          VariantAttributeScope.VARIANT_SELECTION,
+                      )}
+                      attributeValues={attributeValues}
+                      loading={disabled}
+                      disabled={disabled}
+                      errors={errors}
+                      onChange={handlers.selectAttribute}
+                      onMultiChange={handlers.selectAttributeMultiple}
+                      onFileChange={handlers.selectAttributeFile}
+                      onReferencesRemove={handlers.selectAttributeReference}
+                      onReferencesAddClick={onAssignReferencesClick}
+                      onReferencesReorder={handlers.reorderAttributeValue}
+                      fetchAttributeValues={fetchAttributeValues}
+                      fetchMoreAttributeValues={fetchMoreAttributeValues}
+                      onAttributeSelectBlur={onAttributeSelectBlur}
+                      richTextGetters={attributeRichTextGetters}
+                    />
                   )}
                   {!product?.productType?.hasVariants && data.attributes.length > 0 && (
                     <DashboardCard paddingTop={6}>
