@@ -180,6 +180,9 @@ const ReferenceRow = ({
   onReorder,
 }: ReferenceRowProps) => {
   const intl = useIntl();
+  const moveUpLabel = intl.formatMessage(messages.moveUp);
+  const moveDownLabel = intl.formatMessage(messages.moveDown);
+  const removeLabel = intl.formatMessage(buttonMessages.remove);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: value.value,
     disabled: disabled || !draggable,
@@ -195,6 +198,7 @@ const ReferenceRow = ({
       style={style}
       className={styles.row}
       data-test-id="product-reference-row"
+      data-checked={checked ? "true" : undefined}
       data-dragging={isDragging ? "true" : undefined}
     >
       <div
@@ -223,36 +227,45 @@ const ReferenceRow = ({
         />
       </div>
       <div className={styles.actions}>
-        <Button
-          variant="tertiary"
-          size="small"
-          type="button"
-          disabled={disabled || index === 0}
-          aria-label={intl.formatMessage(messages.moveUp)}
-          data-test-id="product-reference-move-up"
-          onClick={() => onReorder({ oldIndex: index, newIndex: index - 1 })}
-          icon={<ArrowUp size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
-        />
-        <Button
-          variant="tertiary"
-          size="small"
-          type="button"
-          disabled={disabled || index === count - 1}
-          aria-label={intl.formatMessage(messages.moveDown)}
-          data-test-id="product-reference-move-down"
-          onClick={() => onReorder({ oldIndex: index, newIndex: index + 1 })}
-          icon={<ArrowDown size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
-        />
-        <Button
-          variant="tertiary"
-          size="small"
-          type="button"
-          disabled={disabled}
-          aria-label={intl.formatMessage(buttonMessages.remove)}
-          data-test-id="product-reference-remove"
-          onClick={() => onRemove(value.value)}
-          icon={<X size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
-        />
+        <span title={moveUpLabel} className={styles.action}>
+          <Button
+            variant="tertiary"
+            size="small"
+            type="button"
+            disabled={disabled || index === 0}
+            aria-label={moveUpLabel}
+            title={moveUpLabel}
+            data-test-id="product-reference-move-up"
+            onClick={() => onReorder({ oldIndex: index, newIndex: index - 1 })}
+            icon={<ArrowUp size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          />
+        </span>
+        <span title={moveDownLabel} className={styles.action}>
+          <Button
+            variant="tertiary"
+            size="small"
+            type="button"
+            disabled={disabled || index === count - 1}
+            aria-label={moveDownLabel}
+            title={moveDownLabel}
+            data-test-id="product-reference-move-down"
+            onClick={() => onReorder({ oldIndex: index, newIndex: index + 1 })}
+            icon={<ArrowDown size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          />
+        </span>
+        <span title={removeLabel} className={styles.action}>
+          <Button
+            variant="tertiary"
+            size="small"
+            type="button"
+            disabled={disabled}
+            aria-label={removeLabel}
+            title={removeLabel}
+            data-test-id="product-reference-remove"
+            onClick={() => onRemove(value.value)}
+            icon={<X size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          />
+        </span>
       </div>
     </div>
   );

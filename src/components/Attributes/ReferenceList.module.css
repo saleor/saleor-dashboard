@@ -108,9 +108,9 @@
   column-gap: var(--mu-spacing-2);
   align-items: center;
   height: 50px;
-  /* Same inset as the search field and the heading chevron. */
+  /* Left matches the heading. Right matches the add button and the list menu. */
   padding-left: var(--mu-spacing-6);
-  padding-right: var(--mu-spacing-6);
+  padding-right: var(--mu-spacing-4);
   border-bottom: 1px solid var(--mu-colors-border-default1);
   background: var(--mu-colors-background-default1);
 }
@@ -227,4 +227,34 @@
   display: flex;
   align-items: center;
   gap: var(--mu-spacing-0-5, 2px);
+}
+
+.action {
+  display: inline-flex;
+}
+
+/* A disabled button does not show its own title. */
+.action:has(button:disabled) button {
+  pointer-events: none;
+}
+
+/* Stay in the row so the name does not jump. Touch devices have no hover, so they keep the buttons. */
+@media (hover: hover) {
+  .actions {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+
+  .row:hover .actions,
+  .row:focus-within .actions,
+  .row[data-checked="true"] .actions,
+  .row[data-dragging="true"] .actions {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .actions {
+    transition: none;
+  }
 }
