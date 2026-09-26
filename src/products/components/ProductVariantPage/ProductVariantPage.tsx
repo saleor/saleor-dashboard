@@ -393,6 +393,7 @@ export const ProductVariantPage = ({
                       <>
                         <CardSpacer />
                         <Attributes
+                          referenceLayoutView="variant"
                           title={
                             <Box display="flex" alignItems="center" gap={2}>
                               <Text size={6} fontWeight="medium">

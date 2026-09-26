@@ -2,6 +2,22 @@ import { type ReorderEvent } from "@dashboard/types";
 import { type DragOverEvent, type UniqueIdentifier } from "@dnd-kit/core";
 import { useMemo } from "react";
 
+/** One form update for a drag: the item's index before the gesture and where it landed. */
+export const commitReorderIndexes = (
+  sourceIds: string[],
+  nextIds: string[],
+  activeId: string,
+): ReorderEvent | null => {
+  const oldIndex = sourceIds.indexOf(activeId);
+  const newIndex = nextIds.indexOf(activeId);
+
+  if (oldIndex < 0 || newIndex < 0 || oldIndex === newIndex) {
+    return null;
+  }
+
+  return { oldIndex, newIndex };
+};
+
 interface Item {
   value: UniqueIdentifier;
   [key: string]: any;

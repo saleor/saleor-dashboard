@@ -157,6 +157,7 @@ export const VariantAttributesSection = ({
     <>
       <CardSpacer />
       <Attributes
+        referenceLayoutView="variant"
         title={titleWithTooltip}
         attributes={attributes}
         attributeValues={attributeValues}

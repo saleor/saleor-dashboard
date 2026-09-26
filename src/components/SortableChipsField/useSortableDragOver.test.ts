@@ -1,7 +1,7 @@
 import { type DragOverEvent } from "@dnd-kit/core";
 import { renderHook } from "@testing-library/react";
 
-import { useSortableDragOver } from "./useSortableDragOver";
+import { commitReorderIndexes, useSortableDragOver } from "./useSortableDragOver";
 
 describe("useSortableDragOver", () => {
   const items = [
@@ -88,5 +88,16 @@ describe("useSortableDragOver", () => {
 
     // Assert
     expect(onReorder).not.toHaveBeenCalled();
+  });
+});
+
+describe("commitReorderIndexes", () => {
+  it("returns the item's start index and where it landed", () => {
+    // Act
+    const reorder = commitReorderIndexes(["a", "b", "c", "d"], ["b", "c", "a", "d"], "a");
+
+    // Assert
+    expect(reorder).toEqual({ oldIndex: 0, newIndex: 2 });
+    expect(commitReorderIndexes(["a", "b"], ["a", "b"], "a")).toBeNull();
   });
 });

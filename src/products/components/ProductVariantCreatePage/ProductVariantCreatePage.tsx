@@ -263,6 +263,7 @@ export const ProductVariantCreatePage = ({
                   <CardSpacer />
                   {product?.productType?.hasVariants && (
                     <Attributes
+                      referenceLayoutView="variant"
                       title={intl.formatMessage(messages.attributesHeader)}
                       attributes={data.attributes.filter(
                         attribute =>
@@ -289,6 +290,7 @@ export const ProductVariantCreatePage = ({
                     <>
                       <CardSpacer />
                       <Attributes
+                        referenceLayoutView="variant"
                         title={intl.formatMessage(messages.attributesSelectionHeader)}
                         attributes={data.attributes.filter(
                           attribute =>

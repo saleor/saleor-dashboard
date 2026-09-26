@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
+import { AttributeInputTypeTooltip } from "@dashboard/components/AttributeInputTypeIcon/AttributeInputTypeTooltip";
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
 import {
@@ -13,19 +14,50 @@ import {
   getReferenceDisplayValue,
   getTruncatedTextValue,
 } from "@dashboard/components/Attributes/utils";
+import { CountPill, countPillFromNumber } from "@dashboard/components/CountPill/CountPill";
+import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
 import FileUploadField from "@dashboard/components/FileUploadField/FileUploadField";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
-import SortableChipsField from "@dashboard/components/SortableChipsField/SortableChipsField";
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { Title2 } from "@dashboard/components/Title2/Title2";
+import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
+import { Box, Button, Input, Select, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
+import { Plus } from "lucide-react";
+import { defineMessages, useIntl } from "react-intl";
 
 import { Multiselect } from "../Combobox/components/Multiselect";
 import { DateTimeField } from "../DateTimeField/DateTimeField";
+import { AttributeReferenceEntityIcon } from "./AttributeReferenceEntityIcon";
+import styles from "./AttributeRow.module.css";
+import { useAttributeRowChrome } from "./attributeRowChrome";
 import { DropdownRow } from "./DropdownRow";
+import { ReferenceList } from "./ReferenceList";
+import { ReferenceMark, ReferenceTitle, showsThumbnail } from "./referenceValueAppearance";
 import { SingleReferenceField } from "./SingleReferenceField";
 import { type AttributeRowProps } from "./types";
-import { useModelReferenceIcons } from "./useModelReferenceIcons";
+import { mergeReferenceDetails, useProductReferenceDetails } from "./useProductReferenceDetails";
+
+const messages = defineMessages({
+  noReferences: {
+    id: "lLyfGK",
+    defaultMessage: "None",
+    description: "reference attribute row header, no values assigned yet",
+  },
+  addReferences: {
+    id: "Rb0T6v",
+    defaultMessage: "Add references",
+    description: "accessible label of the add button in a reference attribute row header",
+  },
+  moreReferences: {
+    id: "OPj7DU",
+    defaultMessage: "+{count} more",
+    description: "collapsed reference attribute row, values not shown in the peek",
+  },
+});
+
+/** Names shown on one line while a reference attribute row is collapsed. */
+const REFERENCE_PEEK_COUNT = 3;
 
 const AttributeRow = ({
   attribute,
@@ -45,15 +77,22 @@ const AttributeRow = ({
   richTextGetters,
 }: AttributeRowProps): React.ReactNode => {
   const intl = useIntl();
+  const rowChrome = useAttributeRowChrome();
   const labelProps = getAttributeRowLabelProps(attribute);
-  const referenceIcons = useModelReferenceIcons(attribute);
+  const isThumbReferenceList =
+    attribute.data.inputType === AttributeInputTypeEnum.REFERENCE &&
+    showsThumbnail(attribute.data.entityType);
+  const referenceDetails = useProductReferenceDetails({
+    ids: attribute.value ?? [],
+    entityType: attribute.data.entityType,
+    skip: !isThumbReferenceList,
+  });
 
   switch (attribute.data.inputType) {
     case AttributeInputTypeEnum.SINGLE_REFERENCE:
       return (
         <SingleReferenceField
           attribute={attribute}
-          referenceIcons={referenceIcons}
           disabled={disabled}
           loading={loading}
           error={error}
@@ -61,26 +100,192 @@ const AttributeRow = ({
           onReferencesRemove={onReferencesRemove}
         />
       );
-    case AttributeInputTypeEnum.REFERENCE:
-      return (
-        <BasicAttributeRow label={attribute.label} {...labelProps}>
-          <SortableChipsField
-            values={getReferenceDisplayValue(attribute, referenceIcons)}
-            onValueDelete={value =>
-              onReferencesRemove(
-                attribute.id,
-                attribute.value?.filter(id => id !== value),
-              )
-            }
-            onValueReorder={event => onReferencesReorder(attribute.id, event)}
-            loading={loading}
-            error={!!error}
-            helperText={getErrorMessage(error, intl)}
-            onAdd={() => onReferencesAddClick(attribute)}
-            disabled={disabled}
-          />
-        </BasicAttributeRow>
+    case AttributeInputTypeEnum.REFERENCE: {
+      const referenceValues = mergeReferenceDetails(
+        getReferenceDisplayValue(attribute),
+        referenceDetails,
       );
+      const isCardRow = rowChrome === "card";
+      const removeReferences = (ids: string[]) =>
+        onReferencesRemove(
+          attribute.id,
+          (attribute.value ?? []).filter(id => !ids.includes(id)),
+        );
+      const errorMessage = error ? (
+        <Box paddingX={6} paddingY={2}>
+          <Text size={2} color="critical1" data-test-id="attribute-reference-error">
+            {getErrorMessage(error, intl)}
+          </Text>
+        </Box>
+      ) : null;
+      const referenceList = (
+        <ReferenceList
+          entityType={attribute.data.entityType}
+          values={referenceValues}
+          details={isThumbReferenceList ? Array.from(referenceDetails.values()) : undefined}
+          disabled={disabled || loading}
+          onRemove={removeReferences}
+          onRemoveAll={() => onReferencesRemove(attribute.id, [])}
+          onReorder={event => onReferencesReorder(attribute.id, event)}
+        />
+      );
+      const addButton = (
+        <Button
+          variant="secondary"
+          size="small"
+          disabled={disabled || loading}
+          onClick={() => onReferencesAddClick(attribute)}
+          aria-label={intl.formatMessage(messages.addReferences)}
+          data-test-id="attribute-reference-add"
+          icon={<Plus size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+        />
+      );
+      const label = typeof attribute.label === "string" ? attribute.label : String(attribute.label);
+      const capitalizedLabel = label.charAt(0).toUpperCase() + label.slice(1);
+      const inputTypeIcon = (
+        <AttributeInputTypeTooltip
+          inputType={attribute.data.inputType}
+          size="xsmall"
+          unit={attribute.data.unit}
+        />
+      );
+
+      if (isCardRow) {
+        const count = referenceValues.length;
+
+        return (
+          <Box as="li" className={styles.referenceGroupItem} data-attribute-row="group">
+            <DetailGroupBox
+              groupId={attribute.id}
+              variant="flush"
+              dataTestId="attribute-reference-group"
+              triggerButtonTestId="attribute-reference-group-expand"
+              defaultExpanded={count > 0 && count <= 8}
+              headerStart={
+                <Box display="flex" alignItems="center" gap={1} className={styles.groupLabel}>
+                  <Text fontWeight="medium" color="default1" className={styles.groupLabelText}>
+                    {capitalizedLabel}
+                  </Text>
+                  {inputTypeIcon}
+                  <AttributeReferenceEntityIcon entityType={attribute.data.entityType} />
+                </Box>
+              }
+              headerBody={
+                count > 0 ? (
+                  <Box className={styles.peek} data-test-id="attribute-reference-peek">
+                    {referenceValues.slice(0, REFERENCE_PEEK_COUNT).map(value => (
+                      <span
+                        key={value.value}
+                        className={clsx(
+                          styles.peekChip,
+                          attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT &&
+                            styles.peekChipVariant,
+                          !showsThumbnail(attribute.data.entityType) && styles.peekChipNameOnly,
+                        )}
+                      >
+                        {showsThumbnail(attribute.data.entityType) ? (
+                          <span data-test-id="attribute-reference-peek-thumb">
+                            <ReferenceMark
+                              name={
+                                attribute.data.entityType ===
+                                AttributeEntityTypeEnum.PRODUCT_VARIANT
+                                  ? (value.caption ?? value.label)
+                                  : value.label
+                              }
+                              thumbnailUrl={value.thumbnailUrl}
+                              compact
+                            />
+                          </span>
+                        ) : null}
+                        <ReferenceTitle
+                          value={{ ...value, url: undefined }}
+                          entityType={attribute.data.entityType}
+                          lineClassName={styles.peekTitle}
+                          nameClassName={styles.peekItem}
+                          secondaryClassName={styles.peekItemSecondary}
+                        />
+                      </span>
+                    ))}
+                    {count > REFERENCE_PEEK_COUNT ? (
+                      <span className={styles.peekMore} data-test-id="attribute-reference-more">
+                        {intl.formatMessage(messages.moreReferences, {
+                          count: count - REFERENCE_PEEK_COUNT,
+                        })}
+                      </span>
+                    ) : null}
+                  </Box>
+                ) : (
+                  <span />
+                )
+              }
+              headerEnd={
+                <>
+                  <Box data-test-id="attribute-reference-count">
+                    {count > 0 ? (
+                      <CountPill count={countPillFromNumber(count)} active />
+                    ) : (
+                      <Text size={2} color="default2" whiteSpace="nowrap">
+                        {intl.formatMessage(messages.noReferences)}
+                      </Text>
+                    )}
+                  </Box>
+                  {addButton}
+                </>
+              }
+            >
+              {referenceList}
+            </DetailGroupBox>
+            {errorMessage}
+          </Box>
+        );
+      }
+
+      if (referenceValues.length === 0) {
+        return (
+          <BasicAttributeRow label={attribute.label} {...labelProps}>
+            <Box display="flex" justifyContent="flex-end">
+              {addButton}
+            </Box>
+            {error ? (
+              <Text size={2} color="critical1" data-test-id="attribute-reference-error">
+                {getErrorMessage(error, intl)}
+              </Text>
+            ) : null}
+          </BasicAttributeRow>
+        );
+      }
+
+      return (
+        <Box as="li" className={styles.referenceGroupItem}>
+          <DetailGroupBox
+            groupId={attribute.id}
+            variant="secondary"
+            dataTestId="attribute-reference-group"
+            triggerButtonTestId="attribute-reference-group-expand"
+            defaultExpanded={referenceValues.length <= 8}
+            marginTop={2}
+            headerStart={
+              <Box display="flex" alignItems="center" gap={1}>
+                <Title2>{capitalizedLabel}</Title2>
+                {inputTypeIcon}
+                <AttributeReferenceEntityIcon entityType={attribute.data.entityType} />
+              </Box>
+            }
+            headerEnd={
+              <>
+                <Text size={2} color="default2">
+                  {referenceValues.length}
+                </Text>
+                {addButton}
+              </>
+            }
+          >
+            <Box padding={4}>{referenceList}</Box>
+          </DetailGroupBox>
+          {errorMessage}
+        </Box>
+      );
+    }
     case AttributeInputTypeEnum.FILE:
       return (
         <BasicAttributeRow label={attribute.label} {...labelProps}>

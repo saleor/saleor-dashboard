@@ -7031,6 +7031,105 @@ export function useAddressValidationRulesLazyQuery(baseOptions?: ApolloReactHook
 export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddressValidationRulesQuery>;
 export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
+export const ProductReferenceListDetailsDocument = gql`
+    query ProductReferenceListDetails($ids: [ID!]!, $first: Int!) {
+  products(first: $first, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        thumbnail {
+          url
+        }
+        category {
+          id
+          name
+        }
+        productType {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductReferenceListDetailsQuery__
+ *
+ * To run a query within a React component, call `useProductReferenceListDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductReferenceListDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductReferenceListDetailsQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useProductReferenceListDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>(ProductReferenceListDetailsDocument, options);
+      }
+export function useProductReferenceListDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>(ProductReferenceListDetailsDocument, options);
+        }
+export type ProductReferenceListDetailsQueryHookResult = ReturnType<typeof useProductReferenceListDetailsQuery>;
+export type ProductReferenceListDetailsLazyQueryHookResult = ReturnType<typeof useProductReferenceListDetailsLazyQuery>;
+export type ProductReferenceListDetailsQueryResult = Apollo.QueryResult<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>;
+export const VariantReferenceListDetailsDocument = gql`
+    query VariantReferenceListDetails($ids: [ID!]!, $first: Int!) {
+  productVariants(first: $first, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        product {
+          name
+          thumbnail {
+            url
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useVariantReferenceListDetailsQuery__
+ *
+ * To run a query within a React component, call `useVariantReferenceListDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVariantReferenceListDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVariantReferenceListDetailsQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useVariantReferenceListDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>(VariantReferenceListDetailsDocument, options);
+      }
+export function useVariantReferenceListDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>(VariantReferenceListDetailsDocument, options);
+        }
+export type VariantReferenceListDetailsQueryHookResult = ReturnType<typeof useVariantReferenceListDetailsQuery>;
+export type VariantReferenceListDetailsLazyQueryHookResult = ReturnType<typeof useVariantReferenceListDetailsLazyQuery>;
+export type VariantReferenceListDetailsQueryResult = Apollo.QueryResult<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>;
 export const _GetDynamicLeftOperandsDocument = gql`
     query _GetDynamicLeftOperands($first: Int!, $query: String!, $type: AttributeTypeEnum!, $after: String) {
   attributes(

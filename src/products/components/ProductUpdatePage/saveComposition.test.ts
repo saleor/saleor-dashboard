@@ -42,20 +42,29 @@ describe("buildProductSaveComposition", () => {
     expect(hasProductSaveComposition(composition)).toBe(false);
   });
 
-  it("marks details for description or attribute edits without scalar field changes", () => {
+  it("marks details for description edits without scalar field changes", () => {
     // Arrange / Act
     const fromDescription = buildProductSaveComposition({
       ...emptyInput,
       descriptionDirty: true,
     });
+
+    // Assert
+    expect(fromDescription.hasDetails).toBe(true);
+    expect(fromDescription.hasAttributes).toBe(false);
+  });
+
+  it("marks attributes separately from details", () => {
+    // Arrange / Act
     const fromAttributes = buildProductSaveComposition({
       ...emptyInput,
       attributesDirty: true,
     });
 
     // Assert
-    expect(fromDescription.hasDetails).toBe(true);
-    expect(fromAttributes.hasDetails).toBe(true);
+    expect(fromAttributes.hasAttributes).toBe(true);
+    expect(fromAttributes.hasDetails).toBe(false);
+    expect(hasProductSaveComposition(fromAttributes)).toBe(true);
   });
 
   it("aggregates channel and variant pending work independently of details", () => {
@@ -71,6 +80,7 @@ describe("buildProductSaveComposition", () => {
     // Assert
     expect(composition).toEqual({
       hasDetails: false,
+      hasAttributes: false,
       dirtyChannelCount: 2,
       variantEditCount: 3,
       variantCreateCount: 1,
@@ -107,6 +117,7 @@ describe("buildProductSaveComposition", () => {
 
   it.each([
     ["details", { ...emptyInput, changedFieldNames: ["name"] }],
+    ["attributes", { ...emptyInput, attributesDirty: true }],
     ["channels", { ...emptyInput, dirtyChannelCount: 1 }],
     ["variant edits", { ...emptyInput, variantEditCount: 1 }],
     ["variant creates", { ...emptyInput, variantCreateCount: 1 }],

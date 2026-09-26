@@ -281,6 +281,7 @@ const PageDetailsPage = ({
               <CardSpacer />
               {data.attributes.length > 0 && (
                 <Attributes
+                  referenceLayoutView="model"
                   attributes={data.attributes}
                   attributeValues={attributeValues}
                   disabled={loading}
