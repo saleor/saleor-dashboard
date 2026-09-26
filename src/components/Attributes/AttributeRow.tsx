@@ -19,6 +19,7 @@ import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroup
 import FileUploadField from "@dashboard/components/FileUploadField/FileUploadField";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Button, Input, Select, Text } from "@saleor/macaw-ui-next";
@@ -367,17 +368,19 @@ const AttributeRow = ({
         <BasicAttributeRow label={attribute.label} {...labelProps}>
           {getShouldMount(attribute.id) && (
             <Box __minWidth={210}>
-              <RichTextEditor
-                defaultValue={defaultValue}
-                editorRef={getMountEditor(attribute.id)}
-                onChange={getHandleChange(attribute.id)}
-                name={`attribute:${attribute.label}`}
-                disabled={disabled}
-                error={!!error}
-                label=""
-                helperText={getErrorMessage(error, intl)}
-                id={`attribute:${attribute.label}`}
-              />
+              <RichTextEditorClamp active={rowChrome === "card"}>
+                <RichTextEditor
+                  defaultValue={defaultValue}
+                  editorRef={getMountEditor(attribute.id)}
+                  onChange={getHandleChange(attribute.id)}
+                  name={`attribute:${attribute.label}`}
+                  disabled={disabled}
+                  error={!!error}
+                  label=""
+                  helperText={getErrorMessage(error, intl)}
+                  id={`attribute:${attribute.label}`}
+                />
+              </RichTextEditorClamp>
             </Box>
           )}
         </BasicAttributeRow>

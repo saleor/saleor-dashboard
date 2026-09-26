@@ -16784,6 +16784,10 @@
   "xKLf5H": {
     "string": "Developed by {developer}"
   },
+  "xKNUrr": {
+    "context": "expands a clamped rich text field to its editing height",
+    "string": "Show all"
+  },
   "xMlT+z": {
     "context": "voucher detail section nav item",
     "string": "Codes"
