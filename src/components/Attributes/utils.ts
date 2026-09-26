@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import { type ReferenceListValue } from "@dashboard/components/Attributes/referenceValueAppearance";
 import { type FileChoiceType } from "@dashboard/components/FileUploadField/FileUploadField";
 import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
-import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField/SortableChipsField";
 import { type AttributeValueFragment } from "@dashboard/graphql";
 import { type FetchMoreProps } from "@dashboard/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
@@ -17,6 +17,7 @@ import { type AttributeFieldError } from "./types";
 export function getAttributeRowLabelProps(attribute: AttributeInput) {
   return {
     inputType: attribute.data.inputType,
+    entityType: attribute.data.entityType,
     unit: attribute.data.unit,
   };
 }
@@ -44,7 +45,7 @@ export function getFileChoice(attribute: AttributeInput): FileChoiceType {
 export function getReferenceDisplayValue(
   attribute: AttributeInput,
   icons?: Map<string, ModelTypeIcon>,
-): SortableChipsFieldValueType[] {
+): ReferenceListValue[] {
   if (!attribute.value || attribute.value.length === 0) {
     return [];
   }
@@ -55,9 +56,11 @@ export function getReferenceDisplayValue(
 
   return attribute.data.references.map(referenceData => {
     return {
-      label: referenceData.label,
+      label: referenceData.primary ?? referenceData.label,
       value: referenceData.value,
       icon: icons?.get(referenceData.value) ?? referenceData.icon,
+      caption: referenceData.caption,
+      thumbnailUrl: referenceData.thumbnailUrl,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: referenceData.value,
@@ -69,7 +72,7 @@ export function getReferenceDisplayValue(
 export function getSingleReferenceDisplayValue(
   attribute: AttributeInput,
   icons?: Map<string, ModelTypeIcon>,
-): SortableChipsFieldValueType {
+): ReferenceListValue {
   if (!attribute.value || attribute.value.length === 0) {
     return null;
   }

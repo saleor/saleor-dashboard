@@ -154,26 +154,40 @@ export const VariantAttributesSection = ({
   }
 
   return (
-    <>
-      <CardSpacer />
-      <Attributes
-        title={titleWithTooltip}
-        attributes={attributes}
-        attributeValues={attributeValues}
-        loading={loading}
-        disabled={loading}
-        errors={errors}
-        onChange={onChange}
-        onMultiChange={onMultiChange}
-        onFileChange={onFileChange}
-        onReferencesRemove={onReferencesRemove}
-        onReferencesAddClick={onReferencesAddClick}
-        onReferencesReorder={onReferencesReorder}
-        fetchAttributeValues={fetchAttributeValues}
-        fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onAttributeSelectBlur={onAttributeSelectBlur}
-        richTextGetters={richTextGetters}
-      />
-    </>
+    <Attributes
+      chrome="card"
+      referenceLayoutView="variant"
+      title={
+        <Box as="span" display="inline-flex" alignItems="center" gap={2}>
+          {title}
+          <Tooltip>
+            <Tooltip.Trigger>
+              <Box color="default2" display="flex" alignItems="center">
+                <CircleHelp size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+              </Box>
+            </Tooltip.Trigger>
+            <Tooltip.Content side="bottom">
+              <Tooltip.Arrow />
+              {tooltipMessage}
+            </Tooltip.Content>
+          </Tooltip>
+        </Box>
+      }
+      attributes={attributes}
+      attributeValues={attributeValues}
+      loading={loading}
+      disabled={loading}
+      errors={errors}
+      onChange={onChange}
+      onMultiChange={onMultiChange}
+      onFileChange={onFileChange}
+      onReferencesRemove={onReferencesRemove}
+      onReferencesAddClick={onReferencesAddClick}
+      onReferencesReorder={onReferencesReorder}
+      fetchAttributeValues={fetchAttributeValues}
+      fetchMoreAttributeValues={fetchMoreAttributeValues}
+      onAttributeSelectBlur={onAttributeSelectBlur}
+      richTextGetters={richTextGetters}
+    />
   );
 };

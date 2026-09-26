@@ -3,11 +3,16 @@ import {
   AttributeInputTypeEnum,
   ProductErrorCode,
 } from "@dashboard/graphql";
-import { render, screen } from "@testing-library/react";
+import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
+import { render as renderBase, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { type ReactElement } from "react";
 
 import { SingleReferenceField } from "./SingleReferenceField";
 import { getErrorMessage } from "./utils";
+
+// The field fetches model type icons for model references.
+const render = (ui: ReactElement) => renderBase(ui, { wrapper: ApolloMockedProvider });
 
 jest.mock("./utils", () => {
   const actualUtils = jest.requireActual("./utils");

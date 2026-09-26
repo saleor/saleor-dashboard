@@ -51,6 +51,21 @@ const RichTextEditor = ({
   const [isFocused, setIsFocused] = React.useState(false);
   const [hasValue, setHasValue] = React.useState(false);
   const isTyped = Boolean(hasValue || isFocused);
+  const onChangeRef = React.useRef(onChange);
+
+  onChangeRef.current = onChange;
+
+  // Editor.js is constructed once and freezes this callback. Always read the latest onChange.
+  const handleEditorChange = React.useCallback(
+    async (api: { saver: { save: () => Promise<OutputData> } }) => {
+      const editorJsValue = await api.saver.save();
+
+      setHasValue(editorJsValue.blocks.length > 0);
+
+      return onChangeRef.current?.(editorJsValue);
+    },
+    [],
+  );
   const handleInitialize = React.useCallback((editor: EditorCore) => {
     if (onInitialize) {
       onInitialize(editor);
@@ -109,14 +124,8 @@ const RichTextEditor = ({
           // Log level is undefined at runtime
           logLevel={"ERROR" as LogLevels.ERROR}
           onInitialize={handleInitialize}
-          onChange={async event => {
-            const editorJsValue = await event.saver.save();
-
-            setHasValue(editorJsValue.blocks.length > 0);
-
-            return onChange?.(editorJsValue);
-          }}
           {...props}
+          onChange={handleEditorChange}
         >
           <div
             id={id}

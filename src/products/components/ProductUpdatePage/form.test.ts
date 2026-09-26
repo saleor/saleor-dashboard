@@ -243,6 +243,23 @@ describe("useProductUpdateForm", () => {
       expect(mockOnSubmit.mock.calls[0][0]).not.toHaveProperty("name");
     });
 
+    it("enables Save when a rich text attribute is edited", () => {
+      // Arrange
+      const { result } = renderHook(() =>
+        useProductUpdateForm(productWithName, jest.fn(), false, jest.fn(), formOpts),
+      );
+
+      // Act
+      act(() => {
+        result.current.attributeRichTextGetters.getHandleChange("rich-text-attribute")();
+      });
+
+      // Assert
+      expect(result.current.saveComposition.hasAttributes).toBe(true);
+      expect(result.current.saveComposition.hasDetails).toBe(false);
+      expect(result.current.isSaveDisabled).toBe(false);
+    });
+
     it("keeps Save enabled when variants are staged even if details are clean", () => {
       // Arrange
       const { result } = renderHook(() =>

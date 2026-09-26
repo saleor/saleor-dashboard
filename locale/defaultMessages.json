@@ -579,6 +579,10 @@
     "context": "quick pick label for United States, Canada, and Mexico",
     "string": "North America"
   },
+  "083Fld": {
+    "context": "Save composition segment for product attribute values",
+    "string": "attributes"
+  },
   "09q72K": {
     "context": "Entity type label for channel availability panel subtitles",
     "string": "Voucher"
@@ -909,6 +913,10 @@
   "1OB3se": {
     "context": "voucher catalogue products row title",
     "string": "Products"
+  },
+  "1PClWl": {
+    "context": "search field in a product variant reference list",
+    "string": "Filter {count, plural, one {# product variant} other {# product variants}}"
   },
   "1Sfy/9": {
     "context": "promotions list search input placeholder",
@@ -2029,6 +2037,10 @@
   "61AaRN": {
     "context": "setup task when product has no channel listings",
     "string": "Choose where this product is sold, then finish that channel’s setup."
+  },
+  "61Ix0p": {
+    "context": "dangerous action that clears every value in a reference attribute",
+    "string": "Remove all"
   },
   "61tEqb": {
     "context": "voucher list scope when free shipping has no country limit",
@@ -3185,6 +3197,10 @@
     "context": "create collection dialog description",
     "string": "Add a collection. You can edit channels, SEO, media, and metadata after creating it."
   },
+  "ADOU97": {
+    "context": "moves a product reference one position down",
+    "string": "Move down"
+  },
   "ADvpV/": {
     "context": "Product can be purchased by customers",
     "string": "Purchasable"
@@ -3791,6 +3807,9 @@
   "CKP9+i": {
     "string": "Webhook errors detected."
   },
+  "CLe1AK": {
+    "string": "Move to position…"
+  },
   "CN3QZu": {
     "context": "attribute slug field in embedded create form",
     "string": "Code"
@@ -4319,6 +4338,10 @@
   "Ed2705": {
     "string": "Create new model type"
   },
+  "Edp8Kj": {
+    "context": "show referenced products as a wrapped row of chips",
+    "string": "Packed"
+  },
   "EfF28c": {
     "context": "channel inventory reorder hint",
     "string": "Drag the handles to reorder."
@@ -4450,6 +4473,10 @@
   "F7DxHw": {
     "string": "Subcategories"
   },
+  "F8VOsV": {
+    "context": "search field in a model reference list",
+    "string": "Filter {count, plural, one {# model} other {# models}}"
+  },
   "F8pCg4": {
     "context": "input placeholder",
     "string": "Optional"
@@ -4572,10 +4599,6 @@
   },
   "FZTrzW": {
     "string": "Manual refund"
-  },
-  "FaL3f6": {
-    "context": "Save composition segment for product details/SEO/organization/attributes",
-    "string": "details"
   },
   "FbWSQs": {
     "context": "setup task description when shipping actions unavailable",
@@ -5122,6 +5145,9 @@
   "HFo3Qe": {
     "context": "successfully created gift card alert title",
     "string": "Gift card created"
+  },
+  "HGKQHG": {
+    "string": "Move to bottom"
   },
   "HK9hkL": {
     "context": "channel catalog stats fetch error",
@@ -6999,6 +7025,10 @@
     "context": "review row when the product type has no attributes",
     "string": "Assigned on the product type. They don’t appear on this page until the type has some."
   },
+  "OPj7DU": {
+    "context": "collapsed reference attribute row, values not shown in the peek",
+    "string": "+{count} more"
+  },
   "OPtrMg": {
     "context": "header",
     "string": "{webhookName} Details"
@@ -7680,6 +7710,10 @@
     "context": "tooltip explanation for before-discounts subtotal amount",
     "string": "Sum of each line's undiscounted total from the order"
   },
+  "R1ot+e": {
+    "context": "Exit form dialog body on product update page",
+    "string": "Media and metadata changes are already saved. Unsaved product details, attributes, availability, and variant edits will be lost."
+  },
   "R4IIw1": {
     "context": "tracking number of the shipment",
     "string": "Tracking number"
@@ -7798,6 +7832,10 @@
   "RaycYK": {
     "context": "button",
     "string": "Save"
+  },
+  "Rb0T6v": {
+    "context": "accessible label of the add button in a reference attribute row header",
+    "string": "Add references"
   },
   "Rd0s80": {
     "context": "no cards found title message",
@@ -8498,6 +8536,9 @@
     "context": "Label for published toggle",
     "string": "Published"
   },
+  "U6qGuO": {
+    "string": "Position"
+  },
   "U86VKF": {
     "context": "number of structures",
     "string": "Items"
@@ -8567,6 +8608,9 @@
   "ULBvyx": {
     "context": "order header date, yesterday",
     "string": "Placed yesterday at {time}"
+  },
+  "UMbBzo": {
+    "string": "Move"
   },
   "UPqrEf": {
     "context": "variant pricing channel status when channel is active",
@@ -8956,6 +9000,10 @@
   "VvhNCi": {
     "context": "command menu shortcut",
     "string": "Command menu"
+  },
+  "VvlXUe": {
+    "context": "search field in a category reference list",
+    "string": "Filter {count, plural, one {# category} other {# categories}}"
   },
   "VvqEe2": {
     "context": "consequence of blocking storefront traffic",
@@ -10320,6 +10368,10 @@
     "context": "order settings hub page title",
     "string": "Orders & fulfillment"
   },
+  "anv5WJ": {
+    "context": "search field in a product reference list",
+    "string": "Filter {count, plural, one {# product} other {# products}}"
+  },
   "apfBOX": {
     "context": "bulk publish stock all channel warehouses radio label",
     "string": "All assigned warehouses"
@@ -10400,6 +10452,10 @@
   "b6L9n7": {
     "context": "voucher is active until date",
     "string": "Ends"
+  },
+  "b7yA7/": {
+    "context": "accessible label of the reference list menu",
+    "string": "List actions"
   },
   "b810WJ": {
     "context": "product price",
@@ -11308,6 +11364,10 @@
     "context": "card header",
     "string": "Tax class rates: {country}"
   },
+  "eSJq+S": {
+    "context": "removes the checked products from a reference attribute",
+    "string": "Remove selected"
+  },
   "eU9J97": {
     "context": "customer type detail cogs menu, promotes this type to default",
     "string": "Set as default"
@@ -11914,6 +11974,10 @@
     "context": "tooltip message",
     "string": "You don't have permission to manage staff"
   },
+  "gxBIiJ": {
+    "context": "attributes card header, total values assigned across reference attributes",
+    "string": "{count, plural, one {# reference} other {# references}}"
+  },
   "gxPjIQ": {
     "string": "Are you sure you want to delete {email} from staff members?"
   },
@@ -11927,6 +11991,10 @@
   },
   "gzM1em": {
     "string": "Add rule"
+  },
+  "gzSP20": {
+    "context": "show referenced products as a list",
+    "string": "List"
   },
   "h/3meW": {
     "context": "staff notification description",
@@ -12293,6 +12361,9 @@
     "context": "model detail page menu, opens model type configuration",
     "string": "Model type settings"
   },
+  "iMy+or": {
+    "string": "Move to top"
+  },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
     "string": "Showing {start}-{end} of {total}"
@@ -12603,6 +12674,9 @@
   },
   "jNoqH0": {
     "string": "Create promotion"
+  },
+  "jOcH76": {
+    "string": "Value actions"
   },
   "jOgiMP": {
     "string": "NOT"
@@ -13211,6 +13285,10 @@
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
+  "lLyfGK": {
+    "context": "reference attribute row header, no values assigned yet",
+    "string": "None"
+  },
   "lMKFSP": {
     "context": "review row status",
     "string": "{count, plural, =0 {None} one {# image} other {# images}}"
@@ -13460,6 +13538,10 @@
   "mGiA6q": {
     "context": "modal button upload",
     "string": "Upload"
+  },
+  "mGjaDZ": {
+    "context": "moves a product reference one position up",
+    "string": "Move up"
   },
   "mIRBuW": {
     "string": "Is published"
@@ -14561,6 +14643,10 @@
     "context": "factor label for manual order discount propagated to a line",
     "string": "Manual order discount (line share)"
   },
+  "qBa0ms": {
+    "context": "search field in a collection reference list",
+    "string": "Filter {count, plural, one {# collection} other {# collections}}"
+  },
   "qC6HKe": {
     "string": "Discount created"
   },
@@ -14731,6 +14817,10 @@
     "context": "dialog header",
     "string": "Delete Order Drafts"
   },
+  "qcTYIh": {
+    "context": "Save composition segment for product name, SEO, organization, and description",
+    "string": "details"
+  },
   "qddy2Z": {
     "context": "order history message",
     "string": "Invoice was sent to customer by {sentBy}"
@@ -14840,9 +14930,6 @@
   },
   "qy/XqL": {
     "string": "Select transaction"
-  },
-  "qyJtWy": {
-    "string": "Show less"
   },
   "qyLv3R": {
     "context": "label for untranslated base content",
@@ -15305,10 +15392,6 @@
   "sglKoA": {
     "context": "create attribute dialog step two intro for model types",
     "string": "Add the choices merchants can pick from and set how this attribute behaves on models."
-  },
-  "sh4Ozn": {
-    "context": "Exit form dialog body on product update page",
-    "string": "Media and metadata changes are already saved. Unsaved product details, availability, and variant edits will be lost."
   },
   "shmSDX": {
     "context": "no products placeholder",
@@ -15960,6 +16043,10 @@
   "uxPpRx": {
     "context": "button",
     "string": "Assign attribute"
+  },
+  "uxsZRg": {
+    "context": "how many product references are checked",
+    "string": "{count, plural, one {# selected} other {# selected}}"
   },
   "uy+tB8": {
     "context": "voucher status",
@@ -16701,6 +16788,10 @@
   "xKLf5H": {
     "string": "Developed by {developer}"
   },
+  "xKNUrr": {
+    "context": "expands a clamped rich text field to its editing height",
+    "string": "Show all"
+  },
   "xMlT+z": {
     "context": "voucher detail section nav item",
     "string": "Codes"
@@ -16875,6 +16966,10 @@
   "xzgaxr": {
     "context": "dialog description when restock warehouse must be selected",
     "string": "Canceling a fulfillment will restock products at the selected warehouse. The warehouse this fulfillment shipped from is pre-selected."
+  },
+  "xziClW": {
+    "context": "attributes card header, number of attributes",
+    "string": "{count, plural, one {# attribute} other {# attributes}}"
   },
   "xzqW+K": {
     "context": "Add condition button on the list filter panel",

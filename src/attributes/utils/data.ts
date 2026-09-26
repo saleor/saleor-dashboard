@@ -74,6 +74,12 @@ export interface AttributeReference {
   value: string;
   /** Model references only — the icon configured on the referenced model's type. */
   icon?: ModelTypeIcon;
+  /** Variant references — the parent product name, shown secondary on the first line. */
+  caption?: string;
+  /** Variant references — the variant name, shown primary on the first line. */
+  primary?: string;
+  /** Product and variant references — product (or parent product) thumbnail. */
+  thumbnailUrl?: string;
 }
 
 export interface AttributeValueEditDialogFormData {
@@ -484,6 +490,7 @@ const findProductReference = (
     return {
       label: product.name,
       value: valueId,
+      ...(product.thumbnail?.url ? { thumbnailUrl: product.thumbnail.url } : {}),
     };
   }
 
@@ -537,8 +544,14 @@ const findProductVariantReference = (
     const variant = productVariantCacheManager.getProductVariantById(product, valueId);
 
     if (variant) {
+      const productName = variant.product?.name || product.name;
+      const thumbnailUrl = variant.product?.thumbnail?.url || product.thumbnail?.url;
+
       return {
-        label: formatVariantReferenceLabel(product.name, variant.name),
+        label: formatVariantReferenceLabel(productName, variant.name),
+        caption: productName,
+        primary: variant.name,
+        ...(thumbnailUrl ? { thumbnailUrl } : {}),
         value: valueId,
       };
     }
@@ -568,68 +581,120 @@ const findReferenceByEntityType = (
   }
 };
 
+const referenceLabel = (
+  valueId: string,
+  attribute: AttributeInput,
+  metaByValue: Map<string, { label?: string; value: string }>,
+  nameByReference: Map<string, string | null | undefined>,
+  referencesEntitiesSearchResult: ReferenceEntitiesSearch,
+) => {
+  /* "additionalData" is the cache for newly selected values from useFormset hook.
+   * It is populated from the initial GraphQL payload
+   * and whenever the user assigns references in the dialog into useFormset data. */
+  const meta = metaByValue.get(valueId);
+
+  // Skip labels that are just the raw id (common when assign metadata
+  // never resolved). Search / saved values can still supply a name.
+  if (meta?.label && meta.label !== meta.value) {
+    const fromSearch = findReferenceByEntityType(
+      valueId,
+      attribute.data.entityType,
+      referencesEntitiesSearchResult,
+    );
+
+    return {
+      label: meta.label,
+      value: meta.value,
+      ...(fromSearch?.caption ? { caption: fromSearch.caption } : {}),
+      ...(fromSearch?.primary ? { primary: fromSearch.primary } : {}),
+      ...(fromSearch?.thumbnailUrl ? { thumbnailUrl: fromSearch.thumbnailUrl } : {}),
+      ...(fromSearch?.icon ? { icon: fromSearch.icon } : {}),
+    };
+  }
+
+  /* As a fallback, look at the latest referenced entity search results.
+   * This should cover scenarios where the user has just added a reference in modal
+   * and metadata has not been updated yet.
+   *
+   * It's not default, because it can fail:
+   * search query filters out references based on `referenceType` and use search query for filtering */
+  const searchResult = findReferenceByEntityType(
+    valueId,
+    attribute.data.entityType,
+    referencesEntitiesSearchResult,
+  );
+
+  if (searchResult) {
+    return searchResult;
+  }
+
+  // Fallback: Look up the name from attribute.data.values
+  // This array contains the correct mapping of reference ID to entity name
+  const name = nameByReference.get(valueId);
+
+  if (name) {
+    return {
+      label: name,
+      value: valueId,
+    };
+  }
+
+  // Ultimate fallback if not found anywhere
+  return {
+    label: valueId,
+    value: valueId,
+  };
+};
+
 export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
 ) => {
+  const metaByValue = new Map((attribute.additionalData ?? []).map(meta => [meta.value, meta]));
+  const nameByReference = new Map(
+    attribute.data.values.flatMap(value =>
+      value.reference ? [[value.reference, value.name] as const] : [],
+    ),
+  );
+
   return {
     ...attribute,
     data: {
       ...attribute.data,
       references:
         attribute.value && attribute.value.length > 0
-          ? attribute.value.map(valueId => {
-              /* "additionalData" is the cache for newly selected values from useFormset hook.
-               * It is populated from the initial GraphQL payload
-               * and whenever the user assigns references in the dialog into useFormset data. */
-              const meta = attribute.additionalData?.find(m => m.value === valueId);
-
-              // Skip labels that are just the raw id (common when assign metadata
-              // never resolved). Search / saved values can still supply a name.
-              if (meta?.label && meta.label !== meta.value) {
-                return {
-                  label: meta.label,
-                  value: meta.value,
-                };
-              }
-
-              /* As a fallback, look at the latest referenced entity search results.
-               * This should cover scenarios where the user has just added a reference in modal
-               * and metadata has not been updated yet.
-               *
-               * It's not default, because it can fail:
-               * search query filters out references based on `referenceType` and use search query for filtering */
-              const searchResult = findReferenceByEntityType(
+          ? attribute.value.map(valueId =>
+              referenceLabel(
                 valueId,
-                attribute.data.entityType,
+                attribute,
+                metaByValue,
+                nameByReference,
                 referencesEntitiesSearchResult,
-              );
-
-              if (searchResult) {
-                return searchResult;
-              }
-
-              // Fallback: Look up the name from attribute.data.values
-              // This array contains the correct mapping of reference ID to entity name
-              const valueWithName = attribute.data.values.find(val => val.reference === valueId);
-
-              if (valueWithName) {
-                return {
-                  label: valueWithName.name,
-                  value: valueId,
-                };
-              }
-
-              // Ultimate fallback if not found anywhere
-              return {
-                label: valueId,
-                value: valueId,
-              };
-            })
+              ),
+            )
           : [],
     },
   };
 };
+
+type ReferenceDisplayCacheEntry = {
+  categories: ReferenceEntitiesSearch["categories"];
+  collections: ReferenceEntitiesSearch["collections"];
+  pages: ReferenceEntitiesSearch["pages"];
+  products: ReferenceEntitiesSearch["products"];
+  result: ReturnType<typeof getReferenceAttributeDisplayData>;
+};
+
+const referenceDisplayCache = new WeakMap<object, ReferenceDisplayCacheEntry>();
+
+const sameReferenceLists = (
+  entry: ReferenceDisplayCacheEntry,
+  references: ReferenceEntitiesSearch,
+) =>
+  entry.pages === references.pages &&
+  entry.products === references.products &&
+  entry.collections === references.collections &&
+  entry.categories === references.categories;
 
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
@@ -641,7 +706,23 @@ export const getAttributesDisplayData = (
       attribute.data.inputType === AttributeInputTypeEnum.REFERENCE ||
       attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE
     ) {
-      return getReferenceAttributeDisplayData(attribute, references);
+      const cached = referenceDisplayCache.get(attribute);
+
+      if (cached && sameReferenceLists(cached, references)) {
+        return cached.result;
+      }
+
+      const result = getReferenceAttributeDisplayData(attribute, references);
+
+      referenceDisplayCache.set(attribute, {
+        pages: references.pages,
+        products: references.products,
+        collections: references.collections,
+        categories: references.categories,
+        result,
+      });
+
+      return result;
     }
 
     if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {

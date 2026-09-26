@@ -1,0 +1,65 @@
+.root {
+  position: relative;
+}
+
+.root:has(.clamped) {
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  background: var(--mu-colors-background-default1);
+}
+
+.clamped {
+  max-height: 9.5rem;
+  overflow: hidden;
+  /* 100% is this clipped box, not the full editor, so the fade lands on the visible bottom. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 6.5rem),
+    rgb(0 0 0 / 28%) calc(100% - 2.75rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 6.5rem),
+    rgb(0 0 0 / 28%) calc(100% - 2.75rem),
+    transparent 100%
+  );
+}
+
+.clamped :global([class*="RichTextEditor-root"]) {
+  border-color: transparent;
+}
+
+/* Editor.js keeps a tall click area under the text. While clamped that reads as empty padding. */
+.clamped :global(.codex-editor__redactor) {
+  padding-bottom: 2px;
+}
+
+.showAll {
+  position: absolute;
+  bottom: calc(var(--mu-spacing-3) * 0.75);
+  left: 50%;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+  padding: 2px 10px;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 999px;
+  background-color: var(--mu-colors-background-default1);
+  color: var(--mu-colors-text-default1);
+  font: inherit;
+  font-size: var(--mu-font-size-2);
+  line-height: var(--mu-line-height-2);
+  white-space: nowrap;
+  cursor: pointer;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+}
+
+.showAll:hover {
+  background-color: var(--mu-colors-background-default1);
+  border-color: var(--mu-colors-border-default2);
+}

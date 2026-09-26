@@ -1,0 +1,140 @@
+.referenceGroupItem {
+  list-style: none;
+}
+
+.groupLabel {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+}
+
+.groupLabelText {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.peek {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+  min-width: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Each chip fades on its own beat. The row stays in flow either way: dropping
+   the peek would shrink the header, because the add button is out of flow. */
+.peek > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.32s ease,
+    transform 0.32s ease,
+    visibility 0s linear;
+}
+
+.peek > *:nth-child(2) {
+  transition-delay: 0.05s, 0.05s, 0s;
+}
+
+.peek > *:nth-child(3) {
+  transition-delay: 0.1s, 0.1s, 0s;
+}
+
+.peek > *:nth-child(4) {
+  transition-delay: 0.15s, 0.15s, 0s;
+}
+
+.referenceGroupItem [data-expanded="true"] .peek > * {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition-delay: 0s, 0s, 0.32s;
+}
+
+.referenceGroupItem [data-expanded="true"] .peek > *:nth-child(2) {
+  transition-delay: 0.04s, 0.04s, 0.36s;
+}
+
+.referenceGroupItem [data-expanded="true"] .peek > *:nth-child(3) {
+  transition-delay: 0.08s, 0.08s, 0.4s;
+}
+
+.referenceGroupItem [data-expanded="true"] .peek > *:nth-child(4) {
+  transition-delay: 0.12s, 0.12s, 0.44s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peek > *,
+  .referenceGroupItem [data-expanded="true"] .peek > * {
+    transition: none;
+  }
+}
+
+.peekChip {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+  min-width: 0;
+  max-width: 12rem;
+  padding: 2px 8px 2px 2px;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  background: var(--mu-colors-background-default1);
+}
+
+.peekChipVariant {
+  flex: 1 1 8rem;
+  min-width: 7rem;
+  max-width: 16rem;
+}
+
+.peekChipNameOnly {
+  padding-left: 8px;
+}
+
+.peekTitle {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: baseline;
+  gap: var(--mu-spacing-1);
+  min-width: 0;
+}
+
+.peekTitle > :first-child {
+  flex: 0 0 auto;
+  max-width: 70%;
+}
+
+.peekItem {
+  overflow: hidden;
+  color: var(--mu-colors-text-default1);
+  font-size: var(--mu-font-size-2);
+  line-height: var(--mu-line-height-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.peekItemSecondary {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--mu-colors-text-default2);
+  font-size: var(--mu-font-size-2);
+  font-weight: 400;
+  line-height: var(--mu-line-height-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.peekMore {
+  flex-shrink: 0;
+  color: var(--mu-colors-text-default2);
+  font-size: var(--mu-font-size-2);
+  line-height: var(--mu-line-height-2);
+  white-space: nowrap;
+}

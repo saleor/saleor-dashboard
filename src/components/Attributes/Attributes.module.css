@@ -1,0 +1,63 @@
+.cardList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Left matches the card title. Right matches the header meta, which uses the
+   tighter headerEnd inset rather than the title's. */
+.cardList > li {
+  padding: var(--mu-spacing-3) var(--mu-spacing-4) var(--mu-spacing-3) var(--mu-spacing-6);
+}
+
+/* Foldable reference rows own their header and content padding. */
+.cardList > li[data-attribute-row="group"] {
+  padding: 0;
+}
+
+/* The card itself cannot clip (rich text menus escape it), so a last reference
+   group has to follow the card's bottom radius or its background squares the
+   corners. Simple rows have no background, and clipping them would cut off the
+   rich text block menu again. */
+.cardList > li[data-attribute-row="group"]:last-child > * {
+  overflow: hidden;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+.cardList > li + li {
+  border-top: 1px solid var(--mu-colors-border-default1);
+}
+
+/* Editor.js narrow mode keeps 50px on the right for the block toolbar. The
+   button only appears on focus, so the gutter just looks like extra padding. */
+.cardList :global(.codex-editor--narrow .codex-editor__redactor) {
+  margin-right: 0;
+}
+
+.cardList :global(.codex-editor--narrow .ce-toolbar__actions) {
+  right: 0;
+  padding-right: 0;
+  border-radius: 6px;
+  background: var(--mu-colors-background-default1);
+}
+
+/* The row after an open group owns the fade, so a clipped list reads as ending under it.
+   A negative box-shadow spread would pull the fade in from the card edges. */
+.cardList > li:has([data-expanded="true"]) + li {
+  position: relative;
+  z-index: 1;
+}
+
+.cardList > li:has([data-expanded="true"]) + li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 8px;
+  transform: translateY(-100%);
+  pointer-events: none;
+  background: linear-gradient(to top, rgb(0 0 0 / 4%), transparent);
+}

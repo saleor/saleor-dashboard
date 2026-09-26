@@ -278,9 +278,10 @@ const PageDetailsPage = ({
                 titlePlaceholder={data.title}
                 helperText={intl.formatMessage(messages.seoOptionsDescription)}
               />
-              <CardSpacer />
               {data.attributes.length > 0 && (
                 <Attributes
+                  chrome="card"
+                  referenceLayoutView="model"
                   attributes={data.attributes}
                   attributeValues={attributeValues}
                   disabled={loading}

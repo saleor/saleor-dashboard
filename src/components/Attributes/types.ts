@@ -8,6 +8,7 @@ import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { type FetchMoreProps, type ReorderEvent } from "@dashboard/types";
 import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
+import { type AttributeReferenceView } from "./attributeReferenceLayout";
 import { type AttributeInput } from "./Attributes";
 
 export type AttributeFieldError =
@@ -32,7 +33,11 @@ export interface AttributeRowHandlers {
   fetchMoreAttributeValues: FetchMoreProps;
 }
 
+/** `card` — full-bleed rows inside a `contentFlush` DetailSettingsCard. */
+export type AttributeRowChrome = "legacy" | "card";
+
 export interface AttributeRowProps extends AttributeRowHandlers {
+  referenceLayoutView: AttributeReferenceView;
   attribute: AttributeInput;
   attributeValues: AttributeValueFragment[];
   disabled: boolean;
