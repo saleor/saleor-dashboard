@@ -1,17 +1,21 @@
 .root {
   position: relative;
-}
-
-.root:has(.clamped) {
   border: 1px solid var(--mu-colors-border-default1);
   border-radius: 8px;
   background: var(--mu-colors-background-default1);
 }
 
+.root:focus-within {
+  border-color: var(--mu-colors-border-accent1);
+}
+
 .clamped {
   max-height: 9.5rem;
   overflow: hidden;
-  /* 100% is this clipped box, not the full editor, so the fade lands on the visible bottom. */
+}
+
+/* Only when a block is cut off. The fade means there is more below this edge. */
+.clampedOverflow {
   -webkit-mask-image: linear-gradient(
     to bottom,
     #000 0,
@@ -28,12 +32,15 @@
   );
 }
 
-.clamped :global([class*="RichTextEditor-root"]) {
-  border-color: transparent;
+/* The wrapper owns the border in both states. The editor's own border would
+   appear on focus and shift the text by that width. */
+.root :global([class*="RichTextEditor-root"]) {
+  border: 0 !important;
 }
 
-/* Editor.js keeps a tall click area under the text. While clamped that reads as empty padding. */
-.clamped :global(.codex-editor__redactor) {
+/* Editor.js keeps a tall click area under the text. Keep it collapsed so
+   focusing the field doesn't grow the box. */
+.root :global(.codex-editor__redactor) {
   padding-bottom: 2px;
 }
 

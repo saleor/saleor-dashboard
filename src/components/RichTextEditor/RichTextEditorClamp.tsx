@@ -40,7 +40,22 @@ export const RichTextEditorClamp = ({
     }
 
     const measure = () => {
-      setOverflows(frame.scrollHeight > frame.clientHeight + 1);
+      const blocks = frame.querySelectorAll(".ce-block");
+      const lastBlock = blocks[blocks.length - 1];
+
+      // Editor.js pads the redactor so you can click below the text. That
+      // padding is not content, so only a block past the visible edge means
+      // there is more to read.
+      if (!lastBlock) {
+        setOverflows(false);
+
+        return;
+      }
+
+      const frameBottom = frame.getBoundingClientRect().bottom;
+      const lastBlockBottom = lastBlock.getBoundingClientRect().bottom;
+
+      setOverflows(lastBlockBottom > frameBottom + 1);
     };
 
     measure();
@@ -80,7 +95,10 @@ export const RichTextEditorClamp = ({
         }
       }}
     >
-      <div ref={frameRef} className={clsx(clamped && styles.clamped)}>
+      <div
+        ref={frameRef}
+        className={clsx(clamped && styles.clamped, clamped && overflows && styles.clampedOverflow)}
+      >
         {children}
       </div>
       {clamped && overflows ? (
