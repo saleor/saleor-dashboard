@@ -282,6 +282,7 @@ const PageDetailsPage = ({
                 <Attributes
                   chrome="card"
                   referenceLayoutView="model"
+                  referenceTypeId={page?.pageType?.id ?? selectedPageType?.id}
                   attributes={data.attributes}
                   attributeValues={attributeValues}
                   disabled={loading}

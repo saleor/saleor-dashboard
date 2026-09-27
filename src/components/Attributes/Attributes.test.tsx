@@ -10,6 +10,7 @@ import userEvent from "@testing-library/user-event";
 import { type ComponentProps, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
+import { ATTRIBUTE_GROUP_FOLD_STORAGE_KEY } from "./attributeGroupFold";
 import { type AttributeInput, Attributes } from "./Attributes";
 
 // Reference chips link to the referenced entity.
@@ -162,7 +163,7 @@ describe("Attributes", () => {
 
     const row = screen.getByTestId("attribute-reference-group");
 
-    // Assert — more than 8 values starts collapsed, so the peek is what the row shows
+    // Assert — groups start collapsed, so the peek is what the row shows
     expect(row).toHaveAttribute("data-expanded", "false");
     expect(screen.getByTestId("attribute-reference-peek")).toHaveTextContent("Alpha");
     expect(screen.getByTestId("attribute-reference-peek")).toHaveTextContent("Gamma");
@@ -329,5 +330,33 @@ describe("Attributes", () => {
       "false",
     );
     expect(screen.getByTestId("attribute-reference-error")).toBeInTheDocument();
+  });
+
+  it("reopens a reference group that was left open for this type", async () => {
+    // Arrange
+    localStorage.setItem(
+      ATTRIBUTE_GROUP_FOLD_STORAGE_KEY,
+      JSON.stringify({ "product:shoes": { related: true } }),
+    );
+
+    render(<Attributes {...baseProps} chrome="card" referenceTypeId="shoes" />, {
+      wrapper: RouterWrapper,
+    });
+
+    const [related, pairs] = screen.getAllByTestId("attribute-reference-group");
+
+    // Assert
+    expect(related).toHaveAttribute("data-expanded", "true");
+    expect(pairs).toHaveAttribute("data-expanded", "false");
+
+    // Act
+    await userEvent.click(within(related).getByTestId("attribute-reference-group-expand"));
+
+    // Assert
+    expect(JSON.parse(localStorage.getItem(ATTRIBUTE_GROUP_FOLD_STORAGE_KEY) ?? "{}")).toEqual({
+      "product:shoes": { related: false },
+    });
+
+    localStorage.removeItem(ATTRIBUTE_GROUP_FOLD_STORAGE_KEY);
   });
 });

@@ -372,6 +372,7 @@ export const ProductVariantPage = ({
                         selectionAttributesExist={selectionAttributes.length > 0}
                         hasVariants={hasVariants}
                         attributeValues={attributeValues}
+                        productTypeId={variant.product.productType.id}
                         productTypeName={variant.product.productType.name}
                         productTypeUrl={productTypeUrl(variant.product.productType.id)}
                         loading={loading}
@@ -392,6 +393,7 @@ export const ProductVariantPage = ({
                       <Attributes
                         chrome="card"
                         referenceLayoutView="variant"
+                        referenceTypeId={variant?.product?.productType?.id}
                         title={
                           <Box as="span" display="inline-flex" alignItems="center" gap={2}>
                             {intl.formatMessage(messages.selectionAttributesHeader)}

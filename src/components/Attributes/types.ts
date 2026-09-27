@@ -38,6 +38,11 @@ export type AttributeRowChrome = "legacy" | "card";
 
 export interface AttributeRowProps extends AttributeRowHandlers {
   referenceLayoutView: AttributeReferenceView;
+  /** Product type, model type, or customer type that owns this attribute set. */
+  referenceTypeId?: string;
+  /** Remembered open state for this attribute on `referenceTypeId`. Absent means collapsed. */
+  referenceGroupExpanded?: boolean;
+  onReferenceGroupExpandedChange?: (expanded: boolean) => void;
   attribute: AttributeInput;
   attributeValues: AttributeValueFragment[];
   disabled: boolean;

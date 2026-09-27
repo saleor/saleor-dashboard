@@ -30,6 +30,7 @@ interface VariantAttributesSectionProps
   hasVariants: boolean;
   attributeValues: AttributeValueChoices;
   fetchMoreAttributeValues: AttributeValueFetchMore;
+  productTypeId?: string;
   productTypeName: string;
   productTypeUrl: string;
   loading: boolean;
@@ -45,6 +46,7 @@ export const VariantAttributesSection = ({
   selectionAttributesExist,
   hasVariants,
   attributeValues,
+  productTypeId,
   productTypeName,
   productTypeUrl,
   loading,
@@ -157,6 +159,7 @@ export const VariantAttributesSection = ({
     <Attributes
       chrome="card"
       referenceLayoutView="variant"
+      referenceTypeId={productTypeId}
       title={
         <Box as="span" display="inline-flex" alignItems="center" gap={2}>
           {title}

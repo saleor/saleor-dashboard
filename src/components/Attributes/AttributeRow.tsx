@@ -76,10 +76,16 @@ const AttributeRow = ({
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
   richTextGetters,
+  referenceTypeId,
+  referenceGroupExpanded = false,
+  onReferenceGroupExpandedChange,
 }: AttributeRowProps): React.ReactNode => {
   const intl = useIntl();
   const rowChrome = useAttributeRowChrome();
   const labelProps = getAttributeRowLabelProps(attribute);
+  const rememberGroup =
+    referenceTypeId !== undefined && onReferenceGroupExpandedChange !== undefined;
+  const groupExpanded = rememberGroup ? referenceGroupExpanded : undefined;
   const isThumbReferenceList =
     attribute.data.inputType === AttributeInputTypeEnum.REFERENCE &&
     showsThumbnail(attribute.data.entityType);
@@ -161,7 +167,8 @@ const AttributeRow = ({
               variant="flush"
               dataTestId="attribute-reference-group"
               triggerButtonTestId="attribute-reference-group-expand"
-              defaultExpanded={count > 0 && count <= 8}
+              expanded={groupExpanded}
+              onExpandedChange={rememberGroup ? onReferenceGroupExpandedChange : undefined}
               headerStart={
                 <Box display="flex" alignItems="center" gap={1} className={styles.groupLabel}>
                   <Text fontWeight="medium" color="default1" className={styles.groupLabelText}>
@@ -263,7 +270,8 @@ const AttributeRow = ({
             variant="secondary"
             dataTestId="attribute-reference-group"
             triggerButtonTestId="attribute-reference-group-expand"
-            defaultExpanded={referenceValues.length <= 8}
+            expanded={groupExpanded}
+            onExpandedChange={rememberGroup ? onReferenceGroupExpandedChange : undefined}
             marginTop={2}
             headerStart={
               <Box display="flex" alignItems="center" gap={1}>

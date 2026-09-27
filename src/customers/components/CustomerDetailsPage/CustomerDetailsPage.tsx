@@ -570,6 +570,7 @@ const CustomerTypeAndAttributes = ({
         <Attributes
           chrome="card"
           referenceLayoutView="customer"
+          referenceTypeId={selectedType?.id}
           unwrapped
           attributes={attributeForm.attributes}
           attributeValues={attributeForm.attributeValues}

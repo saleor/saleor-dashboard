@@ -21,6 +21,9 @@ interface DetailGroupBoxProps {
   headerBody?: ReactNode;
   children: ReactNode;
   defaultExpanded?: boolean;
+  /** When set with `onExpandedChange`, the group is controlled by the parent. */
+  expanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
   dataTestId?: string;
   dataTestIsPrivate?: boolean;
   marginTop?: 0 | 1 | 2 | 3 | 4;
@@ -44,15 +47,30 @@ export const DetailGroupBox = ({
   headerBody,
   children,
   defaultExpanded = false,
+  expanded: expandedProp,
+  onExpandedChange,
   dataTestId,
   dataTestIsPrivate,
   marginTop,
   triggerButtonTestId,
   variant = "primary",
 }: DetailGroupBoxProps): React.ReactNode => {
-  const [expanded, setExpanded] = useState<string | undefined>(
+  const [uncontrolledExpanded, setUncontrolledExpanded] = useState<string | undefined>(
     defaultExpanded ? groupId : undefined,
   );
+  const isControlled = onExpandedChange !== undefined;
+  const expanded = isControlled ? (expandedProp ? groupId : undefined) : uncontrolledExpanded;
+  const setExpanded = (value: string) => {
+    const nextExpanded = value === groupId;
+
+    if (isControlled) {
+      onExpandedChange(nextExpanded);
+
+      return;
+    }
+
+    setUncontrolledExpanded(nextExpanded ? groupId : undefined);
+  };
   const isExpanded = expanded === groupId;
   const isSecondary = variant === "secondary";
   const isCard = variant === "card";

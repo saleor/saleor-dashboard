@@ -264,6 +264,7 @@ export const ProductVariantCreatePage = ({
                     <Attributes
                       chrome="card"
                       referenceLayoutView="variant"
+                      referenceTypeId={product?.productType?.id}
                       title={intl.formatMessage(messages.attributesHeader)}
                       attributes={data.attributes.filter(
                         attribute =>
@@ -290,6 +291,7 @@ export const ProductVariantCreatePage = ({
                     <Attributes
                       chrome="card"
                       referenceLayoutView="variant"
+                      referenceTypeId={product?.productType?.id}
                       title={intl.formatMessage(messages.attributesSelectionHeader)}
                       attributes={data.attributes.filter(
                         attribute =>

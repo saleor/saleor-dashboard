@@ -7,6 +7,7 @@ import {
   type MeasurementUnitsEnum,
 } from "@dashboard/graphql";
 import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { useStableCallback } from "@dashboard/hooks/useStableCallback";
 import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { type FetchMoreProps } from "@dashboard/types";
@@ -17,6 +18,12 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
 import { DetailSettingsCard } from "../DetailSettingsCard/DetailSettingsCard";
+import {
+  ATTRIBUTE_GROUP_FOLD_STORAGE_KEY,
+  type AttributeGroupFoldMap,
+  isAttributeGroupExpanded,
+  withAttributeGroupExpanded,
+} from "./attributeGroupFold";
 import { AttributeListItem } from "./AttributeListItem";
 import { type AttributeReferenceView } from "./attributeReferenceLayout";
 import { AttributeRowChromeContext } from "./attributeRowChrome";
@@ -70,6 +77,8 @@ interface AttributesProps extends Omit<AttributeRowHandlers, "fetchMoreAttribute
   chrome?: AttributeRowChrome;
   /** Which screen remembers the flow/list choice for reference attributes. */
   referenceLayoutView: AttributeReferenceView;
+  /** Product type, model type, or customer type. Fold memory is scoped to this id. */
+  referenceTypeId?: string;
 }
 
 const EMPTY_FETCH_MORE: FetchMoreProps = {
@@ -130,8 +139,28 @@ export const Attributes = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   referenceLayoutView,
+  referenceTypeId,
 }: AttributesProps) => {
   const intl = useIntl();
+  const [folds, setFolds] = useLocalStorage<AttributeGroupFoldMap>(
+    ATTRIBUTE_GROUP_FOLD_STORAGE_KEY,
+    {},
+  );
+  const setGroupExpanded = (attributeId: string, expanded: boolean) => {
+    if (!referenceTypeId) {
+      return;
+    }
+
+    setFolds(current =>
+      withAttributeGroupExpanded({
+        folds: current,
+        view: referenceLayoutView,
+        typeId: referenceTypeId,
+        attributeId,
+        expanded,
+      }),
+    );
+  };
   const stableOnChange = useStableCallback(onChange);
   const stableOnFileChange = useStableCallback(onFileChange);
   const stableOnMultiChange = useStableCallback(onMultiChange);
@@ -157,6 +186,14 @@ export const Attributes = ({
               onReferencesReorder={stableOnReferencesReorder}
               fetchAttributeValues={stableFetchAttributeValues}
               referenceLayoutView={referenceLayoutView}
+              referenceTypeId={referenceTypeId}
+              referenceGroupExpanded={isAttributeGroupExpanded({
+                folds,
+                view: referenceLayoutView,
+                typeId: referenceTypeId,
+                attributeId: attribute.id,
+              })}
+              onReferenceGroupExpandedChange={expanded => setGroupExpanded(attribute.id, expanded)}
               attribute={attribute}
               errors={errors}
               attributeValues={resolveByAttributeId(attributeValues, attribute.id)}
