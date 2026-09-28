@@ -259,10 +259,15 @@ export function useProductUpdateForm(
     [refreshVariantCompositionCounts, triggerChange],
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
+  const markAttributesChanged = (value = true) => {
+    // Save / exit-dialog read `attributesDirty`, not useForm's generic change flag.
+    setAttributesDirty(value);
+    triggerChange(value);
+  };
   const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
     useMultipleRichText({
       initial: getRichTextDataFromAttributes(attributes.data),
-      triggerChange,
+      triggerChange: markAttributesChanged,
     });
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const richText = useRichText({
@@ -299,30 +304,19 @@ export function useProductUpdateForm(
     opts.setSelectedCategory,
     opts.categories,
   );
-  const attributeChangeHandler = createAttributeChangeHandler(attributes, triggerChange);
-  const handleAttributeChange = (...args: Parameters<typeof attributeChangeHandler>) => {
-    setAttributesDirty(true);
-
-    return attributeChangeHandler(...args);
-  };
+  const handleAttributeChange = createAttributeChangeHandler(attributes, markAttributesChanged);
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
-    (value?: boolean) => {
-      setAttributesDirty(true);
-      triggerChange(value);
-    },
+    markAttributesChanged,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
     attributes,
-    (value?: boolean) => {
-      setAttributesDirty(true);
-      triggerChange(value);
-    },
+    markAttributesChanged,
   );
   const handleAttributeMetadataChange = createAttributeReferenceAdditionalDataHandler(
     attributes,
-    triggerChange,
+    markAttributesChanged,
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
@@ -345,18 +339,12 @@ export function useProductUpdateForm(
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
-    (value?: boolean) => {
-      setAttributesDirty(true);
-      triggerChange(value);
-    },
+    markAttributesChanged,
   );
   const handleAttributeValueReorder = createAttributeValueReorderHandler(
     attributes.change,
     attributes.data,
-    (value?: boolean) => {
-      setAttributesDirty(true);
-      triggerChange(value);
-    },
+    markAttributesChanged,
   );
   const handleTaxClassSelect = createSingleAutocompleteSelectHandler(
     handleChange,

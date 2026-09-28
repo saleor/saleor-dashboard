@@ -724,6 +724,9 @@ const ProductUpdatePage = ({
                 />
                 {data.attributes.length > 0 && (
                   <Attributes
+                    chrome="card"
+                    referenceLayoutView="product"
+                    referenceTypeId={product?.productType?.id}
                     attributes={data.attributes}
                     attributeValues={attributeValues}
                     errors={productErrors}

@@ -16,6 +16,7 @@ describe("ProductSaveCompositionHint", () => {
     // Arrange / Act
     renderHint({
       hasDetails: false,
+      hasAttributes: false,
       dirtyChannelCount: 0,
       variantEditCount: 0,
       variantCreateCount: 0,
@@ -34,10 +35,11 @@ describe("ProductSaveCompositionHint", () => {
     expect(screen.queryByTestId("product-save-composition")).not.toBeInTheDocument();
   });
 
-  it("lists details, channels, and distinct variants edited", () => {
+  it("lists details, attributes, channels, and distinct variants edited", () => {
     // Arrange / Act
     renderHint({
       hasDetails: true,
+      hasAttributes: true,
       dirtyChannelCount: 2,
       variantEditCount: 2,
       variantCreateCount: 1,
@@ -49,16 +51,36 @@ describe("ProductSaveCompositionHint", () => {
 
     expect(hint).toHaveTextContent("Unsaved changes:");
     expect(hint).toHaveTextContent("details");
+    expect(hint).toHaveTextContent("attributes");
     expect(hint).toHaveTextContent("2 channels edited");
     expect(hint).toHaveTextContent("2 variants edited");
     expect(hint).toHaveTextContent("1 new variant");
     expect(hint).toHaveTextContent("3 variants pending delete");
   });
 
+  it("lists attributes without details when only attributes are dirty", () => {
+    // Arrange / Act
+    renderHint({
+      hasDetails: false,
+      hasAttributes: true,
+      dirtyChannelCount: 0,
+      variantEditCount: 0,
+      variantCreateCount: 0,
+      variantDeleteCount: 0,
+    });
+
+    // Assert
+    const hint = screen.getByTestId("product-save-composition");
+
+    expect(hint).toHaveTextContent("attributes");
+    expect(hint).not.toHaveTextContent("details");
+  });
+
   it("uses singular copy for one variant edited", () => {
     // Arrange / Act
     renderHint({
       hasDetails: false,
+      hasAttributes: false,
       dirtyChannelCount: 0,
       variantEditCount: 1,
       variantCreateCount: 0,

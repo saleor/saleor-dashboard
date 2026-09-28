@@ -17,6 +17,8 @@ interface DetailSettingsCardProps {
   children: ReactNode;
   /** Drop content padding so list rows can use full-bleed dividers. */
   contentFlush?: boolean;
+  /** Let menus and popovers paint outside the card. */
+  allowOverflow?: boolean;
   "data-test-id"?: string;
 }
 
@@ -55,9 +57,10 @@ export const DetailSettingsCard = ({
   headerEnd,
   children,
   contentFlush = false,
+  allowOverflow = false,
   "data-test-id": dataTestId,
 }: DetailSettingsCardProps): React.ReactNode => (
-  <Box className={styles.card} data-test-id={dataTestId}>
+  <Box className={clsx(styles.card, allowOverflow && styles.cardVisible)} data-test-id={dataTestId}>
     <Box className={clsx(styles.header, headerEnd && styles.headerWithEnd)}>
       <Box className={styles.headerMain}>
         <Text size={5} fontWeight="bold" as="h2" className={styles.title}>

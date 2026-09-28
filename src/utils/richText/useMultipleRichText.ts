@@ -25,7 +25,12 @@ export const useMultipleRichText = <TKey extends string>({
   triggerChange,
 }: RichTextMultipleOptions<TKey>) => {
   const editorRefs = useRef<RefsMap<TKey>>({} as RefsMap<TKey>);
+  const triggerChangeRef = useRef(triggerChange);
+  const changeHandlersRef = useRef({} as Record<TKey, () => void>);
   const [shouldMountMap, { set: setShouldMountById }] = useMap();
+
+  triggerChangeRef.current = triggerChange;
+
   const getMountEditor = useCallback(
     (id: TKey) => (ref: EditorCore | null) => {
       editorRefs.current = {
@@ -35,7 +40,21 @@ export const useMultipleRichText = <TKey extends string>({
     },
     [],
   );
-  const getHandleChange = (_: TKey) => () => triggerChange();
+  const getHandleChange = useCallback((id: TKey) => {
+    const existing = changeHandlersRef.current[id];
+
+    if (existing) {
+      return existing;
+    }
+
+    const handler = () => {
+      triggerChangeRef.current();
+    };
+
+    changeHandlersRef.current[id] = handler;
+
+    return handler;
+  }, []);
   const getDefaultValue = useCallback(
     (id: TKey) => {
       if (initial[id] === undefined) {
