@@ -134,4 +134,5 @@ See [e2e/README.md](e2e/README.md) for the seeds, the actors and how to port a s
 - [Usage with Docker 🐳](docs/docker.md)
 - [Sentry adapter 🗼](docs/sentry-adapter.md)
 - [Deployment 🌐](docs/deployment.md)
+- [Releasing 🚀](docs/releasing.md)
 - [Developing with stable and staging Saleor graphql.schema](docs/multi-schema.md)
