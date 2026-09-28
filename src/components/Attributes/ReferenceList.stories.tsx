@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
 import { ReferenceList } from "./ReferenceList";
+import { ReferenceValueChip } from "./referenceValueAppearance";
 
 const meta: Meta<typeof ReferenceList> = {
   title: "Components / ReferenceList",
@@ -69,4 +70,31 @@ export const Variants: Story = {
       { id: "v3", thumbnailUrl: "https://picsum.photos/id/1060/56" },
     ],
   },
+};
+
+export const SingleValue: Story = {
+  render: () => (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, padding: 24 }}>
+      <ReferenceValueChip
+        entityType={AttributeEntityTypeEnum.PAGE}
+        value={{
+          label: "Frutello",
+          value: "brand-1",
+          url: "/models/brand-1",
+          icon: { name: "shapes", color: "grey" },
+        }}
+        onRemove={() => undefined}
+      />
+      <ReferenceValueChip
+        entityType={AttributeEntityTypeEnum.PRODUCT}
+        value={{
+          label: "Alpine Oak Coffee Table",
+          value: "p1",
+          url: "/products/p1",
+          thumbnailUrl: "https://picsum.photos/id/1060/56",
+        }}
+        onRemove={() => undefined}
+      />
+    </div>
+  ),
 };

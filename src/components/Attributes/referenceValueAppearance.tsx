@@ -1,9 +1,14 @@
 import { getVariantReferenceLine } from "@dashboard/attributes/utils/formatVariantReferenceLabel";
 import { ModelTypeChipIcon } from "@dashboard/components/ChipField/ModelTypeChipIcon";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Link } from "@dashboard/components/Link";
 import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import clsx from "clsx";
+import { X } from "lucide-react";
 import { type ReactNode } from "react";
+import { useIntl } from "react-intl";
 
 import styles from "./ReferenceList.module.css";
 
@@ -44,13 +49,17 @@ export const ReferenceMark = ({
 
   if (thumbnailUrl) {
     return (
-      <span className={className}>
+      <span className={className} aria-hidden="true">
         <img src={thumbnailUrl} alt="" />
       </span>
     );
   }
 
-  return <span className={className}>{initialsFor(name)}</span>;
+  return (
+    <span className={className} aria-hidden="true">
+      {initialsFor(name)}
+    </span>
+  );
 };
 
 const ReferenceName = ({
@@ -234,5 +243,50 @@ export const ReferenceChipBody = ({
       nameClassName={styles.chipName}
       secondaryClassName={styles.nameSecondary}
     />
+  );
+};
+
+/** A selected reference, same chrome as a multi-reference chip. The chip links through. */
+export const ReferenceValueChip = ({
+  value,
+  entityType,
+  thumbnailUrl,
+  onRemove,
+}: {
+  value: ReferenceListValue;
+  entityType?: AttributeEntityTypeEnum | null;
+  thumbnailUrl?: string | null;
+  onRemove?: () => void;
+}) => {
+  const intl = useIntl();
+  const body = (
+    <ReferenceChipBody
+      value={{ ...value, url: undefined }}
+      entityType={entityType}
+      thumbnailUrl={thumbnailUrl}
+    />
+  );
+
+  return (
+    <span className={clsx(styles.valueChip, !showsThumbnail(entityType) && styles.valueChipIcon)}>
+      {value.url ? (
+        <Link href={value.url} color="secondary" inline={false} className={styles.valueChipLink}>
+          {body}
+        </Link>
+      ) : (
+        body
+      )}
+      {onRemove ? (
+        <button
+          type="button"
+          className={styles.valueChipRemove}
+          data-test-id="button-close"
+          aria-label={intl.formatMessage(buttonMessages.remove)}
+          onClick={onRemove}
+        >
+          <X size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+        </button>
+      ) : null}
+    </span>
   );
 };

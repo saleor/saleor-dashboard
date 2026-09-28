@@ -13,6 +13,8 @@ const FLUSH_CHEVRON_STROKE = 1.75;
 interface DetailGroupBoxProps {
   groupId: string;
   headerStart: ReactNode;
+  /** Sits after the chevron. Used for type icons next to an attribute name. */
+  headerMeta?: ReactNode;
   headerEnd?: ReactNode;
   /**
    * Second column of a flush row, aligned with the value column of a
@@ -43,6 +45,7 @@ interface DetailGroupBoxProps {
 export const DetailGroupBox = ({
   groupId,
   headerStart,
+  headerMeta,
   headerEnd,
   headerBody,
   children,
@@ -59,7 +62,8 @@ export const DetailGroupBox = ({
     defaultExpanded ? groupId : undefined,
   );
   const isControlled = onExpandedChange !== undefined;
-  const expanded = isControlled ? (expandedProp ? groupId : undefined) : uncontrolledExpanded;
+  // An empty string keeps the accordion controlled and closed. `undefined` makes it uncontrolled, so the first click only moves the chevron.
+  const expanded = isControlled ? (expandedProp ? groupId : "") : uncontrolledExpanded;
   const setExpanded = (value: string) => {
     const nextExpanded = value === groupId;
 
@@ -114,6 +118,7 @@ export const DetailGroupBox = ({
                 {headerBody ? (
                   <>
                     <Box className={styles.splitLead}>
+                      <Box className={styles.splitLabel}>{headerStart}</Box>
                       <Box
                         className={clsx(
                           styles.chevron,
@@ -124,7 +129,7 @@ export const DetailGroupBox = ({
                       >
                         <ChevronDown size={FLUSH_CHEVRON_SIZE} strokeWidth={FLUSH_CHEVRON_STROKE} />
                       </Box>
-                      <Box minWidth={0}>{headerStart}</Box>
+                      {headerMeta ? <Box className={styles.splitMeta}>{headerMeta}</Box> : null}
                     </Box>
                     <Box className={styles.splitValue}>{headerBody}</Box>
                   </>

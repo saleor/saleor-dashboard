@@ -1,6 +1,7 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
 
 import { DetailGroupBox } from "./DetailGroupBox";
 
@@ -60,5 +61,39 @@ describe("DetailGroupBox", () => {
     expect(section).toHaveAttribute("data-expanded", "true");
     expect(section.querySelector("[class*='headerFlushExpanded']")).toBeInTheDocument();
     expect(section.querySelector("[data-group-header]")).toBeInTheDocument();
+  });
+
+  it("collapses a controlled group on the first click", async () => {
+    // Arrange
+    const Controlled = () => {
+      const [expanded, setExpanded] = useState(true);
+
+      return (
+        <DetailGroupBox
+          groupId="related"
+          expanded={expanded}
+          onExpandedChange={setExpanded}
+          dataTestId="related"
+          triggerButtonTestId="related-expand"
+          headerStart="Related products"
+        >
+          <div>References</div>
+        </DetailGroupBox>
+      );
+    };
+
+    render(<Controlled />, { wrapper: Wrapper });
+
+    const section = screen.getByTestId("related");
+
+    expect(section).toHaveAttribute("data-expanded", "true");
+    expect(screen.getByText("References")).toBeInTheDocument();
+
+    // Act
+    await userEvent.click(screen.getByTestId("related-expand"));
+
+    // Assert
+    expect(section).toHaveAttribute("data-expanded", "false");
+    expect(screen.queryByText("References")).not.toBeInTheDocument();
   });
 });

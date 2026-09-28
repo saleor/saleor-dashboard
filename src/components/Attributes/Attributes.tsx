@@ -26,6 +26,13 @@ import {
 } from "./attributeGroupFold";
 import { AttributeListItem } from "./AttributeListItem";
 import { type AttributeReferenceView } from "./attributeReferenceLayout";
+import {
+  ATTRIBUTE_REFERENCE_LIST_VIEW_STORAGE_KEY,
+  type AttributeReferenceListMode,
+  attributeReferenceListMode,
+  type AttributeReferenceListViewMap,
+  withAttributeReferenceListMode,
+} from "./attributeReferenceListView";
 import { AttributeRowChromeContext } from "./attributeRowChrome";
 import styles from "./Attributes.module.css";
 import {
@@ -45,6 +52,8 @@ export interface AttributeInputData {
   values: AttributeValueDetailsFragment[];
   selectedValues?: AttributeValueDetailsFragment[];
   references?: AttributeReference[];
+  /** Reference ids in the last saved order. Reorder does not change this. */
+  savedReferenceIds?: string[];
 }
 export type AttributeInput = FormsetAtomicData<
   AttributeInputData,
@@ -146,6 +155,10 @@ export const Attributes = ({
     ATTRIBUTE_GROUP_FOLD_STORAGE_KEY,
     {},
   );
+  const [listModes, setListModes] = useLocalStorage<AttributeReferenceListViewMap>(
+    ATTRIBUTE_REFERENCE_LIST_VIEW_STORAGE_KEY,
+    {},
+  );
   const setGroupExpanded = (attributeId: string, expanded: boolean) => {
     if (!referenceTypeId) {
       return;
@@ -161,6 +174,25 @@ export const Attributes = ({
       }),
     );
   };
+  const setListMode = (mode: AttributeReferenceListMode) => {
+    if (!referenceTypeId) {
+      return;
+    }
+
+    setListModes(current =>
+      withAttributeReferenceListMode({
+        modes: current,
+        view: referenceLayoutView,
+        typeId: referenceTypeId,
+        mode,
+      }),
+    );
+  };
+  const referenceListView = attributeReferenceListMode({
+    modes: listModes,
+    view: referenceLayoutView,
+    typeId: referenceTypeId,
+  });
   const stableOnChange = useStableCallback(onChange);
   const stableOnFileChange = useStableCallback(onFileChange);
   const stableOnMultiChange = useStableCallback(onMultiChange);
@@ -194,6 +226,8 @@ export const Attributes = ({
                 attributeId: attribute.id,
               })}
               onReferenceGroupExpandedChange={expanded => setGroupExpanded(attribute.id, expanded)}
+              referenceListView={referenceTypeId ? referenceListView : undefined}
+              onReferenceListViewChange={referenceTypeId ? setListMode : undefined}
               attribute={attribute}
               errors={errors}
               attributeValues={resolveByAttributeId(attributeValues, attribute.id)}

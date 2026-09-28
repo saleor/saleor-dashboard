@@ -72,7 +72,7 @@ export function getReferenceDisplayValue(
 export function getSingleReferenceDisplayValue(
   attribute: AttributeInput,
   icons?: Map<string, ModelTypeIcon>,
-): ReferenceListValue {
+): ReferenceListValue | null {
   if (!attribute.value || attribute.value.length === 0) {
     return null;
   }
@@ -81,9 +81,11 @@ export function getSingleReferenceDisplayValue(
 
   if (reference) {
     return {
-      label: reference.label,
+      label: reference.primary ?? reference.label,
       value: reference.value,
       icon: icons?.get(reference.value) ?? reference.icon,
+      caption: reference.caption,
+      thumbnailUrl: reference.thumbnailUrl,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: reference.value,

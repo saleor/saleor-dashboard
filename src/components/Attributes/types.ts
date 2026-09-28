@@ -43,6 +43,9 @@ export interface AttributeRowProps extends AttributeRowHandlers {
   /** Remembered open state for this attribute on `referenceTypeId`. Absent means collapsed. */
   referenceGroupExpanded?: boolean;
   onReferenceGroupExpandedChange?: (expanded: boolean) => void;
+  /** Remembered list or packed mode for `referenceTypeId`. Absent means list. */
+  referenceListView?: "list" | "packed";
+  onReferenceListViewChange?: (mode: "list" | "packed") => void;
   attribute: AttributeInput;
   attributeValues: AttributeValueFragment[];
   disabled: boolean;

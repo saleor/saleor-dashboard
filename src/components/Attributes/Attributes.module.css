@@ -7,7 +7,10 @@
 /* Left matches the card title. Right matches the header meta, which uses the
    tighter headerEnd inset rather than the title's. */
 .cardList > li {
+  /* Small field (spacing-8) plus the row's vertical padding. Matches Material. */
+  min-height: calc(var(--mu-spacing-3) * 2 + var(--mu-spacing-8));
   padding: var(--mu-spacing-3) var(--mu-spacing-4) var(--mu-spacing-3) var(--mu-spacing-6);
+  box-sizing: border-box;
 }
 
 /* Foldable reference rows own their header and content padding. */

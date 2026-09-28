@@ -1,5 +1,6 @@
 import { DragHandle } from "@dashboard/components/DragHandle/DragHandle";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { SearchInput } from "@dashboard/components/SearchInput/SearchInput";
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -41,12 +42,14 @@ import {
   commitReorderIndexes,
   useSortableDragOver,
 } from "../SortableChipsField/useSortableDragOver";
+import { type AttributeReferenceListMode } from "./attributeReferenceListView";
 import styles from "./ReferenceList.module.css";
 import {
   ReferenceChipBody,
   type ReferenceListValue,
   ReferenceRowBody,
 } from "./referenceValueAppearance";
+import { savedReferencePosition } from "./savedReferencePosition";
 import { useModelReferenceIcons } from "./useModelReferenceIcons";
 import {
   mergeReferenceDetails,
@@ -120,9 +123,32 @@ const messages = defineMessages({
     defaultMessage: "Packed",
     description: "show referenced products as a wrapped row of chips",
   },
+  noProducts: {
+    id: "QYrORf",
+    defaultMessage: "No products",
+    description: "empty product reference list",
+  },
+  noVariants: {
+    id: "6kPUGg",
+    defaultMessage: "No product variants",
+    description: "empty product variant reference list",
+  },
+  noModels: {
+    id: "SRhwCq",
+    defaultMessage: "No models",
+    description: "empty model reference list",
+  },
+  noCategories: {
+    id: "lmUorC",
+    defaultMessage: "No categories",
+    description: "empty category reference list",
+  },
+  noCollections: {
+    id: "hNTI05",
+    defaultMessage: "No collections",
+    description: "empty collection reference list",
+  },
 });
-
-type ReferenceListView = "list" | "packed";
 
 /** Wrapped chips must reflow in the DOM. Transform offsets overlap variable-width items. */
 function disableSortingStrategy() {
@@ -139,12 +165,27 @@ const filterMessageByEntity: Partial<
   [AttributeEntityTypeEnum.COLLECTION]: messages.filterCollections,
 };
 
+const emptyMessageByEntity: Partial<
+  Record<AttributeEntityTypeEnum, (typeof messages)[keyof typeof messages]>
+> = {
+  [AttributeEntityTypeEnum.PRODUCT]: messages.noProducts,
+  [AttributeEntityTypeEnum.PRODUCT_VARIANT]: messages.noVariants,
+  [AttributeEntityTypeEnum.PAGE]: messages.noModels,
+  [AttributeEntityTypeEnum.CATEGORY]: messages.noCategories,
+  [AttributeEntityTypeEnum.COLLECTION]: messages.noCollections,
+};
+
 interface ReferenceListProps {
   values: ReferenceListValue[];
   entityType?: AttributeEntityTypeEnum | null;
   disabled?: boolean;
   /** Preloaded rows. When set, the list does not request product details. */
   details?: ProductReferenceDetails[];
+  /** Reference ids in the last saved order. The row number stays on this until save. */
+  savedIds?: readonly string[];
+  /** When set with `onViewChange`, the list or packed choice is remembered by the parent. */
+  view?: AttributeReferenceListMode;
+  onViewChange?: (mode: AttributeReferenceListMode) => void;
   onRemove: (ids: string[]) => void;
   onRemoveAll: () => void;
   onReorder: (event: ReorderEvent) => void;
@@ -154,6 +195,7 @@ interface ReferenceRowProps {
   value: ReferenceListValue;
   entityType?: AttributeEntityTypeEnum | null;
   index: number;
+  position: number;
   count: number;
   subtitle?: string | null;
   thumbnailUrl?: string | null;
@@ -169,6 +211,7 @@ const ReferenceRow = ({
   value,
   entityType,
   index,
+  position,
   count,
   subtitle,
   thumbnailUrl,
@@ -217,7 +260,7 @@ const ReferenceRow = ({
         onCheckedChange={() => onCheckedChange(value.value)}
         data-test-id="product-reference-checkbox"
       />
-      <span className={styles.index}>{index + 1}</span>
+      <span className={styles.index}>{position}</span>
       <div className={styles.identity}>
         <ReferenceRowBody
           value={value}
@@ -340,6 +383,9 @@ export const ReferenceList = ({
   entityType = AttributeEntityTypeEnum.PRODUCT,
   disabled,
   details,
+  savedIds,
+  view: viewProp,
+  onViewChange,
   onRemove,
   onRemoveAll,
   onReorder,
@@ -361,10 +407,19 @@ export const ReferenceList = ({
   );
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
-  const [view, setView] = useState<ReferenceListView>("list");
+  const [uncontrolledView, setUncontrolledView] = useState<AttributeReferenceListMode>("list");
+  const view = viewProp ?? uncontrolledView;
+  const setView = (mode: AttributeReferenceListMode) => {
+    onViewChange?.(mode);
+
+    if (viewProp === undefined) {
+      setUncontrolledView(mode);
+    }
+  };
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const draftRef = useRef<ReferenceListValue[] | null>(null);
   const [draft, setDraft] = useState<ReferenceListValue[] | null>(null);
+  const provisionalPositions = useRef(new Map<string, number>());
   const valueIds = incomingValues.map(value => value.value);
   const fetchedDetails = useProductReferenceDetails({
     ids: valueIds,
@@ -470,6 +525,18 @@ export const ReferenceList = ({
   };
   const activeValue = orderedValues.find(value => value.value === activeId);
   const activeDetail = activeValue ? resolved.get(activeValue.value) : undefined;
+
+  if (values.length === 0) {
+    return (
+      <Box paddingX={6} paddingY={4} data-test-id="product-reference-list">
+        <Placeholder>
+          {intl.formatMessage(
+            (entityType && emptyMessageByEntity[entityType]) || messages.noProducts,
+          )}
+        </Placeholder>
+      </Box>
+    );
+  }
 
   return (
     <Box data-test-id="product-reference-list">
@@ -604,6 +671,12 @@ export const ReferenceList = ({
           >
             {visibleValues.map(value => {
               const index = orderedValues.findIndex(item => item.value === value.value);
+              const position =
+                savedReferencePosition({
+                  id: value.value,
+                  savedIds,
+                  provisional: provisionalPositions.current,
+                }) ?? index + 1;
               const detail = resolved.get(value.value);
 
               if (view === "packed") {
@@ -629,6 +702,7 @@ export const ReferenceList = ({
                   value={value}
                   entityType={entityType}
                   index={index}
+                  position={position}
                   count={values.length}
                   subtitle={detail?.categoryName || detail?.productTypeName}
                   thumbnailUrl={detail?.thumbnailUrl}

@@ -2,14 +2,9 @@
   list-style: none;
 }
 
-.groupLabel {
-  display: flex;
-  flex: 1 1 auto;
-  align-items: center;
-  min-width: 0;
-}
-
 .groupLabelText {
+  display: block;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

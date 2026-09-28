@@ -79,6 +79,8 @@ const AttributeRow = ({
   referenceTypeId,
   referenceGroupExpanded = false,
   onReferenceGroupExpandedChange,
+  referenceListView,
+  onReferenceListViewChange,
 }: AttributeRowProps): React.ReactNode => {
   const intl = useIntl();
   const rowChrome = useAttributeRowChrome();
@@ -129,6 +131,9 @@ const AttributeRow = ({
         <ReferenceList
           entityType={attribute.data.entityType}
           values={referenceValues}
+          savedIds={attribute.data.savedReferenceIds}
+          view={onReferenceListViewChange ? referenceListView : undefined}
+          onViewChange={onReferenceListViewChange}
           details={isThumbReferenceList ? Array.from(referenceDetails.values()) : undefined}
           disabled={disabled || loading}
           onRemove={removeReferences}
@@ -170,10 +175,12 @@ const AttributeRow = ({
               expanded={groupExpanded}
               onExpandedChange={rememberGroup ? onReferenceGroupExpandedChange : undefined}
               headerStart={
-                <Box display="flex" alignItems="center" gap={1} className={styles.groupLabel}>
-                  <Text fontWeight="medium" color="default1" className={styles.groupLabelText}>
-                    {capitalizedLabel}
-                  </Text>
+                <Text fontWeight="medium" color="default1" className={styles.groupLabelText}>
+                  {capitalizedLabel}
+                </Text>
+              }
+              headerMeta={
+                <Box display="flex" alignItems="center" gap={1}>
                   {inputTypeIcon}
                   <AttributeReferenceEntityIcon entityType={attribute.data.entityType} />
                 </Box>
@@ -415,31 +422,23 @@ const AttributeRow = ({
     case AttributeInputTypeEnum.BOOLEAN:
       return (
         <BasicAttributeRow label={attribute.label} {...labelProps}>
-          <Box
-            as="li"
-            display="flex"
-            gap={2}
-            alignItems="center"
-            justifyContent="flex-end"
-            padding={1}
-          >
-            <Box data-test-id="attribute-value">
-              <Box display="flex" gap={0.5} flexDirection="column" alignItems="flex-end">
-                <Select
-                  name={`attribute:${attribute.label}`}
-                  value={booleanAttrValueToValue(attribute.value[0])}
-                  onChange={value =>
-                    onChange(attribute.id, value === "unset" ? undefined : value === "true")
-                  }
-                  options={getBooleanDropdownOptions(intl)}
-                  id={`attribute:${attribute.label}`}
-                  disabled={disabled}
-                />
-                <Text size={2} color="critical1">
-                  {getErrorMessage(error, intl)}
-                </Text>
-              </Box>
-            </Box>
+          <Box display="flex" flexDirection="column" alignItems="flex-end" gap={0.5}>
+            <Select
+              size="small"
+              name={`attribute:${attribute.label}`}
+              value={booleanAttrValueToValue(attribute.value[0])}
+              onChange={value =>
+                onChange(attribute.id, value === "unset" ? undefined : value === "true")
+              }
+              options={getBooleanDropdownOptions(intl)}
+              id={`attribute:${attribute.label}`}
+              disabled={disabled}
+            />
+            {error ? (
+              <Text size={2} color="critical1">
+                {getErrorMessage(error, intl)}
+              </Text>
+            ) : null}
           </Box>
         </BasicAttributeRow>
       );

@@ -21,6 +21,25 @@ const values: ReferenceListValue[] = [
 ];
 
 describe("ReferenceList", () => {
+  it("shows an empty placeholder instead of the filter when nothing is assigned", () => {
+    // Arrange
+    render(
+      <ReferenceList
+        entityType={AttributeEntityTypeEnum.PRODUCT_VARIANT}
+        values={[]}
+        details={[]}
+        onRemove={jest.fn()}
+        onRemoveAll={jest.fn()}
+        onReorder={jest.fn()}
+      />,
+      { wrapper: RouterWrapper },
+    );
+
+    // Assert
+    expect(screen.getByText("No product variants")).toBeInTheDocument();
+    expect(screen.queryByTestId("attribute-reference-search")).not.toBeInTheDocument();
+  });
+
   it("shows position, name, and category, and scrolls the rows", () => {
     // Arrange
     render(
@@ -49,6 +68,30 @@ describe("ReferenceList", () => {
     expect(rows[2]).toHaveTextContent("Juice");
     expect(screen.getByTestId("product-reference-scroll")).toBeInTheDocument();
     expect(screen.queryByTestId("pagination")).not.toBeInTheDocument();
+  });
+
+  it("keeps the saved position on a row that has moved", () => {
+    // Arrange
+    render(
+      <ReferenceList
+        values={[values[2], values[0], values[1]]}
+        savedIds={["p1", "p2", "p3"]}
+        details={[]}
+        onRemove={jest.fn()}
+        onRemoveAll={jest.fn()}
+        onReorder={jest.fn()}
+      />,
+      { wrapper: RouterWrapper },
+    );
+
+    // Assert
+    const rows = screen.getAllByTestId("product-reference-row");
+
+    expect(rows[0]).toHaveTextContent("Apple Juice Concentrate 5L");
+    expect(rows[0]).toHaveTextContent("3");
+    expect(rows[1]).toHaveTextContent("Alpine Oak Coffee Table");
+    expect(rows[1]).toHaveTextContent("1");
+    expect(rows[2]).toHaveTextContent("2");
   });
 
   it("moves and removes a product from the row actions", async () => {
@@ -102,6 +145,42 @@ describe("ReferenceList", () => {
       "aria-pressed",
       "true",
     );
+  });
+
+  it("moves a packed chip one step from the same actions as the list", async () => {
+    // Arrange
+    const onReorder = jest.fn();
+    const user = userEvent.setup();
+
+    render(
+      <ReferenceList
+        values={values}
+        details={[]}
+        onRemove={jest.fn()}
+        onRemoveAll={jest.fn()}
+        onReorder={onReorder}
+      />,
+      { wrapper: RouterWrapper },
+    );
+
+    // Act
+    await user.click(screen.getByTestId("product-reference-view-packed"));
+    await user.click(screen.getAllByTestId("attribute-value-menu")[0]);
+
+    // Assert
+    expect(screen.getByRole("menuitem", { name: "Move up" })).toHaveAttribute(
+      "aria-disabled",
+      "true",
+    );
+    expect(screen.getByRole("menuitem", { name: "Move down" })).toBeInTheDocument();
+    expect(screen.queryByRole("menuitem", { name: "Move to top" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("menuitem", { name: "Move to position…" })).not.toBeInTheDocument();
+
+    // Act
+    await user.click(screen.getByTestId("attribute-value-move-down"));
+
+    // Assert
+    expect(onReorder).toHaveBeenCalledWith({ oldIndex: 0, newIndex: 1 });
   });
 
   it("shows the variant name as primary and the product as secondary on the first line", () => {

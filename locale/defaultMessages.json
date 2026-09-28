@@ -2286,6 +2286,10 @@
     "context": "section header",
     "string": "About this extension"
   },
+  "6kPUGg": {
+    "context": "empty product variant reference list",
+    "string": "No product variants"
+  },
   "6mdMYB": {
     "context": "account settings empty state action, opens the models list",
     "string": "View models"
@@ -3807,9 +3811,6 @@
   "CKP9+i": {
     "string": "Webhook errors detected."
   },
-  "CLe1AK": {
-    "string": "Move to position…"
-  },
   "CN3QZu": {
     "context": "attribute slug field in embedded create form",
     "string": "Code"
@@ -5145,9 +5146,6 @@
   "HFo3Qe": {
     "context": "successfully created gift card alert title",
     "string": "Gift card created"
-  },
-  "HGKQHG": {
-    "string": "Move to bottom"
   },
   "HK9hkL": {
     "context": "channel catalog stats fetch error",
@@ -7616,6 +7614,10 @@
     "context": "placeholder for multiselect dropdown",
     "string": "Search and select values..."
   },
+  "QYrORf": {
+    "context": "empty product reference list",
+    "string": "No products"
+  },
   "QZVD+5": {
     "context": "button, unassign attribute from object",
     "string": "Unassign and save"
@@ -8096,6 +8098,10 @@
   "SRMNCS": {
     "string": "Pending & failed deliveries (last 10)"
   },
+  "SRhwCq": {
+    "context": "empty model reference list",
+    "string": "No models"
+  },
   "SRnxlw": {
     "context": "button to delete selected product media items",
     "string": "Delete ({quantity})"
@@ -8536,9 +8542,6 @@
     "context": "Label for published toggle",
     "string": "Published"
   },
-  "U6qGuO": {
-    "string": "Position"
-  },
   "U86VKF": {
     "context": "number of structures",
     "string": "Items"
@@ -8608,9 +8611,6 @@
   "ULBvyx": {
     "context": "order header date, yesterday",
     "string": "Placed yesterday at {time}"
-  },
-  "UMbBzo": {
-    "string": "Move"
   },
   "UPqrEf": {
     "context": "variant pricing channel status when channel is active",
@@ -12080,6 +12080,10 @@
   "hMRP6J": {
     "string": "Default Address"
   },
+  "hNTI05": {
+    "context": "empty collection reference list",
+    "string": "No collections"
+  },
   "hNwVmh": {
     "context": "configuration menu item description for gift card settings",
     "string": "Set default expiration for issued and purchased gift cards"
@@ -12356,9 +12360,6 @@
   "iMZEfi": {
     "context": "model detail page menu, opens model type configuration",
     "string": "Model type settings"
-  },
-  "iMy+or": {
-    "string": "Move to top"
   },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
@@ -13406,6 +13407,10 @@
   "lmMHMT": {
     "context": "voucher discount section title",
     "string": "Discount"
+  },
+  "lmUorC": {
+    "context": "empty category reference list",
+    "string": "No categories"
   },
   "lnteBJ": {
     "context": "country rates list label for the default rate",

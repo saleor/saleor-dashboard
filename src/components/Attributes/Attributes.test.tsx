@@ -5,12 +5,13 @@ import {
 } from "@dashboard/graphql";
 import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 import Wrapper from "@test/wrapper";
-import { render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ComponentProps, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import { ATTRIBUTE_GROUP_FOLD_STORAGE_KEY } from "./attributeGroupFold";
+import { ATTRIBUTE_REFERENCE_LIST_VIEW_STORAGE_KEY } from "./attributeReferenceListView";
 import { type AttributeInput, Attributes } from "./Attributes";
 
 // Reference chips link to the referenced entity.
@@ -358,5 +359,57 @@ describe("Attributes", () => {
     });
 
     localStorage.removeItem(ATTRIBUTE_GROUP_FOLD_STORAGE_KEY);
+  });
+
+  it("keeps packed references for this type", async () => {
+    // Arrange
+    localStorage.removeItem(ATTRIBUTE_REFERENCE_LIST_VIEW_STORAGE_KEY);
+    localStorage.setItem(
+      ATTRIBUTE_GROUP_FOLD_STORAGE_KEY,
+      JSON.stringify({ "product:shoes": { related: true } }),
+    );
+
+    render(<Attributes {...baseProps} chrome="card" referenceTypeId="shoes" />, {
+      wrapper: RouterWrapper,
+    });
+
+    // Act
+    await userEvent.click(screen.getByTestId("product-reference-view-packed"));
+
+    // Assert
+    expect(
+      JSON.parse(localStorage.getItem(ATTRIBUTE_REFERENCE_LIST_VIEW_STORAGE_KEY) ?? "{}"),
+    ).toEqual({ "product:shoes": "packed" });
+
+    cleanup();
+    render(<Attributes {...baseProps} chrome="card" referenceTypeId="shoes" />, {
+      wrapper: RouterWrapper,
+    });
+
+    expect(screen.getByTestId("product-reference-view-packed")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+
+    cleanup();
+    localStorage.setItem(
+      ATTRIBUTE_GROUP_FOLD_STORAGE_KEY,
+      JSON.stringify({ "product:bags": { related: true } }),
+    );
+    render(<Attributes {...baseProps} chrome="card" referenceTypeId="bags" />, {
+      wrapper: RouterWrapper,
+    });
+
+    expect(screen.getByTestId("product-reference-view-list")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    expect(screen.getByTestId("product-reference-view-packed")).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+
+    localStorage.removeItem(ATTRIBUTE_GROUP_FOLD_STORAGE_KEY);
+    localStorage.removeItem(ATTRIBUTE_REFERENCE_LIST_VIEW_STORAGE_KEY);
   });
 });

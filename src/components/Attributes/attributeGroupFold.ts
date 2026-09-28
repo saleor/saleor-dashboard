@@ -5,7 +5,7 @@ export const ATTRIBUTE_GROUP_FOLD_STORAGE_KEY = "attributeReferenceGroupFold";
 /** `true` means the user left that attribute group open. Missing keys stay collapsed. */
 export type AttributeGroupFoldMap = Record<string, Record<string, boolean>>;
 
-export const attributeGroupFoldSlot = (view: AttributeReferenceView, typeId: string): string =>
+const attributeGroupFoldSlot = (view: AttributeReferenceView, typeId: string): string =>
   `${view}:${typeId}`;
 
 export const isAttributeGroupExpanded = ({

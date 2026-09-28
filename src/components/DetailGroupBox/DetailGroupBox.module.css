@@ -3,6 +3,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
   transition:
     color 0.18s ease,
     transform 0.2s ease;
@@ -62,6 +64,9 @@
 /* Row inset of a `contentFlush` DetailSettingsCard list. The action keeps the
    header's Y gap as its right inset, like DetailSettingsCard headerEnd. */
 .headerFlush {
+  /* Same row height as a card attribute with a small field, such as Material. */
+  box-sizing: border-box;
+  min-height: calc(var(--mu-spacing-3) * 2 + var(--mu-spacing-8));
   padding: var(--mu-spacing-3) var(--mu-spacing-4) var(--mu-spacing-3) var(--mu-spacing-6);
   transition: background-color 0.18s ease;
 }
@@ -118,9 +123,16 @@
   padding-right: calc(var(--mu-spacing-8) * 2 + var(--mu-spacing-2));
 }
 
-.splitLead > :last-child {
-  flex: 1 1 auto;
+.splitLabel {
+  flex: 0 1 auto;
   min-width: 0;
+  overflow: hidden;
+}
+
+.splitMeta {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
 }
 
 .splitValue {
