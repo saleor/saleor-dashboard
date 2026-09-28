@@ -5,6 +5,7 @@ import { type KeyboardEvent } from "react";
 import { useConfigurationSettingsSearchKeyboard } from "./useConfigurationSettingsSearchKeyboard";
 
 const mockNavigate = jest.fn();
+const mockTrackEvent = jest.fn();
 const mockResults: ResolvedSettingsCatalogEntry[] = [
   {
     id: "a",
@@ -35,6 +36,10 @@ jest.mock("@dashboard/hooks/useNavigator", () => ({
   default: () => mockNavigate,
 }));
 
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
+
 jest.mock("@dashboard/configuration/settingsCatalog/catalog", () => ({
   useSettingsCatalogSearch: (query: string) => (query.trim() ? mockResults : []),
 }));
@@ -48,6 +53,7 @@ const keyEvent = (key: string): KeyboardEvent<HTMLInputElement> =>
 describe("useConfigurationSettingsSearchKeyboard", () => {
   beforeEach(() => {
     mockNavigate.mockClear();
+    mockTrackEvent.mockClear();
   });
 
   it("moves active index with arrow keys and navigates on Enter", () => {
@@ -79,6 +85,13 @@ describe("useConfigurationSettingsSearchKeyboard", () => {
 
     // Assert
     expect(mockNavigate).toHaveBeenCalledWith("/a");
+    expect(mockTrackEvent).toHaveBeenCalledWith("configuration_search_result_clicked", {
+      input_method: "keyboard",
+      position: 1,
+      result_count: 2,
+      result_id: "a",
+      result_kind: "setting",
+    });
   });
 
   it("clears active index when the query is cleared", () => {

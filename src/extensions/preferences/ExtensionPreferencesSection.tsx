@@ -28,7 +28,7 @@ export const ExtensionPreferencesSection = (): React.ReactNode => {
   const userPermissions = useUserPermissions();
   const { extensions: extensionsByMount, loading } =
     useExtensionsWithLoadingState(PREFERENCE_ENABLED_MOUNTS);
-  const { getState, setState, isSaving } = useExtensionPreferences();
+  const { getState, setState, isSaving } = useExtensionPreferences("account_settings");
   const emptyIcon = <Package size={iconSize.small} strokeWidth={iconStrokeWidth} />;
 
   const groups = useMemo(() => {

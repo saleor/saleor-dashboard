@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { SetupChecklist } from "@dashboard/components/SetupChecklist/SetupChecklist";
 import {
   type SetupChecklistReviewItem,
@@ -58,6 +59,7 @@ export const ProductSetupCard = ({
 }: ProductSetupCardProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
+  const { trackEvent } = useAnalytics();
   const {
     hasChannels,
     hasShopReadyChannel,
@@ -87,6 +89,18 @@ export const ProductSetupCard = ({
   const stockActive = needsStock && hasShopReadyChannel && hasCategory && hasOffer && !hasStock;
   const liveActive =
     hasShopReadyChannel && hasCategory && hasOffer && (!needsStock || hasStock) && !isLive;
+  const trackStepClick =
+    (stepId: string, action: () => void): (() => void) =>
+    () => {
+      trackEvent("setup_checklist_step_clicked", {
+        completed_steps: progressDone,
+        core_ready: coreReady,
+        entity_type: "product",
+        step_id: stepId,
+        total_steps: progressTotal,
+      });
+      action();
+    };
 
   const tasks: SetupChecklistTask[] = [
     {
@@ -110,7 +124,10 @@ export const ProductSetupCard = ({
           variant="primary"
           type="button"
           data-test-id="setup-product-channels"
-          onClick={!hasChannels ? onManageChannels : onFinishChannelSetup}
+          onClick={trackStepClick(
+            "channel",
+            !hasChannels ? onManageChannels : onFinishChannelSetup,
+          )}
           disabled={disabled}
         >
           <CtaLabel>
@@ -137,7 +154,7 @@ export const ProductSetupCard = ({
           variant="primary"
           type="button"
           data-test-id="setup-product-category"
-          onClick={() => scrollToProductSetupTarget("category")}
+          onClick={trackStepClick("category", () => scrollToProductSetupTarget("category"))}
           disabled={disabled}
         >
           <CtaLabel>
@@ -166,7 +183,7 @@ export const ProductSetupCard = ({
           variant="primary"
           type="button"
           data-test-id="setup-product-offer"
-          onClick={() => scrollToProductSetupTarget("variants")}
+          onClick={trackStepClick("offer", () => scrollToProductSetupTarget("variants"))}
           disabled={disabled}
         >
           <CtaLabel>
@@ -196,7 +213,7 @@ export const ProductSetupCard = ({
           variant="primary"
           type="button"
           data-test-id="setup-product-stock"
-          onClick={() => scrollToProductSetupTarget("variants")}
+          onClick={trackStepClick("stock", () => scrollToProductSetupTarget("variants"))}
           disabled={disabled}
         >
           <CtaLabel>
@@ -226,7 +243,7 @@ export const ProductSetupCard = ({
           variant="primary"
           type="button"
           data-test-id="setup-product-make-available"
-          onClick={onMakeAvailable}
+          onClick={trackStepClick("live", onMakeAvailable)}
           disabled={disabled}
         >
           <CtaLabel>
@@ -238,6 +255,14 @@ export const ProductSetupCard = ({
 
   const attributeCount = productAttributeCount + variantAttributeCount;
   const handleAttributesReviewClick = () => {
+    trackEvent("setup_checklist_step_clicked", {
+      completed_steps: progressDone,
+      core_ready: coreReady,
+      entity_type: "product",
+      step_id: "attributes_review",
+      total_steps: progressTotal,
+    });
+
     if (productAttributeCount > 0) {
       scrollToProductSetupTarget("attributes");
 
@@ -262,7 +287,7 @@ export const ProductSetupCard = ({
       title: <FormattedMessage {...messages.mediaReviewTitle} />,
       description: <FormattedMessage {...messages.mediaReviewDescription} />,
       status: <FormattedMessage {...messages.mediaReviewStatus} values={{ count: mediaCount }} />,
-      onClick: () => scrollToProductSetupTarget("media"),
+      onClick: trackStepClick("media_review", () => scrollToProductSetupTarget("media")),
       disabled,
     },
     {
@@ -301,7 +326,7 @@ export const ProductSetupCard = ({
         ) : (
           <FormattedMessage {...messages.seoReviewStatusEmpty} />
         ),
-      onClick: () => scrollToProductSetupTarget("seo"),
+      onClick: trackStepClick("seo_review", () => scrollToProductSetupTarget("seo")),
       disabled,
     },
   ];
@@ -362,7 +387,15 @@ export const ProductSetupCard = ({
             <Button
               variant="tertiary"
               type="button"
-              onClick={onDismiss}
+              onClick={() => {
+                trackEvent("setup_checklist_dismissed", {
+                  completed_steps: progressDone,
+                  core_ready: coreReady,
+                  entity_type: "product",
+                  total_steps: progressTotal,
+                });
+                onDismiss();
+              }}
               disabled={disabled}
               data-test-id="setup-dismiss"
             >
