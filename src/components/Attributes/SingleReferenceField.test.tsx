@@ -3,11 +3,16 @@ import {
   AttributeInputTypeEnum,
   ProductErrorCode,
 } from "@dashboard/graphql";
-import { render, screen } from "@testing-library/react";
+import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
+import { render as renderBase, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { type ReactElement } from "react";
 
 import { SingleReferenceField } from "./SingleReferenceField";
 import { getErrorMessage } from "./utils";
+
+// The field fetches model type icons for model references.
+const render = (ui: ReactElement) => renderBase(ui, { wrapper: ApolloMockedProvider });
 
 jest.mock("./utils", () => {
   const actualUtils = jest.requireActual("./utils");
@@ -19,8 +24,14 @@ jest.mock("./utils", () => {
 });
 
 jest.mock("react-router-dom", () => ({
-  Link: ({ children, to }: { children: React.ReactNode; to: string }) => (
-    <a href={to}>{children}</a>
+  Link: ({
+    children,
+    to,
+  }: {
+    children: React.ReactNode;
+    to: string | { pathname?: string; search?: string };
+  }) => (
+    <a href={typeof to === "string" ? to : `${to.pathname ?? ""}${to.search ?? ""}`}>{children}</a>
   ),
   useNavigate: () => jest.fn(),
   useLocation: () => ({ pathname: "/", search: "", hash: "", state: null }),
@@ -140,7 +151,7 @@ describe("SingleReferenceField", () => {
     expect(defaultProps.onReferencesAddClick).toHaveBeenCalledWith(propsWithValue.attribute);
   });
 
-  it("should call onReferencesRemove when chip close button is clicked", async () => {
+  it("links the selected reference and removes it from the chip", async () => {
     // Arrange
     const user = userEvent.setup();
     const propsWithValue = {
@@ -168,6 +179,10 @@ describe("SingleReferenceField", () => {
     await user.click(closeButton);
 
     // Assert
+    expect(screen.getByRole("link", { name: "Selected Value" })).toHaveAttribute(
+      "href",
+      expect.stringContaining("val-1"),
+    );
     expect(defaultProps.onReferencesRemove).toHaveBeenCalledWith("attr-1", []);
   });
 

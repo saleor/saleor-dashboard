@@ -72,6 +72,7 @@ jest.mock("./form", () => ({
       stagedVariantCreates: [],
       saveComposition: {
         hasDetails: false,
+        hasAttributes: false,
         dirtyChannelCount: 0,
         variantEditCount: 0,
         variantCreateCount: 0,

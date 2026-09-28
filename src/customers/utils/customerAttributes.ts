@@ -268,6 +268,11 @@ export const getAttributeInputFromCustomerType = ({
         selectedValues,
         unit: attribute.unit,
         values: mergeChoicesBySlug(typeChoices, selectedValues),
+        savedReferenceIds: usePreviousValue
+          ? previous?.data.savedReferenceIds
+          : mapped?.value
+            ? [...mapped.value]
+            : undefined,
       },
       id: attribute.id,
       label: attribute.name,
