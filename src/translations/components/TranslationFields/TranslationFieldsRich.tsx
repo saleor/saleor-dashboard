@@ -63,9 +63,24 @@ const TranslationFieldsRich = ({
         void handleSubmit();
       }}
     >
-      <Box position="relative">
+      <Box>
         {isReadyForMount ? (
-          <RichTextEditorClamp tall>
+          <RichTextEditorClamp
+            tall
+            footer={
+              showShortcut ? (
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  paddingX={3}
+                  paddingTop={1}
+                  paddingBottom={2}
+                >
+                  <SendFormKeyboardShortcutHint visible={isFocused} action="save" />
+                </Box>
+              ) : null
+            }
+          >
             <RichTextEditor
               defaultValue={defaultValue}
               editorRef={editorRef}
@@ -99,11 +114,6 @@ const TranslationFieldsRich = ({
             name="translation"
             data-test-id="translation-field"
           />
-        )}
-        {showShortcut && (
-          <Box position="absolute" __bottom="8px" __right="8px" zIndex="3">
-            <SendFormKeyboardShortcutHint visible={isFocused} action="save" />
-          </Box>
         )}
       </Box>
       {!hideActions && (

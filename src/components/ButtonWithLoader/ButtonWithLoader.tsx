@@ -25,13 +25,7 @@ export const ButtonWithLoader = ({
   const renderLoader = () => {
     if (isLoading) {
       return (
-        <SaleorThrobber
-          size={20}
-          data-test-id="button-progress"
-          className={sprinkles({
-            position: "absolute",
-          })}
-        />
+        <SaleorThrobber size={20} data-test-id="button-progress" className={styles.indicator} />
       );
     }
 
@@ -45,7 +39,7 @@ export const ButtonWithLoader = ({
   return (
     <Button
       {...props}
-      className={clsx(className, isLoading && styles.noInteraction)}
+      className={clsx(styles.button, className, isLoading && styles.noInteraction)}
       disabled={disabled}
       aria-busy={isLoading}
       tabIndex={isLoading ? -1 : undefined}

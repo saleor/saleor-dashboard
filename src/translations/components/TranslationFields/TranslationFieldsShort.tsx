@@ -58,33 +58,31 @@ const TranslationFieldsShort = ({
 
         return (
           <div>
-            <Box position="relative">
-              <Input
-                disabled={disabled}
-                label={intl.formatMessage({
-                  id: "/vCXIP",
-                  defaultMessage: "Translation",
-                })}
-                name="translation"
-                data-test-id="translation-field"
-                value={data.translation || ""}
-                onChange={event => {
-                  change(event);
+            <Input
+              disabled={disabled}
+              label={intl.formatMessage({
+                id: "/vCXIP",
+                defaultMessage: "Translation",
+              })}
+              name="translation"
+              data-test-id="translation-field"
+              value={data.translation || ""}
+              onChange={event => {
+                change(event);
 
-                  if (onValueChange) {
-                    onValueChange(event.target.value);
-                  }
-                }}
-                onKeyDown={handleKeyDown}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-              />
-              {showShortcut && (
-                <Box position="absolute" __bottom="8px" __right="8px">
-                  <SendFormKeyboardShortcutHint visible={isFocused} action="save" />
-                </Box>
-              )}
-            </Box>
+                if (onValueChange) {
+                  onValueChange(event.target.value);
+                }
+              }}
+              onKeyDown={handleKeyDown}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+            {showShortcut && (
+              <Box display="flex" justifyContent="flex-end" paddingTop={1}>
+                <SendFormKeyboardShortcutHint visible={isFocused} action="save" />
+              </Box>
+            )}
             {!hideActions && (
               <TranslationFieldsSave
                 saveButtonState={saveButtonState}

@@ -40,6 +40,11 @@ interface DetailGroupBoxProps {
    * the parent list draws the dividers.
    */
   variant?: "primary" | "secondary" | "card" | "flush";
+  /**
+   * Keep descendants inside the rounded card. Turn off when a menu must draw
+   * past the bottom edge, such as the Editor.js block menu.
+   */
+  clipOverflow?: boolean;
 }
 
 export const DetailGroupBox = ({
@@ -57,6 +62,7 @@ export const DetailGroupBox = ({
   marginTop,
   triggerButtonTestId,
   variant = "primary",
+  clipOverflow = true,
 }: DetailGroupBoxProps): React.ReactNode => {
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ? groupId : "");
   const isControlled = onExpandedChange !== undefined;
@@ -94,8 +100,12 @@ export const DetailGroupBox = ({
             borderStyle="solid"
             borderColor="default1"
             borderWidth={isFlush ? 0 : 1}
-            overflow="hidden"
-            className={clsx(isSecondary && styles.surfaceSecondary, isCard && styles.surfaceCard)}
+            overflow={clipOverflow ? "hidden" : "visible"}
+            className={clsx(
+              isSecondary && styles.surfaceSecondary,
+              isCard && styles.surfaceCard,
+              !clipOverflow && styles.unclipped,
+            )}
           >
             <Box
               className={clsx(

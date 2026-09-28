@@ -19,6 +19,12 @@
   color: var(--mu-colors-text-default2);
 }
 
+/* Without overflow hidden, the header background would square off the top corners. */
+.unclipped .header {
+  border-top-left-radius: var(--mu-border-radius-4);
+  border-top-right-radius: var(--mu-border-radius-4);
+}
+
 .header {
   display: flex;
   align-items: center;
