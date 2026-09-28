@@ -1,4 +1,5 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { type CreateCustomerTypeFormData } from "@dashboard/customerTypes/components/CreateCustomerTypeDialog/CreateCustomerTypeDialog";
 import { messages as createCustomerTypeMessages } from "@dashboard/customerTypes/components/CreateCustomerTypeDialog/messages";
 import { customerTypeUrl } from "@dashboard/customerTypes/urls";
@@ -9,7 +10,6 @@ import {
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
-import { getMutationErrors } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 
 interface UseCreateCustomerTypeProps {
@@ -29,6 +29,7 @@ export const useCreateCustomerType = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const [createCustomerType, createCustomerTypeOpts] = useCustomerTypeCreateMutation({
     disableErrorHandling: true,
     onCompleted: data => {
@@ -55,9 +56,14 @@ export const useCreateCustomerType = ({
         },
       },
     });
-    const errors = getMutationErrors(result);
+    const payload = result.data?.customerTypeCreate;
+    const typedErrors: CustomerTypeCreateErrorFragment[] = payload?.errors ?? [];
 
-    return Array.isArray(errors) ? (errors as CustomerTypeCreateErrorFragment[]) : [];
+    trackEvent("customer_type_created", {
+      result: payload && !result.errors?.length && typedErrors.length === 0 ? "success" : "error",
+    });
+
+    return typedErrors;
   };
 
   return {

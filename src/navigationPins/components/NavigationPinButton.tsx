@@ -1,4 +1,5 @@
 import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
@@ -7,6 +8,7 @@ import { Pin, PinOff } from "lucide-react";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { getNavigationPinChangedProperties } from "../analytics";
 import { useNavigationPins } from "../hooks/useNavigationPins";
 import { navigationPinMessages as messages } from "../messages";
 import { rippleNavigationPins } from "../ripples/navigationPins";
@@ -31,6 +33,7 @@ export const NavigationPinButton = ({
 }: NavigationPinButtonProps) => {
   const intl = useIntl();
   const notify = useNotifier();
+  const { trackEvent } = useAnalytics();
   const { userPins, organizationPins, setUserPins } = useNavigationPins();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -53,10 +56,30 @@ export const NavigationPinButton = ({
   const handleUnpin = async () => {
     setSubmitting(true);
 
+    const target = userPins.find(pin => pin.id === modelTypeId)?.target ?? "unknown";
+
     try {
       await setUserPins(removePinsById(userPins, modelTypeId));
+      trackEvent(
+        "navigation_pin_changed",
+        getNavigationPinChangedProperties({
+          action: "unpin",
+          result: "success",
+          scope: "user",
+          target,
+        }),
+      );
       notify({ status: "success", text: intl.formatMessage(messages.unpinnedSuccess) });
     } catch {
+      trackEvent(
+        "navigation_pin_changed",
+        getNavigationPinChangedProperties({
+          action: "unpin",
+          result: "error",
+          scope: "user",
+          target,
+        }),
+      );
       notify({ status: "error", text: intl.formatMessage(commonMessages.somethingWentWrong) });
     } finally {
       setSubmitting(false);

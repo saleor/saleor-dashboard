@@ -44,6 +44,9 @@ jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
     trackEvent: jest.fn(),
   })),
 }));
+jest.mock("@dashboard/components/ProductAnalytics/config", () => ({
+  isProductAnalyticsEnabled: () => true,
+}));
 jest.mock("@dashboard/ripples/state", () => ({
   useAllRipplesModalState: jest.fn(() => ({
     isModalOpen: false,
@@ -65,6 +68,17 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 };
 
 describe("Sidebar", () => {
+  it("renders the global feedback trigger", () => {
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.getByRole("button", { name: "Send feedback" })).toHaveAttribute(
+      "data-posthog-feedback-trigger",
+      "true",
+    );
+  });
+
   it("should render cloud environment link when is cloud instance", () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({

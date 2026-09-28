@@ -1539,6 +1539,10 @@
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink}"
   },
+  "41DrcD": {
+    "context": "global Dashboard feedback button label",
+    "string": "Send feedback"
+  },
   "423QsF": {
     "context": "option title",
     "string": "Prioritize warehouses with highest stock"
@@ -11371,6 +11375,10 @@
   "eU9J97": {
     "context": "customer type detail cogs menu, promotes this type to default",
     "string": "Set as default"
+  },
+  "eUXgTE": {
+    "context": "order add product picker, after channel-listed variant ids are known; shown counts priced variants, available counts every variant listed in the channel",
+    "string": "{shown} of {available} channel {available, plural, one {variant has} other {variants have}} a price"
   },
   "eUcaVH": {
     "context": "gift card resend dialog notification section title",

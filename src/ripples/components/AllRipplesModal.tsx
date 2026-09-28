@@ -14,7 +14,15 @@ import { type Ripple, type RippleAction, type RippleType } from "@dashboard/ripp
 import { isExternalURL } from "@dashboard/utils/urls";
 import { Box, Button, Text, useTheme, vars } from "@saleor/macaw-ui-next";
 import { ChevronRightIcon } from "lucide-react";
-import { cloneElement, isValidElement, type ReactNode, useEffect, useMemo, useState } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import SVG from "react-inlinesvg";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -361,6 +369,7 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
   const intl = useIntl();
   const { hideAllRipples, setManuallyHidden } = useRippleStorage();
   const { trackEvent } = useAnalytics();
+  const wasOpen = useRef(false);
 
   const flattenedRipples = useMemo(
     () => Object.values(getRipplesSortedAndGroupedByMonths(allRipples)).flat(),
@@ -381,7 +390,12 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
 
   useEffect(
     function trackRipplesModalOpen() {
-      if (open) {
+      const justOpened = open && !wasOpen.current;
+
+      // Storage updates change the callbacks; only a closed-to-open transition is an event.
+      wasOpen.current = open;
+
+      if (justOpened) {
         trackEvent("ripples.modal-opened");
         setManuallyHidden(rippleIntroducedRipples);
       }
