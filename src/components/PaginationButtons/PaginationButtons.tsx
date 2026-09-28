@@ -5,10 +5,10 @@ import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 interface PaginationButtonsProps {
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
-  onPreviousPage: () => void;
-  onNextPage: () => void;
+  hasPreviousPage?: boolean;
+  hasNextPage?: boolean;
+  onPreviousPage?: () => void;
+  onNextPage?: () => void;
   /** Disables both arrows, including when a page is available. */
   disabled?: boolean;
   previousTestId?: string;

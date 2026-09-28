@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { type ComponentProps, useState } from "react";
 
 import { AttributeBooleanControl } from "./AttributeBooleanControl";
 
@@ -12,7 +12,7 @@ const meta: Meta<typeof AttributeBooleanControl> = {
     value: null,
     onChange: () => undefined,
   },
-  render: args => {
+  render: (args: ComponentProps<typeof AttributeBooleanControl>) => {
     const [value, setValue] = useState<boolean | null | undefined>(args.value);
 
     return <AttributeBooleanControl {...args} value={value} onChange={setValue} />;
