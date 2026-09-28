@@ -4,6 +4,7 @@ import path from "node:path";
 import type { E2eConfig } from "../config.ts";
 import { scenarioByName } from "../scenarios/registry.ts";
 import { execPostgres, imageId, manage, pgDump, psql } from "./docker.ts";
+import { runBeatTasks } from "./beat.ts";
 import { adminToken } from "./graphql.ts";
 import { e2ePath } from "./paths.ts";
 import { log, step } from "./progress.ts";
@@ -101,8 +102,9 @@ const emptyDatabase = async (config: E2eConfig) => {
  * to a script that restores it. The script is the truncate preamble followed by the dump,
  * so restoring is a single `psql` invocation.
  *
- * Every scenario builds from an empty database. A scenario that wants to layer onto another
- * one's dump instead of rebuilding it wants a `restore the parent first` step here.
+ * A scenario builds from its parent's dump when it names one, and from an empty database
+ * otherwise. Every build is followed by the beat tasks - see `lib/beat.ts` - so a dump holds
+ * what a Saleor with a scheduler would have settled into, not rows still flagged as dirty.
  */
 export const ensureScenario = async (config: E2eConfig, name: string): Promise<string> => {
   const id = imageId(config);
@@ -114,10 +116,16 @@ export const ensureScenario = async (config: E2eConfig, name: string): Promise<s
 
   const scenario = scenarioByName(name);
 
-  await emptyDatabase(config);
+  if (scenario.parent) {
+    restoreScenario(config, await ensureScenario(config, scenario.parent));
+  } else {
+    await emptyDatabase(config);
+  }
+
   await step(`building the "${name}" scenario`, () =>
     scenario.build(config, () => adminToken(config)),
   );
+  await step("running the beat tasks the stack has no scheduler for", () => runBeatTasks(config));
 
   const dump = await step(`capturing the "${name}" scenario`, () => pgDump(config));
 

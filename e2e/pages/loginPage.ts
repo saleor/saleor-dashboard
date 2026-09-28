@@ -4,16 +4,13 @@ import { HomePage } from "./homePage.ts";
 
 /** Ported from the legacy suite; locators unchanged. */
 export class LoginPage {
-  readonly page: Page;
+  readonly emailInput = this.page.getByTestId("email");
 
-  constructor(
-    page: Page,
-    readonly emailInput = page.getByTestId("email"),
-    readonly passwordInput = page.getByTestId("password"),
-    readonly signInButton = page.getByTestId("submit"),
-  ) {
-    this.page = page;
-  }
+  readonly passwordInput = this.page.getByTestId("password");
+
+  readonly signInButton = this.page.getByTestId("submit");
+
+  constructor(readonly page: Page) {}
 
   async goto() {
     await this.page.goto("/");
