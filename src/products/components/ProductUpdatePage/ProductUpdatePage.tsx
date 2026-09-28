@@ -24,6 +24,7 @@ import {
 } from "@dashboard/components/Attributes/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
@@ -94,7 +95,6 @@ import {
 } from "../ProductSetupCard/buildProductSetupReadiness";
 import { ProductSetupCard } from "../ProductSetupCard/ProductSetupCard";
 import { scrollToProductSetupTarget } from "../ProductSetupCard/scrollToProductSetupTarget";
-import { ProductShipping } from "../ProductShipping/ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
 import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
@@ -670,145 +670,135 @@ const ProductUpdatePage = ({
               </TopNav>
 
               <DetailPageLayout.Content paddingBottom={10}>
-                {showSetupCard ? (
-                  <ProductSetupCard
-                    readiness={setupReadiness}
-                    disabled={disabled}
-                    onDismiss={onDismissSetupCard}
-                    onManageChannels={() => setChannelPickerOpen(true)}
-                    onFinishChannelSetup={() => {
-                      if (setupReadiness.setupChannelId) {
-                        navigate(channelUrl(setupReadiness.setupChannelId, { action: "setup" }));
-
-                        return;
-                      }
-
-                      setChannelPickerOpen(true);
-                    }}
-                    onMakeAvailable={handleMakeAvailable}
-                    isShippingRequired={
-                      diagnosticsForCard.isShippingRequired ??
-                      product?.productType?.isShippingRequired ??
-                      true
-                    }
-                    productAttributeCount={data.attributes.length}
-                    variantAttributeCount={product?.productType.variantAttributes?.length ?? 0}
-                    onOpenProductType={
-                      canManageProductTypes && product?.productType?.id
-                        ? () => navigate(productTypeUrl(product.productType.id))
-                        : undefined
-                    }
-                  />
-                ) : null}
-                {saveSteps.length > 0 && onDismissSaveSteps ? (
-                  <ProductSaveStepsBanner steps={saveSteps} onDismiss={onDismissSaveSteps} />
-                ) : null}
-                <ProductDetailsForm
-                  data={data}
-                  disabled={disabled}
-                  errors={productErrors}
-                  onChange={change}
-                  onDescriptionChange={value => {
-                    descriptionCache.current = value;
-                  }}
-                />
-                <ProductMedia
-                  media={media}
-                  onImageDelete={onImageDelete}
-                  onImagesDelete={onImagesDelete}
-                  onImageReorder={onImageReorder}
-                  onImageUpload={onImageUpload}
-                  onImagesUploadComplete={onImagesUploadComplete}
-                  openMediaUrlModal={() => setMediaUrlModalStatus(true)}
-                  getImageEditUrl={imageId => productImageUrl(productId, imageId)}
-                />
-                {data.attributes.length > 0 && (
-                  <Attributes
-                    chrome="card"
-                    referenceLayoutView="product"
-                    referenceTypeId={product?.productType?.id}
-                    attributes={data.attributes}
-                    attributeValues={attributeValues}
-                    errors={productErrors}
-                    loading={disabled}
-                    disabled={disabled}
-                    onChange={handlers.selectAttribute}
-                    onMultiChange={handlers.selectAttributeMultiple}
-                    onFileChange={handlers.selectAttributeFile}
-                    onReferencesRemove={handlers.selectAttributeReference}
-                    onReferencesAddClick={onAssignReferencesClick}
-                    onReferencesReorder={handlers.reorderAttributeValue}
-                    fetchAttributeValues={fetchAttributeValues}
-                    fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelectBlur={onAttributeSelectBlur}
-                    richTextGetters={attributeRichTextGetters}
-                  />
-                )}
-                {isSimpleProduct && (
-                  <>
-                    <ProductShipping
-                      data={data}
+                <DetailPageContent paddingBottom={0}>
+                  {showSetupCard ? (
+                    <ProductSetupCard
+                      readiness={setupReadiness}
                       disabled={disabled}
-                      errors={productErrors}
-                      weightUnit={product?.weight?.unit}
-                      onChange={change}
+                      onDismiss={onDismissSetupCard}
+                      onManageChannels={() => setChannelPickerOpen(true)}
+                      onFinishChannelSetup={() => {
+                        if (setupReadiness.setupChannelId) {
+                          navigate(channelUrl(setupReadiness.setupChannelId, { action: "setup" }));
+
+                          return;
+                        }
+
+                        setChannelPickerOpen(true);
+                      }}
+                      onMakeAvailable={handleMakeAvailable}
+                      isShippingRequired={
+                        diagnosticsForCard.isShippingRequired ??
+                        product?.productType?.isShippingRequired ??
+                        true
+                      }
+                      productAttributeCount={data.attributes.length}
+                      variantAttributeCount={product?.productType.variantAttributes?.length ?? 0}
+                      onOpenProductType={
+                        canManageProductTypes && product?.productType?.id
+                          ? () => navigate(productTypeUrl(product.productType.id))
+                          : undefined
+                      }
                     />
-                    <CardSpacer />
-                  </>
-                )}
-                <Box data-test-id="product-variants">
-                  <ProductVariants
-                    productId={productId}
-                    productTypeId={product?.productType.id ?? ""}
-                    productName={product?.name}
-                    errors={variantListErrors}
-                    channels={listings}
-                    limits={limits}
-                    variants={variants}
-                    variantsSearch={variantsSearch}
-                    onVariantsSearchChange={onVariantsSearchChange}
-                    variantsPageInfo={variantsPageInfo}
-                    onVariantsNextPage={onVariantsNextPage}
-                    onVariantsPreviousPage={onVariantsPreviousPage}
-                    variantsRangeLabel={variantsRangeLabel}
-                    variantsTotalCount={variantsTotalCount}
-                    variantsLoading={variantsLoading}
-                    pendingVariantDeleteCount={pendingVariantDeleteCount}
-                    variantAttributes={product?.productType.variantAttributes}
-                    selectionVariantAttributes={product?.productType.selectionVariantAttributes}
-                    nonSelectionVariantAttributes={
-                      product?.productType.nonSelectionVariantAttributes
-                    }
-                    hasVariants={hasVariants ?? false}
-                    onAttributeValuesSearch={onAttributeValuesSearch}
-                    onChange={handlers.changeVariants}
-                    onStageVariantRemovals={handlers.stageVariantRemovals}
-                    onRowClick={onVariantShow}
-                    onStageVariantCreates={handlers.stageVariantCreates}
-                    stagedVariantCreates={stagedVariantCreates}
-                    onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
-                    onClearStagedVariantCreates={handlers.clearStagedVariantCreates}
-                    onReplaceStagedVariantCreates={handlers.replaceStagedVariantCreates}
+                  ) : null}
+                  {saveSteps.length > 0 && onDismissSaveSteps ? (
+                    <ProductSaveStepsBanner steps={saveSteps} onDismiss={onDismissSaveSteps} />
+                  ) : null}
+                  <ProductDetailsForm
+                    data={data}
+                    disabled={disabled}
+                    errors={productErrors}
+                    shippingWeight={isSimpleProduct ? { value: data.weight } : undefined}
+                    onChange={change}
+                    onDescriptionChange={value => {
+                      descriptionCache.current = value;
+                    }}
                   />
-                </Box>
-                <CardSpacer />
-                <SeoForm
-                  errors={productErrors}
-                  title={data.seoTitle}
-                  titlePlaceholder={data.name}
-                  description={data.seoDescription}
-                  descriptionPlaceholder={""} // TODO: cast description to string
-                  slug={data.slug}
-                  slugPlaceholder={data.name}
-                  loading={disabled}
-                  onClick={onSeoClick}
-                  onChange={change}
-                  helperText={intl.formatMessage({
-                    id: "LKoIB1",
-                    defaultMessage:
-                      "Add search engine title and description to make this product easier to find",
-                  })}
-                />
+                  <ProductMedia
+                    media={media}
+                    onImageDelete={onImageDelete}
+                    onImagesDelete={onImagesDelete}
+                    onImageReorder={onImageReorder}
+                    onImageUpload={onImageUpload}
+                    onImagesUploadComplete={onImagesUploadComplete}
+                    openMediaUrlModal={() => setMediaUrlModalStatus(true)}
+                    getImageEditUrl={imageId => productImageUrl(productId, imageId)}
+                  />
+                  {data.attributes.length > 0 && (
+                    <Attributes
+                      chrome="card"
+                      referenceLayoutView="product"
+                      referenceTypeId={product?.productType?.id}
+                      attributes={data.attributes}
+                      attributeValues={attributeValues}
+                      errors={productErrors}
+                      loading={disabled}
+                      disabled={disabled}
+                      onChange={handlers.selectAttribute}
+                      onMultiChange={handlers.selectAttributeMultiple}
+                      onFileChange={handlers.selectAttributeFile}
+                      onReferencesRemove={handlers.selectAttributeReference}
+                      onReferencesAddClick={onAssignReferencesClick}
+                      onReferencesReorder={handlers.reorderAttributeValue}
+                      fetchAttributeValues={fetchAttributeValues}
+                      fetchMoreAttributeValues={fetchMoreAttributeValues}
+                      onAttributeSelectBlur={onAttributeSelectBlur}
+                      richTextGetters={attributeRichTextGetters}
+                    />
+                  )}
+                  <Box data-test-id="product-variants">
+                    <ProductVariants
+                      productId={productId}
+                      productTypeId={product?.productType.id ?? ""}
+                      productName={product?.name}
+                      errors={variantListErrors}
+                      channels={listings}
+                      limits={limits}
+                      variants={variants}
+                      variantsSearch={variantsSearch}
+                      onVariantsSearchChange={onVariantsSearchChange}
+                      variantsPageInfo={variantsPageInfo}
+                      onVariantsNextPage={onVariantsNextPage}
+                      onVariantsPreviousPage={onVariantsPreviousPage}
+                      variantsRangeLabel={variantsRangeLabel}
+                      variantsTotalCount={variantsTotalCount}
+                      variantsLoading={variantsLoading}
+                      pendingVariantDeleteCount={pendingVariantDeleteCount}
+                      variantAttributes={product?.productType.variantAttributes}
+                      selectionVariantAttributes={product?.productType.selectionVariantAttributes}
+                      nonSelectionVariantAttributes={
+                        product?.productType.nonSelectionVariantAttributes
+                      }
+                      hasVariants={hasVariants ?? false}
+                      onAttributeValuesSearch={onAttributeValuesSearch}
+                      onChange={handlers.changeVariants}
+                      onStageVariantRemovals={handlers.stageVariantRemovals}
+                      onRowClick={onVariantShow}
+                      onStageVariantCreates={handlers.stageVariantCreates}
+                      stagedVariantCreates={stagedVariantCreates}
+                      onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
+                      onClearStagedVariantCreates={handlers.clearStagedVariantCreates}
+                      onReplaceStagedVariantCreates={handlers.replaceStagedVariantCreates}
+                    />
+                  </Box>
+                  <SeoForm
+                    errors={productErrors}
+                    title={data.seoTitle}
+                    titlePlaceholder={data.name}
+                    description={data.seoDescription}
+                    descriptionPlaceholder={""} // TODO: cast description to string
+                    slug={data.slug}
+                    slugPlaceholder={data.name}
+                    loading={disabled}
+                    onClick={onSeoClick}
+                    onChange={change}
+                    helperText={intl.formatMessage({
+                      id: "LKoIB1",
+                      defaultMessage:
+                        "Add search engine title and description to make this product easier to find",
+                    })}
+                  />
+                </DetailPageContent>
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
                 <ProductOrganization

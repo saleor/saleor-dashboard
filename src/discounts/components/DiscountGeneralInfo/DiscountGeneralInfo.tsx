@@ -1,5 +1,6 @@
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { PromotionTypeEnum } from "@dashboard/graphql";
@@ -82,20 +83,22 @@ export const DiscountGeneralInfo = ({
         </Box>
 
         {isReadyForMount ? (
-          <RichTextEditor
-            defaultValue={defaultValue}
-            editorRef={editorRef}
-            onChange={data => {
-              handleChange();
-              descriptionField.onChange(JSON.stringify(data));
-            }}
-            onBlur={descriptionField.onBlur}
-            disabled={disabled ?? false}
-            error={false}
-            helperText=""
-            label={intl.formatMessage(commonMessages.description)}
-            name="description"
-          />
+          <RichTextEditorClamp tall>
+            <RichTextEditor
+              defaultValue={defaultValue}
+              editorRef={editorRef}
+              onChange={data => {
+                handleChange();
+                descriptionField.onChange(JSON.stringify(data));
+              }}
+              onBlur={descriptionField.onBlur}
+              disabled={disabled ?? false}
+              error={false}
+              helperText=""
+              label={intl.formatMessage(commonMessages.description)}
+              name="description"
+            />
+          </RichTextEditorClamp>
         ) : (
           <RichTextEditorLoading
             label={intl.formatMessage(commonMessages.description)}

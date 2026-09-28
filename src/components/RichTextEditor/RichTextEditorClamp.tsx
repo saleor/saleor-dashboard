@@ -20,9 +20,12 @@ const messages = defineMessages({
  */
 export const RichTextEditorClamp = ({
   active = true,
+  tall = false,
   children,
 }: {
   active?: boolean;
+  /** Descriptions are about twice the clamped height of an attribute value. */
+  tall?: boolean;
   children: ReactNode;
 }) => {
   const intl = useIntl();
@@ -97,7 +100,11 @@ export const RichTextEditorClamp = ({
     >
       <div
         ref={frameRef}
-        className={clsx(clamped && styles.clamped, clamped && overflows && styles.clampedOverflow)}
+        className={clsx(
+          clamped && styles.clamped,
+          clamped && tall && styles.clampedTall,
+          clamped && overflows && styles.clampedOverflow,
+        )}
       >
         {children}
       </div>

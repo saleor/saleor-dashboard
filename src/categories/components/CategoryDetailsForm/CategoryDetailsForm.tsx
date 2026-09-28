@@ -2,6 +2,7 @@ import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/Det
 import { EntityBackgroundImageField } from "@dashboard/components/EntityBackgroundImageField/EntityBackgroundImageField";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type CategoryDetailsFragment, type ProductErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -86,20 +87,22 @@ export const CategoryDetailsForm = ({
       />
       <FormSpacer />
       {isReadyForMount ? (
-        <RichTextEditor
-          data-test-id="category-description-editor"
-          defaultValue={defaultValue}
-          editorRef={editorRef}
-          onChange={handleChange}
-          disabled={disabled}
-          error={!!formErrors.description}
-          helperText={getProductErrorMessage(formErrors.description, intl)}
-          label={intl.formatMessage({
-            id: "8HRy+U",
-            defaultMessage: "Category Description",
-          })}
-          name="description"
-        />
+        <RichTextEditorClamp tall>
+          <RichTextEditor
+            data-test-id="category-description-editor"
+            defaultValue={defaultValue}
+            editorRef={editorRef}
+            onChange={handleChange}
+            disabled={disabled}
+            error={!!formErrors.description}
+            helperText={getProductErrorMessage(formErrors.description, intl)}
+            label={intl.formatMessage({
+              id: "8HRy+U",
+              defaultMessage: "Category Description",
+            })}
+            name="description"
+          />
+        </RichTextEditorClamp>
       ) : (
         <RichTextEditorLoading
           label={intl.formatMessage({

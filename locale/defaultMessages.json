@@ -6136,10 +6136,6 @@
     "context": "dialog title",
     "string": "Delete permission group"
   },
-  "L7N+0y": {
-    "context": "product rating",
-    "string": "Product Rating"
-  },
   "L7j412": {
     "context": "no models placeholder",
     "string": "No models found"
@@ -9634,6 +9630,10 @@
   "Y299ST": {
     "context": "table column header",
     "string": "Price"
+  },
+  "Y2B0j0": {
+    "context": "helper beside the simple product shipping weight field",
+    "string": "Used to calculate shipping rates."
   },
   "Y2dPyq": {
     "context": "setup task description when shipping zones already exist",
@@ -14236,6 +14236,10 @@
   "oj6EqD": {
     "context": "channel inventory allocation section title",
     "string": "Allocation strategy"
+  },
+  "okGo4U": {
+    "context": "simple product weight used for shipping rates",
+    "string": "Shipping weight"
   },
   "omdhZg": {
     "context": "store name field label",
