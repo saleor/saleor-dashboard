@@ -80,13 +80,22 @@ const useStyles = makeStyles(
       pointerEvents: "auto",
     },
     selectionCheckbox: {
-      background: theme.palette.background.paper,
       borderRadius: theme.spacing(0.5),
       opacity: 0,
       pointerEvents: "none",
       transition: theme.transitions.create("opacity", {
         duration: theme.transitions.duration.shorter,
       }),
+      // Unchecked uses the theme surface, which disappears on a dark photo.
+      "& button[data-state='unchecked'], & button[data-state='unchecked']:hover, & button[data-state='unchecked']:active, & button[data-state='unchecked']:focus-visible":
+        {
+          backgroundColor: "#fff",
+          borderColor: "rgba(0, 0, 0, 0.55)",
+        },
+      "& button[data-state='unchecked']:hover:after, & button[data-state='unchecked']:active:after, & button[data-state='unchecked']:focus-visible:after":
+        {
+          backgroundColor: "transparent",
+        },
     },
     selectionCheckboxVisible: {
       opacity: 1,
