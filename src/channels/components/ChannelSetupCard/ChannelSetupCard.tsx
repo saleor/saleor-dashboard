@@ -1,6 +1,7 @@
 import { type ChannelSectionId } from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
 import { useChannelReviewItems } from "@dashboard/channels/hooks/useChannelReviewItems";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { SetupChecklist } from "@dashboard/components/SetupChecklist/SetupChecklist";
 import { type SetupChecklistTask } from "@dashboard/components/SetupChecklist/types";
 import { type TaxCalculationStrategy } from "@dashboard/graphql";
@@ -108,6 +109,7 @@ export const ChannelSetupCard = ({
 }: ChannelSetupCardProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
+  const { trackEvent } = useAnalytics();
   const reviewItems = useChannelReviewItems({
     taxConfigurationId,
     chargeTaxes,
@@ -135,20 +137,32 @@ export const ChannelSetupCard = ({
   const requiredDone =
     Number(hasWarehouse) + Number(shippingStatusKnown ? hasShipping : hasWarehouse);
   const showActivate = !isActive && !!onActivate;
+  const trackStepClick =
+    (stepId: string, action: () => void): (() => void) =>
+    () => {
+      trackEvent("setup_checklist_step_clicked", {
+        completed_steps: requiredDone,
+        core_ready: coreReady,
+        entity_type: "channel",
+        step_id: stepId,
+        total_steps: REQUIRED_STEPS,
+      });
+      action();
+    };
 
   const warehouseAction = !hasWarehouse ? (
     hasUnassignedWarehouses ? (
       canCreateWarehouse ? (
         <ButtonGroupWithDropdown
           variant="primary"
-          onClick={onAssignWarehouse}
+          onClick={trackStepClick("assign_warehouse", onAssignWarehouse)}
           testId="setup-assign-warehouse"
           disabled={disabled}
           options={[
             {
               label: intl.formatMessage(messages.warehouseCreate),
               testId: "setup-create-warehouse",
-              onSelect: onCreateWarehouse,
+              onSelect: trackStepClick("create_warehouse", onCreateWarehouse),
             },
           ]}
         >
@@ -161,7 +175,7 @@ export const ChannelSetupCard = ({
           variant="primary"
           type="button"
           data-test-id="setup-assign-warehouse"
-          onClick={onAssignWarehouse}
+          onClick={trackStepClick("assign_warehouse", onAssignWarehouse)}
           disabled={disabled}
         >
           <CtaLabel>
@@ -174,7 +188,7 @@ export const ChannelSetupCard = ({
         variant="primary"
         type="button"
         data-test-id="setup-create-warehouse"
-        onClick={onCreateWarehouse}
+        onClick={trackStepClick("create_warehouse", onCreateWarehouse)}
         disabled={disabled}
       >
         <CtaLabel>
@@ -190,14 +204,14 @@ export const ChannelSetupCard = ({
       canAssignShipping ? (
         <ButtonGroupWithDropdown
           variant="primary"
-          onClick={onAssignShipping}
+          onClick={trackStepClick("assign_shipping", onAssignShipping)}
           testId="setup-assign-shipping"
           disabled={disabled}
           options={[
             {
               label: intl.formatMessage(messages.shippingCreate),
               testId: "setup-create-shipping",
-              onSelect: onCreateShipping,
+              onSelect: trackStepClick("create_shipping", onCreateShipping),
             },
           ]}
         >
@@ -210,7 +224,7 @@ export const ChannelSetupCard = ({
           variant="primary"
           type="button"
           data-test-id="setup-create-shipping"
-          onClick={onCreateShipping}
+          onClick={trackStepClick("create_shipping", onCreateShipping)}
           disabled={disabled}
         >
           <CtaLabel>
@@ -324,7 +338,15 @@ export const ChannelSetupCard = ({
                 <Button
                   variant="tertiary"
                   type="button"
-                  onClick={onDismiss}
+                  onClick={() => {
+                    trackEvent("setup_checklist_dismissed", {
+                      completed_steps: requiredDone,
+                      core_ready: coreReady,
+                      entity_type: "channel",
+                      total_steps: REQUIRED_STEPS,
+                    });
+                    onDismiss();
+                  }}
                   disabled={disabled}
                   data-test-id="setup-dismiss"
                 >
@@ -337,7 +359,7 @@ export const ChannelSetupCard = ({
                 <Button
                   variant="primary"
                   type="button"
-                  onClick={onActivate}
+                  onClick={trackStepClick("activate", onActivate)}
                   disabled={!canActivate || activateDisabled || disabled}
                   data-test-id="setup-activate-channel"
                 >

@@ -1531,6 +1531,10 @@
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink}"
   },
+  "41DrcD": {
+    "context": "global Dashboard feedback button label",
+    "string": "Send feedback"
+  },
   "423QsF": {
     "context": "option title",
     "string": "Prioritize warehouses with highest stock"

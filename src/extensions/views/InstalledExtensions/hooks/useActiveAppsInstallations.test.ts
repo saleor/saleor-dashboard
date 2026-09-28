@@ -4,6 +4,8 @@ import { renderHook } from "@testing-library/react";
 
 import { useActiveAppsInstallations } from "./useActiveAppsInstallations";
 
+const mockTrackEvent = jest.fn();
+
 jest.mock("@apollo/client", () => ({
   gql: jest.fn(),
   useApolloClient: jest.fn(() => ({
@@ -12,6 +14,9 @@ jest.mock("@apollo/client", () => ({
 }));
 
 jest.mock("@dashboard/hooks/useLocalStorage");
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
 jest.mock("@dashboard/graphql", () => ({
   useAppRetryInstallMutation: jest.fn(() => [jest.fn(), {}]),
   useAppDeleteFailedInstallationMutation: jest.fn(() => [jest.fn(), {}]),
@@ -20,6 +25,10 @@ jest.mock("@dashboard/graphql", () => ({
 jest.useFakeTimers();
 
 describe("useActiveAppsInstallations", () => {
+  beforeEach(() => {
+    mockTrackEvent.mockClear();
+  });
+
   afterEach(() => {
     jest.clearAllTimers();
   });
@@ -106,5 +115,8 @@ describe("useActiveAppsInstallations", () => {
     });
 
     expect(mockNotify).toHaveBeenCalled();
+    expect(mockTrackEvent).toHaveBeenCalledWith("extension_installation_completed", {
+      result: "success",
+    });
   });
 });
