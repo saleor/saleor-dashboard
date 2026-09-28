@@ -1,12 +1,16 @@
 # The local-stack E2E suite: a disposable Saleor in docker, the dashboard built from this
 # branch, no Saleor Cloud involved.
 #
-# Dispatch-only for now. The suite is young, and a full run is dominated by a `vite build`
+# Nightly and on demand. The suite is young, and a full run is dominated by a `vite build`
 # per target; putting it on every pull request before it has earned the time would mostly
 # buy queue. Moving it onto pull requests is a one-line change to the `on:` block.
 name: E2E (local stack)
 
 on:
+  # Nightly against both targets. `unstable-main` moves daily, so this is also what notices
+  # a Saleor change that breaks the dashboard before a release does.
+  schedule:
+    - cron: "0 3 * * *"
   workflow_dispatch:
     inputs:
       target:
@@ -37,8 +41,8 @@ jobs:
     strategy:
       # The targets are independent; a break in one is worth seeing alongside the other.
       fail-fast: false
-      # Anything other than a single named target - "both", or a dispatch that sent no input
-      # at all - means run them both.
+      # Anything other than a single named target - "both", or a scheduled run, which has no
+      # inputs at all - means run them both.
       matrix:
         target: ${{ fromJSON((inputs.target == 'stable' || inputs.target == 'main') &&
           format('["{0}"]', inputs.target) || '["stable","main"]') }}

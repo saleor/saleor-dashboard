@@ -53,6 +53,26 @@ const ModelingIconPaths = ({ strokeWidth }: { strokeWidth: number }) => (
   </>
 );
 
+/** Same mark as the nav icon, sized for an inline label. */
+export const ModelingLabelIcon = ({
+  size,
+  strokeWidth,
+}: {
+  size: number;
+  strokeWidth: number;
+}): React.ReactNode => (
+  <svg
+    width={size}
+    height={size}
+    viewBox={`0 0 ${MODELING_VIEWBOX_SIZE} ${MODELING_VIEWBOX_SIZE}`}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden
+  >
+    <ModelingIconPaths strokeWidth={strokeWidth} />
+  </svg>
+);
+
 export const ModelingIcon = (): React.ReactNode => (
   <svg
     width={navigationLucideIconProps.size}

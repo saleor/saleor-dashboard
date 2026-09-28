@@ -11231,6 +11231,22 @@ export type AddressValidationRulesQueryVariables = Exact<{
 
 export type AddressValidationRulesQuery = { __typename: 'Query', addressValidationRules: { __typename: 'AddressValidationData', allowedFields: Array<string>, countryAreaChoices: Array<{ __typename: 'ChoiceValue', raw: string | null, verbose: string | null }> } | null };
 
+export type ProductReferenceListDetailsQueryVariables = Exact<{
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  first: Scalars['Int']['input'];
+}>;
+
+
+export type ProductReferenceListDetailsQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, category: { __typename: 'Category', id: string, name: string } | null, productType: { __typename: 'ProductType', id: string, name: string } } }> } | null };
+
+export type VariantReferenceListDetailsQueryVariables = Exact<{
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  first: Scalars['Int']['input'];
+}>;
+
+
+export type VariantReferenceListDetailsQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', name: string, thumbnail: { __typename: 'Image', url: string } | null } } }> } | null };
+
 export type _GetDynamicLeftOperandsQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   query: Scalars['String']['input'];
