@@ -1,3 +1,16 @@
+/* Value column is already the wide side of the row. Fill it so boolean
+   labels always fit and typical dropdown text is not ellipsized. */
+.valueControl {
+  width: 100%;
+  min-width: 9rem;
+  max-width: 100%;
+}
+
+.valueControl > * {
+  width: 100%;
+  max-width: 100%;
+}
+
 .referenceGroupItem {
   list-style: none;
 }

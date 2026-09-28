@@ -213,4 +213,75 @@ describe("ReferenceList", () => {
     expect(row.textContent?.match(/White Plimsolls/g)).toHaveLength(1);
     expect(row.querySelector("img")).toHaveAttribute("src", "https://example.com/shoe.jpg");
   });
+
+  it("deletes the checked references from the button beside the view toggles", async () => {
+    // Arrange
+    const onRemove = jest.fn();
+    const user = userEvent.setup();
+
+    render(
+      <ReferenceList
+        values={values}
+        details={[]}
+        onRemove={onRemove}
+        onRemoveAll={jest.fn()}
+        onReorder={jest.fn()}
+      />,
+      { wrapper: RouterWrapper },
+    );
+
+    // Act
+    await user.click(screen.getAllByTestId("product-reference-checkbox")[0]);
+    await user.click(screen.getAllByTestId("product-reference-checkbox")[2]);
+
+    // Assert
+    const deleteSelected = screen.getByTestId("product-reference-remove-selected");
+    const listView = screen.getByTestId("product-reference-view-list");
+
+    expect(deleteSelected).toHaveTextContent("Delete (2)");
+    expect(
+      deleteSelected.compareDocumentPosition(listView) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+
+    // Act
+    await user.click(screen.getByTestId("attribute-reference-list-menu"));
+
+    // Assert
+    expect(screen.queryByRole("menuitem", { name: "Remove selected" })).not.toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: "Remove all" })).toBeInTheDocument();
+
+    // Act
+    await user.keyboard("{Escape}");
+    await user.click(screen.getByTestId("product-reference-remove-selected"));
+
+    // Assert
+    expect(onRemove).toHaveBeenCalledWith(["p1", "p3"]);
+    expect(screen.queryByTestId("product-reference-remove-selected")).not.toBeInTheDocument();
+  });
+
+  it("shows an empty state when the filter matches nothing", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    render(
+      <ReferenceList
+        values={values}
+        details={[]}
+        onRemove={jest.fn()}
+        onRemoveAll={jest.fn()}
+        onReorder={jest.fn()}
+      />,
+      { wrapper: RouterWrapper },
+    );
+
+    // Act
+    await user.type(screen.getByTestId("attribute-reference-search"), "shoe");
+
+    // Assert
+    expect(screen.getByTestId("product-reference-no-results")).toHaveTextContent(
+      'No results found for "shoe"',
+    );
+    expect(screen.queryByTestId("product-reference-row")).not.toBeInTheDocument();
+    expect(screen.getByTestId("attribute-reference-search")).toBeInTheDocument();
+  });
 });

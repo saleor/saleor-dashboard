@@ -84,6 +84,11 @@ interface AttributesProps extends Omit<AttributeRowHandlers, "fetchMoreAttribute
    * `legacy` keeps the `DashboardCard` chrome for pages not yet on the new detail language.
    */
   chrome?: AttributeRowChrome;
+  /**
+   * Side inset for the card chrome. Turn off when the page column already
+   * pads its edges, such as `DetailPageContent`.
+   */
+  columnInset?: boolean;
   /** Which screen remembers the flow/list choice for reference attributes. */
   referenceLayoutView: AttributeReferenceView;
   /** Product type, model type, or customer type. Fold memory is scoped to this id. */
@@ -149,6 +154,7 @@ export const Attributes = ({
   fetchMoreAttributeValues,
   referenceLayoutView,
   referenceTypeId,
+  columnInset = true,
 }: AttributesProps) => {
   const intl = useIntl();
   const [folds, setFolds] = useLocalStorage<AttributeGroupFoldMap>(
@@ -264,23 +270,29 @@ export const Attributes = ({
       .filter(Boolean)
       .join(" · ");
 
+    const card = (
+      <DetailSettingsCard
+        data-test-id="attributes"
+        title={title || intl.formatMessage(messages.header)}
+        headerEnd={
+          <Text size={3} color="default2" data-test-id="attributes-card-meta">
+            {meta}
+          </Text>
+        }
+        contentFlush
+        allowOverflow
+      >
+        <AttributeRowChromeContext.Provider value="card">{list}</AttributeRowChromeContext.Provider>
+      </DetailSettingsCard>
+    );
+
+    if (!columnInset) {
+      return card;
+    }
+
     return (
       <Box marginX={6} marginTop={4} marginBottom={4}>
-        <DetailSettingsCard
-          data-test-id="attributes"
-          title={title || intl.formatMessage(messages.header)}
-          headerEnd={
-            <Text size={3} color="default2" data-test-id="attributes-card-meta">
-              {meta}
-            </Text>
-          }
-          contentFlush
-          allowOverflow
-        >
-          <AttributeRowChromeContext.Provider value="card">
-            {list}
-          </AttributeRowChromeContext.Provider>
-        </DetailSettingsCard>
+        {card}
       </Box>
     );
   }

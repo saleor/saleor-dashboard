@@ -669,8 +669,8 @@ const ProductUpdatePage = ({
                 )}
               </TopNav>
 
-              <DetailPageLayout.Content paddingBottom={10}>
-                <DetailPageContent paddingBottom={0}>
+              <DetailPageLayout.Content>
+                <DetailPageContent>
                   {showSetupCard ? (
                     <ProductSetupCard
                       readiness={setupReadiness}
@@ -727,6 +727,7 @@ const ProductUpdatePage = ({
                   {data.attributes.length > 0 && (
                     <Attributes
                       chrome="card"
+                      columnInset={false}
                       referenceLayoutView="product"
                       referenceTypeId={product?.productType?.id}
                       attributes={data.attributes}
@@ -746,42 +747,41 @@ const ProductUpdatePage = ({
                       richTextGetters={attributeRichTextGetters}
                     />
                   )}
-                  <Box data-test-id="product-variants">
-                    <ProductVariants
-                      productId={productId}
-                      productTypeId={product?.productType.id ?? ""}
-                      productName={product?.name}
-                      errors={variantListErrors}
-                      channels={listings}
-                      limits={limits}
-                      variants={variants}
-                      variantsSearch={variantsSearch}
-                      onVariantsSearchChange={onVariantsSearchChange}
-                      variantsPageInfo={variantsPageInfo}
-                      onVariantsNextPage={onVariantsNextPage}
-                      onVariantsPreviousPage={onVariantsPreviousPage}
-                      variantsRangeLabel={variantsRangeLabel}
-                      variantsTotalCount={variantsTotalCount}
-                      variantsLoading={variantsLoading}
-                      pendingVariantDeleteCount={pendingVariantDeleteCount}
-                      variantAttributes={product?.productType.variantAttributes}
-                      selectionVariantAttributes={product?.productType.selectionVariantAttributes}
-                      nonSelectionVariantAttributes={
-                        product?.productType.nonSelectionVariantAttributes
-                      }
-                      hasVariants={hasVariants ?? false}
-                      onAttributeValuesSearch={onAttributeValuesSearch}
-                      onChange={handlers.changeVariants}
-                      onStageVariantRemovals={handlers.stageVariantRemovals}
-                      onRowClick={onVariantShow}
-                      onStageVariantCreates={handlers.stageVariantCreates}
-                      stagedVariantCreates={stagedVariantCreates}
-                      onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
-                      onClearStagedVariantCreates={handlers.clearStagedVariantCreates}
-                      onReplaceStagedVariantCreates={handlers.replaceStagedVariantCreates}
-                    />
-                  </Box>
+                  <ProductVariants
+                    productId={productId}
+                    productTypeId={product?.productType.id ?? ""}
+                    productName={product?.name}
+                    errors={variantListErrors}
+                    channels={listings}
+                    limits={limits}
+                    variants={variants}
+                    variantsSearch={variantsSearch}
+                    onVariantsSearchChange={onVariantsSearchChange}
+                    variantsPageInfo={variantsPageInfo}
+                    onVariantsNextPage={onVariantsNextPage}
+                    onVariantsPreviousPage={onVariantsPreviousPage}
+                    variantsRangeLabel={variantsRangeLabel}
+                    variantsTotalCount={variantsTotalCount}
+                    variantsLoading={variantsLoading}
+                    pendingVariantDeleteCount={pendingVariantDeleteCount}
+                    variantAttributes={product?.productType.variantAttributes}
+                    selectionVariantAttributes={product?.productType.selectionVariantAttributes}
+                    nonSelectionVariantAttributes={
+                      product?.productType.nonSelectionVariantAttributes
+                    }
+                    hasVariants={hasVariants ?? false}
+                    onAttributeValuesSearch={onAttributeValuesSearch}
+                    onChange={handlers.changeVariants}
+                    onStageVariantRemovals={handlers.stageVariantRemovals}
+                    onRowClick={onVariantShow}
+                    onStageVariantCreates={handlers.stageVariantCreates}
+                    stagedVariantCreates={stagedVariantCreates}
+                    onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
+                    onClearStagedVariantCreates={handlers.clearStagedVariantCreates}
+                    onReplaceStagedVariantCreates={handlers.replaceStagedVariantCreates}
+                  />
                   <SeoForm
+                    columnInset={false}
                     errors={productErrors}
                     title={data.seoTitle}
                     titlePlaceholder={data.name}
@@ -800,7 +800,7 @@ const ProductUpdatePage = ({
                   />
                 </DetailPageContent>
               </DetailPageLayout.Content>
-              <DetailPageLayout.RightSidebar>
+              <DetailPageLayout.RightSidebar paddingTop={6}>
                 <ProductOrganization
                   canChangeType={false}
                   hideProductType

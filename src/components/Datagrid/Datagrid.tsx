@@ -87,6 +87,8 @@ interface DatagridProps {
   fillHandle?: boolean;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
+  /** Replaces the default dashed placeholder when the grid has no rows. */
+  emptyState?: ReactNode;
   getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
   getCellContent: (item: Item, opts: GetCellContentOpts) => GridCell;
   getColumnTooltipContent?: (colIndex: number) => string;
@@ -135,11 +137,13 @@ interface DatagridProps {
   rowMarkerTheme?: Partial<Theme>;
   smoothScrollX?: boolean;
   rowSelectionBlending?: DataEditorProps["rowSelectionBlending"];
+  experimental?: DataEditorProps["experimental"];
 }
 
 export const Datagrid = ({
   availableColumns,
   emptyText,
+  emptyState,
   getCellContent,
   getCellError,
   menuItems,
@@ -183,6 +187,7 @@ export const Datagrid = ({
   rowMarkerWidth,
   rowMarkerTheme: rowMarkerThemeOverride,
   smoothScrollX = true,
+  experimental,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -696,6 +701,7 @@ export const Datagrid = ({
                   />
                   <DataEditor
                     width="100%"
+                    experimental={experimental}
                     {...datagridProps}
                     customRenderers={customRenderers}
                     verticalBorder={verticalBorder}
@@ -704,7 +710,7 @@ export const Datagrid = ({
                     theme={finalTheme}
                     drawFocusRing={false}
                     rowMarkerTheme={rowMarkerTheme}
-                    className={classes.datagrid}
+                    className={clsx(classes.datagrid, "dashboard-datagrid")}
                     getCellContent={handleGetCellContent}
                     onCellEdited={handleOnCellEdited}
                     columns={availableColumns}
@@ -779,15 +785,15 @@ export const Datagrid = ({
                     }
                     rowMarkerWidth={rowMarkerWidth ?? DEFAULT_ROW_MARKER_WIDTH}
                   />
-                  {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
-                  {hasColumnGroups && <div className={classes.columnGroupFixer} />}
                 </div>
               </>
             ) : (
-              <Box paddingX={6} paddingBottom={6}>
-                <Placeholder>
-                  <span data-test-id="empty-data-grid-text">{emptyText}</span>
-                </Placeholder>
+              <Box paddingX={6} paddingTop={renderHeader ? 5 : undefined} paddingBottom={6}>
+                {emptyState ?? (
+                  <Placeholder>
+                    <span data-test-id="empty-data-grid-text">{emptyText}</span>
+                  </Placeholder>
+                )}
               </Box>
             )}
           </DashboardCard.Content>

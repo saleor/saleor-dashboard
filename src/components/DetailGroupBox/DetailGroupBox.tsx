@@ -58,9 +58,7 @@ export const DetailGroupBox = ({
   triggerButtonTestId,
   variant = "primary",
 }: DetailGroupBoxProps): React.ReactNode => {
-  const [uncontrolledExpanded, setUncontrolledExpanded] = useState<string | undefined>(
-    defaultExpanded ? groupId : undefined,
-  );
+  const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ? groupId : "");
   const isControlled = onExpandedChange !== undefined;
   // An empty string keeps the accordion controlled and closed. `undefined` makes it uncontrolled, so the first click only moves the chevron.
   const expanded = isControlled ? (expandedProp ? groupId : "") : uncontrolledExpanded;
@@ -73,7 +71,7 @@ export const DetailGroupBox = ({
       return;
     }
 
-    setUncontrolledExpanded(nextExpanded ? groupId : undefined);
+    setUncontrolledExpanded(nextExpanded ? groupId : "");
   };
   const isExpanded = expanded === groupId;
   const isSecondary = variant === "secondary";

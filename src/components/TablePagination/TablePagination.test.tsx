@@ -1,3 +1,4 @@
+import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { type ListSettings } from "../../types";
@@ -16,7 +17,11 @@ describe("TablePagination", () => {
 
   it("renders pagination without settings", () => {
     // Arrange
-    render(<TablePagination {...defaultProps} />);
+    render(
+      <Wrapper>
+        <TablePagination {...defaultProps} />
+      </Wrapper>,
+    );
 
     // Assert
     expect(screen.getByTestId("button-pagination-back")).toBeInTheDocument();
@@ -31,7 +36,11 @@ describe("TablePagination", () => {
     };
 
     // Act
-    render(<TablePagination {...defaultProps} settings={settings} />);
+    render(
+      <Wrapper>
+        <TablePagination {...defaultProps} settings={settings} />
+      </Wrapper>,
+    );
 
     // Assert
     expect(screen.getByText("No. of rows")).toBeInTheDocument();
@@ -40,7 +49,11 @@ describe("TablePagination", () => {
 
   it("disables navigation based on hasNextPage/hasPreviousPage flags", () => {
     // Arrange
-    render(<TablePagination {...defaultProps} hasNextPage={false} hasPreviousPage={false} />);
+    render(
+      <Wrapper>
+        <TablePagination {...defaultProps} hasNextPage={false} hasPreviousPage={false} />
+      </Wrapper>,
+    );
 
     // Assert
     expect(screen.getByTestId("button-pagination-back")).toBeDisabled();
@@ -57,7 +70,11 @@ describe("TablePagination", () => {
     };
 
     // Act
-    render(<TablePagination {...defaultProps} settings={settings} labels={customLabels} />);
+    render(
+      <Wrapper>
+        <TablePagination {...defaultProps} settings={settings} labels={customLabels} />
+      </Wrapper>,
+    );
 
     // Assert
     expect(screen.getByText("Custom label")).toBeInTheDocument();
@@ -65,7 +82,11 @@ describe("TablePagination", () => {
 
   it("uses history.push for navigation with href props", () => {
     // Arrange
-    render(<TablePagination {...defaultProps} prevHref="/prev" nextHref="/next" />);
+    render(
+      <Wrapper>
+        <TablePagination {...defaultProps} prevHref="/prev" nextHref="/next" />
+      </Wrapper>,
+    );
 
     // Act & Assert
     fireEvent.click(screen.getByTestId("button-pagination-next"));

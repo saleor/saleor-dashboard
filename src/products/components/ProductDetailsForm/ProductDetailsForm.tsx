@@ -111,7 +111,7 @@ export const ProductDetailsForm = ({
               />
             </Box>
             {!formErrors.weight ? (
-              <Text size={2} color="default2" flexShrink="0" __width="15rem" marginBottom={2}>
+              <Text size={2} color="default2" flexShrink="0" whiteSpace="nowrap" marginBottom={2}>
                 {intl.formatMessage({
                   id: "Y2B0j0",
                   defaultMessage: "Used to calculate shipping rates.",

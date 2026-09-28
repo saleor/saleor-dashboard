@@ -344,66 +344,64 @@ export const ProductSetupCard = ({
             : null;
 
   return (
-    <Box paddingX={6} paddingTop={6} marginBottom={10}>
-      <SetupChecklist
-        className={clsx(styles.elevated, theme === "defaultDark" && styles.elevatedDark)}
-        data-test-id="product-setup-card"
-        title={<FormattedMessage {...messages.title} />}
-        subtitle={
-          coreReady ? (
-            <FormattedMessage {...messages.allDone} />
-          ) : (
-            <FormattedMessage {...messages.subtitle} />
-          )
-        }
-        progress={{ done: progressDone, total: progressTotal }}
-        tasksSection={{
-          title: <FormattedMessage {...messages.tasksSectionTitle} />,
-        }}
-        tasks={tasks}
-        reviewSection={{
-          title: <FormattedMessage {...messages.reviewSectionTitle} />,
-          subtitle: <FormattedMessage {...messages.reviewSectionSubtitle} />,
-          items: reviewItems,
-        }}
-        nextUp={
-          nextUpTask ? (
-            <FormattedMessage
-              {...messages.nextUp}
-              values={{
-                task: (
-                  <Text as="span" size={2} fontWeight="medium" color="default1">
-                    {nextUpTask}
-                  </Text>
-                ),
-              }}
-            />
-          ) : (
-            <FormattedMessage {...messages.nextUpDone} />
-          )
-        }
-        footerActions={
-          onDismiss ? (
-            <Button
-              variant="tertiary"
-              type="button"
-              onClick={() => {
-                trackEvent("setup_checklist_dismissed", {
-                  completed_steps: progressDone,
-                  core_ready: coreReady,
-                  entity_type: "product",
-                  total_steps: progressTotal,
-                });
-                onDismiss();
-              }}
-              disabled={disabled}
-              data-test-id="setup-dismiss"
-            >
-              <FormattedMessage {...(coreReady ? messages.dismissComplete : messages.dismiss)} />
-            </Button>
-          ) : undefined
-        }
-      />
-    </Box>
+    <SetupChecklist
+      className={clsx(styles.elevated, theme === "defaultDark" && styles.elevatedDark)}
+      data-test-id="product-setup-card"
+      title={<FormattedMessage {...messages.title} />}
+      subtitle={
+        coreReady ? (
+          <FormattedMessage {...messages.allDone} />
+        ) : (
+          <FormattedMessage {...messages.subtitle} />
+        )
+      }
+      progress={{ done: progressDone, total: progressTotal }}
+      tasksSection={{
+        title: <FormattedMessage {...messages.tasksSectionTitle} />,
+      }}
+      tasks={tasks}
+      reviewSection={{
+        title: <FormattedMessage {...messages.reviewSectionTitle} />,
+        subtitle: <FormattedMessage {...messages.reviewSectionSubtitle} />,
+        items: reviewItems,
+      }}
+      nextUp={
+        nextUpTask ? (
+          <FormattedMessage
+            {...messages.nextUp}
+            values={{
+              task: (
+                <Text as="span" size={2} fontWeight="medium" color="default1">
+                  {nextUpTask}
+                </Text>
+              ),
+            }}
+          />
+        ) : (
+          <FormattedMessage {...messages.nextUpDone} />
+        )
+      }
+      footerActions={
+        onDismiss ? (
+          <Button
+            variant="tertiary"
+            type="button"
+            onClick={() => {
+              trackEvent("setup_checklist_dismissed", {
+                completed_steps: progressDone,
+                core_ready: coreReady,
+                entity_type: "product",
+                total_steps: progressTotal,
+              });
+              onDismiss();
+            }}
+            disabled={disabled}
+            data-test-id="setup-dismiss"
+          >
+            <FormattedMessage {...(coreReady ? messages.dismissComplete : messages.dismiss)} />
+          </Button>
+        ) : undefined
+      }
+    />
   );
 };

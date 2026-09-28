@@ -5,8 +5,10 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import cardStyles from "@dashboard/components/DetailSettingsCard/DetailSettingsCard.module.css";
 import { type ProductVariantBulkCreateInput, type WarehouseFragment } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { type ReactElement, useCallback, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -103,16 +105,17 @@ export const StagedVariantCreatesDatagrid = ({
   const renderHeader = useCallback(
     () => (
       <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        paddingX={6}
-        paddingY={5}
+        className={clsx(cardStyles.header, cardStyles.headerWithEnd)}
+        borderTopWidth={1}
+        borderTopStyle="solid"
+        borderColor="default1"
       >
-        <Text size={6} fontWeight="medium">
-          <FormattedMessage {...draftMessages.title} values={{ count: creates.length }} />
-        </Text>
-        <Box display="flex" alignItems="center" gap={2}>
+        <Box className={cardStyles.headerMain}>
+          <Text size={5} fontWeight="bold" as="h2" className={cardStyles.title}>
+            <FormattedMessage {...draftMessages.title} values={{ count: creates.length }} />
+          </Text>
+        </Box>
+        <Box className={cardStyles.headerEnd} display="flex" alignItems="center" gap={2}>
           {selectedCount > 0 && (
             <Button
               variant="secondary"
@@ -142,9 +145,10 @@ export const StagedVariantCreatesDatagrid = ({
   }
 
   return (
-    <Box marginTop={4} data-test-id="staged-variant-creates-draft">
+    <Box data-test-id="staged-variant-creates-draft">
       <DatagridChangeStateContext.Provider value={datagrid}>
         <Datagrid
+          showTopBorder={false}
           availableColumns={columns}
           emptyText=""
           getCellContent={getCellContent}
