@@ -191,8 +191,9 @@ Real shortcuts, taken knowingly, with what would undo them:
   environment is baked at build time (it has to be, for the schema flag). The shipped
   image's runtime substitution therefore has no coverage here; it wants a smoke test of the
   actual Docker image, which is a different suite.
-- **Dispatch-only CI.** `.github/workflows/e2e-local.yml` runs on demand. Putting it on pull
-  requests is a one-line change once the suite is broad enough to be worth the minutes.
+- **Nightly CI only.** `.github/workflows/e2e-local.yml` runs nightly and on demand.
+  Putting it on pull requests is a one-line change once the suite is broad enough to be
+  worth the minutes.
 - **One proof spec.** `tests/login.spec.ts`. The next port worth making is a
   single-permission spec — it is the part of the actor model most likely to be subtly wrong,
   and the first place a `populatedb` difference between `3.23` and `unstable-main` would
