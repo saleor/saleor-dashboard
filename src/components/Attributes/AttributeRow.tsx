@@ -4,9 +4,7 @@ import { AttributeInputTypeTooltip } from "@dashboard/components/AttributeInputT
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
 import {
-  booleanAttrValueToValue,
   getAttributeRowLabelProps,
-  getBooleanDropdownOptions,
   getErrorMessage,
   getFileChoice,
   getMultiChoices,
@@ -22,13 +20,14 @@ import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor"
 import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Button, Input, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Plus } from "lucide-react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { Multiselect } from "../Combobox/components/Multiselect";
 import { DateTimeField } from "../DateTimeField/DateTimeField";
+import { AttributeBooleanControl } from "./AttributeBooleanControl";
 import { AttributeReferenceEntityIcon } from "./AttributeReferenceEntityIcon";
 import styles from "./AttributeRow.module.css";
 import { useAttributeRowChrome } from "./attributeRowChrome";
@@ -422,24 +421,22 @@ const AttributeRow = ({
     case AttributeInputTypeEnum.BOOLEAN:
       return (
         <BasicAttributeRow label={attribute.label} {...labelProps}>
-          <Box display="flex" flexDirection="column" alignItems="flex-end" gap={0.5}>
-            <Select
-              size="small"
-              name={`attribute:${attribute.label}`}
-              value={booleanAttrValueToValue(attribute.value[0])}
-              onChange={value =>
-                onChange(attribute.id, value === "unset" ? undefined : value === "true")
-              }
-              options={getBooleanDropdownOptions(intl)}
-              id={`attribute:${attribute.label}`}
-              disabled={disabled}
-            />
-            {error ? (
-              <Text size={2} color="critical1">
-                {getErrorMessage(error, intl)}
-              </Text>
-            ) : null}
-          </Box>
+          <AttributeBooleanControl
+            name={`attribute:${attribute.id}`}
+            label={String(attribute.label)}
+            value={typeof attribute.value[0] === "boolean" ? attribute.value[0] : null}
+            required={attribute.data.isRequired}
+            invalid={
+              !!error || (attribute.data.isRequired && typeof attribute.value[0] !== "boolean")
+            }
+            disabled={disabled}
+            onChange={value => onChange(attribute.id, value)}
+          />
+          {error ? (
+            <Text size={2} color="critical1">
+              {getErrorMessage(error, intl)}
+            </Text>
+          ) : null}
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.DATE:
@@ -474,28 +471,31 @@ const AttributeRow = ({
       return (
         <BasicAttributeRow label={attribute.label} {...labelProps}>
           {/* TODO It works, but replace it with Macaw Multiselect */}
-          <Multiselect
-            allowCustomValues
-            alwaysFetchOnFocus
-            disabled={disabled}
-            name={`attribute:${attribute.label}`}
-            label=""
-            error={!!error}
-            helperText={getErrorMessage(error, intl)}
-            options={getMultiChoices(attributeValues)}
-            value={getMultiDisplayValue(attribute, attributeValues)}
-            fetchOptions={query => {
-              fetchAttributeValues(query, attribute.id);
-            }}
-            onChange={e => {
-              onMultiChange(
-                attribute.id,
-                e.target.value.map(({ value }) => value),
-              );
-            }}
-            fetchMore={fetchMoreAttributeValues}
-            onBlur={onAttributeSelectBlur}
-          />
+          <Box className={styles.valueControl}>
+            <Multiselect
+              width="100%"
+              allowCustomValues
+              alwaysFetchOnFocus
+              disabled={disabled}
+              name={`attribute:${attribute.label}`}
+              label=""
+              error={!!error}
+              helperText={getErrorMessage(error, intl)}
+              options={getMultiChoices(attributeValues)}
+              value={getMultiDisplayValue(attribute, attributeValues)}
+              fetchOptions={query => {
+                fetchAttributeValues(query, attribute.id);
+              }}
+              onChange={e => {
+                onMultiChange(
+                  attribute.id,
+                  e.target.value.map(({ value }) => value),
+                );
+              }}
+              fetchMore={fetchMoreAttributeValues}
+              onBlur={onAttributeSelectBlur}
+            />
+          </Box>
         </BasicAttributeRow>
       );
   }

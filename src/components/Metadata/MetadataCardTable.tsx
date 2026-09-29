@@ -1,5 +1,4 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { Table, TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type MetadataInput } from "@dashboard/graphql";
@@ -47,40 +46,6 @@ export const MetadataCardTable = ({
 
   const pageHorizontalPadding = vars.spacing[6];
 
-  const columnHeaderBar = inModal ? (
-    <Box
-      className={clsx(
-        styles.columnHeaderBar,
-        readonly ? styles.columnHeaderBarReadonly : styles.columnHeaderBarWithActions,
-      )}
-      paddingY={2}
-      paddingLeft={5}
-      paddingRight={5}
-    >
-      <Text size={2} lineHeight={2} color="default2">
-        <FormattedMessage
-          id="nudPsY"
-          defaultMessage="Field"
-          description="metadata field name, header"
-        />
-      </Text>
-      <Box className={styles.columnHeaderValueLabel}>
-        <Text size={2} lineHeight={2} color="default2">
-          <FormattedMessage
-            id="LkuDEb"
-            defaultMessage="Value"
-            description="metadata field value, header"
-          />
-        </Text>
-      </Box>
-      {!readonly && (
-        <Text size={2} lineHeight={2} color="default2" textAlign="right">
-          <FormattedMessage id="nEixpu" defaultMessage="Actions" description="table action" />
-        </Text>
-      )}
-    </Box>
-  ) : null;
-
   const tableBody = (
     <TableBody>
       {data.map((field, fieldIndex) => {
@@ -89,7 +54,7 @@ export const MetadataCardTable = ({
         return (
           <TableRowLink data-test-id="field" key={fieldIndex}>
             <TableCell
-              width="50%"
+              width={inModal ? undefined : "50%"}
               className={clsx(inModal && keyFieldError && styles.fieldCellWithError)}
               style={
                 inModal
@@ -122,7 +87,7 @@ export const MetadataCardTable = ({
               </Box>
             </TableCell>
             <TableCell
-              width="50%"
+              width={inModal ? undefined : "50%"}
               style={
                 inModal
                   ? undefined
@@ -224,11 +189,48 @@ export const MetadataCardTable = ({
 
   if (inModal) {
     return (
-      <Box data-test-id="metadata-table">
-        {columnHeaderBar}
-        <ResponsiveTable bleed className={styles.modalTable}>
+      <Box data-test-id="metadata-table" className={styles.modalTableRoot}>
+        <Table className={styles.modalTable}>
+          <colgroup>
+            <col />
+            <col />
+            {!readonly && <col className={styles.actionsCol} />}
+          </colgroup>
+          <TableHead>
+            <TableRowLink>
+              <TableCell>
+                <Text size={2} color="default2">
+                  <FormattedMessage
+                    id="nudPsY"
+                    defaultMessage="Field"
+                    description="metadata field name, header"
+                  />
+                </Text>
+              </TableCell>
+              <TableCell>
+                <Text size={2} color="default2">
+                  <FormattedMessage
+                    id="LkuDEb"
+                    defaultMessage="Value"
+                    description="metadata field value, header"
+                  />
+                </Text>
+              </TableCell>
+              {!readonly && (
+                <TableCell>
+                  <Text size={2} color="default2">
+                    <FormattedMessage
+                      id="nEixpu"
+                      defaultMessage="Actions"
+                      description="table action"
+                    />
+                  </Text>
+                </TableCell>
+              )}
+            </TableRowLink>
+          </TableHead>
           {tableBody}
-        </ResponsiveTable>
+        </Table>
       </Box>
     );
   }

@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Long rich text attributes stay shortened in the attributes card until you edit them or choose Show all. The fade appears only when text is actually cut off.
+Long rich text stays shortened until you edit it or choose Show all. Descriptions, such as a product description, stay about twice as tall as an attribute value. The fade appears only when text is actually cut off.

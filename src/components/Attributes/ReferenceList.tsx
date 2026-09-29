@@ -93,10 +93,10 @@ const messages = defineMessages({
     defaultMessage: "Remove all",
     description: "dangerous action that clears every value in a reference attribute",
   },
-  removeSelected: {
-    id: "eSJq+S",
-    defaultMessage: "Remove selected",
-    description: "removes the checked products from a reference attribute",
+  deleteSelected: {
+    defaultMessage: "Delete ({count})",
+    id: "7sAOBL",
+    description: "removes the checked references from an attribute",
   },
   selectedCount: {
     id: "uxsZRg",
@@ -147,6 +147,11 @@ const messages = defineMessages({
     id: "hNTI05",
     defaultMessage: "No collections",
     description: "empty collection reference list",
+  },
+  noResults: {
+    defaultMessage: 'No results found for "{query}"',
+    id: "KILQYJ",
+    description: "empty state when a reference list filter matches nothing",
   },
 });
 
@@ -563,89 +568,89 @@ export const ReferenceList = ({
               {intl.formatMessage(messages.selectedCount, { count: selectedSet.size })}
             </Text>
           ) : null}
-          <Box className={styles.viewToggle}>
-            <Button
-              variant={view === "list" ? "secondary" : "tertiary"}
-              size="small"
-              type="button"
-              aria-pressed={view === "list"}
-              aria-label={intl.formatMessage(messages.listView)}
-              data-test-id="product-reference-view-list"
-              onClick={() => setView("list")}
-              icon={<ListIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
-            />
-            <Button
-              variant={view === "packed" ? "secondary" : "tertiary"}
-              size="small"
-              type="button"
-              aria-pressed={view === "packed"}
-              aria-label={intl.formatMessage(messages.packedView)}
-              data-test-id="product-reference-view-packed"
-              onClick={() => setView("packed")}
-              icon={
-                <GalleryHorizontal
-                  size={iconSize.small}
-                  strokeWidth={iconStrokeWidthBySize.small}
-                />
-              }
-            />
-          </Box>
-          <Dropdown>
-            <Dropdown.Trigger>
+          <Box className={styles.toolbarActions}>
+            {selectedSet.size > 0 ? (
               <Button
-                variant="tertiary"
+                variant="error"
                 size="small"
                 type="button"
-                disabled={disabled || values.length === 0}
-                aria-label={intl.formatMessage(messages.listActions)}
-                data-test-id="attribute-reference-list-menu"
+                disabled={disabled}
+                data-test-id="product-reference-remove-selected"
+                onClick={() => {
+                  onRemove([...selectedSet]);
+                  setSelected([]);
+                }}
+              >
+                {intl.formatMessage(messages.deleteSelected, { count: selectedSet.size })}
+              </Button>
+            ) : null}
+            <Box className={styles.viewToggle}>
+              <Button
+                variant={view === "list" ? "secondary" : "tertiary"}
+                size="small"
+                type="button"
+                aria-pressed={view === "list"}
+                aria-label={intl.formatMessage(messages.listView)}
+                data-test-id="product-reference-view-list"
+                onClick={() => setView("list")}
+                icon={<ListIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+              />
+              <Button
+                variant={view === "packed" ? "secondary" : "tertiary"}
+                size="small"
+                type="button"
+                aria-pressed={view === "packed"}
+                aria-label={intl.formatMessage(messages.packedView)}
+                data-test-id="product-reference-view-packed"
+                onClick={() => setView("packed")}
                 icon={
-                  <EllipsisVertical
+                  <GalleryHorizontal
                     size={iconSize.small}
                     strokeWidth={iconStrokeWidthBySize.small}
                   />
                 }
               />
-            </Dropdown.Trigger>
-            <Dropdown.Content align="end">
-              <List
-                padding={2}
-                borderRadius={4}
-                boxShadow="defaultOverlay"
-                backgroundColor="default1"
-              >
-                {selectedSet.size > 0 ? (
+            </Box>
+            <Dropdown>
+              <Dropdown.Trigger>
+                <Button
+                  variant="tertiary"
+                  size="small"
+                  type="button"
+                  disabled={disabled || values.length === 0}
+                  aria-label={intl.formatMessage(messages.listActions)}
+                  data-test-id="attribute-reference-list-menu"
+                  icon={
+                    <EllipsisVertical
+                      size={iconSize.small}
+                      strokeWidth={iconStrokeWidthBySize.small}
+                    />
+                  }
+                />
+              </Dropdown.Trigger>
+              <Dropdown.Content align="end">
+                <List
+                  padding={2}
+                  borderRadius={4}
+                  boxShadow="defaultOverlay"
+                  backgroundColor="default1"
+                >
                   <Dropdown.Item>
                     <List.Item
                       borderRadius={4}
                       paddingX={1.5}
                       paddingY={2}
-                      disabled={disabled}
-                      onClick={() => {
-                        onRemove([...selectedSet]);
-                        setSelected([]);
-                      }}
-                      data-test-id="product-reference-remove-selected"
+                      disabled={disabled || values.length === 0}
+                      onClick={onRemoveAll}
+                      data-test-id="attribute-reference-remove-all"
                     >
-                      <Text color="critical1">{intl.formatMessage(messages.removeSelected)}</Text>
+                      <Text color="critical1">{intl.formatMessage(messages.removeAll)}</Text>
                     </List.Item>
                   </Dropdown.Item>
-                ) : null}
-                <Dropdown.Item>
-                  <List.Item
-                    borderRadius={4}
-                    paddingX={1.5}
-                    paddingY={2}
-                    disabled={disabled || values.length === 0}
-                    onClick={onRemoveAll}
-                    data-test-id="attribute-reference-remove-all"
-                  >
-                    <Text color="critical1">{intl.formatMessage(messages.removeAll)}</Text>
-                  </List.Item>
-                </Dropdown.Item>
-              </List>
-            </Dropdown.Content>
-          </Dropdown>
+                </List>
+              </Dropdown.Content>
+            </Dropdown>
+          </Box>
         </Box>
       </Box>
       <DndContext
@@ -665,57 +670,65 @@ export const ReferenceList = ({
           items={visibleValues.map(value => value.value)}
           strategy={view === "list" ? verticalListSortingStrategy : disableSortingStrategy}
         >
-          <div
-            className={view === "list" ? styles.scroll : styles.flow}
-            data-test-id="product-reference-scroll"
-          >
-            {visibleValues.map(value => {
-              const index = orderedValues.findIndex(item => item.value === value.value);
-              const position =
-                savedReferencePosition({
-                  id: value.value,
-                  savedIds,
-                  provisional: provisionalPositions.current,
-                }) ?? index + 1;
-              const detail = resolved.get(value.value);
+          {visibleValues.length === 0 ? (
+            <Box paddingX={6} paddingY={4} data-test-id="product-reference-no-results">
+              <Placeholder>
+                {intl.formatMessage(messages.noResults, { query: query.trim() })}
+              </Placeholder>
+            </Box>
+          ) : (
+            <div
+              className={view === "list" ? styles.scroll : styles.flow}
+              data-test-id="product-reference-scroll"
+            >
+              {visibleValues.map(value => {
+                const index = orderedValues.findIndex(item => item.value === value.value);
+                const position =
+                  savedReferencePosition({
+                    id: value.value,
+                    savedIds,
+                    provisional: provisionalPositions.current,
+                  }) ?? index + 1;
+                const detail = resolved.get(value.value);
 
-              if (view === "packed") {
+                if (view === "packed") {
+                  return (
+                    <ReferenceChip
+                      key={value.value}
+                      value={value}
+                      entityType={entityType}
+                      index={index}
+                      count={orderedValues.length}
+                      thumbnailUrl={detail?.thumbnailUrl}
+                      disabled={disabled}
+                      draggable={!normalizedQuery}
+                      onRemove={id => onRemove([id])}
+                      onReorder={onReorder}
+                    />
+                  );
+                }
+
                 return (
-                  <ReferenceChip
+                  <ReferenceRow
                     key={value.value}
                     value={value}
                     entityType={entityType}
                     index={index}
-                    count={orderedValues.length}
+                    position={position}
+                    count={values.length}
+                    subtitle={detail?.categoryName || detail?.productTypeName}
                     thumbnailUrl={detail?.thumbnailUrl}
+                    checked={selectedSet.has(value.value)}
                     disabled={disabled}
                     draggable={!normalizedQuery}
+                    onCheckedChange={toggle}
                     onRemove={id => onRemove([id])}
                     onReorder={onReorder}
                   />
                 );
-              }
-
-              return (
-                <ReferenceRow
-                  key={value.value}
-                  value={value}
-                  entityType={entityType}
-                  index={index}
-                  position={position}
-                  count={values.length}
-                  subtitle={detail?.categoryName || detail?.productTypeName}
-                  thumbnailUrl={detail?.thumbnailUrl}
-                  checked={selectedSet.has(value.value)}
-                  disabled={disabled}
-                  draggable={!normalizedQuery}
-                  onCheckedChange={toggle}
-                  onRemove={id => onRemove([id])}
-                  onReorder={onReorder}
-                />
-              );
-            })}
-          </div>
+              })}
+            </div>
+          )}
         </SortableContext>
         {view === "packed"
           ? createPortal(

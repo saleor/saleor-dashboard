@@ -12,6 +12,7 @@ import {
   type DatagridChangeOpts,
   DatagridChangeStateContext,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import cardStyles from "@dashboard/components/DetailSettingsCard/DetailSettingsCard.module.css";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { PRODUCT_VARIANTS_PAGINATE_BY } from "@dashboard/config";
@@ -28,8 +29,9 @@ import { buttonMessages } from "@dashboard/intl";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { CompactSelection, type GridSelection, type Item } from "@glideapps/glide-data-grid";
-import { type Option } from "@saleor/macaw-ui-next";
-import { Pencil } from "lucide-react";
+import { Box, type Option, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
+import { Pencil, Rows3 } from "lucide-react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -49,6 +51,7 @@ import {
   variantsStaticColumnsAdapter,
 } from "./datagrid";
 import messages from "./messages";
+import styles from "./ProductVariants.module.css";
 import { getData, getError } from "./utils";
 
 interface ProductVariantsProps {
@@ -497,57 +500,78 @@ export const ProductVariants = ({
 
   return (
     <>
-      <Datagrid
-        fillHandle={true}
-        renderHeader={renderHeader}
-        availableColumns={visibleColumns}
-        emptyText={
-          variantsSearch.trim()
-            ? intl.formatMessage(messages.emptySearch, { query: variantsSearch.trim() })
-            : intl.formatMessage(messages.empty)
-        }
-        getCellContent={getCellContent}
-        getCellError={getCellError}
-        menuItems={menuItems}
-        rows={
-          variantsLoading
-            ? variants.length > 0
-              ? variants.length
-              : PRODUCT_VARIANTS_PAGINATE_BY
-            : (variants?.length ?? 0)
-        }
-        selectionActions={() => null}
-        onColumnResize={handlers.onResize}
-        onColumnMoved={handlers.onMove}
-        renderColumnPicker={() => (
-          <ColumnPicker
-            staticColumns={staticColumns}
-            dynamicColumns={dynamicColumns}
-            selectedColumns={selectedColumns}
-            columnCategories={columnCategories}
-            onToggle={handlers.onToggle}
-            side="left"
-          />
-        )}
-        onChange={onChange}
-        recentlyAddedColumn={recentlyAddedColumn}
-        controlledSelection={gridSelection}
-        onControlledSelectionChange={handleGridSelectionChange}
-        rowSelectionBlending="mixed"
-      />
-      {stagedVariantCreates.length > 0 &&
-      onRemoveStagedVariantCreates &&
-      onClearStagedVariantCreates &&
-      onReplaceStagedVariantCreates ? (
-        <StagedVariantCreatesDatagrid
-          creates={stagedVariantCreates}
-          channels={channels}
-          warehouses={warehouses ?? []}
-          onReplaceCreates={onReplaceStagedVariantCreates}
-          onRemoveIndexes={onRemoveStagedVariantCreates}
-          onClearAll={onClearStagedVariantCreates}
+      <Box className={clsx(cardStyles.card, styles.card)} data-test-id="product-variants">
+        <Datagrid
+          fillHandle={true}
+          showTopBorder={false}
+          experimental={{ scrollbarWidthOverride: 0 }}
+          renderHeader={renderHeader}
+          availableColumns={visibleColumns}
+          emptyText={
+            variantsSearch.trim()
+              ? intl.formatMessage(messages.emptySearch, { query: variantsSearch.trim() })
+              : intl.formatMessage(messages.empty)
+          }
+          emptyState={
+            <div className={styles.emptyState} data-test-id="empty-data-grid-text">
+              {!variantsSearch.trim() && (
+                <Rows3
+                  className={styles.emptyIcon}
+                  size={28}
+                  strokeWidth={iconStrokeWidthBySize.large}
+                  aria-hidden
+                />
+              )}
+              <Text size={2} color="default2">
+                {variantsSearch.trim()
+                  ? intl.formatMessage(messages.emptySearch, { query: variantsSearch.trim() })
+                  : intl.formatMessage(messages.empty)}
+              </Text>
+            </div>
+          }
+          getCellContent={getCellContent}
+          getCellError={getCellError}
+          menuItems={menuItems}
+          rows={
+            variantsLoading
+              ? variants.length > 0
+                ? variants.length
+                : PRODUCT_VARIANTS_PAGINATE_BY
+              : (variants?.length ?? 0)
+          }
+          selectionActions={() => null}
+          onColumnResize={handlers.onResize}
+          onColumnMoved={handlers.onMove}
+          renderColumnPicker={() => (
+            <ColumnPicker
+              staticColumns={staticColumns}
+              dynamicColumns={dynamicColumns}
+              selectedColumns={selectedColumns}
+              columnCategories={columnCategories}
+              onToggle={handlers.onToggle}
+              side="left"
+            />
+          )}
+          onChange={onChange}
+          recentlyAddedColumn={recentlyAddedColumn}
+          controlledSelection={gridSelection}
+          onControlledSelectionChange={handleGridSelectionChange}
+          rowSelectionBlending="mixed"
         />
-      ) : null}
+        {stagedVariantCreates.length > 0 &&
+        onRemoveStagedVariantCreates &&
+        onClearStagedVariantCreates &&
+        onReplaceStagedVariantCreates ? (
+          <StagedVariantCreatesDatagrid
+            creates={stagedVariantCreates}
+            channels={channels}
+            warehouses={warehouses ?? []}
+            onReplaceCreates={onReplaceStagedVariantCreates}
+            onRemoveIndexes={onRemoveStagedVariantCreates}
+            onClearAll={onClearStagedVariantCreates}
+          />
+        ) : null}
+      </Box>
       {hasVariants && hasSelectionVariantAttributes && onStageVariantCreates && (
         <ProductVariantGenerator
           open={generatorOpen}

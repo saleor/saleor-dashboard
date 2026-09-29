@@ -1,0 +1,54 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-3);
+}
+
+.track {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: var(--mu-spacing-0-5);
+  background-color: var(--mu-colors-background-default2);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 9999px;
+}
+
+.trackInvalid {
+  border-color: var(--mu-colors-border-critical1);
+}
+
+.segment {
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  padding: var(--mu-spacing-1) var(--mu-spacing-3);
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  background: transparent;
+  font: inherit;
+  color: var(--mu-colors-text-default1);
+}
+
+.segmentActive {
+  background-color: var(--mu-colors-background-default1);
+  border-color: var(--mu-colors-border-default1);
+  font-weight: var(--mu-font-weight-bold);
+}
+
+.segmentActivePrimary {
+  background-color: var(--mu-colors-text-default1);
+  border-color: transparent;
+  color: var(--mu-colors-background-default1);
+  font-weight: var(--mu-font-weight-bold);
+}
+
+.segment:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}
+
+.segment:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

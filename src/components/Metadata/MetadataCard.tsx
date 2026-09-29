@@ -66,7 +66,7 @@ export const MetadataCard = ({
 }: MetadataCardProps) => {
   const intl = useIntl();
   const initiallyExpanded = defaultExpanded ?? false;
-  const [expanded, setExpanded] = useState(initiallyExpanded ? ACCORDION_VALUE : undefined);
+  const [expanded, setExpanded] = useState(initiallyExpanded ? ACCORDION_VALUE : "");
   const isEmptyReadOnly = readonly && (data?.length ?? 0) === 0;
   const groupId = isPrivate ? "private-metadata" : "metadata";
 

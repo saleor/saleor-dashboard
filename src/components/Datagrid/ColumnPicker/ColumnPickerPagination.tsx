@@ -1,6 +1,5 @@
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Button } from "@saleor/macaw-ui-next";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { PaginationButtons } from "@dashboard/components/PaginationButtons/PaginationButtons";
+import { Box } from "@saleor/macaw-ui-next";
 
 export interface ColumnPickerPagination {
   query: string;
@@ -17,22 +16,14 @@ export const ColumnPickerPagination = ({
   hasNextPage,
   hasPreviousPage,
 }: ColumnPickerPagination) => (
-  <Box display="flex" gap={1.5} padding={3}>
-    <Button
-      variant="secondary"
-      size="small"
-      icon={<ChevronLeft size={iconSize.small} strokeWidth={iconStrokeWidth} />}
-      onClick={() => onPreviousPage(query)}
-      disabled={!hasPreviousPage}
-      data-test-id="pagination-back"
-    />
-    <Button
-      variant="secondary"
-      size="small"
-      icon={<ChevronRight size={iconSize.small} strokeWidth={iconStrokeWidth} />}
-      onClick={() => onNextPage(query)}
-      disabled={!hasNextPage}
-      data-test-id="pagination-forward"
+  <Box display="flex" gap={2} padding={3}>
+    <PaginationButtons
+      hasPreviousPage={hasPreviousPage}
+      hasNextPage={hasNextPage}
+      onPreviousPage={() => onPreviousPage(query)}
+      onNextPage={() => onNextPage(query)}
+      previousTestId="pagination-back"
+      nextTestId="pagination-forward"
     />
   </Box>
 );

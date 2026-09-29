@@ -120,7 +120,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     await Promise.all([refetch(), refetchVariants()]);
   });
 
-  const isSimpleProduct = !data?.product?.productType?.hasVariants;
+  const productType = data?.product?.productType;
+  // Unknown type is not a simple product. Otherwise the weight field shows in the
+  // loading form and then disappears for products that have variants.
+  const isSimpleProduct = productType != null && !productType.hasVariants;
   const { availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {

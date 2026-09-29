@@ -631,6 +631,10 @@
     "context": "stock exceeded dialog description",
     "string": "{count, plural, one {# item exceeds available stock.} other {# items exceed available stock.}} Go back to adjust quantities, or fulfill anyway to oversell."
   },
+  "0J0FPi": {
+    "context": "boolean attribute value",
+    "string": "No"
+  },
   "0KVj6r": {
     "string": "Copy tracking number"
   },
@@ -2403,6 +2407,10 @@
     "context": "link",
     "string": "View profile"
   },
+  "7AT1Ye": {
+    "context": "boolean attribute has no value",
+    "string": "Not set"
+  },
   "7B5AK5": {
     "context": "link to configure shipping method channel pricing",
     "string": "Set up pricing"
@@ -2504,10 +2512,6 @@
     "context": "eyebrow label for Pulse homepage promotion",
     "string": "Saleor Pulse"
   },
-  "7WEeNq": {
-    "context": "select label",
-    "string": "True"
-  },
   "7WzUxn": {
     "context": "staff member status",
     "string": "Inactive"
@@ -2562,6 +2566,10 @@
   "7qsOwa": {
     "context": "action",
     "string": "Include postal codes"
+  },
+  "7sAOBL": {
+    "context": "removes the checked references from an attribute",
+    "string": "Delete ({count})"
   },
   "7sJ04i": {
     "context": "customer recent orders table column: fulfillment status",
@@ -3780,10 +3788,6 @@
   },
   "CCjH3M": {
     "string": "Refunds & returns settings"
-  },
-  "CD1NDm": {
-    "context": "placeholder for required attribute dropdown",
-    "string": "Select a value"
   },
   "CFG1Ix": {
     "context": "shipping zone",
@@ -5932,6 +5936,10 @@
   },
   "KHZlmi": {
     "string": "Discount Type"
+  },
+  "KILQYJ": {
+    "context": "empty state when a reference list filter matches nothing",
+    "string": "No results found for \"{query}\""
   },
   "KIv44a": {
     "context": "setup task CTA deep-link to channel checklist",
@@ -8994,6 +9002,10 @@
     "context": "setup review row title",
     "string": "Products"
   },
+  "Vt7ZNF": {
+    "context": "boolean attribute value",
+    "string": "Yes"
+  },
   "Vtjlpw": {
     "string": "Transaction is not unique"
   },
@@ -9043,6 +9055,10 @@
   "Vze3qI": {
     "context": "column category descriptor",
     "string": "Channels"
+  },
+  "W+9IrM": {
+    "context": "boolean attribute must be yes or no",
+    "string": "Required"
   },
   "W/Qs4m": {
     "context": "Button label to expand and show additional hidden problems",
@@ -9634,6 +9650,10 @@
   "Y299ST": {
     "context": "table column header",
     "string": "Price"
+  },
+  "Y2B0j0": {
+    "context": "helper beside the simple product shipping weight field",
+    "string": "Used to calculate shipping rates."
   },
   "Y2dPyq": {
     "context": "setup task description when shipping zones already exist",
@@ -10422,10 +10442,6 @@
   "b/z/5G": {
     "context": "settings search alias",
     "string": "customer login"
-  },
-  "b1j4K6": {
-    "context": "select label",
-    "string": "False"
   },
   "b1lW6g": {
     "string": "Last seen {date}."
@@ -11367,10 +11383,6 @@
   "eS8xZ6": {
     "context": "card header",
     "string": "Tax class rates: {country}"
-  },
-  "eSJq+S": {
-    "context": "removes the checked products from a reference attribute",
-    "string": "Remove selected"
   },
   "eU9J97": {
     "context": "customer type detail cogs menu, promotes this type to default",
@@ -12902,10 +12914,6 @@
     "context": "setup task complete",
     "string": "{count} shipping {count, plural, one {zone} other {zones}} assigned"
   },
-  "k62BKw": {
-    "context": "select label",
-    "string": "Unset"
-  },
   "k6kIUq": {
     "context": "password login mode option",
     "string": "Enabled"
@@ -14236,6 +14244,10 @@
   "oj6EqD": {
     "context": "channel inventory allocation section title",
     "string": "Allocation strategy"
+  },
+  "okGo4U": {
+    "context": "simple product weight used for shipping rates",
+    "string": "Shipping weight"
   },
   "omdhZg": {
     "context": "store name field label",

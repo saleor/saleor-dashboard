@@ -96,4 +96,32 @@ describe("DetailGroupBox", () => {
     expect(section).toHaveAttribute("data-expanded", "false");
     expect(screen.queryByText("References")).not.toBeInTheDocument();
   });
+
+  it("collapses a default-open group on the first click", async () => {
+    // Arrange
+    render(
+      <DetailGroupBox
+        groupId="seo-form"
+        defaultExpanded
+        dataTestId="seo-form"
+        triggerButtonTestId="edit-seo"
+        headerStart="SEO"
+      >
+        <div>SEO fields</div>
+      </DetailGroupBox>,
+      { wrapper: Wrapper },
+    );
+
+    const section = screen.getByTestId("seo-form");
+
+    expect(section).toHaveAttribute("data-expanded", "true");
+    expect(screen.getByText("SEO fields")).toBeInTheDocument();
+
+    // Act
+    await userEvent.click(screen.getByTestId("edit-seo"));
+
+    // Assert
+    expect(section).toHaveAttribute("data-expanded", "false");
+    expect(screen.queryByText("SEO fields")).not.toBeInTheDocument();
+  });
 });

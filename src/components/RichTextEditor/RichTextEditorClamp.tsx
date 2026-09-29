@@ -20,9 +20,15 @@ const messages = defineMessages({
  */
 export const RichTextEditorClamp = ({
   active = true,
+  tall = false,
+  footer,
   children,
 }: {
   active?: boolean;
+  /** Descriptions are about twice the clamped height of an attribute value. */
+  tall?: boolean;
+  /** Rendered under the editor, inside the field border, outside the clamped area. */
+  footer?: ReactNode;
   children: ReactNode;
 }) => {
   const intl = useIntl();
@@ -80,7 +86,12 @@ export const RichTextEditorClamp = ({
   }, [clamped]);
 
   if (!active) {
-    return children;
+    return (
+      <>
+        {children}
+        {footer}
+      </>
+    );
   }
 
   return (
@@ -95,24 +106,31 @@ export const RichTextEditorClamp = ({
         }
       }}
     >
-      <div
-        ref={frameRef}
-        className={clsx(clamped && styles.clamped, clamped && overflows && styles.clampedOverflow)}
-      >
-        {children}
-      </div>
-      {clamped && overflows ? (
-        <button
-          type="button"
-          className={styles.showAll}
-          data-test-id="rich-text-show-all"
-          onMouseDown={event => event.preventDefault()}
-          onClick={() => setReleased(true)}
+      <div className={styles.frame}>
+        <div
+          ref={frameRef}
+          className={clsx(
+            clamped && styles.clamped,
+            clamped && tall && styles.clampedTall,
+            clamped && overflows && styles.clampedOverflow,
+          )}
         >
-          {intl.formatMessage(messages.showAll)}
-          <ChevronDown size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-        </button>
-      ) : null}
+          {children}
+        </div>
+        {clamped && overflows ? (
+          <button
+            type="button"
+            className={styles.showAll}
+            data-test-id="rich-text-show-all"
+            onMouseDown={event => event.preventDefault()}
+            onClick={() => setReleased(true)}
+          >
+            {intl.formatMessage(messages.showAll)}
+            <ChevronDown size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+          </button>
+        ) : null}
+      </div>
+      {footer}
     </div>
   );
 };

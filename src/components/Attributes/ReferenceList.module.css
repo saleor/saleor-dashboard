@@ -24,11 +24,19 @@
   min-width: 0;
 }
 
+/* Not `.actions`: that class hides row controls until hover, and CSS modules share the name. */
+.toolbarActions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+  margin-left: auto;
+}
+
 .viewToggle {
   display: flex;
   align-items: center;
   gap: 2px;
-  margin-left: auto;
 }
 
 .flow {

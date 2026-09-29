@@ -1,50 +1,57 @@
-.modalTable {
-  table-layout: fixed;
+.modalTableRoot {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
-.columnHeaderBar {
-  display: grid;
+.modalTable {
+  width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.actionsCol {
+  width: 88px;
+}
+
+.modalTable th,
+.modalTable td {
+  padding: var(--mu-spacing-3) var(--mu-spacing-4);
+  vertical-align: middle;
+  text-align: left;
+}
+
+.modalTable thead th,
+.modalTable thead td {
+  padding-top: var(--mu-spacing-2);
+  padding-bottom: var(--mu-spacing-2);
   background-color: var(--mu-colors-background-default2);
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }
 
-.columnHeaderBarWithActions {
-  grid-template-columns: 1fr 1fr auto;
-}
-
-.columnHeaderBarReadonly {
-  grid-template-columns: 1fr 1fr;
-}
-
-.columnHeaderValueLabel {
-  padding-left: var(--mu-spacing-8);
-}
-
-.modalTable tbody td {
-  padding: var(--mu-spacing-3) var(--mu-spacing-5) !important;
-  vertical-align: top;
-}
-
-.modalTable tbody td:first-child {
-  padding-left: var(--mu-spacing-5) !important;
-}
-
-.modalTable tbody td:last-child {
-  padding-right: var(--mu-spacing-5) !important;
-}
-
-.modalTable tbody td:nth-child(2) {
-  padding-left: var(--mu-spacing-8) !important;
+.modalTable th:last-child,
+.modalTable td:last-child {
+  width: 88px;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .modalTable tbody td.fieldCellWithError {
-  padding-bottom: var(--mu-spacing-4) !important;
+  padding-bottom: var(--mu-spacing-4);
 }
 
 .fieldCell {
   display: flex;
   flex-direction: column;
   gap: var(--mu-spacing-1);
+  min-width: 0;
+}
+
+.fieldCell input,
+.modalTable textarea {
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
 }
 

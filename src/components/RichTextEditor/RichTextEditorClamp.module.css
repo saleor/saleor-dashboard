@@ -5,6 +5,10 @@
   background: var(--mu-colors-background-default1);
 }
 
+.frame {
+  position: relative;
+}
+
 .root:focus-within {
   border-color: var(--mu-colors-border-accent1);
 }
@@ -12,6 +16,10 @@
 .clamped {
   max-height: 9.5rem;
   overflow: hidden;
+}
+
+.clampedTall {
+  max-height: 19rem;
 }
 
 /* Only when a block is cut off. The fade means there is more below this edge. */
