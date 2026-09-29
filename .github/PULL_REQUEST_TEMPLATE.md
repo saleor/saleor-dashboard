@@ -16,8 +16,10 @@
 
 <!-- Required for feature requests: link the approved GitHub issue. -->
 
-- [ ] I added a changeset for a user-facing feature, enhancement, or bug fix, or this PR does not need one.
-- [ ] I added a Ripple for new user-facing functionality (see `src/ripples`), or this PR does not need one.
-- [ ] I used analytics `trackEvent` for key interactions and outcomes of a substantial product feature, or this PR does not need new tracking.
+<!-- Check only completed items. Leave non-applicable items unchecked. -->
+
+- [ ] I added a changeset for a user-facing feature, enhancement, or bug fix.
+- [ ] I added a Ripple for new user-facing functionality (see `src/ripples`).
+- [ ] I used analytics `trackEvent` for key interactions and outcomes of a substantial product feature.
 
 <!-- PRs that do not follow this template may be automatically rejected. -->
