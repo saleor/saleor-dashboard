@@ -17,6 +17,7 @@ interface ProductDetailsFormProps {
   data: {
     description: OutputData;
     name: string;
+    rating: number | null;
   };
   /** Simple products carry weight here. Variants keep it on the variant. */
   shippingWeight?: {
@@ -37,7 +38,7 @@ export const ProductDetailsForm = ({
   onDescriptionChange,
 }: ProductDetailsFormProps) => {
   const intl = useIntl();
-  const formErrors = getFormErrors(["name", "description", "weight"], errors);
+  const formErrors = getFormErrors(["name", "description", "rating", "weight"], errors);
   const { editorRef, defaultValue, isReadyForMount, handleChange } = useRichTextContext();
   const handleWeightChange = createNonNegativeValueChangeHandler(onChange);
 
@@ -88,10 +89,28 @@ export const ProductDetailsForm = ({
           name="description"
         />
       )}
-      {shippingWeight ? (
-        <>
-          <FormSpacer />
-          <Box display="flex" alignItems="flex-end" gap={4}>
+      <FormSpacer />
+      <Box display="flex" alignItems="flex-end" gap={4} flexWrap="wrap">
+        <Box __width="16rem" flexShrink="0">
+          <Input
+            label={intl.formatMessage({
+              id: "L7N+0y",
+              defaultMessage: "Product Rating",
+              description: "product rating",
+            })}
+            size="small"
+            value={data.rating || ""}
+            onChange={onChange}
+            error={!!formErrors.rating}
+            name="rating"
+            type="number"
+            disabled={disabled}
+            data-test-id="product-rating"
+            helperText={getProductErrorMessage(formErrors.rating, intl)}
+          />
+        </Box>
+        {shippingWeight ? (
+          <>
             <Box __width="16rem" flexShrink="0">
               <Input
                 label={intl.formatMessage({
@@ -119,9 +138,9 @@ export const ProductDetailsForm = ({
                 })}
               </Text>
             ) : null}
-          </Box>
-        </>
-      ) : null}
+          </>
+        ) : null}
+      </Box>
     </DetailSettingsCard>
   );
 };

@@ -6144,6 +6144,10 @@
     "context": "dialog title",
     "string": "Delete permission group"
   },
+  "L7N+0y": {
+    "context": "product rating",
+    "string": "Product Rating"
+  },
   "L7j412": {
     "context": "no models placeholder",
     "string": "No models found"
