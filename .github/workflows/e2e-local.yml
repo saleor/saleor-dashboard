@@ -99,3 +99,44 @@ jobs:
           E2E_TARGET: ${{ matrix.target }}
         run: |
           node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON e2e/run.ts --down --target="$E2E_TARGET"
+
+  # A nightly failure is posted to Slack with the failed tests; a manual run has someone
+  # watching it already. The Slack sender is a reusable workflow, so it needs its own job,
+  # and this one turns the targets' json reports into its message body (`e2e/slack-summary.ts`).
+  summarize-failure:
+    if: ${{ failure() && github.event_name == 'schedule' }}
+    needs: e2e
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions: {}
+    outputs:
+      body: ${{ steps.summarize.outputs.body }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: "package.json"
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: e2e-*-report--attempt-${{ github.run_attempt }}
+          path: reports
+
+      - name: List failed tests
+        id: summarize
+        run: node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON e2e/slack-summary.ts reports
+
+  notify-failure:
+    if: ${{ failure() && github.event_name == 'schedule' }}
+    needs: [e2e, summarize-failure]
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@d8bc107b3eb1c48111e47e1e2fc192232086f534 # v1.13.0
+    with:
+      custom_title: "🌙 Nightly E2E (local stack) failed"
+      custom_body: ${{ needs.summarize-failure.outputs.body }}
+      status: failure
+    secrets:
+      slack-webhook-url: ${{ secrets.SLACK_E2E_NIGHTLY_WEBHOOK_URL }}

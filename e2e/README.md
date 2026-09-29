@@ -76,7 +76,16 @@ behind) — the dump captures both identically, but SQL is the part that rots wh
 tables change, and this suite deliberately tracks a moving image.
 
 To add one: a file in `scenarios/`, registered in `scenarios/registry.ts`, and
-`test.use({ scenario: "..." })` in the spec. Every scenario builds from an empty database.
+`test.use({ scenario: "..." })` in the spec. A scenario builds from an empty database, or -
+with `parent: "default"` - on top of another scenario's dump. Build on `default` unless you
+need to replace it: a second `populatedb` mints different staff rows, and the cached sessions
+only work against the rows they were signed in with.
+
+The stack runs a Celery worker but **no beat**, and Saleor leaves some work to beat alone -
+new products are not searchable, and catalogue promotions do not reach prices, until a
+periodic task runs. `ensureScenario` therefore runs those tasks after every build, before the
+dump (`lib/beat.ts`). A scenario that creates something another beat task settles adds that
+task there.
 
 ## Isolation, and opting into parallel
 
@@ -170,6 +179,12 @@ way in. The locators are `data-test-id`s and carry over unchanged; what does not
 `@data/e2eTestData`, the 780 lines of snapshot ids. Point the spec at the seed instead, or
 at a scenario built for it.
 
+Locators become `readonly` class fields initialized from `this.page`, with an empty
+`constructor(readonly page: Page) {}` - not the legacy defaulted constructor parameters. The
+constructor then takes only what a caller injects, so nothing reads as overridable when it
+is not. (`useDefineForClassFields: false` in `tsconfig.json` is what lets the fields see
+`this.page`.)
+
 ## Deferred
 
 Real shortcuts, taken knowingly, with what would undo them:
@@ -191,17 +206,15 @@ Real shortcuts, taken knowingly, with what would undo them:
   environment is baked at build time (it has to be, for the schema flag). The shipped
   image's runtime substitution therefore has no coverage here; it wants a smoke test of the
   actual Docker image, which is a different suite.
-- **Nightly CI only.** `.github/workflows/e2e-local.yml` runs nightly and on demand.
+- **Nightly CI only.** `.github/workflows/e2e-local.yml` runs nightly and on demand. A
+  failed nightly run posts its failed tests to Slack; a manual run does not.
   Putting it on pull requests is a one-line change once the suite is broad enough to be
   worth the minutes.
-- **One proof spec.** `tests/login.spec.ts`. The next port worth making is a
-  single-permission spec — it is the part of the actor model most likely to be subtly wrong,
-  and the first place a `populatedb` difference between `3.23` and `unstable-main` would
-  show.
+- **Few specs so far.** `tests/login.spec.ts` and the order flows in `tests/orders/`. A
+  single-permission spec is still worth porting early — it is the part of the actor model
+  most likely to be subtly wrong, and the first place a `populatedb` difference between
+  `3.23` and `unstable-main` would show.
 - **No multi-actor test helper.** One actor per test. Two actors in one test needs a second
   `browser.newContext({ storageState })`; four lines, written when a spec needs it.
-- **Every scenario builds from an empty database.** Layering one onto another's dump - a
-  handful of extra objects on top of `populatedb` rather than a rebuild - is a `restore the
-parent first` step in `ensureScenario`. Added with the first scenario that wants it.
 - **Product images are skipped** (`populatedb --withoutimages`) — minutes off the build and
   megabytes off every restore. A spec asserting on media needs its own scenario.
