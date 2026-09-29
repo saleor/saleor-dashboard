@@ -1,12 +1,32 @@
 import { ADMIN, type E2eConfig } from "../config.ts";
 
+/**
+ * The first request after a `docker compose run` (every `manage` call) can find its socket
+ * closed by the host's port forwarding before Saleor ever sees it - `fetch failed`, "other
+ * side closed", and nothing in the api log. Only that is retried: an HTTP error or a
+ * GraphQL error means the request arrived, and is reported as it is.
+ */
+const post = async (url: string, init: RequestInit, attempts = 3): Promise<Response> => {
+  try {
+    return await fetch(url, init);
+  } catch (error) {
+    if (attempts <= 1 || !(error instanceof TypeError)) {
+      throw error;
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    return post(url, init, attempts - 1);
+  }
+};
+
 export const gql = async <T>(
   config: E2eConfig,
   query: string,
   variables: Record<string, unknown> = {},
   token?: string,
 ): Promise<T> => {
-  const response = await fetch(config.apiUrl, {
+  const response = await post(config.apiUrl, {
     method: "POST",
     headers: {
       "content-type": "application/json",

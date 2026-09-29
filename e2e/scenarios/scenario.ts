@@ -15,6 +15,13 @@ import type { E2eConfig } from "../config.ts";
 export interface Scenario {
   name: string;
   /**
+   * The scenario this one builds on top of: its dump is restored first, instead of the
+   * build starting from an empty database. Besides saving the parent's build, that keeps
+   * the parent's rows - the staff users above all, whose cached sessions are only valid
+   * against the rows they were minted for - identical in both dumps.
+   */
+  parent?: string;
+  /**
    * Arranges the state. `adminToken` is a thunk because a scenario building from an
    * empty database has no admin to authenticate as until its own build creates one.
    */

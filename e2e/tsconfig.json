@@ -9,6 +9,10 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "target": "esnext",
+    // Page objects initialize their locators as class fields from `constructor(readonly
+    // page: Page) {}`. That needs the parameter property assigned before the fields, which
+    // is how Playwright's own transform runs them; `esnext` alone would imply the opposite.
+    "useDefineForClassFields": false,
     "lib": ["esnext", "dom"],
     "types": ["node"],
     "strict": true,

@@ -10,14 +10,9 @@ import { expect, type Page } from "@playwright/test";
  * the current homepage happens to promote.
  */
 export class HomePage {
-  readonly page: Page;
+  readonly userMenu = this.page.getByTestId("userMenu");
 
-  constructor(
-    page: Page,
-    readonly userMenu = page.getByTestId("userMenu"),
-  ) {
-    this.page = page;
-  }
+  constructor(readonly page: Page) {}
 
   async goto(): Promise<void> {
     await this.page.goto("/");
