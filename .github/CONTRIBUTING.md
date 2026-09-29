@@ -6,7 +6,7 @@ Issues and PRs that do not follow their templates may be automatically rejected.
 
 ## Before you start
 
-Bug fixes and small chores, such as typo and translation corrections, do not need prior approval or a GitHub issue. For a new feature, open a GitHub issue and get maintainer approval before implementing it. Link the approved issue in your PR.
+Bug fixes and small chores, such as typo and translation corrections, do not need prior approval or a GitHub issue. For a new feature, open a GitHub issue and get maintainer approval before implementing it.
 
 ## Development
 
@@ -16,9 +16,7 @@ For changes to source messages, run `pnpm run extract-messages`. For GraphQL cha
 
 ## Pull requests
 
-Describe what changed and how you checked it. External contributors making visual changes must include a screenshot or video in the PR. Enable [maintainer edits](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) if you want maintainers to update your branch.
-
-Add a [Ripple](../src/ripples) for new user-facing functionality so users can discover it.
+Enable [maintainer edits](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) if you want maintainers to update your branch.
 
 #### One significant change per PR
 
@@ -39,4 +37,4 @@ How strictly to split depends on how the changes relate:
   acceptable at some point. For example, a refactor commit followed by the bug fix
   it enables can share one PR, as long as each commit contains only its own change.
 
-For user-facing features, enhancements, and bug fixes, add a changeset with `pnpm run change:add`. Use `minor` for new features, breaking changes, and behavior changes; use `patch` for bug fixes, small visual changes, copy, and translations. Internal refactors, style, tests, CI/CD, and internal documentation do not need a changeset. The CI check requires one unless a maintainer adds the `skip changeset` label.
+For user-facing features, enhancements, and bug fixes, add a `patch` changeset with `pnpm run change:add`. Minor version bumps are handled during releases. Internal refactors, style, tests, CI/CD, and internal documentation do not need a changeset. The CI check requires one unless a maintainer adds the `skip changeset` label.

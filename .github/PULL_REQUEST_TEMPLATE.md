@@ -1,6 +1,6 @@
 ## Screenshot / Video
 
-<!-- Required for external contributors when the change affects the UI: paste a screenshot or video showing the result. Include before/after evidence when changing existing visuals. Otherwise write N/A. -->
+<!-- Required for external contributors when the change affects the UI: paste a screenshot or video showing the result. Include before/after evidence when changing existing visuals. -->
 
 <!-- Remove this section if the change does not affect the UI. -->
 
@@ -18,6 +18,6 @@
 
 - [ ] I added a changeset for a user-facing feature, enhancement, or bug fix, or this PR does not need one.
 - [ ] I added a Ripple for new user-facing functionality (see `src/ripples`), or this PR does not need one.
-- [ ] I used analytics `trackEvent` for important events, or this PR does not need new tracking.
+- [ ] I used analytics `trackEvent` for key interactions and outcomes of a substantial product feature, or this PR does not need new tracking.
 
 <!-- PRs that do not follow this template may be automatically rejected. -->
