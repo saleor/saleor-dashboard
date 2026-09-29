@@ -2,7 +2,8 @@
 
 ## Quick start
 
-Run `cp .env.template .env` to create default configuration that will be connected to [Saleor Demo shop](https://demo.saleor.io/dashboard/)
+Run `cp .env.template .env`, then set `API_URL` to your running Saleor instance.
+The template defaults to `http://localhost:8000/graphql/`.
 
 ## All environment variables
 
