@@ -1,8 +1,23 @@
-## Scope of the change
+## Screenshot / Video
 
-<!-- Describe changes made in this PR. You can attach screenshots or mention related issues as well. -->
+<!-- Required for external contributors when the change affects the UI: paste a screenshot or video showing the result. Include before/after evidence when changing existing visuals. Otherwise write N/A. -->
 
-<!-- External contributors: Please attach GitHub issue number. -->
+<!-- Remove this section if the change does not affect the UI. -->
 
-- [ ] I confirm I added ripples for changes (see src/ripples) or my feature doesn't contain any user-facing changes
-- [ ] I used analytics "trackEvent" for important events
+## What was done
+
+<!-- Describe the changes in simple English. -->
+
+## Why
+
+<!-- Explain the problem or need this addresses. -->
+
+## Related issue
+
+<!-- Required for feature requests: link the approved GitHub issue. -->
+
+- [ ] I added a changeset for a user-facing feature, enhancement, or bug fix, or this PR does not need one.
+- [ ] I added a Ripple for new user-facing functionality (see `src/ripples`), or this PR does not need one.
+- [ ] I used analytics `trackEvent` for important events, or this PR does not need new tracking.
+
+<!-- PRs that do not follow this template may be automatically rejected. -->

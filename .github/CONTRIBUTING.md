@@ -1,37 +1,24 @@
-# Welcome to dashboard contribution guide
+# Contributing to Saleor Dashboard
 
-> [!IMPORTANT]
-> We value your contributions to Saleor and want to ensure they meet our project's needs. To help us maintain quality and consistency, we ask that you follow the process described in our [Contribution Guidelines](https://docs.saleor.io/developer/community/contributing). We welcome issues, new features, documentation improvements, community support, and more.
+Read our [Code of Conduct](CODE_OF_CONDUCT.md) and [Saleor contribution guidelines](https://docs.saleor.io/developer/community/contributing).
 
-Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
+Issues and PRs that do not follow their templates may be automatically rejected.
 
-## New contributor guide
+## Before you start
 
-To get an overview of the project, read the [README](../README.md). Here are some resources to help you get started with open source contributions:
+Bug fixes and small chores, such as typo and translation corrections, do not need prior approval or a GitHub issue. For a new feature, open a GitHub issue and get maintainer approval before implementing it. Link the approved issue in your PR.
 
-- [Finding ways to contribute to open source on GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github)
-- [Set up Git](https://docs.github.com/en/get-started/quickstart/set-up-git)
-- [Collaborating with pull requests](https://docs.github.com/en/github/collaborating-with-pull-requests)
+## Development
 
-## Getting started
+Follow the [README](../README.md) to set up the project. Use the Node.js and pnpm versions specified in [package.json](../package.json). See [AGENTS.md](../AGENTS.md) for code conventions and checks.
 
-We love your contributions and do our best to provide you with mentorship and support. If you are looking for an issue to tackle, take a look at issues labeled [`Good first issue`](https://github.com/saleor/saleor-dashboard/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+) and [`Help wanted`](https://github.com/saleor/saleor-dashboard/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
+For changes to source messages, run `pnpm run extract-messages`. For GraphQL changes, run `pnpm run generate`. Do not edit generated files by hand.
 
-If nothing grabs your attention, check [our roadmap](https://saleor.io/roadmap) or [start a Discord discussion](https://saleor.io/discord) about a feature you'd like to see. Make sure to read our [Contribution Guidelines](https://docs.saleor.io/developer/community/contributing) before opening a PR or issue.
+## Pull requests
 
-### Make changes locally
+Describe what changed and how you checked it. External contributors making visual changes must include a screenshot or video in the PR. Enable [maintainer edits](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) if you want maintainers to update your branch.
 
-1. Fork the repository.
-2. Install Node.js and pnpm using the `engines` and `packageManager` fields in [package.json](../package.json).
-3. Create a working branch and start with your changes!
-
-### Commit your update
-
-Commit the changes once you are happy with them.
-
-### Pull Request
-
-When you're finished with the changes, create a pull request, also known as a PR.
+Add a [Ripple](../src/ripples) for new user-facing functionality so users can discover it.
 
 #### One significant change per PR
 
@@ -52,52 +39,4 @@ How strictly to split depends on how the changes relate:
   acceptable at some point. For example, a refactor commit followed by the bug fix
   it enables can share one PR, as long as each commit contains only its own change.
 
-#### Title and description
-
-A reviewer should understand the entire scope of the PR from its title and
-description alone, without reading the diff first.
-
-- **Title**: say what changes, in plain words. For user-facing changes describe the
-  behavior (`Fix adding variants to order`); for internal changes use a
-  conventional prefix (`refactor:`, `ci:`, `test(e2e):`, `chore:`, `docs:`).
-- **Description** should cover:
-  - **Problem**: what was wrong or missing, and for whom.
-  - **Change**: what this PR does about it, including every area it touches.
-  - **Non-obvious decisions**: trade-offs, rejected alternatives, follow-ups left out.
-  - **Screenshots**: before and after for any UI change.
-  - **Testing**: how the change was verified.
-  - **Links**: related issues, discussions, or stacked PRs.
-
-#### Before you submit
-
-- Fill the template so that we can review your PR. This template helps reviewers understand your changes as well as the purpose of your pull request.
-- Don't forget to [link PR](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) to issue if you are solving one.
-- Enable the checkbox to [allow maintainer edits](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) so the branch can be updated for a merge. Once you submit your PR, a Dashboard team member will review your proposal. We may ask questions or request additional information.
-- We may ask for changes to be made before a PR can be merged, either using [suggested changes](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request) or pull request comments. You can apply suggested changes directly through the UI. You can make any other changes in your fork, then commit them to your branch.
-- As you update your PR and apply changes, mark each conversation as [resolved](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/commenting-on-a-pull-request#resolving-conversations).
-- If you run into any merge issues, checkout this [git tutorial](https://github.com/skills/resolve-merge-conflicts) to help you resolve merge conflicts and other issues.
-- **Respect TypeScript** and further strict mode. We are on the way to migration into strict TypeScript, treat your code as if it was already strict.
-- If it’s possible, **leave the code a better place** - you can do simple refactoring such as moving some repeatable code to separated functions, breaking down bigger components into smaller units, and so on
-- **We expect you to write unit tests** for the new code you create. Please use _Arrange-Act-Assert_ comments to divide test blocks
-- Try to respect **SOLID** rules.
-
-### Changesets
-
-For user-facing features, enhancements, and bug fixes, add a changeset by running `pnpm run change:add`.
-Skip changesets for internal refactors, style, tests, CI/CD, and internal documentation, as described in [AGENTS.md](../AGENTS.md#contributions).
-The prompt will ask you what kind of change you have made. Please pick the one according to the following guide:
-
-- `minor` - any breaking changes, UI updates, new features, anything that changes behavior of the app, and can be considered as minor change
-- `patch` - all bugfixes, insignificant UI updates (color of a button, margins, paddings, borders etc.), text typos, translation amends
-
-### Continuous Integration
-
-We run a series of automated checks on your PR to ensure that it meets our standards. If you are not sure why your PR is failing, please reach out to us. Common problems include:
-
-- Translations messages check is failing - run `pnpm run extract-messages` to update them
-- UI tests are pending - reach out to maintainers to approve them
-- MacawUI migration check is failing - we are on the way to migrate to new MacawUI components, use imports from `@saleor/macaw-ui-next` instead of `@saleor/macaw-ui` in your changes
-
-### Your PR is merged
-
-Congratulations 🎉🎉 Thank you for contribution to dashboard ✨.
+For user-facing features, enhancements, and bug fixes, add a changeset with `pnpm run change:add`. Use `minor` for new features, breaking changes, and behavior changes; use `patch` for bug fixes, small visual changes, copy, and translations. Internal refactors, style, tests, CI/CD, and internal documentation do not need a changeset. The CI check requires one unless a maintainer adds the `skip changeset` label.
