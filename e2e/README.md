@@ -206,7 +206,8 @@ Real shortcuts, taken knowingly, with what would undo them:
   environment is baked at build time (it has to be, for the schema flag). The shipped
   image's runtime substitution therefore has no coverage here; it wants a smoke test of the
   actual Docker image, which is a different suite.
-- **Nightly CI only.** `.github/workflows/e2e-local.yml` runs nightly and on demand.
+- **Nightly CI only.** `.github/workflows/e2e-local.yml` runs nightly and on demand. A
+  failed nightly run posts its failed tests to Slack; a manual run does not.
   Putting it on pull requests is a one-line change once the suite is broad enough to be
   worth the minutes.
 - **Few specs so far.** `tests/login.spec.ts` and the order flows in `tests/orders/`. A

@@ -88,9 +88,17 @@ export default defineConfig({
   retries: 0,
   timeout: 60_000,
   expect: { timeout: 15_000 },
-  /* The html report is what the CI workflow uploads as an artifact; `github` annotates the run. */
+  /*
+   * The html report is what the CI workflow uploads as an artifact; `github` annotates the
+   * run; the json one is what the nightly Slack message lists failed tests from.
+   */
   reporter: process.env.CI
-    ? [["github"], ["list"], ["html", { open: "never" }]]
+    ? [
+        ["github"],
+        ["list"],
+        ["html", { open: "never" }],
+        ["json", { outputFile: "test-results/results.json" }],
+      ]
     : [["html", { open: "never" }], ["list"]],
   use: {
     baseURL: config.dashboardUrl,
