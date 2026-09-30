@@ -60,7 +60,7 @@ describe("useMultipleRichText", () => {
   it("mounts an empty editor when the attribute has no initial value", () => {
     // Arrange
     const { result } = renderHook(() =>
-      useMultipleRichText({
+      useMultipleRichText<string>({
         initial: {},
         triggerChange: jest.fn(),
       }),
