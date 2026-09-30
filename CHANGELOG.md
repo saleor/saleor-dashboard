@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.23.36
+
+### Patch Changes
+
+- [#6962](https://github.com/saleor/saleor-dashboard/pull/6962) [`8d678ea`](https://github.com/saleor/saleor-dashboard/commit/8d678ea217a17187e3bc3dda03df468f3a826617) Thanks [@mirekm](https://github.com/mirekm)! - Long rich text stays shortened until you edit it or choose Show all. Descriptions, such as a product description, stay about twice as tall as an attribute value. The fade appears only when text is actually cut off.
+
+- [#6962](https://github.com/saleor/saleor-dashboard/pull/6962) [`8d678ea`](https://github.com/saleor/saleor-dashboard/commit/8d678ea217a17187e3bc3dda03df468f3a826617) Thanks [@mirekm](https://github.com/mirekm)! - Reference attributes on products, variants, models, and customers now use the same card. Multi-value attributes start as folded, so a long list does not take over the page. Open a group to reorder the references in a list. Switch between a list and chips. That choice, and which groups you left open, is remembered for the type — Shoes stay consistent across Shoes, and stay separate from Bags (if that's a different type), variants, models, and customers.
+
+- [#6943](https://github.com/saleor/saleor-dashboard/pull/6943) [`1b1ad3b`](https://github.com/saleor/saleor-dashboard/commit/1b1ad3b7c7617c281a011c63b0eef417427971be) Thanks [@peelar](https://github.com/peelar)! - Added a global feedback button to the sidebar on cloud instances where product analytics is enabled, making it possible to open PostHog feedback surveys from anywhere in the Dashboard.
+
+- [#6934](https://github.com/saleor/saleor-dashboard/pull/6934) [`248fb36`](https://github.com/saleor/saleor-dashboard/commit/248fb36e81c1bcdb3678b38b9838843feb7bf4a9) Thanks [@mirekm](https://github.com/mirekm)! - Fix how order value shipping handles long carrier method names. Now the name is truncated (full text on hover), and **Change** sits next to Shipping instead of linking the raw method string.
+
+- [#6968](https://github.com/saleor/saleor-dashboard/pull/6968) [`9835b91`](https://github.com/saleor/saleor-dashboard/commit/9835b91354d09654231092e8222da101b7825fb2) Thanks [@mirekm](https://github.com/mirekm)! - For a simple product, shipping weight is in General information and is used to calculate shipping rates. The unit is the shop default, set with shipping zones, not on the product.
+
 ## 3.23.35
 
 ### Patch Changes
