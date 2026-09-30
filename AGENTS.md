@@ -93,8 +93,13 @@ back implementation work, and report any checks that could not run.
 - Use the changesets CLI for user-facing features, enhancements, and bug fixes.
   Explain the user-visible behavior; for fixes, describe what failed and what works
   now. Skip changesets for internal refactors, style, tests, CI/CD, and internal docs.
-- PR descriptions should explain the problem and non-obvious decisions, include
-  screenshots for UI changes, and reference relevant issues or discussions.
+- Follow the PR rules in `.github/CONTRIBUTING.md` (Pull Request section): one
+  significant change per PR, and a title and description that explain the whole
+  scope, with before/after screenshots for UI changes.
+- Run the `saleor-dashboard-pr-quality-check` skill when planning (to keep the
+  planned scope to one PR) and when work is done, including after each commit.
+  Without an open PR it checks the local branch. If it recommends a split, surface
+  that to the user before continuing.
 - Prefer the `gh` CLI for GitHub operations.
 - No agent-driven issue tracker is configured. Return issue or triage findings in
   the conversation; see `docs/agents/issue-tracker.md` when a skill expects a tracker.
