@@ -68,7 +68,9 @@ function useDatagridChange(
   rows: number,
   onChange?: OnDatagridChange,
   setMarkCellsDirty?: (areCellsDirty: boolean) => void,
+  options?: { materializeTrailingGhostOnEdit?: boolean },
 ) {
+  const materializeTrailingGhostOnEdit = options?.materializeTrailingGhostOnEdit ?? false;
   const { added, setAdded, removed, setRemoved, changes } = useDatagridChangeStateContext();
   const getChangeIndex = useCallback(
     (column: string, row: number): number =>
@@ -103,6 +105,14 @@ function useDatagridChange(
   );
   const onCellEdited = useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
+      const ghostRowIndex = rows - removed.length + added.length;
+      let nextAdded = added;
+
+      if (materializeTrailingGhostOnEdit && row === ghostRowIndex && !added.includes(row)) {
+        nextAdded = [...added, row];
+        setAdded(nextAdded);
+      }
+
       const columnId = availableColumns[column].id;
       const existingIndex = getChangeIndex(columnId, row);
       const update = { data: newValue.data, column: columnId, row };
@@ -113,12 +123,21 @@ function useDatagridChange(
           : updateAtIndex(update, changes.current, existingIndex);
       notify({
         updates: changes.current,
-        added,
+        added: nextAdded,
         removed,
         currentUpdate: update,
       });
     },
-    [availableColumns, notify, added, removed],
+    [
+      added,
+      availableColumns,
+      getChangeIndex,
+      materializeTrailingGhostOnEdit,
+      notify,
+      removed,
+      rows,
+      setAdded,
+    ],
   );
   const onRowsRemoved = useCallback(
     (rows: number[]) => {

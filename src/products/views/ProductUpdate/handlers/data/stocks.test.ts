@@ -3,57 +3,8 @@ import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells
 import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
 
-import { getStockData, getVaraintUpdateStockData } from "./stock";
+import { getVaraintUpdateStockData } from "./stock";
 
-describe("getStockData", () => {
-  test("should filter and map to stock format", () => {
-    // Arrange
-    const changeData: DatagridChange[] = [
-      {
-        data: false,
-        column: "availableInChannel:Q2hhbm5lbDox",
-        row: 1,
-      },
-      { column: "attribute:2", row: 2, data: { value: { value: "test2" } } },
-      { column: "warehouse:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
-      { column: "warehouse:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
-    ];
-    // Act
-    const stocks = getStockData(changeData, 1);
-
-    // Assert
-    expect(stocks).toEqual([
-      {
-        warehouse: "Q2hhbm5lbDox",
-        quantity: "12345",
-      },
-      {
-        warehouse: "Q2hhbm5lbDot",
-        quantity: "5666",
-      },
-    ]);
-  });
-  test("should return empty array when no changes for given row", () => {
-    // Arrange
-    const changeData: DatagridChange[] = [
-      { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
-    ];
-    // Act
-    const stocks = getStockData(changeData, 1);
-
-    // Assert
-    expect(stocks).toEqual([]);
-  });
-  test("should return empty string when no name column for given row", () => {
-    // Arrange
-    const changeData: DatagridChange[] = [{ column: "name", row: 2, data: "Joe" }];
-    // Act
-    const stocks = getStockData(changeData, 1);
-
-    // Assert
-    expect(stocks).toEqual([]);
-  });
-});
 describe("getVaraintUpdateStockData", () => {
   const stocks = [
     {

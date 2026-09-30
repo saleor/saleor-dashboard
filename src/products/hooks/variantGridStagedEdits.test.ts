@@ -2,6 +2,7 @@ import { type DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/us
 import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
 
 import {
+  appendStagedVariantCreates,
   buildVariantGridSubmitPayload,
   clearStagedVariantCreates,
   countPendingVariantGridEdits,
@@ -157,30 +158,41 @@ describe("variantGridStagedEdits", () => {
     expect(buildVariantGridSubmitPayload(state).stagedCreates).toEqual([first, second]);
   });
 
-  it("dedupes grid and staged create inputs before BulkCreate", () => {
+  it("drops create inputs that repeat an attribute combination or SKU", () => {
     // Arrange
-    const gridRow = {
+    const red = {
       name: "Red",
       sku: "RED",
       attributes: [{ id: "color", values: ["red"] }],
     };
-    const stagedDup = {
-      name: "Red staged",
+    const redAgain = {
+      name: "Red again",
       sku: "RED",
       attributes: [{ id: "color", values: ["red"] }],
     };
-    const stagedNew = {
+    const blue = {
       name: "Blue",
       sku: "BLUE",
       attributes: [{ id: "color", values: ["blue"] }],
     };
 
     // Act
-    const { unique, skippedCount } = dedupeBulkCreateInputs([gridRow, stagedDup, stagedNew]);
+    const { unique, skippedCount } = dedupeBulkCreateInputs([red, redAgain, blue]);
 
     // Assert
-    expect(unique).toEqual([gridRow, stagedNew]);
+    expect(unique).toEqual([red, blue]);
     expect(skippedCount).toBe(1);
+  });
+
+  it("appends empty manual creates without collapsing them", () => {
+    // Arrange
+    let state = createEmptyVariantGridStagedEdits();
+
+    // Act
+    state = appendStagedVariantCreates(state, [{ attributes: [] }, { attributes: [] }]);
+
+    // Assert
+    expect(state.creates).toEqual([{ attributes: [] }, { attributes: [] }]);
   });
 
   it("clears staged creates after BulkCreate succeeded so retry cannot duplicate them", () => {
