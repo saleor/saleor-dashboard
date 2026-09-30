@@ -555,7 +555,6 @@ export const Datagrid = ({
           ? {
               bgCell:
                 theme === "defaultLight" ? "hsla(220, 18%, 98%, 1)" : "hsla(211, 32%, 16%, 1)",
-              textDark: themeValues.colors.text.defaultDisabled,
             }
           : {}),
         ...customOverride,
