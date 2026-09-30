@@ -4,7 +4,7 @@ import {
 } from "@dashboard/notificationsSettings/constants";
 
 /** Hosted App Store marks — same files Explore and apps.saleor.io use. */
-export const officialAppLogos: Record<string, { light: string; dark: string }> = {
+const officialAppLogos: Record<string, { light: string; dark: string }> = {
   [CUSTOMER_EMAILS_APP_IDENTIFIER]: {
     light: "https://apps.saleor.io/apps/v2/saleor-apps/customer-emails.png",
     dark: "https://apps.saleor.io/apps/v2/saleor-apps/customer-emails.png",

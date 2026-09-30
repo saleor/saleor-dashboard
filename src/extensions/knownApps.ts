@@ -4,7 +4,7 @@ import {
   CUSTOMER_EMAILS_MANIFEST_URL,
 } from "@dashboard/notificationsSettings/constants";
 
-export interface KnownApp {
+interface KnownApp {
   identifier: string;
   manifestUrl: string;
   name: string;
@@ -14,7 +14,7 @@ export interface KnownApp {
  * Official Saleor apps that Dashboard can open by manifest identifier
  * (`/extensions/app/<identifier>`) and install from a hosted manifest.
  */
-export const knownApps: Record<string, KnownApp> = {
+const knownApps: Record<string, KnownApp> = {
   [CUSTOMER_EMAILS_APP_IDENTIFIER]: {
     identifier: CUSTOMER_EMAILS_APP_IDENTIFIER,
     manifestUrl: CUSTOMER_EMAILS_MANIFEST_URL,
