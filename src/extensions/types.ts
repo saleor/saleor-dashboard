@@ -72,6 +72,8 @@ export type InstalledExtension = {
   criticalProblemCount: number;
   /** Installed within the last 48 hours - renders a "New" badge in the list. */
   isNew?: boolean;
+  /** Legacy app that still opens. Renders a Deprecated badge. */
+  deprecated?: boolean;
 };
 
 export interface Extension {

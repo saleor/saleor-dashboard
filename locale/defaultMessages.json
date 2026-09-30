@@ -1735,10 +1735,6 @@
   "4oWCm4": {
     "string": "Tax class updated"
   },
-  "4osJ1F": {
-    "context": "error when SMTP app lookup fails on customer emails redirect",
-    "string": "Couldn’t open customer emails. Try again."
-  },
   "4p3bjX": {
     "context": "tax strategy combobox choice",
     "string": "Use flat rates"
@@ -1953,6 +1949,10 @@
   "5fDY/y": {
     "context": "model type attributes card intro",
     "string": "Shared by every model of this type — for example author or category."
+  },
+  "5gOaTq": {
+    "context": "deprecated SMTP app row description, shown only when that app is installed",
+    "string": "Installed on this shop. Switch to the new Customer Emails app."
   },
   "5hFkdO": {
     "context": "checkbox label",
@@ -3560,6 +3560,10 @@
   "BYfAwE": {
     "context": "page title - installing app with manifestUrl provided",
     "string": "Add extension"
+  },
+  "BZTZYT": {
+    "context": "row title for the current customer emails app on the notifications hub",
+    "string": "Customer Emails"
   },
   "BZyOKE": {
     "context": "bulk publish already listed badge tooltip",
@@ -5916,6 +5920,10 @@
   "K58C4r": {
     "string": "We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}"
   },
+  "K8Q9Ho": {
+    "context": "deprecated SMTP app row title inside the customer emails card",
+    "string": "SMTP"
+  },
   "K8xNLe": {
     "context": "products section name",
     "string": "Products"
@@ -6782,10 +6790,6 @@
   "NPfmdK": {
     "context": "webhook input label",
     "string": "Secret Key"
-  },
-  "NQaMkx": {
-    "context": "notifications settings hub description",
-    "string": "Staff Dashboard emails and who gets new-order alerts are configured here. Customer (shopper) emails use the SMTP app — a separate setup."
   },
   "NQgbYA": {
     "string": "Account Settings"
@@ -8346,6 +8350,10 @@
   "TLYeo5": {
     "context": "label",
     "string": "Shipping Rate Description"
+  },
+  "TNSTQc": {
+    "context": "notifications settings hub description",
+    "string": "Staff Dashboard emails and who gets new-order alerts are configured here. Customer (shopper) emails use the Customer Emails app — a separate setup."
   },
   "TNlcZ5": {
     "context": "extension form app name field placeholder",
@@ -10272,6 +10280,10 @@
   "aKSUWR": {
     "string": "Cannot create transaction to non-existing order"
   },
+  "aL81ko": {
+    "context": "error when Customer Emails app lookup fails on customer emails redirect",
+    "string": "Couldn’t open customer emails. Try again."
+  },
   "aMWJ7/": {
     "context": "local error",
     "string": "This field cannot be blank for a new webhook"
@@ -10554,6 +10566,10 @@
   },
   "bPshhv": {
     "string": "Search vouchers..."
+  },
+  "bQ7TEA": {
+    "context": "customer emails hub card pointing to the Customer Emails app",
+    "string": "Order, account, and fulfillment emails for shoppers are managed in the Customer Emails app."
   },
   "bQCV7I": {
     "context": "voucher redemptions counting explanation callout",
@@ -11235,6 +11251,10 @@
   "diG2vm": {
     "context": "model type icon colour swatch",
     "string": "Color {color}"
+  },
+  "difgT9": {
+    "context": "row hint for the Customer Emails app: i18n, branding, and per-channel SMTP",
+    "string": "Emails in the shopper's language, with your branding and SMTP."
   },
   "diq8M5": {
     "context": "payment apps list truncated warning",
@@ -15201,10 +15221,6 @@
   },
   "rxNddi": {
     "string": "Homepage"
-  },
-  "rxT4ua": {
-    "context": "customer emails hub card pointing to SMTP app",
-    "string": "Order, account, and fulfillment emails for shoppers are managed in the SMTP app."
   },
   "rxlJJ/": {
     "context": "grant refund table, column header",

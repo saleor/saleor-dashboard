@@ -1,6 +1,9 @@
+import { CUSTOMER_EMAILS_APP_IDENTIFIER } from "@dashboard/notificationsSettings/constants";
+
 import {
   findAlreadyInstalledApp,
   findInstalledAppByIdentifier,
+  findInstalledAppForIdentifier,
 } from "./findInstalledAppByIdentifier";
 
 describe("findInstalledAppByIdentifier", () => {
@@ -85,5 +88,43 @@ describe("findAlreadyInstalledApp", () => {
 
     // Assert
     expect(app?.id).toBe("app-2");
+  });
+});
+
+describe("findInstalledAppForIdentifier", () => {
+  it("matches a known app by hosted manifest URL when identifier is missing on the record", () => {
+    // Arrange
+    const apps = [
+      {
+        id: "customer-1",
+        identifier: null,
+        name: "Customer Emails",
+        manifestUrl: "https://customer-emails.saleor.app/api/manifest",
+      },
+    ];
+
+    // Act
+    const app = findInstalledAppForIdentifier(apps, CUSTOMER_EMAILS_APP_IDENTIFIER);
+
+    // Assert
+    expect(app?.id).toBe("customer-1");
+  });
+
+  it("matches a known app by name when identifier and manifest URL are missing", () => {
+    // Arrange
+    const apps = [
+      {
+        id: "customer-local",
+        identifier: null,
+        name: "Customer Emails",
+        manifestUrl: "http://localhost:3000/api/manifest",
+      },
+    ];
+
+    // Act
+    const app = findInstalledAppForIdentifier(apps, CUSTOMER_EMAILS_APP_IDENTIFIER);
+
+    // Assert
+    expect(app?.id).toBe("customer-local");
   });
 });

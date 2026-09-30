@@ -19,7 +19,7 @@ import {
   USER_EMAIL_PLUGIN_ID,
 } from "@dashboard/notificationsSettings/constants";
 import {
-  notificationsCustomerEmailsPath,
+  notificationsCustomerEmailsAppPath,
   notificationsStaffEmailsPath,
 } from "@dashboard/notificationsSettings/urls";
 import { parseQs } from "@dashboard/url-utils";
@@ -118,8 +118,8 @@ const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id: string }>)
   }
 
   if (id === USER_EMAIL_PLUGIN_ID) {
-    // Customer transactional email is owned by the SMTP app — same resolver as Configuration.
-    return <Redirect to={notificationsCustomerEmailsPath} />;
+    // Customer transactional email is owned by the Customer Emails app — same resolver as Configuration.
+    return <Redirect to={notificationsCustomerEmailsAppPath} />;
   }
 
   return <EditPluginExtension id={id} params={params} />;

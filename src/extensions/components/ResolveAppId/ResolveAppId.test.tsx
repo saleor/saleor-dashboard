@@ -1,3 +1,4 @@
+import { CUSTOMER_EMAILS_APP_IDENTIFIER } from "@dashboard/notificationsSettings/constants";
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { MemoryRouter, Route, Switch } from "react-router-dom";
@@ -18,6 +19,7 @@ const renderAt = (path: string) =>
       <MemoryRouter initialEntries={[path]}>
         <Switch>
           <Route path="/extensions/explore" render={() => <div data-test-id="explore" />} />
+          <Route path="/extensions/app/install" render={() => <div data-test-id="install" />} />
           <Route
             path="/extensions/app/:id"
             render={({ match }) => (
@@ -63,6 +65,18 @@ describe("ResolveAppId", () => {
       `/extensions/app/${encodeURIComponent(APP_ID)}/configuration?foo=1#section`,
     );
     expect(mockResolveAppIdFromIdentifier).toHaveBeenCalledWith("saleor.app.adyen");
+  });
+
+  it("Starts install for a known official app that is not installed", async () => {
+    // Arrange
+    mockResolveAppIdFromIdentifier.mockResolvedValue(null);
+
+    // Act
+    renderAt(`/extensions/app/${CUSTOMER_EMAILS_APP_IDENTIFIER}`);
+
+    // Assert
+    expect(await screen.findByTestId("install")).toBeInTheDocument();
+    expect(screen.queryByTestId("explore")).not.toBeInTheDocument();
   });
 
   it("Sends the user to Explore when no installed app matches the identifier", async () => {
