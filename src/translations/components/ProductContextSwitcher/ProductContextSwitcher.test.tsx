@@ -11,6 +11,19 @@ jest.mock("@dashboard/products/hooks/useProductVariantSiblings", () => ({
   useProductVariantSiblings: jest.fn(),
 }));
 
+jest.mock("@dashboard/graphql", () => {
+  const actual = jest.requireActual<typeof import("@dashboard/graphql")>("@dashboard/graphql");
+
+  return {
+    ...actual,
+    useProductTranslationContextQuery: jest.fn(),
+  };
+});
+
+jest.mock("@dashboard/graphql/schemaVersion", () => ({
+  isMainSchema: jest.fn(),
+}));
+
 jest.mock("@saleor/macaw-ui-next", () => {
   const actual = jest.requireActual("@saleor/macaw-ui-next");
 
@@ -23,6 +36,7 @@ jest.mock("@saleor/macaw-ui-next", () => {
       onBlur,
       value,
       loading,
+      options,
       "data-test-id": dataTestId,
     }: {
       onScrollEnd?: () => void;
@@ -31,6 +45,7 @@ jest.mock("@saleor/macaw-ui-next", () => {
       onBlur?: () => void;
       value?: { label: string; value: string } | null;
       loading?: boolean;
+      options: Array<{ label: string; value: string }>;
       "data-test-id"?: string;
     }) => (
       <div data-test-id={dataTestId}>
@@ -48,16 +63,33 @@ jest.mock("@saleor/macaw-ui-next", () => {
         <button type="button" data-test-id="blur" onClick={() => onBlur?.()}>
           blur
         </button>
+        {options.map(option => (
+          <button
+            key={option.value}
+            type="button"
+            data-test-id={`option-${option.value}`}
+            onClick={() => onChange?.(option)}
+          >
+            {option.label}
+          </button>
+        ))}
       </div>
     ),
   };
 });
 
+import { useProductTranslationContextQuery } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { useProductVariantSiblings } from "@dashboard/products/hooks/useProductVariantSiblings";
 
 const mockedUseProductVariantSiblings = useProductVariantSiblings as jest.MockedFunction<
   typeof useProductVariantSiblings
 >;
+const mockedUseProductTranslationContextQuery =
+  useProductTranslationContextQuery as jest.MockedFunction<
+    typeof useProductTranslationContextQuery
+  >;
+const mockedIsMainSchema = isMainSchema as jest.MockedFunction<typeof isMainSchema>;
 
 const renderSwitcher = (props: Partial<React.ComponentProps<typeof ProductContextSwitcher>> = {}) =>
   render(
@@ -75,6 +107,27 @@ describe("ProductContextSwitcher", () => {
   beforeEach(() => {
     mockLoadMore.mockReset();
     mockSetSearch.mockReset();
+    mockedIsMainSchema.mockReturnValue(true);
+    mockedUseProductTranslationContextQuery.mockReturnValue({
+      data: {
+        translation: {
+          __typename: "ProductTranslatableContent",
+          id: "product-content-1",
+          product: {
+            __typename: "Product",
+            id: "product-1",
+            media: [
+              {
+                __typename: "ProductMedia",
+                id: "media-1",
+                alt: "Front view",
+              },
+            ],
+          },
+        },
+      },
+      loading: false,
+    } as ReturnType<typeof useProductTranslationContextQuery>);
     mockedUseProductVariantSiblings.mockReturnValue({
       variants: [
         {
@@ -200,5 +253,41 @@ describe("ProductContextSwitcher", () => {
     expect(mockSetSearch).toHaveBeenCalledWith("");
     expect(screen.getByTestId("combobox-value")).toHaveTextContent("Main Product");
     jest.useRealTimers();
+  });
+
+  it("shows product media alongside variants", () => {
+    // Arrange // Act
+    renderSwitcher();
+
+    // Assert
+    expect(screen.getByTestId("option-v1")).toHaveTextContent("Variant: Variant 1");
+    expect(screen.getByTestId("option-media-1")).toHaveTextContent("Media 1: Front view");
+  });
+
+  it("reports media selection with the media item type", () => {
+    // Arrange
+    const onItemChange = jest.fn();
+
+    renderSwitcher({ onItemChange });
+
+    // Act
+    fireEvent.click(screen.getByTestId("option-media-1"));
+
+    // Assert
+    expect(onItemChange).toHaveBeenCalledWith("media-1", "media");
+  });
+
+  it("hides media when the active schema does not support media translations", () => {
+    // Arrange
+    mockedIsMainSchema.mockReturnValue(false);
+
+    // Act
+    renderSwitcher();
+
+    // Assert
+    expect(screen.queryByTestId("option-media-1")).not.toBeInTheDocument();
+    expect(mockedUseProductTranslationContextQuery).toHaveBeenCalledWith(
+      expect.objectContaining({ skip: true }),
+    );
   });
 });

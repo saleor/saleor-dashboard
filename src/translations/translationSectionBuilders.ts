@@ -1,4 +1,5 @@
 import { commonMessages } from "@dashboard/intl";
+import { rippleProductMediaAltTranslation } from "@dashboard/translations/ripples/productMediaAltTranslation";
 import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import {
   PageTranslationInputFieldName,
@@ -26,6 +27,11 @@ interface GeneralTranslationData {
   name?: string | null;
   translationDescription?: string | null;
   translationName?: string | null;
+}
+
+interface ProductMediaTranslationData {
+  alt?: string | null;
+  translationAlt?: string | null;
 }
 
 export function createGeneralNameDescriptionSection(
@@ -179,6 +185,45 @@ export function createSingleNameSection(
         translation: data.translationName ?? null,
         type: TranslationFieldType.SHORT,
         value: data.name ?? "",
+      },
+    ],
+  };
+}
+
+export function createProductMediaAltSection(
+  intl: IntlShape,
+  data: ProductMediaTranslationData,
+): TranslationSectionConfig {
+  return {
+    id: "media",
+    submitScope: TranslationSubmitScope.entity,
+    subtitle: intl.formatMessage({
+      id: "qG6eS+",
+      defaultMessage: "Alternative text used by storefronts and assistive technologies",
+      description: "product media translation section subtitle",
+    }),
+    title: intl.formatMessage({
+      id: "9RvXNg",
+      defaultMessage: "Media Information",
+      description: "section header",
+    }),
+    fields: [
+      {
+        displayName: intl.formatMessage({
+          id: "SwtcgX",
+          defaultMessage: "Alt text",
+          description: "product media alt text field label",
+        }),
+        hint: intl.formatMessage({
+          id: "CQDz75",
+          defaultMessage: "Describes this media for screen readers and unavailable previews",
+          description: "product media alt text translation hint",
+        }),
+        name: TranslationInputFieldName.alt,
+        ripple: rippleProductMediaAltTranslation,
+        translation: data.translationAlt ?? null,
+        type: TranslationFieldType.SHORT,
+        value: data.alt ?? "",
       },
     ],
   };
