@@ -1,10 +1,23 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import styles from "./RichTextEditorClamp.module.css";
+
+const frameEditor = (child: ReactNode) =>
+  isValidElement(child)
+    ? cloneElement(child as ReactElement<{ framed?: boolean }>, { framed: true })
+    : child;
 
 const messages = defineMessages({
   showAll: {
@@ -115,7 +128,7 @@ export const RichTextEditorClamp = ({
             clamped && overflows && styles.clampedOverflow,
           )}
         >
-          {children}
+          {frameEditor(children)}
         </div>
         {clamped && overflows ? (
           <button
