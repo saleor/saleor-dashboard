@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.23.38
+
+### Patch Changes
+
+- [#6978](https://github.com/saleor/saleor-dashboard/pull/6978) [`8d00479`](https://github.com/saleor/saleor-dashboard/commit/8d0047902dbe7ad12077f33948d61ac40010999b) Thanks [@mirekm](https://github.com/mirekm)! - Customer emails in Configuration → Notifications now open the Customer Emails app, where shopper messages can follow the language they checked out in. If this shop still has the older SMTP app installed, it appears on the same card, marked Deprecated, so you can open it or switch over.
+
+  Notification links and app redirects identify installed apps by their identifier, falling back to the manifest URL only when the identifier is missing. Apps with the same name or a conflicting identifier are no longer mistaken for the intended app.
+
+- [#6979](https://github.com/saleor/saleor-dashboard/pull/6979) [`be83464`](https://github.com/saleor/saleor-dashboard/commit/be8346489ee25aeb9a6430fc2841a7bd3fac183a) Thanks [@peelar](https://github.com/peelar)! - Fixed sidebar overflow and an unresponsive feedback button. Account names now truncate to leave room for both footer buttons, and feedback appears only when its survey is ready.
+
 ## 3.23.37
 
 ### Patch Changes
