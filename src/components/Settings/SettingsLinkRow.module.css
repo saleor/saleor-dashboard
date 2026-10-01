@@ -4,13 +4,13 @@
   display: block;
 }
 
-.card {
+.row {
   transition:
     background-color 0.12s ease,
-    border-color 0.12s ease;
+    color 0.12s ease;
 }
 
-.link:hover .card {
+.link:hover .row {
   background-color: var(--mu-colors-background-default2);
 }
 

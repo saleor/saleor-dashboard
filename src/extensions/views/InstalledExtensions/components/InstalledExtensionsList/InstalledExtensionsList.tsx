@@ -12,6 +12,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProblemsBadge } from "../AppProblems/ProblemsBadge/ProblemsBadge";
 import { ProblemsList } from "../AppProblems/ProblemsList/ProblemsList";
+import { DeprecatedExtensionBadge } from "../DeprecatedExtensionBadge/DeprecatedExtensionBadge";
 import { NewExtensionBadge } from "../NewExtensionBadge/NewExtensionBadge";
 import styles from "./InstalledExtensionsList.module.css";
 import { useExtensionProblems } from "./useExtensionProblems";
@@ -127,6 +128,7 @@ const ExtensionRow = ({
                 </Text>
               </ExtensionName>
               {extension.isNew && <NewExtensionBadge />}
+              {extension.deprecated && <DeprecatedExtensionBadge />}
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}

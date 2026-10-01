@@ -7,9 +7,9 @@ export const notificationsMessages = defineMessages({
     description: "notifications settings hub title",
   },
   hubDescription: {
-    id: "NQaMkx",
+    id: "TNSTQc",
     defaultMessage:
-      "Staff Dashboard emails and who gets new-order alerts are configured here. Customer (shopper) emails use the SMTP app — a separate setup.",
+      "Staff Dashboard emails and who gets new-order alerts are configured here. Customer (shopper) emails use the Customer Emails app — a separate setup.",
     description: "notifications settings hub description",
   },
   staffEmailsTitle: {
@@ -35,15 +35,35 @@ export const notificationsMessages = defineMessages({
     description: "customer emails hub card title",
   },
   customerEmailsSmtpDescription: {
-    id: "rxT4ua",
+    id: "bQ7TEA",
     defaultMessage:
-      "Order, account, and fulfillment emails for shoppers are managed in the SMTP app.",
-    description: "customer emails hub card pointing to SMTP app",
+      "Order, account, and fulfillment emails for shoppers are managed in the Customer Emails app.",
+    description: "customer emails hub card pointing to the Customer Emails app",
   },
   customerEmailsRedirectFailed: {
-    id: "4osJ1F",
+    id: "aL81ko",
     defaultMessage: "Couldn’t open customer emails. Try again.",
-    description: "error when SMTP app lookup fails on customer emails redirect",
+    description: "error when Customer Emails app lookup fails on customer emails redirect",
+  },
+  customerEmailsEntryTitle: {
+    defaultMessage: "Customer Emails",
+    id: "BZTZYT",
+    description: "row title for the current customer emails app on the notifications hub",
+  },
+  customerEmailsEntryDescription: {
+    defaultMessage: "Emails in the shopper's language, with your branding and SMTP.",
+    id: "difgT9",
+    description: "row hint for the Customer Emails app: i18n, branding, and per-channel SMTP",
+  },
+  legacySmtpTitle: {
+    id: "K8Q9Ho",
+    defaultMessage: "SMTP",
+    description: "deprecated SMTP app row title inside the customer emails card",
+  },
+  legacySmtpDescription: {
+    defaultMessage: "Installed on this shop. Switch to the new Customer Emails app.",
+    id: "5gOaTq",
+    description: "deprecated SMTP app row description, shown only when that app is installed",
   },
   staffDeliveryTitle: {
     id: "5p/P1C",
