@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.23.37
+
+### Patch Changes
+
+- [#6974](https://github.com/saleor/saleor-dashboard/pull/6974) [`e4a5acd`](https://github.com/saleor/saleor-dashboard/commit/e4a5acd3190e37033ff103b583dfded7759624a9) Thanks [@mirekm](https://github.com/mirekm)! - Bulk edit now saves every variant you filled in, not just one. An empty row stays at the bottom, ready for the next variant, so you do not have to click Add variant. That empty row is not saved until you type something. On a selected number or price cell, typing replaces the current value instead of adding onto it.
+
 ## 3.23.36
 
 ### Patch Changes
