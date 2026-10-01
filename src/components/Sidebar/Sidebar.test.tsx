@@ -11,6 +11,12 @@ import { MemoryRouter } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { SidebarProvider } from "./SidebarContext";
 
+const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true }));
+
+jest.mock("./user/useFeedbackSurvey", () => ({
+  useFeedbackSurvey: () => mockFeedbackSurvey(),
+}));
+
 jest.mock("./menu/hooks/useMenuStructure", () => ({
   useMenuStructure: jest.fn(() => []),
 }));
@@ -69,6 +75,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 
 describe("Sidebar", () => {
   it("renders the global feedback trigger", () => {
+    // Arrange
+    mockFeedbackSurvey.mockReturnValue({ isAvailable: true });
+
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
 
@@ -77,6 +86,17 @@ describe("Sidebar", () => {
       "data-posthog-feedback-trigger",
       "true",
     );
+  });
+
+  it("hides feedback when its survey is unavailable", () => {
+    // Arrange
+    mockFeedbackSurvey.mockReturnValue({ isAvailable: false });
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.queryByRole("button", { name: "Send feedback" })).not.toBeInTheDocument();
   });
 
   it("should render cloud environment link when is cloud instance", () => {
