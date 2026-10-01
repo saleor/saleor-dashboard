@@ -14,10 +14,11 @@ import messages from "./messages";
 
 export const isVariantDatagridSupportedAttribute = (
   inputType: AttributeInputTypeEnum | null | undefined,
-) =>
+): boolean =>
   inputType === AttributeInputTypeEnum.DROPDOWN ||
   inputType === AttributeInputTypeEnum.PLAIN_TEXT ||
-  inputType === AttributeInputTypeEnum.SWATCH;
+  inputType === AttributeInputTypeEnum.SWATCH ||
+  inputType === AttributeInputTypeEnum.NUMERIC;
 
 export const variantsStaticColumnsAdapter = (intl: IntlShape) => [
   {
