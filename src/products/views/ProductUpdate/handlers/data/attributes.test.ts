@@ -109,7 +109,8 @@ describe("getAttributeData", () => {
         },
       },
     ]);
-  });  test("should return numeric input for numeric attribute change", () => {
+  });
+  test("should return numeric input for numeric attribute change", () => {
     // Arrange
     const changeData: DatagridChange[] = [
       {
@@ -156,5 +157,17 @@ describe("getAttributeData", () => {
         numeric: null,
       },
     ]);
+  });
+  test.each([0, 12.5])("preserves numeric value %s", value => {
+    // Arrange
+    const changes: DatagridChange[] = [
+      { column: `attribute:${numericAttributeId}`, row: 0, data: { kind: "number-cell", value } },
+    ];
+
+    // Act
+    const attributes = getAttributeData(changes, 0, numericVariantAttributes);
+
+    // Assert
+    expect(attributes).toEqual([{ id: numericAttributeId, numeric: String(value) }]);
   });
 });

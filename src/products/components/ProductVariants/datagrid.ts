@@ -14,7 +14,7 @@ import messages from "./messages";
 
 export const isVariantDatagridSupportedAttribute = (
   inputType: AttributeInputTypeEnum | null | undefined,
-) =>
+): boolean =>
   inputType === AttributeInputTypeEnum.DROPDOWN ||
   inputType === AttributeInputTypeEnum.PLAIN_TEXT ||
   inputType === AttributeInputTypeEnum.SWATCH ||
