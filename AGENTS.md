@@ -93,9 +93,8 @@ back implementation work, and report any checks that could not run.
 - Use the changesets CLI for user-facing features, enhancements, and bug fixes.
   Explain the user-visible behavior; for fixes, describe what failed and what works
   now. Skip changesets for internal refactors, style, tests, CI/CD, and internal docs.
-- Follow the PR rules in `.github/CONTRIBUTING.md` (Pull Request section): one
-  significant change per PR, and a title and description that explain the whole
-  scope, with before/after screenshots for UI changes.
+- Follow scope policy in `.github/CONTRIBUTING.md` (Pull requests section) and
+  title and description requirements in `.github/PULL_REQUEST_TEMPLATE.md`.
 - Run the `saleor-dashboard-pr-quality-check` skill when planning (to keep the
   planned scope to one PR) and when work is done, including after each commit.
   Without an open PR it checks the local branch. If it recommends a split, surface

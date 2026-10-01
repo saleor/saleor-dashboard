@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 GitHub Discussions
-    url: https://github.com/saleor/dashboard/discussions
-    about: If you have a support question or need help getting dashboard to work, please use GitHub Discussions.
+  - name: 💬 Discord
+    url: https://saleor.io/discord
+    about: If you have a support question or need help getting dashboard to work, please use Discord.
