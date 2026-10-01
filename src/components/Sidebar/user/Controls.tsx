@@ -92,7 +92,7 @@ export const UserControls = () => {
 
   return (
     <>
-      <Box display="flex" alignItems="center" gap={1}>
+      <Box display="flex" alignItems="center" gap={1} flexShrink="0">
         <FeedbackButton />
         <Dropdown
           open={open}

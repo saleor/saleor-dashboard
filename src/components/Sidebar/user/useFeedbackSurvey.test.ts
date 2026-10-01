@@ -17,10 +17,11 @@ const mockPosthog = {
     Parameters<PostHog["getActiveMatchingSurveys"]>
   >(),
 };
+const mockAnalyticsEnabled = jest.fn(() => true);
 
 jest.mock("posthog-js/react", () => ({ usePostHog: () => mockPosthog }));
 jest.mock("@dashboard/components/ProductAnalytics/config", () => ({
-  isProductAnalyticsEnabled: () => true,
+  isProductAnalyticsEnabled: () => mockAnalyticsEnabled(),
 }));
 
 const feedbackSurvey: Survey = {
@@ -49,6 +50,7 @@ const matching = mockPosthog.getActiveMatchingSurveys;
 
 beforeEach(() => {
   jest.clearAllMocks();
+  mockAnalyticsEnabled.mockReturnValue(true);
   loaded.mockReturnValue(jest.fn());
   mockPosthog.onFeatureFlags.mockReturnValue(jest.fn());
   matching.mockImplementation(callback => callback([feedbackSurvey]));
@@ -64,6 +66,26 @@ it("stays hidden until the renderer loads and the feedback survey matches", () =
 
   // Assert
   expect(result.current.isAvailable).toBe(true);
+});
+
+it("is available in development without analytics or a loaded survey", () => {
+  // Arrange
+  const originalNodeEnv = process.env.NODE_ENV;
+
+  process.env.NODE_ENV = "development";
+  mockAnalyticsEnabled.mockReturnValue(false);
+
+  try {
+    // Act
+    const { result } = renderHook(useFeedbackSurvey);
+
+    // Assert
+    expect(result.current.isAvailable).toBe(true);
+    expect(loaded).not.toHaveBeenCalled();
+    expect(matching).not.toHaveBeenCalled();
+  } finally {
+    process.env.NODE_ENV = originalNodeEnv;
+  }
 });
 
 it("stays hidden when loading fails", () => {
