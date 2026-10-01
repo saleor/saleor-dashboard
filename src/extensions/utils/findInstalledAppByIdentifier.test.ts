@@ -92,9 +92,16 @@ describe("findAlreadyInstalledApp", () => {
 });
 
 describe("findInstalledAppForIdentifier", () => {
+  type InstalledApp = {
+    id: string;
+    identifier: string | null;
+    name: string;
+    manifestUrl: string | null;
+  };
+
   it("matches a known app by hosted manifest URL when identifier is missing on the record", () => {
     // Arrange
-    const apps = [
+    const apps: InstalledApp[] = [
       {
         id: "customer-1",
         identifier: null,
@@ -110,13 +117,55 @@ describe("findInstalledAppForIdentifier", () => {
     expect(app?.id).toBe("customer-1");
   });
 
-  it("matches a known app by name when identifier and manifest URL are missing", () => {
+  it.each([null, "other.app"])("does not match by name when identifier is %s", identifier => {
     // Arrange
-    const apps = [
+    const apps: InstalledApp[] = [
       {
         id: "customer-local",
+        identifier,
+        name: "Customer Emails",
+        manifestUrl: "http://localhost:3000/api/manifest",
+      },
+    ];
+
+    // Act
+    const app = findInstalledAppForIdentifier(apps, CUSTOMER_EMAILS_APP_IDENTIFIER);
+
+    // Assert
+    expect(app).toBeUndefined();
+  });
+
+  it("rejects a matching manifest URL with a conflicting identifier", () => {
+    // Arrange
+    const apps: InstalledApp[] = [
+      {
+        id: "other-app",
+        identifier: "other.app",
+        name: "Customer Emails",
+        manifestUrl: "https://customer-emails.saleor.app/api/manifest",
+      },
+    ];
+
+    // Act
+    const app = findInstalledAppForIdentifier(apps, CUSTOMER_EMAILS_APP_IDENTIFIER);
+
+    // Assert
+    expect(app).toBeUndefined();
+  });
+
+  it("prefers an identifier match over a manifest URL fallback", () => {
+    // Arrange
+    const apps: InstalledApp[] = [
+      {
+        id: "legacy-app",
         identifier: null,
         name: "Customer Emails",
+        manifestUrl: "https://customer-emails.saleor.app/api/manifest",
+      },
+      {
+        id: "customer-local",
+        identifier: CUSTOMER_EMAILS_APP_IDENTIFIER,
+        name: "Custom name",
         manifestUrl: "http://localhost:3000/api/manifest",
       },
     ];

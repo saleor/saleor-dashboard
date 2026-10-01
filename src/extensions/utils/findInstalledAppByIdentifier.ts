@@ -17,7 +17,7 @@ export const findInstalledAppByIdentifier = <
 
 /**
  * Resolves an installed app the same way App Bridge `RedirectToApp` does:
- * manifest identifier first, then the hosted manifest URL / name for known apps
+ * manifest identifier first, then the hosted manifest URL for known apps
  * whose Saleor record has a missing identifier.
  */
 export const findInstalledAppForIdentifier = <
@@ -43,15 +43,13 @@ export const findInstalledAppForIdentifier = <
   }
 
   const expectedManifest = normalizeManifestUrl(known.manifestUrl);
-  const byManifest = installedApps.find(
-    app => app.manifestUrl != null && normalizeManifestUrl(app.manifestUrl) === expectedManifest,
+
+  return installedApps.find(
+    app =>
+      !app.identifier &&
+      app.manifestUrl != null &&
+      normalizeManifestUrl(app.manifestUrl) === expectedManifest,
   );
-
-  if (byManifest) {
-    return byManifest;
-  }
-
-  return installedApps.find(app => app.name === known.name);
 };
 
 export const findAlreadyInstalledApp = <
