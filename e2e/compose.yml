@@ -26,6 +26,8 @@ services:
       EMAIL_URL: console://
       DEFAULT_FROM_EMAIL: noreply@example.com
       ALLOWED_HOSTS: localhost,127.0.0.1,api
+      # Media and thumbnail URLs must use the host port the browser can reach.
+      PUBLIC_URL: http://localhost:${SALEOR_API_PORT}
       DEFAULT_CHANNEL_SLUG: default-channel
       # Seeding runs well past the 5-minute default and the suite holds one admin token
       # for the whole of it; an expiring token fails the seed halfway through.

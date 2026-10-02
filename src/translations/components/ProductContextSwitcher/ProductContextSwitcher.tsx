@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { useProductTranslationContextQuery } from "@dashboard/graphql";
 import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import {
@@ -90,6 +91,7 @@ export const ProductContextSwitcher = ({
   onItemChange,
 }: ProductContextSwitcherProps) => {
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const mediaTranslationsEnabled = isMainSchema();
   const mainProductLabel = intl.formatMessage(messages.mainProduct);
   /**
@@ -256,9 +258,14 @@ export const ProductContextSwitcher = ({
 
       setSelectionOverride(undefined);
       setSearch("");
+
+      if (option.type === "media") {
+        trackEvent("product_media_translation_opened", { source: "translation_context" });
+      }
+
       onItemChange(option.value, option.type);
     },
-    [onItemChange, setSearch],
+    [onItemChange, setSearch, trackEvent],
   );
 
   const handleBlur = useCallback(() => {
