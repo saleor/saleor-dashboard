@@ -1,8 +1,8 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { PermissionEnum } from "@dashboard/graphql";
+import { PermissionEnum, WarehouseClickAndCollectOptionEnum } from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 import Wrapper from "@test/wrapper";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 import OrderCustomer from "./OrderCustomer";
@@ -12,9 +12,6 @@ jest.mock("@dashboard/components/ReadonlyAddress/ReadonlyAddress", () => ({
   ReadonlyAddress: () => <div>ReadonlyAddress</div>,
 }));
 jest.mock("@dashboard/auth/hooks/useUserPermissions");
-jest.mock("./PickupAnnotation", () => ({
-  PickupAnnotation: () => <div>PickupAnnotation</div>,
-}));
 jest.mock("./AddressTextError", () => ({
   AddressTextError: () => <div>AddressTextError</div>,
 }));
@@ -109,6 +106,150 @@ describe("OrderCustomer", () => {
     expect(notSetElements.length).toBeGreaterThan(0);
   });
 
+  it("shows the pickup location instead of a shipping address when collected at a warehouse", () => {
+    // Arrange
+    const order = OrderFixture.fulfilled().build();
+
+    order.deliveryMethod = {
+      __typename: "Warehouse",
+      id: "warehouse-1",
+      clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL,
+    };
+    order.collectionPointName = "Downtown warehouse";
+    order.shippingAddress = {
+      ...order.shippingAddress!,
+      firstName: "Regina",
+      lastName: "Larson",
+      streetAddress1: "799 Cedar Ln",
+    };
+
+    // Act
+    render(
+      <Wrapper>
+        <MemoryRouter>
+          <OrderCustomer {...defaultProps} order={order} />
+        </MemoryRouter>
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("shipping-address-section-title")).toHaveTextContent(
+      "Pickup location",
+    );
+    expect(screen.getByTestId("pickup-location-name")).toHaveTextContent("Downtown warehouse");
+    expect(screen.getByTestId("pickup-location-stock-rule")).toHaveTextContent(
+      "Uses this location's stock only",
+    );
+    expect(screen.getByText("799 Cedar Ln")).toBeInTheDocument();
+    expect(screen.queryByText("Regina Larson")).not.toBeInTheDocument();
+  });
+
+  it("copies the pickup location name and address, without the warehouse contact name", () => {
+    // Arrange
+    const order = OrderFixture.fulfilled().build();
+
+    order.deliveryMethod = {
+      __typename: "Warehouse",
+      id: "warehouse-1",
+      clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL,
+    };
+    order.collectionPointName = "Downtown warehouse";
+    order.shippingAddress = {
+      ...order.shippingAddress!,
+      firstName: "Regina",
+      lastName: "Larson",
+      companyName: "Saleor",
+      streetAddress1: "799 Cedar Ln",
+      streetAddress2: "",
+      postalCode: "10001",
+      city: "NEW YORK",
+      cityArea: "",
+      countryArea: "NY",
+      phone: "+1 212 555 0142",
+      country: {
+        __typename: "CountryDisplay",
+        code: "US",
+        country: "United States of America",
+      },
+    };
+
+    render(
+      <Wrapper>
+        <MemoryRouter>
+          <OrderCustomer {...defaultProps} order={order} />
+        </MemoryRouter>
+      </Wrapper>,
+    );
+
+    // Act
+    const section = screen.getByTestId("shipping-address-section");
+
+    fireEvent.click(within(section).getByRole("button", { name: "Copy to clipboard" }));
+
+    // Assert
+    expect(mockCopy).toHaveBeenCalledWith(
+      [
+        "Downtown warehouse",
+        "Saleor",
+        "799 Cedar Ln",
+        "10001 NEW YORK",
+        "NY, United States of America",
+        "+1 212 555 0142",
+      ].join("\n"),
+    );
+  });
+
+  it("explains that stock can come from any warehouse for pickup with transfers", () => {
+    // Arrange
+    const order = OrderFixture.fulfilled().build();
+
+    order.deliveryMethod = {
+      __typename: "Warehouse",
+      id: "warehouse-1",
+      clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
+    };
+
+    // Act
+    render(
+      <Wrapper>
+        <MemoryRouter>
+          <OrderCustomer {...defaultProps} order={order} />
+        </MemoryRouter>
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("pickup-location-stock-rule")).toHaveTextContent(
+      "Stock can come from any warehouse",
+    );
+  });
+
+  it("says billing matches pickup when both addresses are the warehouse", () => {
+    // Arrange
+    const order = OrderFixture.fulfilled().build();
+
+    order.deliveryMethod = {
+      __typename: "Warehouse",
+      id: "warehouse-1",
+      clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
+    };
+    order.billingAddress = { ...order.shippingAddress!, id: "addr1" };
+    order.shippingAddress = { ...order.shippingAddress!, id: "addr1" };
+
+    // Act
+    render(
+      <Wrapper>
+        <MemoryRouter>
+          <OrderCustomer {...defaultProps} order={order} />
+        </MemoryRouter>
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.getByText("Same as pickup")).toBeInTheDocument();
+    expect(screen.queryByText("Same as shipping address")).not.toBeInTheDocument();
+  });
+
   it("renders shipping address", () => {
     render(
       <Wrapper>
@@ -150,6 +291,30 @@ describe("OrderCustomer", () => {
 
     expect(screen.getByTestId("change-customer")).toBeInTheDocument();
     expect(screen.getByTestId("edit-shipping-address")).toBeInTheDocument();
+    expect(screen.getByTestId("edit-billing-address")).toBeInTheDocument();
+  });
+
+  it("hides the address edit for a pickup location but keeps billing editable", () => {
+    // Arrange
+    const order = OrderFixture.fulfilled().build();
+
+    order.deliveryMethod = {
+      __typename: "Warehouse",
+      id: "warehouse-1",
+      clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL,
+    };
+
+    // Act
+    render(
+      <Wrapper>
+        <MemoryRouter>
+          <OrderCustomer {...defaultProps} order={order} />
+        </MemoryRouter>
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.queryByTestId("edit-shipping-address")).not.toBeInTheDocument();
     expect(screen.getByTestId("edit-billing-address")).toBeInTheDocument();
   });
 

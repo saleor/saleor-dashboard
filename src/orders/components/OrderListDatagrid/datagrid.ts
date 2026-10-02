@@ -53,13 +53,13 @@ export const orderListStaticColumnAdapter = (
       width: 200,
     },
     {
-      id: "delivery",
-      title: intl.formatMessage(columnsMessages.delivery),
+      id: "status",
+      title: intl.formatMessage(columnsMessages.status),
       width: 200,
     },
     {
-      id: "status",
-      title: intl.formatMessage(columnsMessages.status),
+      id: "delivery",
+      title: intl.formatMessage(columnsMessages.delivery),
       width: 200,
     },
     {
@@ -203,6 +203,18 @@ export function getPaymentCellContent(
   return readonlyTextCell("-");
 }
 
+const colorAtOpacity = (color: string, opacity: number): string => {
+  if (color.startsWith("oklch(")) {
+    return color.replace(/\)\s*$/, ` / ${opacity})`);
+  }
+
+  const alpha = Math.round(opacity * 255)
+    .toString(16)
+    .padStart(2, "0");
+
+  return `${color}${alpha}`;
+};
+
 export function getDeliveryCellContent(
   intl: IntlShape,
   currentTheme: DefaultTheme,
@@ -214,11 +226,11 @@ export function getDeliveryCellContent(
     return readonlyTextCell("-");
   }
 
-  return pillCell(
-    intl.formatMessage(info.labelMessage),
-    getStatusColor({ status: info.color, currentTheme }),
-    COMMON_CELL_PROPS,
-  );
+  const pillColor = getStatusColor({ status: info.color, currentTheme });
+  const color =
+    info.color === "info" ? { ...pillColor, base: colorAtOpacity(pillColor.base, 0.5) } : pillColor;
+
+  return pillCell(intl.formatMessage(info.labelMessage), color, COMMON_CELL_PROPS);
 }
 
 function getNetCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {

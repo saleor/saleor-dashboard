@@ -159,7 +159,7 @@ describe("useGetCellContent", () => {
       copyData: "Shipping",
       cursor: "pointer",
       data: {
-        color: getStatusColor({ status: "info", currentTheme: "defaultLight" }),
+        color: getStatusColor({ status: "neutral", currentTheme: "defaultLight" }),
         kind: "auto-tags-cell",
         value: "Shipping",
       },
@@ -275,6 +275,16 @@ describe("getDeliveryCellContent", () => {
 
     // Assert
     expect((result.data as PillCell["data"]).value).toEqual("Pickup");
+
+    const infoPill = getStatusColor({ status: "info", currentTheme: "defaultLight" });
+    const halfOpacityBackground = infoPill.base.startsWith("oklch(")
+      ? infoPill.base.replace(/\)\s*$/, " / 0.5)")
+      : `${infoPill.base}80`;
+
+    expect((result.data as PillCell["data"]).color).toEqual({
+      ...infoPill,
+      base: halfOpacityBackground,
+    });
   });
 
   it("should return dash when delivery method is null", () => {

@@ -8,6 +8,7 @@ import {
   type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { getDeliveryMethodInfo } from "@dashboard/orders/utils/deliveryMethod";
 import {
   type DiscountTypeCategory,
   getDiscountTypeCategory,
@@ -177,6 +178,8 @@ type StaticFields = {
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
   voucherId: string | null;
   undiscountedSubtotal: number;
+  deliveryMethod?: OrderDetailsFragment["deliveryMethod"];
+  collectionPointName?: OrderDetailsFragment["collectionPointName"];
 };
 
 type BaseProps = LineUpdateFields & StaticFields;
@@ -266,6 +269,8 @@ export const OrderValue = (props: Props): ReactNode => {
     displayGrossPrices,
     lineDiscountsSummary,
     undiscountedSubtotal,
+    deliveryMethod,
+    collectionPointName,
     isEditable = false,
   } = props;
   const intl = useIntl();
@@ -286,6 +291,37 @@ export const OrderValue = (props: Props): ReactNode => {
 
   const renderShippingRow = (): ReactNode => {
     const shippingAmountTitle = intl.formatMessage(messages.shippingTitle);
+    const deliveryInfo = getDeliveryMethodInfo(deliveryMethod);
+
+    if (deliveryMethod?.__typename === "Warehouse" && deliveryInfo) {
+      // Assigning a shipping method is the only way to turn an editable pickup order into a shipped one.
+      const canSetShippingMethod =
+        isEditable && !!editableProps?.shippingAddress && hasShippingMethods;
+
+      return (
+        <OrderSummaryListItem amount={shippingPrice.gross.amount} amountTitle={shippingAmountTitle}>
+          {intl.formatMessage(deliveryInfo.labelMessage)}{" "}
+          {collectionPointName && (
+            <Text as="span" color="default2">
+              {collectionPointName}
+            </Text>
+          )}
+          {canSetShippingMethod && (
+            <>
+              <Text as="span" color="default2">
+                {" · "}
+              </Text>
+              <ButtonLink
+                onClick={editableProps?.onShippingMethodEdit}
+                data-test-id="add-shipping-carrier"
+              >
+                {intl.formatMessage(messages.setShippingMethod)}
+              </ButtonLink>
+            </>
+          )}
+        </OrderSummaryListItem>
+      );
+    }
 
     if (!isEditable) {
       return (

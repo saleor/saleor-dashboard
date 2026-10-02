@@ -500,10 +500,6 @@
   "/vCXIP": {
     "string": "Translation"
   },
-  "/w919H": {
-    "context": "OrderCustomer Fulfillment from Local Warehouse",
-    "string": "Fulfill from Local Stock"
-  },
   "/x7Y7U": {
     "context": "search models placeholder",
     "string": "Search models"
@@ -737,6 +733,10 @@
   "0iZ6Ds": {
     "context": "snackbar text",
     "string": "Extension activated"
+  },
+  "0igWMZ": {
+    "context": "billing address matches the pickup location",
+    "string": "Same as pickup"
   },
   "0ix6PR": {
     "string": "Order cancelled"
@@ -1558,6 +1558,10 @@
   "43b+ts": {
     "context": "extensions list has been installed",
     "string": "Extension installed"
+  },
+  "43uGpq": {
+    "context": "customer card section title for a click-and-collect order's collection point",
+    "string": "Pickup location"
   },
   "450Fty": {
     "string": "None"
@@ -2511,6 +2515,10 @@
   "7az76v": {
     "context": "tooltip for status column in line matrix",
     "string": "Click to view shipments and refunds for this line."
+  },
+  "7bDQUo": {
+    "context": "pickup order: items are fulfilled only from the pickup location's own stock",
+    "string": "Uses this location's stock only"
   },
   "7dVB7S": {
     "context": "PDP schematic empty state for non-selection variant attributes",
@@ -3832,6 +3840,10 @@
   "CUGRtv": {
     "context": "warning when staff email plugin is inactive",
     "string": "Staff emails are turned off. These people will not be notified until you enable them above."
+  },
+  "CURJPX": {
+    "context": "pickup order: items may be fulfilled from other warehouses and sent to the pickup location",
+    "string": "Stock can come from any warehouse"
   },
   "CVEnEY": {
     "context": "gift card tag multiselect placeholder",
@@ -7706,10 +7718,6 @@
   "R8R2lk": {
     "context": "transaction refund section header in line expanded panel",
     "string": "Transaction refunds"
-  },
-  "R98JLZ": {
-    "context": "OrderCustomer Fulfillment from All Warehouses",
-    "string": "Fulfill from All Warehouses"
   },
   "RA+pDk": {
     "context": "category metadata dialog header",

@@ -7,9 +7,9 @@ type DeliveryMethodLike =
   | null
   | undefined;
 
-export interface DeliveryMethodInfo {
+interface DeliveryMethodInfo {
   labelMessage: MessageDescriptor;
-  color: "info" | "attention";
+  color: "info" | "neutral";
 }
 
 export const getDeliveryMethodInfo = (
@@ -20,8 +20,8 @@ export const getDeliveryMethodInfo = (
   }
 
   if (deliveryMethod.__typename === "Warehouse") {
-    return { labelMessage: columnsMessages.deliveryWarehouse, color: "attention" };
+    return { labelMessage: columnsMessages.deliveryWarehouse, color: "info" };
   }
 
-  return { labelMessage: columnsMessages.deliveryShipping, color: "info" };
+  return { labelMessage: columnsMessages.deliveryShipping, color: "neutral" };
 };

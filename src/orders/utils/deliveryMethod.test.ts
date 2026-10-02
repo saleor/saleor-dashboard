@@ -9,7 +9,7 @@ describe("getDeliveryMethodInfo", () => {
     const result = getDeliveryMethodInfo(deliveryMethod);
 
     // Assert
-    expect(result?.color).toBe("attention");
+    expect(result?.color).toBe("info");
     expect(result?.labelMessage.defaultMessage).toBe("Pickup");
   });
 
@@ -21,7 +21,7 @@ describe("getDeliveryMethodInfo", () => {
     const result = getDeliveryMethodInfo(deliveryMethod);
 
     // Assert
-    expect(result?.color).toBe("info");
+    expect(result?.color).toBe("neutral");
     expect(result?.labelMessage.defaultMessage).toBe("Shipping");
   });
 

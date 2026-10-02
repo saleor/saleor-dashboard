@@ -4,6 +4,7 @@ import { renderHook } from "@testing-library/react";
 
 import useListSettings, {
   listSettingsStorageKey,
+  orderListDeliveryColumnMigrationKey,
   voucherCodesPageSizeMigrationKey,
   voucherListColumnsMigrationKey,
 } from "./useListSettings";
@@ -124,6 +125,59 @@ describe("useListSettings", () => {
     // Assert
     expect(result.current.settings.columns).toEqual(["code", "status", "value", "type", "limit"]);
     expect(localStorage.getItem(voucherListColumnsMigrationKey)).toBe("1");
+  });
+
+  it("adds the Delivery column when the orders list is still on a previous default", () => {
+    // Arrange
+    localStorage.setItem(
+      listSettingsStorageKey,
+      JSON.stringify({
+        ...defaultListSettings,
+        [ListViews.ORDER_LIST]: {
+          rowNumber: PAGINATE_BY,
+          columns: ["number", "date", "customer", "payment", "status", "net", "total", "channel"],
+        },
+      }),
+    );
+
+    // Act
+    const { result } = renderHook(() => useListSettings(ListViews.ORDER_LIST));
+
+    // Assert
+    expect(result.current.settings.columns).toEqual([
+      "number",
+      "date",
+      "customer",
+      "payment",
+      "status",
+      "delivery",
+      "net",
+      "total",
+      "channel",
+    ]);
+    expect(localStorage.getItem(orderListDeliveryColumnMigrationKey)).toBe("1");
+  });
+
+  it("keeps a custom orders list column setup", () => {
+    // Arrange
+    const storedColumns = ["number", "customer", "total"];
+
+    localStorage.setItem(
+      listSettingsStorageKey,
+      JSON.stringify({
+        ...defaultListSettings,
+        [ListViews.ORDER_LIST]: {
+          rowNumber: PAGINATE_BY,
+          columns: storedColumns,
+        },
+      }),
+    );
+
+    // Act
+    const { result } = renderHook(() => useListSettings(ListViews.ORDER_LIST));
+
+    // Assert
+    expect(result.current.settings.columns).toEqual(storedColumns);
   });
 
   it("keeps an existing product list column setup instead of applying new defaults", () => {
