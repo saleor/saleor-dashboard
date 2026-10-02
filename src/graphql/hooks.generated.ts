@@ -2967,6 +2967,12 @@ export const ActivitiesFragmentDoc = gql`
   }
 }
     `;
+export const OrderNumberFragmentDoc = gql`
+    fragment OrderNumber on Order {
+  id
+  number
+}
+    `;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -3643,6 +3649,14 @@ export const ProductListAttributeFragmentDoc = gql`
   }
 }
     ${AttributeValueFragmentDoc}`;
+export const ProductVariantProductIdFragmentDoc = gql`
+    fragment ProductVariantProductId on ProductVariant {
+  id
+  product {
+    id
+  }
+}
+    `;
 export const ShippingMethodWithPostalCodesFragmentDoc = gql`
     fragment ShippingMethodWithPostalCodes on ShippingMethodType {
   id
