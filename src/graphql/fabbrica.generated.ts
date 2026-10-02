@@ -9624,6 +9624,8 @@ export const defineConfigurationItemInputFactory: DefineTypeFactoryInterface<
  *
  * Triggers the following webhook events:
  * - ACCOUNT_CONFIRMED (async): Account was confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
  */
 export type OptionalConfirmAccount = {
   __typename?: 'ConfirmAccount';
@@ -16789,6 +16791,8 @@ export type OptionalMutation = {
  *
  * Triggers the following webhook events:
  * - ACCOUNT_CONFIRMED (async): Account was confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
  */
   confirmAccount?: Maybe<OptionalConfirmAccount> | undefined;
   /**
@@ -18187,7 +18191,14 @@ export type OptionalMutation = {
  * - ACCOUNT_CONFIRMATION_REQUESTED (async): An account confirmation was requested. This event is always sent regardless of settings.
  */
   sendConfirmationEmail?: Maybe<OptionalSendConfirmationEmail> | undefined;
-  /** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+  /**
+ * Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+ *
+ * Triggers the following webhook events:
+ * - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
+ */
   setPassword?: Maybe<OptionalSetPassword> | undefined;
   /**
  * Manage shipping method's availability in channels.
@@ -31550,7 +31561,14 @@ export const defineSeoInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+/**
+ * Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+ *
+ * Triggers the following webhook events:
+ * - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
+ */
 export type OptionalSetPassword = {
   __typename?: 'SetPassword';
   accountErrors?: OptionalAccountError[] | undefined;
