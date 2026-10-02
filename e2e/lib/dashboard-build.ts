@@ -18,10 +18,22 @@ import { log } from "./progress.ts";
  */
 const BUILD_INPUTS = ["src", "locale", ".featureFlags", "vite.config.js", "package.json"];
 
+// Opt in to an isolated PostHog endpoint for the feedback regression specs.
+const feedbackAnalyticsEnv = (): Record<string, string> =>
+  process.env.E2E_FEEDBACK === "true"
+    ? {
+        IS_CLOUD_INSTANCE: "true",
+        POSTHOG_HOST: "https://posthog.example.test",
+        POSTHOG_KEY: "phc_feedback_e2e",
+        POSTHOG_EXCLUDED_DOMAINS: "",
+      }
+    : {};
+
 const fingerprint = (config: E2eConfig) => {
   const hash = crypto.createHash("sha256");
 
   hash.update(`${config.apiUrl}|${config.stagingSchema}`);
+  hash.update(JSON.stringify(feedbackAnalyticsEnv()));
 
   const visit = (entry: string) => {
     const stats = fs.statSync(entry);
@@ -78,6 +90,7 @@ export const buildDashboard = (config: E2eConfig) => {
       stdio: "inherit",
       env: {
         ...process.env,
+        ...feedbackAnalyticsEnv(),
         NODE_OPTIONS: "--max-old-space-size=8192",
         API_URL: config.apiUrl,
         APP_MOUNT_URI: "/",

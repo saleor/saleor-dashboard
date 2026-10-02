@@ -61,10 +61,7 @@ export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
     [enabled, posthog],
   );
 
-  const isSurveyAvailable =
-    enabled && availability?.client === posthog && availability?.available === true;
-
   return {
-    isAvailable: process.env.NODE_ENV === "development" || isSurveyAvailable,
+    isAvailable: enabled && availability?.client === posthog && availability?.available === true,
   };
 };

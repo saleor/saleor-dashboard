@@ -13,6 +13,17 @@ pnpm e2e:fresh      # drop the database volume and the caches first
 pnpm e2e:down       # stop both stacks, keep the volumes
 ```
 
+To test feedback against the real PostHog SDK in the production dashboard build:
+
+```bash
+E2E_FEEDBACK=true pnpm e2e tests/feedback.spec.ts
+```
+
+This enables analytics at an intercepted test endpoint. The specs serve the installed
+survey script and production-shaped survey responses, including the trigger selector
+condition, and cover loading, opening/submitting feedback, blocked requests, and no
+matching survey. No analytics or feedback is sent to PostHog.
+
 A first run pulls the image, migrates, seeds and builds the dashboard: about **2.5 minutes**
 before the first test. A warm run reaches it in **13 seconds**. Every phase announces itself
 with its elapsed time (`[e2e 1m59s] > running populatedb`), so a slow run is visibly a slow
