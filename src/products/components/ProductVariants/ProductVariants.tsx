@@ -12,6 +12,7 @@ import {
   type DatagridChangeOpts,
   DatagridChangeStateContext,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import cardStyles from "@dashboard/components/DetailSettingsCard/DetailSettingsCard.module.css";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { PRODUCT_VARIANTS_PAGINATE_BY } from "@dashboard/config";
@@ -25,11 +26,13 @@ import {
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
+import { datagridAddedRowsToCreateInputs } from "@dashboard/products/hooks/datagridAddedRowsToCreateInputs";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { CompactSelection, type GridSelection, type Item } from "@glideapps/glide-data-grid";
-import { type Option } from "@saleor/macaw-ui-next";
-import { Pencil } from "lucide-react";
+import { Box, type Option, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
+import { Pencil, Rows3 } from "lucide-react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -49,6 +52,7 @@ import {
   variantsStaticColumnsAdapter,
 } from "./datagrid";
 import messages from "./messages";
+import styles from "./ProductVariants.module.css";
 import { getData, getError } from "./utils";
 
 interface ProductVariantsProps {
@@ -85,6 +89,8 @@ interface ProductVariantsProps {
   onStageVariantCreates?: (
     inputs: ProductVariantBulkCreateInput[],
   ) => Promise<BulkCreateResult> | BulkCreateResult;
+  /** Move bulk-edit added rows into the unsaved section when leaving fullscreen. */
+  onPromoteDatagridAddedRows?: () => void;
   /** Already-staged generator creates for Exists / skip detection. */
   stagedVariantCreates?: ProductVariantBulkCreateInput[];
   onRemoveStagedVariantCreates?: (indexes: number[]) => void;
@@ -117,6 +123,7 @@ export const ProductVariants = ({
   onStageVariantRemovals,
   onRowClick,
   onStageVariantCreates,
+  onPromoteDatagridAddedRows,
   stagedVariantCreates = [],
   onRemoveStagedVariantCreates,
   onClearStagedVariantCreates,
@@ -253,7 +260,17 @@ export const ProductVariants = ({
     selectedVariantIds,
   ]);
 
-  const hasAddedRows = Boolean(datagridState && datagridState.added.length > 0);
+  const hasAddedRows = Boolean(
+    datagridState &&
+      datagridAddedRowsToCreateInputs(
+        {
+          added: datagridState.added,
+          removed: datagridState.removed,
+          updates: datagridState.changes.current,
+        },
+        variantAttributes as VariantAttributeFragment[],
+      ).length > 0,
+  );
   const guardAddedRowsThen = useCallback(
     (action: () => void) => {
       if (hasAddedRows) {
@@ -286,6 +303,15 @@ export const ProductVariants = ({
   const handleCloseUnsavedWarning = useCallback(() => {
     setShowUnsavedWarning(false);
   }, []);
+
+  const handleFullscreenChange = useCallback(
+    (isOpen: boolean) => {
+      if (!isOpen) {
+        onPromoteDatagridAddedRows?.();
+      }
+    },
+    [onPromoteDatagridAddedRows],
+  );
 
   const handleGenerateVariants = useCallback(
     async (inputs: ProductVariantBulkCreateInput[]): Promise<BulkCreateResult> => {
@@ -485,69 +511,100 @@ export const ProductVariants = ({
   );
 
   const menuItems = useCallback(
-    (index: number) => [
-      {
-        label: "Edit Variant",
-        onSelect: () => onRowClick(variants[index].id),
-        Icon: editVariantIcon,
-      },
-    ],
+    (index: number) => {
+      const variant = variants[index];
+
+      if (!variant) {
+        return [];
+      }
+
+      return [
+        {
+          label: "Edit Variant",
+          onSelect: () => onRowClick(variant.id),
+          Icon: editVariantIcon,
+        },
+      ];
+    },
     [editVariantIcon, onRowClick, variants],
   );
 
   return (
     <>
-      <Datagrid
-        fillHandle={true}
-        renderHeader={renderHeader}
-        availableColumns={visibleColumns}
-        emptyText={
-          variantsSearch.trim()
-            ? intl.formatMessage(messages.emptySearch, { query: variantsSearch.trim() })
-            : intl.formatMessage(messages.empty)
-        }
-        getCellContent={getCellContent}
-        getCellError={getCellError}
-        menuItems={menuItems}
-        rows={
-          variantsLoading
-            ? variants.length > 0
-              ? variants.length
-              : PRODUCT_VARIANTS_PAGINATE_BY
-            : (variants?.length ?? 0)
-        }
-        selectionActions={() => null}
-        onColumnResize={handlers.onResize}
-        onColumnMoved={handlers.onMove}
-        renderColumnPicker={() => (
-          <ColumnPicker
-            staticColumns={staticColumns}
-            dynamicColumns={dynamicColumns}
-            selectedColumns={selectedColumns}
-            columnCategories={columnCategories}
-            onToggle={handlers.onToggle}
-            side="left"
-          />
-        )}
-        onChange={onChange}
-        recentlyAddedColumn={recentlyAddedColumn}
-        controlledSelection={gridSelection}
-        onControlledSelectionChange={handleGridSelectionChange}
-        rowSelectionBlending="mixed"
-      />
-      {stagedVariantCreates.length > 0 &&
-      onRemoveStagedVariantCreates &&
-      onClearStagedVariantCreates &&
-      onReplaceStagedVariantCreates ? (
-        <StagedVariantCreatesDatagrid
-          creates={stagedVariantCreates}
-          channels={channels}
-          warehouses={warehouses ?? []}
-          onReplaceCreates={onReplaceStagedVariantCreates}
-          onRemoveIndexes={onRemoveStagedVariantCreates}
-          onClearAll={onClearStagedVariantCreates}
+      <Box className={clsx(cardStyles.card, styles.card)} data-test-id="product-variants">
+        <Datagrid
+          fillHandle={true}
+          showTopBorder={false}
+          experimental={{ scrollbarWidthOverride: 0 }}
+          renderHeader={renderHeader}
+          availableColumns={visibleColumns}
+          emptyText={
+            variantsSearch.trim()
+              ? intl.formatMessage(messages.emptySearch, { query: variantsSearch.trim() })
+              : intl.formatMessage(messages.empty)
+          }
+          emptyState={
+            <div className={styles.emptyState} data-test-id="empty-data-grid-text">
+              {!variantsSearch.trim() && (
+                <Rows3
+                  className={styles.emptyIcon}
+                  size={28}
+                  strokeWidth={iconStrokeWidthBySize.large}
+                  aria-hidden
+                />
+              )}
+              <Text size={2} color="default2">
+                {variantsSearch.trim()
+                  ? intl.formatMessage(messages.emptySearch, { query: variantsSearch.trim() })
+                  : intl.formatMessage(messages.empty)}
+              </Text>
+            </div>
+          }
+          getCellContent={getCellContent}
+          getCellError={getCellError}
+          menuItems={menuItems}
+          rows={
+            variantsLoading
+              ? variants.length > 0
+                ? variants.length
+                : PRODUCT_VARIANTS_PAGINATE_BY
+              : (variants?.length ?? 0)
+          }
+          selectionActions={() => null}
+          onColumnResize={handlers.onResize}
+          onColumnMoved={handlers.onMove}
+          renderColumnPicker={() => (
+            <ColumnPicker
+              staticColumns={staticColumns}
+              dynamicColumns={dynamicColumns}
+              selectedColumns={selectedColumns}
+              columnCategories={columnCategories}
+              onToggle={handlers.onToggle}
+              side="left"
+            />
+          )}
+          onChange={onChange}
+          onFullscreenChange={handleFullscreenChange}
+          trailingGhostRow={variantsLoading ? false : "fullscreen"}
+          recentlyAddedColumn={recentlyAddedColumn}
+          controlledSelection={gridSelection}
+          onControlledSelectionChange={handleGridSelectionChange}
+          rowSelectionBlending="mixed"
         />
-      ) : null}
+        {stagedVariantCreates.length > 0 &&
+        onRemoveStagedVariantCreates &&
+        onClearStagedVariantCreates &&
+        onReplaceStagedVariantCreates ? (
+          <StagedVariantCreatesDatagrid
+            creates={stagedVariantCreates}
+            channels={channels}
+            warehouses={warehouses ?? []}
+            onReplaceCreates={onReplaceStagedVariantCreates}
+            onRemoveIndexes={onRemoveStagedVariantCreates}
+            onClearAll={onClearStagedVariantCreates}
+          />
+        ) : null}
+      </Box>
       {hasVariants && hasSelectionVariantAttributes && onStageVariantCreates && (
         <ProductVariantGenerator
           open={generatorOpen}

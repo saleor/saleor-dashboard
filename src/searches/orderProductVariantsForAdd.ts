@@ -1,43 +1,50 @@
 import { gql } from "@apollo/client";
 
 /**
- * Next page of variants for a single product in the order add-line dialog.
- * Channel is passed on `product` so pricing resolves in that channel context.
+ * Channel-listed variant ids for one product. `Product.variants` is the only
+ * staff query that filters by the variant's channel listing. Fetched lazily,
+ * and only for products whose embedded `productVariants` page is truncated.
+ */
+export const orderProductChannelVariantIds = gql`
+  query OrderProductChannelVariantIds($id: ID!, $channel: String!) {
+    product(id: $id, channel: $channel) {
+      id
+      variants {
+        id
+      }
+    }
+  }
+`;
+
+/**
+ * Variant details for a known set of channel-listed ids. The caller slices ids
+ * to `first`, so each page is variants that can actually be added in this channel.
  */
 export const orderProductVariantsForAdd = gql`
   query OrderProductVariantsForAdd(
-    $id: ID!
+    $ids: [ID!]!
     $first: Int!
-    $after: String
     $channel: String!
     $address: AddressInput
   ) {
-    product(id: $id, channel: $channel) {
-      id
-      productVariants(first: $first, after: $after) {
-        totalCount
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            id
-            name
-            sku
-            pricing(address: $address) {
-              priceUndiscounted {
-                gross {
-                  ...Money
-                }
+    productVariants(first: $first, channel: $channel, where: { ids: $ids }) {
+      edges {
+        node {
+          id
+          name
+          sku
+          pricing(address: $address) {
+            priceUndiscounted {
+              gross {
+                ...Money
               }
-              price {
-                gross {
-                  ...Money
-                }
-              }
-              onSale
             }
+            price {
+              gross {
+                ...Money
+              }
+            }
+            onSale
           }
         }
       }

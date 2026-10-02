@@ -29,5 +29,5 @@
       ]
     }
   },
-  "exclude": ["node_modules", "playwright", "scripts"]
+  "exclude": ["node_modules", "e2e", "e2e-legacy", "scripts"]
 }

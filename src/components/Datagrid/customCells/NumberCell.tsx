@@ -7,6 +7,7 @@ import {
 } from "@glideapps/glide-data-grid";
 
 import { type Locale } from "../../Locale/Locale";
+import { type NumericEditorEmpty, useDatagridNumericEdit } from "./useDatagridNumericEdit";
 
 export const numberCellEmptyValue = Symbol("number-cell-empty-value");
 export interface NumberCellProps {
@@ -26,22 +27,41 @@ const floatOrDigits = /^\d+$|^[0-9]+[.,]?[0-9]+$/;
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
   onChange,
-}) => (
-  <input
-    type="number"
-    onChange={event =>
-      onChange({
-        ...cell,
-        data: {
-          ...cell.data,
-          value: event.target.value ? parseFloat(event.target.value) : numberCellEmptyValue,
-        },
-      })
-    }
-    value={cell.data.value === numberCellEmptyValue ? "" : cell.data.value}
-    autoFocus
-  />
-);
+  initialValue,
+  isHighlighted,
+}) => {
+  const commit = (next: number | NumericEditorEmpty): void => {
+    onChange({
+      ...cell,
+      data: {
+        ...cell.data,
+        value: typeof next === "number" ? next : numberCellEmptyValue,
+      },
+    });
+  };
+  const { draft, inputRef, setDraft } = useDatagridNumericEdit({
+    committedValue: cell.data.value,
+    emptyValue: numberCellEmptyValue,
+    initialValue,
+    isHighlighted,
+    onCommit: commit,
+  });
+
+  return (
+    <input
+      ref={inputRef}
+      type="number"
+      onChange={event => {
+        const next = event.target.value;
+
+        setDraft(next);
+        commit(next === "" ? numberCellEmptyValue : Number.parseFloat(next));
+      }}
+      value={draft}
+      autoFocus
+    />
+  );
+};
 
 export const numberCellRenderer = (locale: Locale): CustomRenderer<NumberCell> => ({
   kind: GridCellKind.Custom,

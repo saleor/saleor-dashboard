@@ -238,44 +238,57 @@ export const CustomerAttributesCard = ({
           ) : null}
         </Box>
       }
+      contentFlush
     >
-      <Box display="flex" flexDirection="column" gap={4}>
-        {showPicker ? (
-          <Box display="flex" flexDirection="column" gap={2}>
-            <DynamicCombobox
-              data-test-id="customer-type-select"
-              disabled={disabled}
-              error={!!error}
-              helperText={error}
-              label={intl.formatMessage(messages.label)}
-              options={options}
-              value={value}
-              onChange={handleSelect}
-              onInputValueChange={debouncedSearch}
-              onFocus={() => setHasOpened(true)}
-              loading={loading}
-            />
-            <Text size={3} color="default2">
-              <FormattedMessage {...messages.hint} />
-            </Text>
-          </Box>
-        ) : null}
-        {isTypeChangePending ? (
-          <Callout
-            type="warning"
-            data-test-id="customer-type-change-warning"
-            title={<FormattedMessage {...messages.pendingChangeTitle} />}
-          >
-            <FormattedMessage {...messages.pendingChangeDescription} />
-          </Callout>
-        ) : null}
-        {children ??
-          (!showPicker ? (
+      {showPicker || isTypeChangePending ? (
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap={4}
+          padding={6}
+          borderBottomWidth={children ? 1 : 0}
+          borderBottomStyle="solid"
+          borderColor="default1"
+        >
+          {showPicker ? (
+            <Box display="flex" flexDirection="column" gap={2}>
+              <DynamicCombobox
+                data-test-id="customer-type-select"
+                disabled={disabled}
+                error={!!error}
+                helperText={error}
+                label={intl.formatMessage(messages.label)}
+                options={options}
+                value={value}
+                onChange={handleSelect}
+                onInputValueChange={debouncedSearch}
+                onFocus={() => setHasOpened(true)}
+                loading={loading}
+              />
+              <Text size={3} color="default2">
+                <FormattedMessage {...messages.hint} />
+              </Text>
+            </Box>
+          ) : null}
+          {isTypeChangePending ? (
+            <Callout
+              type="warning"
+              data-test-id="customer-type-change-warning"
+              title={<FormattedMessage {...messages.pendingChangeTitle} />}
+            >
+              <FormattedMessage {...messages.pendingChangeDescription} />
+            </Callout>
+          ) : null}
+        </Box>
+      ) : null}
+      {children ??
+        (!showPicker ? (
+          <Box padding={6}>
             <Placeholder>
               <FormattedMessage {...messages.emptyAttributes} />
             </Placeholder>
-          ) : null)}
-      </Box>
+          </Box>
+        ) : null)}
       <ChangeCustomerTypeDialog
         open={pendingType !== null}
         typeName={pendingType?.name ?? ""}

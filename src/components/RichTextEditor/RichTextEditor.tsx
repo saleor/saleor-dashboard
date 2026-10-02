@@ -25,6 +25,8 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   onBlur?: () => void;
   onFocus?: () => void;
   onKeyDownCapture?: React.KeyboardEventHandler<HTMLDivElement>;
+  /** Parent frame (RichTextEditorClamp) owns the field border. */
+  framed?: boolean;
 }
 
 const RichTextEditor = ({
@@ -40,6 +42,7 @@ const RichTextEditor = ({
   onBlur,
   onFocus,
   onKeyDownCapture,
+  framed = false,
   ...props
 }: RichTextEditorProps) => {
   const classes = useStyles({});
@@ -51,6 +54,21 @@ const RichTextEditor = ({
   const [isFocused, setIsFocused] = React.useState(false);
   const [hasValue, setHasValue] = React.useState(false);
   const isTyped = Boolean(hasValue || isFocused);
+  const onChangeRef = React.useRef(onChange);
+
+  onChangeRef.current = onChange;
+
+  // Editor.js is constructed once and freezes this callback. Always read the latest onChange.
+  const handleEditorChange = React.useCallback(
+    async (api: { saver: { save: () => Promise<OutputData> } }) => {
+      const editorJsValue = await api.saver.save();
+
+      setHasValue(editorJsValue.blocks.length > 0);
+
+      return onChangeRef.current?.(editorJsValue);
+    },
+    [],
+  );
   const handleInitialize = React.useCallback((editor: EditorCore) => {
     if (onInitialize) {
       onInitialize(editor);
@@ -109,14 +127,8 @@ const RichTextEditor = ({
           // Log level is undefined at runtime
           logLevel={"ERROR" as LogLevels.ERROR}
           onInitialize={handleInitialize}
-          onChange={async event => {
-            const editorJsValue = await event.saver.save();
-
-            setHasValue(editorJsValue.blocks.length > 0);
-
-            return onChange?.(editorJsValue);
-          }}
           {...props}
+          onChange={handleEditorChange}
         >
           <div
             id={id}
@@ -127,7 +139,9 @@ const RichTextEditor = ({
               [classes.rootError]: error,
               [classes.rootHasLabel]: label !== "",
               [classes.rootTyped]: isTyped || props.defaultValue?.blocks?.length! > 0,
+              [classes.rootFramed]: framed,
             })}
+            data-rich-text-field=""
             onFocusCapture={() => {
               setIsFocused(true);
               onFocus?.();

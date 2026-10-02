@@ -26,4 +26,4 @@ Create or edit `.env` file in a root directory or set environment variables with
 
 ## Fetching schema
 
-By default dashboard will use `fetch-schema` script from package.json to get Saleor schema from specific branch e.g `main` for unstable one. If you need to generate types based on your own schema use `fetch-local-schema` that will fetch it from `API_URL`.
+By default dashboard will use `fetch-schema` script from package.json to get Saleor schemas: the stable one from the newest published release matching `config.saleor.schemaVersion`, and the unstable one from the `main` branch. If you need to generate types based on your own schema use `fetch-local-schema` that will fetch it from `API_URL`.

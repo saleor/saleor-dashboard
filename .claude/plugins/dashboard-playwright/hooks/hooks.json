@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'if [[ \"$CLAUDE_FILE_PATH\" == *playwright/*.spec.ts* ]] || [[ \"$CLAUDE_FILE_PATH\" == *playwright/pages/*.ts* ]]; then echo \"🚫 BLOCKED: Use e2e-test-fixer subagent instead\" >&2; exit 2; fi'"
+            "command": "bash -c 'if [[ \"$CLAUDE_FILE_PATH\" == *e2e-legacy/*.spec.ts* ]] || [[ \"$CLAUDE_FILE_PATH\" == *e2e-legacy/pages/*.ts* ]]; then echo \"🚫 BLOCKED: Use e2e-test-fixer subagent instead\" >&2; exit 2; fi'"
           }
         ]
       }

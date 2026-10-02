@@ -1,9 +1,8 @@
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { PaginationButtons } from "@dashboard/components/PaginationButtons/PaginationButtons";
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
-import { Box, type BoxProps, Button, Select, Text } from "@saleor/macaw-ui-next";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Box, type BoxProps, Select, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import styles from "./AssignableListPagination.module.css";
 import {
@@ -65,7 +64,6 @@ export const AssignableListPagination = ({
   paddingLeft,
   beforePagination,
 }: AssignableListPaginationProps): React.ReactNode => {
-  const intl = useIntl();
   const { hasNextPage, hasPreviousPage, loadNextPage, loadPreviousPage } = usePaginatorContext();
   const currentRowNumber = String(numberOfRows);
   const currentRowNumberOption = ROW_NUMBER_OPTIONS.find(
@@ -105,33 +103,11 @@ export const AssignableListPagination = ({
       </Box>
       <Box display="flex" alignItems="center" gap={2}>
         {beforePagination}
-        <Button
-          variant="secondary"
-          size="small"
-          type="button"
-          disabled={!hasPreviousPage}
-          onClick={loadPreviousPage}
-          data-test-id="button-pagination-back"
-          aria-label={intl.formatMessage({
-            id: "/suM59",
-            defaultMessage: "Previous page",
-            description: "pagination previous page button aria label",
-          })}
-          icon={<ChevronLeft size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
-        />
-        <Button
-          variant="secondary"
-          size="small"
-          type="button"
-          disabled={!hasNextPage}
-          onClick={loadNextPage}
-          data-test-id="button-pagination-next"
-          aria-label={intl.formatMessage({
-            id: "xEyXOV",
-            defaultMessage: "Next page",
-            description: "pagination next page button aria label",
-          })}
-          icon={<ChevronRight size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+        <PaginationButtons
+          hasPreviousPage={hasPreviousPage}
+          hasNextPage={hasNextPage}
+          onPreviousPage={loadPreviousPage}
+          onNextPage={loadNextPage}
         />
       </Box>
     </Box>

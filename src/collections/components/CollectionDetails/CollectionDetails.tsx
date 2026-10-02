@@ -2,6 +2,7 @@ import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/Det
 import { EntityBackgroundImageField } from "@dashboard/components/EntityBackgroundImageField/EntityBackgroundImageField";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type CollectionDetailsFragment, type CollectionErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -87,16 +88,18 @@ export const CollectionDetails = ({
       />
       <FormSpacer />
       {isReadyForMount ? (
-        <RichTextEditor
-          defaultValue={defaultValue}
-          editorRef={editorRef}
-          onChange={handleChange}
-          error={!!formErrors.description}
-          helperText={getProductErrorMessage(formErrors.description, intl)}
-          label={intl.formatMessage(commonMessages.description)}
-          name="description"
-          disabled={disabled}
-        />
+        <RichTextEditorClamp tall>
+          <RichTextEditor
+            defaultValue={defaultValue}
+            editorRef={editorRef}
+            onChange={handleChange}
+            error={!!formErrors.description}
+            helperText={getProductErrorMessage(formErrors.description, intl)}
+            label={intl.formatMessage(commonMessages.description)}
+            name="description"
+            disabled={disabled}
+          />
+        </RichTextEditorClamp>
       ) : (
         <RichTextEditorLoading
           label={intl.formatMessage(commonMessages.description)}

@@ -158,15 +158,6 @@ const useStyles = makeStyles<{
       rowActionScrolledToRight: {
         borderLeftColor: vars.colors.border.default1,
       },
-      columnGroupFixer: {
-        position: "absolute",
-        top: 1,
-        left: 0,
-        height: cellHeight,
-        width: 10,
-        borderLeft: 0,
-        background: vars.colors.background.default1,
-      },
       editorContainer: {
         position: "relative",
         height: "100%",

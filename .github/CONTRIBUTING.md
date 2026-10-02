@@ -33,6 +33,43 @@ Commit the changes once you are happy with them.
 
 When you're finished with the changes, create a pull request, also known as a PR.
 
+#### One significant change per PR
+
+A PR should contain **one** significant change: a single bug fix, a single refactor,
+or a single functional change. If your branch mixes several (for example a bug fix,
+a refactor it needed, and a new feature), split it into separate PRs. Land
+prerequisites first (for example the refactor) and stack the rest on top.
+
+Small changes that exist only to support the main change (a renamed helper, a
+tightened type, a test for the fixed path) can stay. Anything a reviewer would need
+to evaluate on its own merits belongs in its own PR.
+
+How strictly to split depends on how the changes relate:
+
+- **Unrelated changes never ship in the same PR.** Hiding changes is prohibited,
+  for example a functional change inside a refactor commit.
+- **Connected changes** should preferably be split too, but combining them is
+  acceptable at some point. For example, a refactor commit followed by the bug fix
+  it enables can share one PR, as long as each commit contains only its own change.
+
+#### Title and description
+
+A reviewer should understand the entire scope of the PR from its title and
+description alone, without reading the diff first.
+
+- **Title**: say what changes, in plain words. For user-facing changes describe the
+  behavior (`Fix adding variants to order`); for internal changes use a
+  conventional prefix (`refactor:`, `ci:`, `test(e2e):`, `chore:`, `docs:`).
+- **Description** should cover:
+  - **Problem**: what was wrong or missing, and for whom.
+  - **Change**: what this PR does about it, including every area it touches.
+  - **Non-obvious decisions**: trade-offs, rejected alternatives, follow-ups left out.
+  - **Screenshots**: before and after for any UI change.
+  - **Testing**: how the change was verified.
+  - **Links**: related issues, discussions, or stacked PRs.
+
+#### Before you submit
+
 - Fill the template so that we can review your PR. This template helps reviewers understand your changes as well as the purpose of your pull request.
 - Don't forget to [link PR](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) to issue if you are solving one.
 - Enable the checkbox to [allow maintainer edits](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) so the branch can be updated for a merge. Once you submit your PR, a MacawUI team member will review your proposal. We may ask questions or request additional information.

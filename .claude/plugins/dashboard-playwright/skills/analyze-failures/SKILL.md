@@ -109,7 +109,7 @@ Before analyzing new failures, check if we've tried to fix these tests before.
 
 ```bash
 # Look for recent commits that modified Playwright tests
-git log --oneline -20 --all -- "playwright/tests/*.spec.ts" "playwright/pages/*.ts"
+git log --oneline -20 --all -- "e2e-legacy/tests/*.spec.ts" "e2e-legacy/pages/*.ts"
 
 # Check if any commits mention the failing test IDs (e.g., SALEOR_124)
 git log --oneline -10 --grep="SALEOR_124" --grep="fix" --all-match
@@ -494,12 +494,12 @@ Task tool call:
     Check git history for recent changes in these areas:
 
     1. **App code**: `src/**/[domain]/**`
-    2. **Test code**: `playwright/tests/[domain].spec.ts`
-    3. **Page objects**: `playwright/pages/[Domain]Page.ts`
+    2. **Test code**: `e2e-legacy/tests/[domain].spec.ts`
+    3. **Page objects**: `e2e-legacy/pages/[Domain]Page.ts`
 
     Run these commands:
     ```bash
-    git log --oneline -10 -- "playwright/tests/[file]"
+    git log --oneline -10 -- "e2e-legacy/tests/[file]"
     git log --oneline -10 -- "src/**/[domain]*"
     git diff HEAD~5 -- src/[domain]/
     ```
@@ -530,7 +530,7 @@ Task tool call:
     Error shows: [WHAT ERROR SHOWS]
 
     Find and read:
-    1. `playwright/pages/[Page].ts` - find the selector definition
+    1. `e2e-legacy/pages/[Page].ts` - find the selector definition
     2. `src/[component]` - understand the app component
 
     Questions to answer:
@@ -911,7 +911,7 @@ Task tool:
 
     ### [N]. [TEST_TITLE]
 
-    **Location**: `playwright/tests/[FILE]:[LINE]`
+    **Location**: `e2e-legacy/tests/[FILE]:[LINE]`
 
     **Error**:
     ```
@@ -979,7 +979,7 @@ Task tool:
        - Use this to determine: Does the element exist but selector is wrong? Or did it not render?
     3. **Compare selector vs DOM** - If test uses `attributesRows` selector, search the error-context for matching elements
     4. **Read the test file** and understand the flow
-    5. **Read relevant page objects** in `playwright/pages/` to see actual selectors
+    5. **Read relevant page objects** in `e2e-legacy/pages/` to see actual selectors
     6. **Identify the REAL root cause** - Is element missing from DOM? Or is selector wrong?
     7. **Implement a PROPER fix** - No timeout hacks!
 
@@ -1153,8 +1153,8 @@ Tests that couldn't be fixed automatically:
 ## Quick Reference
 
 ### File Locations
-- Test specs: `playwright/tests/*.spec.ts`
-- Page objects: `playwright/pages/*.ts`
+- Test specs: `e2e-legacy/tests/*.spec.ts`
+- Page objects: `e2e-legacy/pages/*.ts`
 - Skill scripts: `scripts/` (relative to skill base directory)
 
 ### Semantic Categories (hints from script)
@@ -1199,9 +1199,9 @@ The script provides these categories as HINTS - use your judgment:
 
 ```
 
-❌ Main agent runs: git log --oneline -10 -- playwright/tests/
-❌ Main agent runs: grep -r "selector" playwright/pages/
-❌ Main agent reads: playwright/tests/attributes.spec.ts
+❌ Main agent runs: git log --oneline -10 -- e2e-legacy/tests/
+❌ Main agent runs: grep -r "selector" e2e-legacy/pages/
+❌ Main agent reads: e2e-legacy/tests/attributes.spec.ts
 
 ```
 

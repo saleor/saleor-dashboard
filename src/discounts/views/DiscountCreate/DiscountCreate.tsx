@@ -1,4 +1,5 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountCreatePage } from "@dashboard/discounts/components/DiscountCreatePage/DiscountCreatePage";
 import { discountListUrl, discountUrl } from "@dashboard/discounts/discountsUrls";
@@ -17,6 +18,7 @@ export const DiscountCreate = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { resetFormsState } = useExitFormDialog();
   const [promotionCreate, promotionCreateOpts] = usePromotionCreateMutation({
     onCompleted(data) {
       if (data?.promotionCreate?.errors?.length === 0) {
@@ -27,6 +29,7 @@ export const DiscountCreate = () => {
             defaultMessage: "Discount created",
           }),
         });
+        resetFormsState();
         navigate(discountUrl(data?.promotionCreate?.promotion?.id ?? ""), {
           replace: true,
         });

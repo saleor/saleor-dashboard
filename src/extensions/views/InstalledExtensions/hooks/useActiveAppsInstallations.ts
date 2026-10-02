@@ -1,4 +1,5 @@
 import { useApolloClient } from "@apollo/client";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   type AppInstallationFragment,
   type AppsInstallationsQuery,
@@ -35,6 +36,7 @@ export const useActiveAppsInstallations = ({
   onRemoveInProgressAppSuccess,
 }: UseActiveAppsInstallations) => {
   const client = useApolloClient();
+  const { trackEvent } = useAnalytics();
   const [activeInstallations, setActiveInstallations] = useLocalStorage<
     Array<Record<"id" | "name", string>>
   >("activeInstallations", []);
@@ -145,14 +147,17 @@ export const useActiveAppsInstallations = ({
           appsInProgressRefetch();
           appsRefetch();
           newAppInstalled = true;
+          trackEvent("extension_installation_completed", { result: "success" });
         } else if (item.status === JobStatusEnum.SUCCESS) {
           removeInstallation(installation.id);
           installedAppNotify(item.appName);
           onInstallSuccess();
           newAppInstalled = true;
+          trackEvent("extension_installation_completed", { result: "success" });
         } else if (item.status === JobStatusEnum.FAILED) {
           removeInstallation(installation.id);
           onInstallError(item);
+          trackEvent("extension_installation_completed", { result: "error" });
         }
       });
 
@@ -160,7 +165,7 @@ export const useActiveAppsInstallations = ({
         refetchExtensionList();
       }
     }
-  }, [activeInstallations.length, appsInProgressData]);
+  }, [activeInstallations.length, appsInProgressData, trackEvent]);
 
   return {
     handleAppInstallRetry,

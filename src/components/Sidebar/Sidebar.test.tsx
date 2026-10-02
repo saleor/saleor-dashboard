@@ -11,6 +11,12 @@ import { MemoryRouter } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { SidebarProvider } from "./SidebarContext";
 
+const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true }));
+
+jest.mock("./user/useFeedbackSurvey", () => ({
+  useFeedbackSurvey: () => mockFeedbackSurvey(),
+}));
+
 jest.mock("./menu/hooks/useMenuStructure", () => ({
   useMenuStructure: jest.fn(() => []),
 }));
@@ -44,6 +50,9 @@ jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
     trackEvent: jest.fn(),
   })),
 }));
+jest.mock("@dashboard/components/ProductAnalytics/config", () => ({
+  isProductAnalyticsEnabled: () => true,
+}));
 jest.mock("@dashboard/ripples/state", () => ({
   useAllRipplesModalState: jest.fn(() => ({
     isModalOpen: false,
@@ -65,6 +74,31 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 };
 
 describe("Sidebar", () => {
+  it("renders the global feedback trigger", () => {
+    // Arrange
+    mockFeedbackSurvey.mockReturnValue({ isAvailable: true });
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.getByRole("button", { name: "Send feedback" })).toHaveAttribute(
+      "data-posthog-feedback-trigger",
+      "true",
+    );
+  });
+
+  it("hides feedback when its survey is unavailable", () => {
+    // Arrange
+    mockFeedbackSurvey.mockReturnValue({ isAvailable: false });
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.queryByRole("button", { name: "Send feedback" })).not.toBeInTheDocument();
+  });
+
   it("should render cloud environment link when is cloud instance", () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({

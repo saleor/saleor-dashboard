@@ -39,7 +39,8 @@
   "typescript": true,
   "prettier": true,
   "ignore": [
-    "playwright/**",
+    "e2e/**",
+    "e2e-legacy/**",
     "**/*.generated.ts",
     "apollo.config.js",
     "graphql-lint.config.js",

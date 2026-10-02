@@ -2,6 +2,23 @@
  * keeps its variant appearance. Disabling pointer events prevents hover/active styles
  * from shifting the color and blocks repeated clicks without the "inactive"
  * (disabled) look. */
+.button {
+  position: relative;
+}
+
+/* The label stays in flow (invisible) so the button keeps its width. The indicator
+ * has to be anchored to the button, or it jumps to a positioned ancestor and the
+ * button looks empty. */
+.indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  color: inherit;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
 .noInteraction {
   pointer-events: none;
 }

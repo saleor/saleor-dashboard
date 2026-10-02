@@ -103,7 +103,7 @@ export const OrderSummary = (props: Props) => {
         )}
       </Box>
 
-      <Box display="grid" __gridTemplateColumns="1fr 1fr" gap={3}>
+      <Box display="grid" __gridTemplateColumns="minmax(0, 1fr) minmax(0, 1fr)" gap={3}>
         {isEditable && editableProps ? (
           <OrderValue
             orderSubtotal={order.subtotal}

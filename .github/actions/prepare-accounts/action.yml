@@ -45,5 +45,5 @@ runs:
         E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
         E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
       run: |
-        ACCOUNTS=$(node playwright/auth.js login)
+        ACCOUNTS=$(node e2e-legacy/auth.js login)
         echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"

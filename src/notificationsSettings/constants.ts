@@ -1,9 +1,18 @@
 export const ADMIN_EMAIL_PLUGIN_ID = "mirumee.notifications.admin_email";
-/** Legacy plugin — customer emails are handled by the SMTP app. Kept for hide/redirect only. */
+/** Legacy plugin — customer emails are handled by an app. Kept for hide/redirect only. */
 export const USER_EMAIL_PLUGIN_ID = "mirumee.notifications.user_email";
 
-/** Official SMTP app — customer (shopper) transactional emails. */
+/** Legacy SMTP app. Shops that already installed it can keep using it. */
 export const SMTP_APP_IDENTIFIER = "saleor.app.smtp";
+
+/** Customer Emails app — shopper transactional mail for new setups. */
+export const CUSTOMER_EMAILS_APP_IDENTIFIER = "saleor.app.customer-emails";
+
+/** Hosted Customer Emails manifest. Same install target as the Cloud onboarding checklist. */
+export const CUSTOMER_EMAILS_MANIFEST_URL = "https://customer-emails.saleor.app/api/manifest";
+
+export const isLegacySmtpApp = (identifier: string | null | undefined): boolean =>
+  identifier === SMTP_APP_IDENTIFIER;
 
 export const DEFAULT_EMAIL_TEMPLATE_VALUE = "DEFAULT";
 
