@@ -29,6 +29,7 @@ import {
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { PluginIcon } from "@dashboard/icons/PluginIcon";
 import { WebhookIcon } from "@dashboard/icons/WebhookIcon";
+import { isLegacySmtpApp } from "@dashboard/notificationsSettings/constants";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
@@ -127,40 +128,43 @@ export const useInstalledExtensions = () => {
 
   const installedApps = useMemo<InstalledExtension[]>(
     () =>
-      installedAppsData.map(({ id, name, isActive, brand, type, problems, appUrl, created }) => {
-        const appEvents = eventDeliveriesMap.get(id);
-        const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
+      installedAppsData.map(
+        ({ id, identifier, name, isActive, brand, type, problems, appUrl, created }) => {
+          const appEvents = eventDeliveriesMap.get(id);
+          const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
-        const allProblems = [
-          ...(problems ?? []),
-          ...(lastFailedAttempt
-            ? [buildWebhookProblem(lastFailedAttempt, webhookErrorMessage)]
-            : []),
-        ];
+          const allProblems = [
+            ...(problems ?? []),
+            ...(lastFailedAttempt
+              ? [buildWebhookProblem(lastFailedAttempt, webhookErrorMessage)]
+              : []),
+          ];
 
-        const activeProblemsForApp = allProblems.filter(p => !isProblemDismissed(p));
+          const activeProblemsForApp = allProblems.filter(p => !isProblemDismissed(p));
 
-        return {
-          id: id,
-          name: name ?? "",
-          isActive,
-          logo: getExtensionLogo({
-            logo: brand?.logo?.default,
-            type,
+          return {
+            id: id,
             name: name ?? "",
-          }),
-          info: getExtensionInfo({
             isActive,
-            loading: !eventDeliveriesData?.apps,
-          }),
-          href: resolveInstalledAppHref({ id, type, isActive, appUrl }),
-          problems: allProblems,
-          appType: type,
-          activeProblemCount: activeProblemsForApp.length,
-          criticalProblemCount: activeProblemsForApp.filter(p => isProblemCritical(p)).length,
-          isNew: isRecentlyInstalled(created),
-        };
-      }),
+            logo: getExtensionLogo({
+              logo: brand?.logo?.default,
+              type,
+              name: name ?? "",
+            }),
+            info: getExtensionInfo({
+              isActive,
+              loading: !eventDeliveriesData?.apps,
+            }),
+            href: resolveInstalledAppHref({ id, type, isActive, appUrl }),
+            problems: allProblems,
+            appType: type,
+            activeProblemCount: activeProblemsForApp.length,
+            criticalProblemCount: activeProblemsForApp.filter(p => isProblemCritical(p)).length,
+            isNew: isRecentlyInstalled(created),
+            deprecated: isLegacySmtpApp(identifier),
+          };
+        },
+      ),
     [eventDeliveries, eventDeliveriesData, installedAppsData, webhookErrorMessage],
   );
 

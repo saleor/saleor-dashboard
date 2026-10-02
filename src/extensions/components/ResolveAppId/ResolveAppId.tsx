@@ -1,4 +1,5 @@
 import { useAppNavigation } from "@dashboard/extensions/hooks/useAppNavigation";
+import { getKnownAppInstallUrl } from "@dashboard/extensions/knownApps";
 import { appMessages } from "@dashboard/extensions/messages";
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { isAppGlobalId } from "@dashboard/extensions/utils/isAppGlobalId";
@@ -78,7 +79,7 @@ const RedirectFromIdentifier = ({ identifier }: { identifier: string }): React.R
   }
 
   if (state.status === "notInstalled") {
-    return <Redirect to={ExtensionsPaths.exploreExtensions} />;
+    return <Redirect to={getKnownAppInstallUrl(identifier) ?? ExtensionsPaths.exploreExtensions} />;
   }
 
   if (state.status === "resolved") {

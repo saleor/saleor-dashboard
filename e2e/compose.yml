@@ -1,0 +1,97 @@
+# A trimmed saleor-platform plus the dashboard under test. Only what a dashboard E2E run
+# touches: no mailpit, no jaeger, no replica database.
+#
+# One compose file serves both targets. Everything that differs between them - the image
+# tag, the published ports, which dashboard build is served - arrives as an environment
+# variable from `lib/docker.ts`, and the two get separate compose project names, so a
+# stable stack and a main stack never share a container, a volume or a port.
+
+services:
+  api:
+    # Both targets use floating tags; the suite re-resolves them itself before starting
+    # anything, because the image's content id is what keys the seed cache. See `pullImage`.
+    image: ${SALEOR_IMAGE}
+    ports:
+      - "127.0.0.1:${SALEOR_API_PORT}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_started
+    environment: &backend
+      DATABASE_URL: postgres://saleor:saleor@db/saleor
+      CACHE_URL: ${SALEOR_CACHE_URL:-redis://cache:6379/0}
+      CELERY_BROKER_URL: redis://cache:6379/1
+      SECRET_KEY: dashboard-e2e-secret-key
+      EMAIL_URL: console://
+      DEFAULT_FROM_EMAIL: noreply@example.com
+      ALLOWED_HOSTS: localhost,127.0.0.1,api
+      DEFAULT_CHANNEL_SLUG: default-channel
+      # Seeding runs well past the 5-minute default and the suite holds one admin token
+      # for the whole of it; an expiring token fails the seed halfway through.
+      JWT_TTL_ACCESS: "30 days"
+      OTEL_TRACES_EXPORTER: none
+      OTEL_METRICS_EXPORTER: none
+      OTEL_LOGS_EXPORTER: none
+    volumes:
+      - saleor-media:/app/media
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/health/")
+      interval: 5s
+      timeout: 5s
+      retries: 60
+
+  worker:
+    image: ${SALEOR_IMAGE}
+    command: celery -A saleor --app=saleor.celeryconf:app worker --loglevel=info
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_started
+    environment: *backend
+    volumes:
+      - saleor-media:/app/media
+
+  db:
+    image: library/postgres:15-alpine
+    # Not published: only the compose network and `docker compose exec` talk to it.
+    environment:
+      POSTGRES_USER: saleor
+      POSTGRES_PASSWORD: saleor
+      POSTGRES_DB: saleor
+    volumes:
+      - saleor-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U saleor"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  cache:
+    image: valkey/valkey:8.1-alpine
+
+  # The dashboard under test: the working tree, built on the host into
+  # `build-e2e-<target>/dashboard` and served here by the repository's own nginx config.
+  #
+  # Built on the host rather than in an image because FF_USE_STAGING_SCHEMA is a build-time
+  # `define` (vite.config.js), so a target *is* a build - and rebuilding an image on every
+  # source change would put a multi-minute step between an edit and a test run. The bundle
+  # is mounted read-only; nothing in the container writes to your working tree.
+  dashboard:
+    image: nginx:stable-alpine
+    ports:
+      - "127.0.0.1:${DASHBOARD_PORT}:80"
+    volumes:
+      - "${DASHBOARD_BUILD_DIR}:/app/dashboard:ro"
+      - "${DASHBOARD_NGINX_CONF}:/etc/nginx/conf.d/default.conf:ro"
+
+volumes:
+  # Holds the migrated schema and whichever scenario was restored last. Kept between runs;
+  # `pnpm e2e:fresh` drops it.
+  saleor-db:
+  saleor-media:

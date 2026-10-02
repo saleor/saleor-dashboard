@@ -30,15 +30,27 @@ export const OrderSummaryListItem = ({
     <Box
       as="li"
       display="grid"
-      __gridTemplateColumns="1fr auto"
+      // minmax(0, 1fr) — a plain 1fr track will not shrink below the method name.
+      __gridTemplateColumns="minmax(0, 1fr) auto"
       alignItems="baseline"
       gap={2}
+      __minWidth={0}
       title={title}
       {...props}
     >
-      <Text fontWeight={fontWeight} size={4}>
+      {/* Box, not Text: the shipping row nests a div, and Text's `as` cannot be a div.
+          Match Text size 4 (font, line-height, letter-spacing) so rows stay aligned. */}
+      <Box
+        fontSize={4}
+        lineHeight={4}
+        letterSpacing={4}
+        fontWeight={fontWeight}
+        color="default1"
+        margin={0}
+        minWidth={0}
+      >
         {children}
-      </Text>
+      </Box>
       <Box title={amountTitle}>
         <Text fontWeight={fontWeight} color="default2" size={3}>
           {currency}

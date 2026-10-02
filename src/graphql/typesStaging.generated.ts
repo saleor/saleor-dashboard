@@ -379,6 +379,31 @@ export enum AppProblemDismissedByEnum {
   USER = 'USER'
 }
 
+/**
+ * Error codes for the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export enum AppSelfUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  REQUIRED = 'REQUIRED'
+}
+
+/**
+ * Fields to update on the calling app.
+ *
+ * Added in Saleor 3.23.
+ */
+export type AppSelfUpdateInput = {
+  /**
+   * Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  deprecationReason?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum AppSortField {
   /** Sort apps by creation date. */
   CREATION_DATE = 'CREATION_DATE',
@@ -6687,7 +6712,10 @@ export type ProductBulkCreateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID']['input'];
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -6804,7 +6832,10 @@ export type ProductCreateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID']['input'];
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -6930,7 +6961,10 @@ export type ProductInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -6956,6 +6990,23 @@ export type ProductMediaCreateInput = {
   mediaUrl?: InputMaybe<Scalars['String']['input']>;
   /** ID of an product. */
   product: Scalars['ID']['input'];
+};
+
+export enum ProductMediaTranslateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
+}
+
+/**
+ * Fields required to translate product media.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslationInput = {
+  /** Translated product media alt text. */
+  alt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum ProductMediaType {
@@ -7041,7 +7092,10 @@ export enum ProductOrderField {
   PUBLISHED_AT = 'PUBLISHED_AT',
   /** Sort products by rank. Note: This option is available only with the `search` filter. */
   RANK = 'RANK',
-  /** Sort products by rating. */
+  /**
+   * Sort products by rating.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   RATING = 'RATING',
   /** Sort products by type. */
   TYPE = 'TYPE'
@@ -7313,6 +7367,12 @@ export type ProductVariantInput = {
 };
 
 export enum ProductVariantSortField {
+  /**
+   * Sort product variants by ID.
+   *
+   * Added in Saleor 3.23.
+   */
+  ID = 'ID',
   /** Sort product variants by last modification date. */
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
@@ -8804,6 +8864,7 @@ export enum TranslatableKinds {
   MENU_ITEM = 'MENU_ITEM',
   PAGE = 'PAGE',
   PRODUCT = 'PRODUCT',
+  PRODUCT_MEDIA = 'PRODUCT_MEDIA',
   PROMOTION = 'PROMOTION',
   PROMOTION_RULE = 'PROMOTION_RULE',
   SALE = 'SALE',

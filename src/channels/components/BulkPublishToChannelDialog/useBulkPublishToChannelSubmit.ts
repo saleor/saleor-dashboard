@@ -8,6 +8,7 @@ import {
   type ProductPublishDraft,
   type PublishProgressItem,
 } from "@dashboard/channels/components/BulkPublishToChannelDialog/types";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   ErrorPolicyEnum,
   type ProductErrorCode,
@@ -158,6 +159,7 @@ export const useBulkPublishToChannelSubmit = ({
 } => {
   const intl = useIntl();
   const notify = useNotifier();
+  const { trackEvent } = useAnalytics();
   const client = useApolloClient();
   const [submitting, setSubmitting] = useState(false);
   const { refetch: fetchProductsData } = useBulkPublishProductsDataQuery({
@@ -193,6 +195,20 @@ export const useBulkPublishToChannelSubmit = ({
         return { failedProductIds: [] };
       }
 
+      const priceMode: "keep_existing" | "set_price" = draftsToPublish.some(draft =>
+        hasBulkPublishPrice(draft.price),
+      )
+        ? "set_price"
+        : "keep_existing";
+      const analyticsProperties = {
+        price_mode: priceMode,
+        product_count: draftsToPublish.length,
+        publish_enabled: defaults.isPublished,
+        stock_enabled: defaults.stock.enabled,
+      };
+
+      trackEvent("channel_bulk_publish_started", analyticsProperties);
+
       // Same rules the review step enforces — kept here as a backstop against a caller that skips it.
       const hasUnusablePrice =
         getDraftsWithInvalidPrice(draftsToPublish).length > 0 ||
@@ -202,6 +218,11 @@ export const useBulkPublishToChannelSubmit = ({
         notify({
           status: "error",
           text: intl.formatMessage(messages.priceRequired),
+        });
+        trackEvent("channel_bulk_publish_completed", {
+          ...analyticsProperties,
+          failed_product_count: draftsToPublish.length,
+          result: "failure",
         });
 
         return { failedProductIds: productIds };
@@ -387,6 +408,17 @@ export const useBulkPublishToChannelSubmit = ({
           }
         }
 
+        trackEvent("channel_bulk_publish_completed", {
+          ...analyticsProperties,
+          failed_product_count: failedProductIds.length,
+          result:
+            failedProductIds.length === 0
+              ? "success"
+              : failedProductIds.length === draftsToPublish.length
+                ? "failure"
+                : "partial_success",
+        });
+
         return { failedProductIds };
       } catch {
         progress.forEach((item, index) => {
@@ -401,6 +433,11 @@ export const useBulkPublishToChannelSubmit = ({
           status: "error",
           text: intl.formatMessage(messages.publishFailed),
         });
+        trackEvent("channel_bulk_publish_completed", {
+          ...analyticsProperties,
+          failed_product_count: draftsToPublish.length,
+          result: "failure",
+        });
 
         return { failedProductIds: productIds };
       } finally {
@@ -414,6 +451,7 @@ export const useBulkPublishToChannelSubmit = ({
       fetchProductsData,
       intl,
       notify,
+      trackEvent,
       updateChannelListing,
       channelWarehouses,
     ],

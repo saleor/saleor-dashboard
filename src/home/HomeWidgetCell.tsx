@@ -14,7 +14,7 @@ export const HomeWidgetCell = ({ extension }: HomeWidgetCellProps) => (
   <AppWidgetCard
     extension={extension}
     contentMinHeight={MIN_CELL_HEIGHT}
-    headerActions={<InlineExtensionPreferenceControls extension={extension} />}
+    headerActions={<InlineExtensionPreferenceControls extension={extension} surface="home" />}
   >
     <ExtensionIframe extension={extension} height="100%" loaderType="skeleton" />
   </AppWidgetCard>

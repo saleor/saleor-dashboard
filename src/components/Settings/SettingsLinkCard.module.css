@@ -18,6 +18,16 @@
   color: var(--mu-colors-text-default1);
 }
 
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon img {
+  object-fit: contain;
+}
+
 .chevron {
   transition: color 0.12s ease;
 }

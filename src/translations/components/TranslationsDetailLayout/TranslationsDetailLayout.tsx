@@ -21,6 +21,7 @@ import { FormattedMessage } from "react-intl";
 import { TranslationContextBar } from "../TranslationContextBar/TranslationContextBar";
 import { TranslationSection } from "../TranslationSection/TranslationSection";
 import { translationDetailMessages } from "./messages";
+import styles from "./TranslationsDetailLayout.module.css";
 
 interface TranslationsDetailLayoutProps
   extends Pick<
@@ -211,7 +212,7 @@ export const TranslationsDetailLayout = ({
   const resolvedRichTextResetKey = richTextResetKey ?? languageCode;
 
   return (
-    <Box paddingX={6} paddingTop={6} paddingBottom={6}>
+    <Box className={styles.view} paddingX={6} paddingTop={6}>
       <TranslationContextBar
         sections={sections}
         sourceLanguage={sourceLanguage}

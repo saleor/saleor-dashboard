@@ -22,10 +22,16 @@ const GridContext = ({ children }) => {
   );
 };
 
-function setupHook() {
-  return renderHook(() => useDatagridChange(columns, 10), {
-    wrapper: GridContext,
-  });
+function setupHook(materializeTrailingGhostOnEdit = false) {
+  return renderHook(
+    () =>
+      useDatagridChange(columns, 10, undefined, undefined, {
+        materializeTrailingGhostOnEdit,
+      }),
+    {
+      wrapper: GridContext,
+    },
+  );
 }
 
 describe("useDatagridChange", () => {
@@ -113,5 +119,45 @@ describe("useDatagridChange", () => {
     });
     expect(result.current.changes.current).toHaveLength(1);
     expect(result.current.changes.current[0].row).toBe(9);
+  });
+  it("does not treat an edit of an existing row as a new variant", () => {
+    // Arrange
+    const { result } = setupHook(true);
+
+    // Act
+    act(() => {
+      result.current.onCellEdited([0, 0], { data: "Existing" } as any);
+    });
+
+    // Assert
+    expect(result.current.added).toEqual([]);
+  });
+  it("materializes the trailing ghost only after the first edit", () => {
+    // Arrange
+    const { result } = setupHook(true);
+
+    // Act
+    act(() => {
+      result.current.onCellEdited([0, 10], { data: "New" } as any);
+    });
+
+    // Assert
+    expect(result.current.added).toEqual([10]);
+    expect(result.current.changes.current).toEqual([{ column: "name", row: 10, data: "New" }]);
+  });
+  it("does not rematerialize the same ghost after it is already added", () => {
+    // Arrange
+    const { result } = setupHook(true);
+
+    // Act
+    act(() => {
+      result.current.onCellEdited([0, 10], { data: "New" } as any);
+    });
+    act(() => {
+      result.current.onCellEdited([1, 10], { data: "SKU-1" } as any);
+    });
+
+    // Assert
+    expect(result.current.added).toEqual([10]);
   });
 });

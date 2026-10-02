@@ -177,6 +177,29 @@ describe("OrderValue", () => {
       expect(screen.queryByText("Standard Shipping")).not.toBeInTheDocument();
     });
 
+    it("should keep long shipping method names truncated with the full name on hover", () => {
+      // Arrange — carrier apps often store raw product codes as the method name
+      const longMethodName = "UK Standard Delivery - ROYALMAILTRKNOOBA/RMTRACKEDSTDNOSIG";
+      const props = {
+        ...baseProps,
+        shippingMethodName: longMethodName,
+      };
+
+      // Act
+      render(
+        <RouterWrapper>
+          <OrderValue {...props} />
+        </RouterWrapper>,
+      );
+
+      // Assert — full string stays in the DOM (CSS ellipsis); title exposes it for hover
+      const methodName = screen.getByTestId("shipping-method-name");
+
+      expect(screen.getByText("Shipping")).toBeInTheDocument();
+      expect(methodName).toHaveTextContent(longMethodName);
+      expect(methodName).toHaveAttribute("title", longMethodName);
+    });
+
     it("should render discounts as text when not editable", async () => {
       // Arrange
       const props = {
@@ -365,7 +388,7 @@ describe("OrderValue", () => {
       expect(onShippingMethodEdit).toHaveBeenCalledTimes(1);
     });
 
-    it("should show chosen shipping method as clickable link when alternatives exist", async () => {
+    it("should show Change next to Shipping when alternatives exist", async () => {
       // Arrange
       const onShippingMethodEdit = jest.fn();
       const props = createEditableProps({
@@ -384,13 +407,16 @@ describe("OrderValue", () => {
         </RouterWrapper>,
       );
 
-      // Assert
-      const methodLink = screen.getByText("Standard Shipping");
+      // Assert — name is data; Change sits on the Shipping label row
+      const methodText = screen.getByText("Standard Shipping");
 
-      expect(methodLink).toBeInTheDocument();
-      expect(methodLink.tagName).toBe("BUTTON");
+      expect(methodText).toBeInTheDocument();
+      expect(methodText.tagName).toBe("SPAN");
 
-      await userEvent.click(methodLink);
+      const changeLink = screen.getByRole("button", { name: "Change shipping method" });
+
+      expect(changeLink).toHaveTextContent("Change");
+      await userEvent.click(changeLink);
       expect(onShippingMethodEdit).toHaveBeenCalledTimes(1);
     });
 
@@ -418,7 +444,13 @@ describe("OrderValue", () => {
 
       expect(methodText).toBeInTheDocument();
       expect(methodText.tagName).toBe("SPAN");
-      expect(methodText).toHaveAttribute("title", "No alternative shipping methods available");
+      expect(methodText).toHaveAttribute(
+        "title",
+        "Standard Shipping — No alternative shipping methods available",
+      );
+      expect(
+        screen.queryByRole("button", { name: "Change shipping method" }),
+      ).not.toBeInTheDocument();
     });
 
     it("should prioritize 'No shipping address' over 'No applicable shipping methods'", () => {

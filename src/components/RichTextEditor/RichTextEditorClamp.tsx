@@ -1,0 +1,149 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import clsx from "clsx";
+import { ChevronDown } from "lucide-react";
+import {
+  cloneElement,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { defineMessages, useIntl } from "react-intl";
+
+import styles from "./RichTextEditorClamp.module.css";
+
+const frameEditor = (child: ReactNode) =>
+  isValidElement(child)
+    ? cloneElement(child as ReactElement<{ framed?: boolean }>, { framed: true })
+    : child;
+
+const messages = defineMessages({
+  showAll: {
+    id: "xKNUrr",
+    defaultMessage: "Show all",
+    description: "expands a clamped rich text field to its editing height",
+  },
+});
+
+/**
+ * Focus opens the field only while you're in it. Show all keeps it open
+ * after blur, so reading doesn't collapse the moment you move on.
+ */
+export const RichTextEditorClamp = ({
+  active = true,
+  tall = false,
+  footer,
+  children,
+}: {
+  active?: boolean;
+  /** Descriptions are about twice the clamped height of an attribute value. */
+  tall?: boolean;
+  /** Rendered under the editor, inside the field border, outside the clamped area. */
+  footer?: ReactNode;
+  children: ReactNode;
+}) => {
+  const intl = useIntl();
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [focused, setFocused] = useState(false);
+  const [released, setReleased] = useState(false);
+  const [overflows, setOverflows] = useState(false);
+  const clamped = active && !focused && !released;
+
+  useEffect(() => {
+    const frame = frameRef.current;
+
+    if (!clamped || !frame) {
+      return;
+    }
+
+    const measure = () => {
+      const blocks = frame.querySelectorAll(".ce-block");
+      const lastBlock = blocks[blocks.length - 1];
+
+      // Editor.js pads the redactor so you can click below the text. That
+      // padding is not content, so only a block past the visible edge means
+      // there is more to read.
+      if (!lastBlock) {
+        setOverflows(false);
+
+        return;
+      }
+
+      const frameBottom = frame.getBoundingClientRect().bottom;
+      const lastBlockBottom = lastBlock.getBoundingClientRect().bottom;
+
+      setOverflows(lastBlockBottom > frameBottom + 1);
+    };
+
+    measure();
+
+    const resize = new ResizeObserver(measure);
+    const content = frame.firstElementChild;
+
+    resize.observe(frame);
+
+    if (content) {
+      resize.observe(content);
+    }
+
+    const mutations = new MutationObserver(measure);
+
+    mutations.observe(frame, { childList: true, subtree: true, characterData: true });
+
+    return () => {
+      resize.disconnect();
+      mutations.disconnect();
+    };
+  }, [clamped]);
+
+  if (!active) {
+    return (
+      <>
+        {children}
+        {footer}
+      </>
+    );
+  }
+
+  return (
+    <div
+      className={styles.root}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={event => {
+        const next = event.relatedTarget;
+
+        if (!(next instanceof Node) || !event.currentTarget.contains(next)) {
+          setFocused(false);
+        }
+      }}
+    >
+      <div className={styles.frame}>
+        <div
+          ref={frameRef}
+          className={clsx(
+            clamped && styles.clamped,
+            clamped && tall && styles.clampedTall,
+            clamped && overflows && styles.clampedOverflow,
+          )}
+        >
+          {frameEditor(children)}
+        </div>
+        {clamped && overflows ? (
+          <button
+            type="button"
+            className={styles.showAll}
+            data-test-id="rich-text-show-all"
+            onMouseDown={event => event.preventDefault()}
+            onClick={() => setReleased(true)}
+          >
+            {intl.formatMessage(messages.showAll)}
+            <ChevronDown size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+          </button>
+        ) : null}
+      </div>
+      {footer}
+    </div>
+  );
+};

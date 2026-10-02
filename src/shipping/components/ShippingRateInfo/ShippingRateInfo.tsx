@@ -2,6 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type ShippingErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -94,16 +95,18 @@ const ShippingRateInfo = (props: ShippingRateInfoProps) => {
         />
         <CardSpacer />
         {isReadyForMount ? (
-          <RichTextEditor
-            defaultValue={defaultValue}
-            editorRef={editorRef}
-            onChange={handleChange}
-            disabled={disabled}
-            error={!!formErrors.description}
-            helperText={getShippingErrorMessage(formErrors.description, intl)}
-            label={intl.formatMessage(messages.description)}
-            name="description"
-          />
+          <RichTextEditorClamp tall>
+            <RichTextEditor
+              defaultValue={defaultValue}
+              editorRef={editorRef}
+              onChange={handleChange}
+              disabled={disabled}
+              error={!!formErrors.description}
+              helperText={getShippingErrorMessage(formErrors.description, intl)}
+              label={intl.formatMessage(messages.description)}
+              name="description"
+            />
+          </RichTextEditorClamp>
         ) : (
           <RichTextEditorLoading
             label={intl.formatMessage(messages.description)}

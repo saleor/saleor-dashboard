@@ -7,13 +7,6 @@ import {
 } from "@dashboard/graphql";
 import { getColumnStock, isCurrentRow } from "@dashboard/products/utils/datagrid";
 
-export function getStockData(data: DatagridChange[], currentIndex: number) {
-  return data
-    .filter(change => byHavingStockColumn(change, currentIndex))
-    .map(toStockData)
-    .filter(byStockWithQuantity);
-}
-
 export function getVaraintUpdateStockData(
   data: DatagridChange[],
   currentIndex: number,
@@ -61,10 +54,6 @@ function toStockData(change: DatagridChange) {
     warehouse: getColumnStock(change.column),
     quantity: change.data.value,
   };
-}
-
-function byStockWithQuantity(stock: { quantity: unknown }) {
-  return stock.quantity !== numberCellEmptyValue;
 }
 
 function byHavingStockColumn(change: DatagridChange, currentIndex: number) {

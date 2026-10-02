@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import { type ReferenceListValue } from "@dashboard/components/Attributes/referenceValueAppearance";
 import { type FileChoiceType } from "@dashboard/components/FileUploadField/FileUploadField";
 import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
-import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField/SortableChipsField";
 import { type AttributeValueFragment } from "@dashboard/graphql";
 import { type FetchMoreProps } from "@dashboard/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
@@ -17,6 +17,7 @@ import { type AttributeFieldError } from "./types";
 export function getAttributeRowLabelProps(attribute: AttributeInput) {
   return {
     inputType: attribute.data.inputType,
+    entityType: attribute.data.entityType,
     unit: attribute.data.unit,
   };
 }
@@ -44,7 +45,7 @@ export function getFileChoice(attribute: AttributeInput): FileChoiceType {
 export function getReferenceDisplayValue(
   attribute: AttributeInput,
   icons?: Map<string, ModelTypeIcon>,
-): SortableChipsFieldValueType[] {
+): ReferenceListValue[] {
   if (!attribute.value || attribute.value.length === 0) {
     return [];
   }
@@ -55,9 +56,11 @@ export function getReferenceDisplayValue(
 
   return attribute.data.references.map(referenceData => {
     return {
-      label: referenceData.label,
+      label: referenceData.primary ?? referenceData.label,
       value: referenceData.value,
       icon: icons?.get(referenceData.value) ?? referenceData.icon,
+      caption: referenceData.caption,
+      thumbnailUrl: referenceData.thumbnailUrl,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: referenceData.value,
@@ -69,7 +72,7 @@ export function getReferenceDisplayValue(
 export function getSingleReferenceDisplayValue(
   attribute: AttributeInput,
   icons?: Map<string, ModelTypeIcon>,
-): SortableChipsFieldValueType {
+): ReferenceListValue | null {
   if (!attribute.value || attribute.value.length === 0) {
     return null;
   }
@@ -78,9 +81,11 @@ export function getSingleReferenceDisplayValue(
 
   if (reference) {
     return {
-      label: reference.label,
+      label: reference.primary ?? reference.label,
       value: reference.value,
       icon: icons?.get(reference.value) ?? reference.icon,
+      caption: reference.caption,
+      thumbnailUrl: reference.thumbnailUrl,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: reference.value,
@@ -169,43 +174,6 @@ export function getErrorMessage(err: AttributeFieldError | undefined, intl: Intl
     case "AccountError":
       return getAccountErrorMessage(err, intl);
   }
-}
-
-export function booleanAttrValueToValue(value: unknown | undefined): string {
-  if (typeof value !== "boolean") {
-    return "unset";
-  }
-
-  return value ? "true" : "false";
-}
-
-export function getBooleanDropdownOptions(intl: IntlShape) {
-  return [
-    {
-      label: intl.formatMessage({
-        defaultMessage: "True",
-        id: "7WEeNq",
-        description: "select label",
-      }),
-      value: "true",
-    },
-    {
-      label: intl.formatMessage({
-        defaultMessage: "False",
-        id: "b1j4K6",
-        description: "select label",
-      }),
-      value: "false",
-    },
-    {
-      label: intl.formatMessage({
-        defaultMessage: "Unset",
-        id: "k62BKw",
-        description: "select label",
-      }),
-      value: "unset",
-    },
-  ];
 }
 
 export function getTruncatedTextValue(value: string | undefined, length: number) {

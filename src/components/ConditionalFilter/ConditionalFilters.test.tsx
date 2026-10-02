@@ -6,6 +6,12 @@ import { ConditionalFilters } from "./ConditionalFilters";
 import { useConditionalFilterContext } from "./context/consumer";
 import { type FiltersArea } from "./FiltersArea";
 
+const mockTrackEvent = jest.fn();
+
+jest.mock("../ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
+
 jest.mock("./context/consumer", () => ({
   useConditionalFilterContext: jest.fn(),
 }));
@@ -44,12 +50,17 @@ const setContext = (): {
   mockUseConditionalFilterContext.mockReturnValue({
     valueProvider: { loading: false, persist: jest.fn(), clear, value: [] },
     containerState: { resetToProvider, clearEmpty },
+    queryApiType: "where",
   });
 
   return { clear, resetToProvider, clearEmpty };
 };
 
 describe("ConditionalFilters", () => {
+  beforeEach(() => {
+    mockTrackEvent.mockClear();
+  });
+
   it("clears applied filters from the shared Clear filters button", async () => {
     // Arrange
     const user = userEvent.setup();
@@ -66,6 +77,9 @@ describe("ConditionalFilters", () => {
     expect(resetToProvider).toHaveBeenCalled();
     expect(clearEmpty).not.toHaveBeenCalled();
     expect(onClose).toHaveBeenCalled();
+    expect(mockTrackEvent).toHaveBeenCalledWith("list_filter_cleared", {
+      query_api_type: "where",
+    });
   });
 
   it("dismisses the panel without clearing applied filters", async () => {

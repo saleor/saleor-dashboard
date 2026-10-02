@@ -1,0 +1,4 @@
+.view {
+  /* Room under the last section so an Editor.js block menu can open past the card. */
+  padding-bottom: calc(var(--mu-spacing-6) + 72px);
+}

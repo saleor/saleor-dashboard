@@ -688,6 +688,12 @@ export const customerList: Customers = [
     firstName: "curtis",
     id: "VXNlcjox",
     lastName: "Bailey",
+    externalReference: "crm-1001",
+    defaultBillingAddress: {
+      __typename: "Address",
+      id: "QWRkcmVzczox",
+      companyName: "Mirumee Software",
+    },
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -699,6 +705,8 @@ export const customerList: Customers = [
     firstName: "Curtis",
     id: "VXNlcjox",
     lastName: "Bailey",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -710,6 +718,8 @@ export const customerList: Customers = [
     firstName: "Elizabeth",
     id: "VXNlcjoy",
     lastName: "Vaughn",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -721,6 +731,12 @@ export const customerList: Customers = [
     firstName: "Michael",
     id: "VXNlcjoz",
     lastName: "Martinez",
+    externalReference: "crm-1002",
+    defaultBillingAddress: {
+      __typename: "Address",
+      id: "QWRkcmVzczoy",
+      companyName: "Saleor Commerce",
+    },
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -732,6 +748,8 @@ export const customerList: Customers = [
     firstName: "Kayla",
     id: "VXNlcjo0",
     lastName: "Griffin",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -743,6 +761,8 @@ export const customerList: Customers = [
     firstName: "Donna",
     id: "VXNlcjo1",
     lastName: "Robinson",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -754,6 +774,8 @@ export const customerList: Customers = [
     firstName: "James",
     id: "VXNlcjo2",
     lastName: "Bqall",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -765,6 +787,8 @@ export const customerList: Customers = [
     firstName: "Anthony",
     id: "VXNlcjo3",
     lastName: "Gonzalez",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -776,6 +800,8 @@ export const customerList: Customers = [
     firstName: "Anthony",
     id: "VXNlcjo3",
     lastName: "Gonzalez",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -787,6 +813,8 @@ export const customerList: Customers = [
     firstName: "Wesley",
     id: "VXNlcjo4",
     lastName: "Davis",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -798,6 +826,8 @@ export const customerList: Customers = [
     firstName: "Laura",
     id: "VXNlcjo5",
     lastName: "Stone",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -809,6 +839,8 @@ export const customerList: Customers = [
     firstName: "William",
     id: "VXNlcjoxMA==",
     lastName: "Miller",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -820,6 +852,8 @@ export const customerList: Customers = [
     firstName: "Donald",
     id: "VXNlcjoxMQ==",
     lastName: "Solomon",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -831,6 +865,8 @@ export const customerList: Customers = [
     firstName: "Anthony",
     id: "VXNlcjoxMg==",
     lastName: "Young",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -842,6 +878,8 @@ export const customerList: Customers = [
     firstName: "Hanson",
     id: "VXNlcjoxMw==",
     lastName: "Sharon",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -853,6 +891,8 @@ export const customerList: Customers = [
     firstName: "Laura",
     id: "VXNlcjoxNA==",
     lastName: "Jensen",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -864,6 +904,8 @@ export const customerList: Customers = [
     firstName: "Mark",
     id: "VXNlcjoxNQ==",
     lastName: "Lee",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -875,6 +917,8 @@ export const customerList: Customers = [
     firstName: "David",
     id: "VXNlcjoxNg==",
     lastName: "Lawson",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -886,6 +930,8 @@ export const customerList: Customers = [
     firstName: "David",
     id: "VXNlcjoxNg==",
     lastName: "Lawson",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -897,6 +943,8 @@ export const customerList: Customers = [
     firstName: "Faith",
     id: "VXNlcjoxNw==",
     lastName: "Smith",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -908,6 +956,8 @@ export const customerList: Customers = [
     firstName: "John",
     id: "VXNlcjoxOA==",
     lastName: "Jones",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -919,6 +969,8 @@ export const customerList: Customers = [
     firstName: "Ronald",
     id: "VXNlcjoxOQ==",
     lastName: "Fisher",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -930,6 +982,8 @@ export const customerList: Customers = [
     firstName: "Jason",
     id: "VXNlcjoyMA==",
     lastName: "Gray",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -941,6 +995,8 @@ export const customerList: Customers = [
     firstName: "Tom",
     id: "VXNlcjoyMQ==",
     lastName: "Cooper",
+    externalReference: null,
+    defaultBillingAddress: null,
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 6,

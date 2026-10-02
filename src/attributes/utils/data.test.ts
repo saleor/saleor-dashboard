@@ -7,6 +7,7 @@ import {
 import { type Container } from "@dashboard/types";
 
 import {
+  getAttributesDisplayData,
   getReferenceAttributeDisplayData,
   getSelectedAttributeValues,
   handleContainerReferenceAssignment,
@@ -466,7 +467,12 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(result.data.references).toEqual([
-        { value: "test-variant-1", label: "Product 1: Variant A" },
+        {
+          value: "test-variant-1",
+          label: "Product 1: Variant A",
+          caption: "Product 1",
+          primary: "Variant A",
+        },
       ]);
     });
 
@@ -501,7 +507,12 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(result.data.references).toEqual([
-        { value: variantId, label: "White Plimsolls: 44 / White" },
+        {
+          value: variantId,
+          label: "White Plimsolls: 44 / White",
+          caption: "White Plimsolls",
+          primary: "44 / White",
+        },
       ]);
     });
 
@@ -573,7 +584,7 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(result.data.references).toEqual([
-        { value: "v3", label: "Product 3: Variant 3" },
+        { value: "v3", label: "Product 3: Variant 3", caption: "Product 3", primary: "Variant 3" },
         { value: "non-existent", label: "non-existent" }, // Fallback
       ]);
     });
@@ -685,14 +696,34 @@ describe("attributes/utils/data", () => {
 
         // Assert - Verify cache is working
         expect(result1.data.references).toEqual([
-          { value: "cache-variant-1", label: "Cache Test Product: Cache Variant 1" },
+          {
+            value: "cache-variant-1",
+            label: "Cache Test Product: Cache Variant 1",
+            caption: "Cache Test Product",
+            primary: "Cache Variant 1",
+          },
         ]);
         expect(result2.data.references).toEqual([
-          { value: "cache-variant-2", label: "Cache Test Product: Cache Variant 2" },
+          {
+            value: "cache-variant-2",
+            label: "Cache Test Product: Cache Variant 2",
+            caption: "Cache Test Product",
+            primary: "Cache Variant 2",
+          },
         ]);
         expect(result3.data.references).toEqual([
-          { value: "cache-variant-3", label: "Cache Test Product: Cache Variant 3" },
-          { value: "cache-variant-1", label: "Cache Test Product: Cache Variant 1" },
+          {
+            value: "cache-variant-3",
+            label: "Cache Test Product: Cache Variant 3",
+            caption: "Cache Test Product",
+            primary: "Cache Variant 3",
+          },
+          {
+            value: "cache-variant-1",
+            label: "Cache Test Product: Cache Variant 1",
+            caption: "Cache Test Product",
+            primary: "Cache Variant 1",
+          },
         ]);
 
         // productVariants is read once while building the cache; later lookups reuse it
@@ -750,10 +781,30 @@ describe("attributes/utils/data", () => {
 
         // Assert
         expect(result.data.references).toEqual([
-          { value: "sep-p1-v1", label: "Separate Cache Product 1: P1 Variant 1" },
-          { value: "sep-p2-v1", label: "Separate Cache Product 2: P2 Variant 1" },
-          { value: "sep-p1-v2", label: "Separate Cache Product 1: P1 Variant 2" },
-          { value: "sep-p2-v2", label: "Separate Cache Product 2: P2 Variant 2" },
+          {
+            value: "sep-p1-v1",
+            label: "Separate Cache Product 1: P1 Variant 1",
+            caption: "Separate Cache Product 1",
+            primary: "P1 Variant 1",
+          },
+          {
+            value: "sep-p2-v1",
+            label: "Separate Cache Product 2: P2 Variant 1",
+            caption: "Separate Cache Product 2",
+            primary: "P2 Variant 1",
+          },
+          {
+            value: "sep-p1-v2",
+            label: "Separate Cache Product 1: P1 Variant 2",
+            caption: "Separate Cache Product 1",
+            primary: "P1 Variant 2",
+          },
+          {
+            value: "sep-p2-v2",
+            label: "Separate Cache Product 2: P2 Variant 2",
+            caption: "Separate Cache Product 2",
+            primary: "P2 Variant 2",
+          },
         ]);
 
         expect(product1GetterCalls).toBe(1);
@@ -1012,6 +1063,54 @@ describe("attributes/utils/data", () => {
       // Assert
       expect(result1).toEqual([]);
       expect(result2).toEqual([]);
+    });
+  });
+
+  describe("getAttributesDisplayData", () => {
+    const attribute = {
+      id: "attr-cache",
+      value: ["meta-ref-1"],
+      label: "Ingredients",
+      data: {
+        inputType: AttributeInputTypeEnum.REFERENCE,
+        entityType: AttributeEntityTypeEnum.PRODUCT,
+        isRequired: false,
+        values: [],
+        references: [],
+      },
+      additionalData: [{ value: "meta-ref-1", label: "Aqua" }],
+    };
+
+    it("reuses display data when the attribute object and reference lists are unchanged", () => {
+      // Arrange
+      const references = createMockReferenceData({
+        products: [{ id: "other", name: "Other" }],
+      });
+
+      // Act
+      const first = getAttributesDisplayData([attribute], [], references);
+      const second = getAttributesDisplayData([attribute], [], references);
+
+      // Assert
+      expect(second[0]).toBe(first[0]);
+      expect(first[0].data.references).toEqual([{ value: "meta-ref-1", label: "Aqua" }]);
+    });
+
+    it("rebuilds display data when the attribute object changes", () => {
+      // Arrange
+      const references = createMockReferenceData({});
+      const first = getAttributesDisplayData([attribute], [], references);
+      const nextAttribute = {
+        ...attribute,
+        value: ["meta-ref-1"],
+      };
+
+      // Act
+      const second = getAttributesDisplayData([nextAttribute], [], references);
+
+      // Assert
+      expect(second[0]).not.toBe(first[0]);
+      expect(second[0].data.references).toEqual(first[0].data.references);
     });
   });
 });

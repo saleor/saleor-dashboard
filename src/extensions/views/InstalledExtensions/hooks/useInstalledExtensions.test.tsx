@@ -133,6 +133,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           activeProblemCount: 0,
           criticalProblemCount: 0,
           isNew: false,
+          deprecated: false,
         },
         {
           id: "2",
@@ -146,6 +147,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           activeProblemCount: 0,
           criticalProblemCount: 0,
           isNew: false,
+          deprecated: false,
         },
         {
           id: "plug1",
@@ -186,6 +188,50 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
 
     // Loading state should be false when apps are loaded, even without MANAGE_PLUGINS permission
     expect(result.current.installedAppsLoading).toBe(false);
+  });
+
+  it("marks the legacy SMTP app deprecated and leaves other apps unmarked", () => {
+    // Arrange
+    (useInstalledAppsListQuery as jest.Mock).mockReturnValueOnce({
+      data: {
+        apps: {
+          edges: [
+            {
+              node: {
+                id: "smtp",
+                identifier: "saleor.app.smtp",
+                name: "SMTP",
+                isActive: true,
+                type: "THIRDPARTY",
+                problems: [],
+              },
+            },
+            {
+              node: {
+                id: "customer-emails",
+                identifier: "saleor.app.customer-emails",
+                name: "Customer Emails",
+                isActive: true,
+                type: "THIRDPARTY",
+                problems: [],
+              },
+            },
+          ],
+        },
+      },
+      refetch: jest.fn(),
+    });
+
+    // Act
+    const { result } = renderHook(() => useInstalledExtensions());
+
+    // Assert
+    expect(result.current.installedExtensions.find(ext => ext.id === "smtp")?.deprecated).toBe(
+      true,
+    );
+    expect(
+      result.current.installedExtensions.find(ext => ext.id === "customer-emails")?.deprecated,
+    ).toBe(false);
   });
 
   it("should compute activeProblemCount and criticalProblemCount per app", () => {

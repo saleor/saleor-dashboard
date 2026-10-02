@@ -95,25 +95,14 @@ export const ConfirmButton = ({
     if (transitionState === "loading") {
       return (
         // TODO: Replace with new component when it will be ready https://github.com/saleor/macaw-ui/issues/443
-        <SaleorThrobber
-          size={20}
-          data-test-id="button-progress"
-          className={sprinkles({
-            position: "absolute",
-          })}
-        />
+        <SaleorThrobber size={20} data-test-id="button-progress" className={styles.indicator} />
       );
     }
 
     if (transitionState === "success" && isCompleted) {
       return (
         // TODO: Replace with new component when it will be ready https://github.com/saleor/macaw-ui/issues/443
-        <Check
-          data-test-id="button-success"
-          className={sprinkles({
-            position: "absolute",
-          })}
-        />
+        <Check data-test-id="button-success" className={styles.indicator} />
       );
     }
 
@@ -130,7 +119,11 @@ export const ConfirmButton = ({
   return (
     <Button
       {...props}
-      className={clsx(className, (isInteractionLocked || isSaveDisabled) && styles.noInteraction)}
+      className={clsx(
+        styles.button,
+        className,
+        (isInteractionLocked || isSaveDisabled) && styles.noInteraction,
+      )}
       variant={isError ? "error" : variant}
       disabled={isSaveDisabled}
       aria-busy={isLoading}

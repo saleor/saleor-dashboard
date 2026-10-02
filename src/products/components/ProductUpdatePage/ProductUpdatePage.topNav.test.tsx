@@ -50,6 +50,8 @@ jest.mock("./form", () => ({
         changeVariants: jest.fn(),
         stageVariantRemovals: jest.fn(),
         stageVariantCreates: jest.fn(),
+        addStagedVariantCreate: jest.fn(),
+        promoteDatagridAddedRows: jest.fn(),
         removeStagedVariantCreates: jest.fn(),
         clearStagedVariantCreates: jest.fn(),
         replaceStagedVariantCreates: jest.fn(),
@@ -72,6 +74,7 @@ jest.mock("./form", () => ({
       stagedVariantCreates: [],
       saveComposition: {
         hasDetails: false,
+        hasAttributes: false,
         dirtyChannelCount: 0,
         variantEditCount: 0,
         variantCreateCount: 0,

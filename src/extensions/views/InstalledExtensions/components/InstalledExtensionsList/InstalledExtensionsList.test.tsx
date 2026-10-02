@@ -55,4 +55,23 @@ describe("InstalledExtensionsList", () => {
     expect(screen.getByText("Extension 1")).toBeInTheDocument();
     expect(screen.getByText("Extension 2")).toBeInTheDocument();
   });
+
+  it("marks a deprecated extension without hiding it", () => {
+    // Arrange
+    const installedExtensions = [
+      { id: "smtp", name: "SMTP", deprecated: true },
+    ] as InstalledExtension[];
+
+    render(
+      <InstalledExtensionsList
+        installedExtensions={installedExtensions}
+        loading={false}
+        clearSearch={jest.fn()}
+      />,
+    );
+
+    // Assert
+    expect(screen.getByText("SMTP")).toBeInTheDocument();
+    expect(screen.getByTestId("deprecated-extension-badge")).toHaveTextContent("Deprecated");
+  });
 });

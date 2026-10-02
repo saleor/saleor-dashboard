@@ -1,18 +1,25 @@
-import { Header as DatagridHeader } from "@dashboard/components/Datagrid/components/Header";
 import { type DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagrid";
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import cardStyles from "@dashboard/components/DetailSettingsCard/DetailSettingsCard.module.css";
 import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
+import { PaginationButtons } from "@dashboard/components/PaginationButtons/PaginationButtons";
 import { type VariantAttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { productVariantAddUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { ChevronLeft, ChevronRight, CopyPlus } from "lucide-react";
+import clsx from "clsx";
+import { CopyPlus, Maximize, Minimize, PlusIcon } from "lucide-react";
 import { useCallback } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import messages from "../messages";
+
+/** Small header buttons: lighter and smaller than the 16px/stroke-2 action icons. */
+const headerActionIconProps = {
+  size: 14,
+  strokeWidth: 1.5,
+} as const;
 
 const localMessages = defineMessages({
   generatorRequiresConfig: {
@@ -117,7 +124,8 @@ const GenerateVariantsButton = ({
           disabled={isDisabled}
           onClick={onGenerateVariants}
           data-test-id="generate-variants-button"
-          icon={<CopyPlus size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          size="small"
+          icon={<CopyPlus {...headerActionIconProps} />}
         >
           <FormattedMessage
             defaultMessage="Generate variants"
@@ -217,31 +225,60 @@ export const ProductVariantsHeader = ({
 
   return (
     <>
-      <DatagridHeader title={headerTitle}>
-        <DatagridHeader.ButtonFullScreen isOpen={isFullscreenOpen} onToggle={toggleFullscreen}>
-          {isFullscreenOpen ? (
-            <FormattedMessage id="QjPJ78" defaultMessage="Close" description="close full-screen" />
-          ) : (
-            <FormattedMessage
-              id="9OZ/fr"
-              defaultMessage="Bulk edit"
-              description="open full-screen mode with bulk edit"
+      <Box className={clsx(cardStyles.header, cardStyles.headerWithEnd)}>
+        <Box className={cardStyles.headerMain}>
+          <Text size={5} fontWeight="bold" as="h2" className={cardStyles.title}>
+            {headerTitle}
+          </Text>
+        </Box>
+        <Box className={cardStyles.headerEnd} display="flex" __flexDirection="row-reverse" gap={2}>
+          <Button
+            data-test-id="button-exit-fullscreen"
+            variant="secondary"
+            size="small"
+            onClick={toggleFullscreen}
+            icon={
+              isFullscreenOpen ? (
+                <Minimize {...headerActionIconProps} />
+              ) : (
+                <Maximize {...headerActionIconProps} />
+              )
+            }
+          >
+            {isFullscreenOpen ? (
+              <FormattedMessage
+                id="QjPJ78"
+                defaultMessage="Close"
+                description="close full-screen"
+              />
+            ) : (
+              <FormattedMessage
+                id="9OZ/fr"
+                defaultMessage="Bulk edit"
+                description="open full-screen mode with bulk edit"
+              />
+            )}
+          </Button>
+          <Button
+            data-test-id="button-add-variant"
+            variant="secondary"
+            size="small"
+            onClick={handleAddNewRow}
+            icon={<PlusIcon {...headerActionIconProps} />}
+          >
+            <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
+          </Button>
+          {!isFullscreenOpen && (
+            <GenerateVariantsButton
+              productTypeId={productTypeId}
+              hasVariants={hasVariants}
+              hasVariantAttributes={hasVariantAttributes}
+              unsupportedRequiredAttributes={unsupportedRequiredAttributes}
+              onGenerateVariants={onGenerateVariants}
             />
           )}
-        </DatagridHeader.ButtonFullScreen>
-        <DatagridHeader.ButtonAddRow onAddRow={handleAddNewRow}>
-          <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
-        </DatagridHeader.ButtonAddRow>
-        {!isFullscreenOpen && (
-          <GenerateVariantsButton
-            productTypeId={productTypeId}
-            hasVariants={hasVariants}
-            hasVariantAttributes={hasVariantAttributes}
-            unsupportedRequiredAttributes={unsupportedRequiredAttributes}
-            onGenerateVariants={onGenerateVariants}
-          />
-        )}
-      </DatagridHeader>
+        </Box>
+      </Box>
       {showToolbar && (
         <Box
           display="flex"
@@ -249,7 +286,10 @@ export const ProductVariantsHeader = ({
           justifyContent="space-between"
           gap={3}
           paddingX={6}
-          paddingBottom={4}
+          paddingY={3}
+          borderBottomWidth={1}
+          borderBottomStyle="solid"
+          borderColor="default1"
         >
           {onVariantsSearchChange ? (
             <Box __maxWidth="260px" width="100%">
@@ -307,27 +347,11 @@ export const ProductVariantsHeader = ({
             )}
             {canPaginate && variantsPageInfo && (
               <Box display="flex" gap={2} data-test-id="variants-pagination">
-                <Button
-                  variant="secondary"
-                  disabled={!variantsPageInfo.hasPreviousPage}
-                  onClick={() => runGuarded(() => onVariantsPreviousPage?.())}
-                  icon={
-                    <ChevronLeft
-                      size={iconSize.medium}
-                      strokeWidth={iconStrokeWidthBySize.medium}
-                    />
-                  }
-                />
-                <Button
-                  variant="secondary"
-                  disabled={!variantsPageInfo.hasNextPage}
-                  onClick={() => runGuarded(() => onVariantsNextPage?.())}
-                  icon={
-                    <ChevronRight
-                      size={iconSize.medium}
-                      strokeWidth={iconStrokeWidthBySize.medium}
-                    />
-                  }
+                <PaginationButtons
+                  hasPreviousPage={variantsPageInfo.hasPreviousPage}
+                  hasNextPage={variantsPageInfo.hasNextPage}
+                  onPreviousPage={() => runGuarded(() => onVariantsPreviousPage?.())}
+                  onNextPage={() => runGuarded(() => onVariantsNextPage?.())}
                 />
               </Box>
             )}

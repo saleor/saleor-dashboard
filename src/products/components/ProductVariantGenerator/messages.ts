@@ -184,11 +184,6 @@ export const messages = defineMessages({
     defaultMessage: "These values will be applied to all generated variants.",
     description: "description for required non-selection attributes section",
   },
-  selectValue: {
-    id: "CD1NDm",
-    defaultMessage: "Select a value",
-    description: "placeholder for required attribute dropdown",
-  },
   missingRequiredAttributes: {
     id: "zKEVOg",
     defaultMessage: "Please fill in all required attributes before generating variants.",

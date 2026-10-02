@@ -20,3 +20,11 @@ function getSortQueryField(sort: PageListUrlSortField): PageSortField {
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);
+
+const sortableColumns: PageListUrlSortField[] = Object.values(PageListUrlSortField).filter(
+  field => getSortQueryField(field) !== undefined,
+);
+
+/** Only columns backed by a `PageSortField` can be sorted, the API has no other ordering. */
+export const canBeSorted = (columnId: string): columnId is PageListUrlSortField =>
+  sortableColumns.some(field => field === columnId);

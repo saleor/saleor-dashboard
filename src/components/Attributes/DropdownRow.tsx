@@ -6,10 +6,11 @@ import {
 } from "@dashboard/components/Attributes/utils";
 import { isAddNewValueOption } from "@dashboard/components/Combobox/utils";
 import { type AttributeValueFragment } from "@dashboard/graphql";
-import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
+import styles from "./AttributeRow.module.css";
 import { type AttributeInput } from "./Attributes";
 import { type AttributeFieldError, type AttributeRowHandlers } from "./types";
 import { useAttributeDropdown } from "./useAttributeDropdown";
@@ -126,27 +127,30 @@ export const DropdownRow = ({
       label={attribute.label}
       {...getAttributeRowLabelProps(attribute)}
     >
-      <DynamicCombobox
-        size="small"
-        disabled={disabled}
-        options={[...customValueOption, ...options]}
-        value={selectedValue}
-        error={!!error}
-        helperText={getErrorMessage(error, intl)}
-        name={fieldId}
-        id={fieldId}
-        label=""
-        placeholder={intl.formatMessage(messages.searchValues)}
-        onChange={handleOnChange}
-        onInputValueChange={value => {
-          setInputValue(value);
-          handleInputChange(value);
-        }}
-        onFocus={handleFocus}
-        onBlur={onAttributeSelectBlur}
-        onScrollEnd={handleFetchMore}
-        loading={!!fetchMoreAttributeValues?.loading}
-      />
+      <Box className={styles.valueControl}>
+        <DynamicCombobox
+          width="100%"
+          size="small"
+          disabled={disabled}
+          options={[...customValueOption, ...options]}
+          value={selectedValue}
+          error={!!error}
+          helperText={getErrorMessage(error, intl)}
+          name={fieldId}
+          id={fieldId}
+          label=""
+          placeholder={intl.formatMessage(messages.searchValues)}
+          onChange={handleOnChange}
+          onInputValueChange={value => {
+            setInputValue(value);
+            handleInputChange(value);
+          }}
+          onFocus={handleFocus}
+          onBlur={onAttributeSelectBlur}
+          onScrollEnd={handleFetchMore}
+          loading={!!fetchMoreAttributeValues?.loading}
+        />
+      </Box>
     </BasicAttributeRow>
   );
 };
