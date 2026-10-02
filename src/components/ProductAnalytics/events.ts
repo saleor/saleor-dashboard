@@ -88,6 +88,14 @@ export interface AnalyticsEventMap {
   };
   navigation_pin_changed: NavigationPinChangedProperties;
   product_rating_submitted: undefined;
+  product_media_translation_opened: {
+    source: "media_editor" | "translation_context";
+  };
+  product_media_translation_saved: {
+    language_code: string;
+    mode: "bulk" | "single";
+    result: "error" | "success";
+  };
   "ripples.modal-opened": undefined;
   setup_checklist_dismissed: {
     completed_steps: number;

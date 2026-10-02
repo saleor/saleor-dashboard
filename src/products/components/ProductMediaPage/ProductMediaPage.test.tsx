@@ -11,6 +11,11 @@ import { MemoryRouter } from "react-router-dom";
 import ProductMediaPage from "./ProductMediaPage";
 
 const mockNavigate = jest.fn();
+const mockTrackEvent = jest.fn();
+
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: typeof mockTrackEvent } => ({ trackEvent: mockTrackEvent }),
+}));
 
 jest.mock("@dashboard/auth/misc", () => ({
   hasPermission: jest.fn(),
@@ -72,6 +77,7 @@ const renderPage = () =>
 describe("ProductMediaPage translations action", () => {
   beforeEach(() => {
     mockNavigate.mockReset();
+    mockTrackEvent.mockReset();
     mockHasPermission.mockReset();
     mockIsMainSchema.mockReset();
     mockHasPermission.mockReturnValue(true);
@@ -91,6 +97,9 @@ describe("ProductMediaPage translations action", () => {
     expect(mockNavigate).toHaveBeenCalledWith(
       productMediaUrl("DE", defaultProps.productId, mediaFixture.id),
     );
+    expect(mockTrackEvent).toHaveBeenCalledWith("product_media_translation_opened", {
+      source: "media_editor",
+    });
   });
 
   it("hides the translations action without translation permission", () => {

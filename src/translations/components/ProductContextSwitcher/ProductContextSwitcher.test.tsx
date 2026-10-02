@@ -6,6 +6,11 @@ import { ProductContextSwitcher } from "./ProductContextSwitcher";
 
 const mockLoadMore = jest.fn();
 const mockSetSearch = jest.fn();
+const mockTrackEvent = jest.fn();
+
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: typeof mockTrackEvent } => ({ trackEvent: mockTrackEvent }),
+}));
 
 jest.mock("@dashboard/products/hooks/useProductVariantSiblings", () => ({
   useProductVariantSiblings: jest.fn(),
@@ -107,6 +112,7 @@ describe("ProductContextSwitcher", () => {
   beforeEach(() => {
     mockLoadMore.mockReset();
     mockSetSearch.mockReset();
+    mockTrackEvent.mockReset();
     mockedIsMainSchema.mockReturnValue(true);
     mockedUseProductTranslationContextQuery.mockReturnValue({
       data: {
@@ -275,6 +281,9 @@ describe("ProductContextSwitcher", () => {
 
     // Assert
     expect(onItemChange).toHaveBeenCalledWith("media-1", "media");
+    expect(mockTrackEvent).toHaveBeenCalledWith("product_media_translation_opened", {
+      source: "translation_context",
+    });
   });
 
   it("hides media when the active schema does not support media translations", () => {

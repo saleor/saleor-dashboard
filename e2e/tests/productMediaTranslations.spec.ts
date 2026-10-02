@@ -121,6 +121,12 @@ test("saves and clears media alt translations without changing the original #e2e
   await expect(
     page.getByTestId("product-media-translation-preview").locator("img"),
   ).toHaveAttribute("alt", translatedAlt);
+  await expect(
+    page.getByTestId("product-media-translation-preview").locator("img"),
+  ).toHaveJSProperty("complete", true);
+  await expect(
+    page.getByTestId("product-media-translation-preview").locator("img"),
+  ).not.toHaveJSProperty("naturalWidth", 0);
 
   // Act
   await page.getByRole("combobox", { name: "Choose language" }).fill("French");
@@ -166,6 +172,90 @@ test("saves and clears media alt translations without changing the original #e2e
   await expect(page).toHaveURL(new RegExp(`/media/${encodeURIComponent(otherMediaId)}$`));
   await expect(page.getByTestId("translation-field-alt")).toContainText("Original rear view");
   expect(pageErrors).toEqual([]);
+});
+
+test("saves media alt translations in bulk mode #e2e #translations", async ({
+  page,
+  mediaFixture,
+}) => {
+  // Arrange
+  const { productId, mediaId, token } = mediaFixture;
+  const translatedAlt = "Bulk translated front view";
+
+  await page.goto(
+    `/translations/DE/products/${encodeURIComponent(productId)}/media/${encodeURIComponent(mediaId)}?bulk=1`,
+  );
+
+  // Act
+  await page.getByTestId("translation-field").fill(translatedAlt);
+  await page.getByTestId("button-bar-confirm").click();
+
+  // Assert
+  await expect(page.getByText("All translations saved", { exact: true })).toBeVisible();
+  await expect(page.getByTestId("button-bar-confirm")).toBeDisabled();
+  await page.reload();
+  await expect(page.getByTestId("translation-field")).toHaveValue(translatedAlt);
+
+  const { translation } = await gql<{
+    translation: { alt: string; translation: { alt: string } };
+  }>(
+    config,
+    `query MediaTranslation($id: ID!) {
+      translation(kind: PRODUCT_MEDIA, id: $id) {
+        ... on ProductMediaTranslatableContent {
+          alt
+          translation(languageCode: DE) { alt }
+        }
+      }
+    }`,
+    { id: mediaId },
+    token,
+  );
+
+  expect(translation).toEqual({ alt: ORIGINAL_MEDIA_ALT, translation: { alt: translatedAlt } });
+});
+
+test("rejects overly long alt translations without losing the edit #e2e #translations", async ({
+  page,
+  mediaFixture,
+}) => {
+  // Arrange
+  const { productId, mediaId } = mediaFixture;
+  const invalidAlt = "x".repeat(1000);
+
+  await page.goto(
+    `/translations/DE/products/${encodeURIComponent(productId)}/media/${encodeURIComponent(mediaId)}`,
+  );
+  await page.getByTestId("edit-alt").click();
+  await page.getByTestId("translation-field").fill(invalidAlt);
+  const mutationResponse = page.waitForResponse(
+    response =>
+      response.request().method() === "POST" &&
+      response.request().postDataJSON()?.operationName === "UpdateProductMediaTranslation",
+  );
+
+  // Act
+  await page.getByTestId("button-bar-confirm").click();
+  const response = await mutationResponse;
+  const result: {
+    data: { productMediaTranslate: { errors: Array<{ field: string | null; code: string }> } };
+  } = await response.json();
+
+  // Assert
+  expect(result.data.productMediaTranslate.errors).toEqual(
+    expect.arrayContaining([expect.objectContaining({ field: "alt", code: "INVALID" })]),
+  );
+  await expect(page.getByTestId("translation-field")).toHaveValue(invalidAlt);
+  await expect(page.getByTestId("edit-alt")).toHaveCount(0);
+
+  // Act
+  await page.getByTestId("translation-field").fill("Corrected front view");
+  await page.getByTestId("button-bar-confirm").click();
+
+  // Assert
+  await expect(page.getByTestId("edit-alt")).toBeVisible();
+  await page.reload();
+  await expect(page.getByTestId("translation-field-alt")).toContainText("Corrected front view");
 });
 
 test.describe("staff with only translation permissions", () => {

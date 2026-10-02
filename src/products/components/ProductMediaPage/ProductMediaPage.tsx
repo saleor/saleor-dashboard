@@ -12,6 +12,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import Form from "@dashboard/components/Form/Form";
 import Grid from "@dashboard/components/Grid/Grid";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Savebar } from "@dashboard/components/Savebar";
 import { PermissionEnum, ProductMediaType } from "@dashboard/graphql";
 import { isMainSchema } from "@dashboard/graphql/schemaVersion";
@@ -185,6 +186,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
   const classes = useStyles(props);
   const intl = useIntl();
   const { user } = useUser();
+  const { trackEvent } = useAnalytics();
   const canTranslate =
     isMainSchema() && user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -224,9 +226,10 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
             />
             {canTranslate && mediaObj && (
               <TranslationsButton
-                onClick={() =>
-                  navigate(productMediaUrl(lastUsedLocaleOrFallback, productId, mediaObj.id))
-                }
+                onClick={() => {
+                  trackEvent("product_media_translation_opened", { source: "media_editor" });
+                  navigate(productMediaUrl(lastUsedLocaleOrFallback, productId, mediaObj.id));
+                }}
               />
             )}
           </TopNav>

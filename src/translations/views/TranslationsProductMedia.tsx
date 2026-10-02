@@ -1,4 +1,5 @@
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   type LanguageCodeEnum,
   type ProductMediaTranslationFragment,
@@ -28,10 +29,26 @@ export const TranslationsProductMedia = ({
   params,
 }: TranslationsProductMediaProps): JSX.Element => {
   const navigate = useNavigator();
+  const { trackEvent } = useAnalytics();
   const productMediaTranslation = useProductMediaTranslationDetailsQuery({
     variables: { id, productId, language: languageCode },
   });
-  const entityMutation = useUpdateProductMediaTranslationMutation();
+  const entityMutation = useUpdateProductMediaTranslationMutation({
+    onCompleted: data => {
+      trackEvent("product_media_translation_saved", {
+        language_code: languageCode,
+        mode: params.bulk ? "bulk" : "single",
+        result: data.productMediaTranslate?.errors.length === 0 ? "success" : "error",
+      });
+    },
+    onError: () => {
+      trackEvent("product_media_translation_saved", {
+        language_code: languageCode,
+        mode: params.bulk ? "bulk" : "single",
+        result: "error",
+      });
+    },
+  });
   const viewProps = useTranslationEntityView<ProductMediaTranslationFragment>({
     id,
     languageCode,
