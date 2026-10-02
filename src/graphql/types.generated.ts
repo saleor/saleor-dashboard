@@ -12505,6 +12505,8 @@ export type ProductTranslateErrorFragmentFragment = { __typename: 'TranslationEr
 
 export type ProductVariantTranslateErrorFragmentFragment = { __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null };
 
+export type ProductMediaTranslateErrorFragmentFragment = { __typename: 'ProductMediaTranslateError', code: ProductMediaTranslateErrorCode, field: string | null, message: string | null };
+
 export type CategoryTranslateErrorFragmentFragment = { __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null };
 
 export type CollectionTranslateErrorFragmentFragment = { __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null };
@@ -12828,6 +12830,8 @@ export type CollectionTranslationFragment = { __typename: 'CollectionTranslatabl
 export type ProductTranslationFragment = { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, slug: string | null, seoTitle: string | null, seoDescription: string | null, name: string | null, description: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
 
 export type ProductVariantTranslationFragment = { __typename: 'ProductVariantTranslatableContent', name: string, productVariant: { __typename: 'ProductVariant', id: string } | null, translation: { __typename: 'ProductVariantTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
+
+export type ProductMediaTranslationFragment = { __typename: 'ProductMediaTranslatableContent', id: string, productMediaId: string, alt: string, productMedia: { __typename: 'ProductMedia', id: string, productId: string | null, alt: string, url: string, type: ProductMediaType, oembedData: string } | null, translation: { __typename: 'ProductMediaTranslation', id: string, alt: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
 export type SaleTranslationFragment = { __typename: 'SaleTranslatableContent', sale: { __typename: 'Sale', id: string, name: string } | null, translation: { __typename: 'SaleTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
@@ -14817,6 +14821,15 @@ export type UpdateProductVariantTranslationsMutationVariables = Exact<{
 
 export type UpdateProductVariantTranslationsMutation = { __typename: 'Mutation', productVariantTranslate: { __typename: 'ProductVariantTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, translation: { __typename: 'ProductVariantTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null } | null };
 
+export type UpdateProductMediaTranslationMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: ProductMediaTranslationInput;
+  language: LanguageCodeEnum;
+}>;
+
+
+export type UpdateProductMediaTranslationMutation = { __typename: 'Mutation', productMediaTranslate: { __typename: 'ProductMediaTranslate', errors: Array<{ __typename: 'ProductMediaTranslateError', code: ProductMediaTranslateErrorCode, field: string | null, message: string | null }>, productMedia: { __typename: 'ProductMedia', id: string, alt: string, translation: { __typename: 'ProductMediaTranslation', id: string, alt: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null } | null };
+
 export type UpdateCategoryTranslationsMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   input: TranslationInput;
@@ -15012,6 +15025,22 @@ export type ProductVariantTranslationDetailsQueryVariables = Exact<{
 
 
 export type ProductVariantTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent', name: string, productVariant: { __typename: 'ProductVariant', id: string } | null, translation: { __typename: 'ProductVariantTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+
+export type ProductTranslationContextQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ProductTranslationContextQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent', id: string, product: { __typename: 'Product', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string }> | null } | null } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+
+export type ProductMediaTranslationDetailsQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  productId: Scalars['ID']['input'];
+  language: LanguageCodeEnum;
+}>;
+
+
+export type ProductMediaTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent', id: string, productMediaId: string, alt: string, productMedia: { __typename: 'ProductMedia', id: string, productId: string | null, alt: string, url: string, type: ProductMediaType, oembedData: string } | null, translation: { __typename: 'ProductMediaTranslation', id: string, alt: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null, productTranslation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent', id: string, productId: string, name: string } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type CategoryTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];

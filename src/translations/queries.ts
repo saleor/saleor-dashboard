@@ -211,6 +211,40 @@ export const productVariantTranslationDetails = gql`
   }
 `;
 
+// Keep media navigation available to translators, including for unpublished products.
+export const productTranslationContext = gql`
+  query ProductTranslationContext($id: ID!) {
+    translation(kind: PRODUCT, id: $id) {
+      ... on ProductTranslatableContent {
+        id
+        product {
+          id
+          media {
+            id
+            alt
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const productMediaTranslationDetails = gql`
+  query ProductMediaTranslationDetails($id: ID!, $productId: ID!, $language: LanguageCodeEnum!)
+  @lockSchema(schema: "main") {
+    translation(kind: PRODUCT_MEDIA, id: $id) {
+      ...ProductMediaTranslation
+    }
+    productTranslation: translation(kind: PRODUCT, id: $productId) {
+      ... on ProductTranslatableContent {
+        id
+        productId
+        name
+      }
+    }
+  }
+`;
+
 export const categoryTranslationDetails = gql`
   query CategoryTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: CATEGORY, id: $id) {
