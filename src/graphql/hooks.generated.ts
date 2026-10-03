@@ -4183,6 +4183,7 @@ export const MenuItemTranslationFragmentDoc = gql`
 export const WarehouseWithShippingFragmentDoc = gql`
     fragment WarehouseWithShipping on Warehouse {
   ...Warehouse
+  clickAndCollectOption
   shippingZones(first: 100) {
     edges {
       node {
@@ -16072,6 +16073,9 @@ export const OrderListDocument = gql`
           }
         }
         userEmail
+        deliveryMethod {
+          __typename
+        }
         chargeStatus
       }
     }

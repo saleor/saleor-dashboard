@@ -1,22 +1,29 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
-import { type WarehouseWithShippingFragment } from "@dashboard/graphql";
+import {
+  WarehouseClickAndCollectOptionEnum,
+  type WarehouseWithShippingFragment,
+} from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { renderCollection } from "@dashboard/misc";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
+import messages from "@dashboard/warehouses/components/WarehouseSettings/messages";
 import { WarehouseListUrlSortField, warehousePath } from "@dashboard/warehouses/urls";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
+
+import styles from "./WarehouseList.module.css";
 
 const useStyles = makeStyles(
   theme => ({
@@ -26,6 +33,9 @@ const useStyles = makeStyles(
       },
       colName: {
         width: 400,
+      },
+      colPickup: {
+        width: 140,
       },
       colZones: {
         width: "auto",
@@ -55,12 +65,21 @@ interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortFie
   };
 }
 
-const numberOfColumns = 3;
+const pickupOptions = [
+  WarehouseClickAndCollectOptionEnum.LOCAL,
+  WarehouseClickAndCollectOptionEnum.ALL,
+];
+
+const isPickupLocation = (option: WarehouseClickAndCollectOptionEnum | null | undefined): boolean =>
+  !!option && pickupOptions.includes(option);
+
+const numberOfColumns = 4;
 const WarehouseList = (props: WarehouseListProps) => {
   const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort, search } =
     props;
   const classes = useStyles(props);
   const location = useLocation();
+  const intl = useIntl();
 
   return (
     <ResponsiveTable
@@ -88,6 +107,9 @@ const WarehouseList = (props: WarehouseListProps) => {
           >
             <FormattedMessage id="aCJwVq" defaultMessage="Name" description="warehouse" />
           </TableCellHeader>
+          <TableCell className={classes.colPickup}>
+            <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
+          </TableCell>
           <TableCell className={classes.colZones}>
             <FormattedMessage id="PFXGaR" defaultMessage="Shipping Zones" />
           </TableCell>
@@ -114,6 +136,18 @@ const WarehouseList = (props: WarehouseListProps) => {
             >
               <TableCell className={classes.colName} data-test-id="name">
                 {warehouse?.name ?? <Skeleton />}
+              </TableCell>
+              <TableCell data-test-id="pickup">
+                {warehouse === undefined ? (
+                  <Skeleton />
+                ) : isPickupLocation(warehouse.clickAndCollectOption) ? (
+                  <Pill
+                    className={styles.pickupPill}
+                    color="info"
+                    label={intl.formatMessage(messages.warehouseSettingsPickupTitle)}
+                    data-test-id="warehouse-pickup-label"
+                  />
+                ) : null}
               </TableCell>
               <TableCell className={classes.colZones} data-test-id="zones">
                 {warehouse?.shippingZones === undefined ? (
