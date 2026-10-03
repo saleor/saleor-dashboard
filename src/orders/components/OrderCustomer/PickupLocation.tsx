@@ -23,7 +23,7 @@ const stockRuleMessages: Partial<Record<WarehouseClickAndCollectOptionEnum, Mess
 
 // The address is the warehouse's, copied onto the order at checkout. Its contact
 // name is left out so it is not mistaken for the customer collecting the order.
-export const getPickupLocationAddressLines = (
+const getPickupLocationAddressLines = (
   address: ReadonlyAddressData | null | undefined,
 ): string[] => {
   if (!address) {
