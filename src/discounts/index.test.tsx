@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import DiscountSection from ".";
@@ -12,29 +13,29 @@ jest.mock("@dashboard/components/Router", () => ({
 
 // The list views are wrapped in filter providers that expect Apollo. This test only
 // exercises routing, so pass the children straight through.
-jest.mock("@dashboard/components/ConditionalFilter", () => ({
-  ConditionalDiscountFilterProvider: ({ children }: { children: React.ReactNode }) => children,
-  ConditionalVoucherFilterProvider: ({ children }: { children: React.ReactNode }) => children,
+jest.mock("@dashboard/components/ConditionalFilter/context/provider", () => ({
+  ConditionalDiscountFilterProvider: ({ children }: { children: ReactNode }) => children,
+  ConditionalVoucherFilterProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
-jest.mock("./views/DiscountList", () => ({
+jest.mock("./views/DiscountList/DiscountList", () => ({
   DiscountList: () => <div data-test-id="promotion-list-view" />,
 }));
-jest.mock("./views/DiscountDetails", () => ({
+jest.mock("./views/DiscountDetails/DiscountDetails", () => ({
   DiscountDetails: () => <div data-test-id="promotion-details-view" />,
 }));
-jest.mock("./views/DiscountCreate", () => ({
+jest.mock("./views/DiscountCreate/DiscountCreate", () => ({
   DiscountCreate: () => <div data-test-id="promotion-create-view" />,
 }));
-jest.mock("./views/VoucherList", () => ({
+jest.mock("./views/VoucherList/VoucherList", () => ({
   __esModule: true,
   default: () => <div data-test-id="voucher-list-view" />,
 }));
-jest.mock("./views/VoucherDetails", () => ({
+jest.mock("./views/VoucherDetails/VoucherDetails", () => ({
   __esModule: true,
   default: () => <div data-test-id="voucher-details-view" />,
 }));
-jest.mock("./views/VoucherCreate", () => ({
+jest.mock("./views/VoucherCreate/VoucherCreate", () => ({
   __esModule: true,
   default: () => <div data-test-id="voucher-create-view" />,
 }));
