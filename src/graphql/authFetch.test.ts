@@ -57,6 +57,75 @@ const createMockResponse = (body: Record<string, unknown>) => {
 const mockFetch = jest.fn();
 const originalFetch = global.fetch;
 
+describe("session-safe refresh transport", () => {
+  beforeEach(() => {
+    registerAuthClient({
+      refreshToken: mockRefreshToken,
+      refreshExternalToken: mockRefreshExternalToken,
+      logout: mockLogout,
+    } as unknown as AuthSDK);
+    storage.getAccessToken.mockReturnValue("expired-token");
+    jwtDecode.mockReturnValue({ exp: 0, owner: "saleor" });
+    mockFetch.mockResolvedValue(createMockResponse({ data: {} }));
+  });
+
+  it("coalesces six requests with an expired access token", async () => {
+    // Arrange
+    let resolveRefresh: (value: { data: { tokenRefresh: { token: string } } }) => void = () =>
+      undefined;
+
+    mockRefreshToken.mockImplementationOnce(
+      () =>
+        new Promise(resolve => {
+          resolveRefresh = resolve;
+        }),
+    );
+
+    const requests = Array.from({ length: 6 }, () =>
+      createFetch()("http://localhost:8000/graphql/"),
+    );
+
+    // Act
+    resolveRefresh({ data: { tokenRefresh: { token: "new-token" } } });
+    await Promise.all(requests);
+
+    // Assert
+    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+    expect(mockFetch).toHaveBeenCalledTimes(6);
+  });
+
+  it("surfaces a proactive refresh outage without sending an expired token", async () => {
+    // Arrange
+    mockRefreshToken.mockRejectedValueOnce(new TypeError("offline"));
+
+    // Act
+    await expect(createFetch()("http://localhost:8000/graphql/")).rejects.toThrow("offline");
+
+    // Assert
+    expect(mockFetch).not.toHaveBeenCalled();
+    expect(mockLogout).not.toHaveBeenCalled();
+  });
+
+  it("does not return an ExpiredSignatureError after a reactive refresh outage", async () => {
+    // Arrange
+    mockFetch.mockResolvedValue(
+      createMockResponse({
+        errors: [{ extensions: { exception: { code: "ExpiredSignatureError" } } }],
+      }),
+    );
+    mockRefreshToken.mockRejectedValueOnce(new TypeError("offline"));
+
+    // Act
+    await expect(
+      createFetch({ autoTokenRefresh: false })("http://localhost:8000/graphql/"),
+    ).rejects.toThrow("offline");
+
+    // Assert
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    expect(mockLogout).not.toHaveBeenCalled();
+  });
+});
+
 beforeEach(() => {
   global.fetch = mockFetch as unknown as typeof fetch;
   jest.clearAllMocks();

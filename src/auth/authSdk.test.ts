@@ -272,7 +272,12 @@ describe("auth", () => {
       mockedStorage.getRefreshToken.mockReturnValue("my-refresh-token");
       mockedStorage.getAuthPluginId.mockReturnValue(null);
       client.mutate.mockImplementation(async (opts: any) => {
-        const data = { tokenRefresh: { token: null, errors: [{ message: "expired" }] } };
+        const data = {
+          tokenRefresh: {
+            token: null,
+            errors: [{ code: "JWT_SIGNATURE_EXPIRED", field: "refreshToken", message: "expired" }],
+          },
+        };
 
         opts.update(mockCache, { data });
 
@@ -634,7 +639,13 @@ describe("auth", () => {
       mockedStorage.getRefreshToken.mockReturnValue("ext-refresh-token");
       mockedStorage.getAuthPluginId.mockReturnValue(null);
       client.mutate.mockImplementation(async (opts: any) => {
-        const data = { externalRefresh: { token: null, refreshToken: null, errors: [] } };
+        const data = {
+          externalRefresh: {
+            token: null,
+            refreshToken: null,
+            errors: [{ code: "JWT_INVALID_TOKEN", field: "refreshToken" }],
+          },
+        };
 
         opts.update(mockCache, { data });
 
