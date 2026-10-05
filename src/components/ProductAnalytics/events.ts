@@ -26,6 +26,9 @@ export interface AnalyticsEventMap {
     publish_enabled: boolean;
     stock_enabled: boolean;
   };
+  command_palette_copy_id: {
+    view: string;
+  };
   configuration_search_result_clicked: {
     input_method: "keyboard" | "mouse";
     position: number;
