@@ -5,6 +5,7 @@ import {
   TopNavWrapper,
 } from "@dashboard/components/AppLayout/TopNav";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
+import { deprecationMessages } from "@dashboard/extensions/messages";
 import { type AppLogo } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
@@ -33,6 +34,8 @@ interface AppPageNavProps {
    * Component is used on Manage App page too, so the button should be hidden there
    */
   showMangeAppButton?: boolean;
+  /** Tints the header and shows the reason on one line; the header height is fixed. */
+  deprecationReason?: string | null;
 }
 
 export const AppPageNav = ({
@@ -44,6 +47,7 @@ export const AppPageNav = ({
   goBackUrl,
   appId,
   showMangeAppButton = true,
+  deprecationReason,
 }: AppPageNavProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -62,9 +66,15 @@ export const AppPageNav = ({
   );
 
   return (
-    <TopNavWrapper>
-      <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
-        <Box display="flex" gap={2} alignItems="center">
+    <TopNavWrapper backgroundColor={deprecationReason ? "warning1" : "default1"}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        width="100%"
+        __minWidth="0"
+      >
+        <Box display="flex" gap={2} alignItems="center" flexShrink="0">
           {goBackUrl && (
             <TopNavLink
               to={goBackUrl}
@@ -87,8 +97,27 @@ export const AppPageNav = ({
             </Box>
           </Box>
         </Box>
+        {deprecationReason && (
+          <Text
+            size={3}
+            display="block"
+            __flex="1"
+            __minWidth="0"
+            marginX={6}
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            title={deprecationReason}
+            data-test-id="app-deprecation-reason"
+          >
+            <Text size={3} fontWeight="medium">
+              <FormattedMessage {...deprecationMessages.inlineLabel} />
+            </Text>{" "}
+            {deprecationReason}
+          </Text>
+        )}
       </Box>
-      <Box display="flex" gap={1.5}>
+      <Box display="flex" gap={1.5} flexShrink="0">
         {showMangeAppButton && (
           <Button
             whiteSpace="nowrap"

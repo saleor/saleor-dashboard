@@ -1,6 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
-import { AppDeprecationNotice } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
+import { AppDeprecationReason } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages, problemMessages } from "@dashboard/extensions/messages";
@@ -105,6 +105,7 @@ const ExtensionRow = ({
             data-test-id={justInstalled ? "just-installed-extension-row" : undefined}
             className={clsx(
               extension.href &&
+                !extension.deprecated &&
                 sprinkles({
                   backgroundColor: {
                     default: "default1",
@@ -129,7 +130,8 @@ const ExtensionRow = ({
                 </Text>
               </ExtensionName>
               {extension.isNew && <NewExtensionBadge />}
-              {extension.deprecated && <DeprecatedExtensionBadge />}
+              {/* The reason line already says "Deprecated"; the badge covers apps without one. */}
+              {extension.deprecated && !extension.deprecationReason && <DeprecatedExtensionBadge />}
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}
@@ -156,10 +158,10 @@ const ExtensionRow = ({
             </Box>
           </Box>
           {extension.deprecationReason && (
-            <AppDeprecationNotice
+            <AppDeprecationReason
               reason={extension.deprecationReason}
               lines={2}
-              className={styles.deprecationNotice}
+              className={styles.deprecationReason}
             />
           )}
         </GridTable.Cell>

@@ -8,19 +8,17 @@
   background-color: var(--mu-colors-background-warning1);
 }
 
-.compact {
-  align-items: center;
-  padding: 6px 12px;
-}
-
 .icon {
   flex-shrink: 0;
   color: var(--mu-colors-text-warning1);
 }
 
-.compact .icon {
-  align-self: flex-start;
-  margin-top: 2px;
+.reasonRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
 }
 
 /* App-supplied plain text - keep its line breaks. */

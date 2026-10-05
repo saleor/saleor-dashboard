@@ -1,6 +1,6 @@
 import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 
-import { AppDeprecationNotice } from "./AppDeprecation";
+import { AppDeprecationNotice, AppDeprecationReason } from "./AppDeprecation";
 
 const shortReason = "Use Customer Emails instead.";
 const longReason =
@@ -25,8 +25,10 @@ type Story = StoryObj<typeof AppDeprecationNotice>;
 
 export const Full: Story = {};
 
-export const CompactOneLine: Story = { args: { lines: 1 } };
+export const ReasonClamped: StoryObj<typeof AppDeprecationReason> = {
+  render: () => <AppDeprecationReason reason={longReason} lines={1} />,
+};
 
-export const CompactTwoLines: Story = { args: { lines: 2 } };
-
-export const CompactFits: Story = { args: { lines: 1, reason: shortReason } };
+export const ReasonFits: StoryObj<typeof AppDeprecationReason> = {
+  render: () => <AppDeprecationReason reason={shortReason} lines={2} />,
+};

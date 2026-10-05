@@ -1,11 +1,19 @@
-/* Deprecated app: warning accent on the row and its reason underneath. */
+/* Deprecated app: the whole row, reason included, takes the warning color. */
 .deprecated {
-  box-shadow: inset 3px 0 0 var(--mu-colors-border-warning1);
+  background-color: var(--mu-colors-background-warning1);
 }
 
-/* Aligned with the app name: 20px row padding + 40px avatar + 8px gap. */
-.deprecationNotice {
-  margin: 0 20px 12px 68px;
+.deprecated:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--mu-colors-background-warning1) 85%,
+    var(--mu-colors-text-warning1)
+  );
+}
+
+/* Under the app name: 20px row padding + 40px avatar + 8px gap. */
+.deprecationReason {
+  padding: 0 20px 10px 68px;
 }
 
 /* Subtle accent sweeps in from the left, rests as a wide left-to-right fade, then

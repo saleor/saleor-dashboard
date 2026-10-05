@@ -1,7 +1,6 @@
 import { borderHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { APP_VERSION } from "@dashboard/config";
-import { AppDeprecationNotice } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { type AppQuery } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
@@ -38,13 +37,9 @@ export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
         appLogoUrl={data?.brand?.logo.default}
         showMangeAppButton={true}
         goBackUrl={ExtensionsUrls.resolveInstalledExtensionsUrl()}
+        deprecationReason={data?.deprecationReason}
       />
       <DetailPageLayout.Content>
-        {data?.deprecationReason && (
-          <Box paddingX={6} paddingY={2}>
-            <AppDeprecationNotice reason={data.deprecationReason} lines={1} />
-          </Box>
-        )}
         <Box
           position="relative"
           // It removes extra space between iframe and container
