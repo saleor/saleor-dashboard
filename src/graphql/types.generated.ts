@@ -385,6 +385,31 @@ export enum AppProblemDismissedByEnum {
   USER = 'USER'
 }
 
+/**
+ * Error codes for the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export enum AppSelfUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  REQUIRED = 'REQUIRED'
+}
+
+/**
+ * Fields to update on the calling app.
+ *
+ * Added in Saleor 3.23.
+ */
+export type AppSelfUpdateInput = {
+  /**
+   * Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  deprecationReason?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum AppSortField {
   /** Sort apps by creation date. */
   CREATION_DATE = 'CREATION_DATE',
@@ -1103,6 +1128,12 @@ export type CategoryInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description?: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * External ID of this category.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -7778,7 +7809,8 @@ export enum PromotionCreateErrorCode {
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
-  RULES_NUMBER_LIMIT = 'RULES_NUMBER_LIMIT'
+  RULES_NUMBER_LIMIT = 'RULES_NUMBER_LIMIT',
+  UNIQUE = 'UNIQUE'
 }
 
 export type PromotionCreateInput = {
@@ -7786,6 +7818,12 @@ export type PromotionCreateInput = {
   description?: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Promotion name. */
   name: Scalars['String']['input'];
   /** List of promotion rules. */
@@ -8029,7 +8067,8 @@ export enum PromotionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
-  REQUIRED = 'REQUIRED'
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
 }
 
 export type PromotionUpdateInput = {
@@ -8037,6 +8076,12 @@ export type PromotionUpdateInput = {
   description?: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Promotion name. */
   name?: InputMaybe<Scalars['String']['input']>;
   /** The start date of the promotion in ISO 8601 format. */
@@ -12699,6 +12744,8 @@ export type OrderDetailsGrantRefundFragment = { __typename: 'Order', id: string,
 
 export type ActivitiesFragment = { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null };
 
+export type OrderNumberFragment = { __typename: 'Order', id: string, number: string };
+
 export type PageInfoFragment = { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null };
 
 export type PageTypeFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
@@ -12776,6 +12823,8 @@ export type SearchProductVariantFragment = { __typename: 'ProductVariant', id: s
 export type ExportFileFragment = { __typename: 'ExportFile', id: string, status: JobStatusEnum, url: string | null };
 
 export type ProductListAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string }, values: Array<{ __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> };
+
+export type ProductVariantProductIdFragment = { __typename: 'ProductVariant', id: string, product: { __typename: 'Product', id: string } };
 
 export type ShippingZoneFragment = { __typename: 'ShippingZone', id: string, name: string, description: string | null, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
