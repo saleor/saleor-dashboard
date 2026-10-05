@@ -8,7 +8,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./AppDeprecation.module.css";
 
-/** "Deprecated: <reason>" clamped to `lines`; "Show more" appears only when the reason overflows. */
+/** Deprecation reason clamped to `lines`; "Show more" appears only when the reason overflows. */
 export const AppDeprecationReason = ({
   reason,
   lines,
@@ -51,9 +51,6 @@ export const AppDeprecationReason = ({
         className={clsx(styles.reason, !expanded && styles.clamped)}
         style={expanded ? undefined : { WebkitLineClamp: lines }}
       >
-        <Text size={3} fontWeight="medium">
-          <FormattedMessage {...deprecationMessages.inlineLabel} />
-        </Text>{" "}
         {reason}
       </Text>
       {(overflows || expanded) && (

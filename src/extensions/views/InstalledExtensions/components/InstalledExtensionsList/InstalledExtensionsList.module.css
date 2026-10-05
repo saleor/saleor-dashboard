@@ -1,14 +1,15 @@
-/* Deprecated app: the whole row, reason included, takes the warning color. */
+/* Deprecated app: warning accent on the left edge, drawn over the cell so the content
+   stays aligned with other rows. */
 .deprecated {
-  background-color: var(--mu-colors-background-warning1);
+  position: relative;
 }
 
-.deprecated:hover {
-  background-color: color-mix(
-    in srgb,
-    var(--mu-colors-background-warning1) 85%,
-    var(--mu-colors-text-warning1)
-  );
+.deprecated::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background-color: var(--mu-colors-background-warning1);
 }
 
 /* Under the app name: 20px row padding + 40px avatar + 8px gap. */

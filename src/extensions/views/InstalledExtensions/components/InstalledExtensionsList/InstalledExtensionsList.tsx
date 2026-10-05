@@ -97,23 +97,25 @@ const ExtensionRow = ({
   return (
     <>
       <GridTable.Row data-test-id="installed-extension-row">
-        <GridTable.Cell padding={0} className={clsx(extension.deprecated && styles.deprecated)}>
+        <GridTable.Cell
+          padding={0}
+          className={clsx(
+            extension.href &&
+              sprinkles({
+                backgroundColor: {
+                  default: "default1",
+                  hover: "default2",
+                },
+              }),
+            extension.deprecated && styles.deprecated,
+          )}
+        >
           <Box
             display="flex"
             alignItems="center"
             __padding="5px 20px"
             data-test-id={justInstalled ? "just-installed-extension-row" : undefined}
-            className={clsx(
-              extension.href &&
-                !extension.deprecated &&
-                sprinkles({
-                  backgroundColor: {
-                    default: "default1",
-                    hover: "default2",
-                  },
-                }),
-              justInstalled && styles.justInstalled,
-            )}
+            className={clsx(justInstalled && styles.justInstalled)}
           >
             <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
               <ExtensionName href={extension.href} name={extension.name}>
@@ -130,8 +132,7 @@ const ExtensionRow = ({
                 </Text>
               </ExtensionName>
               {extension.isNew && <NewExtensionBadge />}
-              {/* The reason line already says "Deprecated"; the badge covers apps without one. */}
-              {extension.deprecated && !extension.deprecationReason && <DeprecatedExtensionBadge />}
+              {extension.deprecated && <DeprecatedExtensionBadge />}
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}

@@ -75,7 +75,7 @@ describe("InstalledExtensionsList", () => {
     expect(screen.getByTestId("deprecated-extension-badge")).toHaveTextContent("Deprecated");
   });
 
-  it("shows the reason instead of the badge for extensions that declared one", () => {
+  it("shows the badge and the reason for extensions that declared one", () => {
     // Arrange
     global.ResizeObserver = jest.fn(() => ({
       observe: jest.fn(),
@@ -115,7 +115,7 @@ describe("InstalledExtensionsList", () => {
     );
 
     // Assert
-    expect(screen.queryByTestId("deprecated-extension-badge")).not.toBeInTheDocument();
+    expect(screen.getAllByTestId("deprecated-extension-badge")).toHaveLength(1);
     expect(screen.getAllByTestId("app-deprecation-reason")).toHaveLength(1);
     expect(screen.getByText("Use Customer Emails instead.")).toBeInTheDocument();
   });
