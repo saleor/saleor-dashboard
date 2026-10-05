@@ -10,7 +10,7 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
-import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ProductDetailsFormProps {
@@ -90,55 +90,57 @@ export const ProductDetailsForm = ({
         />
       )}
       <FormSpacer />
-      <Box display="flex" alignItems="flex-end" gap={4} flexWrap="wrap">
-        <Box __width="16rem" flexShrink="0">
+      <Box display="grid" __gridTemplateColumns="1fr 1fr" gap={4} alignItems="start">
+        <Input
+          label={intl.formatMessage({
+            id: "L7N+0y",
+            defaultMessage: "Product Rating",
+            description: "product rating",
+          })}
+          size="small"
+          width="100%"
+          value={data.rating || ""}
+          onChange={onChange}
+          error={!!formErrors.rating}
+          name="rating"
+          type="number"
+          disabled={disabled}
+          data-test-id="product-rating"
+          helperText={
+            getProductErrorMessage(formErrors.rating, intl) ||
+            intl.formatMessage({
+              id: "3qIIGa",
+              defaultMessage:
+                'Product rating will be removed in the next minor version. Create a numeric "rating" attribute instead.',
+              description: "hint explaining why a field is deprecated",
+            })
+          }
+        />
+        {shippingWeight ? (
           <Input
             label={intl.formatMessage({
-              id: "L7N+0y",
-              defaultMessage: "Product Rating",
-              description: "product rating",
+              id: "okGo4U",
+              defaultMessage: "Shipping weight",
+              description: "simple product weight used for shipping rates",
             })}
             size="small"
-            value={data.rating || ""}
-            onChange={onChange}
-            error={!!formErrors.rating}
-            name="rating"
+            width="100%"
+            value={shippingWeight.value}
+            onChange={handleWeightChange}
+            error={!!formErrors.weight}
+            name="weight"
             type="number"
             disabled={disabled}
-            data-test-id="product-rating"
-            helperText={getProductErrorMessage(formErrors.rating, intl)}
+            data-test-id="product-shipping-weight"
+            helperText={
+              getProductErrorMessage(formErrors.weight, intl) ||
+              intl.formatMessage({
+                id: "Y2B0j0",
+                defaultMessage: "Used to calculate shipping rates.",
+                description: "helper beside the simple product shipping weight field",
+              })
+            }
           />
-        </Box>
-        {shippingWeight ? (
-          <>
-            <Box __width="16rem" flexShrink="0">
-              <Input
-                label={intl.formatMessage({
-                  id: "okGo4U",
-                  defaultMessage: "Shipping weight",
-                  description: "simple product weight used for shipping rates",
-                })}
-                size="small"
-                value={shippingWeight.value}
-                onChange={handleWeightChange}
-                error={!!formErrors.weight}
-                name="weight"
-                type="number"
-                disabled={disabled}
-                data-test-id="product-shipping-weight"
-                helperText={getProductErrorMessage(formErrors.weight, intl)}
-              />
-            </Box>
-            {!formErrors.weight ? (
-              <Text size={2} color="default2" flexShrink="0" whiteSpace="nowrap" marginBottom={2}>
-                {intl.formatMessage({
-                  id: "Y2B0j0",
-                  defaultMessage: "Used to calculate shipping rates.",
-                  description: "helper beside the simple product shipping weight field",
-                })}
-              </Text>
-            ) : null}
-          </>
         ) : null}
       </Box>
     </DetailSettingsCard>
