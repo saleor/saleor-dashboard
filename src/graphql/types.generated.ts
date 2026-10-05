@@ -12744,6 +12744,8 @@ export type OrderDetailsGrantRefundFragment = { __typename: 'Order', id: string,
 
 export type ActivitiesFragment = { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null };
 
+export type OrderNumberFragment = { __typename: 'Order', id: string, number: string };
+
 export type PageInfoFragment = { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null };
 
 export type PageTypeFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
@@ -12821,6 +12823,8 @@ export type SearchProductVariantFragment = { __typename: 'ProductVariant', id: s
 export type ExportFileFragment = { __typename: 'ExportFile', id: string, status: JobStatusEnum, url: string | null };
 
 export type ProductListAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string }, values: Array<{ __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> };
+
+export type ProductVariantProductIdFragment = { __typename: 'ProductVariant', id: string, product: { __typename: 'Product', id: string } };
 
 export type ShippingZoneFragment = { __typename: 'ShippingZone', id: string, name: string, description: string | null, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
