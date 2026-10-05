@@ -90,7 +90,7 @@ export const ProductDetailsForm = ({
         />
       )}
       <FormSpacer />
-      <Box display="flex" flexDirection="column" gap={2}>
+      <Box display="flex" flexDirection="column" gap={4}>
         <Box display="flex" alignItems="flex-end" gap={4} flexWrap="wrap">
           <Box __width="16rem" flexShrink="0">
             <Input
@@ -110,46 +110,46 @@ export const ProductDetailsForm = ({
               helperText={getProductErrorMessage(formErrors.rating, intl)}
             />
           </Box>
-          {shippingWeight ? (
-            <>
-              <Box __width="16rem" flexShrink="0">
-                <Input
-                  label={intl.formatMessage({
-                    id: "okGo4U",
-                    defaultMessage: "Shipping weight",
-                    description: "simple product weight used for shipping rates",
-                  })}
-                  size="small"
-                  value={shippingWeight.value}
-                  onChange={handleWeightChange}
-                  error={!!formErrors.weight}
-                  name="weight"
-                  type="number"
-                  disabled={disabled}
-                  data-test-id="product-shipping-weight"
-                  helperText={getProductErrorMessage(formErrors.weight, intl)}
-                />
-              </Box>
-              {!formErrors.weight ? (
-                <Text size={2} color="default2" flexShrink="0" whiteSpace="nowrap" marginBottom={2}>
-                  {intl.formatMessage({
-                    id: "Y2B0j0",
-                    defaultMessage: "Used to calculate shipping rates.",
-                    description: "helper beside the simple product shipping weight field",
-                  })}
-                </Text>
-              ) : null}
-            </>
-          ) : null}
+          <Text size={2} color="default2" marginBottom={2}>
+            {intl.formatMessage({
+              id: "3qIIGa",
+              defaultMessage:
+                'Product rating will be removed in the next minor version. Create a numeric "rating" attribute instead.',
+              description: "hint explaining why a field is deprecated",
+            })}
+          </Text>
         </Box>
-        <Text size={2} color="default2">
-          {intl.formatMessage({
-            id: "3qIIGa",
-            defaultMessage:
-              'Product rating will be removed in the next minor version. Create a numeric "rating" attribute instead.',
-            description: "hint explaining why a field is deprecated",
-          })}
-        </Text>
+        {shippingWeight ? (
+          <Box display="flex" alignItems="flex-end" gap={4} flexWrap="wrap">
+            <Box __width="16rem" flexShrink="0">
+              <Input
+                label={intl.formatMessage({
+                  id: "okGo4U",
+                  defaultMessage: "Shipping weight",
+                  description: "simple product weight used for shipping rates",
+                })}
+                size="small"
+                value={shippingWeight.value}
+                onChange={handleWeightChange}
+                error={!!formErrors.weight}
+                name="weight"
+                type="number"
+                disabled={disabled}
+                data-test-id="product-shipping-weight"
+                helperText={getProductErrorMessage(formErrors.weight, intl)}
+              />
+            </Box>
+            {!formErrors.weight ? (
+              <Text size={2} color="default2" flexShrink="0" whiteSpace="nowrap" marginBottom={2}>
+                {intl.formatMessage({
+                  id: "Y2B0j0",
+                  defaultMessage: "Used to calculate shipping rates.",
+                  description: "helper beside the simple product shipping weight field",
+                })}
+              </Text>
+            ) : null}
+          </Box>
+        ) : null}
       </Box>
     </DetailSettingsCard>
   );
