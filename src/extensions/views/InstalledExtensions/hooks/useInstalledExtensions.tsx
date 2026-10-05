@@ -127,40 +127,43 @@ export const useInstalledExtensions = () => {
 
   const installedApps = useMemo<InstalledExtension[]>(
     () =>
-      installedAppsData.map(({ id, name, isActive, brand, type, problems, appUrl, created }) => {
-        const appEvents = eventDeliveriesMap.get(id);
-        const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
+      installedAppsData.map(
+        ({ id, name, isActive, brand, type, problems, appUrl, created, deprecationReason }) => {
+          const appEvents = eventDeliveriesMap.get(id);
+          const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
-        const allProblems = [
-          ...(problems ?? []),
-          ...(lastFailedAttempt
-            ? [buildWebhookProblem(lastFailedAttempt, webhookErrorMessage)]
-            : []),
-        ];
+          const allProblems = [
+            ...(problems ?? []),
+            ...(lastFailedAttempt
+              ? [buildWebhookProblem(lastFailedAttempt, webhookErrorMessage)]
+              : []),
+          ];
 
-        const activeProblemsForApp = allProblems.filter(p => !isProblemDismissed(p));
+          const activeProblemsForApp = allProblems.filter(p => !isProblemDismissed(p));
 
-        return {
-          id: id,
-          name: name ?? "",
-          isActive,
-          logo: getExtensionLogo({
-            logo: brand?.logo?.default,
-            type,
+          return {
+            id: id,
             name: name ?? "",
-          }),
-          info: getExtensionInfo({
             isActive,
-            loading: !eventDeliveriesData?.apps,
-          }),
-          href: resolveInstalledAppHref({ id, type, isActive, appUrl }),
-          problems: allProblems,
-          appType: type,
-          activeProblemCount: activeProblemsForApp.length,
-          criticalProblemCount: activeProblemsForApp.filter(p => isProblemCritical(p)).length,
-          isNew: isRecentlyInstalled(created),
-        };
-      }),
+            logo: getExtensionLogo({
+              logo: brand?.logo?.default,
+              type,
+              name: name ?? "",
+            }),
+            info: getExtensionInfo({
+              isActive,
+              loading: !eventDeliveriesData?.apps,
+            }),
+            href: resolveInstalledAppHref({ id, type, isActive, appUrl }),
+            problems: allProblems,
+            appType: type,
+            activeProblemCount: activeProblemsForApp.length,
+            criticalProblemCount: activeProblemsForApp.filter(p => isProblemCritical(p)).length,
+            isNew: isRecentlyInstalled(created),
+            deprecationReason,
+          };
+        },
+      ),
     [eventDeliveries, eventDeliveriesData, installedAppsData, webhookErrorMessage],
   );
 

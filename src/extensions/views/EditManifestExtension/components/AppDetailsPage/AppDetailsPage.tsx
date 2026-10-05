@@ -1,3 +1,4 @@
+import { AppDeprecationNotice } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { type AppQuery, AppTypeEnum } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -57,6 +58,11 @@ export const AppDetailsPage = ({
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
       />
+      {data.deprecationReason && (
+        <Box marginX={6} marginTop={4}>
+          <AppDeprecationNotice reason={data.deprecationReason} />
+        </Box>
+      )}
       {data.type === AppTypeEnum.THIRDPARTY && !data.appUrl && (
         <Box
           data-test-id="no-configuration-screen-info"

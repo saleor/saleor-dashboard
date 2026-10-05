@@ -72,6 +72,8 @@ export type InstalledExtension = {
   criticalProblemCount: number;
   /** Installed within the last 48 hours - renders a "New" badge in the list. */
   isNew?: boolean;
+  /** Set by the app itself; the app keeps working, but should be migrated away from. */
+  deprecationReason?: string | null;
 };
 
 export interface Extension {

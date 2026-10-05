@@ -4808,6 +4808,10 @@
     "context": "value input label",
     "string": "Discount value"
   },
+  "GBgv1f": {
+    "context": "checkbox required before installing a deprecated app",
+    "string": "I understand this app is deprecated and want to install it anyway."
+  },
   "GCPzKf": {
     "context": "ProductTypeDeleteWarningDialog single assigned items button label",
     "string": "View products"
@@ -10633,6 +10637,10 @@
     "context": "inline error when a required SMTP field is empty",
     "string": "Required"
   },
+  "bepijT": {
+    "context": "label before the app's deprecation reason in a compact notice",
+    "string": "Deprecated:"
+  },
   "bfj3NC": {
     "context": "Button with Manage app label",
     "string": "Manage extension"
@@ -13702,6 +13710,10 @@
     "context": "model type detail cogs menu, opens the delete-confirmation dialog",
     "string": "Delete model type"
   },
+  "mnm882": {
+    "context": "collapse the app's deprecation reason",
+    "string": "Show less"
+  },
   "mqwLmD": {
     "string": "Menu updated"
   },
@@ -13753,6 +13765,10 @@
   "n0w2ZT": {
     "context": "label for currently selected warehouse",
     "string": "currently selected"
+  },
+  "n1ja6a": {
+    "context": "deprecation notice subtitle explaining the app keeps working",
+    "string": "It still works, but the developer recommends migrating."
   },
   "n4wLTL": {
     "context": "create attribute dialog step two intro for product types",
@@ -14236,6 +14252,10 @@
   },
   "ofewGR": {
     "string": "Go to orders"
+  },
+  "ofxQ4i": {
+    "context": "badge on an installed app that declared itself deprecated",
+    "string": "Deprecated"
   },
   "oi9xgK": {
     "context": "toast after assigning one staff order alert recipient",
@@ -15448,6 +15468,10 @@
   "sozQ3N": {
     "context": "TopNav destination link tooltip to staff list",
     "string": "All staff members"
+  },
+  "spOqAF": {
+    "context": "deprecation notice title",
+    "string": "This app is deprecated"
   },
   "spjKeI": {
     "string": "Fulfillment approved"

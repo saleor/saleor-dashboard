@@ -1,3 +1,13 @@
+/* Deprecated app: warning accent on the row and its reason underneath. */
+.deprecated {
+  box-shadow: inset 3px 0 0 var(--mu-colors-border-warning1);
+}
+
+/* Aligned with the app name: 20px row padding + 40px avatar + 8px gap. */
+.deprecationNotice {
+  margin: 0 20px 12px 68px;
+}
+
 /* Subtle accent sweeps in from the left, rests as a wide left-to-right fade, then
    disappears. Points the user at a freshly installed extension that alphabetical
    sorting pushed into the middle of the table. */

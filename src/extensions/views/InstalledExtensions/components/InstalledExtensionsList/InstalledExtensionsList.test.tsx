@@ -55,4 +55,48 @@ describe("InstalledExtensionsList", () => {
     expect(screen.getByText("Extension 1")).toBeInTheDocument();
     expect(screen.getByText("Extension 2")).toBeInTheDocument();
   });
+
+  it("should mark only deprecated extensions and show their reason", () => {
+    // Arrange
+    global.ResizeObserver = jest.fn(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+
+    const installedExtensions: InstalledExtension[] = [
+      {
+        id: "1",
+        name: "SMTP",
+        logo: null,
+        info: null,
+        activeProblemCount: 0,
+        criticalProblemCount: 0,
+        deprecationReason: "Use Customer Emails instead.",
+      },
+      {
+        id: "2",
+        name: "Customer Emails",
+        logo: null,
+        info: null,
+        activeProblemCount: 0,
+        criticalProblemCount: 0,
+        deprecationReason: null,
+      },
+    ];
+
+    // Act
+    render(
+      <InstalledExtensionsList
+        installedExtensions={installedExtensions}
+        loading={false}
+        clearSearch={jest.fn()}
+      />,
+    );
+
+    // Assert
+    expect(screen.getAllByTestId("app-deprecated-badge")).toHaveLength(1);
+    expect(screen.getAllByTestId("app-deprecation-notice")).toHaveLength(1);
+    expect(screen.getByText("Use Customer Emails instead.")).toBeInTheDocument();
+  });
 });

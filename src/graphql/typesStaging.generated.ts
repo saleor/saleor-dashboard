@@ -379,6 +379,31 @@ export enum AppProblemDismissedByEnum {
   USER = 'USER'
 }
 
+/**
+ * Error codes for the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export enum AppSelfUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  REQUIRED = 'REQUIRED'
+}
+
+/**
+ * Fields to update on the calling app.
+ *
+ * Added in Saleor 3.23.
+ */
+export type AppSelfUpdateInput = {
+  /**
+   * Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  deprecationReason?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum AppSortField {
   /** Sort apps by creation date. */
   CREATION_DATE = 'CREATION_DATE',

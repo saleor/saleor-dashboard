@@ -1,5 +1,9 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
+import {
+  AppDeprecationBadge,
+  AppDeprecationNotice,
+} from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages, problemMessages } from "@dashboard/extensions/messages";
@@ -95,7 +99,10 @@ const ExtensionRow = ({
   return (
     <>
       <GridTable.Row data-test-id="installed-extension-row">
-        <GridTable.Cell padding={0}>
+        <GridTable.Cell
+          padding={0}
+          className={clsx(extension.deprecationReason && styles.deprecated)}
+        >
           <Box
             display="flex"
             alignItems="center"
@@ -127,6 +134,7 @@ const ExtensionRow = ({
                 </Text>
               </ExtensionName>
               {extension.isNew && <NewExtensionBadge />}
+              {extension.deprecationReason && <AppDeprecationBadge />}
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}
@@ -152,6 +160,13 @@ const ExtensionRow = ({
               {extension.actions}
             </Box>
           </Box>
+          {extension.deprecationReason && (
+            <AppDeprecationNotice
+              reason={extension.deprecationReason}
+              lines={2}
+              className={styles.deprecationNotice}
+            />
+          )}
         </GridTable.Cell>
       </GridTable.Row>
       {hasActiveProblems && problemsVisible ? (
