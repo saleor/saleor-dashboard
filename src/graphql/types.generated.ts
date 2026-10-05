@@ -385,6 +385,31 @@ export enum AppProblemDismissedByEnum {
   USER = 'USER'
 }
 
+/**
+ * Error codes for the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export enum AppSelfUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  REQUIRED = 'REQUIRED'
+}
+
+/**
+ * Fields to update on the calling app.
+ *
+ * Added in Saleor 3.23.
+ */
+export type AppSelfUpdateInput = {
+  /**
+   * Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  deprecationReason?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum AppSortField {
   /** Sort apps by creation date. */
   CREATION_DATE = 'CREATION_DATE',
@@ -1103,6 +1128,12 @@ export type CategoryInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description?: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * External ID of this category.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -7778,7 +7809,8 @@ export enum PromotionCreateErrorCode {
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
-  RULES_NUMBER_LIMIT = 'RULES_NUMBER_LIMIT'
+  RULES_NUMBER_LIMIT = 'RULES_NUMBER_LIMIT',
+  UNIQUE = 'UNIQUE'
 }
 
 export type PromotionCreateInput = {
@@ -7786,6 +7818,12 @@ export type PromotionCreateInput = {
   description?: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Promotion name. */
   name: Scalars['String']['input'];
   /** List of promotion rules. */
@@ -8029,7 +8067,8 @@ export enum PromotionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
-  REQUIRED = 'REQUIRED'
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
 }
 
 export type PromotionUpdateInput = {
@@ -8037,6 +8076,12 @@ export type PromotionUpdateInput = {
   description?: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Promotion name. */
   name?: InputMaybe<Scalars['String']['input']>;
   /** The start date of the promotion in ISO 8601 format. */
