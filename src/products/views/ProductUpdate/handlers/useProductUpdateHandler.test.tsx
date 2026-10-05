@@ -34,6 +34,12 @@ jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn(),
 }));
 
+const mockTrackEvent = jest.fn();
+
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
+
 const wrapper = ({ children }: { children: ReactNode }): ReactElement => (
   <IntlProvider locale="en" messages={{}}>
     {children}
@@ -164,5 +170,65 @@ describe("useProductUpdateHandler", () => {
       expect.objectContaining({ type: "create", index: 1 }),
       expect.objectContaining({ type: "create", index: 2 }),
     ]);
+  });
+  it("tracks a changed rating as an explicit write of the deprecated field", async () => {
+    // Arrange
+    createVariants.mockResolvedValue(createBulkCreateResult([]));
+
+    const { result } = renderHook(() => useProductUpdateHandler(product), { wrapper });
+
+    // Act
+    await act(async () => {
+      await result.current[0]({ ...submitData, rating: 4 });
+    });
+
+    // Assert
+    expect(mockTrackEvent).toHaveBeenCalledWith("product_rating_submitted");
+  });
+
+  it("tracks a cleared rating as an explicit write", async () => {
+    // Arrange
+    createVariants.mockResolvedValue(createBulkCreateResult([]));
+
+    const { result } = renderHook(() => useProductUpdateHandler(product), { wrapper });
+
+    // Act
+    await act(async () => {
+      await result.current[0]({ ...submitData, rating: "" as unknown as number });
+    });
+
+    // Assert
+    expect(mockTrackEvent).toHaveBeenCalledWith("product_rating_submitted");
+  });
+
+  it("does not track the rating when the submitted value matches the saved one", async () => {
+    // Arrange
+    createVariants.mockResolvedValue(createBulkCreateResult([]));
+
+    const { result } = renderHook(() => useProductUpdateHandler(product), { wrapper });
+
+    // Act
+    await act(async () => {
+      await result.current[0]({ ...submitData, rating: product.rating as number });
+    });
+
+    // Assert
+    expect(mockTrackEvent).not.toHaveBeenCalled();
+  });
+
+  it("does not track the rating when the field was not changed", async () => {
+    // Arrange
+    createVariants.mockResolvedValue(createBulkCreateResult([]));
+
+    const { rating: _rating, ...dataWithoutRating } = submitData;
+    const { result } = renderHook(() => useProductUpdateHandler(product), { wrapper });
+
+    // Act
+    await act(async () => {
+      await result.current[0](dataWithoutRating as ProductUpdateSubmitData);
+    });
+
+    // Assert
+    expect(mockTrackEvent).not.toHaveBeenCalled();
   });
 });

@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { mergeFileUploadErrors } from "@dashboard/attributes/utils/data";
 import { handleUploadMultipleFiles } from "@dashboard/attributes/utils/handlers";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   type AttributeErrorFragment,
   ErrorPolicyEnum,
@@ -72,6 +73,7 @@ export function useProductUpdateHandler(
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
+  const { trackEvent } = useAnalytics();
   const [variantListErrors, setVariantListErrors] = useState<ProductVariantListError[]>([]);
   const [submitErrors, setSubmitErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
   const [submitChannelsErrors, setSubmitChannelsErrors] = useState<
@@ -111,10 +113,20 @@ export function useProductUpdateHandler(
 
     const updateProductChannelsData = getProductChannelsUpdateVariables(product, data);
 
+    const updateProductVariables = getProductUpdateVariables(product, data, uploadFilesResult);
+
+    // rating is deprecated in the API - track who still changes it. Submitting the
+    // unchanged value (any other field was edited) is not a write worth counting.
+    const submittedRating = updateProductVariables.input.rating;
+
+    if (submittedRating !== undefined && submittedRating !== (product.rating ?? null)) {
+      trackEvent("product_rating_submitted");
+    }
+
     // Persist product fields (including category) before channel listing updates so
     // publish validation sees the latest saved product state in the same submit.
     const updateProductResult = await updateProduct({
-      variables: getProductUpdateVariables(product, data, uploadFilesResult),
+      variables: updateProductVariables,
     });
     const productUpdateErrors = updateProductResult?.data?.productUpdate?.errors ?? [];
 
