@@ -26,6 +26,7 @@ import {
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
+import { datagridAddedRowsToCreateInputs } from "@dashboard/products/hooks/datagridAddedRowsToCreateInputs";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { CompactSelection, type GridSelection, type Item } from "@glideapps/glide-data-grid";
@@ -88,6 +89,8 @@ interface ProductVariantsProps {
   onStageVariantCreates?: (
     inputs: ProductVariantBulkCreateInput[],
   ) => Promise<BulkCreateResult> | BulkCreateResult;
+  /** Move bulk-edit added rows into the unsaved section when leaving fullscreen. */
+  onPromoteDatagridAddedRows?: () => void;
   /** Already-staged generator creates for Exists / skip detection. */
   stagedVariantCreates?: ProductVariantBulkCreateInput[];
   onRemoveStagedVariantCreates?: (indexes: number[]) => void;
@@ -120,6 +123,7 @@ export const ProductVariants = ({
   onStageVariantRemovals,
   onRowClick,
   onStageVariantCreates,
+  onPromoteDatagridAddedRows,
   stagedVariantCreates = [],
   onRemoveStagedVariantCreates,
   onClearStagedVariantCreates,
@@ -256,7 +260,17 @@ export const ProductVariants = ({
     selectedVariantIds,
   ]);
 
-  const hasAddedRows = Boolean(datagridState && datagridState.added.length > 0);
+  const hasAddedRows = Boolean(
+    datagridState &&
+      datagridAddedRowsToCreateInputs(
+        {
+          added: datagridState.added,
+          removed: datagridState.removed,
+          updates: datagridState.changes.current,
+        },
+        variantAttributes as VariantAttributeFragment[],
+      ).length > 0,
+  );
   const guardAddedRowsThen = useCallback(
     (action: () => void) => {
       if (hasAddedRows) {
@@ -289,6 +303,15 @@ export const ProductVariants = ({
   const handleCloseUnsavedWarning = useCallback(() => {
     setShowUnsavedWarning(false);
   }, []);
+
+  const handleFullscreenChange = useCallback(
+    (isOpen: boolean) => {
+      if (!isOpen) {
+        onPromoteDatagridAddedRows?.();
+      }
+    },
+    [onPromoteDatagridAddedRows],
+  );
 
   const handleGenerateVariants = useCallback(
     async (inputs: ProductVariantBulkCreateInput[]): Promise<BulkCreateResult> => {
@@ -488,13 +511,21 @@ export const ProductVariants = ({
   );
 
   const menuItems = useCallback(
-    (index: number) => [
-      {
-        label: "Edit Variant",
-        onSelect: () => onRowClick(variants[index].id),
-        Icon: editVariantIcon,
-      },
-    ],
+    (index: number) => {
+      const variant = variants[index];
+
+      if (!variant) {
+        return [];
+      }
+
+      return [
+        {
+          label: "Edit Variant",
+          onSelect: () => onRowClick(variant.id),
+          Icon: editVariantIcon,
+        },
+      ];
+    },
     [editVariantIcon, onRowClick, variants],
   );
 
@@ -553,6 +584,8 @@ export const ProductVariants = ({
             />
           )}
           onChange={onChange}
+          onFullscreenChange={handleFullscreenChange}
+          trailingGhostRow={variantsLoading ? false : "fullscreen"}
           recentlyAddedColumn={recentlyAddedColumn}
           controlledSelection={gridSelection}
           onControlledSelectionChange={handleGridSelectionChange}

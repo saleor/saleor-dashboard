@@ -2,7 +2,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { notificationsMessages } from "@dashboard/notificationsSettings/messages";
 import {
-  notificationsCustomerEmailsPath,
+  notificationsCustomerEmailsAppPath,
   notificationsSettingsPath,
   notificationsStaffEmailsPath,
 } from "@dashboard/notificationsSettings/urls";
@@ -97,7 +97,7 @@ export const notificationsCatalogEntries: SettingsCatalogEntry[] = [
     title: notificationsMessages.customerEmailsTitle,
     description: notificationsMessages.customerEmailsSmtpDescription,
     breadcrumbs: [...hubBreadcrumb, notificationsMessages.customerEmailsTitle],
-    href: settingsHref(notificationsCustomerEmailsPath),
+    href: settingsHref(notificationsCustomerEmailsAppPath),
     permissions: [PermissionEnum.MANAGE_PLUGINS],
     ownership: "channel",
     keywords: [keywords.customerEmails],

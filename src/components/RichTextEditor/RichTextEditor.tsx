@@ -25,6 +25,8 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   onBlur?: () => void;
   onFocus?: () => void;
   onKeyDownCapture?: React.KeyboardEventHandler<HTMLDivElement>;
+  /** Parent frame (RichTextEditorClamp) owns the field border. */
+  framed?: boolean;
 }
 
 const RichTextEditor = ({
@@ -40,6 +42,7 @@ const RichTextEditor = ({
   onBlur,
   onFocus,
   onKeyDownCapture,
+  framed = false,
   ...props
 }: RichTextEditorProps) => {
   const classes = useStyles({});
@@ -136,7 +139,9 @@ const RichTextEditor = ({
               [classes.rootError]: error,
               [classes.rootHasLabel]: label !== "",
               [classes.rootTyped]: isTyped || props.defaultValue?.blocks?.length! > 0,
+              [classes.rootFramed]: framed,
             })}
+            data-rich-text-field=""
             onFocusCapture={() => {
               setIsFocused(true);
               onFocus?.();

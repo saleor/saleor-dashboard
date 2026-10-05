@@ -11,6 +11,8 @@ export const installedAppsSnapshot = gql`
         node {
           id
           identifier
+          name
+          manifestUrl
           isActive
           type
           appUrl

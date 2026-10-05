@@ -379,6 +379,31 @@ export enum AppProblemDismissedByEnum {
   USER = 'USER'
 }
 
+/**
+ * Error codes for the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export enum AppSelfUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  REQUIRED = 'REQUIRED'
+}
+
+/**
+ * Fields to update on the calling app.
+ *
+ * Added in Saleor 3.23.
+ */
+export type AppSelfUpdateInput = {
+  /**
+   * Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  deprecationReason?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum AppSortField {
   /** Sort apps by creation date. */
   CREATION_DATE = 'CREATION_DATE',
@@ -6967,6 +6992,23 @@ export type ProductMediaCreateInput = {
   product: Scalars['ID']['input'];
 };
 
+export enum ProductMediaTranslateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
+}
+
+/**
+ * Fields required to translate product media.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslationInput = {
+  /** Translated product media alt text. */
+  alt?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum ProductMediaType {
   IMAGE = 'IMAGE',
   VIDEO = 'VIDEO'
@@ -8822,6 +8864,7 @@ export enum TranslatableKinds {
   MENU_ITEM = 'MENU_ITEM',
   PAGE = 'PAGE',
   PRODUCT = 'PRODUCT',
+  PRODUCT_MEDIA = 'PRODUCT_MEDIA',
   PROMOTION = 'PROMOTION',
   PROMOTION_RULE = 'PROMOTION_RULE',
   SALE = 'SALE',

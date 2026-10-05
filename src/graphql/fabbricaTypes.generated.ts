@@ -6317,6 +6317,8 @@ export type ConfigurationTypeFieldEnum =
  *
  * Triggers the following webhook events:
  * - ACCOUNT_CONFIRMED (async): Account was confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
  */
 export type ConfirmAccount = {
   __typename: 'ConfirmAccount';
@@ -13453,6 +13455,8 @@ export type Mutation = {
    *
    * Triggers the following webhook events:
    * - ACCOUNT_CONFIRMED (async): Account was confirmed.
+   * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+   * - STAFF_UPDATED (async): Called if a staff account was confirmed.
    */
   confirmAccount: Maybe<ConfirmAccount>;
   /**
@@ -14880,7 +14884,14 @@ export type Mutation = {
    * - ACCOUNT_CONFIRMATION_REQUESTED (async): An account confirmation was requested. This event is always sent regardless of settings.
    */
   sendConfirmationEmail: Maybe<SendConfirmationEmail>;
-  /** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+  /**
+   * Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+   *
+   * Triggers the following webhook events:
+   * - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+   * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+   * - STAFF_UPDATED (async): Called if a staff account was confirmed.
+   */
   setPassword: Maybe<SetPassword>;
   /**
    * Manage shipping method's availability in channels.
@@ -28006,7 +28017,14 @@ export type SeoInput = {
   title: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+/**
+ * Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+ *
+ * Triggers the following webhook events:
+ * - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
+ */
 export type SetPassword = {
   __typename: 'SetPassword';
   /** @deprecated Use `errors` field instead. */

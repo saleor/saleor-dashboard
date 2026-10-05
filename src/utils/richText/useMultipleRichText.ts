@@ -2,7 +2,7 @@ import { type OutputData } from "@editorjs/editorjs";
 import { type EditorCore } from "@react-editor-js/core";
 import { useCallback, useRef } from "react";
 
-import useMap from "../objects/useMap";
+import { parseEditorData } from "./parseEditorData";
 
 type RefsMap<TKey extends string> = Record<TKey, EditorCore | null>;
 
@@ -27,7 +27,7 @@ export const useMultipleRichText = <TKey extends string>({
   const editorRefs = useRef<RefsMap<TKey>>({} as RefsMap<TKey>);
   const triggerChangeRef = useRef(triggerChange);
   const changeHandlersRef = useRef({} as Record<TKey, () => void>);
-  const [shouldMountMap, { set: setShouldMountById }] = useMap();
+  const parsedCacheRef = useRef(new Map<string, OutputData>());
 
   triggerChangeRef.current = triggerChange;
 
@@ -57,28 +57,24 @@ export const useMultipleRichText = <TKey extends string>({
   }, []);
   const getDefaultValue = useCallback(
     (id: TKey) => {
-      if (initial[id] === undefined) {
-        setShouldMountById(id, true);
+      const raw = initial[id];
+      const cacheKey = raw === undefined ? `${id}::empty` : `${id}::${raw}`;
+      const cached = parsedCacheRef.current.get(cacheKey);
 
-        return "";
+      if (cached) {
+        return cached;
       }
 
-      try {
-        const result = JSON.parse(initial[id]);
+      const parsed = parseEditorData(raw);
 
-        setShouldMountById(id, true);
+      parsedCacheRef.current.set(cacheKey, parsed);
 
-        return result;
-      } catch (e) {
-        return undefined;
-      }
+      return parsed;
     },
     [initial],
   );
-  const getShouldMount = useCallback(
-    (id: TKey) => shouldMountMap.get(id) ?? false,
-    [shouldMountMap],
-  );
+  // Always ready: empty or invalid JSON mounts an empty editor, same as useRichText after load.
+  const getShouldMount = useCallback((_id: TKey) => true, []);
   const getValues = async () => {
     const availableRefs = Object.entries(editorRefs.current).filter(
       ([, value]) => value !== null,

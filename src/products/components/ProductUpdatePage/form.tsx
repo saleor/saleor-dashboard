@@ -30,7 +30,10 @@ import useForm from "@dashboard/hooks/useForm";
 import useFormset from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useLocale from "@dashboard/hooks/useLocale";
+import { datagridAddedRowsToCreateInputs } from "@dashboard/products/hooks/datagridAddedRowsToCreateInputs";
 import {
+  appendStagedVariantCreate,
+  appendStagedVariantCreates,
   buildVariantGridSubmitPayload,
   clearStagedVariantCreates,
   createEmptyVariantGridStagedEdits,
@@ -118,6 +121,11 @@ export function useProductUpdateForm(
     [productVariants],
   );
 
+  const variantAttributes = useMemo(
+    () => product?.productType?.variantAttributes ?? [],
+    [product?.productType?.variantAttributes],
+  );
+
   const refreshVariantCompositionCounts = useCallback(() => {
     const deleteCount = stagedEdits.current.removedIds.size;
     const updatedIds = [...stagedEdits.current.updatesById.keys()].filter(
@@ -126,11 +134,14 @@ export function useProductUpdateForm(
 
     setPendingVariantDeleteCount(deleteCount);
     setPendingVariantEditCount(updatedIds.length);
+    // Page-local bulk-add rows are not in `creates` until fullscreen close.
+    // Untouched / empty ghost rows must not count as new variants.
     setPendingVariantCreateCount(
-      variants.current.added.length + stagedEdits.current.creates.length,
+      stagedEdits.current.creates.length +
+        datagridAddedRowsToCreateInputs(variants.current, variantAttributes).length,
     );
     setStagedVariantCreates([...stagedEdits.current.creates]);
-  }, []);
+  }, [variantAttributes]);
 
   const applyRehydratedDatagridState = useCallback(
     (pageVariants: ProductDetailsVariantFragment[]) => {
@@ -159,11 +170,9 @@ export function useProductUpdateForm(
         return;
       }
 
-      // Added rows are page-local and cannot follow pagination/search.
-      datagrid.setAdded([]);
       applyRehydratedDatagridState(productVariants);
     },
-    [applyRehydratedDatagridState, datagrid, productVariants, variantsPageKey],
+    [applyRehydratedDatagridState, productVariants, variantsPageKey],
   );
 
   const handleVariantChange = React.useCallback(
@@ -191,15 +200,10 @@ export function useProductUpdateForm(
       stagedEdits.current = stageVariantRemovalsInStore(stagedEdits.current, ids);
 
       const rehydrated = rehydrateVariantGridDatagridOpts(stagedEdits.current, productVariants);
-      const keptAdded = datagrid.added;
 
       datagrid.setRemoved(rehydrated.removed);
       datagrid.changes.current = rehydrated.updates;
-      variants.current = {
-        added: keptAdded,
-        removed: rehydrated.removed,
-        updates: rehydrated.updates,
-      };
+      variants.current = rehydrated;
       refreshVariantCompositionCounts();
       triggerChange();
     },
@@ -235,6 +239,12 @@ export function useProductUpdateForm(
     [refreshVariantCompositionCounts, triggerChange],
   );
 
+  const handleAddStagedVariantCreate = React.useCallback(() => {
+    stagedEdits.current = appendStagedVariantCreate(stagedEdits.current, { attributes: [] });
+    refreshVariantCompositionCounts();
+    triggerChange();
+  }, [refreshVariantCompositionCounts, triggerChange]);
+
   const handleRemoveStagedVariantCreates = React.useCallback(
     (indexes: number[]) => {
       stagedEdits.current = removeStagedVariantCreatesAtIndexes(stagedEdits.current, indexes);
@@ -258,6 +268,35 @@ export function useProductUpdateForm(
     },
     [refreshVariantCompositionCounts, triggerChange],
   );
+
+  const handlePromoteDatagridAddedRows = React.useCallback(() => {
+    const addedRows = new Set(variants.current.added);
+
+    if (addedRows.size === 0) {
+      return;
+    }
+
+    const addedCreates = datagridAddedRowsToCreateInputs(variants.current, variantAttributes);
+
+    if (addedCreates.length > 0) {
+      stagedEdits.current = appendStagedVariantCreates(stagedEdits.current, addedCreates);
+    }
+
+    datagrid.setAdded([]);
+    datagrid.changes.current = datagrid.changes.current.filter(
+      change => !addedRows.has(change.row),
+    );
+    variants.current = {
+      ...variants.current,
+      added: [],
+      updates: variants.current.updates.filter(update => !addedRows.has(update.row)),
+    };
+    refreshVariantCompositionCounts();
+
+    if (addedCreates.length > 0) {
+      triggerChange();
+    }
+  }, [datagrid, refreshVariantCompositionCounts, triggerChange, variantAttributes]);
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const markAttributesChanged = (value = true) => {
     // Save / exit-dialog read `attributesDirty`, not useForm's generic change flag.
@@ -365,6 +404,8 @@ export function useProductUpdateForm(
 
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => {
     const stagedPayload = buildVariantGridSubmitPayload(stagedEdits.current);
+    // Bulk-edit rows still sitting in the datagrid (user saved without closing).
+    const fromAddedRows = datagridAddedRowsToCreateInputs(variants.current, variantAttributes);
 
     return {
       ...form.changedData,
@@ -385,7 +426,7 @@ export function useProductUpdateForm(
         removedVariantIds: stagedPayload.removedVariantIds,
         stagedUpdateVariants: stagedPayload.updateVariants,
         stagedUpdateChanges: stagedPayload.updateChanges,
-        stagedCreates: stagedPayload.stagedCreates,
+        stagedCreates: [...stagedPayload.stagedCreates, ...fromAddedRows],
       },
     };
   };
@@ -422,6 +463,10 @@ export function useProductUpdateForm(
     onSubmit: handleSubmit,
   });
   const submit = useCallback(async () => {
+    // Persist page-local bulk-edit rows before the request. Otherwise a failed
+    // BulkCreate clears `added` and the drafts are gone.
+    handlePromoteDatagridAddedRows();
+
     const submitData = await getSubmitData();
     const result = await handleFormSubmit(submitData);
     const succeeded = !result?.length;
@@ -451,75 +496,25 @@ export function useProductUpdateForm(
     // Keep draft state for retry, but trim rows the API already accepted so a retry
     // cannot create duplicates. Create runs even when earlier steps fail.
     const hasDatagridErrors = result.some(error => error.__typename === "DatagridError");
+    // BulkCreate is all-or-nothing: one rejected row means no new variant was created.
+    const createFailed = result.some(
+      error => error.__typename === "DatagridError" && error.type === "create",
+    );
 
-    // Staged (generator) creates: keep only the rows BulkCreate rejected. Accepted
-    // rows are already persisted — refetch returns them as real variants.
-    if (submittedStagedCreateCount > 0) {
-      const failedStagedIndexes = new Set<number>();
-
-      for (const error of result) {
-        if (
-          error.__typename === "DatagridError" &&
-          error.type === "create" &&
-          typeof error.stagedIndex === "number"
-        ) {
-          failedStagedIndexes.add(error.stagedIndex);
-        }
-      }
-
-      const keptStagedCreates = (submitData.variants.stagedCreates ?? []).filter((_, index) =>
-        failedStagedIndexes.has(index),
-      );
-
-      stagedEdits.current = replaceStagedVariantCreates(stagedEdits.current, keptStagedCreates);
+    if (submittedStagedCreateCount > 0 && !createFailed) {
+      stagedEdits.current = clearStagedVariantCreates(stagedEdits.current);
     }
 
     if (hasDatagridErrors) {
-      const nextAdded = datagrid.added.filter((_, index) =>
+      const nextUpdates = datagrid.changes.current.filter(change =>
         result.some(
           error =>
             error.__typename === "DatagridError" &&
-            error.type === "create" &&
-            error.index === index,
+            error.type !== "create" &&
+            error.variantId === productVariants[change.row]?.id,
         ),
       );
-      const nextUpdates = datagrid.changes.current.filter(change =>
-        nextAdded.includes(change.row)
-          ? result.some(
-              error =>
-                error.__typename === "DatagridError" &&
-                error.type === "create" &&
-                error.index === nextAdded.findIndex(r => r === change.row),
-            )
-          : result.some(
-              error =>
-                error.__typename === "DatagridError" &&
-                error.type !== "create" &&
-                error.variantId === productVariants[change.row]?.id,
-            ),
-      );
 
-      datagrid.setAdded(nextAdded);
-      datagrid.changes.current = nextUpdates;
-      variants.current = {
-        added: nextAdded,
-        updates: nextUpdates,
-        removed: datagrid.removed,
-      };
-      stagedEdits.current = syncVariantGridStagedEditsFromPage(
-        stagedEdits.current,
-        productVariants,
-        variants.current,
-      );
-    } else if (submitData.variants.added.length > 0) {
-      // BulkCreate accepted every grid-added row but a non-grid step (product,
-      // channels, files) failed. Drop the accepted rows so retry does not recreate
-      // them; keep edits to existing variants for the retry.
-      const nextUpdates = datagrid.changes.current.filter(
-        change => !datagrid.added.includes(change.row),
-      );
-
-      datagrid.setAdded([]);
       datagrid.changes.current = nextUpdates;
       variants.current = {
         added: [],
@@ -541,6 +536,7 @@ export function useProductUpdateForm(
     datagrid,
     getSubmitData,
     handleFormSubmit,
+    handlePromoteDatagridAddedRows,
     productVariants,
     refetch,
     refreshVariantCompositionCounts,
@@ -572,6 +568,8 @@ export function useProductUpdateForm(
       changeVariants: handleVariantChange,
       stageVariantRemovals: handleStageVariantRemovals,
       stageVariantCreates: handleStageVariantCreates,
+      addStagedVariantCreate: handleAddStagedVariantCreate,
+      promoteDatagridAddedRows: handlePromoteDatagridAddedRows,
       removeStagedVariantCreates: handleRemoveStagedVariantCreates,
       clearStagedVariantCreates: handleClearStagedVariantCreates,
       replaceStagedVariantCreates: handleReplaceStagedVariantCreates,
