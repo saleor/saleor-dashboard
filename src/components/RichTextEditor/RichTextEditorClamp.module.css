@@ -1,7 +1,8 @@
 .root {
   position: relative;
   border: 1px solid var(--mu-colors-border-default1);
-  border-radius: 8px;
+  /* Same radius as macaw Input / Textarea (borderRadius 3). */
+  border-radius: var(--mu-border-radius-3);
   background: var(--mu-colors-background-default1);
 }
 
@@ -40,9 +41,10 @@
   );
 }
 
-/* The wrapper owns the border in both states. The editor's own border would
-   appear on focus and shift the text by that width. */
-.root :global([class*="RichTextEditor-root"]) {
+/* The wrapper owns the border. The editor's own border would stack on top
+   and read as a 2px stroke. JSS class names are hashed in production, so
+   match the data attribute rather than the generated class. */
+.root :global([data-rich-text-field]) {
   border: 0 !important;
 }
 

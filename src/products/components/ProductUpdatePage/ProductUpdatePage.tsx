@@ -775,6 +775,7 @@ const ProductUpdatePage = ({
                     onStageVariantRemovals={handlers.stageVariantRemovals}
                     onRowClick={onVariantShow}
                     onStageVariantCreates={handlers.stageVariantCreates}
+                    onPromoteDatagridAddedRows={handlers.promoteDatagridAddedRows}
                     stagedVariantCreates={stagedVariantCreates}
                     onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
                     onClearStagedVariantCreates={handlers.clearStagedVariantCreates}

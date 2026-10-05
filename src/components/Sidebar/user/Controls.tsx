@@ -1,6 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { navigationLucideIconProps } from "@dashboard/components/icons";
-import { isProductAnalyticsEnabled } from "@dashboard/components/ProductAnalytics/config";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme/hook";
@@ -14,6 +13,7 @@ import { Link } from "react-router-dom";
 import { rippleGlobalFeedback } from "../ripples/globalFeedback";
 import { FeatureFlagsModal } from "./FeatureFlagsModal";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import { useFeedbackSurvey } from "./useFeedbackSurvey";
 
 export const useLegacyThemeHandler = () => {
   const { theme, setTheme } = useTheme();
@@ -45,7 +45,9 @@ export const useLegacyThemeHandler = () => {
 const FeedbackButton = () => {
   const intl = useIntl();
 
-  if (!isProductAnalyticsEnabled()) {
+  const { isAvailable } = useFeedbackSurvey();
+
+  if (!isAvailable) {
     return null;
   }
 
@@ -90,7 +92,7 @@ export const UserControls = () => {
 
   return (
     <>
-      <Box display="flex" alignItems="center" gap={1}>
+      <Box display="flex" alignItems="center" gap={1} flexShrink="0">
         <FeedbackButton />
         <Dropdown
           open={open}

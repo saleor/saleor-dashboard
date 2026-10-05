@@ -1,9 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
-import {
-  AppDeprecationBadge,
-  AppDeprecationNotice,
-} from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
+import { AppDeprecationNotice } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages, problemMessages } from "@dashboard/extensions/messages";
@@ -16,6 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProblemsBadge } from "../AppProblems/ProblemsBadge/ProblemsBadge";
 import { ProblemsList } from "../AppProblems/ProblemsList/ProblemsList";
+import { DeprecatedExtensionBadge } from "../DeprecatedExtensionBadge/DeprecatedExtensionBadge";
 import { NewExtensionBadge } from "../NewExtensionBadge/NewExtensionBadge";
 import styles from "./InstalledExtensionsList.module.css";
 import { useExtensionProblems } from "./useExtensionProblems";
@@ -99,10 +97,7 @@ const ExtensionRow = ({
   return (
     <>
       <GridTable.Row data-test-id="installed-extension-row">
-        <GridTable.Cell
-          padding={0}
-          className={clsx(extension.deprecationReason && styles.deprecated)}
-        >
+        <GridTable.Cell padding={0} className={clsx(extension.deprecated && styles.deprecated)}>
           <Box
             display="flex"
             alignItems="center"
@@ -134,7 +129,7 @@ const ExtensionRow = ({
                 </Text>
               </ExtensionName>
               {extension.isNew && <NewExtensionBadge />}
-              {extension.deprecationReason && <AppDeprecationBadge />}
+              {extension.deprecated && <DeprecatedExtensionBadge />}
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}

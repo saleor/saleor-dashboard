@@ -202,6 +202,7 @@ export const InstalledApp = gql`
 export const InstalledAppDetails = gql`
   fragment InstalledAppDetails on App {
     id
+    identifier
     isActive
     name
     type

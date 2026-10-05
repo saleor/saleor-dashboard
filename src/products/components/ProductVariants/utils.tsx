@@ -178,7 +178,7 @@ export function getData({
     }
 
     const currency = channels.find(channel => channelId === channel.id)?.currency;
-    const value = change?.value ?? listing?.price?.amount ?? 0;
+    const value = change?.value ?? listing?.price?.amount ?? null;
 
     return moneyCell(value, currency);
   }

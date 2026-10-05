@@ -5,7 +5,6 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   type ProductDetailsVariantFragment,
-  type ProductVariantChannelListingAddInput,
   type ProductVariantChannelListingUpdateInput,
 } from "@dashboard/graphql";
 import { getColumnChannel, getColumnChannelAvailability } from "@dashboard/products/utils/datagrid";
@@ -39,20 +38,6 @@ export function getUpdateVariantChannelInputs(
       remove: [],
       update: [],
     });
-}
-
-export function getVariantChannelsInputs(
-  data: DatagridChangeOpts,
-  index: number,
-): ProductVariantChannelListingAddInput[] {
-  return data.updates
-    .filter(byCurrentRowByIndex(index))
-    .map(availabilityToChannelColumn)
-    .filter(byChannelColumn)
-    .reduce(byColumn, [])
-    .map(dataGridChangeToFlatChannel)
-    .filter(byListedChannel)
-    .map(flatChannelToCreateInput);
 }
 
 function byCurrentRowByIndex(index: number) {
@@ -144,18 +129,6 @@ function dataGridChangeToFlatChannel(change: DatagridChange): FlatChannelChange 
   return {
     channelId: getColumnChannel(change.column),
     price: change.data.value,
-  };
-}
-
-function byListedChannel(change: FlatChannelChange) {
-  return change.price !== null;
-}
-
-function flatChannelToCreateInput(change: FlatChannelChange): ProductVariantChannelListingAddInput {
-  return {
-    channelId: change.channelId,
-    // New listings require a price; default to 0 when only availability was toggled on
-    price: change.price ?? 0,
   };
 }
 

@@ -209,6 +209,7 @@ export const InstalledAppFragmentDoc = gql`
 export const InstalledAppDetailsFragmentDoc = gql`
     fragment InstalledAppDetails on App {
   id
+  identifier
   isActive
   name
   type
@@ -11793,6 +11794,8 @@ export const InstalledAppsSnapshotDocument = gql`
       node {
         id
         identifier
+        name
+        manifestUrl
         isActive
         type
         appUrl

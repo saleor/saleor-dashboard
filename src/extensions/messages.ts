@@ -693,11 +693,6 @@ export const extensionActions = defineMessages({
 });
 
 export const deprecationMessages = defineMessages({
-  badge: {
-    defaultMessage: "Deprecated",
-    id: "ofxQ4i",
-    description: "badge on an installed app that declared itself deprecated",
-  },
   inlineLabel: {
     defaultMessage: "Deprecated:",
     id: "bepijT",

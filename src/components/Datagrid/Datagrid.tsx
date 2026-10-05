@@ -5,6 +5,7 @@ import { type NavigatorOpts } from "@dashboard/hooks/useNavigator";
 import { getCellAction } from "@dashboard/products/components/ProductListDatagrid/datagrid";
 import DataEditor, {
   type CellClickedEventArgs,
+  CompactSelection,
   type DataEditorProps,
   type DataEditorRef,
   type DrawHeaderCallback,
@@ -100,6 +101,8 @@ interface DatagridProps {
   loading?: boolean;
   selectionActions: (selection: number[], actions: MenuItemsActions) => ReactNode;
   onChange?: OnDatagridChange;
+  /** Fired when fullscreen mode opens or closes (skips the initial closed mount). */
+  onFullscreenChange?: (isOpen: boolean) => void;
   onHeaderClicked?: (colIndex: number, event: HeaderClickedEventArgs) => void;
   renderColumnPicker?: () => ReactElement;
   renderRowActions?: (index: number) => ReactElement;
@@ -138,6 +141,11 @@ interface DatagridProps {
   smoothScrollX?: boolean;
   rowSelectionBlending?: DataEditorProps["rowSelectionBlending"];
   experimental?: DataEditorProps["experimental"];
+  /**
+   * Extra empty last row that is not in `added` until the first edit.
+   * `"fullscreen"` shows it only while the grid is expanded.
+   */
+  trailingGhostRow?: boolean | "fullscreen";
 }
 
 export const Datagrid = ({
@@ -151,6 +159,7 @@ export const Datagrid = ({
   selectionActions,
   onHeaderClicked,
   onChange,
+  onFullscreenChange,
   renderColumnPicker,
   renderRowActions,
   rowActionBarWidth = defaultRowActionBarWidth,
@@ -188,6 +197,7 @@ export const Datagrid = ({
   rowMarkerTheme: rowMarkerThemeOverride,
   smoothScrollX = true,
   experimental,
+  trailingGhostRow = false,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -213,7 +223,7 @@ export const Datagrid = ({
   const customRenderers = useCustomCellRenderers();
   const { scrolledToRight } = useScrollRight();
   const fullScreenClasses = useFullScreenStyles(classes);
-  const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
+  const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode(onFullscreenChange);
   const { clearTooltip, scheduleTooltip, tooltip, setTooltip } = useTooltipContainer();
   const [uncontrolledSelection, setUncontrolledSelection] = useState<GridSelection>();
   const isSelectionControlled = typeof onControlledSelectionChange === "function";
@@ -355,11 +365,18 @@ export const Datagrid = ({
     return !element.closest("[data-portal-for], [data-test-id='select-option']");
   }, []);
 
+  const showTrailingGhost =
+    trailingGhostRow === true || (trailingGhostRow === "fullscreen" && isOpen);
   const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex, onRowAdded } =
-    useDatagridChange(availableColumns, rows, onChange, (areCellsDirty: boolean) =>
-      setCellsDirty(areCellsDirty),
+    useDatagridChange(
+      availableColumns,
+      rows,
+      onChange,
+      (areCellsDirty: boolean) => setCellsDirty(areCellsDirty),
+      { materializeTrailingGhostOnEdit: showTrailingGhost },
     );
-  const rowsTotal = rows - removed.length + added.length;
+  const dataRowsTotal = rows - removed.length + added.length;
+  const displayRows = showTrailingGhost ? dataRowsTotal + 1 : dataRowsTotal;
 
   // Glide tracks selection by index and keeps it when the rows behind the grid
   // change. Report only indices that still exist so consumers cannot crash, and
@@ -371,7 +388,7 @@ export const Datagrid = ({
         return;
       }
 
-      const { visibleRows, prunedSelection } = getVisibleGridSelection(selection, rowsTotal);
+      const { visibleRows, prunedSelection } = getVisibleGridSelection(selection, displayRows);
 
       if (!loading && prunedSelection) {
         setSelectionState(prunedSelection);
@@ -384,7 +401,7 @@ export const Datagrid = ({
         });
       }
     },
-    [loading, onRowSelectionChange, selection, setSelectionState, rowsTotal],
+    [loading, onRowSelectionChange, selection, setSelectionState, displayRows],
   );
 
   const hasMenuItem = !!menuItems(0).length;
@@ -481,13 +498,24 @@ export const Datagrid = ({
     [rowMarkers, onRowClick, handleRowHover, rowAnchorRef, shouldSuppressClick, availableColumns],
   );
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
+    const selectedRows = Array.from(gridSelection.rows);
+    const nextSelection =
+      showTrailingGhost && selectedRows.includes(dataRowsTotal)
+        ? {
+            ...gridSelection,
+            rows: selectedRows
+              .filter(row => row !== dataRowsTotal)
+              .reduce((acc, row) => acc.add(row), CompactSelection.empty()),
+          }
+        : gridSelection;
+
     // In readonly we not allow selecting cells, but we allow selcting column
-    if (readonly && !gridSelection.current) {
-      setSelectionState(gridSelection);
+    if (readonly && !nextSelection.current) {
+      setSelectionState(nextSelection);
     }
 
     if (!readonly) {
-      setSelectionState(gridSelection);
+      setSelectionState(nextSelection);
     }
   };
   const handleGetThemeOverride = useCallback<GetRowThemeCallback>(
@@ -495,8 +523,9 @@ export const Datagrid = ({
       const customOverride = getRowThemeOverrideProp?.(row);
       const isActiveRow = highlightedRow !== undefined && row === highlightedRow;
       const isHoverRow = row === hoverRow;
+      const isGhostRow = showTrailingGhost && row === dataRowsTotal;
 
-      if (!customOverride && !isActiveRow && !isHoverRow) {
+      if (!customOverride && !isActiveRow && !isHoverRow && !isGhostRow) {
         return undefined;
       }
 
@@ -522,11 +551,26 @@ export const Datagrid = ({
       }
 
       return {
+        ...(isGhostRow
+          ? {
+              bgCell:
+                theme === "defaultLight" ? "hsla(220, 18%, 98%, 1)" : "hsla(211, 32%, 16%, 1)",
+            }
+          : {}),
         ...customOverride,
         ...stateOverride,
       };
     },
-    [getRowThemeOverrideProp, highlightedRow, hoverRow, readonly, theme, themeValues],
+    [
+      dataRowsTotal,
+      getRowThemeOverrideProp,
+      highlightedRow,
+      hoverRow,
+      readonly,
+      showTrailingGhost,
+      theme,
+      themeValues,
+    ],
   );
   const handleHeaderClicked = useCallback(
     (colIndex: number, event: HeaderClickedEventArgs) => {
@@ -602,14 +646,38 @@ export const Datagrid = ({
     },
     [themeValues, availableColumns],
   );
+  const focusTrailingGhostOrAddRow = useCallback(() => {
+    if (!showTrailingGhost) {
+      onRowAdded();
+
+      return;
+    }
+
+    const ghostRow = dataRowsTotal;
+
+    setSelectionState({
+      current: {
+        cell: [0, ghostRow],
+        range: { x: 0, y: ghostRow, width: 1, height: 1 },
+        rangeStack: [],
+      },
+      columns: CompactSelection.empty(),
+      rows: CompactSelection.empty(),
+    });
+    editor.current?.scrollTo(0, ghostRow, "vertical", 0, 0, { vAlign: "end" });
+  }, [dataRowsTotal, onRowAdded, setSelectionState, showTrailingGhost]);
   const handleRemoveRows = useCallback(
-    (rows: number[]) => {
-      if (selection?.rows) {
-        onRowsRemoved(rows);
+    (rowsToRemove: number[]) => {
+      const removable = showTrailingGhost
+        ? rowsToRemove.filter(row => row < dataRowsTotal)
+        : rowsToRemove;
+
+      if (selection?.rows && removable.length > 0) {
+        onRowsRemoved(removable);
         setSelectionState(undefined);
       }
     },
-    [selection, onRowsRemoved, setSelectionState],
+    [dataRowsTotal, onRowsRemoved, selection, setSelectionState, showTrailingGhost],
   );
   const handleColumnResize = useCallback(
     (column: GridColumn, newSize: number) => {
@@ -676,7 +744,7 @@ export const Datagrid = ({
         <DashboardCard position="relative" __height={isOpen ? "100%" : "auto"} gap={0}>
           {renderHeader?.({
             toggleFullscreen: toggle,
-            addRowOnDatagrid: onRowAdded,
+            addRowOnDatagrid: focusTrailingGhostOrAddRow,
             isFullscreenOpen: isOpen,
             isAnimationOpenFinished,
           })}
@@ -687,7 +755,7 @@ export const Datagrid = ({
             paddingX={0}
             data-test-id="list"
           >
-            {rowsTotal > 0 || showEmptyDatagrid ? (
+            {displayRows > 0 || showEmptyDatagrid ? (
               <>
                 {selection?.rows && selection?.rows.length > 0 && selectionActionsComponent && (
                   <div className={classes.actionBtnBar}>{selectionActionsComponent}</div>
@@ -714,7 +782,7 @@ export const Datagrid = ({
                     getCellContent={handleGetCellContent}
                     onCellEdited={handleOnCellEdited}
                     columns={availableColumns}
-                    rows={rowsTotal}
+                    rows={displayRows}
                     freezeColumns={freezeColumns}
                     smoothScrollX={smoothScrollX}
                     rowMarkers={rowMarkers}
@@ -768,7 +836,7 @@ export const Datagrid = ({
                           />
                         )}
                         {hasMenuItem &&
-                          Array(rowsTotal)
+                          Array(displayRows)
                             .fill(0)
                             .map((_, index) =>
                               renderRowActions ? (
@@ -777,7 +845,7 @@ export const Datagrid = ({
                                 <RowActions
                                   key={`row-actions-${index}`}
                                   menuItems={menuItems(index)}
-                                  disabled={index >= rowsTotal - added.length}
+                                  disabled={index >= dataRowsTotal - added.length}
                                 />
                               ),
                             )}

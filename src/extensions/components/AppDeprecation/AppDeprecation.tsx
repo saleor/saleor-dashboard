@@ -8,12 +8,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./AppDeprecation.module.css";
 
-export const AppDeprecationBadge = () => (
-  <span className={styles.badge} data-test-id="app-deprecated-badge">
-    <FormattedMessage {...deprecationMessages.badge} />
-  </span>
-);
-
 /** One-line (or `lines`-line) strip; "Show more" appears only when the reason overflows. */
 const CompactNotice = ({
   reason,

@@ -16,7 +16,7 @@ import {
   staffNotificationCopy,
 } from "@dashboard/notificationsSettings/messages";
 import {
-  notificationsCustomerEmailsPath,
+  notificationsCustomerEmailsAppPath,
   notificationsStaffEmailsPath,
 } from "@dashboard/notificationsSettings/urls";
 import {
@@ -140,7 +140,7 @@ export const StaffEmailsSettingsCard = ({
                   {...notificationsMessages.staffDeliveryDescription}
                   values={{
                     customerEmailsLink: (
-                      <MicrocopyLink to={notificationsCustomerEmailsPath}>
+                      <MicrocopyLink to={notificationsCustomerEmailsAppPath}>
                         <FormattedMessage
                           {...notificationsMessages.staffDeliveryCustomerEmailsLink}
                         />

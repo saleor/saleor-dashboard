@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.23.38
+
+### Patch Changes
+
+- [#6978](https://github.com/saleor/saleor-dashboard/pull/6978) [`8d00479`](https://github.com/saleor/saleor-dashboard/commit/8d0047902dbe7ad12077f33948d61ac40010999b) Thanks [@mirekm](https://github.com/mirekm)! - Customer emails in Configuration → Notifications now open the Customer Emails app, where shopper messages can follow the language they checked out in. If this shop still has the older SMTP app installed, it appears on the same card, marked Deprecated, so you can open it or switch over.
+
+  Notification links and app redirects identify installed apps by their identifier, falling back to the manifest URL only when the identifier is missing. Apps with the same name or a conflicting identifier are no longer mistaken for the intended app.
+
+- [#6979](https://github.com/saleor/saleor-dashboard/pull/6979) [`be83464`](https://github.com/saleor/saleor-dashboard/commit/be8346489ee25aeb9a6430fc2841a7bd3fac183a) Thanks [@peelar](https://github.com/peelar)! - Fixed sidebar overflow and an unresponsive feedback button. Account names now truncate to leave room for both footer buttons, and feedback appears only when its survey is ready.
+
+## 3.23.37
+
+### Patch Changes
+
+- [#6974](https://github.com/saleor/saleor-dashboard/pull/6974) [`e4a5acd`](https://github.com/saleor/saleor-dashboard/commit/e4a5acd3190e37033ff103b583dfded7759624a9) Thanks [@mirekm](https://github.com/mirekm)! - Bulk edit now saves every variant you filled in, not just one. An empty row stays at the bottom, ready for the next variant, so you do not have to click Add variant. That empty row is not saved until you type something. On a selected number or price cell, typing replaces the current value instead of adding onto it.
+
+## 3.23.36
+
+### Patch Changes
+
+- [#6962](https://github.com/saleor/saleor-dashboard/pull/6962) [`8d678ea`](https://github.com/saleor/saleor-dashboard/commit/8d678ea217a17187e3bc3dda03df468f3a826617) Thanks [@mirekm](https://github.com/mirekm)! - Long rich text stays shortened until you edit it or choose Show all. Descriptions, such as a product description, stay about twice as tall as an attribute value. The fade appears only when text is actually cut off.
+
+- [#6962](https://github.com/saleor/saleor-dashboard/pull/6962) [`8d678ea`](https://github.com/saleor/saleor-dashboard/commit/8d678ea217a17187e3bc3dda03df468f3a826617) Thanks [@mirekm](https://github.com/mirekm)! - Reference attributes on products, variants, models, and customers now use the same card. Multi-value attributes start as folded, so a long list does not take over the page. Open a group to reorder the references in a list. Switch between a list and chips. That choice, and which groups you left open, is remembered for the type — Shoes stay consistent across Shoes, and stay separate from Bags (if that's a different type), variants, models, and customers.
+
+- [#6943](https://github.com/saleor/saleor-dashboard/pull/6943) [`1b1ad3b`](https://github.com/saleor/saleor-dashboard/commit/1b1ad3b7c7617c281a011c63b0eef417427971be) Thanks [@peelar](https://github.com/peelar)! - Added a global feedback button to the sidebar on cloud instances where product analytics is enabled, making it possible to open PostHog feedback surveys from anywhere in the Dashboard.
+
+- [#6934](https://github.com/saleor/saleor-dashboard/pull/6934) [`248fb36`](https://github.com/saleor/saleor-dashboard/commit/248fb36e81c1bcdb3678b38b9838843feb7bf4a9) Thanks [@mirekm](https://github.com/mirekm)! - Fix how order value shipping handles long carrier method names. Now the name is truncated (full text on hover), and **Change** sits next to Shipping instead of linking the raw method string.
+
+- [#6968](https://github.com/saleor/saleor-dashboard/pull/6968) [`9835b91`](https://github.com/saleor/saleor-dashboard/commit/9835b91354d09654231092e8222da101b7825fb2) Thanks [@mirekm](https://github.com/mirekm)! - For a simple product, shipping weight is in General information and is used to calculate shipping rates. The unit is the shop default, set with shipping zones, not on the product.
+
 ## 3.23.35
 
 ### Patch Changes
