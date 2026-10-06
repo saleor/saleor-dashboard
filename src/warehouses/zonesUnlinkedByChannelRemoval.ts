@@ -27,7 +27,7 @@ export const zonesUnlinkedByRemovingWarehouseChannel = ({
   });
 };
 
-export type WarehouseZonesGuidance =
+type WarehouseZonesGuidance =
   | { kind: "loading" }
   | { kind: "hidden" }
   | { kind: "direct"; outsideChannelZoneIds: string[] }

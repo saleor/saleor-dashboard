@@ -7,7 +7,7 @@ export interface WarehouseListChannel {
 
 export type WarehouseListMembership = "loading" | "unavailable" | "ready";
 
-export type WarehouseListRowStatus =
+type WarehouseListRowStatus =
   | { kind: "unknown" }
   | { kind: "not-in-channel" }
   | { kind: "channel"; name: string }

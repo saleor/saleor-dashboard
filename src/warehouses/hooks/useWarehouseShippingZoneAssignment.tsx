@@ -150,27 +150,29 @@ export const useWarehouseShippingZoneAssignment = ({
           void zonesQuery.fetchMore({
             variables: { after: cursor },
             updateQuery: (previous, { fetchMoreResult }) => {
-              if (!fetchMoreResult.shippingZones) {
+              const nextZones = fetchMoreResult?.shippingZones;
+
+              if (!nextZones) {
                 return previous;
               }
 
               const seen = new Set<string>();
-              const edges = [
-                ...(previous.shippingZones?.edges ?? []),
-                ...fetchMoreResult.shippingZones.edges,
-              ].filter(edge => {
-                if (seen.has(edge.node.id)) {
-                  return false;
-                }
+              const edges = [...(previous.shippingZones?.edges ?? []), ...nextZones.edges].filter(
+                edge => {
+                  if (seen.has(edge.node.id)) {
+                    return false;
+                  }
 
-                seen.add(edge.node.id);
+                  seen.add(edge.node.id);
 
-                return true;
-              });
+                  return true;
+                },
+              );
 
               return {
+                ...previous,
                 shippingZones: {
-                  ...fetchMoreResult.shippingZones,
+                  ...nextZones,
                   edges,
                 },
               };

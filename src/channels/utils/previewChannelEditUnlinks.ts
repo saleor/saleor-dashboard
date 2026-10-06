@@ -12,7 +12,7 @@ import {
   linksDroppedByChannelEdit,
 } from "./channelEditUnlinks";
 
-export interface ChannelEditUnlink {
+interface ChannelEditUnlink {
   warehouseName: string;
   zoneName: string;
 }

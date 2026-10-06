@@ -21,7 +21,7 @@ export const useWarehouseListMembership = (): {
   const channels = counts.data?.channels;
   const warehouseCount = counts.data ? (counts.data.warehouses?.totalCount ?? null) : undefined;
   const plan =
-    channels === undefined || warehouseCount === undefined
+    channels == null || warehouseCount === undefined
       ? undefined
       : membershipQueryPlan({ channelCount: channels.length, warehouseCount });
   const matrix = useWarehouseChannelMembershipMatrixQuery({
@@ -33,8 +33,8 @@ export const useWarehouseListMembership = (): {
     return { status: "unavailable", channelsByWarehouseId: emptyChannels };
   }
 
-  if (!channels || plan === undefined) {
-    if (counts.error && !counts.data?.channels) {
+  if (channels == null || plan === undefined) {
+    if ((counts.error && !counts.data?.channels) || (counts.data != null && channels == null)) {
       return { status: "unavailable", channelsByWarehouseId: emptyChannels };
     }
 

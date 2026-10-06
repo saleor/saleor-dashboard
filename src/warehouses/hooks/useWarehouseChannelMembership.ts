@@ -24,7 +24,7 @@ export interface WarehouseChannelRef {
   name: string;
 }
 
-export interface WarehouseChannelChangeResult {
+interface WarehouseChannelChangeResult {
   ok: number;
   failed: number;
 }

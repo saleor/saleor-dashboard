@@ -4,6 +4,7 @@ import { Multiselect } from "@dashboard/components/Combobox/components/Multisele
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { type WarehouseChoice } from "@dashboard/shipping/warehouseEligibility";
 import { type FetchMoreProps, type SearchProps } from "@dashboard/types";
+import { WAREHOUSE_CHANNELS_SECTION_ID } from "@dashboard/warehouses/components/WarehouseChannelsCard/WarehouseChannelsCard";
 import { warehouseUrl } from "@dashboard/warehouses/urls";
 import { Box, Button, type Option, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type ReactElement } from "react";
@@ -138,7 +139,7 @@ const WarehousesSection = ({
             ? ineligibleWarehouses.map(warehouse => (
                 <Link
                   key={warehouse.id}
-                  to={`${warehouseUrl(warehouse.id)}#warehouse-channels`}
+                  to={`${warehouseUrl(warehouse.id)}#${WAREHOUSE_CHANNELS_SECTION_ID}`}
                   style={{ textDecoration: "none" }}
                   data-test-id="shipping-zone-ineligible-warehouse"
                 >
