@@ -142,6 +142,8 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       <WarehouseDeleteDialog
         confirmButtonState={deleteWarehouseTransitionState}
         name={getStringOrPlaceholder(data?.warehouse?.name)}
+        stockCount={stockCountLoading ? null : stockCount}
+        channelCount={channels.status === "ready" ? channels.warehouseChannelIds.length : null}
         onClose={closeModal}
         onConfirm={() =>
           deleteWarehouse({

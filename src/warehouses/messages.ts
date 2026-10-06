@@ -130,6 +130,46 @@ export const messages = defineMessages({
     defaultMessage: "Stock",
     description: "warehouse stock card title",
   },
+  deleteImpactNoStock: {
+    id: "NzJP2L",
+    defaultMessage: "There is no stock at this location.",
+    description: "warehouse delete dialog when the location has no stock",
+  },
+  deleteImpactStockOne: {
+    id: "PA5SMu",
+    defaultMessage: "Deletes 1 stock record and its allocations.",
+    description: "warehouse delete dialog for a single stock record",
+  },
+  deleteImpactStock: {
+    id: "QFJSRe",
+    defaultMessage: "Deletes {count} stock records and their allocations.",
+    description: "warehouse delete dialog when the stock count is known",
+  },
+  deleteImpactStockUnknown: {
+    id: "3CRDKN",
+    defaultMessage: "Deletes its stock records and their allocations.",
+    description: "warehouse delete dialog when the stock count is unknown",
+  },
+  deleteImpactNoChannels: {
+    id: "nE3kf5",
+    defaultMessage: "It is not in a channel.",
+    description: "warehouse delete dialog when the location is in no channel",
+  },
+  deleteImpactChannelOne: {
+    id: "3h8G9p",
+    defaultMessage: "It is removed from 1 channel.",
+    description: "warehouse delete dialog for a single channel",
+  },
+  deleteImpactChannels: {
+    id: "DWxcFv",
+    defaultMessage: "It is removed from {count} channels.",
+    description: "warehouse delete dialog when the channel count is known",
+  },
+  deleteImpactChannelsUnknown: {
+    id: "46BDBP",
+    defaultMessage: "It is removed from every channel it is in.",
+    description: "warehouse delete dialog when the channel count is unknown",
+  },
   stockCount: {
     id: "6WOT1a",
     defaultMessage: "{count, plural, one {# stock record} other {# stock records}}",

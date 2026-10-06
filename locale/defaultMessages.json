@@ -1408,6 +1408,10 @@
     "context": "password login mode option description",
     "string": "Only customer users can log in with a password. Staff users logging in with a password will be treated as customers."
   },
+  "3CRDKN": {
+    "context": "warehouse delete dialog when the stock count is unknown",
+    "string": "Deletes its stock records and their allocations."
+  },
   "3CvgrU": {
     "context": "success notification",
     "string": "Attribute created and assigned"
@@ -1499,6 +1503,10 @@
   "3fgyFh": {
     "context": "order history message",
     "string": "Payment was refunded"
+  },
+  "3h8G9p": {
+    "context": "warehouse delete dialog for a single channel",
+    "string": "It is removed from 1 channel."
   },
   "3jdRNZ": {
     "context": "promotion status filter scheduled",
@@ -1617,6 +1625,10 @@
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
+  },
+  "46BDBP": {
+    "context": "warehouse delete dialog when the channel count is unknown",
+    "string": "It is removed from every channel it is in."
   },
   "48dMqY": {
     "context": "Dry run trigger button",
@@ -4192,6 +4204,10 @@
   "DVgMit": {
     "context": "transaction event type, transaction was chargeback by payment provider",
     "string": "Chargeback"
+  },
+  "DWxcFv": {
+    "context": "warehouse delete dialog when the channel count is known",
+    "string": "It is removed from {count} channels."
   },
   "DY3rsj": {
     "context": "settings search alias",
@@ -7001,6 +7017,10 @@
     "context": "onboarding step description",
     "string": "Saleor includes a GraphQL Playground, an interactive GraphQL editor, allowing access to your Saleor instance's API through the web browser. The Playground lets you quickly familiarize yourself with the API, perform example operations, and send your first queries and mutations."
   },
+  "NzJP2L": {
+    "context": "warehouse delete dialog when the location has no stock",
+    "string": "There is no stock at this location."
+  },
   "NzifUg": {
     "context": "window title",
     "string": "Fulfill Order"
@@ -7320,6 +7340,10 @@
     "context": "save preset, header",
     "string": "Save view preset"
   },
+  "PA5SMu": {
+    "context": "warehouse delete dialog for a single stock record",
+    "string": "Deletes 1 stock record and its allocations."
+  },
   "PBd/e+": {
     "context": "dialog header",
     "string": "Change address for order"
@@ -7637,6 +7661,10 @@
   },
   "QFCUEt": {
     "string": "Slug must be unique"
+  },
+  "QFJSRe": {
+    "context": "warehouse delete dialog when the stock count is known",
+    "string": "Deletes {count} stock records and their allocations."
   },
   "QGjJcT": {
     "context": "number of products",
@@ -14045,6 +14073,10 @@
   "nDwEdh": {
     "context": "attribute values section subtitle",
     "string": "Selectable values for this attribute"
+  },
+  "nE3kf5": {
+    "context": "warehouse delete dialog when the location is in no channel",
+    "string": "It is not in a channel."
   },
   "nEWp+k": {
     "context": "quantity of ordered products",
