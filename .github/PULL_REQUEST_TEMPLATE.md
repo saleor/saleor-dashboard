@@ -1,4 +1,4 @@
-<!-- Title: explain what changes in plain words. Describe behavior for user-facing changes (e.g. "Fix adding variants to order"); use a conventional prefix for internal changes (refactor:, ci:, test(e2e):, chore:, docs:). The title and description should explain the full scope without requiring the reviewer to read the diff. -->
+<!-- Title: Describe the change in plain words (e.g. "Fix adding variants to an order" or "Simplify test setup"). The title and description should explain the full scope without requiring reviewers to read the diff. -->
 
 ## Screenshot / Video
 
