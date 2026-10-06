@@ -33,7 +33,12 @@ const feedbackSurvey: Survey = {
     widgetType: SurveyWidgetType.Selector,
     widgetSelector: '[data-posthog-feedback-trigger="true"]',
   },
-  conditions: null,
+  conditions: {
+    selector: '[data-posthog-feedback-trigger="true"]',
+    events: null,
+    cancelEvents: null,
+    actions: null,
+  },
   questions: [],
   start_date: "2026-09-01",
   end_date: null,
@@ -68,7 +73,7 @@ it("stays hidden until the renderer loads and the feedback survey matches", () =
   expect(result.current.isAvailable).toBe(true);
 });
 
-it("is available in development without analytics or a loaded survey", () => {
+it("shows the feedback button in development when analytics is disabled", () => {
   // Arrange
   const originalNodeEnv = process.env.NODE_ENV;
 
@@ -133,4 +138,24 @@ it("updates availability after feature flag changes and unsubscribes on unmount"
   // Assert
   expect(result.current.isAvailable).toBe(false);
   expect(unsubscribe).toHaveBeenCalled();
+});
+
+it("stays hidden in production when analytics is disabled", () => {
+  // Arrange
+  const originalNodeEnv = process.env.NODE_ENV;
+
+  process.env.NODE_ENV = "production";
+  mockAnalyticsEnabled.mockReturnValue(false);
+
+  try {
+    // Act
+    const { result } = renderHook(useFeedbackSurvey);
+
+    // Assert
+    expect(result.current.isAvailable).toBe(false);
+    expect(loaded).not.toHaveBeenCalled();
+    expect(matching).not.toHaveBeenCalled();
+  } finally {
+    process.env.NODE_ENV = originalNodeEnv;
+  }
 });

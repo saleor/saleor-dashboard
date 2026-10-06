@@ -47,12 +47,10 @@ const FeedbackButton = () => {
 
   const { isAvailable } = useFeedbackSurvey();
 
-  if (!isAvailable) {
-    return null;
-  }
-
   return (
-    <Box position="relative" display="inline-flex">
+    // PostHog can require this selector to exist before the survey matches.
+    // Keep the trigger mounted while hiding it until the survey is ready.
+    <Box hidden={!isAvailable} position="relative" display={isAvailable ? "inline-flex" : "none"}>
       <Tooltip>
         <Tooltip.Trigger>
           <Button
@@ -77,9 +75,11 @@ const FeedbackButton = () => {
           />
         </Tooltip.Content>
       </Tooltip>
-      <Box position="absolute" __top="-4px" __right="-4px" __zIndex="1">
-        <Ripple model={rippleGlobalFeedback} />
-      </Box>
+      {isAvailable && (
+        <Box position="absolute" __top="-4px" __right="-4px" __zIndex="1">
+          <Ripple model={rippleGlobalFeedback} />
+        </Box>
+      )}
     </Box>
   );
 };

@@ -97,6 +97,11 @@ describe("Sidebar", () => {
 
     // Assert
     expect(screen.queryByRole("button", { name: "Send feedback" })).not.toBeInTheDocument();
+    expect(screen.getByTestId("feedback-button")).not.toBeVisible();
+    expect(screen.getByTestId("feedback-button")).toHaveAttribute(
+      "data-posthog-feedback-trigger",
+      "true",
+    );
   });
 
   it("should render cloud environment link when is cloud instance", () => {
