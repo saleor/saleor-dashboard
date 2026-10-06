@@ -6648,6 +6648,10 @@
     "context": "label for available authorization amount",
     "string": "Available to capture (authorized)"
   },
+  "MhtjvQ": {
+    "context": "checkbox label",
+    "string": "Enable checkout stock reservation for authenticated users"
+  },
   "MkPAWX": {
     "context": "pill on staff details when viewing your own profile",
     "string": "Me"
@@ -9781,10 +9785,6 @@
   },
   "YEIFiI": {
     "string": "Add new structure item to begin creating structure"
-  },
-  "YEv+6G": {
-    "context": "input helper text",
-    "string": "Leaving this setting empty will mean that stock won’t be reserved"
   },
   "YFQBs1": {
     "context": "product availability date label",
@@ -13600,6 +13600,10 @@
   "lxgrqS": {
     "context": "PDP schematic when the type has options turned off",
     "string": "No pickers — sold as a single variant"
+  },
+  "lybc+B": {
+    "context": "checkbox label",
+    "string": "Enable checkout stock reservation for anonymous users"
   },
   "lz7o8y": {
     "context": "tooltip when generate button is disabled because over variant limit",
