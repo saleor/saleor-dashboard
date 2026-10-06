@@ -4,7 +4,7 @@ import { WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import WarehouseList from "./WarehouseList";
+import { WarehouseList } from "./WarehouseList";
 
 const meta: Meta<typeof WarehouseList> = {
   title: "Warehouses/WarehouseList",

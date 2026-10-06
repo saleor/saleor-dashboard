@@ -9,11 +9,17 @@ export const warehouseFragment = gql`
 export const warehouseWithShippingFragment = gql`
   fragment WarehouseWithShipping on Warehouse {
     ...Warehouse
+    clickAndCollectOption
     shippingZones(first: 100) {
+      totalCount
       edges {
         node {
           id
           name
+          channels {
+            id
+            name
+          }
         }
       }
     }

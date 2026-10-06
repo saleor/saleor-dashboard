@@ -1,11 +1,10 @@
-import { DashboardCard } from "@dashboard/components/Card";
-import { FormSpacer } from "@dashboard/components/FormSpacer";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { type WarehouseErrorFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
-import { Input } from "@saleor/macaw-ui-next";
+import { messages } from "@dashboard/warehouses/messages";
+import { Box, Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface WarehouseInfoProps {
@@ -18,54 +17,44 @@ interface WarehouseInfoProps {
   onChange: FormChange;
 }
 
-const WarehouseInfo = ({ data, disabled, errors, onChange }: WarehouseInfoProps) => {
+export const WarehouseInfo = ({ data, disabled, errors, onChange }: WarehouseInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name", "email"], errors);
 
   return (
-    <DashboardCard data-test-id="general-information-section" paddingTop={9}>
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage(commonMessages.generalInformations)}
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
+    <DetailSettingsCard
+      title={intl.formatMessage(messages.general)}
+      data-test-id="general-information-section"
+    >
+      <Box display="flex" flexDirection="column" gap={4}>
         <Input
           data-test-id="warehouse-name-input"
           disabled={disabled}
           error={!!formErrors.name}
           aria-invalid={!!formErrors.name}
           helperText={getWarehouseErrorMessage(formErrors.name, intl)}
-          label={intl.formatMessage({
-            id: "llBnr+",
-            defaultMessage: "Warehouse Name",
-          })}
-          name={"name" as keyof typeof data}
+          label={intl.formatMessage(messages.name)}
+          name="name"
           value={data.name}
           onChange={onChange}
           autoComplete="none"
         />
-        <FormSpacer />
         <Input
           disabled={disabled}
           error={!!formErrors.email}
           aria-invalid={!!formErrors.email}
           data-test-id="company-email-input"
           helperText={getWarehouseErrorMessage(formErrors.email, intl)}
-          label={intl.formatMessage({
-            id: "sy+pv5",
-            defaultMessage: "Email",
-          })}
-          name={"email"}
+          label={intl.formatMessage(messages.email)}
+          name="email"
           value={data.email}
           onChange={onChange}
           autoComplete="email"
           spellCheck={false}
         />
-      </DashboardCard.Content>
-    </DashboardCard>
+      </Box>
+    </DetailSettingsCard>
   );
 };
 
 WarehouseInfo.displayName = "WarehouseInfo";
-export default WarehouseInfo;

@@ -4,7 +4,10 @@ import {
   CountryCode,
   useWarehouseDeleteMutation,
   useWarehouseDetailsQuery,
+  useWarehouseStockAvailabilityModeQuery,
+  useWarehouseStockCountQuery,
   useWarehouseUpdateMutation,
+  type WarehouseDetailsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
@@ -16,16 +19,20 @@ import {
   getStringOrPlaceholder,
 } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
-import WarehouseDetailsPage, {
+import {
+  WarehouseDetailsPage,
   type WarehouseDetailsPageFormData,
 } from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPage";
 import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
+import { useWarehouseDetailsChannels } from "@dashboard/warehouses/hooks/useWarehouseDetailsChannels";
 import {
   warehouseListUrl,
   warehouseUrl,
   type WarehouseUrlQueryParams,
 } from "@dashboard/warehouses/urls";
+import { type ZoneChannelMembership } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
 import { useIntl } from "react-intl";
 
 interface WarehouseDetailsProps {
@@ -41,6 +48,15 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
   const { data, loading } = useWarehouseDetailsQuery({
     displayLoader: true,
     variables: { id },
+  });
+  const { legacyStockAvailability, stockCount, stockCountLoading } =
+    useWarehouseDetailsSideData(id);
+  const shippingZones = warehouseZoneMemberships(data?.warehouse?.shippingZones);
+  const channels = useWarehouseDetailsChannels({
+    warehouseId: id,
+    legacyStockAvailability,
+    zones: shippingZones.zones,
+    zonesTruncated: shippingZones.truncated,
   });
   const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation({
     onCompleted: data => {
@@ -58,7 +74,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage({ id: "arT1bu", defaultMessage: "Warehouse updated" }),
+          text: intl.formatMessage({ id: "MzXzjL", defaultMessage: "Warehouse deleted" }),
         });
         navigate(warehouseListUrl());
       }
@@ -110,6 +126,15 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
         errors={updateWarehouseOpts.data?.updateWarehouse?.errors || []}
         saveButtonBarState={updateWarehouseTransitionState}
         warehouse={data?.warehouse}
+        legacyStockAvailability={legacyStockAvailability}
+        stockCount={stockCount}
+        stockCountLoading={stockCountLoading}
+        channelsCard={channels.card}
+        channelBanner={channels.banner}
+        channelSubtitle={channels.subtitle}
+        membershipStatus={channels.status}
+        warehouseChannelIds={channels.warehouseChannelIds}
+        channelNames={channels.channelNames}
         onDelete={() => openModal("delete")}
         onShowMetadata={() => openModal("view-warehouse-metadata")}
         onSubmit={handleSubmit}
@@ -136,3 +161,42 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
 
 WarehouseDetails.displayName = "WarehouseDetails";
 export default WarehouseDetails;
+
+const warehouseZoneMemberships = (
+  shippingZones:
+    | NonNullable<WarehouseDetailsQuery["warehouse"]>["shippingZones"]
+    | null
+    | undefined,
+): { zones: ZoneChannelMembership[]; truncated: boolean } => {
+  const zones = (mapEdgesToItems(shippingZones) ?? []).map(zone => ({
+    id: zone.id,
+    name: zone.name,
+    channelIds: zone.channels.map(channel => channel.id),
+  }));
+
+  return {
+    zones,
+    truncated: (shippingZones?.totalCount ?? 0) > zones.length,
+  };
+};
+
+const useWarehouseDetailsSideData = (
+  id: string,
+): {
+  legacyStockAvailability: boolean | undefined;
+  stockCount: number | null;
+  stockCountLoading: boolean;
+} => {
+  const stockCountQuery = useWarehouseStockCountQuery({
+    variables: { id },
+    errorPolicy: "all",
+  });
+  const stockModeQuery = useWarehouseStockAvailabilityModeQuery();
+  const legacyValue = stockModeQuery.data?.shop?.useLegacyShippingZoneStockAvailability;
+
+  return {
+    legacyStockAvailability: stockModeQuery.loading ? undefined : (legacyValue ?? false),
+    stockCount: stockCountQuery.data?.warehouse?.stocks?.totalCount ?? null,
+    stockCountLoading: stockCountQuery.loading,
+  };
+};

@@ -1,6 +1,8 @@
 // @ts-strict-ignore
+import { useApolloClient } from "@apollo/client";
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import {
   TopNav,
   TopNavDestinationIcon,
@@ -24,12 +26,17 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useShippingZoneEditChanges } from "@dashboard/shipping/hooks/useShippingZoneEditChanges";
+import {
+  useLegacyStockAvailability,
+  useZoneWarehouseEligibility,
+  warehousesUnlinkedByRemovingZoneChannels,
+} from "@dashboard/shipping/hooks/useZoneWarehouseEligibility";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type Option } from "@saleor/macaw-ui-next";
-import { useLayoutEffect, useMemo } from "react";
-import { useIntl } from "react-intl";
+import { useLayoutEffect, useMemo, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
 import { type FetchMoreProps, type SearchProps } from "../../../types";
@@ -124,6 +131,54 @@ export const ShippingZoneDetailsPage = ({
 
     return [...searchChoices, ...selectedNotInSearch];
   }, [data.warehouses, warehouses]);
+  const client = useApolloClient();
+  const legacyStockAvailability = useLegacyStockAvailability();
+  const [unlinkNames, setUnlinkNames] = useState<string[] | null>(null);
+  const eligibilityWarehouses = useMemo(
+    () => warehouseChoices.map(choice => ({ id: choice.value, name: String(choice.label) })),
+    [warehouseChoices],
+  );
+  const channelIds = data.channels.map(channel => channel.value);
+  const eligibility = useZoneWarehouseEligibility({
+    warehouses: eligibilityWarehouses,
+    channelIds,
+  });
+  const selectableChoices = eligibility.loading
+    ? data.warehouses
+    : warehouseChoices.filter(
+        choice =>
+          eligibility.eligible.some(warehouse => warehouse.id === choice.value) ||
+          data.warehouses.some(selected => selected.value === choice.value),
+      );
+  const requestSave = async (): Promise<void> => {
+    const originalChannelIds = new Set(initialForm.channels.map(channel => channel.value));
+    const removedChannel = [...originalChannelIds].some(
+      channelId => !channelIds.includes(channelId),
+    );
+
+    if (legacyStockAvailability === true && removedChannel && shippingZone) {
+      try {
+        const unlinked = await warehousesUnlinkedByRemovingZoneChannels({
+          client,
+          linked: shippingZone.warehouses.map(warehouse => ({
+            id: warehouse.id,
+            name: warehouse.name,
+          })),
+          remainingChannelIds: channelIds,
+        });
+
+        if (unlinked.length > 0) {
+          setUnlinkNames(unlinked.map(warehouse => warehouse.name));
+
+          return;
+        }
+      } catch {
+        // The server still removes a link that no longer shares a channel.
+      }
+    }
+
+    submit();
+  };
   const zoneChannels =
     shippingZone?.channels.map(channel => ({
       id: channel.id,
@@ -216,9 +271,12 @@ export const ShippingZoneDetailsPage = ({
           onWarehouseChange={change}
           onFetchMoreWarehouses={onFetchMore}
           onWarehousesSearchChange={onSearchChange}
-          warehousesChoices={warehouseChoices}
+          warehousesChoices={selectableChoices}
           allChannels={allChannels}
           onChannelChange={change}
+          legacyStockAvailability={legacyStockAvailability}
+          ineligibleWarehouses={eligibility.ineligible}
+          zoneChannelNames={data.channels.map(channel => String(channel.label))}
         />
       </DetailPageLayout.RightSidebar>
       <Savebar>
@@ -228,10 +286,26 @@ export const ShippingZoneDetailsPage = ({
         <Savebar.CancelButton onClick={() => navigate(shippingZonesListBackLink)} />
         <Savebar.ConfirmButton
           transitionState={saveButtonBarState}
-          onClick={submit}
+          onClick={requestSave}
           disabled={isSaveDisabled}
         />
       </Savebar>
+      <ActionDialog
+        open={unlinkNames !== null}
+        title={intl.formatMessage(messages.unlinkWarehousesTitle)}
+        confirmButtonState="default"
+        variant="delete"
+        onClose={() => setUnlinkNames(null)}
+        onConfirm={() => {
+          setUnlinkNames(null);
+          submit();
+        }}
+      >
+        <FormattedMessage
+          {...messages.unlinkWarehousesBody}
+          values={{ warehouses: unlinkNames?.join(", ") ?? "" }}
+        />
+      </ActionDialog>
     </DetailPageLayout>
   );
 };

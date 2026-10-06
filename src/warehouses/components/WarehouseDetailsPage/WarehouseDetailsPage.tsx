@@ -1,19 +1,20 @@
-// @ts-strict-ignore
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CompanyAddressInput from "@dashboard/components/CompanyAddressInput/CompanyAddressInput";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form/Form";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
+  type AccountErrorFragment,
   type CountryWithCodeFragment,
   WarehouseClickAndCollectOptionEnum,
   type WarehouseDetailsFragment,
@@ -21,18 +22,26 @@ import {
 } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type FormChange, type SubmitPromise, type UseFormResult } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
+import { messages } from "@dashboard/warehouses/messages";
+import { isPrivateForPickupOption } from "@dashboard/warehouses/pickupOptionAfterPrivateChange";
+import { defaultGraphiQLQuery } from "@dashboard/warehouses/queries";
 import { warehouseListPath } from "@dashboard/warehouses/urls";
-import { Button } from "@saleor/macaw-ui-next";
-import { Code } from "lucide-react";
-import { useIntl } from "react-intl";
+import { Box } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
+import { type ReactNode, useCallback, useMemo } from "react";
+import { type IntlShape, useIntl } from "react-intl";
 
-import WarehouseInfo from "../WarehouseInfo/WarehouseInfo";
-import WarehouseSettings from "../WarehouseSettings/WarehouseSettings";
+import { WarehouseAddressCard } from "../WarehouseAddressCard/WarehouseAddressCard";
+import { WarehouseInfo } from "../WarehouseInfo/WarehouseInfo";
+import { WarehousePickupCard } from "../WarehousePickupCard/WarehousePickupCard";
+import { WarehouseShippingZonesCard } from "../WarehouseShippingZonesCard/WarehouseShippingZonesCard";
+import { WarehouseStockCard } from "../WarehouseStockCard/WarehouseStockCard";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
@@ -40,123 +49,326 @@ export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   isPrivate: boolean;
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
+
 interface WarehouseDetailsPageProps {
   countries: CountryWithCodeFragment[];
   disabled: boolean;
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouse: WarehouseDetailsFragment | undefined;
+  /** Undefined while the shop stock mode is still loading. */
+  legacyStockAvailability: boolean | undefined;
+  /** Null when the count could not be loaded. */
+  stockCount: number | null;
+  stockCountLoading: boolean;
+  channelsCard: ReactNode;
+  channelBanner: ReactNode | null;
+  /** Shown under the title once membership is known. */
+  channelSubtitle: ReactNode | null;
+  membershipStatus: "loading" | "error" | "ready";
+  warehouseChannelIds: string[];
+  channelNames: string[];
   onDelete: () => void;
   onShowMetadata: () => void;
   onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
 
-const WarehouseDetailsPage = ({
+const orEmpty = (value: string | null | undefined): string => value ?? "";
+
+const warehouseToFormData = (
+  warehouse: WarehouseDetailsFragment | undefined,
+): WarehouseDetailsPageFormData => ({
+  city: orEmpty(warehouse?.address.city),
+  companyName: orEmpty(warehouse?.address.companyName),
+  country: orEmpty(warehouse?.address.country.code),
+  isPrivate: !!warehouse?.isPrivate,
+  clickAndCollectOption:
+    warehouse?.clickAndCollectOption || WarehouseClickAndCollectOptionEnum.DISABLED,
+  countryArea: orEmpty(warehouse?.address.countryArea),
+  name: orEmpty(warehouse?.name),
+  email: orEmpty(warehouse?.email),
+  phone: orEmpty(warehouse?.address.phone),
+  postalCode: orEmpty(warehouse?.address.postalCode),
+  streetAddress1: orEmpty(warehouse?.address.streetAddress1),
+  streetAddress2: orEmpty(warehouse?.address.streetAddress2),
+});
+
+const warehouseMenuItems = ({
+  intl,
+  warehouseId,
+  onDelete,
+  onOpenPlayground,
+}: {
+  intl: IntlShape;
+  warehouseId: string | undefined;
+  onDelete: () => void;
+  onOpenPlayground: () => void;
+}): TopNavMenuItem[] => {
+  if (!warehouseId) {
+    return [];
+  }
+
+  return [
+    {
+      label: intl.formatMessage(messages.openGraphiQL),
+      onSelect: onOpenPlayground,
+      testId: "graphiql-redirect",
+      icon: <GraphqlIcon />,
+    },
+    {
+      label: intl.formatMessage(messages.deleteWarehouse),
+      onSelect: onDelete,
+      testId: "delete-warehouse",
+      color: "critical1",
+      icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+    },
+  ];
+};
+
+export const WarehouseDetailsPage = ({
   countries,
   disabled,
   errors,
   saveButtonBarState,
   warehouse,
+  legacyStockAvailability,
+  stockCount,
+  stockCountLoading,
+  channelsCard,
+  channelBanner,
+  channelSubtitle,
+  membershipStatus,
+  warehouseChannelIds,
+  channelNames,
   onDelete,
   onShowMetadata,
   onSubmit,
-}: WarehouseDetailsPageProps) => {
+}: WarehouseDetailsPageProps): ReactNode => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const devMode = useDevModeContext();
   const [displayCountry, setDisplayCountry] = useStateFromProps(
     warehouse?.address?.country.country || "",
   );
   const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
-  const initialForm: WarehouseDetailsPageFormData = {
-    city: warehouse?.address.city ?? "",
-    companyName: warehouse?.address.companyName ?? "",
-    country: warehouse?.address.country.code ?? "",
-    isPrivate: !!warehouse?.isPrivate,
-    clickAndCollectOption:
-      warehouse?.clickAndCollectOption || WarehouseClickAndCollectOptionEnum.DISABLED,
-    countryArea: warehouse?.address.countryArea ?? "",
-    name: warehouse?.name ?? "",
-    email: warehouse?.email ?? "",
-    phone: warehouse?.address.phone ?? "",
-    postalCode: warehouse?.address.postalCode ?? "",
-    streetAddress1: warehouse?.address.streetAddress1 ?? "",
-    streetAddress2: warehouse?.address.streetAddress2 ?? "",
-  };
-
+  const initialForm = warehouseToFormData(warehouse);
   const warehouseListBackLink = useBackLinkWithState({
     path: warehouseListPath,
   });
+  const openPlaygroundURL = useCallback(() => {
+    devMode.setDevModeContent(defaultGraphiQLQuery);
+    devMode.setVariables(`{ "id": "${warehouse?.id}" }`);
+    devMode.setDevModeVisibility(true);
+  }, [devMode, warehouse?.id]);
+  const menuItems = useMemo(
+    () =>
+      warehouseMenuItems({
+        intl,
+        warehouseId: warehouse?.id,
+        onDelete,
+        onOpenPlayground: openPlaygroundURL,
+      }),
+    [intl, onDelete, openPlaygroundURL, warehouse?.id],
+  );
+  const zones = (mapEdgesToItems(warehouse?.shippingZones) ?? []).map(zone => ({
+    id: zone.id,
+    name: zone.name,
+    channelIds: zone.channels.map(channel => channel.id),
+  }));
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
-      {({ change, data, isSaveDisabled, submit, set }) => {
-        const countryChoices = mapCountriesToChoices(countries);
-        const countrySelect = createSingleAutocompleteSelectHandler(
-          change,
-          setDisplayCountry,
-          countryChoices,
-        );
-        const handleCountrySelect = createCountryHandler(countrySelect, set);
-
-        return (
-          <DetailPageLayout>
-            <TopNav
-              href={warehouseListBackLink}
-              hrefIcon={<TopNavDestinationIcon.warehouses />}
-              hrefTitle={intl.formatMessage(topNavDestinationMessages.allWarehouses)}
-              title={warehouse?.name}
-            >
-              <Button
-                variant="secondary"
-                icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-                onClick={onShowMetadata}
-                data-test-id="show-warehouse-metadata"
-                title="Edit warehouse metadata"
-              />
-            </TopNav>
-            <DetailPageLayout.Content>
-              <WarehouseInfo data={data} disabled={disabled} errors={errors} onChange={change} />
-              <CardSpacer />
-              <CompanyAddressInput
-                countries={countryChoices}
-                data={data}
-                disabled={disabled}
-                displayCountry={displayCountry}
-                errors={[...errors, ...validationErrors]}
-                header={intl.formatMessage({
-                  id: "43Nlay",
-                  defaultMessage: "Address Information",
-                  description: "warehouse",
-                })}
-                onChange={change}
-                onCountryChange={handleCountrySelect}
-              />
-            </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <WarehouseSettings
-                zones={mapEdgesToItems(warehouse?.shippingZones) ?? []}
-                data={data}
-                disabled={disabled}
-                onChange={change}
-                setData={set}
-              />
-            </DetailPageLayout.RightSidebar>
-            <Savebar>
-              <Savebar.DeleteButton onClick={onDelete} />
-              <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(warehouseListBackLink)} />
-              <Savebar.ConfirmButton
-                transitionState={saveButtonBarState}
-                onClick={submit}
-                disabled={!!isSaveDisabled}
-              />
-            </Savebar>
-          </DetailPageLayout>
-        );
-      }}
+      {formData => (
+        <WarehouseDetailsForm
+          change={formData.change}
+          countries={countries}
+          data={formData.data}
+          disabled={disabled}
+          displayCountry={displayCountry}
+          errors={errors}
+          isSaveDisabled={!!formData.isSaveDisabled}
+          legacyStockAvailability={legacyStockAvailability}
+          menuItems={menuItems}
+          saveButtonBarState={saveButtonBarState}
+          set={formData.set}
+          triggerChange={formData.triggerChange}
+          setDisplayCountry={setDisplayCountry}
+          stockCount={stockCount}
+          stockCountLoading={stockCountLoading}
+          channelsCard={channelsCard}
+          channelBanner={channelBanner}
+          channelSubtitle={channelSubtitle}
+          membershipStatus={membershipStatus}
+          warehouseChannelIds={warehouseChannelIds}
+          channelNames={channelNames}
+          submit={formData.submit}
+          validationErrors={validationErrors}
+          warehouse={warehouse}
+          warehouseListBackLink={warehouseListBackLink}
+          zones={zones}
+          onNavigateBack={() => navigate(warehouseListBackLink)}
+          onShowMetadata={onShowMetadata}
+        />
+      )}
     </Form>
   );
 };
 
+interface WarehouseDetailsFormProps {
+  change: FormChange;
+  countries: CountryWithCodeFragment[];
+  data: WarehouseDetailsPageFormData;
+  disabled: boolean;
+  displayCountry: string;
+  errors: WarehouseErrorFragment[];
+  isSaveDisabled: boolean;
+  legacyStockAvailability: boolean | undefined;
+  menuItems: TopNavMenuItem[];
+  saveButtonBarState: ConfirmButtonTransitionState;
+  set: UseFormResult<WarehouseDetailsPageFormData>["set"];
+  triggerChange: UseFormResult<WarehouseDetailsPageFormData>["triggerChange"];
+  setDisplayCountry: (country: string) => void;
+  stockCount: number | null;
+  stockCountLoading: boolean;
+  channelsCard: ReactNode;
+  channelBanner: ReactNode | null;
+  channelSubtitle: ReactNode | null;
+  membershipStatus: "loading" | "error" | "ready";
+  warehouseChannelIds: string[];
+  channelNames: string[];
+  submit: UseFormResult<WarehouseDetailsPageFormData>["submit"];
+  validationErrors: AccountErrorFragment[];
+  warehouse: WarehouseDetailsFragment | undefined;
+  warehouseListBackLink: string;
+  zones: Array<{ id: string; name: string; channelIds: string[] }>;
+  onNavigateBack: () => void;
+  onShowMetadata: () => void;
+}
+
+const WarehouseDetailsForm = ({
+  change,
+  countries,
+  data,
+  disabled,
+  displayCountry,
+  errors,
+  isSaveDisabled,
+  legacyStockAvailability,
+  menuItems,
+  saveButtonBarState,
+  set,
+  triggerChange,
+  setDisplayCountry,
+  stockCount,
+  stockCountLoading,
+  channelsCard,
+  channelBanner,
+  channelSubtitle,
+  membershipStatus,
+  warehouseChannelIds,
+  channelNames,
+  submit,
+  validationErrors,
+  warehouse,
+  warehouseListBackLink,
+  zones,
+  onNavigateBack,
+  onShowMetadata,
+}: WarehouseDetailsFormProps): ReactNode => {
+  const intl = useIntl();
+  const countryChoices = mapCountriesToChoices(countries);
+  const countrySelect = createSingleAutocompleteSelectHandler(
+    change,
+    setDisplayCountry,
+    countryChoices,
+  );
+  const handleCountrySelect = createCountryHandler(countrySelect, set);
+
+  return (
+    <DetailPageLayout>
+      <TopNav
+        href={warehouseListBackLink}
+        hrefIcon={<TopNavDestinationIcon.warehouses />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.allWarehouses)}
+        title={warehouse?.name}
+        subtitle={channelSubtitle ?? undefined}
+        actionsGap={3}
+      >
+        <TopNav.MetadataButton
+          onClick={onShowMetadata}
+          disabled={disabled || !warehouse}
+          data-test-id="show-warehouse-metadata"
+          title={intl.formatMessage(messages.editMetadata)}
+        />
+        {menuItems.length > 0 && (
+          <TopNav.Menu
+            items={
+              disabled || !warehouse
+                ? menuItems.map(item => ({ ...item, disabled: true }))
+                : menuItems
+            }
+            dataTestId="warehouse-menu"
+          />
+        )}
+      </TopNav>
+      <DetailPageLayout.Content>
+        <DetailPageContent>
+          {channelBanner}
+          <WarehouseInfo data={data} disabled={disabled} errors={errors} onChange={change} />
+          <WarehouseAddressCard
+            countries={countryChoices}
+            data={data}
+            disabled={disabled}
+            displayCountry={displayCountry}
+            errors={[...errors, ...validationErrors]}
+            showPickupNotice={
+              data.clickAndCollectOption !== WarehouseClickAndCollectOptionEnum.DISABLED
+            }
+            onChange={change}
+            onCountryChange={handleCountrySelect}
+          />
+          <WarehousePickupCard
+            clickAndCollectOption={data.clickAndCollectOption}
+            disabled={disabled}
+            onOptionChange={option => {
+              set({
+                clickAndCollectOption: option,
+                isPrivate: isPrivateForPickupOption(option),
+              });
+              triggerChange();
+            }}
+          />
+        </DetailPageContent>
+      </DetailPageLayout.Content>
+      <DetailPageLayout.RightSidebar paddingTop={6}>
+        <Box display="flex" flexDirection="column" gap={4}>
+          {channelsCard}
+          <WarehouseStockCard count={stockCount} loading={stockCountLoading} />
+          <WarehouseShippingZonesCard
+            legacyStockAvailability={legacyStockAvailability}
+            zones={zones}
+            totalCount={warehouse?.shippingZones?.totalCount ?? null}
+            loading={!warehouse}
+            membershipStatus={membershipStatus}
+            warehouseChannelIds={warehouseChannelIds}
+            channelNames={channelNames}
+            pickupEnabled={
+              data.clickAndCollectOption !== WarehouseClickAndCollectOptionEnum.DISABLED
+            }
+          />
+        </Box>
+      </DetailPageLayout.RightSidebar>
+      <Savebar>
+        <Savebar.Spacer />
+        <Savebar.CancelButton onClick={onNavigateBack} />
+        <Savebar.ConfirmButton
+          transitionState={saveButtonBarState}
+          onClick={submit}
+          disabled={isSaveDisabled}
+        />
+      </Savebar>
+    </DetailPageLayout>
+  );
+};
+
 WarehouseDetailsPage.displayName = "WarehouseDetailsPage";
-export default WarehouseDetailsPage;

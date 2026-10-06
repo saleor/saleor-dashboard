@@ -1,0 +1,21 @@
+.colName {
+  padding-left: 0;
+}
+
+.colSecondary {
+  padding-left: 0;
+}
+
+.tableRow {
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .colName {
+    width: 400px;
+  }
+
+  .colSecondary {
+    width: auto;
+  }
+}

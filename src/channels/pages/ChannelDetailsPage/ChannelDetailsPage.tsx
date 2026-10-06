@@ -20,6 +20,7 @@ import { defaultGraphiQLQuery } from "@dashboard/channels/queries";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { getChannelCreateDefaults } from "@dashboard/channels/utils/getChannelCreateDefaults";
 import { validateChannelFormData } from "@dashboard/channels/validation";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import {
   TopNav,
   TopNavDestinationIcon,
@@ -39,6 +40,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import {
   type ChannelDetailsFragment,
+  ChannelErrorCode,
   type ChannelErrorFragment,
   type CountryCode,
   type CountryFragment,
@@ -53,8 +55,8 @@ import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/sin
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
 import { Copy, ListChecks, Receipt, Trash2 } from "lucide-react";
-import { type ReactNode, useCallback, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { ChannelForm, type FormData } from "../../components/ChannelForm/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
@@ -136,6 +138,11 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   onShowSetupChecklist?: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors>;
+  /** True in the older stock mode, where removing a warehouse or zone can unlink the other. */
+  legacyStockAvailability?: boolean;
+  previewChannelUnlinks?: (
+    data: FormData,
+  ) => Promise<Array<{ warehouseName: string; zoneName: string }>>;
   /** Opens activate/deactivate confirmation (live action, not part of Save). */
   onToggleChannelStatus?: () => void;
 }
@@ -146,6 +153,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   disabled,
   disabledStatus,
   onSubmit,
+  legacyStockAvailability = false,
+  previewChannelUnlinks,
   errors,
   onDelete,
   onDuplicate,
@@ -343,6 +352,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     openPlaygroundURL,
   ]);
   const [validationErrors, setValidationErrors] = useState<ChannelErrorFragment[]>([]);
+  const [unlinkLabels, setUnlinkLabels] = useState<string[]>([]);
+  const bypassUnlinkWarning = useRef(false);
   const [selectedCountryDisplayName, setSelectedCountryDisplayName] = useStateFromProps(
     channel?.defaultCountry.country || "",
   );
@@ -425,6 +436,37 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     if (errors.length) {
       return errors;
     }
+
+    const removesMembership =
+      data.warehousesIdsToRemove.length > 0 || data.shippingZonesIdsToRemove.length > 0;
+
+    if (
+      legacyStockAvailability &&
+      previewChannelUnlinks &&
+      removesMembership &&
+      !bypassUnlinkWarning.current
+    ) {
+      try {
+        const links = await previewChannelUnlinks(data);
+
+        if (links.length > 0) {
+          setUnlinkLabels(links.map(link => `${link.warehouseName} · ${link.zoneName}`));
+
+          return [
+            {
+              __typename: "ChannelError",
+              code: ChannelErrorCode.INVALID,
+              field: null,
+              message: null,
+            },
+          ] as TErrors;
+        }
+      } catch {
+        // Save anyway. Saleor still deletes a link that no longer shares a channel.
+      }
+    }
+
+    bypassUnlinkWarning.current = false;
 
     return onSubmit(data);
   };
@@ -613,6 +655,23 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 disabled={isSaveDisabled}
               />
             </Savebar>
+            <ActionDialog
+              open={unlinkLabels.length > 0}
+              title={intl.formatMessage(messages.unlinkLocationsTitle)}
+              confirmButtonState="default"
+              variant="delete"
+              onClose={() => setUnlinkLabels([])}
+              onConfirm={() => {
+                bypassUnlinkWarning.current = true;
+                setUnlinkLabels([]);
+                submit();
+              }}
+            >
+              <FormattedMessage
+                {...messages.unlinkLocationsBody}
+                values={{ links: unlinkLabels.join(", ") }}
+              />
+            </ActionDialog>
           </DetailPageLayout>
         );
       }}

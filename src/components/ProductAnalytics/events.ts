@@ -94,6 +94,11 @@ export interface AnalyticsEventMap {
   setup_checklist_reopened: {
     entity_type: "channel" | "product";
   };
+  warehouse_channels_changed: {
+    action: "assign" | "remove";
+    channel_count: number;
+    result: "error" | "partial_success" | "success";
+  };
   setup_checklist_step_clicked: {
     completed_steps: number;
     core_ready: boolean;

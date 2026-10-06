@@ -22,7 +22,7 @@ import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { warehouseListUrl } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";
 
-import WarehouseInfo from "../WarehouseInfo/WarehouseInfo";
+import { WarehouseInfo } from "../WarehouseInfo/WarehouseInfo";
 
 export interface WarehouseCreatePageFormData extends AddressTypeInput {
   name: string;

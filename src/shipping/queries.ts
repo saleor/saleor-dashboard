@@ -69,6 +69,26 @@ export const channelShippingZones = gql`
   }
 `;
 
+export const channelZoneWarehouseLinks = gql`
+  query ChannelZoneWarehouseLinks($filter: ShippingZoneFilterInput) {
+    shippingZones(filter: $filter, first: 100) {
+      edges {
+        node {
+          id
+          name
+          channels {
+            id
+          }
+          warehouses {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const shippingZonesCount = gql`
   query ShippingZonesCount {
     shippingZones {

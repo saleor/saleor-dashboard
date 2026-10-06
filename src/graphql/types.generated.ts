@@ -12847,9 +12847,9 @@ export type MenuItemTranslationFragment = { __typename: 'MenuItemTranslatableCon
 
 export type WarehouseFragment = { __typename: 'Warehouse', id: string, name: string };
 
-export type WarehouseWithShippingFragment = { __typename: 'Warehouse', id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
+export type WarehouseWithShippingFragment = { __typename: 'Warehouse', clickAndCollectOption: WarehouseClickAndCollectOptionEnum, id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string, name: string }> } }> } };
 
-export type WarehouseDetailsFragment = { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
+export type WarehouseDetailsFragment = { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string, name: string }> } }> } };
 
 export type WebhookFragment = { __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } };
 
@@ -14562,6 +14562,13 @@ export type ChannelShippingZonesQueryVariables = Exact<{
 
 export type ChannelShippingZonesQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } | null };
 
+export type ChannelZoneWarehouseLinksQueryVariables = Exact<{
+  filter?: InputMaybe<ShippingZoneFilterInput>;
+}>;
+
+
+export type ChannelZoneWarehouseLinksQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> } }> } | null };
+
 export type ShippingZonesCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -15111,7 +15118,15 @@ export type WarehouseCreateMutationVariables = Exact<{
 }>;
 
 
-export type WarehouseCreateMutation = { __typename: 'Mutation', createWarehouse: { __typename: 'WarehouseCreate', errors: Array<{ __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null }>, warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } } | null } | null };
+export type WarehouseCreateMutation = { __typename: 'Mutation', createWarehouse: { __typename: 'WarehouseCreate', errors: Array<{ __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null }>, warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string, name: string }> } }> } } | null } | null };
+
+export type WarehouseChannelMembershipUpdateMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: ChannelUpdateInput;
+}>;
+
+
+export type WarehouseChannelMembershipUpdateMutation = { __typename: 'Mutation', channelUpdate: { __typename: 'ChannelUpdate', channel: { __typename: 'Channel', id: string } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type WarehouseUpdateMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -15119,7 +15134,7 @@ export type WarehouseUpdateMutationVariables = Exact<{
 }>;
 
 
-export type WarehouseUpdateMutation = { __typename: 'Mutation', updateWarehouse: { __typename: 'WarehouseUpdate', errors: Array<{ __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null }>, warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } } | null } | null };
+export type WarehouseUpdateMutation = { __typename: 'Mutation', updateWarehouse: { __typename: 'WarehouseUpdate', errors: Array<{ __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null }>, warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string, name: string }> } }> } } | null } | null };
 
 export type WarehouseListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -15131,19 +15146,58 @@ export type WarehouseListQueryVariables = Exact<{
 }>;
 
 
-export type WarehouseListQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type WarehouseListQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', clickAndCollectOption: WarehouseClickAndCollectOptionEnum, id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string, name: string }> } }> } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type WarehouseDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type WarehouseDetailsQuery = { __typename: 'Query', warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } } | null };
+export type WarehouseDetailsQuery = { __typename: 'Query', warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string, name: string }> } }> } } | null };
 
 export type WarehousesCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WarehousesCountQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', totalCount: number | null } | null };
+
+export type WarehouseStockCountQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type WarehouseStockCountQuery = { __typename: 'Query', warehouse: { __typename: 'Warehouse', id: string, stocks: { __typename: 'StockCountableConnection', totalCount: number | null } | null } | null };
+
+export type WarehouseChannelMembershipCountsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WarehouseChannelMembershipCountsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string }> | null, warehouses: { __typename: 'WarehouseCountableConnection', totalCount: number | null } | null };
+
+export type WarehouseChannelMembershipMatrixQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WarehouseChannelMembershipMatrixQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, warehouses: Array<{ __typename: 'Warehouse', id: string }> }> | null };
+
+export type WarehousesInChannelsQueryVariables = Exact<{
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  channels: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  first: Scalars['Int']['input'];
+}>;
+
+
+export type WarehousesInChannelsQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string } }> } | null };
+
+export type WarehouseSharesChannelsQueryVariables = Exact<{
+  warehouseId: Scalars['ID']['input'];
+  channelIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+}>;
+
+
+export type WarehouseSharesChannelsQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', totalCount: number | null } | null };
+
+export type WarehouseStockAvailabilityModeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WarehouseStockAvailabilityModeQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, useLegacyShippingZoneStockAvailability: boolean } };
 
 export type SaveOnBoardingStateMutationVariables = Exact<{
   id: Scalars['ID']['input'];

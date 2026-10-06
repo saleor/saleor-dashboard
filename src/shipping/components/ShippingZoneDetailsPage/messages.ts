@@ -21,6 +21,17 @@ export const messages = defineMessages({
     defaultMessage: "Countries",
     description: "country list header",
   },
+  unlinkWarehousesTitle: {
+    id: "Vo2VDa",
+    defaultMessage: "Unlink locations?",
+    description: "confirm removing a channel that unlinks warehouses from the zone",
+  },
+  unlinkWarehousesBody: {
+    id: "BTq6zF",
+    defaultMessage:
+      "{warehouses} will be unlinked from this zone, because they share no other channel.",
+    description: "warehouses that lose their only shared channel",
+  },
   noCountriesAssigned: {
     id: "y7mfbl",
     defaultMessage: "Currently, there are no countries assigned to this shipping zone",

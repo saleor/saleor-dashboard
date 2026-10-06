@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { useApolloClient } from "@apollo/client";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { useUser } from "@dashboard/auth/useUser";
 import { BulkPublishToChannelDialog } from "@dashboard/channels/components/BulkPublishToChannelDialog/BulkPublishToChannelDialog";
@@ -30,6 +31,7 @@ import {
   buildChannelDuplicateSource,
   getChannelDuplicateFormPrefill,
 } from "@dashboard/channels/utils/channelDuplicate";
+import { previewChannelEditUnlinks } from "@dashboard/channels/utils/previewChannelEditUnlinks";
 import { getChannelDetailsRefetchQueries } from "@dashboard/channels/views/ChannelDetails/channelRefetchQueries";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
@@ -53,6 +55,7 @@ import {
   useChannelQuery,
   useChannelsQuery,
   useChannelUpdateMutation,
+  useChannelZoneWarehouseLinksQuery,
 } from "@dashboard/graphql";
 import {
   getParsedSearchData,
@@ -64,6 +67,7 @@ import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getMutationStatus } from "@dashboard/misc";
+import { useLegacyStockAvailability } from "@dashboard/shipping/hooks/useZoneWarehouseEligibility";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -555,6 +559,19 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     fetchMoreShippingZones,
   );
 
+  const client = useApolloClient();
+  const legacyStockAvailability = useLegacyStockAvailability();
+  const zoneLinksQuery = useChannelZoneWarehouseLinksQuery({
+    variables: { filter: { channels: [id] } },
+    skip: !canLoadShippingZones,
+  });
+  const zoneLinks = (mapEdgesToItems(zoneLinksQuery.data?.shippingZones) ?? []).map(zone => ({
+    id: zone.id,
+    name: zone.name,
+    channelIds: zone.channels.map(channel => channel.id),
+    warehouses: zone.warehouses,
+  }));
+
   if (data?.channel === null) {
     return <NotFoundPage onBack={() => navigate(channelsListUrl())} />;
   }
@@ -602,6 +619,17 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         }
         onShowMetadata={() => openModal("view-metadata")}
         onSubmit={handleSubmit}
+        legacyStockAvailability={legacyStockAvailability === true}
+        previewChannelUnlinks={formData =>
+          previewChannelEditUnlinks({
+            client,
+            channelId: id,
+            channelWarehouseIds: channelWarehouses.map(warehouse => warehouse.id),
+            zones: zoneLinks,
+            removeWarehouseIds: formData.warehousesIdsToRemove,
+            removeZoneIds: formData.shippingZonesIdsToRemove,
+          })
+        }
         onToggleChannelStatus={() => openModal(data?.channel?.isActive ? "deactivate" : "activate")}
         assignmentActionsRef={assignmentActionsRef}
         onDisplayedAssignmentIdsChange={handleDisplayedAssignmentIdsChange}

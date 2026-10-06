@@ -1,7 +1,7 @@
+import { DetailSettingRadioGroup } from "@dashboard/components/DetailSettingRadioGroup/DetailSettingRadioGroup";
 import { TransactionFlowStrategyEnum } from "@dashboard/graphql";
 import { FormattedMessage } from "react-intl";
 
-import { ChannelSettingRadioGroup } from "./ChannelSettingRadioGroup";
 import { messages } from "./messages";
 
 interface DefaultTransactionFlowStrategyProps {
@@ -15,7 +15,7 @@ export const DefaultTransactionFlowStrategy = ({
   onValueChange,
   disabled,
 }: DefaultTransactionFlowStrategyProps) => (
-  <ChannelSettingRadioGroup
+  <DetailSettingRadioGroup
     testId="default-transaction-strategy"
     name="defaultTransactionFlowStrategy"
     title={<FormattedMessage {...messages.defaultTransactionFlowStrategyLabel} />}

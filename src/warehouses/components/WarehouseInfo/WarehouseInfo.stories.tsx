@@ -4,7 +4,7 @@ import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
 
-import WarehouseInfo from "./WarehouseInfo";
+import { WarehouseInfo } from "./WarehouseInfo";
 
 const meta: Meta<typeof WarehouseInfo> = {
   title: "Warehouses/WarehouseInfo",

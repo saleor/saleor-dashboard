@@ -3,7 +3,7 @@ import { warehouse } from "@dashboard/warehouses/fixtures";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import WarehouseInfo from "./WarehouseInfo";
+import { WarehouseInfo } from "./WarehouseInfo";
 
 const mockOnChange = jest.fn();
 

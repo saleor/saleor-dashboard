@@ -41,6 +41,11 @@ interface DetailGroupBoxProps {
    */
   variant?: "primary" | "secondary" | "card" | "flush";
   /**
+   * Flush rows tint the header while open so a list row reads as one chrome.
+   * Turn off when the fold is a single section, not a row in a tinted list.
+   */
+  tintExpandedHeader?: boolean;
+  /**
    * Keep descendants inside the rounded card. Turn off when a menu must draw
    * past the bottom edge, such as the Editor.js block menu.
    */
@@ -62,6 +67,7 @@ export const DetailGroupBox = ({
   marginTop,
   triggerButtonTestId,
   variant = "primary",
+  tintExpandedHeader = true,
   clipOverflow = true,
 }: DetailGroupBoxProps): React.ReactNode => {
   const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded ? groupId : "");
@@ -83,6 +89,7 @@ export const DetailGroupBox = ({
   const isSecondary = variant === "secondary";
   const isCard = variant === "card";
   const isFlush = variant === "flush";
+  const flushHeaderIsPlain = isFlush && (!isExpanded || !tintExpandedHeader);
   const resolvedMarginTop = marginTop ?? (isCard || isFlush ? 0 : 4);
 
   return (
@@ -115,10 +122,10 @@ export const DetailGroupBox = ({
                 isSecondary && styles.headerSecondary,
                 isSecondary && isExpanded && styles.headerSecondaryExpanded,
                 isFlush && styles.headerFlush,
-                isFlush && isExpanded && styles.headerFlushExpanded,
+                isFlush && isExpanded && tintExpandedHeader && styles.headerFlushExpanded,
                 headerBody && styles.headerForm,
               )}
-              backgroundColor={isSecondary || (isFlush && !isExpanded) ? "default1" : "default2"}
+              backgroundColor={isSecondary || flushHeaderIsPlain ? "default1" : "default2"}
               {...(isFlush ? { "data-group-header": true } : {})}
             >
               {/* Trigger is only the title side so headerEnd actions don't toggle. */}

@@ -23,7 +23,7 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import WarehouseList from "../WarehouseList/WarehouseList";
+import { WarehouseList, type WarehouseListSecondaryColumn } from "../WarehouseList/WarehouseList";
 
 interface WarehouseListPageProps
   extends PageListProps,
@@ -32,6 +32,7 @@ interface WarehouseListPageProps
     Omit<TabPageProps, "onTabDelete"> {
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
   warehouses: WarehouseWithShippingFragment[] | undefined;
+  secondaryColumn?: WarehouseListSecondaryColumn;
   onRemove: (id: string | undefined) => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (id: number) => void;

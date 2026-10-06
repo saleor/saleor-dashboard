@@ -2,7 +2,11 @@ import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDial
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { useWarehouseDeleteMutation, useWarehouseListQuery } from "@dashboard/graphql";
+import {
+  useWarehouseDeleteMutation,
+  useWarehouseListQuery,
+  useWarehouseStockAvailabilityModeQuery,
+} from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -21,6 +25,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
+import { type WarehouseListSecondaryColumn } from "@dashboard/warehouses/components/WarehouseList/WarehouseList";
 import WarehouseListPage from "@dashboard/warehouses/components/WarehouseListPage/WarehouseListPage";
 import {
   warehouseListUrl,
@@ -45,6 +50,7 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
 
   usePaginationReset(warehouseListUrl, params, settings.rowNumber);
 
+  const stockModeQuery = useWarehouseStockAvailabilityModeQuery();
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = useMemo(
     () => ({
@@ -116,6 +122,13 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
   });
 
   const handleSort = createSortHandler(navigate, warehouseListUrl, params);
+  const secondaryColumn: WarehouseListSecondaryColumn = stockModeQuery.loading
+    ? "loading"
+    : stockModeQuery.data?.shop?.useLegacyShippingZoneStockAvailability
+      ? "zones"
+      : stockModeQuery.data
+        ? "pickup"
+        : "zones";
   const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
 
   return (
@@ -136,6 +149,7 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
         onTabUpdate={onPresetUpdate}
         tabs={presets.map(tab => tab.name)}
         warehouses={mapEdgesToItems(data?.warehouses)}
+        secondaryColumn={secondaryColumn}
         settings={settings}
         disabled={loading}
         onRemove={id => openModal("delete", { id })}

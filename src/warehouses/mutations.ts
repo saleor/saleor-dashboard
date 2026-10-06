@@ -23,6 +23,19 @@ export const createWarehouse = gql`
   }
 `;
 
+export const warehouseChannelMembershipUpdate = gql`
+  mutation WarehouseChannelMembershipUpdate($id: ID!, $input: ChannelUpdateInput!) {
+    channelUpdate(id: $id, input: $input) {
+      channel {
+        id
+      }
+      errors {
+        ...ChannelError
+      }
+    }
+  }
+`;
+
 export const updateWarehouse = gql`
   mutation WarehouseUpdate($id: ID!, $input: WarehouseUpdateInput!) {
     updateWarehouse(id: $id, input: $input) {

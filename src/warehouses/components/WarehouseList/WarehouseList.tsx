@@ -11,42 +11,27 @@ import { renderCollection } from "@dashboard/misc";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
+import { messages } from "@dashboard/warehouses/messages";
 import { WarehouseListUrlSortField, warehousePath } from "@dashboard/warehouses/urls";
-import { makeStyles } from "@saleor/macaw-ui";
+import { warehousePickupListLabel } from "@dashboard/warehouses/warehousePickupListLabel";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
-import { FormattedMessage } from "react-intl";
+import { type ReactNode } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-const useStyles = makeStyles(
-  theme => ({
-    [theme.breakpoints.up("lg")]: {
-      colActions: {
-        width: 160,
-      },
-      colName: {
-        width: 400,
-      },
-      colZones: {
-        width: "auto",
-      },
-    },
-    colName: {
-      paddingLeft: 0,
-    },
-    colZones: {
-      paddingLeft: 0,
-    },
-    tableRow: {
-      cursor: "pointer",
-    },
-  }),
-  { name: "WarehouseList" },
-);
+import styles from "./WarehouseList.module.css";
+
+export type WarehouseListSecondaryColumn = "loading" | "zones" | "pickup";
 
 interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortField> {
   warehouses: WarehouseWithShippingFragment[] | undefined;
   onRemove: (id: string | undefined) => void;
+  /**
+   * Direct stock mode shows pickup. Legacy mode shows shipping zones.
+   * Loading keeps the cell empty until the shop setting is known.
+   */
+  secondaryColumn?: WarehouseListSecondaryColumn;
   /** Optional search configuration */
   search?: {
     placeholder?: string;
@@ -56,10 +41,19 @@ interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortFie
 }
 
 const numberOfColumns = 3;
-const WarehouseList = (props: WarehouseListProps) => {
-  const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort, search } =
-    props;
-  const classes = useStyles(props);
+
+export const WarehouseList = ({
+  warehouses,
+  disabled,
+  settings,
+  sort,
+  onUpdateListSettings,
+  onRemove,
+  onSort,
+  search,
+  secondaryColumn = "zones",
+}: WarehouseListProps): ReactNode => {
+  const intl = useIntl();
   const location = useLocation();
 
   return (
@@ -83,13 +77,19 @@ const WarehouseList = (props: WarehouseListProps) => {
                 : undefined
             }
             arrowPosition="right"
-            className={classes.colName}
+            className={styles.colName}
             onClick={() => onSort(WarehouseListUrlSortField.name)}
           >
             <FormattedMessage id="aCJwVq" defaultMessage="Name" description="warehouse" />
           </TableCellHeader>
-          <TableCell className={classes.colZones}>
-            <FormattedMessage id="PFXGaR" defaultMessage="Shipping Zones" />
+          <TableCell className={styles.colSecondary}>
+            {secondaryColumn === "loading" ? (
+              <Skeleton __width="5rem" __height="1rem" />
+            ) : secondaryColumn === "pickup" ? (
+              <FormattedMessage {...messages.pickupColumn} />
+            ) : (
+              <FormattedMessage {...messages.shippingZonesColumn} />
+            )}
           </TableCell>
           <TableCell />
         </TableRowLink>
@@ -107,19 +107,21 @@ const WarehouseList = (props: WarehouseListProps) => {
                     }
                   : undefined
               }
-              className={classes.tableRow}
+              className={styles.tableRow}
               hover={!!warehouse}
               key={warehouse ? warehouse.id : "skeleton"}
               data-test-id={"warehouse-entry-" + warehouse?.name.toLowerCase().replace(" ", "")}
             >
-              <TableCell className={classes.colName} data-test-id="name">
+              <TableCell className={styles.colName} data-test-id="name">
                 {warehouse?.name ?? <Skeleton />}
               </TableCell>
-              <TableCell className={classes.colZones} data-test-id="zones">
-                {warehouse?.shippingZones === undefined ? (
+              <TableCell className={styles.colSecondary} data-test-id="zones">
+                {secondaryColumn === "loading" || warehouse === undefined ? (
                   <Skeleton />
+                ) : secondaryColumn === "pickup" ? (
+                  intl.formatMessage(warehousePickupListLabel(warehouse.clickAndCollectOption))
                 ) : (
-                  mapEdgesToItems(warehouse?.shippingZones)
+                  mapEdgesToItems(warehouse.shippingZones)
                     ?.map(({ name }) => name)
                     .join(", ") || "-"
                 )}
@@ -153,4 +155,3 @@ const WarehouseList = (props: WarehouseListProps) => {
 };
 
 WarehouseList.displayName = "WarehouseList";
-export default WarehouseList;
