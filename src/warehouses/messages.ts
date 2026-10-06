@@ -100,35 +100,10 @@ export const messages = defineMessages({
       "Shown when the items are in stock across your locations. You may need to move items here before the customer collects them.",
     description: "warehouse pickup option",
   },
-  pickupBadgeOff: {
-    id: "ic/2AC",
-    defaultMessage: "No pickup",
-    description: "warehouse list pickup badge",
-  },
-  pickupBadgeLocal: {
-    id: "QMFugC",
-    defaultMessage: "Stock here",
-    description: "warehouse list pickup badge",
-  },
-  pickupBadgeAll: {
-    id: "6CAZq9",
-    defaultMessage: "Any location",
-    description: "warehouse list pickup badge",
-  },
-  pickupColumn: {
-    id: "MkSjwz",
+  listPickup: {
+    id: "AgdhYN",
     defaultMessage: "Pickup",
-    description: "warehouse list column",
-  },
-  shippingZonesColumn: {
-    id: "jXhzZZ",
-    defaultMessage: "Shipping zones",
-    description: "warehouse list column",
-  },
-  stockTitle: {
-    id: "YGJ0DV",
-    defaultMessage: "Stock",
-    description: "warehouse stock card title",
+    description: "orders list tag: order is picked up by the customer at a warehouse",
   },
   deleteImpactNoStock: {
     id: "NzJP2L",
@@ -171,14 +146,9 @@ export const messages = defineMessages({
     description: "warehouse delete dialog when the channel count is unknown",
   },
   stockCount: {
-    id: "6WOT1a",
+    id: "gEE2kY",
     defaultMessage: "{count, plural, one {# stock record} other {# stock records}}",
-    description: "warehouse stock card count",
-  },
-  stockDescription: {
-    id: "2/pQef",
-    defaultMessage: "Quantities are edited on each product.",
-    description: "warehouse stock card description",
+    description: "warehouse header stock count",
   },
   zonesTitle: {
     id: "SdsAmY",
@@ -191,9 +161,8 @@ export const messages = defineMessages({
     description: "warehouse shipping zones intro in direct stock mode",
   },
   zonesLegacyIntro: {
-    id: "hcJTex",
-    defaultMessage:
-      "Stock here counts only for countries in these zones. Manage the links on each shipping zone.",
+    id: "Qjj96A",
+    defaultMessage: "Stock here counts only for countries in these zones.",
     description: "warehouse shipping zones intro in legacy stock mode",
   },
   zonesMore: {
@@ -207,10 +176,35 @@ export const messages = defineMessages({
     description: "warehouse shipping zones when the location has no channel",
   },
   zonesNeedZone: {
-    id: "++xw7m",
+    id: "aDfpGM",
     defaultMessage:
-      "Customers in a country can only buy this stock once a shipping zone in {channels} covers it. Link the zone from <zonesLink>shipping zones</zonesLink>.",
+      "Customers in a country can only buy this stock once a shipping zone in {channels} covers it.",
     description: "warehouse shipping zones when a channel exists but no zone is linked",
+  },
+  zonesEmptyTitle: {
+    id: "c5zCMP",
+    defaultMessage: "No shipping zone",
+    description: "warehouse shipping zones empty state title",
+  },
+  zonesRemove: {
+    id: "tJX2cD",
+    defaultMessage: "Remove shipping zone",
+    description: "warehouse shipping zones row remove label",
+  },
+  zonesEmptyDescription: {
+    id: "aLEM/w",
+    defaultMessage: "Add a shipping zone that shares this location's channel.",
+    description: "warehouse shipping zones empty state",
+  },
+  zonesAssigned: {
+    id: "eS57y+",
+    defaultMessage: "Shipping zones updated",
+    description: "warehouse shipping zones assign success",
+  },
+  zonesAssignFailed: {
+    id: "y1Cpsv",
+    defaultMessage: "Could not update every shipping zone",
+    description: "warehouse shipping zones assign partial or failed",
   },
   zonesPickupWithoutZone: {
     id: "0YT3cW",
@@ -226,6 +220,16 @@ export const messages = defineMessages({
     id: "hDrMCW",
     defaultMessage: "Shipping zones are linked from each shipping zone.",
     description: "warehouse shipping zones when channel membership could not be loaded",
+  },
+  listPlaceColumn: {
+    id: "rBEb3x",
+    defaultMessage: "Address",
+    description: "warehouse list column",
+  },
+  listPlace: {
+    id: "HO81c6",
+    defaultMessage: "{city}, {country}",
+    description: "warehouse list place, city then country",
   },
   channelsTitle: {
     id: "X9B8LO",
@@ -261,6 +265,11 @@ export const messages = defineMessages({
     id: "ZFqgI5",
     defaultMessage: "Add",
     description: "warehouse channels assign button",
+  },
+  channelsAllAssigned: {
+    id: "6ZfDCV",
+    defaultMessage: "All channels are assigned.",
+    description: "warehouse channels footer when every channel already includes this location",
   },
   channelsAddTitle: {
     id: "YkKWif",
@@ -377,6 +386,56 @@ export const messages = defineMessages({
     id: "XUIYhJ",
     defaultMessage: "Needs permission to manage channels",
     description: "warehouse setup task when the user cannot assign channels",
+  },
+  setupReviewTitle: {
+    id: "9Czafv",
+    defaultMessage: "Worth reviewing",
+    description: "setup checklist optional section title",
+  },
+  setupReviewSubtitle: {
+    id: "0FU+SF",
+    defaultMessage: "Stock in a country still needs a shipping zone that shares a channel.",
+    description: "warehouse setup review section in the older stock mode",
+  },
+  setupReviewZonesDescription: {
+    id: "i9nHR2",
+    defaultMessage: "Customers in a country can buy this stock once a shipping zone covers it.",
+    description: "warehouse setup review row for shipping zones",
+  },
+  setupReviewZonesNone: {
+    id: "UV97Yb",
+    defaultMessage: "No shipping zone",
+    description: "warehouse setup review status when no zone is linked",
+  },
+  setupReviewZonesOne: {
+    id: "36Jt9G",
+    defaultMessage: "1 zone",
+    description: "warehouse setup review status for one shipping zone",
+  },
+  setupReviewZonesCount: {
+    id: "nNwacI",
+    defaultMessage: "{count} zones",
+    description: "warehouse setup review status when zones are linked",
+  },
+  setupNextUpDone: {
+    id: "0hCh0t",
+    defaultMessage: "Required steps are complete.",
+    description: "footer when warehouse and shipping are done",
+  },
+  setupDismiss: {
+    id: "O6C+2E",
+    defaultMessage: "Skip for now",
+    description: "dismiss setup checklist while required steps remain",
+  },
+  setupDismissComplete: {
+    id: "IrwpKJ",
+    defaultMessage: "Dismiss",
+    description: "dismiss setup checklist after required steps are done",
+  },
+  showSetupChecklist: {
+    id: "ZM3Rt9",
+    defaultMessage: "Show setup checklist",
+    description: "warehouse detail menu, reopens the setup checklist after dismiss",
   },
   setupNextUp: {
     id: "Gm3fGD",

@@ -32,16 +32,15 @@ import { messages } from "@dashboard/warehouses/messages";
 import { isPrivateForPickupOption } from "@dashboard/warehouses/pickupOptionAfterPrivateChange";
 import { defaultGraphiQLQuery } from "@dashboard/warehouses/queries";
 import { warehouseListPath } from "@dashboard/warehouses/urls";
-import { Box } from "@saleor/macaw-ui-next";
-import { Trash2 } from "lucide-react";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { ListChecks, Trash2 } from "lucide-react";
 import { type ReactNode, useCallback, useMemo } from "react";
-import { type IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import { WarehouseAddressCard } from "../WarehouseAddressCard/WarehouseAddressCard";
 import { WarehouseInfo } from "../WarehouseInfo/WarehouseInfo";
 import { WarehousePickupCard } from "../WarehousePickupCard/WarehousePickupCard";
 import { WarehouseShippingZonesCard } from "../WarehouseShippingZonesCard/WarehouseShippingZonesCard";
-import { WarehouseStockCard } from "../WarehouseStockCard/WarehouseStockCard";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
@@ -68,8 +67,13 @@ interface WarehouseDetailsPageProps {
   membershipStatus: "loading" | "error" | "ready";
   warehouseChannelIds: string[];
   channelNames: string[];
+  canManageShippingZones: boolean;
+  shippingZonesDisabled?: boolean;
+  onRequestAssignZones: () => void;
+  onRemoveShippingZone: (zoneId: string) => void;
   onDelete: () => void;
   onShowMetadata: () => void;
+  onShowSetupChecklist?: () => void;
   onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
 
@@ -98,11 +102,13 @@ const warehouseMenuItems = ({
   warehouseId,
   onDelete,
   onOpenPlayground,
+  onShowSetupChecklist,
 }: {
   intl: IntlShape;
   warehouseId: string | undefined;
   onDelete: () => void;
   onOpenPlayground: () => void;
+  onShowSetupChecklist?: () => void;
 }): TopNavMenuItem[] => {
   if (!warehouseId) {
     return [];
@@ -115,11 +121,21 @@ const warehouseMenuItems = ({
       testId: "graphiql-redirect",
       icon: <GraphqlIcon />,
     },
+    ...(onShowSetupChecklist
+      ? [
+          {
+            label: intl.formatMessage(messages.showSetupChecklist),
+            onSelect: onShowSetupChecklist,
+            testId: "show-setup-checklist",
+            icon: <ListChecks size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          },
+        ]
+      : []),
     {
       label: intl.formatMessage(messages.deleteWarehouse),
       onSelect: onDelete,
       testId: "delete-warehouse",
-      color: "critical1",
+      color: "critical1" as const,
       icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
     },
   ];
@@ -140,8 +156,13 @@ export const WarehouseDetailsPage = ({
   membershipStatus,
   warehouseChannelIds,
   channelNames,
+  canManageShippingZones,
+  shippingZonesDisabled,
+  onRequestAssignZones,
+  onRemoveShippingZone,
   onDelete,
   onShowMetadata,
+  onShowSetupChecklist,
   onSubmit,
 }: WarehouseDetailsPageProps): ReactNode => {
   const intl = useIntl();
@@ -167,8 +188,9 @@ export const WarehouseDetailsPage = ({
         warehouseId: warehouse?.id,
         onDelete,
         onOpenPlayground: openPlaygroundURL,
+        onShowSetupChecklist,
       }),
-    [intl, onDelete, openPlaygroundURL, warehouse?.id],
+    [intl, onDelete, onShowSetupChecklist, openPlaygroundURL, warehouse?.id],
   );
   const zones = (mapEdgesToItems(warehouse?.shippingZones) ?? []).map(zone => ({
     id: zone.id,
@@ -201,6 +223,10 @@ export const WarehouseDetailsPage = ({
           membershipStatus={membershipStatus}
           warehouseChannelIds={warehouseChannelIds}
           channelNames={channelNames}
+          canManageShippingZones={canManageShippingZones}
+          shippingZonesDisabled={shippingZonesDisabled}
+          onRequestAssignZones={onRequestAssignZones}
+          onRemoveShippingZone={onRemoveShippingZone}
           submit={formData.submit}
           validationErrors={validationErrors}
           warehouse={warehouse}
@@ -236,6 +262,10 @@ interface WarehouseDetailsFormProps {
   membershipStatus: "loading" | "error" | "ready";
   warehouseChannelIds: string[];
   channelNames: string[];
+  canManageShippingZones: boolean;
+  shippingZonesDisabled?: boolean;
+  onRequestAssignZones: () => void;
+  onRemoveShippingZone: (zoneId: string) => void;
   submit: UseFormResult<WarehouseDetailsPageFormData>["submit"];
   validationErrors: AccountErrorFragment[];
   warehouse: WarehouseDetailsFragment | undefined;
@@ -267,6 +297,10 @@ const WarehouseDetailsForm = ({
   membershipStatus,
   warehouseChannelIds,
   channelNames,
+  canManageShippingZones,
+  shippingZonesDisabled,
+  onRequestAssignZones,
+  onRemoveShippingZone,
   submit,
   validationErrors,
   warehouse,
@@ -283,6 +317,19 @@ const WarehouseDetailsForm = ({
     countryChoices,
   );
   const handleCountrySelect = createCountryHandler(countrySelect, set);
+  const stockMeta = stockCountLoading ? (
+    <Skeleton __width="6rem" __height="1rem" />
+  ) : stockCount !== null ? (
+    <Text
+      color="default2"
+      fontSize={2}
+      __whiteSpace="nowrap"
+      data-test-id="warehouse-stock-count"
+      display={{ mobile: "none", tablet: "block", desktop: "block" }}
+    >
+      <FormattedMessage {...messages.stockCount} values={{ count: stockCount }} />
+    </Text>
+  ) : null;
 
   return (
     <DetailPageLayout>
@@ -290,8 +337,24 @@ const WarehouseDetailsForm = ({
         href={warehouseListBackLink}
         hrefIcon={<TopNavDestinationIcon.warehouses />}
         hrefTitle={intl.formatMessage(topNavDestinationMessages.allWarehouses)}
-        title={warehouse?.name}
-        subtitle={channelSubtitle ?? undefined}
+        title={
+          warehouse?.name ? (
+            <Box display="flex" alignItems="center" gap={2} flexWrap="nowrap" __minWidth="0">
+              <Box
+                title={warehouse.name}
+                __maxWidth="320px"
+                __overflow="hidden"
+                __textOverflow="ellipsis"
+                __whiteSpace="nowrap"
+                __minWidth="0"
+              >
+                {warehouse.name}
+              </Box>
+              {channelSubtitle}
+              {stockMeta}
+            </Box>
+          ) : null
+        }
         actionsGap={3}
       >
         <TopNav.MetadataButton
@@ -343,7 +406,6 @@ const WarehouseDetailsForm = ({
       <DetailPageLayout.RightSidebar paddingTop={6}>
         <Box display="flex" flexDirection="column" gap={4}>
           {channelsCard}
-          <WarehouseStockCard count={stockCount} loading={stockCountLoading} />
           <WarehouseShippingZonesCard
             legacyStockAvailability={legacyStockAvailability}
             zones={zones}
@@ -355,6 +417,10 @@ const WarehouseDetailsForm = ({
             pickupEnabled={
               data.clickAndCollectOption !== WarehouseClickAndCollectOptionEnum.DISABLED
             }
+            canManage={canManageShippingZones}
+            disabled={shippingZonesDisabled}
+            onRequestAssign={onRequestAssignZones}
+            onRemove={onRemoveShippingZone}
           />
         </Box>
       </DetailPageLayout.RightSidebar>

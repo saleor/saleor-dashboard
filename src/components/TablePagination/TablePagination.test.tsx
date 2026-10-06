@@ -47,17 +47,27 @@ describe("TablePagination", () => {
     expect(screen.getByText("20")).toBeInTheDocument();
   });
 
-  it("disables navigation based on hasNextPage/hasPreviousPage flags", () => {
+  it("hides pagination when this is the only page", () => {
     // Arrange
+    const settings: ListSettings = {
+      rowNumber: 20,
+    };
+
     render(
       <Wrapper>
-        <TablePagination {...defaultProps} hasNextPage={false} hasPreviousPage={false} />
+        <TablePagination
+          {...defaultProps}
+          settings={settings}
+          hasNextPage={false}
+          hasPreviousPage={false}
+        />
       </Wrapper>,
     );
 
     // Assert
-    expect(screen.getByTestId("button-pagination-back")).toBeDisabled();
-    expect(screen.getByTestId("button-pagination-next")).toBeDisabled();
+    expect(screen.queryByTestId("button-pagination-back")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("button-pagination-next")).not.toBeInTheDocument();
+    expect(screen.queryByText("No. of rows")).not.toBeInTheDocument();
   });
 
   it("uses custom labels for row number selector", () => {

@@ -9,6 +9,7 @@ const renderCard = (
     status: "loading" | "error" | "ready";
     channels: Array<{ id: string; name: string }>;
     canManage: boolean;
+    availableChannels: Array<{ id: string; name: string }>;
   }> = {},
 ): ReturnType<typeof render> =>
   render(
@@ -17,7 +18,7 @@ const renderCard = (
         <WarehouseChannelsCard
           status={props.status ?? "ready"}
           channels={props.channels ?? []}
-          availableChannels={[{ id: "ch-eu", name: "Europe" }]}
+          availableChannels={props.availableChannels ?? [{ id: "ch-eu", name: "Europe" }]}
           canManage={props.canManage ?? true}
           disabled={false}
           onRetry={jest.fn()}
@@ -57,6 +58,21 @@ describe("WarehouseChannelsCard", () => {
     // Assert
     expect(screen.queryByTestId("warehouse-channels-add")).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Remove from Europe" })).not.toBeInTheDocument();
+    expect(screen.getByText("Needs permission to manage channels")).toBeInTheDocument();
+  });
+
+  it("keeps the footer when every channel is already assigned", () => {
+    // Arrange
+    renderCard({
+      channels: [{ id: "ch-eu", name: "Europe" }],
+      availableChannels: [],
+    });
+
+    // Assert
+    expect(screen.queryByTestId("warehouse-channels-add")).not.toBeInTheDocument();
+    expect(screen.getByTestId("warehouse-channels-footer")).toHaveTextContent(
+      "All channels are assigned.",
+    );
   });
 
   it("does not claim the location is outside every channel when channels failed to load", () => {

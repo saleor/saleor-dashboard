@@ -11,12 +11,13 @@ import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHead
 import { type AddressTypeInput } from "@dashboard/customers/types";
 import { type CountryFragment, type WarehouseErrorFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { transformFormToAddressInput } from "@dashboard/misc";
+import { getFieldError } from "@dashboard/utils/errors";
+import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { Box, Input } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -52,11 +53,20 @@ export const CreateWarehouseDialog = ({
 }: CreateWarehouseDialogProps): ReactNode => {
   const intl = useIntl();
   const [submitErrors, setSubmitErrors] = useState<WarehouseErrorFragment[]>([]);
-  const [formKey, setFormKey] = useState(0);
+  const [wasOpen, setWasOpen] = useState(open);
   const countryChoices = useMemo(() => mapCountriesToChoices(countries || []), [countries]);
   const defaultCountryLabel =
     countries.find(country => country.code === defaultCountryCode)?.country || "";
   const [displayCountry, setDisplayCountry] = useStateFromProps(defaultCountryLabel);
+
+  if (open !== wasOpen) {
+    setWasOpen(open);
+
+    if (open) {
+      setSubmitErrors([]);
+      setDisplayCountry(defaultCountryLabel);
+    }
+  }
 
   const initialForm: CreateWarehouseFormData = {
     name: "",
@@ -70,15 +80,6 @@ export const CreateWarehouseDialog = ({
     countryArea: "",
     phone: "",
   };
-
-  useModalDialogOpen(open, {
-    onClose: () => setSubmitErrors([]),
-    onOpen: () => {
-      setSubmitErrors([]);
-      setFormKey(current => current + 1);
-      setDisplayCountry(defaultCountryLabel);
-    },
-  });
 
   const displayedErrors = [...apiErrors, ...submitErrors];
 
@@ -94,7 +95,7 @@ export const CreateWarehouseDialog = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       {open ? (
-        <Form key={formKey} initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
+        <Form initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
           {({ change, data, set, submit }) => {
             const countrySelect = createSingleAutocompleteSelectHandler(
               change,
@@ -102,6 +103,21 @@ export const CreateWarehouseDialog = ({
               countryChoices,
             );
             const handleCountrySelect = createCountryHandler(countrySelect, set);
+            const nameError = getFieldError(displayedErrors, "name");
+            const formLevelErrors = displayedErrors.filter(
+              error =>
+                error.field !== "name" &&
+                ![
+                  "companyName",
+                  "streetAddress1",
+                  "streetAddress2",
+                  "city",
+                  "postalCode",
+                  "country",
+                  "countryArea",
+                  "phone",
+                ].includes(error.field ?? ""),
+            );
             const title = <FormattedMessage {...messages.title} />;
             const description = (
               <FormattedMessage
@@ -130,12 +146,24 @@ export const CreateWarehouseDialog = ({
                 <DashboardModal.Body>
                   <DashboardModal.Inset>
                     <Box display="flex" flexDirection="column" gap={5}>
+                      {formLevelErrors.map(error => (
+                        <Text
+                          key={`${error.field ?? "form"}-${error.code}-${error.message}`}
+                          size={3}
+                          color="critical1"
+                          data-test-id="create-warehouse-form-error"
+                        >
+                          {getWarehouseErrorMessage(error, intl)}
+                        </Text>
+                      ))}
                       <Input
                         name="name"
                         label={intl.formatMessage(messages.name)}
                         value={data.name}
                         onChange={change}
                         disabled={disabled}
+                        error={!!nameError}
+                        helperText={getWarehouseErrorMessage(nameError, intl)}
                         data-test-id="warehouse-name-input"
                       />
 

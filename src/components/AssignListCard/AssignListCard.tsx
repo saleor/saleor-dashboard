@@ -29,6 +29,8 @@ interface AssignListCardProps {
   emptyState: AssignListCardEmptyState;
   footerAction?: ReactNode;
   onRemoveItem: (id: string) => void;
+  /** Hides the row remove control when the user cannot edit the list. */
+  removable?: boolean;
   /** Tooltip / aria-label on the row trash control. */
   removeLabel?: string;
   disabled?: boolean;
@@ -52,6 +54,7 @@ export const AssignListCard = ({
   emptyState,
   footerAction,
   onRemoveItem,
+  removable = true,
   removeLabel,
   disabled = false,
   loading = false,
@@ -146,14 +149,16 @@ export const AssignListCard = ({
                     ) : null}
                   </Box>
                 </Box>
-                <div className={styles.rowDelete}>
-                  <DeletableItem
-                    id={item.id}
-                    onDelete={onRemoveItem}
-                    disabled={disabled}
-                    label={removeLabel}
-                  />
-                </div>
+                {removable ? (
+                  <div className={styles.rowDelete}>
+                    <DeletableItem
+                      id={item.id}
+                      onDelete={onRemoveItem}
+                      disabled={disabled}
+                      label={removeLabel}
+                    />
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

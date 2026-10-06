@@ -1,21 +1,19 @@
-.colName {
-  padding-left: 0;
-}
-
-.colSecondary {
-  padding-left: 0;
-}
-
 .tableRow {
   cursor: pointer;
 }
 
-@media (min-width: 1024px) {
-  .colName {
-    width: 400px;
-  }
+.colPickup {
+  width: 120px;
+}
 
-  .colSecondary {
-    width: auto;
-  }
+/*
+ * Match the row’s vertical inset around the trash icon.
+ * Doubled class + :last-child beats ResponsiveTable’s
+ * `.table td:last-child { padding-right: 4px }` (see ChannelsListPage).
+ */
+td.colAction.colAction:last-child,
+th.colAction.colAction:last-child {
+  width: 48px;
+  text-align: right;
+  padding-right: var(--mu-spacing-3) !important;
 }

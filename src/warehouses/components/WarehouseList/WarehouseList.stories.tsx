@@ -14,6 +14,9 @@ const meta: Meta<typeof WarehouseList> = {
     ...sortPageProps,
     sort: { ...sortPageProps.sort, sort: WarehouseListUrlSortField.name },
     warehouses: warehouseList,
+    membership: "ready",
+    channelsByWarehouseId: {},
+    legacyStockAvailability: false,
     onRemove: fn(),
   },
 };

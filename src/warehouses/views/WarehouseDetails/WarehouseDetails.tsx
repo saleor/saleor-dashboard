@@ -1,4 +1,5 @@
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
@@ -18,6 +19,7 @@ import {
   getMutationStatus,
   getStringOrPlaceholder,
 } from "@dashboard/misc";
+import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
@@ -27,6 +29,8 @@ import {
 } from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPage";
 import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
 import { useWarehouseDetailsChannels } from "@dashboard/warehouses/hooks/useWarehouseDetailsChannels";
+import { useWarehouseSetupChecklistDismiss } from "@dashboard/warehouses/hooks/useWarehouseSetupChecklistDismiss";
+import { useWarehouseShippingZoneAssignment } from "@dashboard/warehouses/hooks/useWarehouseShippingZoneAssignment";
 import {
   warehouseListUrl,
   warehouseUrl,
@@ -43,20 +47,46 @@ interface WarehouseDetailsProps {
 const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const { trackEvent } = useAnalytics();
+  const { dismiss: dismissChecklist, undismiss: undismissChecklist } =
+    useWarehouseSetupChecklistDismiss(id);
   const notify = useNotifier();
   const shop = useShop();
-  const { data, loading } = useWarehouseDetailsQuery({
+  const { data, loading, refetch } = useWarehouseDetailsQuery({
     displayLoader: true,
     variables: { id },
   });
   const { legacyStockAvailability, stockCount, stockCountLoading } =
     useWarehouseDetailsSideData(id);
   const shippingZones = warehouseZoneMemberships(data?.warehouse?.shippingZones);
+  const [openModal, closeModal] = createDialogActionHandlers(
+    navigate,
+    params => warehouseUrl(id, params),
+    params,
+  );
   const channels = useWarehouseDetailsChannels({
     warehouseId: id,
     legacyStockAvailability,
     zones: shippingZones.zones,
     zonesTruncated: shippingZones.truncated,
+    zoneCount: data?.warehouse?.shippingZones?.totalCount ?? shippingZones.zones.length,
+    checklistEmphasized: !!data?.warehouse && params.action === "setup",
+    onDismissChecklist: channelCount => {
+      dismissChecklist(channelCount);
+
+      if (params.action === "setup") {
+        closeModal();
+      }
+    },
+    onOpenShippingZones: () => navigate(shippingZonesListUrl()),
+  });
+  const zoneAssignment = useWarehouseShippingZoneAssignment({
+    warehouseId: id,
+    channelIds: channels.warehouseChannelIds,
+    assignedZoneIds: shippingZones.zones.map(zone => zone.id),
+    onChanged: async () => {
+      await refetch();
+    },
   });
   const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation({
     onCompleted: data => {
@@ -81,11 +111,6 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
     },
   });
   const deleteWarehouseTransitionState = getMutationStatus(deleteWarehouseOpts);
-  const [openModal, closeModal] = createDialogActionHandlers(
-    navigate,
-    params => warehouseUrl(id, params),
-    params,
-  );
 
   if (data?.warehouse === null) {
     return <NotFoundPage onBack={() => navigate(warehouseListUrl())} />;
@@ -135,10 +160,24 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
         membershipStatus={channels.status}
         warehouseChannelIds={channels.warehouseChannelIds}
         channelNames={channels.channelNames}
+        canManageShippingZones={zoneAssignment.canManage}
+        shippingZonesDisabled={zoneAssignment.busy}
+        onRequestAssignZones={zoneAssignment.openAssign}
+        onRemoveShippingZone={zoneAssignment.remove}
         onDelete={() => openModal("delete")}
         onShowMetadata={() => openModal("view-warehouse-metadata")}
+        onShowSetupChecklist={
+          data?.warehouse && channels.status === "ready" && !channels.checklistVisible
+            ? () => {
+                trackEvent("setup_checklist_reopened", { entity_type: "warehouse" });
+                undismissChecklist();
+                openModal("setup");
+              }
+            : undefined
+        }
         onSubmit={handleSubmit}
       />
+      {zoneAssignment.dialog}
       <WarehouseDeleteDialog
         confirmButtonState={deleteWarehouseTransitionState}
         name={getStringOrPlaceholder(data?.warehouse?.name)}

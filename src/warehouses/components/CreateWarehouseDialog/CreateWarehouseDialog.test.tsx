@@ -1,5 +1,7 @@
+import { WarehouseErrorCode } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { CreateWarehouseDialog } from "./CreateWarehouseDialog";
 
@@ -29,6 +31,39 @@ describe("CreateWarehouseDialog", () => {
       screen.getByText("Add it to a channel on the next page so its stock can be sold."),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Create" })).toBeInTheDocument();
+  });
+
+  it("shows a create failure in the dialog", async () => {
+    // Arrange
+    render(
+      <Wrapper>
+        <CreateWarehouseDialog
+          open
+          confirmButtonState="default"
+          countries={[{ code: "PL", country: "Poland", __typename: "CountryDisplay" }]}
+          defaultCountryCode="PL"
+          errors={[]}
+          onClose={jest.fn()}
+          onSubmit={async () => [
+            {
+              __typename: "WarehouseError",
+              code: WarehouseErrorCode.INVALID,
+              field: null,
+              message: "Could not create the warehouse.",
+            },
+          ]}
+        />
+      </Wrapper>,
+    );
+
+    // Act
+    await userEvent.type(screen.getByTestId("warehouse-name-input"), "Europe");
+    await userEvent.click(screen.getByTestId("submit"));
+
+    // Assert
+    expect(await screen.findByTestId("create-warehouse-form-error")).toHaveTextContent(
+      "Could not create the warehouse.",
+    );
   });
 
   it("does not submit until the location has a country", () => {

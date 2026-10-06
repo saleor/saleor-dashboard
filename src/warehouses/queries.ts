@@ -99,6 +99,27 @@ export const warehouseSharesChannels = gql`
   }
 `;
 
+export const warehouseShippingZonesToAssign = gql`
+  query WarehouseShippingZonesToAssign(
+    $filter: ShippingZoneFilterInput
+    $first: Int!
+    $after: String
+  ) {
+    shippingZones(first: $first, after: $after, filter: $filter) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
+
 export const warehouseStockAvailabilityMode = gql`
   query WarehouseStockAvailabilityMode {
     shop {

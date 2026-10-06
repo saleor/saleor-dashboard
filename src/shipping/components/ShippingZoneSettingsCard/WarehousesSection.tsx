@@ -1,7 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { Multiselect } from "@dashboard/components/Combobox/components/Multiselect";
-import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { type WarehouseChoice } from "@dashboard/shipping/warehouseEligibility";
 import { type FetchMoreProps, type SearchProps } from "@dashboard/types";
@@ -9,27 +8,29 @@ import { warehouseUrl } from "@dashboard/warehouses/urls";
 import { Box, Button, type Option, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type ReactElement } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 const messages = defineMessages({
   directSubtitle: {
-    id: "N/hLIR",
+    id: "T8FKZK",
     defaultMessage:
-      "Linking locations doesn't change which stock is available in your store. Apps can read it.",
+      "Linking warehouses doesn't change which stock is available in your store. Apps can read it.",
     description: "shipping zone warehouses in the default stock mode",
   },
   legacySubtitle: {
-    id: "INSpAx",
-    defaultMessage: "Stock in these locations can be bought by customers in this zone's countries.",
+    id: "XnUWjR",
+    defaultMessage:
+      "Stock in these warehouses can be bought by customers in this zone's countries.",
     description: "shipping zone warehouses in the older stock mode",
   },
   collapsed: {
-    id: "0kqLrq",
-    defaultMessage: "Linking a location doesn't change which stock is available.",
+    id: "JW+A2b",
+    defaultMessage: "Linking a warehouse doesn't change which stock is available.",
     description: "shipping zone warehouses collapsed in the default stock mode",
   },
   addLocation: {
-    id: "lXiks/",
-    defaultMessage: "Add a location",
+    id: "RBCyrU",
+    defaultMessage: "Add a warehouse",
     description: "shipping zone warehouses expand control",
   },
   selectFieldLabel: {
@@ -38,24 +39,14 @@ const messages = defineMessages({
     description: "WarehousesSection select field label",
   },
   ineligibleIntro: {
-    id: "1CXcI7",
-    defaultMessage: "These locations aren't in this zone's channels, so they can't be linked yet.",
+    id: "88iCr+",
+    defaultMessage: "These warehouses aren't in this zone's channels, so they can't be linked yet.",
     description: "shipping zone warehouses that share no channel",
-  },
-  notInChannels: {
-    id: "Arrv6m",
-    defaultMessage: "Not in {channels}",
-    description: "shipping zone warehouse missing the zone's channels",
   },
   addChannelFirst: {
     id: "WrQB8Z",
     defaultMessage: "Add a channel above first.",
     description: "shipping zone warehouse when the zone has no channel",
-  },
-  openChannels: {
-    id: "0AVqMM",
-    defaultMessage: "Channels",
-    description: "link to the warehouse channels card",
   },
 });
 
@@ -137,35 +128,32 @@ const WarehousesSection = ({
       />
 
       {ineligibleWarehouses.length > 0 ? (
-        <Box display="flex" flexDirection="column" gap={2} marginTop={4}>
+        <Box display="flex" flexDirection="column" gap={3} marginTop={4}>
           <DashboardCard.Subtitle fontSize={3} color="default2">
-            <FormattedMessage {...messages.ineligibleIntro} />
+            <FormattedMessage
+              {...(channelNames ? messages.ineligibleIntro : messages.addChannelFirst)}
+            />
           </DashboardCard.Subtitle>
-          {ineligibleWarehouses.map(warehouse => (
-            <Box
-              key={warehouse.id}
-              display="flex"
-              flexWrap="wrap"
-              alignItems="baseline"
-              gap={2}
-              data-test-id="shipping-zone-ineligible-warehouse"
-            >
-              <Text size={3}>{warehouse.name}</Text>
-              <Text size={2} color="default2">
-                {channelNames ? (
-                  <FormattedMessage
-                    {...messages.notInChannels}
-                    values={{ channels: channelNames }}
-                  />
-                ) : (
-                  <FormattedMessage {...messages.addChannelFirst} />
-                )}
-              </Text>
-              <MicrocopyLink to={`${warehouseUrl(warehouse.id)}#warehouse-channels`}>
-                <FormattedMessage {...messages.openChannels} />
-              </MicrocopyLink>
-            </Box>
-          ))}
+          {channelNames
+            ? ineligibleWarehouses.map(warehouse => (
+                <Link
+                  key={warehouse.id}
+                  to={`${warehouseUrl(warehouse.id)}#warehouse-channels`}
+                  style={{ textDecoration: "none" }}
+                  data-test-id="shipping-zone-ineligible-warehouse"
+                >
+                  <Text
+                    as="span"
+                    size={3}
+                    fontWeight="medium"
+                    color="default1"
+                    textDecoration={{ hover: "underline" }}
+                  >
+                    {warehouse.name}
+                  </Text>
+                </Link>
+              ))
+            : null}
         </Box>
       ) : null}
     </>

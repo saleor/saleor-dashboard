@@ -103,6 +103,11 @@
 
 .footer {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   padding: var(--mu-spacing-3) var(--mu-spacing-4) var(--mu-spacing-4);
+}
+
+.footerHint {
+  justify-content: flex-start;
 }

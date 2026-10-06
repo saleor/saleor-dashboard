@@ -18,11 +18,15 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { type WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
+import {
+  type WarehouseListChannel,
+  type WarehouseListMembership,
+} from "@dashboard/warehouses/warehouseListStatus";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WarehouseList, type WarehouseListSecondaryColumn } from "../WarehouseList/WarehouseList";
+import { WarehouseList } from "../WarehouseList/WarehouseList";
 
 interface WarehouseListPageProps
   extends PageListProps,
@@ -31,7 +35,9 @@ interface WarehouseListPageProps
     Omit<TabPageProps, "onTabDelete"> {
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
   warehouses: WarehouseWithShippingFragment[] | undefined;
-  secondaryColumn?: WarehouseListSecondaryColumn;
+  membership: WarehouseListMembership;
+  channelsByWarehouseId: Record<string, WarehouseListChannel[]>;
+  legacyStockAvailability: boolean | undefined;
   onAdd: () => void;
   onRemove: (id: string | undefined) => void;
   onTabUpdate: (tabName: string) => void;

@@ -8,6 +8,7 @@ import {
   useWarehouseDeleteMutation,
   useWarehouseListQuery,
   useWarehouseStockAvailabilityModeQuery,
+  WarehouseErrorCode,
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
@@ -33,8 +34,8 @@ import {
   type CreateWarehouseFormData,
 } from "@dashboard/warehouses/components/CreateWarehouseDialog/CreateWarehouseDialog";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
-import { type WarehouseListSecondaryColumn } from "@dashboard/warehouses/components/WarehouseList/WarehouseList";
 import WarehouseListPage from "@dashboard/warehouses/components/WarehouseListPage/WarehouseListPage";
+import { useWarehouseListMembership } from "@dashboard/warehouses/hooks/useWarehouseListMembership";
 import {
   warehouseListUrl,
   type WarehouseListUrlDialog,
@@ -180,13 +181,8 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
   });
 
   const handleSort = createSortHandler(navigate, warehouseListUrl, params);
-  const secondaryColumn: WarehouseListSecondaryColumn = stockModeQuery.loading
-    ? "loading"
-    : stockModeQuery.data?.shop?.useLegacyShippingZoneStockAvailability
-      ? "zones"
-      : stockModeQuery.data
-        ? "pickup"
-        : "zones";
+  const membership = useWarehouseListMembership();
+  const legacyStockAvailability = stockModeQuery.data?.shop?.useLegacyShippingZoneStockAvailability;
   const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation();
   const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
   const createTransitionState = getMutationStatus(createWarehouseOpts);
@@ -206,12 +202,14 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
         },
       });
     } catch {
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonMessages.somethingWentWrong),
-      });
-
-      return [];
+      return [
+        {
+          __typename: "WarehouseError",
+          code: WarehouseErrorCode.INVALID,
+          field: null,
+          message: intl.formatMessage(commonMessages.somethingWentWrong),
+        },
+      ];
     }
   };
 
@@ -233,7 +231,9 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
         onTabUpdate={onPresetUpdate}
         tabs={presets.map(tab => tab.name)}
         warehouses={mapEdgesToItems(data?.warehouses)}
-        secondaryColumn={secondaryColumn}
+        membership={membership.status}
+        channelsByWarehouseId={membership.channelsByWarehouseId}
+        legacyStockAvailability={legacyStockAvailability}
         settings={settings}
         disabled={loading}
         onAdd={() => openModal("create")}

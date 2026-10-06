@@ -4,6 +4,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { type WarehouseChannelRef } from "@dashboard/warehouses/hooks/useWarehouseChannelMembership";
 import { messages } from "@dashboard/warehouses/messages";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { Globe } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -130,7 +131,20 @@ export const WarehouseChannelsCard = ({
               </div>
             ))}
           </div>
-          {assignButton ? <Box className={styles.footer}>{assignButton}</Box> : null}
+          <Box
+            className={clsx(styles.footer, !assignButton && styles.footerHint)}
+            data-test-id="warehouse-channels-footer"
+          >
+            {assignButton ?? (
+              <Text size={2} color="default2">
+                {availableChannels.length === 0 ? (
+                  <FormattedMessage {...messages.channelsAllAssigned} />
+                ) : (
+                  <FormattedMessage {...messages.setupChannelPermission} />
+                )}
+              </Text>
+            )}
+          </Box>
         </>
       ) : null}
     </Box>

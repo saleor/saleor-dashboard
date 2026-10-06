@@ -12,6 +12,7 @@ import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import { type ListSettings } from "../../types";
+import { paginationHasAnotherPage } from "./paginationHasAnotherPage";
 
 export type ListSettingsUpdate = <T extends keyof ListSettings>(
   key: T,
@@ -60,6 +61,10 @@ export const TablePagination = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const Wrapper = component || TableCell;
+
+  if (!paginationHasAnotherPage(hasNextPage, hasPreviousPage)) {
+    return null;
+  }
 
   const handlers = {
     onPreviousPage: prevHref ? () => navigate(prevHref) : onPreviousPage,

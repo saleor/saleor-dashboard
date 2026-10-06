@@ -16,20 +16,30 @@ import { type ReactNode, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useWarehouseChannelMembership } from "./useWarehouseChannelMembership";
+import { isWarehouseSetupChecklistVisible } from "./useWarehouseSetupChecklistDismiss";
 
 export const useWarehouseDetailsChannels = ({
   warehouseId,
   legacyStockAvailability,
   zones,
   zonesTruncated,
+  zoneCount,
+  checklistEmphasized,
+  onDismissChecklist,
+  onOpenShippingZones,
 }: {
   warehouseId: string | undefined;
   legacyStockAvailability: boolean | undefined;
   zones: ZoneChannelMembership[];
   zonesTruncated: boolean;
+  zoneCount: number;
+  checklistEmphasized: boolean;
+  onDismissChecklist?: (channelCount: number) => void;
+  onOpenShippingZones?: () => void;
 }): {
   card: ReactNode;
   banner: ReactNode | null;
+  checklistVisible: boolean;
   subtitle: ReactNode | null;
   status: "loading" | "error" | "ready";
   warehouseChannelIds: string[];
@@ -95,7 +105,12 @@ export const useWarehouseDetailsChannels = ({
 
   const subtitle =
     membership.status === "ready" ? (
-      <Text size={2} color="default2" data-test-id="warehouse-channel-count">
+      <Text
+        color="default2"
+        fontSize={2}
+        __whiteSpace="nowrap"
+        data-test-id="warehouse-channel-count"
+      >
         {membership.channels.length === 0 ? (
           <FormattedMessage {...messages.channelsNotInChannel} />
         ) : (
@@ -107,15 +122,33 @@ export const useWarehouseDetailsChannels = ({
       </Text>
     ) : null;
 
+  const checklistVisible = isWarehouseSetupChecklistVisible({
+    membershipReady: membership.status === "ready",
+    inChannel: membership.channels.length > 0,
+    emphasized: checklistEmphasized,
+  });
+
   return {
     status: membership.status,
     warehouseChannelIds: membership.channels.map(channel => channel.id),
     channelNames: membership.channels.map(channel => channel.name),
     subtitle,
-    banner:
-      membership.status === "ready" && membership.channels.length === 0 ? (
-        <WarehouseSetupChecklist canManage={canManage} onAddChannel={() => setAssignOpen(true)} />
-      ) : null,
+    checklistVisible,
+    banner: checklistVisible ? (
+      <WarehouseSetupChecklist
+        canManage={canManage}
+        inChannel={membership.channels.length > 0}
+        showShippingZones={legacyStockAvailability === true}
+        zoneCount={zoneCount}
+        onAddChannel={() => setAssignOpen(true)}
+        onOpenShippingZones={onOpenShippingZones}
+        onDismiss={
+          onDismissChecklist && membership.channels.length > 0
+            ? (): void => onDismissChecklist(membership.channels.length)
+            : undefined
+        }
+      />
+    ) : null,
     card: (
       <>
         <WarehouseChannelsCard
