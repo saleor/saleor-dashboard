@@ -66,7 +66,7 @@ const EMPTY_CONTEXT: SearchActionContext = { view: null, params: {} };
  * otherwise `stringifyQs` encodes them a second time and apps receive an id the API
  * rejects. Falls back to the raw value for malformed sequences, which would throw.
  */
-const decodeId = (id: string): string => {
+export const decodeId = (id: string): string => {
   try {
     return decodeURIComponent(id);
   } catch {

@@ -37,6 +37,7 @@ export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
         appLogoUrl={data?.brand?.logo.default}
         showMangeAppButton={true}
         goBackUrl={ExtensionsUrls.resolveInstalledExtensionsUrl()}
+        deprecationReason={data?.deprecationReason}
       />
       <DetailPageLayout.Content>
         <Box

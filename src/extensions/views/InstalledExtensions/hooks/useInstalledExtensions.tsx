@@ -129,7 +129,18 @@ export const useInstalledExtensions = () => {
   const installedApps = useMemo<InstalledExtension[]>(
     () =>
       installedAppsData.map(
-        ({ id, identifier, name, isActive, brand, type, problems, appUrl, created }) => {
+        ({
+          id,
+          identifier,
+          name,
+          isActive,
+          brand,
+          type,
+          problems,
+          appUrl,
+          created,
+          deprecationReason,
+        }) => {
           const appEvents = eventDeliveriesMap.get(id);
           const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
@@ -161,7 +172,8 @@ export const useInstalledExtensions = () => {
             activeProblemCount: activeProblemsForApp.length,
             criticalProblemCount: activeProblemsForApp.filter(p => isProblemCritical(p)).length,
             isNew: isRecentlyInstalled(created),
-            deprecated: isLegacySmtpApp(identifier),
+            deprecated: isLegacySmtpApp(identifier) || !!deprecationReason,
+            deprecationReason,
           };
         },
       ),

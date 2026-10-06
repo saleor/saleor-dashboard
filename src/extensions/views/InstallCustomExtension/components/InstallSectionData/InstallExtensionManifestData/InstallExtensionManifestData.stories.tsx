@@ -1,5 +1,6 @@
 import { type InstallDetailsManifestData } from "@dashboard/extensions/views/InstallCustomExtension/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { type ComponentProps, useState } from "react";
 import { ZodIssueCode } from "zod";
 
 import { InstallExtensionManifestData } from "./InstallExtensionManifestData";
@@ -15,12 +16,13 @@ const manifest: InstallDetailsManifestData = {
     { __typename: "Permission", code: "MANAGE_PRODUCTS" as any, name: "Manage products" },
   ],
   dataPrivacyUrl: "https://example.com/privacy",
+  deprecationReason: null,
 };
 
 const meta: Meta<typeof InstallExtensionManifestData> = {
   title: "Extensions/InstallCustomExtension/InstallExtensionManifestData",
   component: InstallExtensionManifestData,
-  args: { manifest },
+  args: { manifest, deprecationAcknowledged: false, onDeprecationAcknowledgedChange: () => {} },
 };
 
 export default meta;
@@ -42,5 +44,26 @@ export const WithIssues: Story = {
         message: "tokenTargetUrl is not a valid URL",
       },
     ],
+  },
+};
+
+export const Deprecated: Story = {
+  args: {
+    manifest: {
+      ...manifest,
+      deprecationReason:
+        "Acme Analytics is replaced by Acme Insights. Install Acme Insights from Extensions and move your dashboards before the end of the year.",
+    },
+  },
+  render: (args: ComponentProps<typeof InstallExtensionManifestData>) => {
+    const [acknowledged, setAcknowledged] = useState(false);
+
+    return (
+      <InstallExtensionManifestData
+        {...args}
+        deprecationAcknowledged={acknowledged}
+        onDeprecationAcknowledgedChange={setAcknowledged}
+      />
+    );
   },
 };

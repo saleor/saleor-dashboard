@@ -1,0 +1,41 @@
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 3px solid var(--mu-colors-border-warning1);
+  background-color: var(--mu-colors-background-warning1);
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--mu-colors-text-warning1);
+}
+
+.reasonRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* App-supplied plain text - keep its line breaks. */
+.reason {
+  flex: 1;
+  min-width: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.toggle {
+  flex-shrink: 0;
+  align-self: flex-start;
+}
