@@ -1,5 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
+import { AppDeprecationReason } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages, problemMessages } from "@dashboard/extensions/messages";
@@ -96,22 +97,25 @@ const ExtensionRow = ({
   return (
     <>
       <GridTable.Row data-test-id="installed-extension-row">
-        <GridTable.Cell padding={0}>
+        <GridTable.Cell
+          padding={0}
+          className={clsx(
+            extension.href &&
+              sprinkles({
+                backgroundColor: {
+                  default: "default1",
+                  hover: "default2",
+                },
+              }),
+            extension.deprecated && styles.deprecated,
+          )}
+        >
           <Box
             display="flex"
             alignItems="center"
             __padding="5px 20px"
             data-test-id={justInstalled ? "just-installed-extension-row" : undefined}
-            className={clsx(
-              extension.href &&
-                sprinkles({
-                  backgroundColor: {
-                    default: "default1",
-                    hover: "default2",
-                  },
-                }),
-              justInstalled && styles.justInstalled,
-            )}
+            className={clsx(justInstalled && styles.justInstalled)}
           >
             <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
               <ExtensionName href={extension.href} name={extension.name}>
@@ -154,6 +158,13 @@ const ExtensionRow = ({
               {extension.actions}
             </Box>
           </Box>
+          {extension.deprecationReason && (
+            <AppDeprecationReason
+              reason={extension.deprecationReason}
+              lines={2}
+              className={styles.deprecationReason}
+            />
+          )}
         </GridTable.Cell>
       </GridTable.Row>
       {hasActiveProblems && problemsVisible ? (
