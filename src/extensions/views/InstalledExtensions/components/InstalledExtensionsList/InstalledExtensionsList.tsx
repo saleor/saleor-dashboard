@@ -1,18 +1,18 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
+import { AppDeprecationReason } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
-import { messages, problemMessages } from "@dashboard/extensions/messages";
+import { deprecationMessages, messages, problemMessages } from "@dashboard/extensions/messages";
 import { type InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
-import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, TriangleAlert } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProblemsBadge } from "../AppProblems/ProblemsBadge/ProblemsBadge";
 import { ProblemsList } from "../AppProblems/ProblemsList/ProblemsList";
-import { DeprecatedExtensionBadge } from "../DeprecatedExtensionBadge/DeprecatedExtensionBadge";
 import { NewExtensionBadge } from "../NewExtensionBadge/NewExtensionBadge";
 import styles from "./InstalledExtensionsList.module.css";
 import { useExtensionProblems } from "./useExtensionProblems";
@@ -32,36 +32,61 @@ interface InstalledExtensionsListProps {
 const ExtensionName = ({
   href,
   name,
+  deprecated,
+  deprecationReason,
   children,
 }: {
   href?: string;
   name: string;
+  deprecated?: boolean;
+  deprecationReason?: string | null;
   children: React.ReactNode;
-}) => {
-  if (!href) {
-    return (
-      <Box display="flex" alignItems="center" gap={2}>
-        {children}
-      </Box>
-    );
-  }
-
-  const formattedName = name?.toLowerCase().replace(" ", "") ?? "";
-
-  return (
+}): React.ReactElement => {
+  const content = (
+    <>
+      {children}
+      {deprecated && <TriangleAlert size={16} aria-hidden="true" />}
+    </>
+  );
+  const formattedName = name.toLowerCase().replace(" ", "");
+  const appName = href ? (
     <Link
       href={href}
+      inline={false}
       data-test-id={`${formattedName}-view-details`}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "8px",
-        textDecoration: "none",
-        color: "inherit",
-      }}
+      className={styles.nameLink}
     >
-      {children}
+      {content}
     </Link>
+  ) : (
+    <Box display="flex" alignItems="center" gap={2}>
+      {content}
+    </Box>
+  );
+
+  if (!deprecated) {
+    return appName;
+  }
+
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>
+        <div className={styles.deprecatedName} tabIndex={href ? undefined : 0}>
+          {appName}
+        </div>
+      </Tooltip.Trigger>
+      <Tooltip.Content>
+        <Tooltip.Arrow />
+        <Box __maxWidth="360px" display="flex" flexDirection="column" gap={2}>
+          <Text size={3} fontWeight="bold">
+            <FormattedMessage {...deprecationMessages.statusTitle} />
+          </Text>
+          <Text size={3} className={styles.tooltipReason}>
+            {deprecationReason || <FormattedMessage {...deprecationMessages.description} />}
+          </Text>
+        </Box>
+      </Tooltip.Content>
+    </Tooltip>
   );
 };
 
@@ -79,7 +104,7 @@ const ExtensionRow = ({
   onClearProblem,
   onFetchAllProblems,
   justInstalled,
-}: ExtensionRowProps) => {
+}: ExtensionRowProps): React.ReactElement => {
   const intl = useIntl();
   const problems = extension.problems ?? [];
   const {
@@ -96,29 +121,37 @@ const ExtensionRow = ({
   return (
     <>
       <GridTable.Row data-test-id="installed-extension-row">
-        <GridTable.Cell padding={0}>
+        <GridTable.Cell
+          padding={0}
+          className={clsx(
+            extension.href &&
+              sprinkles({
+                backgroundColor: {
+                  default: "default1",
+                  hover: "default2",
+                },
+              }),
+          )}
+        >
           <Box
             display="flex"
             alignItems="center"
             __padding="5px 20px"
             data-test-id={justInstalled ? "just-installed-extension-row" : undefined}
-            className={clsx(
-              extension.href &&
-                sprinkles({
-                  backgroundColor: {
-                    default: "default1",
-                    hover: "default2",
-                  },
-                }),
-              justInstalled && styles.justInstalled,
-            )}
+            className={clsx(justInstalled && styles.justInstalled)}
           >
             <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-              <ExtensionName href={extension.href} name={extension.name}>
+              <ExtensionName
+                href={extension.href}
+                name={extension.name}
+                deprecated={extension.deprecated}
+                deprecationReason={extension.deprecationReason}
+              >
                 <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
                 <Text
                   size={4}
                   fontWeight="bold"
+                  color={extension.deprecated ? "default2" : "default1"}
                   __maxWidth="400px"
                   overflow="hidden"
                   textOverflow="ellipsis"
@@ -128,7 +161,6 @@ const ExtensionRow = ({
                 </Text>
               </ExtensionName>
               {extension.isNew && <NewExtensionBadge />}
-              {extension.deprecated && <DeprecatedExtensionBadge />}
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}
@@ -154,6 +186,13 @@ const ExtensionRow = ({
               {extension.actions}
             </Box>
           </Box>
+          {extension.deprecationReason && (
+            <AppDeprecationReason
+              reason={extension.deprecationReason}
+              lines={2}
+              className={styles.deprecationReason}
+            />
+          )}
         </GridTable.Cell>
       </GridTable.Row>
       {hasActiveProblems && problemsVisible ? (
@@ -201,7 +240,7 @@ export const InstalledExtensionsList = ({
   onClearProblem,
   onFetchAllProblems,
   justInstalledName,
-}: InstalledExtensionsListProps) => {
+}: InstalledExtensionsListProps): React.ReactElement => {
   const intl = useIntl();
 
   if (loading) {

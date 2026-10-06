@@ -11,6 +11,8 @@ interface IInstallSectionDataProps {
   lastFetchedManifestUrl: string | undefined;
   control: Control<ExtensionInstallFormData>;
   issues?: ZodIssue[];
+  deprecationAcknowledged: boolean;
+  onDeprecationAcknowledgedChange: (acknowledged: boolean) => void;
 }
 
 export const InstallSectionData = ({
@@ -19,6 +21,8 @@ export const InstallSectionData = ({
   lastFetchedManifestUrl,
   control,
   issues,
+  deprecationAcknowledged,
+  onDeprecationAcknowledgedChange,
 }: IInstallSectionDataProps) => {
   const manifestUrlInputValue = useWatch({
     control,
@@ -46,7 +50,14 @@ export const InstallSectionData = ({
   }
 
   if (manifest && lastFetchedManifestUrl === manifestUrlInputValue) {
-    return <InstallExtensionManifestData manifest={manifest} issues={issues} />;
+    return (
+      <InstallExtensionManifestData
+        manifest={manifest}
+        issues={issues}
+        deprecationAcknowledged={deprecationAcknowledged}
+        onDeprecationAcknowledgedChange={onDeprecationAcknowledgedChange}
+      />
+    );
   }
 
   return null;

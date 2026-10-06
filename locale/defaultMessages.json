@@ -910,6 +910,10 @@
     "context": "expiry date section header",
     "string": "Expiry date"
   },
+  "1JTtUi": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This collection"
+  },
   "1LCFJM": {
     "context": "settings search hint when deep links are not yet available",
     "string": "Configured per channel — open a channel to edit."
@@ -1151,6 +1155,10 @@
     "context": "search modal shipping title",
     "string": "Shipping address"
   },
+  "2OUUkM": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This voucher"
+  },
   "2R4joj": {
     "context": "settings ownership badge — shop-scoped setting",
     "string": "Shop"
@@ -1287,6 +1295,10 @@
   },
   "2qfU+C": {
     "string": "The extension identifier is already in use."
+  },
+  "2qm57A": {
+    "context": "command palette action",
+    "string": "Copy variant ID"
   },
   "2qyiGa": {
     "context": "channel metadata dialog header",
@@ -1526,6 +1538,10 @@
     "context": "attribute values list: slug column header",
     "string": "Admin"
   },
+  "3qIIGa": {
+    "context": "hint explaining why a field is deprecated",
+    "string": "Product rating will be removed in the next minor version. Create a numeric \"rating\" attribute instead."
+  },
   "3qaTMO": {
     "context": "assign shipping zone dialog title",
     "string": "Assign shipping zones"
@@ -1677,6 +1693,10 @@
   },
   "4Rj36Y": {
     "string": "Create new Model Type"
+  },
+  "4TLDsf": {
+    "context": "command palette action",
+    "string": "Copy product ID"
   },
   "4VLj3S": {
     "context": "overcharged order status",
@@ -3237,6 +3257,10 @@
   "A7W4KO": {
     "string": "Catalog rule"
   },
+  "A9HvZo": {
+    "context": "command palette action",
+    "string": "Copy discount ID"
+  },
   "A9QSur": {
     "context": "area units type",
     "string": "Area"
@@ -4040,6 +4064,10 @@
   "CrnqOK": {
     "string": "Country tax rates updated"
   },
+  "Cs70jv": {
+    "context": "Heading explaining the deprecated status of an installed extension",
+    "string": "This app is being deprecated"
+  },
   "CsDZaw": {
     "context": "toast description when create is blocked by missing codes",
     "string": "Add at least one code"
@@ -4079,6 +4107,10 @@
   "D0hIP2": {
     "context": "gift card history message fallback when customer email is unavailable",
     "string": "a customer"
+  },
+  "D1Vn6d": {
+    "context": "command palette action",
+    "string": "Copy order ID"
   },
   "D1rO7x": {
     "context": "tooltip for a clickable voucher name in the line price breakdown that opens the voucher detail page",
@@ -4329,6 +4361,10 @@
     "context": "voucher status active",
     "string": "Active"
   },
+  "EHM+g5": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This order"
+  },
   "EHRXv4": {
     "context": "product media detail page header",
     "string": "Edit Image"
@@ -4422,6 +4458,10 @@
   "EfF28c": {
     "context": "channel inventory reorder hint",
     "string": "Drag the handles to reorder."
+  },
+  "EgZF2U": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This structure"
   },
   "Egyh2T": {
     "context": "section header",
@@ -4623,6 +4663,10 @@
   "FOehC/": {
     "context": "label",
     "string": "Manual Amount"
+  },
+  "FP306G": {
+    "context": "command palette action",
+    "string": "Copy customer ID"
   },
   "FQNvg8": {
     "context": "voucher list percentage offer summary",
@@ -4879,6 +4923,10 @@
   "GAmGog": {
     "context": "value input label",
     "string": "Discount value"
+  },
+  "GBgv1f": {
+    "context": "checkbox required before installing a deprecated app",
+    "string": "I understand this app is deprecated and want to install it anyway."
   },
   "GCPzKf": {
     "context": "ProductTypeDeleteWarningDialog single assigned items button label",
@@ -6672,6 +6720,10 @@
     "context": "label for available authorization amount",
     "string": "Available to capture (authorized)"
   },
+  "MhtjvQ": {
+    "context": "checkbox label",
+    "string": "Enable checkout stock reservation for authenticated users"
+  },
   "MkPAWX": {
     "context": "pill on staff details when viewing your own profile",
     "string": "Me"
@@ -7339,6 +7391,10 @@
   "PCoO4D": {
     "context": "error message",
     "string": "Page not found."
+  },
+  "PDlKOb": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This customer"
   },
   "PDw0YN": {
     "context": "open new window button",
@@ -8445,6 +8501,10 @@
     "context": "tax strategy combobox choice",
     "string": "Use tax app"
   },
+  "TKfUiv": {
+    "context": "command palette action",
+    "string": "Copy category ID"
+  },
   "TKmub+": {
     "string": "This field is required"
   },
@@ -9463,6 +9523,10 @@
     "context": "Product availability status when visible in a channel",
     "string": "Live"
   },
+  "X30QQ1": {
+    "context": "command palette action",
+    "string": "Copy order number"
+  },
   "X31kOG": {
     "context": "gift card sidebar, intro when only assignedToEmail is set",
     "string": "Restricted to {email}. No customer account is linked — typically from guest checkout. Assign a customer to attach an account, or remove the restriction."
@@ -9655,6 +9719,10 @@
     "context": "transaction reference subtitle",
     "string": "Transaction reference"
   },
+  "XWTFlv": {
+    "context": "command palette action",
+    "string": "Copy gift card ID"
+  },
   "XXZxyz": {
     "context": "notification",
     "string": "Pinned to navigation"
@@ -9693,6 +9761,10 @@
   "XcwOQt": {
     "context": "ripple video announcement CTA to install Saleor Pulse",
     "string": "Install Pulse"
+  },
+  "XdsQjm": {
+    "context": "command palette action",
+    "string": "Copy voucher ID"
   },
   "XgsXQv": {
     "context": "order transaction refund summary label",
@@ -9867,10 +9939,6 @@
   "YEIFiI": {
     "string": "Add new structure item to begin creating structure"
   },
-  "YEv+6G": {
-    "context": "input helper text",
-    "string": "Leaving this setting empty will mean that stock won’t be reserved"
-  },
   "YFQBs1": {
     "context": "product availability date label",
     "string": "Set availability date"
@@ -9986,6 +10054,10 @@
   "Ydfy6M": {
     "context": "voucher single-use code toggle title",
     "string": "One use per code"
+  },
+  "Yen5SP": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This gift card"
   },
   "YgE6ga": {
     "context": "imperial unit system",
@@ -10838,6 +10910,10 @@
     "context": "inline error when a required SMTP field is empty",
     "string": "Required"
   },
+  "bepijT": {
+    "context": "label before the app's deprecation reason in a compact notice",
+    "string": "Deprecated:"
+  },
   "bfj3NC": {
     "context": "Button with Manage app label",
     "string": "Manage extension"
@@ -11635,6 +11711,10 @@
   "eVrDft": {
     "string": "No value"
   },
+  "eW3YG1": {
+    "context": "toast title after a command palette copy action succeeds",
+    "string": "Copied to clipboard"
+  },
   "eWV760": {
     "string": "Attribute with this slug already exists"
   },
@@ -11649,6 +11729,10 @@
   "eY+BKQ": {
     "string": "The extension manifest was not found. ({errorCode})"
   },
+  "eaZlKB": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This discount"
+  },
   "eaoi2W": {
     "context": "tab name",
     "string": "All warehouses"
@@ -11660,6 +11744,10 @@
   "ecd+JV": {
     "context": "voucher detail section navigation aria label",
     "string": "Voucher settings sections"
+  },
+  "ed63Qc": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This category"
   },
   "efbank": {
     "context": "bulk publish progress error when product fetch misses a row",
@@ -12582,6 +12670,10 @@
     "context": "order refund amount",
     "string": "Replaced Products Value"
   },
+  "i6MDjw": {
+    "context": "command palette action",
+    "string": "Copy draft order ID"
+  },
   "i8FLQQ": {
     "context": "load more subcategories in category tree",
     "string": "Load {count, plural, one {# more subcategory} other {# more subcategories}}"
@@ -12856,6 +12948,10 @@
   "j2l6cL": {
     "context": "checkbox label",
     "string": "Set gift card expiration period"
+  },
+  "j2qMNg": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This product"
   },
   "j3yE7I": {
     "context": "order history message",
@@ -13763,6 +13859,10 @@
     "context": "PDP schematic when the type has options turned off",
     "string": "No pickers — sold as a single variant"
   },
+  "lybc+B": {
+    "context": "checkbox label",
+    "string": "Enable checkout stock reservation for anonymous users"
+  },
   "lz7o8y": {
     "context": "tooltip when generate button is disabled because over variant limit",
     "string": "Cannot create more than {limit} variants at once"
@@ -13980,6 +14080,10 @@
     "context": "model type detail cogs menu, opens the delete-confirmation dialog",
     "string": "Delete model type"
   },
+  "mnm882": {
+    "context": "collapse the app's deprecation reason",
+    "string": "Show less"
+  },
   "mqwLmD": {
     "string": "Menu updated"
   },
@@ -14031,6 +14135,10 @@
   "n0w2ZT": {
     "context": "label for currently selected warehouse",
     "string": "currently selected"
+  },
+  "n1ja6a": {
+    "context": "deprecation notice subtitle explaining the app keeps working",
+    "string": "It still works, but the developer recommends migrating."
   },
   "n4wLTL": {
     "context": "create attribute dialog step two intro for product types",
@@ -14264,6 +14372,10 @@
   "nqWHPw": {
     "context": "sales channel a11y label prefix",
     "string": "Channel"
+  },
+  "nrO5SA": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This draft order"
   },
   "nsTglh": {
     "context": "confirmation dialog title for staging generated variants",
@@ -14693,6 +14805,10 @@
     "context": "status",
     "string": "Deactivated"
   },
+  "pIgMKS": {
+    "context": "command palette action",
+    "string": "Copy collection ID"
+  },
   "pIxpPI": {
     "context": "voucher fixed amount per channel section title",
     "string": "Amount off, per channel"
@@ -14832,6 +14948,10 @@
   "pkzlgy": {
     "context": "helper under editable staff email — login identity, no confirmation step",
     "string": "Used to sign in. The change takes effect as soon as you save."
+  },
+  "pmWI/7": {
+    "context": "command palette action",
+    "string": "Copy draft order number"
   },
   "pmXN+Q": {
     "context": "TopNav destination link tooltip to products list",
@@ -15710,6 +15830,10 @@
     "context": "transaction refund tiles transaction name",
     "string": "Transaction"
   },
+  "seOi5h": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This variant"
+  },
   "sf6FMK": {
     "context": "dialog search placeholder",
     "string": "Search by category name, etc..."
@@ -15751,6 +15875,10 @@
     "context": "TopNav destination link tooltip to staff list",
     "string": "All staff members"
   },
+  "spOqAF": {
+    "context": "deprecation notice title",
+    "string": "This app is deprecated"
+  },
   "spjKeI": {
     "string": "Fulfillment approved"
   },
@@ -15789,6 +15917,10 @@
   "swMMqF": {
     "context": "product variant channel selling price aria label",
     "string": "Selling price for {channelName}"
+  },
+  "swcabW": {
+    "context": "command palette action",
+    "string": "Copy model ID"
   },
   "sykM/J": {
     "context": "SMTP sender name field — optional; Saleor only requires sender email",
@@ -16168,6 +16300,10 @@
     "context": "section header",
     "string": "Extension permissions"
   },
+  "uKf70f": {
+    "context": "command palette action",
+    "string": "Copy model type ID"
+  },
   "uKuQFH": {
     "context": "delete customer type dialog title",
     "string": "Delete customer type"
@@ -16391,6 +16527,10 @@
   "uy+tB8": {
     "context": "voucher status",
     "string": "Status"
+  },
+  "uyEWze": {
+    "context": "command palette action",
+    "string": "Copy structure ID"
   },
   "v+tpSR": {
     "context": "dialog body explaining password-reset email for resend invite",
@@ -16661,6 +16801,10 @@
   "vh9a5S": {
     "context": "Tooltip CTA on the direct-stock-mode-only badge in the webhook event picker. Links to the page where the legacy stock-availability flag can be toggled.",
     "string": "Open shop settings"
+  },
+  "vhhNHw": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This model type"
   },
   "vitgwA": {
     "string": "Search syntax"
@@ -17027,6 +17171,10 @@
     "context": "label for enabling grouped model type tabs",
     "string": "Group similar model types"
   },
+  "x+961a": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This channel"
+  },
   "x+jH+T": {
     "context": "switch from default to custom template",
     "string": "Customize"
@@ -17056,6 +17204,10 @@
   "x2mg39": {
     "context": "Transaction event description",
     "string": "Used in order"
+  },
+  "x3lIH+": {
+    "context": "toast title after a command palette copy action fails",
+    "string": "Could not copy to clipboard"
   },
   "x3leH4": {
     "context": "ProductTypeDeleteWarningDialog title",
@@ -17139,6 +17291,10 @@
   "xOFbeR": {
     "context": "toast after creating attribute values",
     "string": "{count, plural, one {Added new value} other {Added # values}}"
+  },
+  "xOJd/Z": {
+    "context": "command palette section grouping actions for the currently open entity",
+    "string": "This model"
   },
   "xOrtMG": {
     "context": "Availability card hint when channel listings are dirty",
@@ -17403,6 +17559,10 @@
   "yMjwop": {
     "context": "granted refund amount in line expanded panel",
     "string": "Refund total {amount}"
+  },
+  "yOEYnD": {
+    "context": "command palette action",
+    "string": "Copy channel ID"
   },
   "yOaNWB": {
     "context": "delete shipping method",

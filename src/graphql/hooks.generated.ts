@@ -25,6 +25,7 @@ export const AppManifestFragmentDoc = gql`
   tokenTargetUrl
   dataPrivacy
   dataPrivacyUrl
+  deprecationReason
   homepageUrl
   supportUrl
   extensions {
@@ -71,6 +72,7 @@ export const AppFragmentDoc = gql`
   manifestUrl
   supportUrl
   version
+  deprecationReason
   accessToken
   brand {
     logo {
@@ -213,6 +215,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   type
   appUrl
   created
+  deprecationReason
   problems {
     __typename
     key
@@ -2967,6 +2970,12 @@ export const ActivitiesFragmentDoc = gql`
   }
 }
     `;
+export const OrderNumberFragmentDoc = gql`
+    fragment OrderNumber on Order {
+  id
+  number
+}
+    `;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -3643,6 +3652,14 @@ export const ProductListAttributeFragmentDoc = gql`
   }
 }
     ${AttributeValueFragmentDoc}`;
+export const ProductVariantProductIdFragmentDoc = gql`
+    fragment ProductVariantProductId on ProductVariant {
+  id
+  product {
+    id
+  }
+}
+    `;
 export const ShippingMethodWithPostalCodesFragmentDoc = gql`
     fragment ShippingMethodWithPostalCodes on ShippingMethodType {
   id

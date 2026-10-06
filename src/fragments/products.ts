@@ -445,3 +445,14 @@ export const productListAttribute = gql`
     }
   }
 `;
+
+export const fragmentProductVariantProductId = gql`
+  # Only read from the Apollo cache (Cmd+K copy actions), never spread into an operation.
+  # eslint-disable-next-line @graphql-eslint/no-unused-fragments
+  fragment ProductVariantProductId on ProductVariant {
+    id
+    product {
+      id
+    }
+  }
+`;

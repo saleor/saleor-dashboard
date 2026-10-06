@@ -1,8 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { AppDeprecationNotice } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled/ExternalLinkUnstyled";
-import { messages } from "@dashboard/extensions/messages";
+import { deprecationMessages, messages } from "@dashboard/extensions/messages";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 import { type ZodIssue } from "zod";
 import { fromZodIssue } from "zod-validation-error";
@@ -13,9 +14,13 @@ import { IconsSection } from "./IconsSection";
 export const InstallExtensionManifestData = ({
   manifest,
   issues,
+  deprecationAcknowledged,
+  onDeprecationAcknowledgedChange,
 }: {
   manifest: InstallDetailsManifestData;
   issues?: ZodIssue[];
+  deprecationAcknowledged: boolean;
+  onDeprecationAcknowledgedChange: (acknowledged: boolean) => void;
 }) => {
   const intl = useIntl();
 
@@ -31,6 +36,21 @@ export const InstallExtensionManifestData = ({
       </Text>
 
       <IconsSection appLogo={manifest?.brand?.logo.default} />
+
+      {manifest.deprecationReason && (
+        <AppDeprecationNotice reason={manifest.deprecationReason}>
+          <Checkbox
+            marginTop={2}
+            checked={deprecationAcknowledged}
+            onCheckedChange={checked => onDeprecationAcknowledgedChange(checked === true)}
+            data-test-id="app-deprecation-acknowledgement"
+          >
+            <Text size={3}>
+              <FormattedMessage {...deprecationMessages.installAcknowledgement} />
+            </Text>
+          </Checkbox>
+        </AppDeprecationNotice>
+      )}
 
       <Box display="flex" flexDirection="column" gap={4}>
         <Text size={5} fontWeight="medium">

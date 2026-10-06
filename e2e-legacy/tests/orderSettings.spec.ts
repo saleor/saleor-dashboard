@@ -12,6 +12,7 @@ test.beforeEach(({ page }) => {
 
 test("TC: SALEOR_132B Should be able to update checkout stock settings on orders hub #e2e", async () => {
   await orderSettingsPage.gotoOrderSettings();
+  await orderSettingsPage.enableStockReservations();
   const currentStockReservationForAuthUser =
     await orderSettingsPage.stockReservationForAuthUserInput.inputValue();
   const currentStockReservationForAnonUser =
