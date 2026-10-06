@@ -51,9 +51,8 @@ export async function submitOrderSettingsForm({
             shopSettingsInput: {
               fulfillmentAutoApprove: formData.fulfillmentAutoApprove,
               fulfillmentAllowUnpaid: formData.fulfillmentAllowUnpaid,
-              reserveStockDurationAnonymousUser: formData.reserveStockDurationAnonymousUser || null,
-              reserveStockDurationAuthenticatedUser:
-                formData.reserveStockDurationAuthenticatedUser || null,
+              reserveStockDurationAnonymousUser: formData.reserveStockDurationAnonymousUser,
+              reserveStockDurationAuthenticatedUser: formData.reserveStockDurationAuthenticatedUser,
               limitQuantityPerCheckout: formData.limitQuantityPerCheckout || null,
             },
           },

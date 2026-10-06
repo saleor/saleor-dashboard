@@ -1,8 +1,9 @@
 import { SettingsFieldStack } from "@dashboard/components/Settings/SettingsFieldStack";
 import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
 import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
-import { Box, Input } from "@saleor/macaw-ui-next";
-import { type ChangeEvent } from "react";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type OrderSettingsFormData } from "../OrderSettingsPage/types";
@@ -11,8 +12,72 @@ import { messages } from "./messages";
 interface OrderCheckoutStockSettingsProps {
   data: OrderSettingsFormData;
   disabled: boolean;
-  onChange: (event: ChangeEvent<any>) => void;
+  onChange: FormChange;
 }
+
+const DEFAULT_RESERVATION_ANONYMOUS_USER = 200;
+const DEFAULT_RESERVATION_AUTHENTICATED_USER = 400;
+
+interface StockReservationFieldProps {
+  name: "reserveStockDurationAnonymousUser" | "reserveStockDurationAuthenticatedUser";
+  testId: string;
+  value: number;
+  defaultValue: number;
+  checkboxLabel: string;
+  inputLabel: string;
+  disabled: boolean;
+  onChange: FormChange;
+}
+
+// Saleor treats 0 as "reservation disabled", so the checkbox maps to 0 / default.
+const StockReservationField = ({
+  name,
+  testId,
+  value,
+  defaultValue,
+  checkboxLabel,
+  inputLabel,
+  disabled,
+  onChange,
+}: StockReservationFieldProps): React.ReactNode => {
+  // Explicit toggle wins over the derived state, so clearing the input doesn't hide it.
+  const [enabledOverride, setEnabledOverride] = useState<boolean | null>(null);
+  const enabled = enabledOverride ?? value > 0;
+
+  return (
+    <Box display="flex" flexDirection="column" gap={3}>
+      <Checkbox
+        data-test-id={`${testId}-checkbox`}
+        checked={enabled}
+        disabled={disabled}
+        onCheckedChange={checked => {
+          const isChecked = checked === true;
+
+          setEnabledOverride(isChecked);
+          onChange({ target: { name, value: isChecked ? defaultValue : 0 } });
+        }}
+      >
+        <Text size={3}>{checkboxLabel}</Text>
+      </Checkbox>
+      {enabled && (
+        <Input
+          data-test-id={`${testId}-input`}
+          disabled={disabled}
+          type="number"
+          width="100%"
+          name={name}
+          label={inputLabel}
+          value={value ? String(value) : ""}
+          min={1}
+          onChange={event => {
+            setEnabledOverride(true);
+            onChange(event);
+          }}
+        />
+      )}
+    </Box>
+  );
+};
 
 export const OrderCheckoutStockSettings = ({
   data,
@@ -31,34 +96,24 @@ export const OrderCheckoutStockSettings = ({
         description={<FormattedMessage {...messages.reservedStockDescription} />}
       >
         <SettingsFieldStack>
-          <Input
-            data-test-id="reserve-stock-duration-for-auth-user-input"
-            disabled={disabled}
-            type="number"
-            width="100%"
+          <StockReservationField
             name="reserveStockDurationAuthenticatedUser"
-            label={intl.formatMessage(messages.stockReservationForAuthenticatedUser)}
-            helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
-            value={
-              data.reserveStockDurationAuthenticatedUser
-                ? String(data.reserveStockDurationAuthenticatedUser)
-                : ""
-            }
+            testId="reserve-stock-duration-for-auth-user"
+            value={data.reserveStockDurationAuthenticatedUser}
+            defaultValue={DEFAULT_RESERVATION_AUTHENTICATED_USER}
+            checkboxLabel={intl.formatMessage(messages.enableStockReservationForAuthenticatedUser)}
+            inputLabel={intl.formatMessage(messages.stockReservationForAuthenticatedUser)}
+            disabled={disabled}
             onChange={onChange}
           />
-          <Input
-            data-test-id="reserve-stock-duration-for-anon-user-input"
-            disabled={disabled}
-            type="number"
-            width="100%"
+          <StockReservationField
             name="reserveStockDurationAnonymousUser"
-            label={intl.formatMessage(messages.stockReservationForAnonymousUser)}
-            helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
-            value={
-              data.reserveStockDurationAnonymousUser
-                ? String(data.reserveStockDurationAnonymousUser)
-                : ""
-            }
+            testId="reserve-stock-duration-for-anon-user"
+            value={data.reserveStockDurationAnonymousUser}
+            defaultValue={DEFAULT_RESERVATION_ANONYMOUS_USER}
+            checkboxLabel={intl.formatMessage(messages.enableStockReservationForAnonymousUser)}
+            inputLabel={intl.formatMessage(messages.stockReservationForAnonymousUser)}
+            disabled={disabled}
             onChange={onChange}
           />
         </SettingsFieldStack>
