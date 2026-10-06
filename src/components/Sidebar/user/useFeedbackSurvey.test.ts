@@ -73,7 +73,7 @@ it("stays hidden until the renderer loads and the feedback survey matches", () =
   expect(result.current.isAvailable).toBe(true);
 });
 
-it("stays hidden in development when analytics is disabled", () => {
+it("shows the feedback button in development when analytics is disabled", () => {
   // Arrange
   const originalNodeEnv = process.env.NODE_ENV;
 
@@ -85,7 +85,7 @@ it("stays hidden in development when analytics is disabled", () => {
     const { result } = renderHook(useFeedbackSurvey);
 
     // Assert
-    expect(result.current.isAvailable).toBe(false);
+    expect(result.current.isAvailable).toBe(true);
     expect(loaded).not.toHaveBeenCalled();
     expect(matching).not.toHaveBeenCalled();
   } finally {
@@ -138,4 +138,24 @@ it("updates availability after feature flag changes and unsubscribes on unmount"
   // Assert
   expect(result.current.isAvailable).toBe(false);
   expect(unsubscribe).toHaveBeenCalled();
+});
+
+it("stays hidden in production when analytics is disabled", () => {
+  // Arrange
+  const originalNodeEnv = process.env.NODE_ENV;
+
+  process.env.NODE_ENV = "production";
+  mockAnalyticsEnabled.mockReturnValue(false);
+
+  try {
+    // Act
+    const { result } = renderHook(useFeedbackSurvey);
+
+    // Assert
+    expect(result.current.isAvailable).toBe(false);
+    expect(loaded).not.toHaveBeenCalled();
+    expect(matching).not.toHaveBeenCalled();
+  } finally {
+    process.env.NODE_ENV = originalNodeEnv;
+  }
 });

@@ -12,6 +12,7 @@ interface FeedbackSurveyAvailability {
 export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
   const posthog = usePostHog();
   const [availability, setAvailability] = useState<{ client: PostHog; available: boolean }>();
+  const isDev = process.env.NODE_ENV === "development";
   const enabled = isProductAnalyticsEnabled();
 
   useEffect(
@@ -62,6 +63,7 @@ export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
   );
 
   return {
-    isAvailable: enabled && availability?.client === posthog && availability?.available === true,
+    isAvailable:
+      isDev || (enabled && availability?.client === posthog && availability?.available === true),
   };
 };

@@ -16,11 +16,13 @@ pnpm e2e:down       # stop both stacks, keep the volumes
 To test feedback against the real PostHog SDK in the production dashboard build:
 
 ```bash
-E2E_FEEDBACK=true pnpm e2e tests/feedback.spec.ts
+IS_CLOUD_INSTANCE=true POSTHOG_HOST=https://posthog.example.test \
+POSTHOG_KEY=phc_feedback_e2e POSTHOG_EXCLUDED_DOMAINS= \
+pnpm e2e tests/feedback.spec.ts
 ```
 
-This enables analytics at an intercepted test endpoint. The specs serve the installed
-survey script and production-shaped survey responses, including the trigger selector
+This uses the existing analytics configuration at an intercepted test endpoint. The specs
+serve the installed survey script and production-shaped survey responses, including the trigger selector
 condition, and cover loading, opening/submitting feedback, blocked requests, and no
 matching survey. No analytics or feedback is sent to PostHog.
 

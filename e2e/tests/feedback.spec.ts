@@ -95,7 +95,13 @@ const routePostHog = async (
 };
 
 test.describe("Feedback availability", { tag: parallel() }, () => {
-  test.skip(process.env.E2E_FEEDBACK !== "true", "Run with E2E_FEEDBACK=true to enable analytics");
+  test.skip(
+    !process.env.IS_CLOUD_INSTANCE ||
+      process.env.POSTHOG_HOST !== "https://posthog.example.test" ||
+      process.env.POSTHOG_KEY !== "phc_feedback_e2e" ||
+      Boolean(process.env.POSTHOG_EXCLUDED_DOMAINS),
+    "Run with the isolated analytics configuration documented in e2e/README.md",
+  );
 
   test("reveals the trigger after loading and opens and submits the real survey", async ({
     page,
