@@ -4004,6 +4004,10 @@
   "CrnqOK": {
     "string": "Country tax rates updated"
   },
+  "Cs70jv": {
+    "context": "Heading explaining the deprecated status of an installed extension",
+    "string": "This app is being deprecated"
+  },
   "CsDZaw": {
     "context": "toast description when create is blocked by missing codes",
     "string": "Add at least one code"

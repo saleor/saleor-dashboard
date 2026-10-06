@@ -693,6 +693,11 @@ export const extensionActions = defineMessages({
 });
 
 export const deprecationMessages = defineMessages({
+  statusTitle: {
+    defaultMessage: "This app is being deprecated",
+    id: "Cs70jv",
+    description: "Heading explaining the deprecated status of an installed extension",
+  },
   inlineLabel: {
     defaultMessage: "Deprecated:",
     id: "bepijT",
