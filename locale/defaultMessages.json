@@ -3043,6 +3043,10 @@
   "9OtpHt": {
     "string": "Order line deleted"
   },
+  "9PpgNb": {
+    "context": "create warehouse dialog title",
+    "string": "Create warehouse"
+  },
   "9QtKvB": {
     "context": "Product type is shippable",
     "string": "Shippable"
@@ -3297,6 +3301,10 @@
   },
   "AN+zaK": {
     "string": "Structures"
+  },
+  "AN1L12": {
+    "context": "create warehouse dialog description",
+    "string": "Add it to a channel on the next page so its stock can be sold."
   },
   "AP312F": {
     "context": "create attribute dialog header",
@@ -5045,10 +5053,6 @@
   "GhY+pm": {
     "context": "dynamic column description",
     "string": "Attributes"
-  },
-  "GhcypC": {
-    "context": "header",
-    "string": "Create Warehouse"
   },
   "GiDxS4": {
     "context": "add metadata field,button",
@@ -10838,6 +10842,10 @@
     "context": "order return amount button",
     "string": "Return & Replace products"
   },
+  "bgm4AT": {
+    "context": "create warehouse dialog submit",
+    "string": "Create"
+  },
   "bh9+8A": {
     "context": "voucher requirement",
     "string": "Minimal order value"
@@ -13159,10 +13167,6 @@
   },
   "k20lqw": {
     "string": "Legacy flow detected - select tax strategy from dropdown"
-  },
-  "k3B1+l": {
-    "context": "create warehouse for channel dialog title",
-    "string": "Create warehouse"
   },
   "k3EI/U": {
     "context": "dialog header",

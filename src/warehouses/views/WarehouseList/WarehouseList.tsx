@@ -3,9 +3,12 @@ import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/S
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
+  CountryCode,
+  useWarehouseCreateMutation,
   useWarehouseDeleteMutation,
   useWarehouseListQuery,
   useWarehouseStockAvailabilityModeQuery,
+  type WarehouseErrorFragment,
 } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -16,14 +19,19 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { sectionNames } from "@dashboard/intl";
-import { getById, getMutationStatus } from "@dashboard/misc";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { findValueInEnum, getById, getMutationStatus } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
+import {
+  CreateWarehouseDialog,
+  type CreateWarehouseFormData,
+} from "@dashboard/warehouses/components/CreateWarehouseDialog/CreateWarehouseDialog";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
 import { type WarehouseListSecondaryColumn } from "@dashboard/warehouses/components/WarehouseList/WarehouseList";
 import WarehouseListPage from "@dashboard/warehouses/components/WarehouseListPage/WarehouseListPage";
@@ -31,6 +39,7 @@ import {
   warehouseListUrl,
   type WarehouseListUrlDialog,
   type WarehouseListUrlQueryParams,
+  warehouseUrl,
 } from "@dashboard/warehouses/urls";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -42,9 +51,58 @@ interface WarehouseListProps {
   params: WarehouseListUrlQueryParams;
 }
 
+const shopCountryDefaults = (
+  shop: ReturnType<typeof useShop>,
+): {
+  countries: NonNullable<ReturnType<typeof useShop>>["countries"];
+  defaultCountryCode: string;
+} => ({
+  countries: shop?.countries ?? [],
+  defaultCountryCode: shop?.defaultCountry?.code ?? "",
+});
+
+const submitWarehouseCreate = async ({
+  createWarehouse,
+  data,
+  onCreated,
+}: {
+  createWarehouse: ReturnType<typeof useWarehouseCreateMutation>[0];
+  data: CreateWarehouseFormData;
+  onCreated: (warehouseId: string) => void;
+}): Promise<WarehouseErrorFragment[]> => {
+  const result = await createWarehouse({
+    variables: {
+      input: {
+        name: data.name,
+        address: {
+          companyName: data.companyName,
+          city: data.city,
+          cityArea: data.cityArea,
+          country: findValueInEnum(data.country, CountryCode),
+          countryArea: data.countryArea,
+          phone: data.phone,
+          postalCode: data.postalCode,
+          streetAddress1: data.streetAddress1,
+          streetAddress2: data.streetAddress2,
+        },
+      },
+    },
+  });
+  const errors = result.data?.createWarehouse?.errors ?? [];
+  const warehouseId = result.data?.createWarehouse?.warehouse?.id;
+
+  if (!errors.length && warehouseId) {
+    onCreated(warehouseId);
+  }
+
+  return errors;
+};
+
 const WarehouseList = ({ params }: WarehouseListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const shop = useShop();
+  const { countries: shopCountries, defaultCountryCode } = shopCountryDefaults(shop);
   const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
   const intl = useIntl();
 
@@ -129,7 +187,33 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
       : stockModeQuery.data
         ? "pickup"
         : "zones";
+  const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation();
   const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
+  const createTransitionState = getMutationStatus(createWarehouseOpts);
+  const handleCreateWarehouse = async (
+    data: CreateWarehouseFormData,
+  ): Promise<WarehouseErrorFragment[]> => {
+    try {
+      return await submitWarehouseCreate({
+        createWarehouse,
+        data,
+        onCreated: warehouseId => {
+          notify({
+            status: "success",
+            text: intl.formatMessage({ id: "xeMcID", defaultMessage: "Warehouse created" }),
+          });
+          navigate(warehouseUrl(warehouseId));
+        },
+      });
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+
+      return [];
+    }
+  };
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
@@ -152,11 +236,22 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
         secondaryColumn={secondaryColumn}
         settings={settings}
         disabled={loading}
+        onAdd={() => openModal("create")}
         onRemove={id => openModal("delete", { id })}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
         hasPresetsChanged={hasPresetsChanged}
+      />
+      <CreateWarehouseDialog
+        open={params.action === "create"}
+        confirmButtonState={createTransitionState}
+        countries={shopCountries}
+        defaultCountryCode={defaultCountryCode}
+        disabled={createWarehouseOpts.loading}
+        errors={[]}
+        onClose={closeModal}
+        onSubmit={handleCreateWarehouse}
       />
       {!!params.id && (
         <WarehouseDeleteDialog

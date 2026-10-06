@@ -1,6 +1,5 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
-import { type ReactElement } from "react";
 
 import { WarehouseDeleteDialog } from "./WarehouseDeleteDialog";
 
@@ -10,7 +9,7 @@ const renderDialog = ({
 }: {
   stockCount?: number | null;
   channelCount?: number | null;
-} = {}): ReactElement =>
+} = {}): ReturnType<typeof render> =>
   render(
     <Wrapper>
       <WarehouseDeleteDialog

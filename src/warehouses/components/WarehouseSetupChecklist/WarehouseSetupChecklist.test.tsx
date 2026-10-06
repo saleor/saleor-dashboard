@@ -1,11 +1,13 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { type ReactElement } from "react";
 
 import { WarehouseSetupChecklist } from "./WarehouseSetupChecklist";
 
-const renderChecklist = (canManage: boolean, onAddChannel: () => void = jest.fn()): ReactElement =>
+const renderChecklist = (
+  canManage: boolean,
+  onAddChannel: () => void = jest.fn(),
+): ReturnType<typeof render> =>
   render(
     <Wrapper>
       <WarehouseSetupChecklist canManage={canManage} onAddChannel={onAddChannel} />

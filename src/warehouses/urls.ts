@@ -18,7 +18,7 @@ enum WarehouseListUrlFiltersEnum {
   query = "query",
 }
 export type WarehouseListUrlFilters = Filters<WarehouseListUrlFiltersEnum>;
-export type WarehouseListUrlDialog = "delete" | TabActionDialog;
+export type WarehouseListUrlDialog = "create" | "delete" | TabActionDialog;
 export enum WarehouseListUrlSortField {
   name = "name",
 }
@@ -39,4 +39,5 @@ export const warehouseUrl = (id: string, params?: WarehouseUrlQueryParams) =>
   withQuery(warehousePath(encodeURIComponent(id)), params);
 
 export const warehouseAddPath = urlJoin(warehouseSection, "add");
-export const warehouseAddUrl = warehouseAddPath;
+/** Legacy /warehouses/add opens the create dialog on the list. */
+export const warehouseAddUrl = warehouseListUrl({ action: "create" });
