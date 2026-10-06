@@ -1,15 +1,29 @@
-/* Deprecated app: warning accent on the left edge, drawn over the cell so the content
-   stays aligned with other rows. */
-.deprecated {
-  position: relative;
+.nameLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
 }
 
-.deprecated::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 5px;
-  background-color: var(--mu-colors-background-warning1);
+.deprecatedName {
+  display: inline-flex;
+  color: var(--mu-colors-text-default2);
+  border-radius: 4px;
+}
+
+.deprecatedName .nameLink {
+  color: inherit;
+}
+
+.deprecatedName:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}
+
+.tooltipReason {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 
 /* Under the app name: 20px row padding + 40px avatar + 8px gap. */
