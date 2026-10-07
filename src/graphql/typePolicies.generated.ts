@@ -1386,13 +1386,14 @@ export type CheckoutEmailUpdateFieldPolicy = {
 	checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CheckoutErrorKeySpecifier = ('addressType' | 'code' | 'field' | 'lines' | 'message' | 'variants' | CheckoutErrorKeySpecifier)[];
+export type CheckoutErrorKeySpecifier = ('addressType' | 'code' | 'field' | 'lines' | 'message' | 'promoCodeDetails' | 'variants' | CheckoutErrorKeySpecifier)[];
 export type CheckoutErrorFieldPolicy = {
 	addressType?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	lines?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	promoCodeDetails?: FieldPolicy<any> | FieldReadFunction<any>,
 	variants?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CheckoutFilterShippingMethodsKeySpecifier = ('checkout' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'shippingMethods' | 'version' | CheckoutFilterShippingMethodsKeySpecifier)[];
@@ -1554,13 +1555,14 @@ export type ChoiceValueFieldPolicy = {
 	raw?: FieldPolicy<any> | FieldReadFunction<any>,
 	verbose?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CollectionKeySpecifier = ('backgroundImage' | 'channel' | 'channelListings' | 'description' | 'descriptionJson' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'products' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CollectionKeySpecifier)[];
+export type CollectionKeySpecifier = ('backgroundImage' | 'channel' | 'channelListings' | 'description' | 'descriptionJson' | 'externalReference' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'products' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CollectionKeySpecifier)[];
 export type CollectionFieldPolicy = {
 	backgroundImage?: FieldPolicy<any> | FieldReadFunction<any>,
 	channel?: FieldPolicy<any> | FieldReadFunction<any>,
 	channelListings?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
+	externalReference?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafield?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3544,12 +3546,13 @@ export type OrderCreateFromCheckoutFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	order?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type OrderCreateFromCheckoutErrorKeySpecifier = ('code' | 'field' | 'lines' | 'message' | 'variants' | OrderCreateFromCheckoutErrorKeySpecifier)[];
+export type OrderCreateFromCheckoutErrorKeySpecifier = ('code' | 'field' | 'lines' | 'message' | 'promoCodeDetails' | 'variants' | OrderCreateFromCheckoutErrorKeySpecifier)[];
 export type OrderCreateFromCheckoutErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	lines?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	promoCodeDetails?: FieldPolicy<any> | FieldReadFunction<any>,
 	variants?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type OrderCreatedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'order' | 'recipient' | 'version' | OrderCreatedKeySpecifier)[];
@@ -3590,13 +3593,14 @@ export type OrderDiscountUpdateFieldPolicy = {
 	order?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type OrderErrorKeySpecifier = ('addressType' | 'code' | 'field' | 'message' | 'orderLines' | 'variants' | 'warehouse' | OrderErrorKeySpecifier)[];
+export type OrderErrorKeySpecifier = ('addressType' | 'code' | 'field' | 'message' | 'orderLines' | 'promoCodeDetails' | 'variants' | 'warehouse' | OrderErrorKeySpecifier)[];
 export type OrderErrorFieldPolicy = {
 	addressType?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderLines?: FieldPolicy<any> | FieldReadFunction<any>,
+	promoCodeDetails?: FieldPolicy<any> | FieldReadFunction<any>,
 	variants?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouse?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -5338,6 +5342,12 @@ export type ProductVariantUpdatedFieldPolicy = {
 	productVariant?: FieldPolicy<any> | FieldReadFunction<any>,
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PromoCodeRejectionDetailsKeySpecifier = ('minCheckoutItemsQuantity' | 'minSpent' | 'reason' | PromoCodeRejectionDetailsKeySpecifier)[];
+export type PromoCodeRejectionDetailsFieldPolicy = {
+	minCheckoutItemsQuantity?: FieldPolicy<any> | FieldReadFunction<any>,
+	minSpent?: FieldPolicy<any> | FieldReadFunction<any>,
+	reason?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionKeySpecifier = ('createdAt' | 'description' | 'endDate' | 'events' | 'externalReference' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'rules' | 'startDate' | 'translation' | 'type' | 'updatedAt' | PromotionKeySpecifier)[];
 export type PromotionFieldPolicy = {
@@ -10134,6 +10144,10 @@ export type StrictTypedTypePolicies = {
 	ProductVariantUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductVariantUpdatedKeySpecifier | (() => undefined | ProductVariantUpdatedKeySpecifier),
 		fields?: ProductVariantUpdatedFieldPolicy,
+	},
+	PromoCodeRejectionDetails?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PromoCodeRejectionDetailsKeySpecifier | (() => undefined | PromoCodeRejectionDetailsKeySpecifier),
+		fields?: PromoCodeRejectionDetailsFieldPolicy,
 	},
 	Promotion?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PromotionKeySpecifier | (() => undefined | PromotionKeySpecifier),

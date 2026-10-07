@@ -4,6 +4,7 @@ import {
   languageEntityPath,
   languageEntityUrl,
   languageListUrl,
+  productMediaUrl,
   productUrl,
   productVariantUrl,
   TranslatableEntities,
@@ -323,6 +324,24 @@ describe("translations/urls", () => {
 
       // url-join may remove trailing slash
       expect(result).toContain("/translations/en/products/prod123/variants");
+    });
+  });
+
+  describe("productMediaUrl", () => {
+    it("should generate a nested URL for product media", () => {
+      // Arrange // Act
+      const result = productMediaUrl("en", "prod123", "media456");
+
+      // Assert
+      expect(result).toBe("/translations/en/products/prod123/media/media456");
+    });
+
+    it("should encode both product and media IDs", () => {
+      // Arrange // Act
+      const result = productMediaUrl("pl", "prod/123", "media?456");
+
+      // Assert
+      expect(result).toBe("/translations/pl/products/prod%2F123/media/media%3F456");
     });
   });
 

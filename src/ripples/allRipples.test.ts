@@ -11,4 +11,15 @@ describe("allRipples", () => {
     // Assert
     expect(duplicateIds).toEqual([]);
   });
+
+  it("should include the product media alt translation announcement", () => {
+    // Arrange
+    const rippleIds = allRipples.map(ripple => ripple.ID);
+
+    // Act
+    const hasProductMediaAltTranslationRipple = rippleIds.includes("product-media-alt-translation");
+
+    // Assert
+    expect(hasProductMediaAltTranslationRipple).toBe(true);
+  });
 });
