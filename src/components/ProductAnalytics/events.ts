@@ -26,6 +26,9 @@ export interface AnalyticsEventMap {
     publish_enabled: boolean;
     stock_enabled: boolean;
   };
+  command_palette_copy_id: {
+    view: string;
+  };
   configuration_search_result_clicked: {
     input_method: "keyboard" | "mouse";
     position: number;
@@ -84,6 +87,15 @@ export interface AnalyticsEventMap {
     preset_kind: "built_in" | "custom";
   };
   navigation_pin_changed: NavigationPinChangedProperties;
+  product_rating_submitted: undefined;
+  product_media_translation_opened: {
+    source: "media_editor" | "translation_context";
+  };
+  product_media_translation_saved: {
+    language_code: string;
+    mode: "bulk" | "single";
+    result: "error" | "success";
+  };
   "ripples.modal-opened": undefined;
   setup_checklist_dismissed: {
     completed_steps: number;

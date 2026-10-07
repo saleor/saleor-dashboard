@@ -5,5 +5,5 @@ export { ExtensionInstallFormData } from "./schema";
 
 export type InstallDetailsManifestData = Pick<
   AppManifestFragment,
-  "name" | "brand" | "permissions" | "dataPrivacyUrl"
+  "name" | "brand" | "permissions" | "dataPrivacyUrl" | "deprecationReason"
 >;

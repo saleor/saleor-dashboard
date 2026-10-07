@@ -5,8 +5,9 @@ description: Check a PR (or local branch when no PR is open) against the repo's 
 
 # PR quality check
 
-The rules live in `.github/CONTRIBUTING.md` under **Pull Request**. Read that
-section first; it is the source of truth for everything below.
+Read `.github/CONTRIBUTING.md` under **Pull requests** for scope policy and
+`.github/PULL_REQUEST_TEMPLATE.md` for title and description requirements. These
+files are the sources of truth for the checks below.
 
 This skill only reads and proposes. Every outward action (editing the PR,
 running the app for screenshots, creating branches) needs the user's explicit
@@ -58,7 +59,7 @@ Put the scope finding first in your report, not in a footnote.
 
 ## 3. Check title and description
 
-Against the CONTRIBUTING rules, report each as pass / missing / weak:
+Against the PR template requirements, report each as pass / missing / weak:
 
 - Title says what changes; user-facing wording for product changes, conventional
   prefix for internal ones.
@@ -74,26 +75,12 @@ become the PR text.
 ## 4. Propose title and description
 
 Write a ready-to-paste title and description that pass step 3. Base it on the
-diff, not on the existing text. Use this shape:
+diff, not on the existing text. Follow the headings and instructions in
+`.github/PULL_REQUEST_TEMPLATE.md`; do not prescribe a separate format.
 
-```markdown
-## Problem
-
-## Change
-
-## Decisions
-
-## Screenshots
-
-| Before | After |
-| ------ | ----- |
-
-## Testing
-```
-
-Drop sections that do not apply (for example, Screenshots for non-UI changes).
-Keep the PR template checkboxes at the end. Leave a clear `TODO` for anything
-you could not determine instead of inventing it.
+Remove optional sections only as the template permits. Keep its checkboxes at
+the end. Leave a clear `TODO` for anything you could not determine instead of
+inventing it.
 
 ## 5. Offer screenshots and a PR update
 

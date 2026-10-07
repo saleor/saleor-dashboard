@@ -60,6 +60,32 @@ export const updateProductVariantTranslations = gql`
   }
 `;
 
+export const updateProductMediaTranslation = gql`
+  mutation UpdateProductMediaTranslation(
+    $id: ID!
+    $input: ProductMediaTranslationInput!
+    $language: LanguageCodeEnum!
+  ) @lockSchema(schema: "main") {
+    productMediaTranslate(id: $id, input: $input, languageCode: $language) {
+      errors {
+        ...ProductMediaTranslateErrorFragment
+      }
+      productMedia {
+        id
+        alt
+        translation(languageCode: $language) {
+          id
+          alt
+          language {
+            code
+            language
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const updateCategoryTranslations = gql`
   mutation UpdateCategoryTranslations(
     $id: ID!

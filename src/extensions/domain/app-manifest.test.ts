@@ -15,6 +15,7 @@ const getValidManifestBase = (overrides: Partial<AppManifestFragment> = {}) => {
     tokenTargetUrl: "",
     dataPrivacy: "",
     dataPrivacyUrl: "",
+    deprecationReason: null,
     homepageUrl: "",
     supportUrl: "",
     brand: {

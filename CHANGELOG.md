@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.23.39
+
+### Patch Changes
+
+- [#6986](https://github.com/saleor/saleor-dashboard/pull/6986) [`38c0c57`](https://github.com/saleor/saleor-dashboard/commit/38c0c570db62fdad1f21220ea571c6af158fb60b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Apps can now mark themselves as deprecated, and the dashboard shows it. The installed extensions list, the app page, and the app's manage page show the app's deprecation message. Installing a deprecated app shows the message and asks you to confirm before you can install it. Deprecated apps keep working as before. Requires Saleor 3.23.38 or later.
+
+- [#6973](https://github.com/saleor/saleor-dashboard/pull/6973) [`07af74d`](https://github.com/saleor/saleor-dashboard/commit/07af74da834e74374219d61d8990cf00feba782c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Cmd+K now has "Copy … ID" actions for the page you are on. On orders and draft orders, you can also copy the order number. On a product variant, you can copy both the variant ID and its product ID. Other detail pages (customers, collections, categories, gift cards, vouchers, discounts, models, model types, structures, channels) get a "Copy … ID" action too. The copied value is the GraphQL ID used by the API, and a toast confirms the copy.
+
+- [#6939](https://github.com/saleor/saleor-dashboard/pull/6939) [`f9093f2`](https://github.com/saleor/saleor-dashboard/commit/f9093f26918a1e1e508b851e07e47594606491df) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Draft order errors now disappear once the missing details are filled in.
+
+  Clicking "Finalize" on an incomplete draft order marks the missing billing address, shipping address and shipping method. Those errors come from the `draftOrderComplete` result, which Apollo keeps until the mutation runs again, so they stayed on screen even after the customer, addresses and carrier had been picked. Each of them is now dropped as soon as the draft actually carries the data it was complaining about.
+
+- [#6941](https://github.com/saleor/saleor-dashboard/pull/6941) [`e215f89`](https://github.com/saleor/saleor-dashboard/commit/e215f8964034fc5a6c202cc6677ef2eb4fb6ff5b) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Draft orders that don't need shipping no longer warn about missing shipping methods.
+
+  A draft made up entirely of non-shippable products (digital goods, for instance) has no shipping methods to offer, so the draft page warned that the destination country was unavailable for the channel and listed it under "You will not be able to finalize this draft because:". Finalizing such an order never checks shipping at all, so the warning named a blocker that did not exist. The alert is now limited to drafts that actually require shipping; the inactive-channel and no-products alerts are unchanged.
+
+- [#6949](https://github.com/saleor/saleor-dashboard/pull/6949) [`19b5bb1`](https://github.com/saleor/saleor-dashboard/commit/19b5bb142e427fabaa1ae2cd0d921bc360bb7152) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The Product Rating field on the product details page is now marked as deprecated. Product rating will be removed in the next minor version — create a numeric "rating" attribute instead. The field still works for now.
+
+- [#6982](https://github.com/saleor/saleor-dashboard/pull/6982) [`0f14255`](https://github.com/saleor/saleor-dashboard/commit/0f14255e13201394c68017ecd656c8c9cd269937) Thanks [@peelar](https://github.com/peelar)! - Fixed the feedback button staying hidden even when its survey loaded successfully. The button now appears when feedback is available, including surveys configured to match the feedback button, and stays hidden in production when surveys are blocked or unavailable. Local development continues to show the feedback button without analytics configuration.
+
+- [#6983](https://github.com/saleor/saleor-dashboard/pull/6983) [`d1510fb`](https://github.com/saleor/saleor-dashboard/commit/d1510fbe36a2f6cbab2a335d6518a862e77bde95) Thanks [@mirekm](https://github.com/mirekm)! - Rich text fields, such as product descriptions, now use the same border as other form fields. Before, that outline looked thicker than name fields and text boxes.
+
+- [#6991](https://github.com/saleor/saleor-dashboard/pull/6991) [`a37698e`](https://github.com/saleor/saleor-dashboard/commit/a37698e9ed566a686a87d8c9890e9807a9393ea8) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Checkout stock reservation in order settings is now toggled with "Enable checkout stock reservation" checkboxes for authenticated and anonymous users. Previously you had to clear the duration input to turn reservation off, which wasn't obvious. Unchecking now saves `0` (reservation disabled) and hides the input; checking shows the input prefilled with a default (400 minutes for authenticated users, 200 for anonymous users).
+
 ## 3.23.38
 
 ### Patch Changes

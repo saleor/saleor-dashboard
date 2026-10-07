@@ -76,6 +76,9 @@ import type {
   AppProblemDismissed,
   AppReenableSyncWebhooks,
   AppRetryInstall,
+  AppSelfUpdate,
+  AppSelfUpdateError,
+  AppSelfUpdateInput,
   AppSortingInput,
   AppStatusChanged,
   AppToken,
@@ -884,6 +887,7 @@ import type {
   ProductVariantUpdated,
   ProductVariantWhereInput,
   ProductWhereInput,
+  PromoCodeRejectionDetails,
   Promotion,
   PromotionBulkDelete,
   PromotionCountableConnection,
@@ -2290,6 +2294,12 @@ export type OptionalApp = {
   dataPrivacy?: App['dataPrivacy'] | undefined;
   /** URL to details about the privacy policy on the app owner page. */
   dataPrivacyUrl?: App['dataPrivacyUrl'] | undefined;
+  /**
+ * Reason why the app is deprecated, set by the app itself. Null when the app is not deprecated. A deprecated app keeps working as usual, but usually means it should not be used anymore.
+ *
+ * Added in Saleor 3.23.
+ */
+  deprecationReason?: App['deprecationReason'] | undefined;
   /** App's dashboard extensions. */
   extensions?: OptionalAppExtension[] | undefined;
   /** Homepage of the app. */
@@ -3384,6 +3394,91 @@ export type OptionalAppRetryInstall = {
  */
 export const defineAppRetryInstallFactory: DefineTypeFactoryInterface<
   OptionalAppRetryInstall,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+export type OptionalAppSelfUpdate = {
+  __typename?: 'AppSelfUpdate';
+  /**
+ * The updated app.
+ *
+ * Added in Saleor 3.23.
+ */
+  app?: Maybe<OptionalApp> | undefined;
+  errors?: OptionalAppSelfUpdateError[] | undefined;
+};
+
+/**
+ * Define factory for {@link AppSelfUpdate} model.
+ *
+ * @param options
+ * @returns factory {@link AppSelfUpdateFactoryInterface}
+ */
+export const defineAppSelfUpdateFactory: DefineTypeFactoryInterface<
+  OptionalAppSelfUpdate,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents errors in the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalAppSelfUpdateError = {
+  __typename?: 'AppSelfUpdateError';
+  /**
+ * The error code.
+ *
+ * Added in Saleor 3.23.
+ */
+  code?: AppSelfUpdateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: AppSelfUpdateError['field'] | undefined;
+  /** The error message. */
+  message?: AppSelfUpdateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppSelfUpdateError} model.
+ *
+ * @param options
+ * @returns factory {@link AppSelfUpdateErrorFactoryInterface}
+ */
+export const defineAppSelfUpdateErrorFactory: DefineTypeFactoryInterface<
+  OptionalAppSelfUpdateError,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Fields to update on the calling app.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalAppSelfUpdateInput = {
+  __typename?: 'AppSelfUpdateInput';
+  /**
+ * Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+ *
+ * Added in Saleor 3.23.
+ */
+  deprecationReason?: AppSelfUpdateInput['deprecationReason'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppSelfUpdateInput} model.
+ *
+ * @param options
+ * @returns factory {@link AppSelfUpdateInputFactoryInterface}
+ */
+export const defineAppSelfUpdateInputFactory: DefineTypeFactoryInterface<
+  OptionalAppSelfUpdateInput,
   {}
 > = defineTypeFactory;
 
@@ -6193,6 +6288,12 @@ export type OptionalCategory = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: Category['descriptionJson'] | undefined;
+  /**
+ * External ID of this category.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Category['externalReference'] | undefined;
   /** The ID of the category. */
   id?: Category['id'] | undefined;
   /** Level of the category. */
@@ -6440,6 +6541,12 @@ export type OptionalCategoryInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: CategoryInput['description'] | undefined;
+  /**
+ * External ID of this category.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: CategoryInput['externalReference'] | undefined;
   /**
  * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
  *
@@ -7972,6 +8079,12 @@ export type OptionalCheckoutError = {
   lines?: CheckoutError['lines'] | undefined;
   /** The error message. */
   message?: CheckoutError['message'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of variant IDs which causes the error. */
   variants?: CheckoutError['variants'] | undefined;
 };
@@ -8823,6 +8936,12 @@ export type OptionalCollection = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: Collection['descriptionJson'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Collection['externalReference'] | undefined;
   /** The ID of the collection. */
   id?: Collection['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
@@ -9088,6 +9207,12 @@ export type OptionalCollectionCreateInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: CollectionCreateInput['description'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: CollectionCreateInput['externalReference'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionCreateInput['isPublished'] | undefined;
   /**
@@ -9257,6 +9382,12 @@ export type OptionalCollectionInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: CollectionInput['description'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: CollectionInput['externalReference'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionInput['isPublished'] | undefined;
   /**
@@ -11300,6 +11431,9 @@ export const defineDraftOrderBulkDeleteFactory: DefineTypeFactoryInterface<
  * Completes creating an order.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
+ *
+ * Triggers the following webhook events:
+ * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
  */
 export type OptionalDraftOrderComplete = {
   __typename?: 'DraftOrderComplete';
@@ -14968,6 +15102,12 @@ export type OptionalManifest = {
   dataPrivacy?: Manifest['dataPrivacy'] | undefined;
   /** URL to the full privacy policy. */
   dataPrivacyUrl?: Manifest['dataPrivacyUrl'] | undefined;
+  /**
+ * Reason why the app is deprecated, declared in the manifest. Null when the app is not deprecated. A deprecated app can still be installed and works as usual, but usually means it should not be used anymore.
+ *
+ * Added in Saleor 3.23.
+ */
+  deprecationReason?: Manifest['deprecationReason'] | undefined;
   /** List of extensions that will be mounted in Saleor's dashboard. For details, please [see the extension section.](https://docs.saleor.io/developer/extending/apps/extending-dashboard-with-apps#key-concepts) */
   extensions?: OptionalAppManifestExtension[] | undefined;
   /** External URL to the app homepage. */
@@ -16337,6 +16477,14 @@ export type OptionalMutation = {
  */
   appRetryInstall?: Maybe<OptionalAppRetryInstall> | undefined;
   /**
+ * Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+  appSelfUpdate?: Maybe<OptionalAppSelfUpdate> | undefined;
+  /**
  * Creates a new token.
  *
  * Requires one of the following permissions: MANAGE_APPS.
@@ -16968,6 +17116,9 @@ export type OptionalMutation = {
  * Completes creating an order.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
+ *
+ * Triggers the following webhook events:
+ * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
  */
   draftOrderComplete?: Maybe<OptionalDraftOrderComplete> | undefined;
   /**
@@ -19661,6 +19812,12 @@ export type OptionalOrderCreateFromCheckoutError = {
   lines?: OrderCreateFromCheckoutError['lines'] | undefined;
   /** The error message. */
   message?: OrderCreateFromCheckoutError['message'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of variant IDs which causes the error. */
   variants?: OrderCreateFromCheckoutError['variants'] | undefined;
 };
@@ -19869,6 +20026,12 @@ export type OptionalOrderError = {
   message?: OrderError['message'] | undefined;
   /** List of order line IDs that cause the error. */
   orderLines?: OrderError['orderLines'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of product variants that are associated with the error */
   variants?: OrderError['variants'] | undefined;
   /** Warehouse ID which causes the error. */
@@ -28559,6 +28722,32 @@ export const defineProductWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Details explaining why a promo code cannot be applied.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalPromoCodeRejectionDetails = {
+  __typename?: 'PromoCodeRejectionDetails';
+  /** The minimum number of items required by the voucher. Set only when `reason` is `MIN_QUANTITY_NOT_REACHED`. */
+  minCheckoutItemsQuantity?: PromoCodeRejectionDetails['minCheckoutItemsQuantity'] | undefined;
+  /** The minimum order value required by the voucher. Set only when `reason` is `MIN_SPENT_NOT_REACHED`. */
+  minSpent?: Maybe<OptionalMoney> | undefined;
+  /** The specific reason why the promo code cannot be applied. */
+  reason?: PromoCodeRejectionDetails['reason'] | undefined;
+};
+
+/**
+ * Define factory for {@link PromoCodeRejectionDetails} model.
+ *
+ * @param options
+ * @returns factory {@link PromoCodeRejectionDetailsFactoryInterface}
+ */
+export const definePromoCodeRejectionDetailsFactory: DefineTypeFactoryInterface<
+  OptionalPromoCodeRejectionDetails,
+  {}
+> = defineTypeFactory;
+
 /** Represents the promotion that allow creating discounts based on given conditions, and is visible to all the customers. */
 export type OptionalPromotion = {
   __typename?: 'Promotion';
@@ -28570,6 +28759,12 @@ export type OptionalPromotion = {
   endDate?: Promotion['endDate'] | undefined;
   /** The list of events associated with the promotion. */
   events?: Maybe<OptionalPromotionEvent[]> | undefined;
+  /**
+ * External ID of this promotion.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Promotion['externalReference'] | undefined;
   id?: Promotion['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
   metadata?: OptionalMetadataItem[] | undefined;
@@ -28750,6 +28945,12 @@ export type OptionalPromotionCreateInput = {
   description?: PromotionCreateInput['description'] | undefined;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: PromotionCreateInput['endDate'] | undefined;
+  /**
+ * External ID of this promotion.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: PromotionCreateInput['externalReference'] | undefined;
   /** Promotion name. */
   name?: PromotionCreateInput['name'] | undefined;
   /** List of promotion rules. */
@@ -29878,6 +30079,12 @@ export type OptionalPromotionUpdateInput = {
   description?: PromotionUpdateInput['description'] | undefined;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: PromotionUpdateInput['endDate'] | undefined;
+  /**
+ * External ID of this promotion.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: PromotionUpdateInput['externalReference'] | undefined;
   /** Promotion name. */
   name?: PromotionUpdateInput['name'] | undefined;
   /** The start date of the promotion in ISO 8601 format. */
@@ -30048,7 +30255,7 @@ export type OptionalQuery = {
   attributes?: Maybe<OptionalAttributeCountableConnection> | undefined;
   /** List of the shop's categories. */
   categories?: Maybe<OptionalCategoryCountableConnection> | undefined;
-  /** Look up a category by ID or slug. */
+  /** Look up a category by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. */
   category?: Maybe<OptionalCategory> | undefined;
   /** Look up a channel by ID or slug. */
   channel?: Maybe<OptionalChannel> | undefined;
@@ -30076,7 +30283,7 @@ export type OptionalQuery = {
  * Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_PAYMENTS.
  */
   checkouts?: Maybe<OptionalCheckoutCountableConnection> | undefined;
-  /** Look up a collection by ID or slug. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
+  /** Look up a collection by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collection?: Maybe<OptionalCollection> | undefined;
   /** List of the shop's collections. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collections?: Maybe<OptionalCollectionCountableConnection> | undefined;
@@ -30245,7 +30452,7 @@ export type OptionalQuery = {
   /** List of the shop's products. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   products?: Maybe<OptionalProductCountableConnection> | undefined;
   /**
- * Look up a promotion by ID.
+ * Look up a promotion by ID or external reference.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  */

@@ -1,11 +1,13 @@
 import { defaultScenario } from "./default.ts";
 import { ordersScenario } from "./orders.ts";
+import { productMediaTranslationsScenario } from "./productMediaTranslations.ts";
 import type { Scenario } from "./scenario.ts";
 
 /** Every scenario a spec may ask for by name, via `test.use({ scenario: "..." })`. */
 export const SCENARIOS: Record<string, Scenario> = {
   [defaultScenario.name]: defaultScenario,
   [ordersScenario.name]: ordersScenario,
+  [productMediaTranslationsScenario.name]: productMediaTranslationsScenario,
 };
 
 export const scenarioByName = (name: string): Scenario => {

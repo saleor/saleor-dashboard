@@ -1035,6 +1035,12 @@ export type CategoryInput = {
    */
   description?: InputMaybe<Scalars['JSONString']['input']>;
   /**
+   * External ID of this category.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
+  /**
    * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -1478,6 +1484,12 @@ export type CollectionCreateInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description?: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * External ID of this collection.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Informs whether a collection is published. */
   isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -1543,6 +1555,12 @@ export type CollectionInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description?: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * External ID of this collection.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Informs whether a collection is published. */
   isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -7476,6 +7494,32 @@ export type ProductWhereInput = {
   updatedAt?: InputMaybe<DateTimeFilterInput>;
 };
 
+/** The specific reason why a promo code cannot be applied. A code that has not been proven usable yet is only ever reported as `NOT_FOUND`, `EXPIRED` or `USAGE_LIMIT_REACHED`, so that a rejected code cannot be told apart from one that does not exist. The reason never depends on the caller's permissions. */
+export enum PromoCodeRejectionReason {
+  /** The voucher is limited to one use per customer, so a customer email must be set on the checkout before it can be applied. */
+  CUSTOMER_EMAIL_REQUIRED = 'CUSTOMER_EMAIL_REQUIRED',
+  /** The voucher applies to shipping, but no delivery method is selected yet. Selecting one may make the voucher applicable. */
+  DELIVERY_METHOD_NOT_SET = 'DELIVERY_METHOD_NOT_SET',
+  /** The voucher's end date, or the gift card's expiry date, is in the past. */
+  EXPIRED = 'EXPIRED',
+  /** The order contains fewer items than the voucher's minimum. Populates the `minCheckoutItemsQuantity` field. */
+  MIN_QUANTITY_NOT_REACHED = 'MIN_QUANTITY_NOT_REACHED',
+  /** The order value is below the voucher's minimum. Populates the `minSpent` field. */
+  MIN_SPENT_NOT_REACHED = 'MIN_SPENT_NOT_REACHED',
+  /** The promo code exists but cannot be used here. Reported when the reason is specific to the code's configuration rather than to something the customer can change: a voucher limited to staff, to other countries, to another channel or to one use per customer, or a gift card restricted to another customer. */
+  NOT_APPLICABLE = 'NOT_APPLICABLE',
+  /** No promo code matches the given code. Also reported in place of a reason that may not be disclosed, so this value does not prove that no voucher or gift card exists with that code. */
+  NOT_FOUND = 'NOT_FOUND',
+  /** The voucher applies to specific products, collections or categories, and none of the ordered lines match. */
+  NO_ELIGIBLE_PRODUCTS = 'NO_ELIGIBLE_PRODUCTS',
+  /** The promo code was applicable when it was added to the checkout, but is no longer available. */
+  NO_LONGER_AVAILABLE = 'NO_LONGER_AVAILABLE',
+  /** The voucher applies to shipping, but nothing in the order requires shipping. */
+  SHIPPING_NOT_REQUIRED = 'SHIPPING_NOT_REQUIRED',
+  /** The voucher's total usage limit, summed over all of its codes, is exhausted, or a single-use code was already redeemed. */
+  USAGE_LIMIT_REACHED = 'USAGE_LIMIT_REACHED'
+}
+
 export enum PromotionCreateErrorCode {
   GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7486,7 +7530,8 @@ export enum PromotionCreateErrorCode {
   MULTIPLE_CURRENCIES_NOT_ALLOWED = 'MULTIPLE_CURRENCIES_NOT_ALLOWED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
-  RULES_NUMBER_LIMIT = 'RULES_NUMBER_LIMIT'
+  RULES_NUMBER_LIMIT = 'RULES_NUMBER_LIMIT',
+  UNIQUE = 'UNIQUE'
 }
 
 export type PromotionCreateInput = {
@@ -7494,6 +7539,12 @@ export type PromotionCreateInput = {
   description?: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Promotion name. */
   name: Scalars['String']['input'];
   /** List of promotion rules. */
@@ -7713,7 +7764,8 @@ export enum PromotionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
-  REQUIRED = 'REQUIRED'
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
 }
 
 export type PromotionUpdateInput = {
@@ -7721,6 +7773,12 @@ export type PromotionUpdateInput = {
   description?: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Promotion name. */
   name?: InputMaybe<Scalars['String']['input']>;
   /** The start date of the promotion in ISO 8601 format. */

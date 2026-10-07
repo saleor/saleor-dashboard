@@ -344,7 +344,9 @@ type Query {
     last: Int
   ): CategoryCountableConnection @doc(category: "Products")
 
-  """Look up a category by ID or slug."""
+  """
+  Look up a category by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation.
+  """
   category(
     """ID of the category."""
     id: ID
@@ -358,10 +360,17 @@ type Query {
     Added in Saleor 3.21.
     """
     slugLanguageCode: LanguageCodeEnum
+
+    """
+    External ID of the category.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
   ): Category @doc(category: "Products")
 
   """
-  Look up a collection by ID or slug. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  Look up a collection by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
   """
   collection(
     """ID of the collection."""
@@ -376,6 +385,13 @@ type Query {
     Added in Saleor 3.21.
     """
     slugLanguageCode: LanguageCodeEnum
+
+    """
+    External ID of the collection.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
 
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -1223,13 +1239,20 @@ type Query {
   ): VoucherCountableConnection @doc(category: "Discounts")
 
   """
-  Look up a promotion by ID.
+  Look up a promotion by ID or external reference.
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   """
   promotion(
     """ID of the promotion."""
-    id: ID!
+    id: ID
+
+    """
+    External ID of the promotion.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
   ): Promotion @doc(category: "Discounts")
 
   """
@@ -3029,6 +3052,13 @@ type App implements Node & ObjectWithMetadata @doc(category: "Apps") {
   """The App's author name."""
   author: String
 
+  """
+  Reason why the app is deprecated, set by the app itself. Null when the app is not deprecated. A deprecated app keeps working as usual, but usually means it should not be used anymore.
+  
+  Added in Saleor 3.23.
+  """
+  deprecationReason: String
+
   """App's dashboard extensions."""
   extensions: [AppExtension!]!
 
@@ -4370,6 +4400,13 @@ type Category implements Node & ObjectWithMetadata @doc(category: "Products") {
 
   """Slug of the category."""
   slug: String!
+
+  """
+  External ID of this category.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """Parent category."""
   parent: Category
@@ -10301,6 +10338,13 @@ type Collection implements Node & ObjectWithMetadata @doc(category: "Products") 
   slug: String!
 
   """
+  External ID of this collection.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
+  """
   Channel given to retrieve this collection. Also used by federation gateway to resolve this object in a federated query.
   """
   channel: String
@@ -13590,6 +13634,13 @@ type OrderError @doc(category: "Orders") {
 
   """A type of address that causes the error."""
   addressType: AddressTypeEnum
+
+  """
+  Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+  
+  Added in Saleor 3.23.
+  """
+  promoCodeDetails: PromoCodeRejectionDetails
 }
 
 enum OrderErrorCode @doc(category: "Orders") {
@@ -13635,6 +13686,86 @@ enum OrderErrorCode @doc(category: "Orders") {
 enum AddressTypeEnum {
   BILLING
   SHIPPING
+}
+
+"""
+Details explaining why a promo code cannot be applied.
+
+Added in Saleor 3.23.
+"""
+type PromoCodeRejectionDetails @doc(category: "Checkout") {
+  """The specific reason why the promo code cannot be applied."""
+  reason: PromoCodeRejectionReason!
+
+  """
+  The minimum order value required by the voucher. Set only when `reason` is `MIN_SPENT_NOT_REACHED`.
+  """
+  minSpent: Money
+
+  """
+  The minimum number of items required by the voucher. Set only when `reason` is `MIN_QUANTITY_NOT_REACHED`.
+  """
+  minCheckoutItemsQuantity: Int
+}
+
+"""
+The specific reason why a promo code cannot be applied. A code that has not been proven usable yet is only ever reported as `NOT_FOUND`, `EXPIRED` or `USAGE_LIMIT_REACHED`, so that a rejected code cannot be told apart from one that does not exist. The reason never depends on the caller's permissions.
+"""
+enum PromoCodeRejectionReason @doc(category: "Discounts") {
+  """
+  No promo code matches the given code. Also reported in place of a reason that may not be disclosed, so this value does not prove that no voucher or gift card exists with that code.
+  """
+  NOT_FOUND
+
+  """
+  The voucher's end date, or the gift card's expiry date, is in the past.
+  """
+  EXPIRED
+
+  """
+  The voucher's total usage limit, summed over all of its codes, is exhausted, or a single-use code was already redeemed.
+  """
+  USAGE_LIMIT_REACHED
+
+  """
+  The promo code exists but cannot be used here. Reported when the reason is specific to the code's configuration rather than to something the customer can change: a voucher limited to staff, to other countries, to another channel or to one use per customer, or a gift card restricted to another customer.
+  """
+  NOT_APPLICABLE
+
+  """
+  The order value is below the voucher's minimum. Populates the `minSpent` field.
+  """
+  MIN_SPENT_NOT_REACHED
+
+  """
+  The order contains fewer items than the voucher's minimum. Populates the `minCheckoutItemsQuantity` field.
+  """
+  MIN_QUANTITY_NOT_REACHED
+
+  """
+  The voucher is limited to one use per customer, so a customer email must be set on the checkout before it can be applied.
+  """
+  CUSTOMER_EMAIL_REQUIRED
+
+  """
+  The voucher applies to shipping, but nothing in the order requires shipping.
+  """
+  SHIPPING_NOT_REQUIRED
+
+  """
+  The voucher applies to shipping, but no delivery method is selected yet. Selecting one may make the voucher applicable.
+  """
+  DELIVERY_METHOD_NOT_SET
+
+  """
+  The voucher applies to specific products, collections or categories, and none of the ordered lines match.
+  """
+  NO_ELIGIBLE_PRODUCTS
+
+  """
+  The promo code was applicable when it was added to the checkout, but is no longer available.
+  """
+  NO_LONGER_AVAILABLE
 }
 
 """The details of granted refund."""
@@ -17084,6 +17215,13 @@ type Promotion implements Node & ObjectWithMetadata @doc(category: "Discounts") 
   name: String!
 
   """
+  External ID of this promotion.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
+  """
   The type of the promotion. Implicate if the discount is applied on catalogue or order level.
   
   Added in Saleor 3.19.
@@ -18694,8 +18832,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   categoryDelete(
+    """
+    External ID of a category to delete.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a category to delete."""
-    id: ID!
+    id: ID
   ): CategoryDelete @doc(category: "Products")
 
   """
@@ -18714,8 +18859,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   categoryUpdate(
+    """
+    External ID of a category to update.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a category to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a category."""
     input: CategoryInput!
@@ -18766,8 +18918,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   collectionDelete(
+    """
+    External ID of a collection to delete.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a collection to delete."""
-    id: ID!
+    id: ID
   ): CollectionDelete @doc(category: "Products")
 
   """
@@ -18812,8 +18971,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   collectionUpdate(
+    """
+    External ID of a collection to update.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a collection to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a collection."""
     input: CollectionInput!
@@ -19946,11 +20112,14 @@ type Mutation {
   Completes creating an order. 
   
   Requires one of the following permissions: MANAGE_ORDERS.
+  
+  Triggers the following webhook events:
+  - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
   """
   draftOrderComplete(
     """ID of the order that will be completed."""
     id: ID!
-  ): DraftOrderComplete @doc(category: "Orders")
+  ): DraftOrderComplete @doc(category: "Orders") @webhookEventsInfo(asyncEvents: [NOTIFY_USER], syncEvents: [])
 
   """
   Creates a new draft order. 
@@ -20939,8 +21108,15 @@ type Mutation {
   - PROMOTION_ENDED (async): Optionally called if promotion was ended.
   """
   promotionUpdate(
+    """
+    External ID of a promotion to update.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of the promotion to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a promotion."""
     input: PromotionUpdateInput!
@@ -20955,8 +21131,15 @@ type Mutation {
   - PROMOTION_DELETED (async): A promotion was deleted.
   """
   promotionDelete(
+    """
+    External ID of the promotion to remove.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """The ID of the promotion to remove."""
-    id: ID!
+    id: ID
   ): PromotionDelete @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [PROMOTION_DELETED], syncEvents: [])
 
   """
@@ -22292,6 +22475,22 @@ type Mutation {
     """Input for dismissing app problems."""
     input: AppProblemDismissInput!
   ): AppProblemDismiss @doc(category: "Apps")
+
+  """
+  Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: AUTHENTICATED_APP.
+  """
+  appSelfUpdate(
+    """
+    Fields to update on the calling app.
+    
+    Added in Saleor 3.23.
+    """
+    input: AppSelfUpdateInput!
+  ): AppSelfUpdate @doc(category: "Apps")
 
   """
   Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends.
@@ -24819,6 +25018,13 @@ input CategoryInput @doc(category: "Products") {
   """Category slug."""
   slug: String
 
+  """
+  External ID of this category.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
   """Search engine optimization fields."""
   seo: SeoInput
 
@@ -24976,6 +25182,13 @@ input CollectionCreateInput @doc(category: "Products") {
   slug: String
 
   """
+  External ID of this collection.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
+  """
   Description of the collection.
   
   Rich text format. For reference see https://editorjs.io/
@@ -25089,6 +25302,13 @@ input CollectionInput @doc(category: "Products") {
 
   """Slug of the collection."""
   slug: String
+
+  """
+  External ID of this collection.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """
   Description of the collection.
@@ -27953,8 +28173,11 @@ type PageReorderAttributeValues @doc(category: "Pages") {
 Completes creating an order. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
+
+Triggers the following webhook events:
+- NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
 """
-type DraftOrderComplete @doc(category: "Orders") {
+type DraftOrderComplete @doc(category: "Orders") @webhookEventsInfo(asyncEvents: [NOTIFY_USER], syncEvents: []) {
   """Completed order."""
   order: Order
   orderErrors: [OrderError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -30456,6 +30679,7 @@ enum PromotionCreateErrorCode {
   NOT_FOUND
   REQUIRED
   INVALID
+  UNIQUE
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   INVALID_PRECISION
   MISSING_CHANNELS
@@ -30473,6 +30697,13 @@ input PromotionCreateInput @doc(category: "Discounts") {
 
   """The end date of the promotion in ISO 8601 format."""
   endDate: DateTime
+
+  """
+  External ID of this promotion.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """Promotion name."""
   name: String!
@@ -30619,6 +30850,7 @@ enum PromotionUpdateErrorCode {
   NOT_FOUND
   REQUIRED
   INVALID
+  UNIQUE
 }
 
 input PromotionUpdateInput {
@@ -30630,6 +30862,13 @@ input PromotionUpdateInput {
 
   """The end date of the promotion in ISO 8601 format."""
   endDate: DateTime
+
+  """
+  External ID of this promotion.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """Promotion name."""
   name: String
@@ -31646,6 +31885,13 @@ type CheckoutError @doc(category: "Checkout") {
 
   """A type of address that causes the error."""
   addressType: AddressTypeEnum
+
+  """
+  Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+  
+  Added in Saleor 3.23.
+  """
+  promoCodeDetails: PromoCodeRejectionDetails
 }
 
 enum CheckoutErrorCode @doc(category: "Checkout") {
@@ -32258,6 +32504,13 @@ type OrderCreateFromCheckoutError @doc(category: "Orders") {
 
   """List of line Ids which cause the error."""
   lines: [ID!]
+
+  """
+  Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+  
+  Added in Saleor 3.23.
+  """
+  promoCodeDetails: PromoCodeRejectionDetails
 }
 
 enum OrderCreateFromCheckoutErrorCode @doc(category: "Orders") {
@@ -33479,6 +33732,13 @@ type Manifest @doc(category: "Apps") {
   """URL to the full privacy policy."""
   dataPrivacyUrl: String
 
+  """
+  Reason why the app is deprecated, declared in the manifest. Null when the app is not deprecated. A deprecated app can still be installed and works as usual, but usually means it should not be used anymore.
+  
+  Added in Saleor 3.23.
+  """
+  deprecationReason: String
+
   """External URL to the app homepage."""
   homepageUrl: String
 
@@ -33741,6 +34001,70 @@ input AppProblemDismissByStaffWithKeysInput @doc(category: "Apps") {
 
   """ID of the app whose problems to dismiss."""
   app: ID!
+}
+
+"""
+Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: AUTHENTICATED_APP.
+"""
+type AppSelfUpdate @doc(category: "Apps") {
+  """
+  The updated app.
+  
+  Added in Saleor 3.23.
+  """
+  app: App
+  errors: [AppSelfUpdateError!]!
+}
+
+"""
+Represents errors in the appSelfUpdate mutation.
+
+Added in Saleor 3.23.
+"""
+type AppSelfUpdateError @doc(category: "Apps") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """
+  The error code.
+  
+  Added in Saleor 3.23.
+  """
+  code: AppSelfUpdateErrorCode!
+}
+
+"""
+Error codes for the appSelfUpdate mutation.
+
+Added in Saleor 3.23.
+"""
+enum AppSelfUpdateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  REQUIRED
+}
+
+"""
+Fields to update on the calling app.
+
+Added in Saleor 3.23.
+"""
+input AppSelfUpdateInput @doc(category: "Apps") {
+  """
+  Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+  
+  Added in Saleor 3.23.
+  """
+  deprecationReason: String
 }
 
 """

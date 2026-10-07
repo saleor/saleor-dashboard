@@ -691,3 +691,36 @@ export const extensionActions = defineMessages({
     id: "jCYHA+",
   },
 });
+
+export const deprecationMessages = defineMessages({
+  statusTitle: {
+    defaultMessage: "This app is being deprecated",
+    id: "Cs70jv",
+    description: "Heading explaining the deprecated status of an installed extension",
+  },
+  inlineLabel: {
+    defaultMessage: "Deprecated:",
+    id: "bepijT",
+    description: "label before the app's deprecation reason in a compact notice",
+  },
+  title: {
+    defaultMessage: "This app is deprecated",
+    id: "spOqAF",
+    description: "deprecation notice title",
+  },
+  description: {
+    defaultMessage: "It still works, but the developer recommends migrating.",
+    id: "n1ja6a",
+    description: "deprecation notice subtitle explaining the app keeps working",
+  },
+  showLess: {
+    defaultMessage: "Show less",
+    id: "mnm882",
+    description: "collapse the app's deprecation reason",
+  },
+  installAcknowledgement: {
+    defaultMessage: "I understand this app is deprecated and want to install it anyway.",
+    id: "GBgv1f",
+    description: "checkbox required before installing a deprecated app",
+  },
+});

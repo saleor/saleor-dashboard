@@ -11,6 +11,12 @@ export class OrderSettingsPage extends BasePage {
     readonly stockReservationForAnonUserInput = page.getByTestId(
       "reserve-stock-duration-for-anon-user-input",
     ),
+    readonly stockReservationForAuthUserCheckbox = page.getByTestId(
+      "reserve-stock-duration-for-auth-user-checkbox",
+    ),
+    readonly stockReservationForAnonUserCheckbox = page.getByTestId(
+      "reserve-stock-duration-for-anon-user-checkbox",
+    ),
     readonly checkoutLineLimitInput = page.getByTestId("checkout-limits-input"),
   ) {
     super(page);
@@ -18,6 +24,11 @@ export class OrderSettingsPage extends BasePage {
 
   async gotoOrderSettings() {
     await this.page.goto(URL_LIST.orderSettings);
+  }
+
+  async enableStockReservations(): Promise<void> {
+    await this.stockReservationForAuthUserCheckbox.check();
+    await this.stockReservationForAnonUserCheckbox.check();
   }
 
   async fillStockReservationForAuthUser(value: string) {

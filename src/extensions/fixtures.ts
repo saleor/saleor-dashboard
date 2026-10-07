@@ -15,6 +15,7 @@ export const appDetails: NonNullable<AppQuery["app"]> = {
   manifestUrl: "http://localhost:8888/api/manifest",
   created: "2020-06-02T12:24:26.818138+00:00",
   dataPrivacyUrl: "http://localhost:8888/app-data-privacy",
+  deprecationReason: null,
   homepageUrl: "http://localhost:8888/homepage",
   id: "QXBwOjE4MQ==",
   isActive: true,

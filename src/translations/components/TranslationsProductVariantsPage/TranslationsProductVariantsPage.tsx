@@ -22,6 +22,7 @@ import {
 import {
   languageEntitiesUrl,
   languageEntityUrl,
+  productMediaUrl,
   productVariantUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
@@ -127,7 +128,7 @@ export const TranslationsProductVariantsPage = ({
               } else if (type === "variant") {
                 navigate(productVariantUrl(languageCode, productId, id));
               } else {
-                throw new Error("Invalid type, must be main or variant");
+                navigate(productMediaUrl(languageCode, productId, id));
               }
             }}
             productId={productId}
