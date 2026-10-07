@@ -1,6 +1,7 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 
 import { WarehouseShippingZonesCard } from "./WarehouseShippingZonesCard";
 
@@ -32,6 +33,7 @@ describe("WarehouseShippingZonesCard", () => {
     await userEvent.click(screen.getByTestId("warehouse-zones-add"));
 
     // Assert
+    expect(screen.getByTestId("assign-list-required-meta")).toHaveTextContent("Required to sell");
     expect(screen.getByText("No shipping zone")).toBeInTheDocument();
     expect(onRequestAssign).toHaveBeenCalledTimes(1);
   });
@@ -46,10 +48,34 @@ describe("WarehouseShippingZonesCard", () => {
 
     // Assert
     expect(screen.queryByTestId("warehouse-zones-add")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("assign-list-required-meta")).not.toBeInTheDocument();
     expect(
       screen.getByText(
         "Add this location to a channel first. Stock here can't be sold until then.",
       ),
     ).toBeInTheDocument();
+  });
+
+  it("still requires a zone when linked zones share no channel", () => {
+    // Arrange
+    render(
+      <Wrapper>
+        <MemoryRouter>
+          <WarehouseShippingZonesCard
+            {...baseProps}
+            zones={[{ id: "z-eu", name: "Europe", channelIds: ["other-channel"] }]}
+            totalCount={1}
+            warehouseChannelIds={["channel-1"]}
+            channelNames={["Brazil"]}
+          />
+        </MemoryRouter>
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("assign-list-required-meta")).toHaveTextContent("Required to sell");
+    expect(screen.getByText("Europe")).toBeInTheDocument();
+    expect(screen.getByText("Not in this location's channels")).toBeInTheDocument();
+    expect(screen.getByTestId("warehouse-zones-add")).toBeInTheDocument();
   });
 });

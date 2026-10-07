@@ -19,7 +19,6 @@ import {
   getMutationStatus,
   getStringOrPlaceholder,
 } from "@dashboard/misc";
-import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
@@ -37,6 +36,7 @@ import {
   type WarehouseUrlQueryParams,
 } from "@dashboard/warehouses/urls";
 import { type ZoneChannelMembership } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
+import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 interface WarehouseDetailsProps {
@@ -64,12 +64,13 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
     params => warehouseUrl(id, params),
     params,
   );
+  // Checklist is rendered inside the channels hook; zone assign opens after that hook runs.
+  const openZoneAssignRef = useRef<() => void>(() => undefined);
   const channels = useWarehouseDetailsChannels({
     warehouseId: id,
     legacyStockAvailability,
     zones: shippingZones.zones,
     zonesTruncated: shippingZones.truncated,
-    zoneCount: data?.warehouse?.shippingZones?.totalCount ?? shippingZones.zones.length,
     checklistEmphasized: !!data?.warehouse && params.action === "setup",
     onDismissChecklist: channelCount => {
       dismissChecklist(channelCount);
@@ -78,7 +79,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
         closeModal();
       }
     },
-    onOpenShippingZones: () => navigate(shippingZonesListUrl()),
+    onOpenShippingZones: () => openZoneAssignRef.current(),
   });
   const zoneAssignment = useWarehouseShippingZoneAssignment({
     warehouseId: id,
@@ -88,6 +89,14 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       await refetch();
     },
   });
+
+  useEffect(
+    function syncZoneAssignOpener() {
+      openZoneAssignRef.current = zoneAssignment.openAssign;
+    },
+    [zoneAssignment.openAssign],
+  );
+
   const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation({
     onCompleted: data => {
       if (data?.updateWarehouse?.errors.length === 0) {

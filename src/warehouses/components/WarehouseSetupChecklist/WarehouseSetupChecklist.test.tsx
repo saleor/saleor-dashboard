@@ -43,7 +43,7 @@ describe("WarehouseSetupChecklist", () => {
     expect(screen.queryByTestId("warehouse-setup-add-channel")).not.toBeInTheDocument();
   });
 
-  it("marks the channel step done and can be dismissed", async () => {
+  it("marks the channel step done and can be dismissed when shipping is not required", async () => {
     // Arrange
     const onDismiss = jest.fn();
 
@@ -60,37 +60,78 @@ describe("WarehouseSetupChecklist", () => {
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
-  it("lists shipping zones to review only in the older stock mode", async () => {
+  it("requires a shipping zone in the older stock mode after a channel is assigned", async () => {
     // Arrange
-    const onOpenShippingZones = jest.fn();
+    const onAddShippingZone = jest.fn();
 
-    const { rerender } = renderChecklist({
+    renderChecklist({
       inChannel: true,
       showShippingZones: true,
       zoneCount: 0,
-      onOpenShippingZones,
+      hasUsableShippingZone: false,
+      canManageShipping: true,
+      onAddShippingZone,
     });
 
+    // Assert
+    expect(screen.getByText("Link a shipping zone")).toBeInTheDocument();
+    expect(screen.queryByText("Worth reviewing")).not.toBeInTheDocument();
+    expect(screen.getByText(/Next up:/)).toBeInTheDocument();
+    expect(screen.queryByTestId("setup-dismiss")).not.toBeInTheDocument();
+
     // Act
-    await userEvent.click(screen.getByTestId("setup-checklist-review-shipping-zones"));
+    await userEvent.click(screen.getByTestId("warehouse-setup-add-shipping-zone"));
 
     // Assert
-    expect(screen.getByText("Worth reviewing")).toBeInTheDocument();
-    expect(screen.getByText("No shipping zone")).toBeInTheDocument();
-    expect(onOpenShippingZones).toHaveBeenCalledTimes(1);
+    expect(onAddShippingZone).toHaveBeenCalledTimes(1);
+  });
 
-    rerender(
-      <Wrapper>
-        <WarehouseSetupChecklist
-          canManage
-          inChannel
-          showShippingZones={false}
-          onAddChannel={jest.fn()}
-          onOpenShippingZones={onOpenShippingZones}
-        />
-      </Wrapper>,
+  it("keeps the shipping zone step open when linked zones share no channel", () => {
+    // Arrange
+    renderChecklist({
+      inChannel: true,
+      showShippingZones: true,
+      zoneCount: 0,
+      hasUsableShippingZone: false,
+      canManageShipping: true,
+      onAddShippingZone: jest.fn(),
+    });
+
+    // Assert
+    expect(screen.getByTestId("setup-checklist-task-shipping-zones")).toHaveAttribute(
+      "data-status",
+      "active",
     );
+    expect(screen.getByTestId("warehouse-setup-add-shipping-zone")).toBeInTheDocument();
+  });
 
-    expect(screen.queryByText("Worth reviewing")).not.toBeInTheDocument();
+  it("locks the shipping zone step until a channel is assigned", () => {
+    // Arrange
+    renderChecklist({
+      showShippingZones: true,
+      canManageShipping: true,
+      onAddShippingZone: jest.fn(),
+    });
+
+    // Assert
+    expect(screen.getByTestId("setup-checklist-task-shipping-zones")).toHaveAttribute(
+      "data-status",
+      "locked",
+    );
+    expect(screen.getByText("Add to a channel first")).toBeInTheDocument();
+    expect(screen.queryByTestId("warehouse-setup-add-shipping-zone")).not.toBeInTheDocument();
+  });
+
+  it("omits the shipping zone step in the default stock mode", () => {
+    // Arrange
+    renderChecklist({
+      inChannel: true,
+      showShippingZones: false,
+      onAddShippingZone: jest.fn(),
+    });
+
+    // Assert
+    expect(screen.queryByText("Link a shipping zone")).not.toBeInTheDocument();
+    expect(screen.getByText("Required steps are complete.")).toBeInTheDocument();
   });
 });

@@ -1,3 +1,4 @@
+import { AssignListRequiredMeta } from "@dashboard/components/AssignListCard/AssignListCard";
 import { ChannelDetailsLink } from "@dashboard/components/Channel/Channel";
 import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
@@ -62,16 +63,18 @@ export const WarehouseChannelsCard = ({
           <FormattedMessage {...messages.channelsTitle} />
         </Text>
         {status === "ready" ? (
-          <Text size={2} color="default2">
-            {hasChannels ? (
+          hasChannels ? (
+            <Text size={2} color="default2">
               <FormattedMessage
                 {...messages.channelsAssignedCount}
                 values={{ count: channels.length }}
               />
-            ) : (
+            </Text>
+          ) : (
+            <AssignListRequiredMeta>
               <FormattedMessage {...messages.channelsRequired} />
-            )}
-          </Text>
+            </AssignListRequiredMeta>
+          )
         ) : null}
       </Box>
       <Box className={styles.intro}>

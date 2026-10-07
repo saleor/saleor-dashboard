@@ -82,39 +82,48 @@ export const WarehouseShippingZonesCard = ({
   onRemove,
 }: WarehouseShippingZonesCardProps): ReactNode => {
   const intl = useIntl();
+  const count = totalCount ?? zones.length;
+  const zonesTruncated = count > zones.length;
   const guidance = warehouseZonesGuidance({
     legacyStockAvailability: loading ? undefined : legacyStockAvailability,
-    hasZones: zones.length > 0,
     membershipStatus: loading ? "loading" : membershipStatus,
     channelNames,
     zones,
     warehouseChannelIds,
+    zonesTruncated,
   });
 
   if (guidance.kind === "hidden") {
     return null;
   }
 
-  const count = totalCount ?? zones.length;
   const hiddenCount = Math.max(count - zones.length, 0);
+  const zoneRequired = guidance.kind === "legacy-need-zone";
   const canAssign =
     canManage &&
     guidance.kind !== "loading" &&
     guidance.kind !== "legacy-need-channel" &&
     guidance.kind !== "legacy-unknown";
-  const outside = new Set(guidance.kind === "legacy-linked" ? guidance.outsideChannelZoneIds : []);
+  // Always mark outside-channel links, including when they are the only zones
+  // (legacy-need-zone) so the list explains why they do not count for selling.
+  const outside = new Set(
+    zones
+      .filter(zone => !zone.channelIds.some(channelId => warehouseChannelIds.includes(channelId)))
+      .map(zone => zone.id),
+  );
 
   return (
     <AssignListCard
       data-test-id="warehouse-shipping-zones"
       title={<FormattedMessage {...messages.zonesTitle} />}
       subtitle={
-        guidance.kind === "loading" ? null : count === 0 ? (
+        guidance.kind === "loading" ? null : zoneRequired ? (
           <FormattedMessage {...messages.channelsRequired} />
-        ) : (
+        ) : count > 0 ? (
           <FormattedMessage {...messages.channelsAssignedCount} values={{ count }} />
-        )
+        ) : null
       }
+      emphasis={zoneRequired ? "warning" : "default"}
       loading={guidance.kind === "loading"}
       disabled={disabled}
       removable={canManage}

@@ -1,4 +1,5 @@
 import {
+  warehouseSharesShippingZone,
   warehouseZonesGuidance,
   zonesUnlinkedByRemovingWarehouseChannel,
 } from "./zonesUnlinkedByChannelRemoval";
@@ -32,12 +33,29 @@ describe("zonesUnlinkedByRemovingWarehouseChannel", () => {
   });
 });
 
+describe("warehouseSharesShippingZone", () => {
+  it("is true only when a zone shares a channel with the warehouse", () => {
+    // Assert
+    expect(
+      warehouseSharesShippingZone({
+        zones: [europe],
+        warehouseChannelIds: ["ch-eu"],
+      }),
+    ).toBe(true);
+    expect(
+      warehouseSharesShippingZone({
+        zones: [europe],
+        warehouseChannelIds: ["ch-us"],
+      }),
+    ).toBe(false);
+  });
+});
+
 describe("warehouseZonesGuidance", () => {
   it("hides the card in the default stock mode when nothing is linked", () => {
     // Arrange / Act
     const guidance = warehouseZonesGuidance({
       legacyStockAvailability: false,
-      hasZones: false,
       membershipStatus: "ready",
       channelNames: [],
       zones: [],
@@ -52,7 +70,6 @@ describe("warehouseZonesGuidance", () => {
     // Arrange / Act
     const guidance = warehouseZonesGuidance({
       legacyStockAvailability: true,
-      hasZones: false,
       membershipStatus: "ready",
       channelNames: [],
       zones: [],
@@ -67,7 +84,6 @@ describe("warehouseZonesGuidance", () => {
     // Arrange / Act
     const guidance = warehouseZonesGuidance({
       legacyStockAvailability: true,
-      hasZones: false,
       membershipStatus: "error",
       channelNames: [],
       zones: [],
@@ -82,7 +98,6 @@ describe("warehouseZonesGuidance", () => {
     // Arrange / Act
     const guidance = warehouseZonesGuidance({
       legacyStockAvailability: true,
-      hasZones: false,
       membershipStatus: "ready",
       channelNames: ["Europe"],
       zones: [],
@@ -93,11 +108,10 @@ describe("warehouseZonesGuidance", () => {
     expect(guidance).toEqual({ kind: "legacy-need-zone", channelNames: ["Europe"] });
   });
 
-  it("flags a linked zone that shares no channel with the warehouse", () => {
+  it("treats outside-channel-only zones as still needing a zone to sell", () => {
     // Arrange / Act
     const guidance = warehouseZonesGuidance({
       legacyStockAvailability: true,
-      hasZones: true,
       membershipStatus: "ready",
       channelNames: ["United States"],
       zones: [europe],
@@ -105,6 +119,24 @@ describe("warehouseZonesGuidance", () => {
     });
 
     // Assert
-    expect(guidance).toEqual({ kind: "legacy-linked", outsideChannelZoneIds: ["z-eu"] });
+    expect(guidance).toEqual({ kind: "legacy-need-zone", channelNames: ["United States"] });
+  });
+
+  it("does not claim a zone is missing when the loaded list is truncated", () => {
+    // Arrange / Act
+    const guidance = warehouseZonesGuidance({
+      legacyStockAvailability: true,
+      membershipStatus: "ready",
+      channelNames: ["United States"],
+      zones: [europe],
+      warehouseChannelIds: ["ch-us"],
+      zonesTruncated: true,
+    });
+
+    // Assert
+    expect(guidance).toEqual({
+      kind: "legacy-linked",
+      outsideChannelZoneIds: ["z-eu"],
+    });
   });
 });

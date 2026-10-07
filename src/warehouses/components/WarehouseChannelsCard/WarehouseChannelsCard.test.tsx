@@ -35,6 +35,7 @@ describe("WarehouseChannelsCard", () => {
     renderCard();
 
     // Assert
+    expect(screen.getByTestId("assign-list-required-meta")).toHaveTextContent("Required to sell");
     expect(screen.getByText("Stock here can't be sold yet")).toBeInTheDocument();
     expect(screen.getByTestId("warehouse-channels-add")).toBeInTheDocument();
   });

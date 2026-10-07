@@ -20,12 +20,31 @@ describe("isWarehouseSetupChecklistVisible", () => {
     expect(isWarehouseSetupChecklistVisible({ ...base, membershipReady: false })).toBe(false);
   });
 
-  it("comes back from the menu even after the channel step", () => {
+  it("stays up in the older stock mode until a shipping zone is linked", () => {
+    // Arrange
+    const inChannelNoZone = {
+      membershipReady: true,
+      inChannel: true,
+      emphasized: false,
+      shippingZoneRequired: true,
+      hasShippingZone: false,
+    };
+
+    // Assert
+    expect(isWarehouseSetupChecklistVisible(inChannelNoZone)).toBe(true);
+    expect(isWarehouseSetupChecklistVisible({ ...inChannelNoZone, hasShippingZone: true })).toBe(
+      false,
+    );
+  });
+
+  it("comes back from the menu even after required steps are done", () => {
     // Arrange
     const hidden = {
       membershipReady: true,
       inChannel: true,
       emphasized: false,
+      shippingZoneRequired: true,
+      hasShippingZone: true,
     };
 
     // Act

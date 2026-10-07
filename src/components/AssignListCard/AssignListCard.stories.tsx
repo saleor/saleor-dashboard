@@ -56,6 +56,7 @@ export const Empty: Story = {
     ...WithItems.args,
     items: [],
     subtitle: "Required to sell",
+    emphasis: "warning",
     footerAction: (
       <Button variant="secondary" type="button">
         Assign shipping zone

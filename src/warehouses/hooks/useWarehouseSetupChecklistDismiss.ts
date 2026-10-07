@@ -31,24 +31,37 @@ const dismissedEntries = (value: unknown): ChecklistDismissEntry[] => {
 };
 
 /**
- * The checklist is required while the location is in no channel, so a saved skip
- * cannot hide it, including after refresh. `?action=setup` shows it again from the
- * menu once a channel is assigned.
+ * The checklist stays while a required step is open: no channel, or (in the older
+ * stock mode) no shipping zone. A saved skip cannot hide those. `?action=setup`
+ * shows it again from the menu after the required steps are done.
  */
 export const isWarehouseSetupChecklistVisible = ({
   membershipReady,
   inChannel,
   emphasized,
+  shippingZoneRequired = false,
+  hasShippingZone = true,
 }: {
   membershipReady: boolean;
   inChannel: boolean;
   emphasized: boolean;
+  /** Older stock mode: a shipping zone is also required to sell. */
+  shippingZoneRequired?: boolean;
+  hasShippingZone?: boolean;
 }): boolean => {
   if (!membershipReady) {
     return false;
   }
 
-  return emphasized || !inChannel;
+  if (emphasized) {
+    return true;
+  }
+
+  if (!inChannel) {
+    return true;
+  }
+
+  return shippingZoneRequired && !hasShippingZone;
 };
 
 /** The setup checklist stays until it is skipped. The menu can show it again. */

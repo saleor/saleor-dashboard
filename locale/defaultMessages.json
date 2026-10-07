@@ -616,10 +616,6 @@
     "context": "swatch attribute color picker label",
     "string": "Picker"
   },
-  "0FU+SF": {
-    "context": "warehouse setup review section in the older stock mode",
-    "string": "Stock in a country still needs a shipping zone that shares a channel."
-  },
   "0FexL7": {
     "context": "min price in channel",
     "string": "Min. value"
@@ -675,6 +671,10 @@
   "0R1EEd": {
     "context": "staff notification description",
     "string": "Sent to people in {alertsLink} when a customer completes checkout. Draft orders completed in the Dashboard are not included."
+  },
+  "0R7xxr": {
+    "context": "warehouse setup checklist subtitle when required steps are done",
+    "string": "This location is ready to sell stock."
   },
   "0Sq+Ey": {
     "context": "button opening the model type icon picker",
@@ -1367,10 +1367,6 @@
   "367xKd": {
     "context": "settings search alias",
     "string": "authorize"
-  },
-  "36Jt9G": {
-    "context": "warehouse setup review status for one shipping zone",
-    "string": "1 zone"
   },
   "36QccF": {
     "context": "TopNav destination link tooltip to channels list",
@@ -2382,6 +2378,10 @@
     "context": "section title",
     "string": "Address Validation"
   },
+  "6vn5QI": {
+    "context": "warehouse setup checklist subtitle while steps remain",
+    "string": "Customers can't buy stock from here until these steps are done."
+  },
   "6wQfpJ": {
     "context": "voucher minimum order value channel input aria label",
     "string": "Minimal order value for {channelName}"
@@ -2638,6 +2638,10 @@
   "7scATx": {
     "context": "select title",
     "string": "Select channels you want for {contentType} to be available on"
+  },
+  "7u9iIp": {
+    "context": "warehouse setup shipping zone task action",
+    "string": "Add a shipping zone"
   },
   "7vnKNE": {
     "context": "structure item name",
@@ -7497,6 +7501,10 @@
     "context": "order status",
     "string": "Partially fulfilled"
   },
+  "PcB7+7": {
+    "context": "warehouse setup shipping zone task when zones are linked",
+    "string": "{count} shipping zones linked."
+  },
   "PcPMjC": {
     "context": "order history message",
     "string": "Fulfillment awaits approval"
@@ -7958,6 +7966,10 @@
   "RGrH9+": {
     "context": "warehouse channels card retry",
     "string": "Try again"
+  },
+  "RI1Ocx": {
+    "context": "warehouse setup task title for shipping zones in the older stock mode",
+    "string": "Link a shipping zone"
   },
   "RK6l3Z": {
     "context": "radio button label",
@@ -8823,6 +8835,10 @@
     "context": "order header date, yesterday",
     "string": "Placed yesterday at {time}"
   },
+  "UMFP/f": {
+    "context": "warehouse setup shipping zone task when one zone is linked",
+    "string": "1 shipping zone linked."
+  },
   "UPqrEf": {
     "context": "variant pricing channel status when channel is active",
     "string": "Active channel"
@@ -8848,10 +8864,6 @@
   },
   "US3IPU": {
     "string": "Search Engine Description"
-  },
-  "UV97Yb": {
-    "context": "warehouse setup review status when no zone is linked",
-    "string": "No shipping zone"
   },
   "UVDfTs": {
     "context": "discount type shipping",
@@ -12691,10 +12703,6 @@
     "context": "load more subcategories in category tree",
     "string": "Load {count, plural, one {# more subcategory} other {# more subcategories}}"
   },
-  "i9nHR2": {
-    "context": "warehouse setup review row for shipping zones",
-    "string": "Customers in a country can buy this stock once a shipping zone covers it."
-  },
   "iAaYh4": {
     "context": "Info box description for unavailable products",
     "string": "Customers can view this product but cannot add it to cart."
@@ -14278,10 +14286,6 @@
     "context": "dialog header",
     "string": "Delete Shipping Method"
   },
-  "nNwacI": {
-    "context": "warehouse setup review status when zones are linked",
-    "string": "{count} zones"
-  },
   "nOGSLQ": {
     "string": "Could not set the shipping rate price for this channel"
   },
@@ -14385,6 +14389,10 @@
   "nqWHPw": {
     "context": "sales channel a11y label prefix",
     "string": "Channel"
+  },
+  "nqmoQW": {
+    "context": "warehouse setup shipping zone task when the user cannot assign zones",
+    "string": "Needs permission to manage shipping"
   },
   "nrO5SA": {
     "context": "command palette section grouping actions for the currently open entity",
@@ -17646,10 +17654,6 @@
     "context": "extensions page subheader",
     "string": "Learn more about {extensions}"
   },
-  "yfUPdu": {
-    "context": "warehouse setup checklist subtitle",
-    "string": "Customers can't buy stock from here until this step is done."
-  },
   "ygPAC7": {
     "context": "Tooltip explaining the app-reported problem badge",
     "string": "This message comes from the app"
@@ -17857,6 +17861,10 @@
     "context": "bulk publish review many variants warning",
     "string": "{count, plural, one {# product has} other {# products have}} more than {threshold} variants. Publishing may take longer."
   },
+  "zMZ9j7": {
+    "context": "warehouse setup shipping zone task while no zone is linked",
+    "string": "Customers in a country can only buy this stock once a shipping zone that shares a channel covers it."
+  },
   "zN0Eub": {
     "context": "info message when hasVariants is false but variant attributes exist",
     "string": "This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
@@ -17881,6 +17889,10 @@
   },
   "zSDfq0": {
     "string": "Use flat tax rate"
+  },
+  "zSmU+g": {
+    "context": "warehouse setup shipping zone task locked until a channel is assigned",
+    "string": "Add to a channel first"
   },
   "zT1CvH": {
     "string": "Learn more about {extendingSaleor}"

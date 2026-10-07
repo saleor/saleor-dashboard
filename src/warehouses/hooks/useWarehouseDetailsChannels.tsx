@@ -8,6 +8,7 @@ import { WarehouseChannelsCard } from "@dashboard/warehouses/components/Warehous
 import { WarehouseSetupChecklist } from "@dashboard/warehouses/components/WarehouseSetupChecklist/WarehouseSetupChecklist";
 import { messages } from "@dashboard/warehouses/messages";
 import {
+  warehouseSharesShippingZone,
   type ZoneChannelMembership,
   zonesUnlinkedByRemovingWarehouseChannel,
 } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
@@ -23,7 +24,6 @@ export const useWarehouseDetailsChannels = ({
   legacyStockAvailability,
   zones,
   zonesTruncated,
-  zoneCount,
   checklistEmphasized,
   onDismissChecklist,
   onOpenShippingZones,
@@ -32,7 +32,6 @@ export const useWarehouseDetailsChannels = ({
   legacyStockAvailability: boolean | undefined;
   zones: ZoneChannelMembership[];
   zonesTruncated: boolean;
-  zoneCount: number;
   checklistEmphasized: boolean;
   onDismissChecklist?: (channelCount: number) => void;
   onOpenShippingZones?: () => void;
@@ -49,6 +48,7 @@ export const useWarehouseDetailsChannels = ({
   const notify = useNotifier();
   const permissions = useUserPermissions();
   const canManage = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_CHANNELS]);
+  const canManageShipping = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SHIPPING]);
   const membership = useWarehouseChannelMembership(warehouseId);
   const [assignOpen, setAssignOpen] = useState(false);
   const [assigning, setAssigning] = useState(false);
@@ -122,28 +122,45 @@ export const useWarehouseDetailsChannels = ({
       </Text>
     ) : null;
 
+  const warehouseChannelIds = membership.channels.map(channel => channel.id);
+  const inChannel = warehouseChannelIds.length > 0;
+  // Wait for stock mode so a direct-mode shop does not flash a zone step, and a
+  // legacy shop does not look ready before we know a zone is required.
+  const stockModeReady = legacyStockAvailability !== undefined;
+  const shippingZoneRequired = legacyStockAvailability === true;
+  const usableZoneCount = zones.filter(zone =>
+    zone.channelIds.some(channelId => warehouseChannelIds.includes(channelId)),
+  ).length;
+  // Truncated lists match the warehouse list: do not claim “no zone”.
+  const hasShippingZone =
+    zonesTruncated || warehouseSharesShippingZone({ zones, warehouseChannelIds });
+  const coreReady = inChannel && (!shippingZoneRequired || hasShippingZone);
   const checklistVisible = isWarehouseSetupChecklistVisible({
-    membershipReady: membership.status === "ready",
-    inChannel: membership.channels.length > 0,
+    membershipReady: membership.status === "ready" && stockModeReady,
+    inChannel,
     emphasized: checklistEmphasized,
+    shippingZoneRequired,
+    hasShippingZone,
   });
 
   return {
     status: membership.status,
-    warehouseChannelIds: membership.channels.map(channel => channel.id),
+    warehouseChannelIds,
     channelNames: membership.channels.map(channel => channel.name),
     subtitle,
     checklistVisible,
     banner: checklistVisible ? (
       <WarehouseSetupChecklist
         canManage={canManage}
-        inChannel={membership.channels.length > 0}
-        showShippingZones={legacyStockAvailability === true}
-        zoneCount={zoneCount}
+        canManageShipping={canManageShipping}
+        inChannel={inChannel}
+        showShippingZones={shippingZoneRequired}
+        zoneCount={usableZoneCount}
+        hasUsableShippingZone={hasShippingZone}
         onAddChannel={() => setAssignOpen(true)}
-        onOpenShippingZones={onOpenShippingZones}
+        onAddShippingZone={onOpenShippingZones}
         onDismiss={
-          onDismissChecklist && membership.channels.length > 0
+          onDismissChecklist && coreReady
             ? (): void => onDismissChecklist(membership.channels.length)
             : undefined
         }

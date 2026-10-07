@@ -1,6 +1,8 @@
 import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
+import { iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { TriangleAlert } from "lucide-react";
 import { type ReactNode } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -21,9 +23,24 @@ interface AssignListCardEmptyState {
   description: ReactNode;
 }
 
+/** Header meta when an empty assign list blocks selling. */
+export const AssignListRequiredMeta = ({ children }: { children: ReactNode }): ReactNode => (
+  <Box className={styles.requiredMeta} data-test-id="assign-list-required-meta">
+    <TriangleAlert size={14} strokeWidth={iconStrokeWidthBySize.small} aria-hidden />
+    <Text size={2} color="warning1">
+      {children}
+    </Text>
+  </Box>
+);
+
 interface AssignListCardProps {
   title: ReactNode;
   subtitle: ReactNode;
+  /**
+   * `warning` when the empty list blocks selling — warning header meta only
+   * (“Required to sell”). Do not tint the empty frame; readiness belongs in setup.
+   */
+  emphasis?: "default" | "warning";
   intro: ReactNode;
   items: AssignListCardItem[];
   emptyState: AssignListCardEmptyState;
@@ -49,6 +66,7 @@ interface AssignListCardProps {
 export const AssignListCard = ({
   title,
   subtitle,
+  emphasis = "default",
   intro,
   items,
   emptyState,
@@ -64,6 +82,7 @@ export const AssignListCard = ({
   rowLinkTestId = (id: string): string => `${id}-link`,
 }: AssignListCardProps): React.ReactNode => {
   const hasItems = items.length > 0;
+  const warn = emphasis === "warning";
 
   return (
     <Box
@@ -74,9 +93,15 @@ export const AssignListCard = ({
         <Text size={5} fontWeight="bold" as="h2">
           {title}
         </Text>
-        <Text size={2} color="default2">
-          {subtitle}
-        </Text>
+        {subtitle ? (
+          warn ? (
+            <AssignListRequiredMeta>{subtitle}</AssignListRequiredMeta>
+          ) : (
+            <Text size={2} color="default2">
+              {subtitle}
+            </Text>
+          )
+        ) : null}
       </Box>
 
       <Box className={styles.intro}>

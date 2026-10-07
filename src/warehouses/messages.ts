@@ -373,9 +373,14 @@ export const messages = defineMessages({
     description: "warehouse setup checklist title",
   },
   setupSubtitle: {
-    id: "yfUPdu",
-    defaultMessage: "Customers can't buy stock from here until this step is done.",
-    description: "warehouse setup checklist subtitle",
+    id: "6vn5QI",
+    defaultMessage: "Customers can't buy stock from here until these steps are done.",
+    description: "warehouse setup checklist subtitle while steps remain",
+  },
+  setupSubtitleDone: {
+    id: "0R7xxr",
+    defaultMessage: "This location is ready to sell stock.",
+    description: "warehouse setup checklist subtitle when required steps are done",
   },
   setupChannelTitle: {
     id: "jb9Vzu",
@@ -387,45 +392,46 @@ export const messages = defineMessages({
     defaultMessage: "Needs permission to manage channels",
     description: "warehouse setup task when the user cannot assign channels",
   },
-  setupReviewTitle: {
-    id: "9Czafv",
-    defaultMessage: "Worth reviewing",
-    description: "setup checklist optional section title",
+  setupZoneTitle: {
+    id: "RI1Ocx",
+    defaultMessage: "Link a shipping zone",
+    description: "warehouse setup task title for shipping zones in the older stock mode",
   },
-  setupReviewSubtitle: {
-    id: "0FU+SF",
-    defaultMessage: "Stock in a country still needs a shipping zone that shares a channel.",
-    description: "warehouse setup review section in the older stock mode",
+  setupZoneDescription: {
+    id: "zMZ9j7",
+    defaultMessage:
+      "Customers in a country can only buy this stock once a shipping zone that shares a channel covers it.",
+    description: "warehouse setup shipping zone task while no zone is linked",
   },
-  setupReviewZonesDescription: {
-    id: "i9nHR2",
-    defaultMessage: "Customers in a country can buy this stock once a shipping zone covers it.",
-    description: "warehouse setup review row for shipping zones",
+  setupZoneAction: {
+    id: "7u9iIp",
+    defaultMessage: "Add a shipping zone",
+    description: "warehouse setup shipping zone task action",
   },
-  setupReviewZonesNone: {
-    id: "UV97Yb",
-    defaultMessage: "No shipping zone",
-    description: "warehouse setup review status when no zone is linked",
+  setupZoneRequiresChannel: {
+    id: "zSmU+g",
+    defaultMessage: "Add to a channel first",
+    description: "warehouse setup shipping zone task locked until a channel is assigned",
   },
-  setupReviewZonesOne: {
-    id: "36Jt9G",
-    defaultMessage: "1 zone",
-    description: "warehouse setup review status for one shipping zone",
+  setupZonePermission: {
+    id: "nqmoQW",
+    defaultMessage: "Needs permission to manage shipping",
+    description: "warehouse setup shipping zone task when the user cannot assign zones",
   },
-  setupReviewZonesCount: {
-    id: "nNwacI",
-    defaultMessage: "{count} zones",
-    description: "warehouse setup review status when zones are linked",
+  setupZoneDoneOne: {
+    id: "UMFP/f",
+    defaultMessage: "1 shipping zone linked.",
+    description: "warehouse setup shipping zone task when one zone is linked",
+  },
+  setupZoneDoneCount: {
+    id: "PcB7+7",
+    defaultMessage: "{count} shipping zones linked.",
+    description: "warehouse setup shipping zone task when zones are linked",
   },
   setupNextUpDone: {
     id: "0hCh0t",
     defaultMessage: "Required steps are complete.",
     description: "footer when warehouse and shipping are done",
-  },
-  setupDismiss: {
-    id: "O6C+2E",
-    defaultMessage: "Skip for now",
-    description: "dismiss setup checklist while required steps remain",
   },
   setupDismissComplete: {
     id: "IrwpKJ",

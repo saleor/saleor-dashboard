@@ -1,34 +1,37 @@
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { SetupChecklist } from "@dashboard/components/SetupChecklist/SetupChecklist";
-import {
-  type SetupChecklistReviewItem,
-  type SetupChecklistTask,
-} from "@dashboard/components/SetupChecklist/types";
+import { type SetupChecklistTask } from "@dashboard/components/SetupChecklist/types";
 import { messages } from "@dashboard/warehouses/messages";
-import { Box, Button, Text, useTheme } from "@saleor/macaw-ui-next";
+import { Button, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { ArrowRight, Truck } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import {
+  buildWarehouseChannelTask,
+  buildWarehouseShippingZoneTask,
+} from "./buildWarehouseSetupTasks";
 import styles from "./WarehouseSetupChecklist.module.css";
-
-const CtaLabel = ({ children }: { children: ReactNode }): ReactNode => (
-  <Box display="flex" alignItems="center" gap={1}>
-    {children}
-    <ArrowRight size={14} aria-hidden />
-  </Box>
-);
 
 interface WarehouseSetupChecklistProps {
   canManage: boolean;
   /** The location is already in at least one channel. */
   inChannel?: boolean;
-  /** Older stock mode: a shipping zone still affects which countries can buy this stock. */
+  /**
+   * Older stock mode: a shipping zone is required before customers in a country
+   * can buy this stock. Direct stock mode omits this step.
+   */
   showShippingZones?: boolean;
+  /** Zones that share a channel with this location (not outside-channel-only links). */
   zoneCount?: number;
+  /**
+   * True when a usable zone is linked, or the zone list is truncated so we cannot
+   * claim one is missing. Drives completion — not raw zoneCount alone.
+   */
+  hasUsableShippingZone?: boolean;
+  canManageShipping?: boolean;
   onAddChannel: () => void;
-  onOpenShippingZones?: () => void;
+  onAddShippingZone?: () => void;
   onDismiss?: () => void;
 }
 
@@ -37,97 +40,81 @@ export const WarehouseSetupChecklist = ({
   inChannel = false,
   showShippingZones = false,
   zoneCount = 0,
+  hasUsableShippingZone = zoneCount > 0,
+  canManageShipping = false,
   onAddChannel,
-  onOpenShippingZones,
+  onAddShippingZone,
   onDismiss,
 }: WarehouseSetupChecklistProps): ReactNode => {
   const intl = useIntl();
   const { theme } = useTheme();
   const { trackEvent } = useAnalytics();
-  const taskTitle = intl.formatMessage(messages.setupChannelTitle);
+  const channelTitle = intl.formatMessage(messages.setupChannelTitle);
+  const zoneTitle = intl.formatMessage(messages.setupZoneTitle);
+  const coreReady = inChannel && (!showShippingZones || hasUsableShippingZone);
+  const requiredDone = showShippingZones
+    ? Number(inChannel) + Number(hasUsableShippingZone)
+    : Number(inChannel);
+  const requiredTotal = showShippingZones ? 2 : 1;
+  const nextUpTask = !inChannel
+    ? channelTitle
+    : showShippingZones && !hasUsableShippingZone
+      ? zoneTitle
+      : null;
+
   const tasks: SetupChecklistTask[] = [
-    {
-      id: "channel",
-      title: taskTitle,
-      description: <FormattedMessage {...messages.channelsBanner} />,
-      status: inChannel ? "completed" : canManage ? "active" : "locked",
-      requirement:
-        inChannel || canManage ? undefined : (
-          <FormattedMessage {...messages.setupChannelPermission} />
-        ),
-      action:
-        !inChannel && canManage ? (
-          <Button
-            variant="primary"
-            type="button"
-            data-test-id="warehouse-setup-add-channel"
-            onClick={onAddChannel}
-          >
-            <CtaLabel>
-              <FormattedMessage {...messages.channelsBannerAction} />
-            </CtaLabel>
-          </Button>
-        ) : undefined,
-    },
+    buildWarehouseChannelTask({
+      title: channelTitle,
+      inChannel,
+      canManage,
+      onAddChannel,
+    }),
   ];
 
-  const reviewItems: SetupChecklistReviewItem[] =
-    showShippingZones && onOpenShippingZones
-      ? [
-          {
-            id: "shipping-zones",
-            icon: <Truck size={16} />,
-            title: <FormattedMessage {...messages.zonesTitle} />,
-            description: <FormattedMessage {...messages.setupReviewZonesDescription} />,
-            status:
-              zoneCount === 0 ? (
-                <FormattedMessage {...messages.setupReviewZonesNone} />
-              ) : zoneCount === 1 ? (
-                <FormattedMessage {...messages.setupReviewZonesOne} />
-              ) : (
-                <FormattedMessage
-                  {...messages.setupReviewZonesCount}
-                  values={{ count: zoneCount }}
-                />
-              ),
-            onClick: onOpenShippingZones,
-          },
-        ]
-      : [];
+  if (showShippingZones) {
+    tasks.push(
+      buildWarehouseShippingZoneTask({
+        title: zoneTitle,
+        inChannel,
+        zoneCount,
+        hasUsableShippingZone,
+        canManageShipping,
+        onAddShippingZone,
+      }),
+    );
+  }
 
   return (
     <SetupChecklist
       className={clsx(styles.elevated, theme === "defaultDark" && styles.elevatedDark)}
       data-test-id="warehouse-setup-checklist"
       title={<FormattedMessage {...messages.setupTitle} />}
-      subtitle={<FormattedMessage {...messages.setupSubtitle} />}
+      subtitle={
+        coreReady ? (
+          <FormattedMessage {...messages.setupSubtitleDone} />
+        ) : (
+          <FormattedMessage {...messages.setupSubtitle} />
+        )
+      }
+      progress={{ done: requiredDone, total: requiredTotal }}
       tasksSection={{
         title: <FormattedMessage {...messages.channelsRequired} />,
       }}
       tasks={tasks}
-      reviewSection={
-        reviewItems.length > 0
-          ? {
-              title: <FormattedMessage {...messages.setupReviewTitle} />,
-              subtitle: <FormattedMessage {...messages.setupReviewSubtitle} />,
-              items: reviewItems,
-            }
-          : undefined
-      }
       nextUp={
-        inChannel ? (
-          <FormattedMessage {...messages.setupNextUpDone} />
-        ) : (
+        nextUpTask ? (
           <FormattedMessage
             {...messages.setupNextUp}
             values={{
               task: (
                 <Text as="span" size={2} fontWeight="medium" color="default1">
-                  {taskTitle}
+                  {nextUpTask}
                 </Text>
               ),
             }}
           />
+        ) : (
+          <FormattedMessage {...messages.setupNextUpDone} />
         )
       }
       footerActions={
@@ -137,18 +124,16 @@ export const WarehouseSetupChecklist = ({
             type="button"
             onClick={() => {
               trackEvent("setup_checklist_dismissed", {
-                completed_steps: inChannel ? 1 : 0,
-                core_ready: inChannel,
+                completed_steps: requiredDone,
+                core_ready: coreReady,
                 entity_type: "warehouse",
-                total_steps: 1,
+                total_steps: requiredTotal,
               });
               onDismiss();
             }}
             data-test-id="setup-dismiss"
           >
-            <FormattedMessage
-              {...(inChannel ? messages.setupDismissComplete : messages.setupDismiss)}
-            />
+            <FormattedMessage {...messages.setupDismissComplete} />
           </Button>
         ) : undefined
       }

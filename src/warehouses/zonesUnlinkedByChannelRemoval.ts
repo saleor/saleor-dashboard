@@ -36,21 +36,38 @@ type WarehouseZonesGuidance =
   | { kind: "legacy-need-zone"; channelNames: string[] }
   | { kind: "legacy-linked"; outsideChannelZoneIds: string[] };
 
+/** True when at least one linked zone shares a channel with the warehouse. */
+export const warehouseSharesShippingZone = ({
+  zones,
+  warehouseChannelIds,
+}: {
+  zones: ReadonlyArray<{ channelIds: readonly string[] }>;
+  warehouseChannelIds: readonly string[];
+}): boolean => {
+  const channelIds = new Set(warehouseChannelIds);
+
+  return zones.some(zone => zone.channelIds.some(channelId => channelIds.has(channelId)));
+};
+
 export const warehouseZonesGuidance = ({
   legacyStockAvailability,
-  hasZones,
   membershipStatus,
   channelNames,
   zones,
   warehouseChannelIds,
+  zonesTruncated = false,
 }: {
   /** Undefined while the shop stock mode is still loading. */
   legacyStockAvailability: boolean | undefined;
-  hasZones: boolean;
   membershipStatus: "loading" | "error" | "ready";
   channelNames: string[];
   zones: ZoneChannelMembership[];
   warehouseChannelIds: string[];
+  /**
+   * When the loaded page is incomplete, do not claim “need a zone” — a usable
+   * zone may exist on a later page (same rule as the warehouse list).
+   */
+  zonesTruncated?: boolean;
 }): WarehouseZonesGuidance => {
   if (legacyStockAvailability === undefined || membershipStatus === "loading") {
     return { kind: "loading" };
@@ -59,6 +76,8 @@ export const warehouseZonesGuidance = ({
   const outsideChannelZoneIds = zones
     .filter(zone => !zone.channelIds.some(channelId => warehouseChannelIds.includes(channelId)))
     .map(zone => zone.id);
+  const hasZones = zones.length > 0;
+  const sharesZone = warehouseSharesShippingZone({ zones, warehouseChannelIds });
 
   if (!legacyStockAvailability) {
     return hasZones ? { kind: "direct", outsideChannelZoneIds: [] } : { kind: "hidden" };
@@ -74,7 +93,8 @@ export const warehouseZonesGuidance = ({
     return { kind: "legacy-need-channel" };
   }
 
-  if (!hasZones) {
+  // Outside-channel-only zones do not make stock sellable — same as an empty list.
+  if (!sharesZone && !zonesTruncated) {
     return { kind: "legacy-need-zone", channelNames };
   }
 
