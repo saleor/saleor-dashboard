@@ -9,10 +9,10 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form/Form";
+import { FormDirtyStateSync } from "@dashboard/components/Form/FormDirtyStateSync";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
-import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
   type AccountErrorFragment,
   type CountryWithCodeFragment,
@@ -41,13 +41,11 @@ import { WarehouseAddressCard } from "../WarehouseAddressCard/WarehouseAddressCa
 import { WarehouseInfo } from "../WarehouseInfo/WarehouseInfo";
 import { WarehousePickupCard } from "../WarehousePickupCard/WarehousePickupCard";
 import { WarehouseShippingZonesCard } from "../WarehouseShippingZonesCard/WarehouseShippingZonesCard";
+import { buildWarehouseSaveComposition, hasWarehouseSaveComposition } from "./saveComposition";
+import { type WarehouseDetailsPageFormData } from "./types";
+import { WarehouseSaveCompositionHint } from "./WarehouseSaveCompositionHint";
 
-export interface WarehouseDetailsPageFormData extends AddressTypeInput {
-  name: string;
-  email: string;
-  isPrivate: boolean;
-  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
-}
+export type { WarehouseDetailsPageFormData } from "./types";
 
 interface WarehouseDetailsPageProps {
   countries: CountryWithCodeFragment[];
@@ -172,7 +170,15 @@ export const WarehouseDetailsPage = ({
     warehouse?.address?.country.country || "",
   );
   const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
-  const initialForm = warehouseToFormData(warehouse);
+  // Warehouse fragment is the saved baseline for pristine checks and the save hint.
+  const initialForm = useMemo(() => warehouseToFormData(warehouse), [warehouse]);
+  const checkIfSaveIsDisabled = useCallback(
+    (formValues: WarehouseDetailsPageFormData) =>
+      disabled ||
+      !warehouse ||
+      !hasWarehouseSaveComposition(buildWarehouseSaveComposition(formValues, initialForm)),
+    [disabled, initialForm, warehouse],
+  );
   const warehouseListBackLink = useBackLinkWithState({
     path: warehouseListPath,
   });
@@ -199,7 +205,13 @@ export const WarehouseDetailsPage = ({
   }));
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+    >
       {formData => (
         <WarehouseDetailsForm
           change={formData.change}
@@ -208,6 +220,7 @@ export const WarehouseDetailsPage = ({
           disabled={disabled}
           displayCountry={displayCountry}
           errors={errors}
+          initialForm={initialForm}
           isSaveDisabled={!!formData.isSaveDisabled}
           legacyStockAvailability={legacyStockAvailability}
           menuItems={menuItems}
@@ -247,6 +260,7 @@ interface WarehouseDetailsFormProps {
   disabled: boolean;
   displayCountry: string;
   errors: WarehouseErrorFragment[];
+  initialForm: WarehouseDetailsPageFormData;
   isSaveDisabled: boolean;
   legacyStockAvailability: boolean | undefined;
   menuItems: TopNavMenuItem[];
@@ -282,6 +296,7 @@ const WarehouseDetailsForm = ({
   disabled,
   displayCountry,
   errors,
+  initialForm,
   isSaveDisabled,
   legacyStockAvailability,
   menuItems,
@@ -310,6 +325,7 @@ const WarehouseDetailsForm = ({
   onShowMetadata,
 }: WarehouseDetailsFormProps): ReactNode => {
   const intl = useIntl();
+  const saveComposition = warehouse ? buildWarehouseSaveComposition(data, initialForm) : undefined;
   const countryChoices = mapCountriesToChoices(countries);
   const countrySelect = createSingleAutocompleteSelectHandler(
     change,
@@ -333,6 +349,11 @@ const WarehouseDetailsForm = ({
 
   return (
     <DetailPageLayout>
+      <FormDirtyStateSync
+        enabled={!!warehouse}
+        isSaveDisabled={isSaveDisabled}
+        triggerChange={triggerChange}
+      />
       <TopNav
         href={warehouseListBackLink}
         hrefIcon={<TopNavDestinationIcon.warehouses />}
@@ -426,6 +447,7 @@ const WarehouseDetailsForm = ({
       </DetailPageLayout.RightSidebar>
       <Savebar>
         <Savebar.Spacer />
+        <WarehouseSaveCompositionHint composition={saveComposition} />
         <Savebar.CancelButton onClick={onNavigateBack} />
         <Savebar.ConfirmButton
           transitionState={saveButtonBarState}

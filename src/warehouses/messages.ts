@@ -367,6 +367,21 @@ export const messages = defineMessages({
     defaultMessage: "Add a channel",
     description: "warehouse setup task action",
   },
+  saveCompositionGeneral: {
+    id: "8aZT0W",
+    defaultMessage: "general",
+    description: "Save composition segment for warehouse name and email",
+  },
+  saveCompositionAddress: {
+    id: "PZ11N1",
+    defaultMessage: "address",
+    description: "Save composition segment for warehouse address fields",
+  },
+  saveCompositionPickup: {
+    id: "gWMANT",
+    defaultMessage: "customer pickup",
+    description: "Save composition segment for warehouse pickup settings",
+  },
   setupTitle: {
     id: "n6yout",
     defaultMessage: "Finish setting up this location",

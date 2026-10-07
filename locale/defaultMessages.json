@@ -2826,6 +2826,10 @@
   "8a7vg2": {
     "string": "Staff member invited"
   },
+  "8aZT0W": {
+    "context": "Save composition segment for warehouse name and email",
+    "string": "general"
+  },
   "8cQf6w": {
     "context": "dialog description when navigating away from dirty variants grid",
     "string": "Save or discard your unsaved variant changes before continuing. Newly added rows must be saved before you can search or change page."
@@ -7484,6 +7488,10 @@
   },
   "PXatmC": {
     "string": "Customer Removed"
+  },
+  "PZ11N1": {
+    "context": "Save composition segment for warehouse address fields",
+    "string": "address"
   },
   "PaQFmR": {
     "context": "onboarding step title",
@@ -12241,6 +12249,10 @@
   "gU10OX": {
     "context": "shown when user tries to install an extension that is already installed",
     "string": "{appName} is already installed."
+  },
+  "gWMANT": {
+    "context": "Save composition segment for warehouse pickup settings",
+    "string": "customer pickup"
   },
   "gWUWig": {
     "context": "channel inventory allocation description when fewer than two",
