@@ -5,9 +5,7 @@ export const WAREHOUSE_CHANNEL_MEMBERSHIP_LIMIT = 5000;
 
 export const MEMBERSHIP_PROBE_CHUNK_SIZE = 20;
 
-export const CHANNEL_ASSIGN_CONCURRENCY = 4;
-
-/** How many channelUpdate aliases to send in one GraphQL document. */
+/** How many link-update aliases to send in one GraphQL document. */
 export const MEMBERSHIP_UPDATE_CHUNK_SIZE = 20;
 
 export const membershipQueryPlan = ({
@@ -90,38 +88,48 @@ export const channelIdsPresentInProbe = (
   data: Record<string, { totalCount?: number | null } | null | undefined> | null | undefined,
 ): string[] => channelIds.filter((_, index) => (data?.[`c${index}`]?.totalCount ?? 0) > 0);
 
+type WarehouseLinkVia = "channel" | "shippingZone";
+
+type WarehouseLinkBatchNode = {
+  errors?: unknown[] | null;
+  channel?: { id: string } | null;
+  shippingZone?: { id: string } | null;
+};
+
 /**
- * One HTTP request can update many channels: Saleor only accepts one channel per
- * channelUpdate, so we alias several mutations in a single document.
+ * One HTTP request can link a warehouse to many channels or shipping zones.
+ * Saleor only accepts one entity per update, so we alias several mutations.
  */
-export const buildMembershipChannelUpdates = ({
-  channelIds,
+export const buildWarehouseLinkUpdates = ({
+  entityIds,
   action,
+  linkVia,
 }: {
-  channelIds: string[];
+  entityIds: string[];
   action: "add" | "remove";
+  linkVia: WarehouseLinkVia;
 }): {
   document: DocumentNode;
   variables: (warehouseId: string) => Record<string, string>;
 } => {
   const field = action === "add" ? "addWarehouses" : "removeWarehouses";
+  const mutation = linkVia === "channel" ? "channelUpdate" : "shippingZoneUpdate";
+  const entityField = linkVia === "channel" ? "channel" : "shippingZone";
   const variableDefinitions = [
     "$warehouseId: ID!",
-    ...channelIds.map((_, index) => `$c${index}: ID!`),
+    ...entityIds.map((_, index) => `$e${index}: ID!`),
   ].join(", ");
-  const fields = channelIds
+  const fields = entityIds
     .map(
       (_, index) =>
-        `c${index}: channelUpdate(id: $c${index}, input: { ${field}: [$warehouseId] }) {
-          channel { id }
+        `e${index}: ${mutation}(id: $e${index}, input: { ${field}: [$warehouseId] }) {
+          ${entityField} { id }
           errors { code field message }
         }`,
     )
     .join("\n");
   const document = gql(
-    ["mutation WarehouseChannelMembershipBatch(", variableDefinitions, ") {", fields, "}"].join(
-      "\n",
-    ),
+    ["mutation WarehouseLinkBatch(", variableDefinitions, ") {", fields, "}"].join("\n"),
   );
 
   return {
@@ -129,8 +137,8 @@ export const buildMembershipChannelUpdates = ({
     variables: (warehouseId: string): Record<string, string> => {
       const variables: Record<string, string> = { warehouseId };
 
-      channelIds.forEach((channelId, index) => {
-        variables[`c${index}`] = channelId;
+      entityIds.forEach((entityId, index) => {
+        variables[`e${index}`] = entityId;
       });
 
       return variables;
@@ -138,10 +146,24 @@ export const buildMembershipChannelUpdates = ({
   };
 };
 
-export const membershipBatchSucceeded = (
-  channelIds: string[],
-  data: Record<string, { errors?: unknown[] | null } | null | undefined> | null | undefined,
-): boolean[] => channelIds.map((_, index) => (data?.[`c${index}`]?.errors?.length ?? 1) === 0);
+export const warehouseLinkBatchSucceeded = (
+  entityIds: string[],
+  data: Record<string, WarehouseLinkBatchNode | null | undefined> | null | undefined,
+  linkVia: WarehouseLinkVia,
+): boolean[] =>
+  entityIds.map((_, index) => {
+    const node = data?.[`e${index}`];
+
+    if ((node?.errors?.length ?? 1) !== 0) {
+      return false;
+    }
+
+    if (linkVia === "shippingZone") {
+      return Boolean(node?.shippingZone);
+    }
+
+    return true;
+  });
 
 export const runPool = async <TItem, TResult>(
   items: TItem[],

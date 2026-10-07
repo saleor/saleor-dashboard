@@ -3,17 +3,14 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { AssignShippingZoneDialog } from "@dashboard/components/AssignShippingZoneDialog/AssignShippingZoneDialog";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
-import {
-  PermissionEnum,
-  UpdateShippingZoneDocument,
-  type UpdateShippingZoneMutation,
-  useWarehouseShippingZonesToAssignQuery,
-} from "@dashboard/graphql";
+import { PermissionEnum, useWarehouseShippingZonesToAssignQuery } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { messages } from "@dashboard/warehouses/messages";
 import {
-  CHANNEL_ASSIGN_CONCURRENCY,
-  runPool,
+  buildWarehouseLinkUpdates,
+  chunkList,
+  MEMBERSHIP_UPDATE_CHUNK_SIZE,
+  warehouseLinkBatchSucceeded,
 } from "@dashboard/warehouses/warehouseChannelMembership";
 import { type ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
@@ -75,23 +72,35 @@ export const useWarehouseShippingZoneAssignment = ({
 
     setBusy(true);
 
+    const results: boolean[] = [];
+
     try {
-      const results = await runPool(zoneIds, CHANNEL_ASSIGN_CONCURRENCY, async zoneId => {
-        const result = await client.mutate<UpdateShippingZoneMutation>({
-          mutation: UpdateShippingZoneDocument,
-          variables: {
-            id: zoneId,
-            input:
-              action === "assign"
-                ? { addWarehouses: [warehouseId] }
-                : { removeWarehouses: [warehouseId] },
-          },
-        });
+      for (const chunk of chunkList(zoneIds, MEMBERSHIP_UPDATE_CHUNK_SIZE)) {
+        try {
+          const batch = buildWarehouseLinkUpdates({
+            entityIds: chunk,
+            action: action === "assign" ? "add" : "remove",
+            linkVia: "shippingZone",
+          });
+          const result = await client.mutate<
+            Record<
+              string,
+              { errors?: unknown[] | null; shippingZone?: { id: string } | null } | null
+            >
+          >({
+            mutation: batch.document,
+            variables: batch.variables(warehouseId),
+            errorPolicy: "all",
+          });
 
-        const updated = result.data?.shippingZoneUpdate;
+          results.push(
+            ...warehouseLinkBatchSucceeded(chunk, result.data ?? undefined, "shippingZone"),
+          );
+        } catch {
+          results.push(...chunk.map(() => false));
+        }
+      }
 
-        return Boolean(updated && updated.errors.length === 0 && updated.shippingZone);
-      });
       const failed = results.filter(ok => !ok).length;
       const result =
         failed === 0 ? "success" : failed === results.length ? "error" : "partial_success";

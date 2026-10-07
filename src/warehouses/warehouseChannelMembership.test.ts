@@ -1,13 +1,13 @@
 import {
-  buildMembershipChannelUpdates,
   buildMembershipProbe,
+  buildWarehouseLinkUpdates,
   channelIdsFromMatrix,
   channelIdsPresentInProbe,
   chunkList,
-  membershipBatchSucceeded,
   membershipQueryPlan,
   runPool,
   WAREHOUSE_CHANNEL_MEMBERSHIP_LIMIT,
+  warehouseLinkBatchSucceeded,
 } from "./warehouseChannelMembership";
 
 describe("membershipQueryPlan", () => {
@@ -79,34 +79,64 @@ describe("buildMembershipProbe", () => {
   });
 });
 
-describe("buildMembershipChannelUpdates", () => {
+describe("buildWarehouseLinkUpdates", () => {
   it("aliases one channelUpdate per channel in a single document", () => {
     // Arrange
-    const channelIds = ["eu", "us"];
+    const entityIds = ["eu", "us"];
 
     // Act
-    const { document, variables } = buildMembershipChannelUpdates({
-      channelIds,
+    const { document, variables } = buildWarehouseLinkUpdates({
+      entityIds,
       action: "add",
+      linkVia: "channel",
     });
     const source = document.loc?.source.body ?? "";
 
     // Assert
-    expect(source).toContain("c0: channelUpdate");
-    expect(source).toContain("c1: channelUpdate");
+    expect(source).toContain("e0: channelUpdate");
+    expect(source).toContain("e1: channelUpdate");
     expect(source).toContain("addWarehouses: [$warehouseId]");
-    expect(variables("w1")).toEqual({ warehouseId: "w1", c0: "eu", c1: "us" });
+    expect(variables("w1")).toEqual({ warehouseId: "w1", e0: "eu", e1: "us" });
+  });
+
+  it("aliases shippingZoneUpdate when linking zones", () => {
+    // Arrange / Act
+    const { document } = buildWarehouseLinkUpdates({
+      entityIds: ["z1"],
+      action: "remove",
+      linkVia: "shippingZone",
+    });
+    const source = document.loc?.source.body ?? "";
+
+    // Assert
+    expect(source).toContain("e0: shippingZoneUpdate");
+    expect(source).toContain("removeWarehouses: [$warehouseId]");
+    expect(source).toContain("shippingZone { id }");
   });
 
   it("reports which aliases succeeded", () => {
     // Arrange / Act
-    const results = membershipBatchSucceeded(["eu", "us"], {
-      c0: { errors: [] },
-      c1: { errors: [{ code: "NOT_FOUND" }] },
-    });
+    const channelResults = warehouseLinkBatchSucceeded(
+      ["eu", "us"],
+      {
+        e0: { errors: [] },
+        e1: { errors: [{ code: "NOT_FOUND" }] },
+      },
+      "channel",
+    );
+    const zoneResults = warehouseLinkBatchSucceeded(
+      ["z1", "z2"],
+      {
+        e0: { errors: [], shippingZone: { id: "z1" } },
+        e1: { errors: [], shippingZone: null },
+      },
+      "shippingZone",
+    );
 
     // Assert
-    expect(results).toEqual([true, false]);
+    expect(channelResults).toEqual([true, false]);
+    expect(zoneResults).toEqual([true, false]);
+    expect(warehouseLinkBatchSucceeded(["eu"], null, "channel")).toEqual([false]);
   });
 });
 

@@ -7,15 +7,15 @@ import {
 import { useEffect, useState } from "react";
 
 import {
-  buildMembershipChannelUpdates,
   buildMembershipProbe,
+  buildWarehouseLinkUpdates,
   channelIdsFromMatrix,
   channelIdsPresentInProbe,
   chunkList,
   MEMBERSHIP_PROBE_CHUNK_SIZE,
   MEMBERSHIP_UPDATE_CHUNK_SIZE,
-  membershipBatchSucceeded,
   membershipQueryPlan,
+  warehouseLinkBatchSucceeded,
 } from "../warehouseChannelMembership";
 
 export interface WarehouseChannelRef {
@@ -92,22 +92,21 @@ export const useWarehouseChannelMembership = (
   const [removingId, setRemovingId] = useState<string | undefined>();
   const allChannels = counts.data?.channels ?? [];
   const names = new Map(allChannels.map(channel => [channel.id, channel.name]));
+  // String key stays stable when Apollo re-emits the same channel ids after a write.
+  const channelIdsKey = allChannels.map(channel => channel.id).join("\0");
 
   useEffect(
     function loadWarehouseChannelProbe() {
-      if (!warehouseId || plan !== "probe" || !counts.data?.channels) {
+      if (!warehouseId || plan !== "probe" || !channelIdsKey) {
         return;
       }
 
+      const channelIds = channelIdsKey.split("\0");
       let cancelled = false;
 
       setProbeIds(null);
       setProbeError(false);
-      probeWarehouseChannels(
-        client,
-        warehouseId,
-        counts.data.channels.map(channel => channel.id),
-      )
+      probeWarehouseChannels(client, warehouseId, channelIds)
         .then((ids): void => {
           if (!cancelled) {
             setProbeIds(ids);
@@ -123,7 +122,7 @@ export const useWarehouseChannelMembership = (
         cancelled = true;
       };
     },
-    [client, counts.data?.channels, plan, probeToken, warehouseId],
+    [client, channelIdsKey, plan, probeToken, warehouseId],
   );
 
   const memberIds = ((): string[] | undefined => {
@@ -173,14 +172,8 @@ export const useWarehouseChannelMembership = (
       return;
     }
 
-    if (warehouseId && counts.data?.channels) {
-      setProbeIds(
-        await probeWarehouseChannels(
-          client,
-          warehouseId,
-          counts.data.channels.map(channel => channel.id),
-        ),
-      );
+    if (warehouseId && channelIdsKey) {
+      setProbeIds(await probeWarehouseChannels(client, warehouseId, channelIdsKey.split("\0")));
     }
   };
 
@@ -196,13 +189,24 @@ export const useWarehouseChannelMembership = (
     const results: boolean[] = [];
 
     for (const chunk of chunkList(channelIds, MEMBERSHIP_UPDATE_CHUNK_SIZE)) {
-      const batch = buildMembershipChannelUpdates({ channelIds: chunk, action });
-      const result = await client.mutate<Record<string, { errors?: unknown[] | null } | null>>({
-        mutation: batch.document,
-        variables: batch.variables(targetWarehouseId),
-      });
+      try {
+        const batch = buildWarehouseLinkUpdates({
+          entityIds: chunk,
+          action,
+          linkVia: "channel",
+        });
+        const result = await client.mutate<
+          Record<string, { errors?: unknown[] | null; channel?: { id: string } | null } | null>
+        >({
+          mutation: batch.document,
+          variables: batch.variables(targetWarehouseId),
+          errorPolicy: "all",
+        });
 
-      results.push(...membershipBatchSucceeded(chunk, result.data ?? undefined));
+        results.push(...warehouseLinkBatchSucceeded(chunk, result.data ?? undefined, "channel"));
+      } catch {
+        results.push(...chunk.map(() => false));
+      }
     }
 
     return results;
@@ -229,7 +233,12 @@ export const useWarehouseChannelMembership = (
         channel_count: channelIds.length,
         result: changeResult(ok, failed),
       });
-      await refreshMembership();
+
+      try {
+        await refreshMembership();
+      } catch {
+        // Writes already landed; the list may stay briefly stale.
+      }
 
       return { ok, failed };
     } finally {
@@ -256,7 +265,12 @@ export const useWarehouseChannelMembership = (
         channel_count: 1,
         result: ok ? "success" : "error",
       });
-      await refreshMembership();
+
+      try {
+        await refreshMembership();
+      } catch {
+        // Writes already landed; the list may stay briefly stale.
+      }
 
       return ok ? { ok: 1, failed: 0 } : { ok: 0, failed: 1 };
     } finally {
