@@ -16,6 +16,33 @@ import { type ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 
 const PAGE_SIZE = 20;
+/** Cap so a warehouse with many channels does not request unbounded pages. */
+const MAX_PAGE_SIZE = 100;
+
+/**
+ * Saleor's `shippingZones(filter: { channels })` returns one edge per matching
+ * channel, so a zone shared by N warehouse channels appears N times with the
+ * same id. Keep first occurrence only.
+ */
+export const uniqueById = <TItem,>(items: TItem[], getId: (item: TItem) => string): TItem[] => {
+  const seen = new Set<string>();
+
+  return items.filter(item => {
+    const id = getId(item);
+
+    if (seen.has(id)) {
+      return false;
+    }
+
+    seen.add(id);
+
+    return true;
+  });
+};
+
+/** Aim for ~PAGE_SIZE unique zones after the per-channel edge duplication. */
+export const shippingZonesAssignPageSize = (channelCount: number): number =>
+  Math.min(MAX_PAGE_SIZE, PAGE_SIZE * Math.max(channelCount, 1));
 
 export const zonesAvailableToAssign = <TZone extends { id: string }>(
   zones: TZone[],
@@ -57,7 +84,7 @@ export const useWarehouseShippingZoneAssignment = ({
     skip: !open || channelIds.length === 0,
     fetchPolicy: "cache-and-network",
     variables: {
-      first: PAGE_SIZE,
+      first: shippingZonesAssignPageSize(channelIds.length),
       filter: {
         channels: channelIds,
         ...(search ? { search } : {}),
@@ -132,7 +159,11 @@ export const useWarehouseShippingZoneAssignment = ({
     }
   };
 
-  const loaded = zonesQuery.data?.shippingZones?.edges.map(edge => edge.node) ?? [];
+  // Same id can appear once per filtered channel — collapse before the dialog.
+  const loaded = uniqueById(
+    zonesQuery.data?.shippingZones?.edges.map(edge => edge.node) ?? [],
+    zone => zone.id,
+  );
 
   return {
     canManage,
@@ -165,17 +196,9 @@ export const useWarehouseShippingZoneAssignment = ({
                 return previous;
               }
 
-              const seen = new Set<string>();
-              const edges = [...(previous.shippingZones?.edges ?? []), ...nextZones.edges].filter(
-                edge => {
-                  if (seen.has(edge.node.id)) {
-                    return false;
-                  }
-
-                  seen.add(edge.node.id);
-
-                  return true;
-                },
+              const edges = uniqueById(
+                [...(previous.shippingZones?.edges ?? []), ...nextZones.edges],
+                edge => edge.node.id,
               );
 
               return {
