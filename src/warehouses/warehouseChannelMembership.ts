@@ -7,6 +7,9 @@ export const MEMBERSHIP_PROBE_CHUNK_SIZE = 20;
 
 export const CHANNEL_ASSIGN_CONCURRENCY = 4;
 
+/** How many channelUpdate aliases to send in one GraphQL document. */
+export const MEMBERSHIP_UPDATE_CHUNK_SIZE = 20;
+
 export const membershipQueryPlan = ({
   channelCount,
   warehouseCount,
@@ -86,6 +89,59 @@ export const channelIdsPresentInProbe = (
   channelIds: string[],
   data: Record<string, { totalCount?: number | null } | null | undefined> | null | undefined,
 ): string[] => channelIds.filter((_, index) => (data?.[`c${index}`]?.totalCount ?? 0) > 0);
+
+/**
+ * One HTTP request can update many channels: Saleor only accepts one channel per
+ * channelUpdate, so we alias several mutations in a single document.
+ */
+export const buildMembershipChannelUpdates = ({
+  channelIds,
+  action,
+}: {
+  channelIds: string[];
+  action: "add" | "remove";
+}): {
+  document: DocumentNode;
+  variables: (warehouseId: string) => Record<string, string>;
+} => {
+  const field = action === "add" ? "addWarehouses" : "removeWarehouses";
+  const variableDefinitions = [
+    "$warehouseId: ID!",
+    ...channelIds.map((_, index) => `$c${index}: ID!`),
+  ].join(", ");
+  const fields = channelIds
+    .map(
+      (_, index) =>
+        `c${index}: channelUpdate(id: $c${index}, input: { ${field}: [$warehouseId] }) {
+          channel { id }
+          errors { code field message }
+        }`,
+    )
+    .join("\n");
+  const document = gql(
+    ["mutation WarehouseChannelMembershipBatch(", variableDefinitions, ") {", fields, "}"].join(
+      "\n",
+    ),
+  );
+
+  return {
+    document,
+    variables: (warehouseId: string): Record<string, string> => {
+      const variables: Record<string, string> = { warehouseId };
+
+      channelIds.forEach((channelId, index) => {
+        variables[`c${index}`] = channelId;
+      });
+
+      return variables;
+    },
+  };
+};
+
+export const membershipBatchSucceeded = (
+  channelIds: string[],
+  data: Record<string, { errors?: unknown[] | null } | null | undefined> | null | undefined,
+): boolean[] => channelIds.map((_, index) => (data?.[`c${index}`]?.errors?.length ?? 1) === 0);
 
 export const runPool = async <TItem, TResult>(
   items: TItem[],

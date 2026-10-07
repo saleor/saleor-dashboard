@@ -1,8 +1,10 @@
 import {
+  buildMembershipChannelUpdates,
   buildMembershipProbe,
   channelIdsFromMatrix,
   channelIdsPresentInProbe,
   chunkList,
+  membershipBatchSucceeded,
   membershipQueryPlan,
   runPool,
   WAREHOUSE_CHANNEL_MEMBERSHIP_LIMIT,
@@ -74,6 +76,37 @@ describe("buildMembershipProbe", () => {
       c1: ["us"],
     });
     expect(present).toEqual(["eu"]);
+  });
+});
+
+describe("buildMembershipChannelUpdates", () => {
+  it("aliases one channelUpdate per channel in a single document", () => {
+    // Arrange
+    const channelIds = ["eu", "us"];
+
+    // Act
+    const { document, variables } = buildMembershipChannelUpdates({
+      channelIds,
+      action: "add",
+    });
+    const source = document.loc?.source.body ?? "";
+
+    // Assert
+    expect(source).toContain("c0: channelUpdate");
+    expect(source).toContain("c1: channelUpdate");
+    expect(source).toContain("addWarehouses: [$warehouseId]");
+    expect(variables("w1")).toEqual({ warehouseId: "w1", c0: "eu", c1: "us" });
+  });
+
+  it("reports which aliases succeeded", () => {
+    // Arrange / Act
+    const results = membershipBatchSucceeded(["eu", "us"], {
+      c0: { errors: [] },
+      c1: { errors: [{ code: "NOT_FOUND" }] },
+    });
+
+    // Assert
+    expect(results).toEqual([true, false]);
   });
 });
 
