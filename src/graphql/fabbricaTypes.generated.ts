@@ -5158,6 +5158,12 @@ export type CheckoutError = {
   lines: Maybe<Array<Scalars['ID']['output']>>;
   /** The error message. */
   message: Maybe<Scalars['String']['output']>;
+  /**
+   * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+   *
+   * Added in Saleor 3.23.
+   */
+  promoCodeDetails: Maybe<PromoCodeRejectionDetails>;
   /** List of variant IDs which causes the error. */
   variants: Maybe<Array<Scalars['ID']['output']>>;
 };
@@ -5767,6 +5773,12 @@ export type Collection = Node & ObjectWithMetadata & {
    * @deprecated Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars['JSONString']['output']>;
+  /**
+   * External ID of this collection.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: Maybe<Scalars['String']['output']>;
   /** The ID of the collection. */
   id: Scalars['ID']['output'];
   /** List of public metadata items. Can be accessed without permissions. */
@@ -5975,6 +5987,12 @@ export type CollectionCreateInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * External ID of this collection.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
   /** Informs whether a collection is published. */
   isPublished: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -6105,6 +6123,12 @@ export type CollectionInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * External ID of this collection.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
   /** Informs whether a collection is published. */
   isPublished: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -8031,6 +8055,9 @@ export type DraftOrderBulkDelete = {
  * Completes creating an order.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
+ *
+ * Triggers the following webhook events:
+ * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
  */
 export type DraftOrderComplete = {
   __typename: 'DraftOrderComplete';
@@ -13725,6 +13752,9 @@ export type Mutation = {
    * Completes creating an order.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   *
+   * Triggers the following webhook events:
+   * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
    */
   draftOrderComplete: Maybe<DraftOrderComplete>;
   /**
@@ -15925,7 +15955,8 @@ export type MutationCollectionCreateArgs = {
 
 
 export type MutationCollectionDeleteArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -15949,7 +15980,8 @@ export type MutationCollectionTranslateArgs = {
 
 
 export type MutationCollectionUpdateArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
   input: CollectionInput;
 };
 
@@ -18346,6 +18378,12 @@ export type OrderCreateFromCheckoutError = {
   lines: Maybe<Array<Scalars['ID']['output']>>;
   /** The error message. */
   message: Maybe<Scalars['String']['output']>;
+  /**
+   * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+   *
+   * Added in Saleor 3.23.
+   */
+  promoCodeDetails: Maybe<PromoCodeRejectionDetails>;
   /** List of variant IDs which causes the error. */
   variants: Maybe<Array<Scalars['ID']['output']>>;
 };
@@ -18499,6 +18537,12 @@ export type OrderError = {
   message: Maybe<Scalars['String']['output']>;
   /** List of order line IDs that cause the error. */
   orderLines: Maybe<Array<Scalars['ID']['output']>>;
+  /**
+   * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+   *
+   * Added in Saleor 3.23.
+   */
+  promoCodeDetails: Maybe<PromoCodeRejectionDetails>;
   /** List of product variants that are associated with the error */
   variants: Maybe<Array<Scalars['ID']['output']>>;
   /** Warehouse ID which causes the error. */
@@ -25164,6 +25208,46 @@ export type ProductWhereInput = {
   updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
+/**
+ * Details explaining why a promo code cannot be applied.
+ *
+ * Added in Saleor 3.23.
+ */
+export type PromoCodeRejectionDetails = {
+  __typename: 'PromoCodeRejectionDetails';
+  /** The minimum number of items required by the voucher. Set only when `reason` is `MIN_QUANTITY_NOT_REACHED`. */
+  minCheckoutItemsQuantity: Maybe<Scalars['Int']['output']>;
+  /** The minimum order value required by the voucher. Set only when `reason` is `MIN_SPENT_NOT_REACHED`. */
+  minSpent: Maybe<Money>;
+  /** The specific reason why the promo code cannot be applied. */
+  reason: PromoCodeRejectionReason;
+};
+
+/** The specific reason why a promo code cannot be applied. A code that has not been proven usable yet is only ever reported as `NOT_FOUND`, `EXPIRED` or `USAGE_LIMIT_REACHED`, so that a rejected code cannot be told apart from one that does not exist. The reason never depends on the caller's permissions. */
+export type PromoCodeRejectionReason =
+  /** The voucher is limited to one use per customer, so a customer email must be set on the checkout before it can be applied. */
+  | 'CUSTOMER_EMAIL_REQUIRED'
+  /** The voucher applies to shipping, but no delivery method is selected yet. Selecting one may make the voucher applicable. */
+  | 'DELIVERY_METHOD_NOT_SET'
+  /** The voucher's end date, or the gift card's expiry date, is in the past. */
+  | 'EXPIRED'
+  /** The order contains fewer items than the voucher's minimum. Populates the `minCheckoutItemsQuantity` field. */
+  | 'MIN_QUANTITY_NOT_REACHED'
+  /** The order value is below the voucher's minimum. Populates the `minSpent` field. */
+  | 'MIN_SPENT_NOT_REACHED'
+  /** The promo code exists but cannot be used here. Reported when the reason is specific to the code's configuration rather than to something the customer can change: a voucher limited to staff, to other countries, to another channel or to one use per customer, or a gift card restricted to another customer. */
+  | 'NOT_APPLICABLE'
+  /** No promo code matches the given code. Also reported in place of a reason that may not be disclosed, so this value does not prove that no voucher or gift card exists with that code. */
+  | 'NOT_FOUND'
+  /** The voucher applies to specific products, collections or categories, and none of the ordered lines match. */
+  | 'NO_ELIGIBLE_PRODUCTS'
+  /** The promo code was applicable when it was added to the checkout, but is no longer available. */
+  | 'NO_LONGER_AVAILABLE'
+  /** The voucher applies to shipping, but nothing in the order requires shipping. */
+  | 'SHIPPING_NOT_REQUIRED'
+  /** The voucher's total usage limit, summed over all of its codes, is exhausted, or a single-use code was already redeemed. */
+  | 'USAGE_LIMIT_REACHED';
+
 /** Represents the promotion that allow creating discounts based on given conditions, and is visible to all the customers. */
 export type Promotion = Node & ObjectWithMetadata & {
   __typename: 'Promotion';
@@ -26290,7 +26374,7 @@ export type Query = {
    * Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_PAYMENTS.
    */
   checkouts: Maybe<CheckoutCountableConnection>;
-  /** Look up a collection by ID or slug. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
+  /** Look up a collection by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collection: Maybe<Collection>;
   /** List of the shop's collections. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collections: Maybe<CollectionCountableConnection>;
@@ -26762,6 +26846,7 @@ export type QueryCheckoutsArgs = {
 
 export type QueryCollectionArgs = {
   channel: InputMaybe<Scalars['String']['input']>;
+  externalReference: InputMaybe<Scalars['String']['input']>;
   id: InputMaybe<Scalars['ID']['input']>;
   slug: InputMaybe<Scalars['String']['input']>;
   slugLanguageCode: InputMaybe<LanguageCodeEnum>;

@@ -887,6 +887,7 @@ import type {
   ProductVariantUpdated,
   ProductVariantWhereInput,
   ProductWhereInput,
+  PromoCodeRejectionDetails,
   Promotion,
   PromotionBulkDelete,
   PromotionCountableConnection,
@@ -8078,6 +8079,12 @@ export type OptionalCheckoutError = {
   lines?: CheckoutError['lines'] | undefined;
   /** The error message. */
   message?: CheckoutError['message'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of variant IDs which causes the error. */
   variants?: CheckoutError['variants'] | undefined;
 };
@@ -8929,6 +8936,12 @@ export type OptionalCollection = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: Collection['descriptionJson'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Collection['externalReference'] | undefined;
   /** The ID of the collection. */
   id?: Collection['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
@@ -9194,6 +9207,12 @@ export type OptionalCollectionCreateInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: CollectionCreateInput['description'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: CollectionCreateInput['externalReference'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionCreateInput['isPublished'] | undefined;
   /**
@@ -9363,6 +9382,12 @@ export type OptionalCollectionInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: CollectionInput['description'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: CollectionInput['externalReference'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionInput['isPublished'] | undefined;
   /**
@@ -11406,6 +11431,9 @@ export const defineDraftOrderBulkDeleteFactory: DefineTypeFactoryInterface<
  * Completes creating an order.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
+ *
+ * Triggers the following webhook events:
+ * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
  */
 export type OptionalDraftOrderComplete = {
   __typename?: 'DraftOrderComplete';
@@ -17088,6 +17116,9 @@ export type OptionalMutation = {
  * Completes creating an order.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
+ *
+ * Triggers the following webhook events:
+ * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
  */
   draftOrderComplete?: Maybe<OptionalDraftOrderComplete> | undefined;
   /**
@@ -19781,6 +19812,12 @@ export type OptionalOrderCreateFromCheckoutError = {
   lines?: OrderCreateFromCheckoutError['lines'] | undefined;
   /** The error message. */
   message?: OrderCreateFromCheckoutError['message'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of variant IDs which causes the error. */
   variants?: OrderCreateFromCheckoutError['variants'] | undefined;
 };
@@ -19989,6 +20026,12 @@ export type OptionalOrderError = {
   message?: OrderError['message'] | undefined;
   /** List of order line IDs that cause the error. */
   orderLines?: OrderError['orderLines'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of product variants that are associated with the error */
   variants?: OrderError['variants'] | undefined;
   /** Warehouse ID which causes the error. */
@@ -28679,6 +28722,32 @@ export const defineProductWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Details explaining why a promo code cannot be applied.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalPromoCodeRejectionDetails = {
+  __typename?: 'PromoCodeRejectionDetails';
+  /** The minimum number of items required by the voucher. Set only when `reason` is `MIN_QUANTITY_NOT_REACHED`. */
+  minCheckoutItemsQuantity?: PromoCodeRejectionDetails['minCheckoutItemsQuantity'] | undefined;
+  /** The minimum order value required by the voucher. Set only when `reason` is `MIN_SPENT_NOT_REACHED`. */
+  minSpent?: Maybe<OptionalMoney> | undefined;
+  /** The specific reason why the promo code cannot be applied. */
+  reason?: PromoCodeRejectionDetails['reason'] | undefined;
+};
+
+/**
+ * Define factory for {@link PromoCodeRejectionDetails} model.
+ *
+ * @param options
+ * @returns factory {@link PromoCodeRejectionDetailsFactoryInterface}
+ */
+export const definePromoCodeRejectionDetailsFactory: DefineTypeFactoryInterface<
+  OptionalPromoCodeRejectionDetails,
+  {}
+> = defineTypeFactory;
+
 /** Represents the promotion that allow creating discounts based on given conditions, and is visible to all the customers. */
 export type OptionalPromotion = {
   __typename?: 'Promotion';
@@ -30214,7 +30283,7 @@ export type OptionalQuery = {
  * Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_PAYMENTS.
  */
   checkouts?: Maybe<OptionalCheckoutCountableConnection> | undefined;
-  /** Look up a collection by ID or slug. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
+  /** Look up a collection by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collection?: Maybe<OptionalCollection> | undefined;
   /** List of the shop's collections. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collections?: Maybe<OptionalCollectionCountableConnection> | undefined;
