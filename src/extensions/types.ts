@@ -76,6 +76,8 @@ export type InstalledExtension = {
   deprecated?: boolean;
   /** Set by the app itself; shown under its row. The app keeps working. */
   deprecationReason?: string | null;
+  /** Install URL of the app that replaces this deprecated one. Renders a Migrate button. */
+  migrateUrl?: string | null;
 };
 
 export interface Extension {

@@ -183,6 +183,13 @@ const ExtensionRow = ({
                   {intl.formatMessage(problemMessages.openAppProblems)}
                 </Button>
               )}
+              {extension.migrateUrl && (
+                <Link href={extension.migrateUrl} data-test-id="migrate-deprecated-app">
+                  <Button variant="secondary" size="small">
+                    {intl.formatMessage(deprecationMessages.migrate)}
+                  </Button>
+                </Link>
+              )}
               {extension.actions}
             </Box>
           </Box>
