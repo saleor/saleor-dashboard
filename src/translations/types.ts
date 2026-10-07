@@ -8,6 +8,7 @@ import { type ListSettings } from "@dashboard/types";
 import { type OutputData } from "@editorjs/editorjs";
 
 export enum TranslationInputFieldName {
+  alt = "alt",
   description = "description",
   name = "name",
   seoDescription = "seoDescription",

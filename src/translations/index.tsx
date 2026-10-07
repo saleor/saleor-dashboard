@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { Route } from "@dashboard/components/Router";
 import { LanguageCodeEnum } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
@@ -12,6 +13,7 @@ import {
   languageEntitiesPath,
   languageEntityPath,
   languageListPath,
+  productMediaPathSegment,
   TranslatableEntities,
 } from "./urls";
 import {
@@ -36,6 +38,10 @@ import {
   TranslationsPages as TranslationsPagesView,
   type TranslationsPagesQueryParams,
 } from "./views/TranslationsPages";
+import {
+  TranslationsProductMedia as TranslationsProductMediaView,
+  type TranslationsProductMediaQueryParams,
+} from "./views/TranslationsProductMedia";
 import {
   TranslationsProducts as TranslationsProductsView,
   type TranslationsProductsQueryParams,
@@ -118,13 +124,13 @@ const TranslationsProducts = ({ location, match }: TranslationsEntityRouteProps)
   );
 };
 
-type TranslationsProductVariantProps = RouteComponentProps<{
+type TranslationsProductChildProps = RouteComponentProps<{
   productId: string;
   id: string;
   languageCode: string;
 }>;
 
-const TranslationsProductVariants = ({ location, match }: TranslationsProductVariantProps) => {
+const TranslationsProductVariants = ({ location, match }: TranslationsProductChildProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsProductVariantsQueryParams = parseTranslationDetailQueryParams(
     qs,
@@ -133,6 +139,22 @@ const TranslationsProductVariants = ({ location, match }: TranslationsProductVar
 
   return (
     <TranslationsProductVariantsView
+      id={decodeURIComponent(match.params.id)}
+      productId={decodeURIComponent(match.params.productId)}
+      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      params={params}
+    />
+  );
+};
+const TranslationsProductMedia = ({ location, match }: TranslationsProductChildProps) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: TranslationsProductMediaQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
+
+  return (
+    <TranslationsProductMediaView
       id={decodeURIComponent(match.params.id)}
       productId={decodeURIComponent(match.params.productId)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
@@ -259,6 +281,19 @@ const TranslationsRouter = () => {
           )}
           component={TranslationsProductVariants}
         />
+        {isMainSchema() && (
+          <Route
+            exact
+            path={languageEntityPath(
+              ":languageCode",
+              TranslatableEntities.products,
+              ":productId",
+              productMediaPathSegment,
+              ":id",
+            )}
+            component={TranslationsProductMedia}
+          />
+        )}
         <Route
           exact
           path={languageEntityPath(":languageCode", TranslatableEntities.categories, ":id")}
