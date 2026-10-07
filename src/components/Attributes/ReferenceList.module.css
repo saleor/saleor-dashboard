@@ -13,15 +13,14 @@
 
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--mu-spacing-2);
 }
 
 .searchField {
-  flex: 0 1 calc(18rem * 1.75);
-  width: calc(18rem * 1.75);
+  flex: 1 1 auto;
   max-width: 100%;
-  min-width: 0;
 }
 
 /* Not `.actions`: that class hides row controls until hover, and CSS modules share the name. */
@@ -30,7 +29,6 @@
   flex-shrink: 0;
   align-items: center;
   gap: var(--mu-spacing-2);
-  margin-left: auto;
 }
 
 .viewToggle {

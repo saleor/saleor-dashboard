@@ -158,7 +158,7 @@ const PageListPage = ({
         <DashboardCard>
           <Box
             display="grid"
-            __gridTemplateColumns="auto 1fr"
+            __gridTemplateColumns="minmax(16rem, 1fr) auto"
             gap={4}
             paddingBottom={2}
             paddingX={6}

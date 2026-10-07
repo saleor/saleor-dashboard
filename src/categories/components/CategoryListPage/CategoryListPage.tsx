@@ -127,19 +127,20 @@ export const CategoryListPage = ({
       <DashboardCard>
         <Box
           display="flex"
-          justifyContent="space-between"
           alignItems="center"
+          flexWrap="wrap"
+          gap={4}
           paddingX={6}
           marginBottom={2}
         >
-          <Box __width="320px">
+          <Box flexGrow="1">
             <SearchInput
               initialSearch={initialSearch}
               placeholder={intl.formatMessage(messages.searchCategory)}
               onSearchChange={onSearchChange}
             />
           </Box>
-          <Box display="flex" alignItems="center" gap={4}>
+          <Box display="flex" alignItems="center" gap={4} flexShrink="0">
             <Box display="flex" alignItems="center" gap={2}>
               <Ripple model={rippleExpandedSubcategories} />
               <Button
