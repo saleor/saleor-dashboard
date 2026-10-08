@@ -16,6 +16,7 @@ import {
   transformPaymentStatus,
 } from "@dashboard/misc";
 import { type OrderListUrlSortField } from "@dashboard/orders/urls";
+import { getDeliveryMethodInfo } from "@dashboard/orders/utils/deliveryMethod";
 import { type RelayToFlat, type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { type GridCell, type Item, type TextCell } from "@glideapps/glide-data-grid";
@@ -54,6 +55,11 @@ export const orderListStaticColumnAdapter = (
     {
       id: "status",
       title: intl.formatMessage(columnsMessages.status),
+      width: 200,
+    },
+    {
+      id: "delivery",
+      title: intl.formatMessage(columnsMessages.delivery),
       width: 200,
     },
     {
@@ -108,6 +114,8 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
         return getCustomerCellContent(rowData);
       case "payment":
         return getPaymentCellContent(intl, theme, rowData);
+      case "delivery":
+        return getDeliveryCellContent(intl, theme, rowData);
       case "status":
         return getStatusCellContent(intl, theme, rowData);
       case "net":
@@ -193,6 +201,36 @@ export function getPaymentCellContent(
   }
 
   return readonlyTextCell("-");
+}
+
+const colorAtOpacity = (color: string, opacity: number): string => {
+  if (color.startsWith("oklch(")) {
+    return color.replace(/\)\s*$/, ` / ${opacity})`);
+  }
+
+  const alpha = Math.round(opacity * 255)
+    .toString(16)
+    .padStart(2, "0");
+
+  return `${color}${alpha}`;
+};
+
+export function getDeliveryCellContent(
+  intl: IntlShape,
+  currentTheme: DefaultTheme,
+  rowData: RelayToFlat<OrderListQuery["orders"]>[number],
+) {
+  const info = getDeliveryMethodInfo(rowData?.deliveryMethod);
+
+  if (!info) {
+    return readonlyTextCell("-");
+  }
+
+  const pillColor = getStatusColor({ status: info.color, currentTheme });
+  const color =
+    info.color === "info" ? { ...pillColor, base: colorAtOpacity(pillColor.base, 0.5) } : pillColor;
+
+  return pillCell(intl.formatMessage(info.labelMessage), color, COMMON_CELL_PROPS);
 }
 
 function getNetCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {

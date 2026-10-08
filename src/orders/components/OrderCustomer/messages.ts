@@ -6,18 +6,27 @@ const messages = defineMessages({
     defaultMessage: "Change customer",
     description: "button to open change customer dialog on draft order",
   },
-  orderCustomerFulfillmentAll: {
-    id: "R98JLZ",
-    defaultMessage: "Fulfill from All Warehouses",
-    description: "OrderCustomer Fulfillment from All Warehouses",
+  pickupLocation: {
+    id: "43uGpq",
+    defaultMessage: "Pickup location",
+    description: "customer card section title for a click-and-collect order's collection point",
   },
-  orderCustomerFulfillmentLocal: {
-    id: "/w919H",
-    defaultMessage: "Fulfill from Local Stock",
-    description: "OrderCustomer Fulfillment from Local Warehouse",
+  pickupStockAll: {
+    id: "CURJPX",
+    defaultMessage: "Stock can come from any warehouse",
+    description:
+      "pickup order: items may be fulfilled from other warehouses and sent to the pickup location",
+  },
+  pickupStockLocal: {
+    id: "7bDQUo",
+    defaultMessage: "Uses this location's stock only",
+    description: "pickup order: items are fulfilled only from the pickup location's own stock",
+  },
+  sameAsPickup: {
+    id: "0igWMZ",
+    defaultMessage: "Same as pickup",
+    description: "billing address matches the pickup location",
   },
 });
-
-export default messages;
 
 export { messages as orderCustomerMessages };

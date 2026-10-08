@@ -228,6 +228,7 @@ export const orderTransactions: TransactionItemFragment[] = [
 export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   {
     __typename: "Order",
+    deliveryMethod: { __typename: "Warehouse" },
     billingAddress: {
       __typename: "Address",
       city: "East Aaronville",
@@ -278,6 +279,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: { __typename: "ShippingMethod" },
     billingAddress: {
       __typename: "Address",
       city: "Port Danielshire",
@@ -328,6 +330,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: null,
     created: "2018-09-11T09:37:30.019749+00:00",
     id: "T3JkZXI6MTg=",
@@ -360,6 +363,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "South Rodneymouth",
@@ -410,6 +414,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Jorgeview",
@@ -460,6 +465,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "East Lauriestad",
@@ -510,6 +516,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Kaneton",
@@ -560,6 +567,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "New Morganshire",
@@ -610,6 +618,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Adamsport",
@@ -660,6 +669,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Thomasburgh",
@@ -710,6 +720,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Lake Walter",
@@ -760,6 +771,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "West Patriciastad",
@@ -810,6 +822,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Lake Kevinchester",
@@ -860,6 +873,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "New Morganshire",
@@ -910,6 +924,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Gabrielchester",
@@ -960,6 +975,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "East Steven",
@@ -1010,6 +1026,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "East Daniel",
@@ -1060,6 +1077,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Lake Margaret",
@@ -1110,6 +1128,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Dorothyberg",
@@ -1160,6 +1179,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
   },
   {
     __typename: "Order",
+    deliveryMethod: null,
     billingAddress: {
       __typename: "Address",
       city: "Gregorymouth",
