@@ -1,12 +1,18 @@
-import { candidateLinksForChannelEdit, linksDroppedByChannelEdit } from "./channelEditUnlinks";
+import {
+  candidateLinksForChannelEdit,
+  type ChannelEditZone,
+  linksDroppedByChannelEdit,
+} from "./channelEditUnlinks";
 
-const europe = {
+type CandidateLinksInput = Parameters<typeof candidateLinksForChannelEdit>[0];
+
+const europe: ChannelEditZone = {
   id: "z-eu",
   name: "Europe",
   channelIds: ["ch-eu"],
   warehouses: [{ id: "w-warsaw", name: "Warsaw" }],
 };
-const both = {
+const both: ChannelEditZone = {
   id: "z-both",
   name: "Both",
   channelIds: ["ch-eu", "ch-us"],
@@ -15,14 +21,17 @@ const both = {
 
 describe("candidateLinksForChannelEdit", () => {
   it("includes a linked warehouse that is being removed from this channel", () => {
-    // Arrange / Act
-    const links = candidateLinksForChannelEdit({
+    // Arrange
+    const input: CandidateLinksInput = {
       channelId: "ch-eu",
       channelWarehouseIds: ["w-warsaw"],
       zones: [europe],
       removeWarehouseIds: ["w-warsaw"],
       removeZoneIds: [],
-    });
+    };
+
+    // Act
+    const links = candidateLinksForChannelEdit(input);
 
     // Assert
     expect(links).toEqual([
@@ -37,14 +46,17 @@ describe("candidateLinksForChannelEdit", () => {
   });
 
   it("skips a warehouse that is not on this channel", () => {
-    // Arrange / Act
-    const links = candidateLinksForChannelEdit({
+    // Arrange
+    const input: CandidateLinksInput = {
       channelId: "ch-eu",
       channelWarehouseIds: [],
       zones: [europe],
       removeWarehouseIds: [],
       removeZoneIds: ["z-eu"],
-    });
+    };
+
+    // Act
+    const links = candidateLinksForChannelEdit(input);
 
     // Assert
     expect(links).toEqual([]);

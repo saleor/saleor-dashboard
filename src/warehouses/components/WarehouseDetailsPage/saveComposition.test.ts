@@ -21,10 +21,10 @@ const baseFormData: WarehouseDetailsPageFormData = {
 describe("buildWarehouseSaveComposition", () => {
   it("returns general when name or email changes", () => {
     // Arrange
-    const composition = buildWarehouseSaveComposition(
-      { ...baseFormData, name: "Updated" },
-      baseFormData,
-    );
+    const formData: WarehouseDetailsPageFormData = { ...baseFormData, name: "Updated" };
+
+    // Act
+    const composition = buildWarehouseSaveComposition(formData, baseFormData);
 
     // Assert
     expect(composition.hasGeneral).toBe(true);
@@ -34,10 +34,10 @@ describe("buildWarehouseSaveComposition", () => {
 
   it("returns address when an address field changes", () => {
     // Arrange
-    const composition = buildWarehouseSaveComposition(
-      { ...baseFormData, city: "Kraków" },
-      baseFormData,
-    );
+    const formData: WarehouseDetailsPageFormData = { ...baseFormData, city: "Kraków" };
+
+    // Act
+    const composition = buildWarehouseSaveComposition(formData, baseFormData);
 
     // Assert
     expect(composition.hasAddress).toBe(true);
@@ -46,14 +46,14 @@ describe("buildWarehouseSaveComposition", () => {
 
   it("returns pickup when pickup settings change", () => {
     // Arrange
-    const composition = buildWarehouseSaveComposition(
-      {
-        ...baseFormData,
-        isPrivate: false,
-        clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL,
-      },
-      baseFormData,
-    );
+    const formData: WarehouseDetailsPageFormData = {
+      ...baseFormData,
+      isPrivate: false,
+      clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL,
+    };
+
+    // Act
+    const composition = buildWarehouseSaveComposition(formData, baseFormData);
 
     // Assert
     expect(composition.hasPickup).toBe(true);
@@ -61,7 +61,10 @@ describe("buildWarehouseSaveComposition", () => {
 
   it("returns nothing when the form matches the saved warehouse", () => {
     // Arrange
-    const composition = buildWarehouseSaveComposition(baseFormData, baseFormData);
+    const formData: WarehouseDetailsPageFormData = { ...baseFormData };
+
+    // Act
+    const composition = buildWarehouseSaveComposition(formData, baseFormData);
 
     // Assert
     expect(hasWarehouseSaveComposition(composition)).toBe(false);

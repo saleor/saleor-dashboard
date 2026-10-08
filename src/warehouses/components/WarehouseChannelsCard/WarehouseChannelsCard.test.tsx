@@ -1,24 +1,28 @@
+import { type WarehouseChannelRef } from "@dashboard/warehouses/hooks/useWarehouseChannelMembership";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
+import { type ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import { WarehouseChannelsCard } from "./WarehouseChannelsCard";
 
-const renderCard = (
-  props: Partial<{
-    status: "loading" | "error" | "ready";
-    channels: Array<{ id: string; name: string }>;
-    canManage: boolean;
-    availableChannels: Array<{ id: string; name: string }>;
-  }> = {},
-): ReturnType<typeof render> =>
+type CardProps = Partial<
+  Pick<
+    ComponentProps<typeof WarehouseChannelsCard>,
+    "status" | "channels" | "canManage" | "availableChannels"
+  >
+>;
+
+const europe: WarehouseChannelRef = { id: "ch-eu", name: "Europe" };
+
+const renderCard = (props: CardProps = {}): ReturnType<typeof render> =>
   render(
     <Wrapper>
       <MemoryRouter>
         <WarehouseChannelsCard
           status={props.status ?? "ready"}
           channels={props.channels ?? []}
-          availableChannels={props.availableChannels ?? [{ id: "ch-eu", name: "Europe" }]}
+          availableChannels={props.availableChannels ?? [europe]}
           canManage={props.canManage ?? true}
           disabled={false}
           onRetry={jest.fn()}
@@ -32,7 +36,10 @@ const renderCard = (
 describe("WarehouseChannelsCard", () => {
   it("says stock cannot be sold when the location is in no channel", () => {
     // Arrange
-    renderCard();
+    const props: CardProps = { channels: [] };
+
+    // Act
+    renderCard(props);
 
     // Assert
     expect(screen.getByTestId("assign-list-required-meta")).toHaveTextContent("Required to sell");
@@ -42,7 +49,10 @@ describe("WarehouseChannelsCard", () => {
 
   it("lists assigned channels", () => {
     // Arrange
-    renderCard({ channels: [{ id: "ch-eu", name: "Europe" }] });
+    const props: CardProps = { channels: [europe] };
+
+    // Act
+    renderCard(props);
 
     // Assert
     expect(screen.getByText("Europe")).toBeInTheDocument();
@@ -51,10 +61,13 @@ describe("WarehouseChannelsCard", () => {
 
   it("hides add and remove when the user cannot manage channels", () => {
     // Arrange
-    renderCard({
+    const props: CardProps = {
       canManage: false,
-      channels: [{ id: "ch-eu", name: "Europe" }],
-    });
+      channels: [europe],
+    };
+
+    // Act
+    renderCard(props);
 
     // Assert
     expect(screen.queryByTestId("warehouse-channels-add")).not.toBeInTheDocument();
@@ -64,10 +77,13 @@ describe("WarehouseChannelsCard", () => {
 
   it("keeps the footer when every channel is already assigned", () => {
     // Arrange
-    renderCard({
-      channels: [{ id: "ch-eu", name: "Europe" }],
+    const props: CardProps = {
+      channels: [europe],
       availableChannels: [],
-    });
+    };
+
+    // Act
+    renderCard(props);
 
     // Assert
     expect(screen.queryByTestId("warehouse-channels-add")).not.toBeInTheDocument();
@@ -78,7 +94,10 @@ describe("WarehouseChannelsCard", () => {
 
   it("does not claim the location is outside every channel when channels failed to load", () => {
     // Arrange
-    renderCard({ status: "error" });
+    const props: CardProps = { status: "error" };
+
+    // Act
+    renderCard(props);
 
     // Assert
     expect(screen.getByText("Couldn't load channels.")).toBeInTheDocument();

@@ -4,20 +4,33 @@ import {
   zonesAvailableToAssign,
 } from "./useWarehouseShippingZoneAssignment";
 
+interface ZoneRow {
+  id: string;
+  name: string;
+}
+
+interface ZoneEdge {
+  cursor: string;
+  node: ZoneRow;
+}
+
 describe("shippingZonesAssignPageSize", () => {
   it("scales with channel count so dedupe still fills a page", () => {
+    // Arrange
+    const channelCounts: number[] = [1, 4, 7, 0];
+
+    // Act
+    const pageSizes = channelCounts.map(shippingZonesAssignPageSize);
+
     // Assert
-    expect(shippingZonesAssignPageSize(1)).toBe(20);
-    expect(shippingZonesAssignPageSize(4)).toBe(80);
-    expect(shippingZonesAssignPageSize(7)).toBe(100);
-    expect(shippingZonesAssignPageSize(0)).toBe(20);
+    expect(pageSizes).toEqual([20, 80, 100, 20]);
   });
 });
 
 describe("uniqueById", () => {
   it("keeps the first row when Saleor returns one zone per channel", () => {
     // Arrange — same id repeated once per warehouse channel (API quirk).
-    const zones = [
+    const zones: ZoneRow[] = [
       { id: "zone-eu", name: "Europe" },
       { id: "zone-eu", name: "Europe" },
       { id: "zone-eu", name: "Europe" },
@@ -37,7 +50,7 @@ describe("uniqueById", () => {
 
   it("dedupes connection edges by node id", () => {
     // Arrange
-    const edges = [
+    const edges: ZoneEdge[] = [
       { cursor: "a", node: { id: "zone-eu", name: "Europe" } },
       { cursor: "b", node: { id: "zone-eu", name: "Europe" } },
       { cursor: "c", node: { id: "zone-oc", name: "Oceania" } },
@@ -57,7 +70,7 @@ describe("uniqueById", () => {
 describe("zonesAvailableToAssign", () => {
   it("drops zones this location is already in", () => {
     // Arrange
-    const zones = [
+    const zones: ZoneRow[] = [
       { id: "zone-1", name: "Brazil" },
       { id: "zone-2", name: "Europe" },
     ];

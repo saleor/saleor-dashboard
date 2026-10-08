@@ -1,22 +1,33 @@
-import { WarehouseErrorCode } from "@dashboard/graphql";
+import {
+  type CountryFragment,
+  WarehouseErrorCode,
+  type WarehouseErrorFragment,
+} from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { type ComponentProps } from "react";
 
 import { CreateWarehouseDialog } from "./CreateWarehouseDialog";
 
-const renderDialog = (channelName?: string): ReturnType<typeof render> =>
+type CreateWarehouseDialogProps = ComponentProps<typeof CreateWarehouseDialog>;
+
+const countries: CountryFragment[] = [
+  { code: "PL", country: "Poland", __typename: "CountryDisplay" },
+];
+
+const renderDialog = (props: Partial<CreateWarehouseDialogProps> = {}): ReturnType<typeof render> =>
   render(
     <Wrapper>
       <CreateWarehouseDialog
         open
-        channelName={channelName}
         confirmButtonState="default"
-        countries={[{ code: "PL", country: "Poland", __typename: "CountryDisplay" }]}
+        countries={countries}
         defaultCountryCode="PL"
         errors={[]}
         onClose={jest.fn()}
         onSubmit={jest.fn()}
+        {...props}
       />
     </Wrapper>,
   );
@@ -24,7 +35,10 @@ const renderDialog = (channelName?: string): ReturnType<typeof render> =>
 describe("CreateWarehouseDialog", () => {
   it("says the warehouse can be added to a channel on the next page", () => {
     // Arrange
-    renderDialog();
+    const props: Partial<CreateWarehouseDialogProps> = { channelName: undefined };
+
+    // Act
+    renderDialog(props);
 
     // Assert
     expect(
@@ -35,26 +49,16 @@ describe("CreateWarehouseDialog", () => {
 
   it("shows a create failure in the dialog", async () => {
     // Arrange
-    render(
-      <Wrapper>
-        <CreateWarehouseDialog
-          open
-          confirmButtonState="default"
-          countries={[{ code: "PL", country: "Poland", __typename: "CountryDisplay" }]}
-          defaultCountryCode="PL"
-          errors={[]}
-          onClose={jest.fn()}
-          onSubmit={async () => [
-            {
-              __typename: "WarehouseError",
-              code: WarehouseErrorCode.INVALID,
-              field: null,
-              message: "Could not create the warehouse.",
-            },
-          ]}
-        />
-      </Wrapper>,
-    );
+    const createErrors: WarehouseErrorFragment[] = [
+      {
+        __typename: "WarehouseError",
+        code: WarehouseErrorCode.INVALID,
+        field: null,
+        message: "Could not create the warehouse.",
+      },
+    ];
+
+    renderDialog({ onSubmit: async () => createErrors });
 
     // Act
     await userEvent.type(screen.getByTestId("warehouse-name-input"), "Europe");
@@ -68,19 +72,10 @@ describe("CreateWarehouseDialog", () => {
 
   it("does not submit until the location has a country", () => {
     // Arrange
-    render(
-      <Wrapper>
-        <CreateWarehouseDialog
-          open
-          confirmButtonState="default"
-          countries={[{ code: "PL", country: "Poland", __typename: "CountryDisplay" }]}
-          defaultCountryCode=""
-          errors={[]}
-          onClose={jest.fn()}
-          onSubmit={jest.fn()}
-        />
-      </Wrapper>,
-    );
+    const props: Partial<CreateWarehouseDialogProps> = { defaultCountryCode: "" };
+
+    // Act
+    renderDialog(props);
 
     // Assert
     expect(screen.getByTestId("submit")).toBeDisabled();
@@ -88,7 +83,10 @@ describe("CreateWarehouseDialog", () => {
 
   it("says the warehouse will be assigned when it is created for a channel", () => {
     // Arrange
-    renderDialog("Europe");
+    const props: Partial<CreateWarehouseDialogProps> = { channelName: "Europe" };
+
+    // Act
+    renderDialog(props);
 
     // Assert
     expect(
