@@ -27,13 +27,13 @@ import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useShippingZoneEditChanges } from "@dashboard/shipping/hooks/useShippingZoneEditChanges";
 import {
-  useLegacyStockAvailability,
   useZoneWarehouseEligibility,
   warehousesUnlinkedByRemovingZoneChannels,
 } from "@dashboard/shipping/hooks/useZoneWarehouseEligibility";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
+import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
 import { type Option } from "@saleor/macaw-ui-next";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -133,7 +133,8 @@ export const ShippingZoneDetailsPage = ({
   }, [data.warehouses, warehouses]);
   const client = useApolloClient();
   const legacyStockAvailability = useLegacyStockAvailability();
-  const [unlinkNames, setUnlinkNames] = useState<string[] | null>(null);
+  // Null names: the check failed, so the dialog cannot say which warehouses lose their link.
+  const [unlinkWarning, setUnlinkWarning] = useState<{ names: string[] | null } | null>(null);
   const eligibilityWarehouses = useMemo(
     () => warehouseChoices.map(choice => ({ id: choice.value, name: String(choice.label) })),
     [warehouseChoices],
@@ -168,12 +169,15 @@ export const ShippingZoneDetailsPage = ({
         });
 
         if (unlinked.length > 0) {
-          setUnlinkNames(unlinked.map(warehouse => warehouse.name));
+          setUnlinkWarning({ names: unlinked.map(warehouse => warehouse.name) });
 
           return;
         }
       } catch {
-        // The server still removes a link that no longer shares a channel.
+        // The server still removes a link that no longer shares a channel, so warn anyway.
+        setUnlinkWarning({ names: null });
+
+        return;
       }
     }
 
@@ -291,20 +295,24 @@ export const ShippingZoneDetailsPage = ({
         />
       </Savebar>
       <ActionDialog
-        open={unlinkNames !== null}
+        open={unlinkWarning !== null}
         title={intl.formatMessage(messages.unlinkWarehousesTitle)}
         confirmButtonState="default"
         variant="delete"
-        onClose={() => setUnlinkNames(null)}
+        onClose={() => setUnlinkWarning(null)}
         onConfirm={() => {
-          setUnlinkNames(null);
+          setUnlinkWarning(null);
           submit();
         }}
       >
-        <FormattedMessage
-          {...messages.unlinkWarehousesBody}
-          values={{ warehouses: unlinkNames?.join(", ") ?? "" }}
-        />
+        {unlinkWarning?.names ? (
+          <FormattedMessage
+            {...messages.unlinkWarehousesBody}
+            values={{ warehouses: intl.formatList(unlinkWarning.names, { type: "conjunction" }) }}
+          />
+        ) : (
+          <FormattedMessage {...messages.unlinkWarehousesUnknownBody} />
+        )}
       </ActionDialog>
     </DetailPageLayout>
   );

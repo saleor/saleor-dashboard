@@ -78,16 +78,14 @@ export const useWarehouseDetailsChannels = ({
   const requestRemove = (channelId: string): void => {
     const channelName =
       membership.channels.find(channel => channel.id === channelId)?.name ?? channelId;
-    const unlinked =
-      legacyStockAvailability === true
-        ? zonesUnlinkedByRemovingWarehouseChannel({
-            removedChannelId: channelId,
-            remainingChannelIds: membership.channels
-              .filter(channel => channel.id !== channelId)
-              .map(channel => channel.id),
-            zones,
-          })
-        : [];
+    // Saleor drops the zone link in either stock mode, and the zones card shows it in both.
+    const unlinked = zonesUnlinkedByRemovingWarehouseChannel({
+      removedChannelId: channelId,
+      remainingChannelIds: membership.channels
+        .filter(channel => channel.id !== channelId)
+        .map(channel => channel.id),
+      zones,
+    });
 
     if (unlinked.length > 0) {
       setPendingRemove({
@@ -242,7 +240,9 @@ export const useWarehouseDetailsChannels = ({
         >
           <FormattedMessage
             {...messages.channelsRemoveUnlink}
-            values={{ zones: pendingRemove?.zoneNames.join(", ") ?? "" }}
+            values={{
+              zones: intl.formatList(pendingRemove?.zoneNames ?? [], { type: "conjunction" }),
+            }}
           />
           {pendingRemove?.truncated ? (
             <>

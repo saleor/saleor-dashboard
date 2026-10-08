@@ -15236,14 +15236,6 @@ export type WarehouseCreateMutationVariables = Exact<{
 
 export type WarehouseCreateMutation = { __typename: 'Mutation', createWarehouse: { __typename: 'WarehouseCreate', errors: Array<{ __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null }>, warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', id: string, city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string, name: string }> } }> } } | null } | null };
 
-export type WarehouseChannelMembershipUpdateMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-  input: ChannelUpdateInput;
-}>;
-
-
-export type WarehouseChannelMembershipUpdateMutation = { __typename: 'Mutation', channelUpdate: { __typename: 'ChannelUpdate', channel: { __typename: 'Channel', id: string } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
-
 export type WarehouseUpdateMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   input: WarehouseUpdateInput;

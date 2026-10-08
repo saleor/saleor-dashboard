@@ -3,13 +3,15 @@ import { render, screen } from "@testing-library/react";
 
 import { WarehouseDeleteDialog } from "./WarehouseDeleteDialog";
 
+interface DeleteImpactCounts {
+  stockCount?: number | null;
+  channelCount?: number | null;
+}
+
 const renderDialog = ({
   stockCount = null,
   channelCount = null,
-}: {
-  stockCount?: number | null;
-  channelCount?: number | null;
-} = {}): ReturnType<typeof render> =>
+}: DeleteImpactCounts = {}): ReturnType<typeof render> =>
   render(
     <Wrapper>
       <WarehouseDeleteDialog
@@ -27,7 +29,10 @@ const renderDialog = ({
 describe("WarehouseDeleteDialog", () => {
   it("names the stock records and channels that will be deleted", () => {
     // Arrange
-    renderDialog({ stockCount: 3, channelCount: 2 });
+    const counts: DeleteImpactCounts = { stockCount: 3, channelCount: 2 };
+
+    // Act
+    renderDialog(counts);
 
     // Assert
     expect(screen.getByTestId("warehouse-delete-impact")).toHaveTextContent(
@@ -37,7 +42,10 @@ describe("WarehouseDeleteDialog", () => {
 
   it("does not invent counts that were not loaded", () => {
     // Arrange
-    renderDialog();
+    const counts: DeleteImpactCounts = { stockCount: null, channelCount: null };
+
+    // Act
+    renderDialog(counts);
 
     // Assert
     expect(screen.getByTestId("warehouse-delete-impact")).toHaveTextContent(
@@ -47,11 +55,14 @@ describe("WarehouseDeleteDialog", () => {
 
   it("says when there is no stock and the location is in one channel", () => {
     // Arrange
-    renderDialog({ stockCount: 0, channelCount: 1 });
+    const counts: DeleteImpactCounts = { stockCount: 0, channelCount: 1 };
+
+    // Act
+    renderDialog(counts);
 
     // Assert
     expect(screen.getByTestId("warehouse-delete-impact")).toHaveTextContent(
-      "There is no stock at this location. It is removed from 1 channel.",
+      "There is no stock in this warehouse. It is removed from 1 channel.",
     );
   });
 });

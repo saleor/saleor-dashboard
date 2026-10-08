@@ -1,7 +1,6 @@
 import { type useApolloClient } from "@apollo/client";
 import {
   useWarehousesInChannelsQuery,
-  useWarehouseStockAvailabilityModeQuery,
   WarehousesInChannelsDocument,
   type WarehousesInChannelsQuery,
 } from "@dashboard/graphql";
@@ -12,7 +11,11 @@ import {
   warehousesUnlinkedByZoneChannelChange,
 } from "@dashboard/shipping/warehouseEligibility";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { chunkList } from "@dashboard/warehouses/warehouseChannelMembership";
 import { useMemo } from "react";
+
+/** Saleor rejects `first` above 100. */
+const WAREHOUSES_PAGE_LIMIT = 100;
 
 export const useZoneWarehouseEligibility = ({
   warehouses,
@@ -26,8 +29,8 @@ export const useZoneWarehouseEligibility = ({
   ineligible: WarehouseChoice[];
 } => {
   const warehouseIds = useMemo(() => warehouses.map(warehouse => warehouse.id), [warehouses]);
-  // Saleor rejects `first` above 100. Unchecked warehouses stay selectable.
-  const checkedIds = warehouseIds.slice(0, 100);
+  // Unchecked warehouses stay selectable.
+  const checkedIds = warehouseIds.slice(0, WAREHOUSES_PAGE_LIMIT);
   const skip = checkedIds.length === 0 || channelIds.length === 0;
   const query = useWarehousesInChannelsQuery({
     variables: {
@@ -54,16 +57,6 @@ export const useZoneWarehouseEligibility = ({
   };
 };
 
-export const useLegacyStockAvailability = (): boolean | undefined => {
-  const query = useWarehouseStockAvailabilityModeQuery();
-
-  if (query.loading) {
-    return undefined;
-  }
-
-  return query.data?.shop?.useLegacyShippingZoneStockAvailability ?? false;
-};
-
 export const warehousesUnlinkedByRemovingZoneChannels = async ({
   client,
   linked,
@@ -81,17 +74,26 @@ export const warehousesUnlinkedByRemovingZoneChannels = async ({
     return linked;
   }
 
-  const result = await client.query<WarehousesInChannelsQuery>({
-    query: WarehousesInChannelsDocument,
-    variables: {
-      ids: linked.map(warehouse => warehouse.id),
-      channels: remainingChannelIds,
-      first: linked.length,
-    },
-    fetchPolicy: "network-only",
-  });
+  const results = await Promise.all(
+    chunkList(
+      linked.map(warehouse => warehouse.id),
+      WAREHOUSES_PAGE_LIMIT,
+    ).map(ids =>
+      client.query<WarehousesInChannelsQuery>({
+        query: WarehousesInChannelsDocument,
+        variables: {
+          ids,
+          channels: remainingChannelIds,
+          first: ids.length,
+        },
+        fetchPolicy: "network-only",
+      }),
+    ),
+  );
   const stillSharingIds = new Set(
-    (mapEdgesToItems(result.data?.warehouses) ?? []).map(warehouse => warehouse.id),
+    results.flatMap(result =>
+      (mapEdgesToItems(result.data?.warehouses) ?? []).map(warehouse => warehouse.id),
+    ),
   );
 
   return warehousesUnlinkedByZoneChannelChange({

@@ -24731,45 +24731,6 @@ export function useWarehouseCreateMutation(baseOptions?: ApolloReactHooks.Mutati
 export type WarehouseCreateMutationHookResult = ReturnType<typeof useWarehouseCreateMutation>;
 export type WarehouseCreateMutationResult = Apollo.MutationResult<Types.WarehouseCreateMutation>;
 export type WarehouseCreateMutationOptions = Apollo.BaseMutationOptions<Types.WarehouseCreateMutation, Types.WarehouseCreateMutationVariables>;
-export const WarehouseChannelMembershipUpdateDocument = gql`
-    mutation WarehouseChannelMembershipUpdate($id: ID!, $input: ChannelUpdateInput!) {
-  channelUpdate(id: $id, input: $input) {
-    channel {
-      id
-    }
-    errors {
-      ...ChannelError
-    }
-  }
-}
-    ${ChannelErrorFragmentDoc}`;
-export type WarehouseChannelMembershipUpdateMutationFn = Apollo.MutationFunction<Types.WarehouseChannelMembershipUpdateMutation, Types.WarehouseChannelMembershipUpdateMutationVariables>;
-
-/**
- * __useWarehouseChannelMembershipUpdateMutation__
- *
- * To run a mutation, you first call `useWarehouseChannelMembershipUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useWarehouseChannelMembershipUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [warehouseChannelMembershipUpdateMutation, { data, loading, error }] = useWarehouseChannelMembershipUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useWarehouseChannelMembershipUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WarehouseChannelMembershipUpdateMutation, Types.WarehouseChannelMembershipUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.WarehouseChannelMembershipUpdateMutation, Types.WarehouseChannelMembershipUpdateMutationVariables>(WarehouseChannelMembershipUpdateDocument, options);
-      }
-export type WarehouseChannelMembershipUpdateMutationHookResult = ReturnType<typeof useWarehouseChannelMembershipUpdateMutation>;
-export type WarehouseChannelMembershipUpdateMutationResult = Apollo.MutationResult<Types.WarehouseChannelMembershipUpdateMutation>;
-export type WarehouseChannelMembershipUpdateMutationOptions = Apollo.BaseMutationOptions<Types.WarehouseChannelMembershipUpdateMutation, Types.WarehouseChannelMembershipUpdateMutationVariables>;
 export const WarehouseUpdateDocument = gql`
     mutation WarehouseUpdate($id: ID!, $input: WarehouseUpdateInput!) {
   updateWarehouse(id: $id, input: $input) {

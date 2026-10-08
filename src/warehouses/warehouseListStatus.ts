@@ -73,7 +73,7 @@ export const channelsByWarehouseFromMatrix = ({
 
 /**
  * Whether stock at this location can be sold.
- * An unknown membership stays blank. A truncated zone list is not treated as "no zone".
+ * An unknown membership is reported as unknown. A truncated zone list is not treated as "no zone".
  */
 export const warehouseListRowStatus = ({
   membership,

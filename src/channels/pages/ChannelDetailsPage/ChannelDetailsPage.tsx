@@ -450,16 +450,26 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         const links = await previewChannelUnlinks(data);
 
         if (links.length > 0) {
-          setUnlinkLabels(links.map(link => `${link.warehouseName} · ${link.zoneName}`));
+          setUnlinkLabels(
+            links.map(link =>
+              intl.formatMessage(messages.unlinkWarehouseFromZone, {
+                warehouse: link.warehouseName,
+                zone: link.zoneName,
+              }),
+            ),
+          );
 
-          return [
+          // A non-empty result keeps the form dirty until the dialog is confirmed.
+          const awaitingUnlinkConfirm: ChannelErrorFragment[] = [
             {
               __typename: "ChannelError",
               code: ChannelErrorCode.INVALID,
               field: null,
               message: null,
             },
-          ] as TErrors;
+          ];
+
+          return awaitingUnlinkConfirm;
         }
       } catch {
         // Save anyway. Saleor still deletes a link that no longer shares a channel.
@@ -657,7 +667,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             </Savebar>
             <ActionDialog
               open={unlinkLabels.length > 0}
-              title={intl.formatMessage(messages.unlinkLocationsTitle)}
+              title={intl.formatMessage(messages.unlinkWarehousesTitle)}
               confirmButtonState="default"
               variant="delete"
               onClose={() => setUnlinkLabels([])}
@@ -668,8 +678,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               }}
             >
               <FormattedMessage
-                {...messages.unlinkLocationsBody}
-                values={{ links: unlinkLabels.join(", ") }}
+                {...messages.unlinkWarehousesBody}
+                values={{ links: intl.formatList(unlinkLabels, { type: "conjunction" }) }}
               />
             </ActionDialog>
           </DetailPageLayout>

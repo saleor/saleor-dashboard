@@ -29,7 +29,7 @@ import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
 import { messages } from "@dashboard/warehouses/messages";
-import { isPrivateForPickupOption } from "@dashboard/warehouses/pickupOptionAfterPrivateChange";
+import { pickupFormChange } from "@dashboard/warehouses/pickupOptionAfterPrivateChange";
 import { defaultGraphiQLQuery } from "@dashboard/warehouses/queries";
 import { warehouseListPath } from "@dashboard/warehouses/urls";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -43,6 +43,7 @@ import { WarehousePickupCard } from "../WarehousePickupCard/WarehousePickupCard"
 import { WarehouseShippingZonesCard } from "../WarehouseShippingZonesCard/WarehouseShippingZonesCard";
 import { buildWarehouseSaveComposition, hasWarehouseSaveComposition } from "./saveComposition";
 import { type WarehouseDetailsPageFormData } from "./types";
+import { WarehouseDetailsPageLoading } from "./WarehouseDetailsPageLoading";
 import { WarehouseSaveCompositionHint } from "./WarehouseSaveCompositionHint";
 
 export type { WarehouseDetailsPageFormData } from "./types";
@@ -204,8 +205,13 @@ export const WarehouseDetailsPage = ({
     channelIds: zone.channels.map(channel => channel.id),
   }));
 
+  if (!warehouse) {
+    return <WarehouseDetailsPageLoading channelsCard={channelsCard} />;
+  }
+
   return (
     <Form
+      key={warehouse.id}
       confirmLeave
       initial={initialForm}
       onSubmit={handleSubmit}
@@ -282,7 +288,7 @@ interface WarehouseDetailsFormProps {
   onRemoveShippingZone: (zoneId: string) => void;
   submit: UseFormResult<WarehouseDetailsPageFormData>["submit"];
   validationErrors: AccountErrorFragment[];
-  warehouse: WarehouseDetailsFragment | undefined;
+  warehouse: WarehouseDetailsFragment;
   warehouseListBackLink: string;
   zones: Array<{ id: string; name: string; channelIds: string[] }>;
   onNavigateBack: () => void;
@@ -325,7 +331,7 @@ const WarehouseDetailsForm = ({
   onShowMetadata,
 }: WarehouseDetailsFormProps): ReactNode => {
   const intl = useIntl();
-  const saveComposition = warehouse ? buildWarehouseSaveComposition(data, initialForm) : undefined;
+  const saveComposition = buildWarehouseSaveComposition(data, initialForm);
   const countryChoices = mapCountriesToChoices(countries);
   const countrySelect = createSingleAutocompleteSelectHandler(
     change,
@@ -349,17 +355,13 @@ const WarehouseDetailsForm = ({
 
   return (
     <DetailPageLayout>
-      <FormDirtyStateSync
-        enabled={!!warehouse}
-        isSaveDisabled={isSaveDisabled}
-        triggerChange={triggerChange}
-      />
+      <FormDirtyStateSync enabled isSaveDisabled={isSaveDisabled} triggerChange={triggerChange} />
       <TopNav
         href={warehouseListBackLink}
         hrefIcon={<TopNavDestinationIcon.warehouses />}
         hrefTitle={intl.formatMessage(topNavDestinationMessages.allWarehouses)}
         title={
-          warehouse?.name ? (
+          warehouse.name ? (
             <Box display="flex" alignItems="center" gap={2} flexWrap="nowrap" __minWidth="0">
               <Box
                 title={warehouse.name}
@@ -380,17 +382,13 @@ const WarehouseDetailsForm = ({
       >
         <TopNav.MetadataButton
           onClick={onShowMetadata}
-          disabled={disabled || !warehouse}
+          disabled={disabled}
           data-test-id="show-warehouse-metadata"
           title={intl.formatMessage(messages.editMetadata)}
         />
         {menuItems.length > 0 && (
           <TopNav.Menu
-            items={
-              disabled || !warehouse
-                ? menuItems.map(item => ({ ...item, disabled: true }))
-                : menuItems
-            }
+            items={disabled ? menuItems.map(item => ({ ...item, disabled: true })) : menuItems}
             dataTestId="warehouse-menu"
           />
         )}
@@ -413,12 +411,10 @@ const WarehouseDetailsForm = ({
           />
           <WarehousePickupCard
             clickAndCollectOption={data.clickAndCollectOption}
+            savedClickAndCollectOption={initialForm.clickAndCollectOption}
             disabled={disabled}
             onOptionChange={option => {
-              set({
-                clickAndCollectOption: option,
-                isPrivate: isPrivateForPickupOption(option),
-              });
+              set(pickupFormChange({ option, saved: initialForm }));
               triggerChange();
             }}
           />
@@ -430,8 +426,7 @@ const WarehouseDetailsForm = ({
           <WarehouseShippingZonesCard
             legacyStockAvailability={legacyStockAvailability}
             zones={zones}
-            totalCount={warehouse?.shippingZones?.totalCount ?? null}
-            loading={!warehouse}
+            totalCount={warehouse.shippingZones?.totalCount ?? null}
             membershipStatus={membershipStatus}
             warehouseChannelIds={warehouseChannelIds}
             channelNames={channelNames}

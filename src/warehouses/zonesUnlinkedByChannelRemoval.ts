@@ -30,11 +30,11 @@ export const zonesUnlinkedByRemovingWarehouseChannel = ({
 type WarehouseZonesGuidance =
   | { kind: "loading" }
   | { kind: "hidden" }
-  | { kind: "direct"; outsideChannelZoneIds: string[] }
+  | { kind: "direct" }
   | { kind: "legacy-unknown" }
   | { kind: "legacy-need-channel" }
   | { kind: "legacy-need-zone"; channelNames: string[] }
-  | { kind: "legacy-linked"; outsideChannelZoneIds: string[] };
+  | { kind: "legacy-linked" };
 
 /** True when at least one linked zone shares a channel with the warehouse. */
 export const warehouseSharesShippingZone = ({
@@ -73,20 +73,15 @@ export const warehouseZonesGuidance = ({
     return { kind: "loading" };
   }
 
-  const outsideChannelZoneIds = zones
-    .filter(zone => !zone.channelIds.some(channelId => warehouseChannelIds.includes(channelId)))
-    .map(zone => zone.id);
   const hasZones = zones.length > 0;
   const sharesZone = warehouseSharesShippingZone({ zones, warehouseChannelIds });
 
   if (!legacyStockAvailability) {
-    return hasZones ? { kind: "direct", outsideChannelZoneIds: [] } : { kind: "hidden" };
+    return hasZones ? { kind: "direct" } : { kind: "hidden" };
   }
 
   if (membershipStatus === "error") {
-    return hasZones
-      ? { kind: "legacy-linked", outsideChannelZoneIds: [] }
-      : { kind: "legacy-unknown" };
+    return hasZones ? { kind: "legacy-linked" } : { kind: "legacy-unknown" };
   }
 
   if (warehouseChannelIds.length === 0) {
@@ -98,5 +93,5 @@ export const warehouseZonesGuidance = ({
     return { kind: "legacy-need-zone", channelNames };
   }
 
-  return { kind: "legacy-linked", outsideChannelZoneIds };
+  return { kind: "legacy-linked" };
 };

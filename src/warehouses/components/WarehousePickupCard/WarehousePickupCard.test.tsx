@@ -1,15 +1,20 @@
 import { WarehouseClickAndCollectOptionEnum } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { type ComponentProps } from "react";
 
 import { WarehousePickupCard } from "./WarehousePickupCard";
 
+type CardProps = Partial<
+  Pick<
+    ComponentProps<typeof WarehousePickupCard>,
+    "clickAndCollectOption" | "savedClickAndCollectOption" | "onOptionChange"
+  >
+>;
+
 const renderCard = (
-  props: Partial<{
-    clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
-    onOptionChange: (option: WarehouseClickAndCollectOptionEnum) => void;
-  }> = {},
-) => {
+  props: CardProps = {},
+): { onOptionChange: (option: WarehouseClickAndCollectOptionEnum) => void } => {
   const onOptionChange = props.onOptionChange ?? jest.fn();
 
   render(
@@ -17,6 +22,9 @@ const renderCard = (
       <WarehousePickupCard
         clickAndCollectOption={
           props.clickAndCollectOption ?? WarehouseClickAndCollectOptionEnum.DISABLED
+        }
+        savedClickAndCollectOption={
+          props.savedClickAndCollectOption ?? WarehouseClickAndCollectOptionEnum.DISABLED
         }
         disabled={false}
         onOptionChange={onOptionChange}
@@ -30,7 +38,10 @@ const renderCard = (
 describe("WarehousePickupCard", () => {
   it("only says whether customers can collect orders when pickup is off", () => {
     // Arrange
-    renderCard();
+    const props: CardProps = { clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED };
+
+    // Act
+    renderCard(props);
 
     // Assert
     expect(screen.getByText("Customers can't collect orders here.")).toBeInTheDocument();
@@ -39,7 +50,10 @@ describe("WarehousePickupCard", () => {
 
   it("keeps where the items come from inside a closed advanced section when pickup is on", () => {
     // Arrange
-    renderCard({ clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL });
+    const props: CardProps = { clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL };
+
+    // Act
+    renderCard(props);
 
     // Assert
     expect(screen.getByTestId("warehouse-pickup-advanced")).toHaveAttribute(
@@ -62,5 +76,18 @@ describe("WarehousePickupCard", () => {
 
     // Assert
     expect(onOptionChange).toHaveBeenCalledWith(WarehouseClickAndCollectOptionEnum.LOCAL);
+  });
+
+  it("restores the saved pickup choice when pickup is switched back on", () => {
+    // Arrange
+    const { onOptionChange } = renderCard({
+      savedClickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
+    });
+
+    // Act
+    fireEvent.click(within(screen.getByTestId("warehouse-pickup-toggle")).getByRole("button"));
+
+    // Assert
+    expect(onOptionChange).toHaveBeenCalledWith(WarehouseClickAndCollectOptionEnum.ALL);
   });
 });

@@ -7,7 +7,6 @@ import {
   useWarehouseCreateMutation,
   useWarehouseDeleteMutation,
   useWarehouseListQuery,
-  useWarehouseStockAvailabilityModeQuery,
   WarehouseErrorCode,
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
@@ -35,7 +34,9 @@ import {
 } from "@dashboard/warehouses/components/CreateWarehouseDialog/CreateWarehouseDialog";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
 import WarehouseListPage from "@dashboard/warehouses/components/WarehouseListPage/WarehouseListPage";
+import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
 import { useWarehouseListMembership } from "@dashboard/warehouses/hooks/useWarehouseListMembership";
+import { useWarehouseStockCount } from "@dashboard/warehouses/hooks/useWarehouseStockCount";
 import {
   warehouseListUrl,
   type WarehouseListUrlDialog,
@@ -99,6 +100,15 @@ const submitWarehouseCreate = async ({
   return errors;
 };
 
+/** Null until membership is known. */
+const membershipChannelCount = (
+  membership: ReturnType<typeof useWarehouseListMembership>,
+  warehouseId: string,
+): number | null =>
+  membership.status === "ready"
+    ? (membership.channelsByWarehouseId[warehouseId]?.length ?? 0)
+    : null;
+
 const WarehouseList = ({ params }: WarehouseListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -109,7 +119,7 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
 
   usePaginationReset(warehouseListUrl, params, settings.rowNumber);
 
-  const stockModeQuery = useWarehouseStockAvailabilityModeQuery();
+  const legacyStockAvailability = useLegacyStockAvailability();
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = useMemo(
     () => ({
@@ -182,7 +192,9 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
 
   const handleSort = createSortHandler(navigate, warehouseListUrl, params);
   const membership = useWarehouseListMembership();
-  const legacyStockAvailability = stockModeQuery.data?.shop?.useLegacyShippingZoneStockAvailability;
+  const deleteStockCount = useWarehouseStockCount(
+    params.action === "delete" ? params.id : undefined,
+  ).stockCount;
   const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation();
   const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
   const createTransitionState = getMutationStatus(createWarehouseOpts);
@@ -257,6 +269,8 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
         <WarehouseDeleteDialog
           confirmButtonState={deleteTransitionState}
           name={mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name ?? ""}
+          stockCount={deleteStockCount}
+          channelCount={membershipChannelCount(membership, params.id)}
           open={params.action === "delete"}
           onClose={closeModal}
           onConfirm={() =>

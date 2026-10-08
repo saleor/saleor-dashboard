@@ -5,13 +5,13 @@ import { type ComponentProps } from "react";
 
 import { WarehouseSetupChecklist } from "./WarehouseSetupChecklist";
 
+type ChecklistProps = Partial<ComponentProps<typeof WarehouseSetupChecklist>>;
+
 jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
   useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: jest.fn() }),
 }));
 
-const renderChecklist = (
-  props: Partial<ComponentProps<typeof WarehouseSetupChecklist>> = {},
-): ReturnType<typeof render> =>
+const renderChecklist = (props: ChecklistProps = {}): ReturnType<typeof render> =>
   render(
     <Wrapper>
       <WarehouseSetupChecklist canManage onAddChannel={jest.fn()} {...props} />
@@ -30,14 +30,17 @@ describe("WarehouseSetupChecklist", () => {
 
     // Assert
     expect(
-      screen.getByText("Stock here can't be sold until this location is added to a channel."),
+      screen.getByText("Stock here can't be sold until this warehouse is added to a channel."),
     ).toBeInTheDocument();
     expect(onAddChannel).toHaveBeenCalledTimes(1);
   });
 
   it("hides the action when the user cannot manage channels", () => {
     // Arrange
-    renderChecklist({ canManage: false });
+    const props: ChecklistProps = { canManage: false };
+
+    // Act
+    renderChecklist(props);
 
     // Assert
     expect(screen.queryByTestId("warehouse-setup-add-channel")).not.toBeInTheDocument();
@@ -46,8 +49,10 @@ describe("WarehouseSetupChecklist", () => {
   it("marks the channel step done and can be dismissed when shipping is not required", async () => {
     // Arrange
     const onDismiss = jest.fn();
+    const props: ChecklistProps = { inChannel: true, onDismiss };
 
-    renderChecklist({ inChannel: true, onDismiss });
+    // Act
+    renderChecklist(props);
 
     // Assert
     expect(screen.queryByTestId("warehouse-setup-add-channel")).not.toBeInTheDocument();
@@ -63,15 +68,17 @@ describe("WarehouseSetupChecklist", () => {
   it("requires a shipping zone in the older stock mode after a channel is assigned", async () => {
     // Arrange
     const onAddShippingZone = jest.fn();
-
-    renderChecklist({
+    const props: ChecklistProps = {
       inChannel: true,
       showShippingZones: true,
       zoneCount: 0,
       hasUsableShippingZone: false,
       canManageShipping: true,
       onAddShippingZone,
-    });
+    };
+
+    // Act
+    renderChecklist(props);
 
     // Assert
     expect(screen.getByText("Link a shipping zone")).toBeInTheDocument();
@@ -88,14 +95,17 @@ describe("WarehouseSetupChecklist", () => {
 
   it("keeps the shipping zone step open when linked zones share no channel", () => {
     // Arrange
-    renderChecklist({
+    const props: ChecklistProps = {
       inChannel: true,
       showShippingZones: true,
       zoneCount: 0,
       hasUsableShippingZone: false,
       canManageShipping: true,
       onAddShippingZone: jest.fn(),
-    });
+    };
+
+    // Act
+    renderChecklist(props);
 
     // Assert
     expect(screen.getByTestId("setup-checklist-task-shipping-zones")).toHaveAttribute(
@@ -107,11 +117,14 @@ describe("WarehouseSetupChecklist", () => {
 
   it("locks the shipping zone step until a channel is assigned", () => {
     // Arrange
-    renderChecklist({
+    const props: ChecklistProps = {
       showShippingZones: true,
       canManageShipping: true,
       onAddShippingZone: jest.fn(),
-    });
+    };
+
+    // Act
+    renderChecklist(props);
 
     // Assert
     expect(screen.getByTestId("setup-checklist-task-shipping-zones")).toHaveAttribute(
@@ -124,11 +137,14 @@ describe("WarehouseSetupChecklist", () => {
 
   it("omits the shipping zone step in the default stock mode", () => {
     // Arrange
-    renderChecklist({
+    const props: ChecklistProps = {
       inChannel: true,
       showShippingZones: false,
       onAddShippingZone: jest.fn(),
-    });
+    };
+
+    // Act
+    renderChecklist(props);
 
     // Assert
     expect(screen.queryByText("Link a shipping zone")).not.toBeInTheDocument();

@@ -10,7 +10,7 @@ import {
 import { Button } from "@saleor/macaw-ui-next";
 import { Truck } from "lucide-react";
 import { type ReactNode } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 interface WarehouseShippingZonesCardProps {
   /** Undefined while the shop stock mode is still loading. */
@@ -28,15 +28,19 @@ interface WarehouseShippingZonesCardProps {
   onRemove: (zoneId: string) => void;
 }
 
-const channelList = (names: string[]): string => {
+const channelList = (intl: IntlShape, names: string[]): string => {
   if (names.length <= 2) {
-    return names.join(", ");
+    return intl.formatList(names, { type: "conjunction" });
   }
 
-  return `${names[0]} +${names.length - 1}`;
+  return intl.formatMessage(messages.channelsFirstAndMore, {
+    first: names[0],
+    count: names.length - 1,
+  });
 };
 
 const zoneIntro = (
+  intl: IntlShape,
   kind: ReturnType<typeof warehouseZonesGuidance>["kind"],
   channelNames: string[],
   pickupWithoutZone: boolean,
@@ -53,7 +57,7 @@ const zoneIntro = (
       {kind === "legacy-need-zone" ? (
         <FormattedMessage
           {...messages.zonesNeedZone}
-          values={{ channels: channelList(channelNames) }}
+          values={{ channels: channelList(intl, channelNames) }}
         />
       ) : null}
       {kind === "legacy-linked" ? <FormattedMessage {...messages.zonesLegacyIntro} /> : null}
@@ -129,7 +133,7 @@ export const WarehouseShippingZonesCard = ({
       removable={canManage}
       intro={
         <>
-          {zoneIntro(guidance.kind, channelNames, pickupEnabled && zones.length === 0)}
+          {zoneIntro(intl, guidance.kind, channelNames, pickupEnabled && zones.length === 0)}
           {hiddenCount > 0 ? (
             <>
               {" "}

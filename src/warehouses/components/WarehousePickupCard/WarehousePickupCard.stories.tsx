@@ -18,6 +18,7 @@ const meta: Meta<typeof WarehousePickupCard> = {
   ],
   args: {
     clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
+    savedClickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
     disabled: false,
     onOptionChange: fn(),
   },
@@ -42,6 +43,7 @@ export const Interactive: Story = {
     return (
       <WarehousePickupCard
         clickAndCollectOption={option}
+        savedClickAndCollectOption={WarehouseClickAndCollectOptionEnum.DISABLED}
         disabled={false}
         onOptionChange={setOption}
       />

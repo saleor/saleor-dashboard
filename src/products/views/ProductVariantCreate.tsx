@@ -32,7 +32,7 @@ import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { warehouseAddPath } from "@dashboard/warehouses/urls";
+import { warehouseAddUrl } from "@dashboard/warehouses/urls";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -289,7 +289,7 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
         attributeValues={attributeValues}
         onSubmit={handleSubmit}
         onVariantClick={handleVariantClick}
-        onWarehouseConfigure={() => navigate(warehouseAddPath)}
+        onWarehouseConfigure={() => navigate(warehouseAddUrl)}
         onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
         weightUnit={shop?.defaultWeightUnit}

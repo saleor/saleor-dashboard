@@ -78,12 +78,7 @@ const WarehousesSection = ({
   onExpand,
 }: WarehousesSectionProps): ReactElement => {
   const intl = useIntl();
-  const channelNames =
-    zoneChannelNames.length === 0
-      ? ""
-      : zoneChannelNames.length <= 2
-        ? zoneChannelNames.join(", ")
-        : `${zoneChannelNames[0]} +${zoneChannelNames.length - 1}`;
+  const hasZoneChannels = zoneChannelNames.length > 0;
 
   if (legacyStockAvailability === undefined) {
     return <Skeleton __height="2.5rem" __width="100%" />;
@@ -132,10 +127,10 @@ const WarehousesSection = ({
         <Box display="flex" flexDirection="column" gap={3} marginTop={4}>
           <DashboardCard.Subtitle fontSize={3} color="default2">
             <FormattedMessage
-              {...(channelNames ? messages.ineligibleIntro : messages.addChannelFirst)}
+              {...(hasZoneChannels ? messages.ineligibleIntro : messages.addChannelFirst)}
             />
           </DashboardCard.Subtitle>
-          {channelNames
+          {hasZoneChannels
             ? ineligibleWarehouses.map(warehouse => (
                 <Link
                   key={warehouse.id}

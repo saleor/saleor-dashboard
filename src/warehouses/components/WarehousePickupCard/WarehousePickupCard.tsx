@@ -11,12 +11,15 @@ import { FormattedMessage } from "react-intl";
 
 interface WarehousePickupCardProps {
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+  /** Restored when pickup is switched back on. */
+  savedClickAndCollectOption: WarehouseClickAndCollectOptionEnum;
   disabled: boolean;
   onOptionChange: (option: WarehouseClickAndCollectOptionEnum) => void;
 }
 
 export const WarehousePickupCard = ({
   clickAndCollectOption,
+  savedClickAndCollectOption,
   disabled,
   onOptionChange,
 }: WarehousePickupCardProps): ReactNode => {
@@ -24,7 +27,9 @@ export const WarehousePickupCard = ({
 
   const handlePickupChange = (enabled: boolean): void => {
     onOptionChange(
-      enabled ? pickupOptionWhenEnabled() : WarehouseClickAndCollectOptionEnum.DISABLED,
+      enabled
+        ? pickupOptionWhenEnabled(savedClickAndCollectOption)
+        : WarehouseClickAndCollectOptionEnum.DISABLED,
     );
   };
 

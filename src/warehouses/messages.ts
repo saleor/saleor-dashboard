@@ -106,8 +106,8 @@ export const messages = defineMessages({
     description: "orders list tag: order is picked up by the customer at a warehouse",
   },
   deleteImpactNoStock: {
-    id: "NzJP2L",
-    defaultMessage: "There is no stock at this location.",
+    id: "pPl6GN",
+    defaultMessage: "There is no stock in this warehouse.",
     description: "warehouse delete dialog when the location has no stock",
   },
   deleteImpactStockOne: {
@@ -165,14 +165,20 @@ export const messages = defineMessages({
     defaultMessage: "Stock here counts only for countries in these zones.",
     description: "warehouse shipping zones intro in legacy stock mode",
   },
+  channelsFirstAndMore: {
+    id: "kTfWcB",
+    defaultMessage: "{first} and {count} more",
+    description:
+      "a channel name followed by how many other channels, in warehouse shipping zone guidance",
+  },
   zonesMore: {
     id: "sqzerb",
     defaultMessage: "+{count} more",
     description: "warehouse shipping zones truncated list",
   },
   zonesNeedChannel: {
-    id: "al7UcB",
-    defaultMessage: "Add this location to a channel first. Stock here can't be sold until then.",
+    id: "dnuJF2",
+    defaultMessage: "Add this warehouse to a channel first. Stock here can't be sold until then.",
     description: "warehouse shipping zones when the location has no channel",
   },
   zonesNeedZone: {
@@ -192,8 +198,8 @@ export const messages = defineMessages({
     description: "warehouse shipping zones row remove label",
   },
   zonesEmptyDescription: {
-    id: "aLEM/w",
-    defaultMessage: "Add a shipping zone that shares this location's channel.",
+    id: "gu2cez",
+    defaultMessage: "Add a shipping zone that shares this warehouse's channel.",
     description: "warehouse shipping zones empty state",
   },
   zonesAssigned: {
@@ -212,8 +218,8 @@ export const messages = defineMessages({
     description: "warehouse shipping zones note when pickup is on",
   },
   zonesOutsideChannel: {
-    id: "IjDgLu",
-    defaultMessage: "Not in this location's channels",
+    id: "9oyRA0",
+    defaultMessage: "Not in this warehouse's channels",
     description: "shipping zone that shares no channel with the warehouse",
   },
   zonesUnknown: {
@@ -225,6 +231,11 @@ export const messages = defineMessages({
     id: "rBEb3x",
     defaultMessage: "Address",
     description: "warehouse list column",
+  },
+  listStatusUnknown: {
+    id: "AKzNnu",
+    defaultMessage: "Open the warehouse to see its channels",
+    description: "warehouse list channels cell when channel membership could not be loaded",
   },
   listPlace: {
     id: "HO81c6",
@@ -257,8 +268,8 @@ export const messages = defineMessages({
     description: "warehouse channels empty state title",
   },
   channelsEmptyDescription: {
-    id: "Y6b+Rh",
-    defaultMessage: "Add this location to a channel.",
+    id: "zfygCO",
+    defaultMessage: "Add this warehouse to a channel.",
     description: "warehouse channels empty state description",
   },
   channelsAdd: {
@@ -287,8 +298,8 @@ export const messages = defineMessages({
     description: "warehouse channels assign dialog",
   },
   channelsNoneLeft: {
-    id: "0brnFc",
-    defaultMessage: "This location is already in every channel.",
+    id: "RSFh3k",
+    defaultMessage: "This warehouse is already in every channel.",
     description: "warehouse channels assign dialog when nothing is left",
   },
   channelsAssigned: {
@@ -297,8 +308,8 @@ export const messages = defineMessages({
     description: "warehouse channels assign success",
   },
   channelsAssignFailed: {
-    id: "zHPCgr",
-    defaultMessage: "Couldn't add this location to the channel. Try again.",
+    id: "ORApQI",
+    defaultMessage: "Couldn't add this warehouse to the channel. Try again.",
     description: "warehouse channels assign failure",
   },
   channelsAssignPartial: {
@@ -312,8 +323,8 @@ export const messages = defineMessages({
     description: "warehouse channel remove success",
   },
   channelsRemoveFailed: {
-    id: "jKTgB9",
-    defaultMessage: "Couldn't remove this location from the channel. Try again.",
+    id: "zvFb+A",
+    defaultMessage: "Couldn't remove this warehouse from the channel. Try again.",
     description: "warehouse channel remove failure",
   },
   channelsRemove: {
@@ -327,9 +338,9 @@ export const messages = defineMessages({
     description: "warehouse channel remove confirmation title",
   },
   channelsRemoveUnlink: {
-    id: "squrTb",
+    id: "57sj4E",
     defaultMessage:
-      "{zones} will also be unlinked from this location, because they share no other channel.",
+      "{zones} will also be unlinked from this warehouse, because they share no other channel.",
     description: "warehouse channel remove confirmation when zones would unlink",
   },
   channelsRemoveUnlinkMore: {
@@ -358,8 +369,8 @@ export const messages = defineMessages({
     description: "warehouse header channel count",
   },
   channelsBanner: {
-    id: "FWx5g+",
-    defaultMessage: "Stock here can't be sold until this location is added to a channel.",
+    id: "0nUgyb",
+    defaultMessage: "Stock here can't be sold until this warehouse is added to a channel.",
     description: "warehouse setup task when the location is in no channel",
   },
   channelsBannerAction: {
@@ -383,8 +394,8 @@ export const messages = defineMessages({
     description: "Save composition segment for warehouse pickup settings",
   },
   setupTitle: {
-    id: "n6yout",
-    defaultMessage: "Finish setting up this location",
+    id: "0aPT4I",
+    defaultMessage: "Finish setting up this warehouse",
     description: "warehouse setup checklist title",
   },
   setupSubtitle: {
@@ -393,8 +404,8 @@ export const messages = defineMessages({
     description: "warehouse setup checklist subtitle while steps remain",
   },
   setupSubtitleDone: {
-    id: "0R7xxr",
-    defaultMessage: "This location is ready to sell stock.",
+    id: "RFgw1A",
+    defaultMessage: "This warehouse is ready to sell stock.",
     description: "warehouse setup checklist subtitle when required steps are done",
   },
   setupChannelTitle: {

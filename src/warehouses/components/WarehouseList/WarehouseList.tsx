@@ -4,12 +4,10 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/Responsiv
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
-import { paginationHasAnotherPage } from "@dashboard/components/TablePagination/paginationHasAnotherPage";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type WarehouseWithShippingFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
-import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { type ListProps, type SortPage } from "@dashboard/types";
@@ -26,7 +24,7 @@ import {
 } from "@dashboard/warehouses/warehouseListStatus";
 import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
-import { type ReactNode, useContext } from "react";
+import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -35,7 +33,7 @@ import styles from "./WarehouseList.module.css";
 interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortField> {
   warehouses: WarehouseWithShippingFragment[] | undefined;
   onRemove: (id: string | undefined) => void;
-  /** Blank until channel membership is known, including when the shop is too large to look up. */
+  /** Shows a dash when channel membership is unknown, including when the shop is too large to look up. */
   membership: WarehouseListMembership;
   channelsByWarehouseId: Record<string, WarehouseListChannel[]>;
   /** Undefined while the shop stock mode is still loading. */
@@ -90,7 +88,10 @@ const WarehouseListStatus = ({
   channels: WarehouseListChannel[];
   legacyStockAvailability: boolean | undefined;
 }): ReactNode => {
-  if (!warehouse || membership === "loading") {
+  const intl = useIntl();
+
+  // Wait for the stock mode too, so a legacy shop does not flash a channel before "No shipping zone".
+  if (!warehouse || membership === "loading" || legacyStockAvailability === undefined) {
     return <Skeleton />;
   }
 
@@ -104,7 +105,16 @@ const WarehouseListStatus = ({
   });
 
   if (status.kind === "unknown") {
-    return null;
+    return (
+      <Text
+        size={2}
+        color="default2"
+        title={intl.formatMessage(messages.listStatusUnknown)}
+        data-test-id="warehouse-list-status-unknown"
+      >
+        —
+      </Text>
+    );
   }
 
   const isBlocker = status.kind === "not-in-channel" || status.kind === "no-shipping-zone";
@@ -140,20 +150,17 @@ export const WarehouseList = ({
 }: WarehouseListProps): ReactNode => {
   const intl = useIntl();
   const location = useLocation();
-  const pagination = useContext(PaginatorContext);
 
   return (
     <ResponsiveTable
       data-test-id="warehouse-list"
       search={search}
       footer={
-        paginationHasAnotherPage(pagination?.hasNextPage, pagination?.hasPreviousPage) ? (
-          <TablePaginationWithContext
-            settings={settings}
-            disabled={disabled}
-            onUpdateListSettings={onUpdateListSettings}
-          />
-        ) : undefined
+        <TablePaginationWithContext
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
       }
     >
       <TableHead>

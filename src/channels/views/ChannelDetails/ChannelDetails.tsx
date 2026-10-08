@@ -67,10 +67,10 @@ import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getMutationStatus } from "@dashboard/misc";
-import { useLegacyStockAvailability } from "@dashboard/shipping/hooks/useZoneWarehouseEligibility";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 

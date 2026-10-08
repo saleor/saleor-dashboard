@@ -141,6 +141,10 @@
     "context": "discount type percentage",
     "string": "Percentage"
   },
+  "+XDTnd": {
+    "context": "confirm removing a channel that unlinks warehouses from the zone",
+    "string": "Unlink warehouses?"
+  },
   "+ZVimo": {
     "context": "fallback detail when a price override has no reason recorded",
     "string": "Custom price set for this line"
@@ -668,10 +672,6 @@
     "context": "staff notification description",
     "string": "Sent to people in {alertsLink} when a customer completes checkout. Draft orders completed in the Dashboard are not included."
   },
-  "0R7xxr": {
-    "context": "warehouse setup checklist subtitle when required steps are done",
-    "string": "This location is ready to sell stock."
-  },
   "0Sq+Ey": {
     "context": "button opening the model type icon picker",
     "string": "Change icon"
@@ -715,9 +715,9 @@
     "context": "success message after unassigning attributes from a model type",
     "string": "Model type updated"
   },
-  "0brnFc": {
-    "context": "warehouse channels assign dialog when nothing is left",
-    "string": "This location is already in every channel."
+  "0aPT4I": {
+    "context": "warehouse setup checklist title",
+    "string": "Finish setting up this warehouse"
   },
   "0dCGBW": {
     "context": "button",
@@ -787,6 +787,10 @@
   },
   "0nLsyM": {
     "string": "No product types found"
+  },
+  "0nUgyb": {
+    "context": "warehouse setup task when the location is in no channel",
+    "string": "Stock here can't be sold until this warehouse is added to a channel."
   },
   "0oo+BT": {
     "context": "section header",
@@ -1844,6 +1848,10 @@
   "57IYpr": {
     "context": "error message",
     "string": "Value is invalid"
+  },
+  "57sj4E": {
+    "context": "warehouse channel remove confirmation when zones would unlink",
+    "string": "{zones} will also be unlinked from this warehouse, because they share no other channel."
   },
   "59XppT": {
     "context": "button",
@@ -3176,6 +3184,10 @@
     "context": "no products placeholder",
     "string": "No products are available matching query in the channel assigned to this order."
   },
+  "9oyRA0": {
+    "context": "shipping zone that shares no channel with the warehouse",
+    "string": "Not in this warehouse's channels"
+  },
   "9pGRfy": {
     "context": "Add custom extension error link to Saleor Docs",
     "string": "Learn more about this error"
@@ -3319,6 +3331,10 @@
   "AJF7N5": {
     "context": "scope note for model type tab grouping help tooltip",
     "string": "Browser-only display — does not rename, merge, or change your model types or data."
+  },
+  "AKzNnu": {
+    "context": "warehouse list channels cell when channel membership could not be loaded",
+    "string": "Open the warehouse to see its channels"
   },
   "ALe+of": {
     "string": "You don't have permission to manage webhooks. Contact your administrator for access."
@@ -4730,10 +4746,6 @@
     "context": "warning callout body after a pending customer type change",
     "string": "Values from the previous type stay stored. They'll show again if you switch back."
   },
-  "FWx5g+": {
-    "context": "warehouse setup task when the location is in no channel",
-    "string": "Stock here can't be sold until this location is added to a channel."
-  },
   "FX7ts2": {
     "context": "error message",
     "string": "Amount should be greater than 0"
@@ -5094,6 +5106,10 @@
   "Gbhrqd": {
     "context": "model types section name",
     "string": "Model Types"
+  },
+  "Gcruxi": {
+    "context": "confirm a channel save that drops warehouse-zone links",
+    "string": "Unlink warehouses from shipping zones?"
   },
   "Gfbp36": {
     "context": "dialog header",
@@ -5711,10 +5727,6 @@
   "Ihp4D3": {
     "context": "header",
     "string": "Edit Media"
-  },
-  "IjDgLu": {
-    "context": "shipping zone that shares no channel with the warehouse",
-    "string": "Not in this location's channels"
   },
   "IlPaqv": {
     "context": "channel detail cogs menu, opens the delete-confirmation dialog",
@@ -7088,10 +7100,6 @@
     "context": "onboarding step description",
     "string": "Saleor includes a GraphQL Playground, an interactive GraphQL editor, allowing access to your Saleor instance's API through the web browser. The Playground lets you quickly familiarize yourself with the API, perform example operations, and send your first queries and mutations."
   },
-  "NzJP2L": {
-    "context": "warehouse delete dialog when the location has no stock",
-    "string": "There is no stock at this location."
-  },
   "NzifUg": {
     "context": "window title",
     "string": "Fulfill Order"
@@ -7205,6 +7213,10 @@
   "OPtrMg": {
     "context": "header",
     "string": "{webhookName} Details"
+  },
+  "ORApQI": {
+    "context": "warehouse channels assign failure",
+    "string": "Couldn't add this warehouse to the channel. Try again."
   },
   "ORQvOg": {
     "string": "You don't have permission to perform this action"
@@ -7979,6 +7991,10 @@
     "context": "attribute label placeholder in embedded create form",
     "string": "e.g. Gift wrap style"
   },
+  "RFgw1A": {
+    "context": "warehouse setup checklist subtitle when required steps are done",
+    "string": "This warehouse is ready to sell stock."
+  },
   "RGL8Oi": {
     "context": "voucher minimum order requirement description",
     "string": "Checkout subtotal in each channel's currency must meet this amount."
@@ -8020,6 +8036,10 @@
   },
   "RQUkVW": {
     "string": "Manage your employees and their permissions"
+  },
+  "RSFh3k": {
+    "context": "warehouse channels assign dialog when nothing is left",
+    "string": "This warehouse is already in every channel."
   },
   "RUS52q": {
     "context": "order history message",
@@ -9226,10 +9246,6 @@
     "context": "permission list item description",
     "string": "This group is last source of that permission"
   },
-  "Vo2VDa": {
-    "context": "confirm removing a channel that unlinks warehouses from the zone",
-    "string": "Unlink locations?"
-  },
   "Vqz/Gs": {
     "context": "cannot unset default customer type",
     "string": "The default flag cannot be unset. Mark another customer type as the default instead."
@@ -9953,17 +9969,9 @@
     "context": "setup checklist required section title",
     "string": "Required by checkout"
   },
-  "Y6b+Rh": {
-    "context": "warehouse channels empty state description",
-    "string": "Add this location to a channel."
-  },
   "Y7UlMR": {
     "context": "app extensions subsection",
     "string": "Apps"
-  },
-  "YBU2wt": {
-    "context": "confirm a channel save that drops warehouse-zone links",
-    "string": "Unlink locations from shipping zones?"
   },
   "YBqLHs": {
     "context": "expiry date label",
@@ -10578,10 +10586,6 @@
     "context": "error when Customer Emails app lookup fails on customer emails redirect",
     "string": "Couldn’t open customer emails. Try again."
   },
-  "aLEM/w": {
-    "context": "warehouse shipping zones empty state",
-    "string": "Add a shipping zone that shares this location's channel."
-  },
   "aMWJ7/": {
     "context": "local error",
     "string": "This field cannot be blank for a new webhook"
@@ -10690,10 +10694,6 @@
   "akXDST": {
     "context": "section header",
     "string": "Visibility"
-  },
-  "al7UcB": {
-    "context": "warehouse shipping zones when the location has no channel",
-    "string": "Add this location to a channel first. Stock here can't be sold until then."
   },
   "amQg6f": {
     "context": "voucher status",
@@ -11589,6 +11589,10 @@
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
   },
+  "dnuJF2": {
+    "context": "warehouse shipping zones when the location has no channel",
+    "string": "Add this warehouse to a channel first. Stock here can't be sold until then."
+  },
   "doQvFl": {
     "context": "customer overview, subtitle scoping recent money stats to the selected channel window",
     "string": "{count} of last {windowSize, plural, one {# order} other {# orders}} in {channelName}"
@@ -12372,6 +12376,10 @@
     "context": "tooltip message",
     "string": "You don't have permission to manage staff"
   },
+  "gu2cez": {
+    "context": "warehouse shipping zones empty state",
+    "string": "Add a shipping zone that shares this warehouse's channel."
+  },
   "gxBIiJ": {
     "context": "attributes card header, total values assigned across reference attributes",
     "string": "{count, plural, one {# reference} other {# references}}"
@@ -12794,6 +12802,10 @@
     "context": "channel catalog unpublished action description",
     "string": "Added to this channel but publish is still off."
   },
+  "iSIMl5": {
+    "context": "one warehouse-zone link a channel save would unlink, listed in the unlink dialog",
+    "string": "{warehouse} from {zone}"
+  },
   "iSnXTt": {
     "string": "Open this collection in GraphiQL"
   },
@@ -13075,10 +13087,6 @@
   "jJIb3C": {
     "context": "warehouse pickup radio group description",
     "string": "Choose where the items have to be in stock."
-  },
-  "jKTgB9": {
-    "context": "warehouse channel remove failure",
-    "string": "Couldn't remove this location from the channel. Try again."
   },
   "jKm3k/": {
     "context": "issue gift card success dialog intro",
@@ -13447,6 +13455,10 @@
   "kRnxj2": {
     "context": "Suffix for show-more button when hidden problems include both active and critical",
     "string": ", including {active} active and {critical} critical"
+  },
+  "kTfWcB": {
+    "context": "a channel name followed by how many other channels, in warehouse shipping zone guidance",
+    "string": "{first} and {count} more"
   },
   "kThWsq": {
     "context": "fulfillment refund amount in expanded shipment row",
@@ -14201,10 +14213,6 @@
     "context": "error toast title after failed staff email settings save",
     "string": "Couldn’t save notification settings"
   },
-  "n6yout": {
-    "context": "warehouse setup checklist title",
-    "string": "Finish setting up this location"
-  },
   "n8kSWe": {
     "context": "warehouse channel remove button",
     "string": "Remove from {channel}"
@@ -14895,6 +14903,14 @@
   "pOUOnw": {
     "context": "tab name",
     "string": "All vouchers"
+  },
+  "pPWWAT": {
+    "context": "unlink warning shown when the shared-channel check failed",
+    "string": "We couldn't check which warehouses share another channel with this zone. Warehouses that share none will be unlinked from it."
+  },
+  "pPl6GN": {
+    "context": "warehouse delete dialog when the location has no stock",
+    "string": "There is no stock in this warehouse."
   },
   "pRYGUR": {
     "context": "section description",
@@ -15934,10 +15950,6 @@
   },
   "spjKeI": {
     "string": "Fulfillment approved"
-  },
-  "squrTb": {
-    "context": "warehouse channel remove confirmation when zones would unlink",
-    "string": "{zones} will also be unlinked from this location, because they share no other channel."
   },
   "sqz22u": {
     "context": "footer when redeem blockers are done",
@@ -17843,10 +17855,6 @@
     "context": "usage summary when attribute is on both product and variant types",
     "string": "{productCount, plural, one {# product type} other {# product types}}, {variantCount, plural, one {# variant type} other {# variant types}}"
   },
-  "zHPCgr": {
-    "context": "warehouse channels assign failure",
-    "string": "Couldn't add this location to the channel. Try again."
-  },
   "zHx85l": {
     "context": "value input helper text",
     "string": "Cannot be higher than 100%"
@@ -18001,6 +18009,10 @@
     "context": "grant refund, card header",
     "string": "Unfulfilled products"
   },
+  "zfygCO": {
+    "context": "warehouse channels empty state description",
+    "string": "Add this warehouse to a channel."
+  },
   "zgqPGF": {
     "context": "attribute list",
     "string": "Attribute {name}"
@@ -18068,6 +18080,10 @@
   },
   "zv9OGI": {
     "string": "No models found"
+  },
+  "zvFb+A": {
+    "context": "warehouse channel remove failure",
+    "string": "Couldn't remove this warehouse from the channel. Try again."
   },
   "zxs6G3": {
     "string": "Manage how you ship out orders"

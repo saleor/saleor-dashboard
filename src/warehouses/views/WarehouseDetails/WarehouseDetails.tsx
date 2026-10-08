@@ -5,8 +5,6 @@ import {
   CountryCode,
   useWarehouseDeleteMutation,
   useWarehouseDetailsQuery,
-  useWarehouseStockAvailabilityModeQuery,
-  useWarehouseStockCountQuery,
   useWarehouseUpdateMutation,
   type WarehouseDetailsQuery,
 } from "@dashboard/graphql";
@@ -27,9 +25,11 @@ import {
   type WarehouseDetailsPageFormData,
 } from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPage";
 import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
+import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
 import { useWarehouseDetailsChannels } from "@dashboard/warehouses/hooks/useWarehouseDetailsChannels";
 import { useWarehouseSetupChecklistDismiss } from "@dashboard/warehouses/hooks/useWarehouseSetupChecklistDismiss";
 import { useWarehouseShippingZoneAssignment } from "@dashboard/warehouses/hooks/useWarehouseShippingZoneAssignment";
+import { useWarehouseStockCount } from "@dashboard/warehouses/hooks/useWarehouseStockCount";
 import {
   warehouseListUrl,
   warehouseUrl,
@@ -56,8 +56,8 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
     displayLoader: true,
     variables: { id },
   });
-  const { legacyStockAvailability, stockCount, stockCountLoading } =
-    useWarehouseDetailsSideData(id);
+  const legacyStockAvailability = useLegacyStockAvailability();
+  const { stockCount, loading: stockCountLoading } = useWarehouseStockCount(id);
   const shippingZones = warehouseZoneMemberships(data?.warehouse?.shippingZones);
   const [openModal, closeModal] = createDialogActionHandlers(
     navigate,
@@ -190,7 +190,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       <WarehouseDeleteDialog
         confirmButtonState={deleteWarehouseTransitionState}
         name={getStringOrPlaceholder(data?.warehouse?.name)}
-        stockCount={stockCountLoading ? null : stockCount}
+        stockCount={stockCount}
         channelCount={channels.status === "ready" ? channels.warehouseChannelIds.length : null}
         onClose={closeModal}
         onConfirm={() =>
@@ -227,26 +227,5 @@ const warehouseZoneMemberships = (
   return {
     zones,
     truncated: (shippingZones?.totalCount ?? 0) > zones.length,
-  };
-};
-
-const useWarehouseDetailsSideData = (
-  id: string,
-): {
-  legacyStockAvailability: boolean | undefined;
-  stockCount: number | null;
-  stockCountLoading: boolean;
-} => {
-  const stockCountQuery = useWarehouseStockCountQuery({
-    variables: { id },
-    errorPolicy: "all",
-  });
-  const stockModeQuery = useWarehouseStockAvailabilityModeQuery();
-  const legacyValue = stockModeQuery.data?.shop?.useLegacyShippingZoneStockAvailability;
-
-  return {
-    legacyStockAvailability: stockModeQuery.loading ? undefined : (legacyValue ?? false),
-    stockCount: stockCountQuery.data?.warehouse?.stocks?.totalCount ?? null,
-    stockCountLoading: stockCountQuery.loading,
   };
 };

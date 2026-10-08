@@ -12,7 +12,7 @@ import {
 
 const emptyChannels: Record<string, WarehouseListChannel[]> = {};
 
-/** One matrix for the list when the shop is small enough. Otherwise the status cell stays blank. */
+/** One matrix for the list when the shop is small enough. Otherwise the status is unavailable. */
 export const useWarehouseListMembership = (): {
   status: WarehouseListMembership;
   channelsByWarehouseId: Record<string, WarehouseListChannel[]>;
