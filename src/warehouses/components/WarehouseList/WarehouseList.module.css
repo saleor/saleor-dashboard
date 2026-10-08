@@ -1,0 +1,13 @@
+/* Matches the orders-list datagrid pill: 12px label, 8px side padding, ~22px height. */
+.pickupPill.pickupPill {
+  height: 22px;
+  border-radius: 16px;
+  padding: 0;
+}
+
+.pickupPill.pickupPill > span {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 0 8px;
+}
