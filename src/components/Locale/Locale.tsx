@@ -1,6 +1,5 @@
-// @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { createContext, type ReactNode, useEffect, useRef, useState } from "react";
+import { createContext, type ReactNode, useEffect, useState } from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
 export enum Locale {
@@ -102,20 +101,52 @@ export const localeNames: Record<Locale, string> = {
 const dotSeparator = "_dot_";
 const sepRegExp = new RegExp(dotSeparator, "g");
 
-function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
-  if (messages) {
-    const keyValueMessages: Record<string, string> = {};
-
-    return Object.entries(messages).reduce((acc, [id, msg]) => {
-      acc[id.replace(sepRegExp, ".")] = msg.string;
-
-      return acc;
-    }, keyValueMessages);
+function getKeyValueJson(messages: LocaleMessages | undefined): Record<string, string> | undefined {
+  if (!messages) {
+    return undefined;
   }
+
+  return Object.entries(messages).reduce<Record<string, string>>((acc, [id, msg]) => {
+    acc[id.replace(sepRegExp, ".")] = msg.string;
+
+    return acc;
+  }, {});
 }
 
-const localeCode = process.env.LOCALE_CODE || "EN";
-const defaultLocale = Locale[localeCode];
+const supportedLocales = new Set<string>(Object.values(Locale));
+
+export const isSupportedLocale = (value: unknown): value is Locale =>
+  typeof value === "string" && supportedLocales.has(value);
+
+/**
+ * Maps a locale setting to a supported `Locale`.
+ *
+ * Accepts the enum key used by `LOCALE_CODE` ("EN", "PT_BR"), the locale tag
+ * stored in local storage ("en", "pt-BR") and loosely formatted variants of
+ * both (surrounding whitespace, lower case, dashes instead of underscores).
+ * Anything that still does not match a supported locale yields `fallback`.
+ */
+export const resolveLocale = (value: unknown, fallback: Locale = Locale.EN): Locale => {
+  if (typeof value !== "string") {
+    return fallback;
+  }
+
+  const trimmed = value.trim();
+
+  if (isSupportedLocale(trimmed)) {
+    return trimmed;
+  }
+
+  const enumKey = trimmed.toUpperCase().replace(/-/g, "_");
+
+  if (Object.prototype.hasOwnProperty.call(Locale, enumKey)) {
+    return Locale[enumKey as keyof typeof Locale];
+  }
+
+  return fallback;
+};
+
+const defaultLocale = resolveLocale(process.env.LOCALE_CODE);
 
 interface LocaleContextType {
   locale: Locale;
@@ -128,28 +159,49 @@ export const LocaleContext = createContext<LocaleContextType>({
 
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 const LocaleProvider = ({ children }: { children: ReactNode }) => {
-  const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
-  const [messages, setMessages] = useState(undefined);
-  const loaded = useRef(false);
+  const [storedLocale, setLocale] = useLocalStorage<string>("locale", defaultLocale);
+  // A stale or hand-edited value in local storage must not take the whole
+  // dashboard down, so anything unsupported falls back to the default.
+  const locale = resolveLocale(storedLocale, defaultLocale);
+  const [messages, setMessages] = useState<LocaleMessages | undefined>(undefined);
 
-  useEffect(() => {
-    async function changeLocale() {
-      if (locale !== Locale.EN && !loaded.current) {
-        // It seems like Webpack is unable to use aliases for lazy imports
-        const mod = await import(`../../../locale/${locale}.json`);
+  useEffect(
+    function loadMessages() {
+      let cancelled = false;
 
-        setMessages(mod.default);
+      async function changeLocale() {
+        if (locale === Locale.EN) {
+          setMessages(undefined);
 
-        if (!loaded.current) {
-          loaded.current = true;
+          return;
         }
-      } else {
-        setMessages(undefined);
-      }
-    }
 
-    changeLocale();
-  }, [locale]);
+        try {
+          // It seems like Webpack is unable to use aliases for lazy imports
+          const mod = await import(`../../../locale/${locale}.json`);
+
+          if (!cancelled) {
+            setMessages(mod.default);
+          }
+        } catch (error) {
+          // Missing or broken translation bundle: keep the default messages
+          // instead of surfacing an unhandled rejection.
+          console.error(`Could not load translations for locale "${locale}"`, error);
+
+          if (!cancelled) {
+            setMessages(undefined);
+          }
+        }
+      }
+
+      changeLocale();
+
+      return () => {
+        cancelled = true;
+      };
+    },
+    [locale],
+  );
 
   return (
     <IntlProvider
