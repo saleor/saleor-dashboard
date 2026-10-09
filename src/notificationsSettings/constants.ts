@@ -11,6 +11,13 @@ export const CUSTOMER_EMAILS_APP_IDENTIFIER = "saleor.app.customer-emails";
 /** Hosted Customer Emails manifest. Same install target as the Cloud onboarding checklist. */
 export const CUSTOMER_EMAILS_MANIFEST_URL = "https://customer-emails.saleor.app/api/manifest";
 
+/** Legacy Product Feed app, replaced by Google Merchant Center. */
+export const PRODUCT_FEED_APP_IDENTIFIER = "saleor.app.product-feed";
+
+/** Hosted Google Merchant Center manifest. */
+export const GOOGLE_MERCHANT_CENTER_MANIFEST_URL =
+  "https://google-merchant-center.saleor.app/api/manifest";
+
 export const isLegacySmtpApp = (identifier: string | null | undefined): boolean =>
   identifier === SMTP_APP_IDENTIFIER;
 
