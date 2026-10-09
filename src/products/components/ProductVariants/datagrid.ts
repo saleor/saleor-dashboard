@@ -11,6 +11,7 @@ import { useState } from "react";
 import { type IntlShape } from "react-intl";
 
 import messages from "./messages";
+import { type WarehouseColumnsSearch } from "./useWarehouseColumnsSearch";
 
 export const isVariantDatagridSupportedAttribute = (
   inputType: AttributeInputTypeEnum | null | undefined,
@@ -175,35 +176,30 @@ const parseAttributeColumns = (
 
 export const useWarehouseAdapter = ({
   intl,
-  selectedColumns,
-  warehouses,
-}: {
-  intl: IntlShape;
-  selectedColumns: string[] | undefined;
-  warehouses: WarehouseFragment[] | undefined;
-}) => {
+  availableWarehouses,
+  selectedWarehouses,
+  hasNextPage,
+  hasPreviousPage,
+  onSearch,
+  onNextPage,
+  onPreviousPage,
+}: { intl: IntlShape } & WarehouseColumnsSearch): ColumnCategory => {
   const [warehouseQuery, setWarehouseQuery] = useState("");
-  const { paginate, currentPage, changeCurrentPage } = useClientPagination();
-  const paginatedWarehouses = paginate(
-    (warehouses ?? []).filter(warehouse =>
-      warehouse.name?.toLowerCase().includes(warehouseQuery.toLowerCase()),
-    ),
-  );
-  const filteredWarehouses = selectedColumns
-    ? warehouses?.filter(warehouse => selectedColumns.includes(`warehouse:${warehouse.id}`))
-    : undefined;
 
   return {
     name: intl.formatMessage(messages.warehouses),
     prefix: "warehouse",
-    availableNodes: parseWarehousesColumns(paginatedWarehouses.data, intl),
-    selectedNodes: parseWarehousesColumns(filteredWarehouses, intl),
-    onSearch: (query: string) => setWarehouseQuery(query),
+    availableNodes: parseWarehousesColumns(availableWarehouses, intl),
+    selectedNodes: parseWarehousesColumns(selectedWarehouses, intl),
+    onSearch: (query: string) => {
+      setWarehouseQuery(query);
+      onSearch(query);
+    },
     initialSearch: warehouseQuery,
-    hasNextPage: paginatedWarehouses.hasNextPage,
-    hasPreviousPage: paginatedWarehouses.hasPreviousPage,
-    onNextPage: () => changeCurrentPage(currentPage + 1),
-    onPreviousPage: () => changeCurrentPage(currentPage - 1),
+    hasNextPage,
+    hasPreviousPage,
+    onNextPage,
+    onPreviousPage,
   };
 };
 

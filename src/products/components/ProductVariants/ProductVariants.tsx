@@ -53,6 +53,7 @@ import {
 } from "./datagrid";
 import messages from "./messages";
 import styles from "./ProductVariants.module.css";
+import { useWarehouseColumnsSearch } from "./useWarehouseColumnsSearch";
 import { getData, getError } from "./utils";
 
 interface ProductVariantsProps {
@@ -284,7 +285,8 @@ export const ProductVariants = ({
     [hasAddedRows],
   );
 
-  // https://github.com/saleor/saleor-dashboard/issues/4165
+  // Warehouses shown as columns by default. The column picker reaches the
+  // rest through useWarehouseColumnsSearch.
   const { data: warehousesData } = useWarehouseListQuery({
     variables: {
       first: 50,
@@ -400,11 +402,11 @@ export const ProductVariants = ({
     selectedColumns: columnSettings,
     attributes: variantAttributes,
   });
-  const warehouseCategory = useWarehouseAdapter({
-    selectedColumns: columnSettings,
-    intl,
+  const warehouseColumnsSearch = useWarehouseColumnsSearch({
     warehouses,
+    selectedColumns: columnSettings,
   });
+  const warehouseCategory = useWarehouseAdapter({ intl, ...warehouseColumnsSearch });
   const memoizedStaticColumns = useMemo(() => variantsStaticColumnsAdapter(intl), [intl]);
   const {
     handlers,
