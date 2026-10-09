@@ -4951,6 +4951,10 @@
     "context": "tooltip",
     "string": "Checkout reservation time threshold is enabled in settings."
   },
+  "G7z3ad": {
+    "context": "warehouse channels assign partial failure",
+    "string": "{ok, plural, one {Added to # channel} other {Added to # channels}}. Couldn't add to {failed}."
+  },
   "G8vJ+G": {
     "context": "account settings card header when the list is empty",
     "string": "None pinned"
@@ -7111,6 +7115,10 @@
     "context": "deletion error message",
     "string": "Cant's delete group which is out of your permission scope"
   },
+  "O2DA6e": {
+    "context": "warehouse details page when the warehouse query failed",
+    "string": "Couldn't load this warehouse."
+  },
   "O31Ggf": {
     "context": "staff notification title",
     "string": "Staff invite"
@@ -7447,10 +7455,6 @@
     "context": "Status when product has availability issues",
     "string": "Issues"
   },
-  "PFCa6L": {
-    "context": "warehouse channels assign partial failure",
-    "string": "Added to {ok} channels. Couldn't add to {failed}."
-  },
   "PFJYxb": {
     "context": "bulk publish defaults step intro",
     "string": "These apply to every product you selected."
@@ -7536,10 +7540,6 @@
   "PbqNhi": {
     "context": "order status",
     "string": "Partially fulfilled"
-  },
-  "PcB7+7": {
-    "context": "warehouse setup shipping zone task when zones are linked",
-    "string": "{count} shipping zones linked."
   },
   "PcPMjC": {
     "context": "order history message",
@@ -7986,6 +7986,10 @@
   "RBxYJf": {
     "context": "sale status",
     "string": "Expired"
+  },
+  "REvcFD": {
+    "context": "warehouse setup shipping zone task when zones are linked",
+    "string": "{count, plural, one {# shipping zone linked.} other {# shipping zones linked.}}"
   },
   "RFbzxF": {
     "context": "attribute label placeholder in embedded create form",
@@ -8874,10 +8878,6 @@
   "ULBvyx": {
     "context": "order header date, yesterday",
     "string": "Placed yesterday at {time}"
-  },
-  "UMFP/f": {
-    "context": "warehouse setup shipping zone task when one zone is linked",
-    "string": "1 shipping zone linked."
   },
   "UPqrEf": {
     "context": "variant pricing channel status when channel is active",
@@ -9968,6 +9968,10 @@
   "Y3zr/B": {
     "context": "voucher application, switch button",
     "string": "Apply only to a single cheapest eligible product"
+  },
+  "Y6N9EL": {
+    "context": "warehouse setup shipping zone task when a usable zone exists beyond the loaded list",
+    "string": "Shipping zones linked."
   },
   "Y6amBy": {
     "context": "setup checklist required section title",

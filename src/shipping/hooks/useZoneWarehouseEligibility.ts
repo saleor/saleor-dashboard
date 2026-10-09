@@ -1,12 +1,11 @@
 import { type useApolloClient } from "@apollo/client";
 import {
-  useWarehousesInChannelsQuery,
+  useZoneWarehouseEligibilityQuery,
   WarehousesInChannelsDocument,
   type WarehousesInChannelsQuery,
 } from "@dashboard/graphql";
 import {
-  resolveEligibleWarehouseIds,
-  splitWarehousesByZoneChannels,
+  splitWarehousesByLatestCheck,
   type WarehouseChoice,
   warehousesUnlinkedByZoneChannelChange,
 } from "@dashboard/shipping/warehouseEligibility";
@@ -32,7 +31,7 @@ export const useZoneWarehouseEligibility = ({
   // Unchecked warehouses stay selectable.
   const checkedIds = warehouseIds.slice(0, WAREHOUSES_PAGE_LIMIT);
   const skip = checkedIds.length === 0 || channelIds.length === 0;
-  const query = useWarehousesInChannelsQuery({
+  const query = useZoneWarehouseEligibilityQuery({
     variables: {
       ids: checkedIds,
       channels: channelIds,
@@ -41,17 +40,23 @@ export const useZoneWarehouseEligibility = ({
     skip,
     fetchPolicy: "cache-and-network",
   });
-  const eligibleIds = resolveEligibleWarehouseIds({
-    warehouseIds,
+  // Searching or scrolling changes the ids; keep the last answer until the new one arrives.
+  const latest = query.data ?? query.previousData;
+  const split = splitWarehousesByLatestCheck({
+    warehouses,
     channelIds,
-    checkedIds,
-    inChannelIds: (mapEdgesToItems(query.data?.warehouses) ?? []).map(warehouse => warehouse.id),
-    failed: skip || Boolean(query.error) || (query.loading && !query.data),
+    checkLimit: WAREHOUSES_PAGE_LIMIT,
+    answer: latest
+      ? {
+          checkedIds: (mapEdgesToItems(latest.checked) ?? []).map(warehouse => warehouse.id),
+          inChannelIds: (mapEdgesToItems(latest.inChannels) ?? []).map(warehouse => warehouse.id),
+        }
+      : null,
+    failed: skip || Boolean(query.error),
   });
-  const split = splitWarehousesByZoneChannels({ warehouses, eligibleIds });
 
   return {
-    loading: !skip && query.loading && !query.data,
+    loading: !skip && query.loading && !latest,
     eligible: split.eligible,
     ineligible: split.ineligible,
   };

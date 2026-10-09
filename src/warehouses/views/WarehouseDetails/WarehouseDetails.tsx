@@ -24,6 +24,7 @@ import {
   WarehouseDetailsPage,
   type WarehouseDetailsPageFormData,
 } from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPage";
+import { WarehouseDetailsPageLoading } from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPageLoading";
 import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
 import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
 import { useWarehouseDetailsChannels } from "@dashboard/warehouses/hooks/useWarehouseDetailsChannels";
@@ -52,7 +53,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
     useWarehouseSetupChecklistDismiss(id);
   const notify = useNotifier();
   const shop = useShop();
-  const { data, loading, refetch } = useWarehouseDetailsQuery({
+  const { data, loading, error, refetch } = useWarehouseDetailsQuery({
     displayLoader: true,
     variables: { id },
   });
@@ -80,6 +81,9 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       }
     },
     onOpenShippingZones: () => openZoneAssignRef.current(),
+    onChannelRemoved: async () => {
+      await refetch();
+    },
   });
   const zoneAssignment = useWarehouseShippingZoneAssignment({
     warehouseId: id,
@@ -123,6 +127,17 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
 
   if (data?.warehouse === null) {
     return <NotFoundPage onBack={() => navigate(warehouseListUrl())} />;
+  }
+
+  if (warehouseLoadFailed({ data, error, loading })) {
+    return (
+      <WarehouseDetailsPageLoading
+        channelsCard={channels.card}
+        onRetry={() => {
+          refetch().catch(() => undefined);
+        }}
+      />
+    );
   }
 
   const handleSubmit = async (data: WarehouseDetailsPageFormData) =>
@@ -211,6 +226,17 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
 
 WarehouseDetails.displayName = "WarehouseDetails";
 export default WarehouseDetails;
+
+/** The query finished with an error and no warehouse to show. */
+const warehouseLoadFailed = ({
+  data,
+  error,
+  loading,
+}: {
+  data: WarehouseDetailsQuery | undefined;
+  error: unknown;
+  loading: boolean;
+}): boolean => !data?.warehouse && !!error && !loading;
 
 const warehouseZoneMemberships = (
   shippingZones:

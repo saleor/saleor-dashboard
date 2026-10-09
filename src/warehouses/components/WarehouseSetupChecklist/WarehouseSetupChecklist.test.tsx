@@ -150,4 +150,39 @@ describe("WarehouseSetupChecklist", () => {
     expect(screen.queryByText("Link a shipping zone")).not.toBeInTheDocument();
     expect(screen.getByText("Required steps are complete.")).toBeInTheDocument();
   });
+
+  it("counts linked shipping zones with plural rules", () => {
+    // Arrange
+    const props: ChecklistProps = {
+      inChannel: true,
+      showShippingZones: true,
+      zoneCount: 2,
+      hasUsableShippingZone: true,
+      canManageShipping: true,
+    };
+
+    // Act
+    renderChecklist(props);
+
+    // Assert
+    expect(screen.getByText("2 shipping zones linked.")).toBeInTheDocument();
+  });
+
+  it("does not invent a zone count when usable zones are beyond the loaded list", () => {
+    // Arrange
+    const props: ChecklistProps = {
+      inChannel: true,
+      showShippingZones: true,
+      zoneCount: 0,
+      hasUsableShippingZone: true,
+      canManageShipping: true,
+    };
+
+    // Act
+    renderChecklist(props);
+
+    // Assert
+    expect(screen.getByText("Shipping zones linked.")).toBeInTheDocument();
+    expect(screen.queryByText("1 shipping zones linked.")).not.toBeInTheDocument();
+  });
 });

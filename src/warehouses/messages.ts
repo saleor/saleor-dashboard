@@ -232,6 +232,11 @@ export const messages = defineMessages({
     defaultMessage: "Address",
     description: "warehouse list column",
   },
+  loadError: {
+    id: "O2DA6e",
+    defaultMessage: "Couldn't load this warehouse.",
+    description: "warehouse details page when the warehouse query failed",
+  },
   listStatusUnknown: {
     id: "AKzNnu",
     defaultMessage: "Open the warehouse to see its channels",
@@ -313,8 +318,9 @@ export const messages = defineMessages({
     description: "warehouse channels assign failure",
   },
   channelsAssignPartial: {
-    id: "PFCa6L",
-    defaultMessage: "Added to {ok} channels. Couldn't add to {failed}.",
+    id: "G7z3ad",
+    defaultMessage:
+      "{ok, plural, one {Added to # channel} other {Added to # channels}}. Couldn't add to {failed}.",
     description: "warehouse channels assign partial failure",
   },
   channelsRemoved: {
@@ -444,15 +450,17 @@ export const messages = defineMessages({
     defaultMessage: "Needs permission to manage shipping",
     description: "warehouse setup shipping zone task when the user cannot assign zones",
   },
-  setupZoneDoneOne: {
-    id: "UMFP/f",
-    defaultMessage: "1 shipping zone linked.",
-    description: "warehouse setup shipping zone task when one zone is linked",
-  },
   setupZoneDoneCount: {
-    id: "PcB7+7",
-    defaultMessage: "{count} shipping zones linked.",
+    id: "REvcFD",
+    defaultMessage:
+      "{count, plural, one {# shipping zone linked.} other {# shipping zones linked.}}",
     description: "warehouse setup shipping zone task when zones are linked",
+  },
+  setupZoneDoneUncounted: {
+    id: "Y6N9EL",
+    defaultMessage: "Shipping zones linked.",
+    description:
+      "warehouse setup shipping zone task when a usable zone exists beyond the loaded list",
   },
   setupNextUpDone: {
     id: "0hCh0t",

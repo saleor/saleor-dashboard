@@ -103,8 +103,10 @@ export const WarehouseShippingZonesCard = ({
 
   const hiddenCount = Math.max(count - zones.length, 0);
   const zoneRequired = guidance.kind === "legacy-need-zone";
+  // Zones are offered by shared channel, so without channels the assign dialog would be empty.
   const canAssign =
     canManage &&
+    warehouseChannelIds.length > 0 &&
     guidance.kind !== "loading" &&
     guidance.kind !== "legacy-need-channel" &&
     guidance.kind !== "legacy-unknown";

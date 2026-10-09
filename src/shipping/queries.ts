@@ -89,6 +89,26 @@ export const channelZoneWarehouseLinks = gql`
   }
 `;
 
+/** `checked` returns the ids this answer covers, so a stale answer can still be read while a new one loads. */
+export const zoneWarehouseEligibility = gql`
+  query ZoneWarehouseEligibility($ids: [ID!]!, $channels: [ID!]!, $first: Int!) {
+    checked: warehouses(first: $first, filter: { ids: $ids }) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+    inChannels: warehouses(first: $first, filter: { ids: $ids, channels: $channels }) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const shippingZonesCount = gql`
   query ShippingZonesCount {
     shippingZones {

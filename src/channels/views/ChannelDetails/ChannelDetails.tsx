@@ -55,7 +55,6 @@ import {
   useChannelQuery,
   useChannelsQuery,
   useChannelUpdateMutation,
-  useChannelZoneWarehouseLinksQuery,
 } from "@dashboard/graphql";
 import {
   getParsedSearchData,
@@ -70,7 +69,6 @@ import { extractMutationErrors, getMutationStatus } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -561,17 +559,6 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   );
 
   const client = useApolloClient();
-  const legacyStockAvailability = useLegacyStockAvailability();
-  const zoneLinksQuery = useChannelZoneWarehouseLinksQuery({
-    variables: { filter: { channels: [id] } },
-    skip: !canLoadShippingZones,
-  });
-  const zoneLinks = (mapEdgesToItems(zoneLinksQuery.data?.shippingZones) ?? []).map(zone => ({
-    id: zone.id,
-    name: zone.name,
-    channelIds: zone.channels.map(channel => channel.id),
-    warehouses: zone.warehouses,
-  }));
 
   if (data?.channel === null) {
     return <NotFoundPage onBack={() => navigate(channelsListUrl())} />;
@@ -620,16 +607,17 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         }
         onShowMetadata={() => openModal("view-metadata")}
         onSubmit={handleSubmit}
-        legacyStockAvailability={legacyStockAvailability === true}
-        previewChannelUnlinks={formData =>
-          previewChannelEditUnlinks({
-            client,
-            channelId: id,
-            channelWarehouseIds: channelWarehouses.map(warehouse => warehouse.id),
-            zones: zoneLinks,
-            removeWarehouseIds: formData.warehousesIdsToRemove,
-            removeZoneIds: formData.shippingZonesIdsToRemove,
-          })
+        previewChannelUnlinks={
+          canLoadShippingZones
+            ? formData =>
+                previewChannelEditUnlinks({
+                  client,
+                  channelId: id,
+                  channelWarehouseIds: channelWarehouses.map(warehouse => warehouse.id),
+                  removeWarehouseIds: formData.warehousesIdsToRemove,
+                  removeZoneIds: formData.shippingZonesIdsToRemove,
+                })
+            : undefined
         }
         onToggleChannelStatus={() => openModal(data?.channel?.isActive ? "deactivate" : "activate")}
         assignmentActionsRef={assignmentActionsRef}

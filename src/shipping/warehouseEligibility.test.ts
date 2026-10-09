@@ -1,11 +1,13 @@
 import {
   resolveEligibleWarehouseIds,
+  splitWarehousesByLatestCheck,
   splitWarehousesByZoneChannels,
   type WarehouseChoice,
   warehousesUnlinkedByZoneChannelChange,
 } from "./warehouseEligibility";
 
 type SplitInput = Parameters<typeof splitWarehousesByZoneChannels>[0];
+type LatestCheckInput = Parameters<typeof splitWarehousesByLatestCheck>[0];
 type ResolveInput = Parameters<typeof resolveEligibleWarehouseIds>[0];
 type UnlinkInput = Parameters<typeof warehousesUnlinkedByZoneChannelChange>[0];
 
@@ -126,5 +128,63 @@ describe("warehousesUnlinkedByZoneChannelChange", () => {
 
     // Assert
     expect(unlinked).toEqual([berlin]);
+  });
+});
+
+describe("splitWarehousesByLatestCheck", () => {
+  const krakow: WarehouseChoice = { id: "w-krakow", name: "Krakow" };
+
+  it("keeps earlier answers and holds back warehouses a newer check has not answered", () => {
+    // Arrange
+    const input: LatestCheckInput = {
+      warehouses: [warsaw, berlin, krakow],
+      channelIds: ["channel-pl"],
+      checkLimit: 100,
+      answer: { checkedIds: ["w-warsaw", "w-berlin"], inChannelIds: ["w-warsaw"] },
+      failed: false,
+    };
+
+    // Act
+    const split = splitWarehousesByLatestCheck(input);
+
+    // Assert
+    expect(split.eligible).toEqual([warsaw]);
+    expect(split.ineligible).toEqual([berlin]);
+  });
+
+  it("keeps warehouses past the check limit selectable", () => {
+    // Arrange
+    const input: LatestCheckInput = {
+      warehouses: [warsaw, berlin],
+      channelIds: ["channel-pl"],
+      checkLimit: 1,
+      answer: { checkedIds: ["w-warsaw"], inChannelIds: [] },
+      failed: false,
+    };
+
+    // Act
+    const split = splitWarehousesByLatestCheck(input);
+
+    // Assert
+    expect(split.eligible).toEqual([berlin]);
+    expect(split.ineligible).toEqual([warsaw]);
+  });
+
+  it("keeps every warehouse selectable before the first answer arrives", () => {
+    // Arrange
+    const input: LatestCheckInput = {
+      warehouses: [warsaw, berlin],
+      channelIds: ["channel-pl"],
+      checkLimit: 100,
+      answer: null,
+      failed: false,
+    };
+
+    // Act
+    const split = splitWarehousesByLatestCheck(input);
+
+    // Assert
+    expect(split.eligible).toEqual([warsaw, berlin]);
+    expect(split.ineligible).toEqual([]);
   });
 });

@@ -157,7 +157,8 @@ export const ShippingZoneDetailsPage = ({
       channelId => !channelIds.includes(channelId),
     );
 
-    if (legacyStockAvailability === true && removedChannel && shippingZone) {
+    // Saleor drops the link in either stock mode, so warn in both.
+    if (removedChannel && shippingZone) {
       try {
         const unlinked = await warehousesUnlinkedByRemovingZoneChannels({
           client,

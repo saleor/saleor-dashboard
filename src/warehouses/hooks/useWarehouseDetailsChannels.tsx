@@ -27,6 +27,7 @@ export const useWarehouseDetailsChannels = ({
   checklistEmphasized,
   onDismissChecklist,
   onOpenShippingZones,
+  onChannelRemoved,
 }: {
   warehouseId: string | undefined;
   legacyStockAvailability: boolean | undefined;
@@ -35,6 +36,8 @@ export const useWarehouseDetailsChannels = ({
   checklistEmphasized: boolean;
   onDismissChecklist?: (channelCount: number) => void;
   onOpenShippingZones?: () => void;
+  /** Reload the warehouse: Saleor drops zone links that no longer share a channel. */
+  onChannelRemoved?: () => Promise<void>;
 }): {
   card: ReactNode;
   banner: ReactNode | null;
@@ -73,6 +76,14 @@ export const useWarehouseDetailsChannels = ({
         { channel: channelName },
       ),
     });
+
+    if (result.ok > 0 && onChannelRemoved) {
+      try {
+        await onChannelRemoved();
+      } catch {
+        // The removal landed; the zones card stays stale until the page reloads.
+      }
+    }
   };
 
   const requestRemove = (channelId: string): void => {

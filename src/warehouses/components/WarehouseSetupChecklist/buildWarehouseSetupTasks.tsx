@@ -66,13 +66,11 @@ export const buildWarehouseShippingZoneTask = ({
     id: "shipping-zones",
     title,
     description: hasUsableShippingZone ? (
-      zoneCount === 1 ? (
-        <FormattedMessage {...messages.setupZoneDoneOne} />
+      // A truncated zone list can count as usable before any usable zone is loaded.
+      zoneCount > 0 ? (
+        <FormattedMessage {...messages.setupZoneDoneCount} values={{ count: zoneCount }} />
       ) : (
-        <FormattedMessage
-          {...messages.setupZoneDoneCount}
-          values={{ count: Math.max(zoneCount, 1) }}
-        />
+        <FormattedMessage {...messages.setupZoneDoneUncounted} />
       )
     ) : (
       <FormattedMessage {...messages.setupZoneDescription} />

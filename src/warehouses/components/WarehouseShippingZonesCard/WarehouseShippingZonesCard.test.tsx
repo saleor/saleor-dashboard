@@ -82,4 +82,23 @@ describe("WarehouseShippingZonesCard", () => {
     expect(screen.getByText("Not in this warehouse's channels")).toBeInTheDocument();
     expect(screen.getByTestId("warehouse-zones-add")).toBeInTheDocument();
   });
+
+  it("hides Add when the warehouse has no channel to offer zones from", () => {
+    // Arrange
+    const props: CardProps = {
+      ...baseProps,
+      legacyStockAvailability: false,
+      zones: [{ id: "z-eu", name: "Europe", channelIds: ["channel-eu"] }],
+      totalCount: 1,
+      warehouseChannelIds: [],
+      channelNames: [],
+    };
+
+    // Act
+    renderCard(props);
+
+    // Assert
+    expect(screen.getByText("Europe")).toBeInTheDocument();
+    expect(screen.queryByTestId("warehouse-zones-add")).not.toBeInTheDocument();
+  });
 });

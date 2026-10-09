@@ -138,8 +138,6 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   onShowSetupChecklist?: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors>;
-  /** True in the older stock mode, where removing a warehouse or zone can unlink the other. */
-  legacyStockAvailability?: boolean;
   previewChannelUnlinks?: (
     data: FormData,
   ) => Promise<Array<{ warehouseName: string; zoneName: string }>>;
@@ -153,7 +151,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   disabled,
   disabledStatus,
   onSubmit,
-  legacyStockAvailability = false,
   previewChannelUnlinks,
   errors,
   onDelete,
@@ -440,12 +437,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     const removesMembership =
       data.warehousesIdsToRemove.length > 0 || data.shippingZonesIdsToRemove.length > 0;
 
-    if (
-      legacyStockAvailability &&
-      previewChannelUnlinks &&
-      removesMembership &&
-      !bypassUnlinkWarning.current
-    ) {
+    // Saleor drops the link in either stock mode, so warn in both.
+    if (previewChannelUnlinks && removesMembership && !bypassUnlinkWarning.current) {
       try {
         const links = await previewChannelUnlinks(data);
 

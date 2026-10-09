@@ -21749,6 +21749,54 @@ export function useChannelZoneWarehouseLinksLazyQuery(baseOptions?: ApolloReactH
 export type ChannelZoneWarehouseLinksQueryHookResult = ReturnType<typeof useChannelZoneWarehouseLinksQuery>;
 export type ChannelZoneWarehouseLinksLazyQueryHookResult = ReturnType<typeof useChannelZoneWarehouseLinksLazyQuery>;
 export type ChannelZoneWarehouseLinksQueryResult = Apollo.QueryResult<Types.ChannelZoneWarehouseLinksQuery, Types.ChannelZoneWarehouseLinksQueryVariables>;
+export const ZoneWarehouseEligibilityDocument = gql`
+    query ZoneWarehouseEligibility($ids: [ID!]!, $channels: [ID!]!, $first: Int!) {
+  checked: warehouses(first: $first, filter: {ids: $ids}) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+  inChannels: warehouses(first: $first, filter: {ids: $ids, channels: $channels}) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useZoneWarehouseEligibilityQuery__
+ *
+ * To run a query within a React component, call `useZoneWarehouseEligibilityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useZoneWarehouseEligibilityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useZoneWarehouseEligibilityQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      channels: // value for 'channels'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useZoneWarehouseEligibilityQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>(ZoneWarehouseEligibilityDocument, options);
+      }
+export function useZoneWarehouseEligibilityLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>(ZoneWarehouseEligibilityDocument, options);
+        }
+export type ZoneWarehouseEligibilityQueryHookResult = ReturnType<typeof useZoneWarehouseEligibilityQuery>;
+export type ZoneWarehouseEligibilityLazyQueryHookResult = ReturnType<typeof useZoneWarehouseEligibilityLazyQuery>;
+export type ZoneWarehouseEligibilityQueryResult = Apollo.QueryResult<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>;
 export const ShippingZonesCountDocument = gql`
     query ShippingZonesCount {
   shippingZones {
