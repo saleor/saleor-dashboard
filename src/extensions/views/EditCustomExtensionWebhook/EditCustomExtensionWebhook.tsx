@@ -1,4 +1,5 @@
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
@@ -23,6 +24,7 @@ interface EditCustomExtensionWebhookProps {
 export const EditCustomExtensionWebhook = ({ id }: EditCustomExtensionWebhookProps) => {
   const notify = useNotifier();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const availableEvents = useAvailableEvents();
   const { data: webhookDetails, loading } = useWebhookDetailsQuery({
     variables: { id },
@@ -42,8 +44,13 @@ export const EditCustomExtensionWebhook = ({ id }: EditCustomExtensionWebhookPro
   });
   const webhook = webhookDetails?.webhook;
   const formErrors = webhookUpdateOpts.data?.webhookUpdate?.errors || [];
-  const handleSubmit = (data: WebhookFormData) =>
-    extractMutationErrors(
+  const handleSubmit = (data: WebhookFormData) => {
+    // secretKey is deprecated in the API - track who still sets it.
+    if (data.secretKey !== (webhook?.secretKey ?? "")) {
+      trackEvent("webhook_secret_key_submitted");
+    }
+
+    return extractMutationErrors(
       webhookUpdate({
         variables: {
           id,
@@ -62,6 +69,7 @@ export const EditCustomExtensionWebhook = ({ id }: EditCustomExtensionWebhookPro
         },
       }),
     );
+  };
 
   if (!webhook && !loading) {
     return <NotFoundPage backHref={ExtensionsUrls.resolveInstalledExtensionsUrl()} />;

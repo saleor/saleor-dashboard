@@ -11,6 +11,7 @@ import {
 } from "@dashboard/components/CreateAttributeDialog/CreateAttributeDialog";
 import { messages as createAttributeMessages } from "@dashboard/components/CreateAttributeDialog/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -74,6 +75,7 @@ interface ProductTypeUpdateProps {
 const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const { trackEvent } = useAnalytics();
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductTypeUrlDialog,
     ProductTypeUrlQueryParams
@@ -243,8 +245,11 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       productType: data?.productType,
     });
   const handleProductTypeDelete = () => deleteProductType.mutate({ id });
-  const handleProductTypeVariantsToggle = (hasVariants: boolean) =>
-    updateProductType({
+  const handleProductTypeVariantsToggle = (hasVariants: boolean) => {
+    // hasVariants is deprecated in the API - track who still toggles it.
+    trackEvent("product_type_has_variants_submitted");
+
+    return updateProductType({
       variables: {
         id,
         input: {
@@ -252,6 +257,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
         },
       },
     });
+  };
   const handleAssignAttribute = async () => {
     await assignAttribute.mutate({
       id,

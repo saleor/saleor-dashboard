@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
@@ -20,6 +21,7 @@ import {
 const SiteSettings = () => {
   const notify = useNotifier();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const siteSettings = useSiteSettingsQuery({
     displayLoader: true,
   });
@@ -80,6 +82,14 @@ const SiteSettings = () => {
       passwordLoginMode: data.passwordLoginMode,
       allowStorefrontTraffic: data.allowStorefrontTraffic,
     };
+
+    // useLegacyUpdateWebhookEmission is deprecated in the API - track who still changes it.
+    if (
+      data.useLegacyUpdateWebhookEmission !==
+      (siteSettings.data?.shop?.useLegacyUpdateWebhookEmission ?? true)
+    ) {
+      trackEvent("shop_legacy_update_webhook_emission_submitted");
+    }
 
     return extractMutationErrors(
       updateShopSettings({
