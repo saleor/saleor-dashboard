@@ -197,9 +197,6 @@ importers:
       react-dropzone:
         specifier: ^11.7.1
         version: 11.7.1(react@18.3.1)
-      react-editor-js:
-        specifier: ^2.1.0
-        version: 2.1.0(@editorjs/editorjs@2.30.7)(@editorjs/paragraph@2.11.7)(react@18.3.1)
       react-error-boundary:
         specifier: ^3.1.4
         version: 3.1.4(react@18.3.1)
@@ -4780,16 +4777,6 @@ packages:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
 
-  "@react-editor-js/client@2.1.0":
-    resolution:
-      {
-        integrity: sha512-X/OwqY2KKUUVIy24zvubHTI4qhiVIWMxGlU/Bc6tkf9gcsWgQjPvn75DwrQ5SIGBOYpSBcHY01JX0RRtJHRumw==,
-      }
-    peerDependencies:
-      "@editorjs/editorjs": "*"
-      "@editorjs/paragraph": "*"
-      react: "*"
-
   "@react-editor-js/core@2.1.0":
     resolution:
       {
@@ -4797,16 +4784,6 @@ packages:
       }
     peerDependencies:
       "@editorjs/editorjs": "*"
-      react: "*"
-
-  "@react-editor-js/server@2.1.0":
-    resolution:
-      {
-        integrity: sha512-RnTbCmzCHbjcjPNKhr9FaehItHgAZyd47Lq+iIGynFqWSsrwGy46LgOXSvb50DYbwDyT0GtxaXBIk6aiFki1Dg==,
-      }
-    peerDependencies:
-      "@editorjs/editorjs": "*"
-      "@editorjs/paragraph": "*"
       react: "*"
 
   "@repeaterjs/repeater@3.0.6":
@@ -8774,6 +8751,7 @@ packages:
         integrity: sha512-LEyamqS7W5HB3ujJyvi0HQK/dtVINZvd5mAAp9eT5S/ujByGjiZLCzPcHVzuXbpJDJF/cxwHlfceVUDZ2lnSTw==,
       }
     engines: { node: ^18.18.0 || ^20.9.0 || >=21.1.0 }
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: "*"
@@ -12330,12 +12308,6 @@ packages:
         integrity: sha512-OeR2jAxdoqUMHIn/nS9fgreI5hSpgGoL5ezdal4+oO7YSSgJR8ga+PkYGJrSrJ9MKlPcQjMQXnketrD7WNmNsg==,
       }
     engines: { node: ">= 6" }
-
-  react-editor-js@2.1.0:
-    resolution:
-      {
-        integrity: sha512-unI9D2pTH/2gBenc6LgCXJm8iqnrzB71CHgfjQmaB+lGR0Njx+ZXydgUQm1VofMmvF6vcCNVDE1Eb47zQbm14g==,
-      }
 
   react-error-boundary@3.1.4:
     resolution:
@@ -17999,23 +17971,9 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.8.1
 
-  "@react-editor-js/client@2.1.0(@editorjs/editorjs@2.30.7)(@editorjs/paragraph@2.11.7)(react@18.3.1)":
-    dependencies:
-      "@editorjs/editorjs": 2.30.7
-      "@editorjs/paragraph": 2.11.7
-      "@react-editor-js/core": 2.1.0(@editorjs/editorjs@2.30.7)(react@18.3.1)
-      react: 18.3.1
-
   "@react-editor-js/core@2.1.0(@editorjs/editorjs@2.30.7)(react@18.3.1)":
     dependencies:
       "@editorjs/editorjs": 2.30.7
-      react: 18.3.1
-
-  "@react-editor-js/server@2.1.0(@editorjs/editorjs@2.30.7)(@editorjs/paragraph@2.11.7)(react@18.3.1)":
-    dependencies:
-      "@editorjs/editorjs": 2.30.7
-      "@editorjs/paragraph": 2.11.7
-      "@react-editor-js/core": 2.1.0(@editorjs/editorjs@2.30.7)(react@18.3.1)
       react: 18.3.1
 
   "@repeaterjs/repeater@3.0.6": {}
@@ -23319,16 +23277,6 @@ snapshots:
   react-easy-swipe@0.0.21:
     dependencies:
       prop-types: 15.8.1
-
-  react-editor-js@2.1.0(@editorjs/editorjs@2.30.7)(@editorjs/paragraph@2.11.7)(react@18.3.1):
-    dependencies:
-      "@react-editor-js/client": 2.1.0(@editorjs/editorjs@2.30.7)(@editorjs/paragraph@2.11.7)(react@18.3.1)
-      "@react-editor-js/core": 2.1.0(@editorjs/editorjs@2.30.7)(react@18.3.1)
-      "@react-editor-js/server": 2.1.0(@editorjs/editorjs@2.30.7)(@editorjs/paragraph@2.11.7)(react@18.3.1)
-    transitivePeerDependencies:
-      - "@editorjs/editorjs"
-      - "@editorjs/paragraph"
-      - react
 
   react-error-boundary@3.1.4(react@18.3.1):
     dependencies:
