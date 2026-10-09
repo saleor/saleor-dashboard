@@ -39,7 +39,7 @@ export const buildChannelCreateInput = (
       automaticallyFulfillNonShippableGiftCard: defaults.automaticallyFulfillNonShippableGiftCard,
     },
     checkoutSettings: {
-      automaticallyCompleteFullyPaidCheckouts: defaults.automaticallyCompleteCheckouts,
+      automaticCompletion: { enabled: defaults.automaticallyCompleteCheckouts },
       allowLegacyGiftCardUse: defaults.allowLegacyGiftCardUse,
     },
   };
