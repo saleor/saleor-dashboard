@@ -1,10 +1,6 @@
 import { type FetchResult } from "@apollo/client";
 import { type AuthSDK } from "@dashboard/auth/authSdk";
-import {
-  assertCurrentSession,
-  getSessionVersion,
-  RefreshUnavailableError,
-} from "@dashboard/auth/sessionRefresh";
+import { assertCurrentSession, getSessionVersion } from "@dashboard/auth/sessionRefresh";
 import { isInternalToken, type JWTToken, storage } from "@dashboard/auth/tokenStorage";
 import jwtDecode from "jwt-decode";
 
@@ -39,9 +35,7 @@ const isTokenRefreshExternal = (
  * promise, so a caller that merely awaits it can never drop the reference while
  * the request is still running.
  */
-const runTokenRefresh = (
-  owner: string,
-): ReturnType<AuthSDK["refreshToken"]> | ReturnType<AuthSDK["refreshExternalToken"]> => {
+const runTokenRefresh = (owner: string) => {
   if (refreshPromise && refreshVersion === getSessionVersion()) {
     return refreshPromise;
   }
@@ -64,18 +58,6 @@ const runTokenRefresh = (
     .catch(() => undefined);
 
   return pending;
-};
-
-const hasRefreshedToken = (
-  data?: RefreshTokenMutation | ExternalRefreshMutation | null,
-): boolean => {
-  if (!data) {
-    return false;
-  }
-
-  return Boolean(
-    isTokenRefreshExternal(data) ? data.externalRefresh?.token : data.tokenRefresh?.token,
-  );
 };
 
 type FetchConfig = Partial<{
@@ -141,10 +123,14 @@ export const createFetch =
       const expirationTime = (decodedToken.exp - tokenRefreshTimeSkew) * 1000;
       const owner = decodedToken.owner;
 
-      if (refreshPromise && refreshVersion === version) {
-        await refreshPromise;
-      } else if (Date.now() >= expirationTime) {
-        await runTokenRefresh(owner);
+      try {
+        if (refreshPromise && refreshVersion === version) {
+          await refreshPromise;
+        } else if (Date.now() >= expirationTime) {
+          await runTokenRefresh(owner);
+        }
+      } catch {
+        // ignore
       }
 
       assertCurrentSession(version);
@@ -180,19 +166,30 @@ export const createFetch =
       const owner = jwtDecode<JWTToken>(token).owner;
 
       if (isUnauthenticated) {
-        refreshTokenResponse = await runTokenRefresh(owner);
-        assertCurrentSession(version);
+        try {
+          refreshTokenResponse = await runTokenRefresh(owner);
+          assertCurrentSession(version);
 
-        if (hasRefreshedToken(refreshTokenResponse.data)) {
-          // check if mutation returns a valid token after refresh and retry the request
-          return createFetch({
-            autoTokenRefresh: false,
-            refreshOnUnauthorized: false,
-          })(input, init);
-        } else {
-          // A missing response is not proof that the refresh token was rejected.
-          throw new RefreshUnavailableError();
+          if (
+            refreshTokenResponse.data && isTokenRefreshExternal(refreshTokenResponse.data)
+              ? refreshTokenResponse.data.externalRefresh?.token
+              : (refreshTokenResponse.data as RefreshTokenMutation | undefined)?.tokenRefresh?.token
+          ) {
+            // check if mutation returns a valid token after refresh and retry the request
+            return createFetch({
+              autoTokenRefresh: false,
+              refreshOnUnauthorized: false,
+            })(input, init);
+          } else {
+            // after Saleor returns ExpiredSignatureError status and token refresh fails
+            // we log out the user and return the failed response
+            authClient.logout();
+          }
+        } catch {
+          // Preserve the existing handling of refresh failures within the same session.
         }
+
+        assertCurrentSession(version);
       }
 
       return response;

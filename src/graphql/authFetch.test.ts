@@ -1,4 +1,5 @@
 import { type AuthSDK } from "@dashboard/auth/authSdk";
+import { advanceSession } from "@dashboard/auth/sessionRefresh";
 import { type OperationDefinitionNode } from "graphql";
 
 import { createFetch, registerAuthClient } from "./authFetch";
@@ -57,74 +58,14 @@ const createMockResponse = (body: Record<string, unknown>) => {
 const mockFetch = jest.fn();
 const originalFetch = global.fetch;
 
-describe("session-safe refresh transport", () => {
-  beforeEach(() => {
-    registerAuthClient({
-      refreshToken: mockRefreshToken,
-      refreshExternalToken: mockRefreshExternalToken,
-      logout: mockLogout,
-    } as unknown as AuthSDK);
-    storage.getAccessToken.mockReturnValue("expired-token");
-    jwtDecode.mockReturnValue({ exp: 0, owner: "saleor" });
-    mockFetch.mockResolvedValue(createMockResponse({ data: {} }));
+const deferred = <T>(): { promise: Promise<T>; resolve: (value: T) => void } => {
+  let resolve: (value: T) => void = () => undefined;
+  const promise = new Promise<T>(finish => {
+    resolve = finish;
   });
 
-  it("coalesces six requests with an expired access token", async () => {
-    // Arrange
-    let resolveRefresh: (value: { data: { tokenRefresh: { token: string } } }) => void = () =>
-      undefined;
-
-    mockRefreshToken.mockImplementationOnce(
-      () =>
-        new Promise(resolve => {
-          resolveRefresh = resolve;
-        }),
-    );
-
-    const requests = Array.from({ length: 6 }, () =>
-      createFetch()("http://localhost:8000/graphql/"),
-    );
-
-    // Act
-    resolveRefresh({ data: { tokenRefresh: { token: "new-token" } } });
-    await Promise.all(requests);
-
-    // Assert
-    expect(mockRefreshToken).toHaveBeenCalledTimes(1);
-    expect(mockFetch).toHaveBeenCalledTimes(6);
-  });
-
-  it("surfaces a proactive refresh outage without sending an expired token", async () => {
-    // Arrange
-    mockRefreshToken.mockRejectedValueOnce(new TypeError("offline"));
-
-    // Act
-    await expect(createFetch()("http://localhost:8000/graphql/")).rejects.toThrow("offline");
-
-    // Assert
-    expect(mockFetch).not.toHaveBeenCalled();
-    expect(mockLogout).not.toHaveBeenCalled();
-  });
-
-  it("does not return an ExpiredSignatureError after a reactive refresh outage", async () => {
-    // Arrange
-    mockFetch.mockResolvedValue(
-      createMockResponse({
-        errors: [{ extensions: { exception: { code: "ExpiredSignatureError" } } }],
-      }),
-    );
-    mockRefreshToken.mockRejectedValueOnce(new TypeError("offline"));
-
-    // Act
-    await expect(
-      createFetch({ autoTokenRefresh: false })("http://localhost:8000/graphql/"),
-    ).rejects.toThrow("offline");
-
-    // Assert
-    expect(mockFetch).toHaveBeenCalledTimes(1);
-    expect(mockLogout).not.toHaveBeenCalled();
-  });
-});
+  return { promise, resolve };
+};
 
 beforeEach(() => {
   global.fetch = mockFetch as unknown as typeof fetch;
@@ -133,6 +74,92 @@ beforeEach(() => {
 
 afterAll(() => {
   global.fetch = originalFetch;
+});
+
+describe("request session boundaries", () => {
+  beforeEach(() => {
+    advanceSession();
+    registerAuthClient({
+      refreshToken: mockRefreshToken,
+      refreshExternalToken: mockRefreshExternalToken,
+      logout: mockLogout,
+    } as unknown as AuthSDK);
+    storage.getAccessToken.mockReturnValue("expired-token");
+    jwtDecode.mockReturnValue({ exp: 0, owner: "saleor" });
+    mockFetch.mockResolvedValue(createMockResponse({ data: {} }));
+    mockRefreshToken
+      .mockReset()
+      .mockResolvedValue({ data: { tokenRefresh: { token: "new-token" } } });
+  });
+
+  it("allows login without waiting for an older session's refresh", async () => {
+    // Arrange
+    const refresh = deferred<{ data: { tokenRefresh: { token: string } } }>();
+
+    mockRefreshToken.mockReturnValueOnce(refresh.promise);
+
+    const request = createFetch()("/graphql/");
+    const rejected = expect(request).rejects.toThrow("Authentication session changed");
+
+    // Act
+    advanceSession();
+
+    const login = createFetch()("/graphql/", { body: JSON.stringify({ operationName: "Login" }) });
+
+    // Assert
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    refresh.resolve({ data: { tokenRefresh: { token: "late-token" } } });
+    await login;
+    await rejected;
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    expect(mockLogout).not.toHaveBeenCalled();
+  });
+
+  it("does not share an older session's refresh with a new session", async () => {
+    // Arrange
+    const refresh = deferred<{ data: { tokenRefresh: { token: string } } }>();
+
+    mockRefreshToken.mockReturnValueOnce(refresh.promise);
+
+    const request = createFetch()("/graphql/");
+    const rejected = expect(request).rejects.toThrow("Authentication session changed");
+
+    // Act
+    advanceSession();
+    await createFetch()("/graphql/");
+    refresh.resolve({ data: { tokenRefresh: { token: "late-token" } } });
+    await rejected;
+
+    // Assert
+    expect(mockRefreshToken).toHaveBeenCalledTimes(2);
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([true, false])(
+    "discards a delayed response (refreshOnUnauthorized=%s)",
+    async refreshOnUnauthorized => {
+      // Arrange
+      const response = deferred<ReturnType<typeof createMockResponse>>();
+
+      mockFetch.mockReturnValueOnce(response.promise);
+
+      const request = createFetch({ autoTokenRefresh: false, refreshOnUnauthorized })("/graphql/");
+      const rejected = expect(request).rejects.toThrow("Authentication session changed");
+
+      // Act
+      advanceSession();
+      response.resolve(
+        createMockResponse({
+          errors: [{ extensions: { exception: { code: "ExpiredSignatureError" } } }],
+        }),
+      );
+      await rejected;
+
+      // Assert
+      expect(mockRefreshToken).not.toHaveBeenCalled();
+      expect(mockLogout).not.toHaveBeenCalled();
+    },
+  );
 });
 
 describe("createFetch", () => {

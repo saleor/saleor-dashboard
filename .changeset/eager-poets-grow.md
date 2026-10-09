@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Keep Dashboard sessions during temporary token-refresh outages with bounded retries. Handle boot-time recovery failures without an unhandled rejection or an endless loading state, and prevent an older refresh response from restoring a logged-out session or overwriting a newer login. Explicitly rejected refresh tokens still log the user out.
+Prevent a delayed token-refresh response from restoring a logged-out Dashboard session, overwriting a newer login, or clearing the newer session. Keep in-flight requests and token refreshes scoped to the session that started them.

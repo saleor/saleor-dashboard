@@ -4,7 +4,6 @@ import jwtDecode from "jwt-decode";
 
 import { auth, type AuthSDK } from "./authSdk";
 import { setAuthState } from "./authState";
-import { getSessionVersion } from "./sessionRefresh";
 import { createStorage, isInternalToken, type JWTToken, storage } from "./tokenStorage";
 
 /**
@@ -31,35 +30,13 @@ export const initAuth = (
   setAuthState({ authenticating: autologin && !!refreshToken });
 
   if (autologin && refreshToken) {
-    const version = getSessionVersion();
-    const restoreSession = async (): Promise<void> => {
-      try {
-        let owner: string;
+    const owner = jwtDecode<JWTToken>(refreshToken).owner;
 
-        try {
-          owner = jwtDecode<JWTToken>(refreshToken).owner;
-        } catch {
-          // A malformed stored JWT cannot be repaired by retrying the network.
-          await authSdk.logout();
-
-          return;
-        }
-
-        if (isInternalToken(owner)) {
-          await authSdk.refreshToken(true);
-        } else {
-          await authSdk.refreshExternalToken(true);
-        }
-      } catch {
-        // Keep a stored refresh token on network failure. A reload can retry recovery.
-      } finally {
-        if (version === getSessionVersion()) {
-          setAuthState({ authenticating: false });
-        }
-      }
-    };
-
-    void restoreSession();
+    if (isInternalToken(owner)) {
+      authSdk.refreshToken(true);
+    } else {
+      authSdk.refreshExternalToken(true);
+    }
   }
 
   return authSdk;
