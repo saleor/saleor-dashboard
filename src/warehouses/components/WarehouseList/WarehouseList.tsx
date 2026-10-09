@@ -6,57 +6,38 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
-import {
-  WarehouseClickAndCollectOptionEnum,
-  type WarehouseWithShippingFragment,
-} from "@dashboard/graphql";
+import { type WarehouseWithShippingFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
-import { renderCollection } from "@dashboard/misc";
+import { buttonMessages } from "@dashboard/intl";
+import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import messages from "@dashboard/warehouses/components/WarehouseSettings/messages";
+import { messages } from "@dashboard/warehouses/messages";
 import { WarehouseListUrlSortField, warehousePath } from "@dashboard/warehouses/urls";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import {
+  type WarehouseListChannel,
+  type WarehouseListMembership,
+  warehouseListPlace,
+  warehouseListRowStatus,
+  warehouseOffersPickup,
+} from "@dashboard/warehouses/warehouseListStatus";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
+import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import styles from "./WarehouseList.module.css";
 
-const useStyles = makeStyles(
-  theme => ({
-    [theme.breakpoints.up("lg")]: {
-      colActions: {
-        width: 160,
-      },
-      colName: {
-        width: 400,
-      },
-      colPickup: {
-        width: 140,
-      },
-      colZones: {
-        width: "auto",
-      },
-    },
-    colName: {
-      paddingLeft: 0,
-    },
-    colZones: {
-      paddingLeft: 0,
-    },
-    tableRow: {
-      cursor: "pointer",
-    },
-  }),
-  { name: "WarehouseList" },
-);
-
 interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortField> {
   warehouses: WarehouseWithShippingFragment[] | undefined;
   onRemove: (id: string | undefined) => void;
+  /** Shows a dash when channel membership is unknown, including when the shop is too large to look up. */
+  membership: WarehouseListMembership;
+  channelsByWarehouseId: Record<string, WarehouseListChannel[]>;
+  /** Undefined while the shop stock mode is still loading. */
+  legacyStockAvailability: boolean | undefined;
   /** Optional search configuration */
   search?: {
     placeholder?: string;
@@ -65,21 +46,110 @@ interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortFie
   };
 }
 
-const pickupOptions = [
-  WarehouseClickAndCollectOptionEnum.LOCAL,
-  WarehouseClickAndCollectOptionEnum.ALL,
-];
+const numberOfColumns = 5;
 
-const isPickupLocation = (option: WarehouseClickAndCollectOptionEnum | null | undefined): boolean =>
-  !!option && pickupOptions.includes(option);
+const WarehouseListPlace = ({
+  warehouse,
+}: {
+  warehouse: WarehouseWithShippingFragment;
+}): ReactNode => {
+  const place = warehouseListPlace({
+    city: warehouse.address?.city ?? "",
+    country: warehouse.address?.country.country ?? "",
+  });
 
-const numberOfColumns = 4;
-const WarehouseList = (props: WarehouseListProps) => {
-  const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort, search } =
-    props;
-  const classes = useStyles(props);
-  const location = useLocation();
+  if (!place) {
+    return null;
+  }
+
+  if (place.city && place.country) {
+    return (
+      <Text size={2} color="default2">
+        <FormattedMessage {...messages.listPlace} values={place} />
+      </Text>
+    );
+  }
+
+  return (
+    <Text size={2} color="default2">
+      {place.city || place.country}
+    </Text>
+  );
+};
+
+const WarehouseListStatus = ({
+  warehouse,
+  membership,
+  channels,
+  legacyStockAvailability,
+}: {
+  warehouse: WarehouseWithShippingFragment | undefined;
+  membership: WarehouseListMembership;
+  channels: WarehouseListChannel[];
+  legacyStockAvailability: boolean | undefined;
+}): ReactNode => {
   const intl = useIntl();
+
+  // Wait for the stock mode too, so a legacy shop does not flash a channel before "No shipping zone".
+  if (!warehouse || membership === "loading" || legacyStockAvailability === undefined) {
+    return <Skeleton />;
+  }
+
+  const zones = mapEdgesToItems(warehouse.shippingZones) ?? [];
+  const status = warehouseListRowStatus({
+    membership,
+    channels,
+    legacyStockAvailability,
+    zones: zones.map(zone => ({ channelIds: zone.channels.map(channel => channel.id) })),
+    zonesTruncated: (warehouse.shippingZones?.totalCount ?? zones.length) > zones.length,
+  });
+
+  if (status.kind === "unknown") {
+    return (
+      <Text
+        size={2}
+        color="default2"
+        title={intl.formatMessage(messages.listStatusUnknown)}
+        data-test-id="warehouse-list-status-unknown"
+      >
+        —
+      </Text>
+    );
+  }
+
+  const isBlocker = status.kind === "not-in-channel" || status.kind === "no-shipping-zone";
+
+  return (
+    <Text size={2} color={isBlocker ? "warning1" : "default2"}>
+      {status.kind === "not-in-channel" ? (
+        <FormattedMessage {...messages.channelsNotInChannel} />
+      ) : null}
+      {status.kind === "no-shipping-zone" ? (
+        <FormattedMessage {...messages.zonesEmptyTitle} />
+      ) : null}
+      {status.kind === "channel" ? status.name : null}
+      {status.kind === "channels" ? (
+        <FormattedMessage {...messages.channelsInCount} values={{ count: status.count }} />
+      ) : null}
+    </Text>
+  );
+};
+
+export const WarehouseList = ({
+  warehouses,
+  disabled,
+  settings,
+  sort,
+  onUpdateListSettings,
+  onRemove,
+  onSort,
+  search,
+  membership,
+  channelsByWarehouseId,
+  legacyStockAvailability,
+}: WarehouseListProps): ReactNode => {
+  const intl = useIntl();
+  const location = useLocation();
 
   return (
     <ResponsiveTable
@@ -102,18 +172,20 @@ const WarehouseList = (props: WarehouseListProps) => {
                 : undefined
             }
             arrowPosition="right"
-            className={classes.colName}
             onClick={() => onSort(WarehouseListUrlSortField.name)}
           >
             <FormattedMessage id="aCJwVq" defaultMessage="Name" description="warehouse" />
           </TableCellHeader>
-          <TableCell className={classes.colPickup}>
-            <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
-          </TableCell>
-          <TableCell className={classes.colZones}>
-            <FormattedMessage id="PFXGaR" defaultMessage="Shipping Zones" />
-          </TableCell>
-          <TableCell />
+          <TableCellHeader>
+            <FormattedMessage {...messages.listPlaceColumn} />
+          </TableCellHeader>
+          <TableCellHeader>
+            <FormattedMessage {...messages.channelsTitle} />
+          </TableCellHeader>
+          <TableCellHeader className={styles.colPickup}>
+            <FormattedMessage {...messages.listPickup} />
+          </TableCellHeader>
+          <TableCell className={styles.colAction} />
         </TableRowLink>
       </TableHead>
       <TableBody data-test-id="warehouses-list">
@@ -129,47 +201,58 @@ const WarehouseList = (props: WarehouseListProps) => {
                     }
                   : undefined
               }
-              className={classes.tableRow}
+              className={styles.tableRow}
               hover={!!warehouse}
               key={warehouse ? warehouse.id : "skeleton"}
               data-test-id={"warehouse-entry-" + warehouse?.name.toLowerCase().replace(" ", "")}
             >
-              <TableCell className={classes.colName} data-test-id="name">
-                {warehouse?.name ?? <Skeleton />}
-              </TableCell>
-              <TableCell data-test-id="pickup">
-                {warehouse === undefined ? (
-                  <Skeleton />
-                ) : isPickupLocation(warehouse.clickAndCollectOption) ? (
-                  <Pill
-                    className={styles.pickupPill}
-                    color="info"
-                    label={intl.formatMessage(messages.warehouseSettingsPickupTitle)}
-                    data-test-id="warehouse-pickup-label"
-                  />
-                ) : null}
-              </TableCell>
-              <TableCell className={classes.colZones} data-test-id="zones">
-                {warehouse?.shippingZones === undefined ? (
-                  <Skeleton />
+              <TableCell>
+                {warehouse ? (
+                  <Text size={4} fontWeight="medium" ellipsis data-test-id="name">
+                    {warehouse.name}
+                  </Text>
                 ) : (
-                  mapEdgesToItems(warehouse?.shippingZones)
-                    ?.map(({ name }) => name)
-                    .join(", ") || "-"
+                  <Skeleton />
                 )}
               </TableCell>
-              <TableCell>
-                <TableButtonWrapper>
-                  <Button
-                    icon={
-                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                    }
-                    variant="secondary"
-                    data-test-id="delete-button"
-                    onClick={() => onRemove(warehouse?.id)}
-                    marginLeft="auto"
-                  />
-                </TableButtonWrapper>
+              <TableCell data-test-id="warehouse-list-place">
+                {warehouse ? <WarehouseListPlace warehouse={warehouse} /> : <Skeleton />}
+              </TableCell>
+              <TableCell data-test-id="warehouse-list-status">
+                <WarehouseListStatus
+                  warehouse={warehouse}
+                  membership={membership}
+                  channels={warehouse ? (channelsByWarehouseId[warehouse.id] ?? []) : []}
+                  legacyStockAvailability={legacyStockAvailability}
+                />
+              </TableCell>
+              <TableCell className={styles.colPickup} data-test-id="warehouse-list-pickup">
+                {warehouse ? (
+                  warehouseOffersPickup(warehouse.clickAndCollectOption) ? (
+                    <Pill
+                      data-test-id="warehouse-pickup-pill"
+                      label={intl.formatMessage(messages.listPickup)}
+                      color="info"
+                    />
+                  ) : null
+                ) : (
+                  <Skeleton />
+                )}
+              </TableCell>
+              <TableCell className={styles.colAction}>
+                {warehouse ? (
+                  <TableButtonWrapper>
+                    <Button
+                      variant="tertiary"
+                      data-test-id="delete-button"
+                      aria-label={intl.formatMessage(buttonMessages.delete)}
+                      icon={
+                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                      }
+                      onClick={stopPropagation(() => onRemove(warehouse.id))}
+                    />
+                  </TableButtonWrapper>
+                ) : null}
               </TableCell>
             </TableRowLink>
           ),
@@ -187,4 +270,3 @@ const WarehouseList = (props: WarehouseListProps) => {
 };
 
 WarehouseList.displayName = "WarehouseList";
-export default WarehouseList;

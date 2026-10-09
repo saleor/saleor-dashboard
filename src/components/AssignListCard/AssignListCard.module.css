@@ -25,6 +25,15 @@
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }
 
+/* Header meta when the empty list blocks selling — warning, not quiet gray. */
+.requiredMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+  color: var(--mu-colors-text-warning1);
+  flex-shrink: 0;
+}
+
 .intro {
   /* Match empty-state bottom inset (spacing-4) on all sides of the content block. */
   padding: var(--mu-spacing-4) var(--mu-spacing-4) 0;

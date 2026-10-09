@@ -9,11 +9,13 @@ import {
   useCreateShippingZoneMutation,
   useShippingMethodChannelListingUpdateMutation,
   useWarehouseCreateMutation,
+  WarehouseErrorCode,
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
+import { useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { getChannelDetailsRefetchQueries } from "./channelRefetchQueries";
@@ -43,6 +45,7 @@ export const useChannelSetupActions = ({
   };
 
   const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation();
+  const pendingWarehouseId = useRef<string | null>(null);
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation();
   const [createShippingZone, createShippingZoneOpts] = useCreateShippingZoneMutation();
   const [createShippingRate, createShippingRateOpts] = useCreateShippingRateMutation();
@@ -53,34 +56,40 @@ export const useChannelSetupActions = ({
     data: CreateWarehouseForChannelFormData,
   ): Promise<WarehouseErrorFragment[]> => {
     try {
-      const createResult = await createWarehouse({
-        variables: {
-          input: {
-            name: data.name,
-            address: {
-              companyName: data.companyName,
-              city: data.city,
-              cityArea: data.cityArea,
-              country: findValueInEnum(data.country, CountryCode),
-              countryArea: data.countryArea,
-              phone: data.phone,
-              postalCode: data.postalCode,
-              streetAddress1: data.streetAddress1,
-              streetAddress2: data.streetAddress2,
-            },
-          },
-        },
-      });
-      const createErrors = createResult.data?.createWarehouse?.errors ?? [];
-
-      if (createErrors.length) {
-        return createErrors;
-      }
-
-      const warehouseId = createResult.data?.createWarehouse?.warehouse?.id;
+      let warehouseId = pendingWarehouseId.current;
 
       if (!warehouseId) {
-        return [];
+        const createResult = await createWarehouse({
+          variables: {
+            input: {
+              name: data.name,
+              address: {
+                companyName: data.companyName,
+                city: data.city,
+                cityArea: data.cityArea,
+                country: findValueInEnum(data.country, CountryCode),
+                countryArea: data.countryArea,
+                phone: data.phone,
+                postalCode: data.postalCode,
+                streetAddress1: data.streetAddress1,
+                streetAddress2: data.streetAddress2,
+              },
+            },
+          },
+        });
+        const createErrors = createResult.data?.createWarehouse?.errors ?? [];
+
+        if (createErrors.length) {
+          return createErrors;
+        }
+
+        warehouseId = createResult.data?.createWarehouse?.warehouse?.id ?? null;
+
+        if (!warehouseId) {
+          return [];
+        }
+
+        pendingWarehouseId.current = warehouseId;
       }
 
       const assignErrors = await extractMutationErrors(
@@ -96,17 +105,19 @@ export const useChannelSetupActions = ({
       );
 
       if (assignErrors.length) {
-        notify({
-          status: "error",
-          text:
-            assignErrors[0]?.message ||
-            intl.formatMessage({
-              id: "kwS+Nw",
-              defaultMessage: "Warehouse was created but could not be assigned to this channel",
-            }),
-        });
-
-        return [];
+        return [
+          {
+            __typename: "WarehouseError",
+            code: WarehouseErrorCode.INVALID,
+            field: null,
+            message:
+              assignErrors[0]?.message ||
+              intl.formatMessage({
+                id: "kwS+Nw",
+                defaultMessage: "Warehouse was created but could not be assigned to this channel",
+              }),
+          },
+        ];
       }
 
       notify({
@@ -116,13 +127,19 @@ export const useChannelSetupActions = ({
           defaultMessage: "Warehouse created and assigned",
         }),
       });
+      pendingWarehouseId.current = null;
       onWarehouseCreated();
 
       return [];
     } catch {
-      notifyUnexpectedError();
-
-      return [];
+      return [
+        {
+          __typename: "WarehouseError",
+          code: WarehouseErrorCode.INVALID,
+          field: null,
+          message: intl.formatMessage(commonMessages.somethingWentWrong),
+        },
+      ];
     }
   };
 
@@ -333,6 +350,9 @@ export const useChannelSetupActions = ({
     updateShippingMethodListingOpts.loading;
 
   return {
+    resetPendingWarehouse: (): void => {
+      pendingWarehouseId.current = null;
+    },
     handleCreateWarehouse,
     handleCreateShipping,
     handleAssignWarehouse,

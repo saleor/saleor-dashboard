@@ -4,7 +4,7 @@ import { WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import WarehouseList from "./WarehouseList";
+import { WarehouseList } from "./WarehouseList";
 
 const meta: Meta<typeof WarehouseList> = {
   title: "Warehouses/WarehouseList",
@@ -14,6 +14,9 @@ const meta: Meta<typeof WarehouseList> = {
     ...sortPageProps,
     sort: { ...sortPageProps.sort, sort: WarehouseListUrlSortField.name },
     warehouses: warehouseList,
+    membership: "ready",
+    channelsByWarehouseId: {},
+    legacyStockAvailability: false,
     onRemove: fn(),
   },
 };

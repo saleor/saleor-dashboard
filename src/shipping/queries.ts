@@ -69,6 +69,46 @@ export const channelShippingZones = gql`
   }
 `;
 
+export const channelZoneWarehouseLinks = gql`
+  query ChannelZoneWarehouseLinks($filter: ShippingZoneFilterInput) {
+    shippingZones(filter: $filter, first: 100) {
+      edges {
+        node {
+          id
+          name
+          channels {
+            id
+          }
+          warehouses {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+/** `checked` returns the ids this answer covers, so a stale answer can still be read while a new one loads. */
+export const zoneWarehouseEligibility = gql`
+  query ZoneWarehouseEligibility($ids: [ID!]!, $channels: [ID!]!, $first: Int!) {
+    checked: warehouses(first: $first, filter: { ids: $ids }) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+    inChannels: warehouses(first: $first, filter: { ids: $ids, channels: $channels }) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const shippingZonesCount = gql`
   query ShippingZonesCount {
     shippingZones {

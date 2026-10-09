@@ -1,4 +1,5 @@
 import { type ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import { AssignListRequiredMeta } from "@dashboard/components/AssignListCard/AssignListCard";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { AllocationStrategyEnum, type StockSettingsInput } from "@dashboard/graphql";
@@ -150,13 +151,15 @@ export const ChannelInventoryCard = ({
         <Text size={5} fontWeight="bold" as="h2">
           <FormattedMessage {...messages.title} />
         </Text>
-        <Text size={2} color="default2">
-          {hasWarehouses ? (
+        {hasWarehouses ? (
+          <Text size={2} color="default2">
             <FormattedMessage {...messages.assignedCount} values={{ count: warehouses.length }} />
-          ) : (
+          </Text>
+        ) : (
+          <AssignListRequiredMeta>
             <FormattedMessage {...messages.requiredToSell} />
-          )}
-        </Text>
+          </AssignListRequiredMeta>
+        )}
       </Box>
 
       <Box className={styles.intro}>

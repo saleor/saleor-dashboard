@@ -99,6 +99,7 @@ export const ChannelDeliveryCard = ({
           <FormattedMessage {...messages.requiredToSell} />
         )
       }
+      emphasis={hasZones ? "default" : "warning"}
       intro={<FormattedMessage {...messages.description} />}
       items={zones.map(zone => ({
         id: zone.id,

@@ -45,7 +45,7 @@ import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { warehouseAddPath } from "@dashboard/warehouses/urls";
+import { warehouseAddUrl } from "@dashboard/warehouses/urls";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -313,7 +313,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         fetchMoreWarehouses={fetchMoreWarehouses}
         searchWarehousesResult={searchWarehousesResult}
         searchWarehouses={searchWarehouses}
-        onWarehouseConfigure={() => navigate(warehouseAddPath)}
+        onWarehouseConfigure={() => navigate(warehouseAddUrl)}
         onVariantReorder={handleVariantReorder}
         assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}

@@ -1,7 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { type ChannelFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
+import { type WarehouseChoice } from "@dashboard/shipping/warehouseEligibility";
 import { Divider, type Option } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
@@ -26,6 +28,9 @@ interface ShippingZoneSettingsCardProps {
   onChannelChange: FormChange;
   allChannels?: ChannelFragment[];
   loading: boolean;
+  legacyStockAvailability: boolean | undefined;
+  ineligibleWarehouses: WarehouseChoice[];
+  zoneChannelNames: string[];
 }
 
 const ShippingZoneSettingsCard = ({
@@ -38,8 +43,12 @@ const ShippingZoneSettingsCard = ({
   onWarehouseChange,
   allChannels,
   onChannelChange,
+  legacyStockAvailability,
+  ineligibleWarehouses,
+  zoneChannelNames,
 }: ShippingZoneSettingsCardProps) => {
   const intl = useIntl();
+  const [warehousesExpanded, setWarehousesExpanded] = useState(false);
 
   return (
     <DashboardCard>
@@ -63,6 +72,11 @@ const ShippingZoneSettingsCard = ({
           selectedWarehouses={formData.warehouses}
           hasMore={hasMoreWarehouses}
           loading={loading}
+          legacyStockAvailability={legacyStockAvailability}
+          ineligibleWarehouses={ineligibleWarehouses}
+          zoneChannelNames={zoneChannelNames}
+          expanded={warehousesExpanded}
+          onExpand={() => setWarehousesExpanded(true)}
         />
       </DashboardCard.Content>
     </DashboardCard>

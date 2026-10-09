@@ -12,8 +12,12 @@ const EMPTY_SEARCH_FILTERS = {};
 
 export interface AssignShippingZoneDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState?: ConfirmButtonTransitionState;
-  /** Zones available to assign — already filtered by the parent (e.g. exclude assigned). */
+  /**
+   * Zones returned by the current search. Pass zones that are already linked through
+   * `excludeContainer` so a page of only those rows can load the next page.
+   */
   shippingZones: Array<{ id: string; name: string }>;
+  excludeContainer?: (container: Container) => boolean;
   loading: boolean;
   onFetch: (query: string) => void;
   onSubmit: (shippingZones: Container[]) => void;
@@ -22,6 +26,7 @@ export interface AssignShippingZoneDialogProps extends FetchMoreProps, DialogPro
 export const AssignShippingZoneDialog = ({
   confirmButtonState = "default",
   shippingZones,
+  excludeContainer,
   loading,
   onFetch,
   onSubmit,
@@ -69,6 +74,8 @@ export const AssignShippingZoneDialog = ({
       {...fetchMoreProps}
       confirmButtonState={confirmButtonState}
       containers={containers}
+      excludeContainer={excludeContainer}
+      backfillResetKey={query}
       emptyMessage={emptyMessage}
       labels={labels}
       loading={loading}

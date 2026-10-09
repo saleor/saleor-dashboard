@@ -9,7 +9,6 @@ import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type RefreshLimitsQuery, type WarehouseWithShippingFragment } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   type PageListProps,
@@ -18,12 +17,16 @@ import {
   type TabPageProps,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { warehouseAddUrl, type WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
+import { type WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
+import {
+  type WarehouseListChannel,
+  type WarehouseListMembership,
+} from "@dashboard/warehouses/warehouseListStatus";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import WarehouseList from "../WarehouseList/WarehouseList";
+import { WarehouseList } from "../WarehouseList/WarehouseList";
 
 interface WarehouseListPageProps
   extends PageListProps,
@@ -32,6 +35,10 @@ interface WarehouseListPageProps
     Omit<TabPageProps, "onTabDelete"> {
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
   warehouses: WarehouseWithShippingFragment[] | undefined;
+  membership: WarehouseListMembership;
+  channelsByWarehouseId: Record<string, WarehouseListChannel[]>;
+  legacyStockAvailability: boolean | undefined;
+  onAdd: () => void;
   onRemove: (id: string | undefined) => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (id: number) => void;
@@ -47,6 +54,7 @@ const WarehouseListPage = ({
   settings,
   tabs,
   onAll,
+  onAdd,
   onRemove,
   onSearchChange,
   onTabChange,
@@ -58,7 +66,6 @@ const WarehouseListPage = ({
   ...listProps
 }: WarehouseListPageProps) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const limitReached = isLimitReached(limits, "warehouses");
 
@@ -97,7 +104,7 @@ const WarehouseListPage = ({
               data-test-id="create-warehouse"
               disabled={disabled || limitReached}
               variant="primary"
-              onClick={() => navigate(warehouseAddUrl)}
+              onClick={onAdd}
             >
               <FormattedMessage
                 id="wmdHhD"

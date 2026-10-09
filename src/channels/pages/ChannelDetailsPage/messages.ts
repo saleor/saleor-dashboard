@@ -1,6 +1,22 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  unlinkWarehousesTitle: {
+    id: "Gcruxi",
+    defaultMessage: "Unlink warehouses from shipping zones?",
+    description: "confirm a channel save that drops warehouse-zone links",
+  },
+  unlinkWarehouseFromZone: {
+    id: "iSIMl5",
+    defaultMessage: "{warehouse} from {zone}",
+    description: "one warehouse-zone link a channel save would unlink, listed in the unlink dialog",
+  },
+  unlinkWarehousesBody: {
+    id: "/PSoVZ",
+    defaultMessage:
+      "{links} will be unlinked, because they share no other channel. This only changes which stock can be bought in the older stock mode.",
+    description: "warehouse and zone pairs a channel save would unlink",
+  },
   channelUpdated: {
     id: "T9dLJY",
     defaultMessage: "Channel updated",

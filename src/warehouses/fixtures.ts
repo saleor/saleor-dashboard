@@ -7,17 +7,29 @@ import {
 
 import { shippingZones } from "../shipping/fixtures";
 
+const listAddress = {
+  __typename: "Address" as const,
+  id: address.id,
+  city: address.city,
+  country: address.country,
+};
+
 export const warehouseList: WarehouseWithShippingFragment[] = [
   {
     __typename: "Warehouse",
     id: "V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==",
     name: "C our wares",
-    clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL,
+    clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
+    address: listAddress,
     shippingZones: {
       __typename: "ShippingZoneCountableConnection",
+      totalCount: shippingZones.length,
       edges: shippingZones.map(node => ({
-        __typename: "ShippingZoneCountableEdge",
-        node,
+        __typename: "ShippingZoneCountableEdge" as const,
+        node: {
+          ...node,
+          channels: [],
+        },
       })),
     },
   },
@@ -25,12 +37,17 @@ export const warehouseList: WarehouseWithShippingFragment[] = [
     __typename: "Warehouse",
     id: "V2FyZWhvdXNlOjJmN2UyOTlmLWEwMzMtNDhjZS1iYmM5LTFkZDM4NjU2ZjMwYw==",
     name: "Be stocked",
-    clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
+    clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL,
+    address: listAddress,
     shippingZones: {
       __typename: "ShippingZoneCountableConnection",
+      totalCount: shippingZones.length,
       edges: shippingZones.map(node => ({
-        __typename: "ShippingZoneCountableEdge",
-        node,
+        __typename: "ShippingZoneCountableEdge" as const,
+        node: {
+          ...node,
+          channels: [],
+        },
       })),
     },
   },
@@ -38,12 +55,17 @@ export const warehouseList: WarehouseWithShippingFragment[] = [
     __typename: "Warehouse",
     id: "V2FyZWhvdXNlOmM0ZmQ3Nzc0LWZlMjYtNDE1YS1hYjk1LWFlYTFjMjI0NTgwNg==",
     name: "A Warehouse",
-    clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
+    clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
+    address: listAddress,
     shippingZones: {
       __typename: "ShippingZoneCountableConnection",
+      totalCount: shippingZones.length,
       edges: shippingZones.map(node => ({
-        __typename: "ShippingZoneCountableEdge",
-        node,
+        __typename: "ShippingZoneCountableEdge" as const,
+        node: {
+          ...node,
+          channels: [],
+        },
       })),
     },
   },
@@ -52,11 +74,16 @@ export const warehouseList: WarehouseWithShippingFragment[] = [
     id: "V2FyZWhvdXNlOmNlMmNiZDhhLWRkYmQtNDhiNS1hM2UxLTNmZGVkZGI5MWZkMg==",
     name: "Darkwares",
     clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
+    address: listAddress,
     shippingZones: {
       __typename: "ShippingZoneCountableConnection",
+      totalCount: shippingZones.length,
       edges: shippingZones.map(node => ({
-        __typename: "ShippingZoneCountableEdge",
-        node,
+        __typename: "ShippingZoneCountableEdge" as const,
+        node: {
+          ...node,
+          channels: [],
+        },
       })),
     },
   },
