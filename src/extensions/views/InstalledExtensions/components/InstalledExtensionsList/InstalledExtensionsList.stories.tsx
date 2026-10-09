@@ -1,5 +1,7 @@
 import { type InstalledExtension } from "@dashboard/extensions/types";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppTypeEnum } from "@dashboard/graphql";
+import { CUSTOMER_EMAILS_MANIFEST_URL } from "@dashboard/notificationsSettings/constants";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { Mail } from "lucide-react";
 import { fn } from "storybook/test";
@@ -28,6 +30,7 @@ const installedExtensions: InstalledExtension[] = [
     id: "app-2",
     name: "SMTP",
     deprecated: true,
+    migrateUrl: ExtensionsUrls.resolveInstallCustomExtensionUrl(CUSTOMER_EMAILS_MANIFEST_URL),
     deprecationReason:
       "SMTP is replaced by Customer Emails. Install Customer Emails from Extensions, copy your templates over, then uninstall this app.",
   },

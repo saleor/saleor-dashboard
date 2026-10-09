@@ -9180,6 +9180,10 @@
     "context": "staff member full name",
     "string": "Name"
   },
+  "W3Ead/": {
+    "context": "button installing the app that replaces a deprecated app",
+    "string": "Migrate"
+  },
   "W4J3wr": {
     "context": "Expanded help for category setup",
     "string": "Publishing is blocked without a category. Pick one so storefronts can show and sell this product."

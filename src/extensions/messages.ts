@@ -713,6 +713,11 @@ export const deprecationMessages = defineMessages({
     id: "n1ja6a",
     description: "deprecation notice subtitle explaining the app keeps working",
   },
+  migrate: {
+    defaultMessage: "Migrate",
+    id: "W3Ead/",
+    description: "button installing the app that replaces a deprecated app",
+  },
   showLess: {
     defaultMessage: "Show less",
     id: "mnm882",
