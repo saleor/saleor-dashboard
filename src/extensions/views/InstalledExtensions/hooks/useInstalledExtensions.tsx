@@ -4,6 +4,7 @@ import {
   getLatestFailedAttemptFromWebhooks,
   type LatestWebhookDeliveryWithMoment,
 } from "@dashboard/extensions/components/AppAlerts/utils";
+import { getReplacementAppInstallUrl } from "@dashboard/extensions/knownApps";
 import { infoMessages } from "@dashboard/extensions/messages";
 import {
   type InstalledExtension,
@@ -174,10 +175,17 @@ export const useInstalledExtensions = () => {
             isNew: isRecentlyInstalled(created),
             deprecated: isLegacySmtpApp(identifier) || !!deprecationReason,
             deprecationReason,
+            migrateUrl: hasManagedAppsPermission ? getReplacementAppInstallUrl(identifier) : null,
           };
         },
       ),
-    [eventDeliveries, eventDeliveriesData, installedAppsData, webhookErrorMessage],
+    [
+      eventDeliveries,
+      eventDeliveriesData,
+      hasManagedAppsPermission,
+      installedAppsData,
+      webhookErrorMessage,
+    ],
   );
 
   const installedPlugins = useMemo<InstalledExtension[]>(

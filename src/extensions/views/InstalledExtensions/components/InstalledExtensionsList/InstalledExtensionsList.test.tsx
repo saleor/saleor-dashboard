@@ -215,4 +215,36 @@ describe("InstalledExtensionsList", () => {
     expect(screen.getAllByTestId("app-deprecation-reason")).toHaveLength(1);
     expect(screen.getByText("Use Customer Emails instead.")).toBeInTheDocument();
   });
+
+  it("links the Migrate button to the replacement app install page", () => {
+    // Arrange
+    const extension: InstalledExtension = {
+      id: "1",
+      name: "SMTP",
+      logo: null,
+      info: null,
+      activeProblemCount: 0,
+      criticalProblemCount: 0,
+      deprecated: true,
+      migrateUrl: "/extensions/app/install?manifestUrl=replacement",
+    };
+
+    // Act
+    render(
+      <MemoryRouter>
+        <InstalledExtensionsList
+          installedExtensions={[extension]}
+          loading={false}
+          clearSearch={jest.fn()}
+        />
+      </MemoryRouter>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("migrate-deprecated-app")).toHaveAttribute(
+      "href",
+      "/extensions/app/install?manifestUrl=replacement",
+    );
+    expect(screen.getByRole("button", { name: "Migrate" })).toBeInTheDocument();
+  });
 });
