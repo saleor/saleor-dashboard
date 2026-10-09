@@ -2,7 +2,10 @@ import { AttributeCreateFormContent } from "@dashboard/attributes/components/Att
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
 import { AttributeValueDeleteDialog } from "@dashboard/attributes/components/AttributeValueDeleteDialog/AttributeValueDeleteDialog";
 import { useAttributeCreateValues } from "@dashboard/attributes/hooks/useAttributeCreateValues/useAttributeCreateValues";
-import { getAttributePageInitialForm } from "@dashboard/attributes/utils/attributePageForm";
+import {
+  getAttributePageInitialForm,
+  getDeprecatedAttributeInputEvents,
+} from "@dashboard/attributes/utils/attributePageForm";
 import {
   ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES,
   type AttributeValueEditDialogFormData,
@@ -16,6 +19,7 @@ import {
 import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModelTypeDisplay } from "@dashboard/components/ModelType/ModelType";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { ProductTypeDisplay } from "@dashboard/components/ProductType/ProductType";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -65,6 +69,7 @@ export const CreateAttributeDialog = ({
   onClose,
   onSubmit,
 }: CreateAttributeDialogProps) => {
+  const { trackEvent } = useAnalytics();
   const [step, setStep] = useState<1 | 2>(1);
   const [submitErrors, setSubmitErrors] = useState<AttributeErrorFragment[]>([]);
   const initialForm = useMemo(
@@ -105,6 +110,8 @@ export const CreateAttributeDialog = ({
   });
 
   const handleSubmit = async (data: AttributePageFormData) => {
+    getDeprecatedAttributeInputEvents(data, initialForm).forEach(event => trackEvent(event));
+
     const errors = await onSubmit({
       formData: {
         ...data,

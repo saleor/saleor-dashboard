@@ -9,6 +9,11 @@ import { type WebhookFormData } from "../../components/WebhookDetailsPage/Webhoo
 import { EditCustomExtensionWebhook } from "./EditCustomExtensionWebhook";
 
 const mockWebhookDetailsPage = jest.fn();
+const mockTrackEvent = jest.fn();
+
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
 
 jest.mock("@dashboard/graphql", () => ({
   ...(jest.requireActual("@dashboard/graphql") as object),
@@ -114,6 +119,15 @@ describe("EditCustomExtensionWebhook", () => {
         },
       },
     });
+    expect(mockTrackEvent).toHaveBeenCalledWith("webhook_secret_key_submitted");
+  });
+
+  it("does not track the secret key when it is unchanged", async () => {
+    // Arrange & Act
+    await submitForm({ ...formData, secretKey: "" });
+
+    // Assert
+    expect(mockTrackEvent).not.toHaveBeenCalled();
   });
 
   it("collapses async events to ANY_EVENTS when it is selected", async () => {

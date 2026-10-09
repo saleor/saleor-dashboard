@@ -35,6 +35,10 @@ describe("buildChannelCreateInput", () => {
       TransactionFlowStrategyEnum.CHARGE,
     );
     expect(input.orderSettings?.automaticallyConfirmAllNewOrders).toBe(true);
+    expect(input.checkoutSettings).toEqual({
+      automaticCompletion: { enabled: false },
+      allowLegacyGiftCardUse: false,
+    });
   });
 
   it("slugifies the name when slug is empty", () => {

@@ -4,6 +4,7 @@ import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
 } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import isEqual from "lodash/isEqual";
 import slugify from "slugify";
 
@@ -93,4 +94,31 @@ export function isAttributeUpdateFormPristine(
     getAttributeUpdateComparableData(data),
     getAttributeUpdateComparableData(initialData),
   );
+}
+
+type DeprecatedAttributeInputEvent =
+  | "attribute_filterable_in_storefront_submitted"
+  | "attribute_storefront_search_position_submitted";
+
+// Faceted navigation fields are deprecated in the API - track who still changes them.
+// The staging schema build strips them from the input, so nothing is sent there.
+export function getDeprecatedAttributeInputEvents(
+  data: AttributePageFormData,
+  initialData: AttributePageFormData,
+): DeprecatedAttributeInputEvent[] {
+  if (!isMainSchema()) {
+    return [];
+  }
+
+  const events: DeprecatedAttributeInputEvent[] = [];
+
+  if (data.filterableInStorefront !== initialData.filterableInStorefront) {
+    events.push("attribute_filterable_in_storefront_submitted");
+  }
+
+  if (data.storefrontSearchPosition !== initialData.storefrontSearchPosition) {
+    events.push("attribute_storefront_search_position_submitted");
+  }
+
+  return events;
 }
