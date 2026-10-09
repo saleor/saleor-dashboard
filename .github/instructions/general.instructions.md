@@ -1,0 +1,1 @@
+- Do not review schema.graphql and \*.generated.ts
