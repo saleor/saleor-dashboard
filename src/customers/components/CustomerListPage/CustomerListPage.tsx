@@ -147,9 +147,11 @@ export const CustomerListPage = ({
             paddingX={6}
             paddingTop={4}
           >
-            <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4}>
-              <Box display="flex" alignItems="center" gap={4}>
+            <Box display="flex" alignItems="center" flexWrap="wrap" gap={4}>
+              <Box flexShrink="0">
                 <ExpressionFilters />
+              </Box>
+              <Box flexGrow="1">
                 <ListSearchInput
                   initialSearch={initialSearch}
                   placeholder={intl.formatMessage({
@@ -159,13 +161,13 @@ export const CustomerListPage = ({
                   onSearchChange={onSearchChange}
                 />
               </Box>
-              <Box display="flex" justifyContent="flex-end" alignItems="center">
-                {canEditCustomers && selectedCustomerIds.length > 0 && (
+              {canEditCustomers && selectedCustomerIds.length > 0 ? (
+                <Box flexShrink="0">
                   <BulkDeleteButton count={selectedCustomerIds.length} onClick={onCustomersDelete}>
                     <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
                   </BulkDeleteButton>
-                )}
-              </Box>
+                </Box>
+              ) : null}
             </Box>
             <ExpressionFilterPanel />
           </Box>
