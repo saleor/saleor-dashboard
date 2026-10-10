@@ -4269,7 +4269,7 @@ export const WebhookDetailsFragmentDoc = gql`
   asyncEvents {
     eventType
   }
-  secretKey
+  secretKey @lockSchema(schema: "main")
   targetUrl
   subscriptionQuery
   customHeaders
