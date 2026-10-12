@@ -12,7 +12,10 @@ import { type OutputData } from "@editorjs/editorjs";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import { TranslationFieldRow } from "../TranslationFieldRow/TranslationFieldRow";
+import {
+  type BlankTranslationHint,
+  TranslationFieldRow,
+} from "../TranslationFieldRow/TranslationFieldRow";
 import { TranslationGroupBox } from "../TranslationGroupBox/TranslationGroupBox";
 import { TranslationProgressBar } from "../TranslationProgressBar/TranslationProgressBar";
 import { TranslationProgressCompletePill } from "../TranslationProgressBar/TranslationProgressCompletePill";
@@ -31,6 +34,8 @@ interface TranslationSectionProps {
   isFieldDirty: (field: TranslationField) => boolean;
   /** A stored blank that saving resets; Save stays enabled and a hint explains it. */
   isFieldPendingReset: (field: TranslationField) => boolean;
+  /** A blank (stored or cleared) that the API can't reset yet; a hint warns about it. */
+  isFieldUnresettableBlank: (field: TranslationField) => boolean;
   saveButtonState: ConfirmButtonTransitionState;
   richTextResetKey: string;
   initialExpanded?: boolean;
@@ -52,6 +57,7 @@ export const TranslationSection = ({
   disabled,
   isFieldDirty,
   isFieldPendingReset,
+  isFieldUnresettableBlank,
   saveButtonState,
   richTextResetKey,
   initialExpanded = true,
@@ -64,6 +70,18 @@ export const TranslationSection = ({
   const progress = getFieldsProgress(section.fields);
   const progressPercentage = getProgressPercentage(progress);
   const isComplete = progressPercentage === 100;
+
+  const getBlankTranslationHint = (field: TranslationField): BlankTranslationHint | undefined => {
+    if (isFieldPendingReset(field)) {
+      return "resettable";
+    }
+
+    if (isFieldUnresettableBlank(field)) {
+      return "unresettable";
+    }
+
+    return undefined;
+  };
 
   const isFieldEditing = (fieldName: string) => {
     if (bulk) {
@@ -174,7 +192,7 @@ export const TranslationSection = ({
                 !isFieldDirty(field) &&
                 !isFieldPendingReset(field)
               }
-              showBlankTranslationHint={isFieldPendingReset(field)}
+              blankTranslationHint={getBlankTranslationHint(field)}
               disabled={disabled}
               saveButtonState={saveButtonState}
               richTextResetKey={richTextResetKey}

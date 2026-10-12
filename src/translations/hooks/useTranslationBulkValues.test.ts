@@ -70,4 +70,26 @@ describe("useTranslationBulkValues", () => {
       expect.objectContaining({ field: blankNameField, data: "Nowa nazwa" }),
     ]);
   });
+
+  it("flags a cleared translation of a field that cannot be reset", () => {
+    // Arrange
+    const variantNameField: TranslationField = {
+      ...blankNameField,
+      nullable: undefined,
+      translation: "Rozmiar M",
+    };
+    const { result } = renderHook(() => useTranslationBulkValues(sectionWith(variantNameField)));
+
+    // Act
+    act(() => {
+      result.current.handleValueChange(variantNameField, "");
+    });
+
+    // Assert
+    expect(result.current.isFieldUnresettableBlank(variantNameField)).toBe(true);
+    expect(result.current.isFieldPendingReset(variantNameField)).toBe(false);
+    expect(result.current.getBulkSaveValues()).toEqual([
+      expect.objectContaining({ field: variantNameField, data: "" }),
+    ]);
+  });
 });

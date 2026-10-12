@@ -1,4 +1,8 @@
-import { isResettableBlankTranslation } from "@dashboard/translations/progress";
+import {
+  isBlankTextTranslation,
+  isFieldTranslationComplete,
+  isResettableBlankTranslation,
+} from "@dashboard/translations/progress";
 import {
   type BulkTranslationValue,
   type TranslationField,
@@ -98,6 +102,30 @@ export const isPendingBlankReset = (
   field: TranslationField,
   editedValue: string | undefined,
 ): boolean => isResettableBlankTranslation(field) && !isBulkFieldDirty(field, editedValue);
+
+/**
+ * A text field the API can't reset to untranslated whose input is blank: the stored blank, or a
+ * translation the user cleared. Saving it stores `""`, so storefronts may show a blank.
+ */
+export const isUnresettableBlankInput = (
+  field: TranslationField,
+  editedValue: string | undefined,
+): boolean => {
+  if (
+    field.nullable === true ||
+    field.type === TranslationFieldType.RICH ||
+    field.translation === null ||
+    field.editInitial != null
+  ) {
+    return false;
+  }
+
+  if (!isFieldTranslationComplete(field.value, field.type)) {
+    return false;
+  }
+
+  return isBlankTextTranslation(editedValue ?? field.translation);
+};
 
 export const hasBlankResetBulkValues = (
   sections: TranslationSectionConfig[],

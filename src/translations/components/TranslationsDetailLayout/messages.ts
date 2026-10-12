@@ -134,4 +134,17 @@ export const translationDetailMessages = defineMessages({
       "Saved as empty, so your storefront may show a blank. Saving resets it to the original.",
     description: "hint under a translation stored as an empty value, while editing it",
   },
+  blankTranslationUnresettableHint: {
+    id: "RMrqM8",
+    defaultMessage:
+      "Saved as empty, so your storefront may show a blank. This field can't be reset to the original yet.",
+    description:
+      "hint under an empty translation of a field that cannot be reset, outside edit mode",
+  },
+  blankTranslationUnresettableEditingHint: {
+    id: "wUr1VV",
+    defaultMessage:
+      "Saving it empty may show a blank on your storefront. This field can't be reset to the original yet.",
+    description: "hint while a translation of a field that cannot be reset is empty in the editor",
+  },
 });

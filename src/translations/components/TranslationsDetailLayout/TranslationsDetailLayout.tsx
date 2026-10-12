@@ -77,6 +77,7 @@ export const TranslationsDetailLayout = ({
     hasDirtyFields,
     isFieldDirty,
     isFieldPendingReset,
+    isFieldUnresettableBlank,
     resetValues,
   } = useTranslationBulkValues(sections);
   const canBulkSave = hasDirtyFields || hasBlankResets;
@@ -238,6 +239,7 @@ export const TranslationsDetailLayout = ({
           disabled={disabled}
           isFieldDirty={isFieldDirty}
           isFieldPendingReset={isFieldPendingReset}
+          isFieldUnresettableBlank={isFieldUnresettableBlank}
           saveButtonState={saveButtonState}
           richTextResetKey={resolvedRichTextResetKey}
           onEdit={onEdit}
