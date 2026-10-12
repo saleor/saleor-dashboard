@@ -29,6 +29,7 @@ import {
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
 import { returnItemsCardMessages } from "./messages";
 import ProductErrorCell from "./ProductErrorCell";
+import styles from "./ReturnItemsCard.module.css";
 
 const useStyles = makeStyles(
   theme => {
@@ -178,6 +179,7 @@ const ItemsCard = ({
               return (
                 <TableRowLink key={id}>
                   <TableCellAvatar
+                    className={styles.productCell}
                     thumbnail={thumbnail?.url}
                     style={{ width: productNameCellWidth }}
                   >
