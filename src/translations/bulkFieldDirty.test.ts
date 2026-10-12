@@ -6,7 +6,9 @@ import {
 } from "@dashboard/translations/types";
 
 import {
+  getBlankResetBulkValues,
   getDirtyBulkSubmitValues,
+  hasBlankResetBulkValues,
   hasDirtyBulkFields,
   isBulkFieldDirty,
   normalizeBulkFieldValue,
@@ -208,5 +210,74 @@ describe("getDirtyBulkSubmitValues", () => {
     expect(result[0]?.field.name).toBe("attributeValue:attr-value-id");
     expect(result[0]?.section.submitScope).toBe(TranslationSubmitScope.attributeValue);
     expect(hasDirtyBulkFields([attributeSection], values)).toBe(true);
+  });
+});
+describe("getBlankResetBulkValues", () => {
+  const blankShortField: TranslationField = { ...shortField, nullable: true, translation: "" };
+  const blankRichField: TranslationField = {
+    ...richField,
+    nullable: true,
+    translation: JSON.stringify({ blocks: [] }),
+  };
+  const blankSection: TranslationSectionConfig = {
+    ...entitySection,
+    fields: [blankShortField, blankRichField],
+  };
+
+  it("returns resets for untouched blanks as cleared values", () => {
+    // Arrange & Act
+    const result = getBlankResetBulkValues([blankSection], {});
+
+    // Assert
+    expect(result).toEqual([
+      { field: blankShortField, section: blankSection, data: "" },
+      { field: blankRichField, section: blankSection, data: { blocks: [] } },
+    ]);
+  });
+
+  it("keeps a blank whose input was cleared back to empty", () => {
+    // Arrange & Act
+    const result = getBlankResetBulkValues([blankSection], { name: "" });
+
+    // Assert
+    expect(result.map(({ field }) => field.name)).toContain("name");
+  });
+
+  it("skips a blank the translator typed a translation into", () => {
+    // Arrange & Act
+    const result = getBlankResetBulkValues([blankSection], { name: "Nowa nazwa" });
+
+    // Assert
+    expect(result.map(({ field }) => field.name)).toEqual(["description"]);
+  });
+
+  it("skips blanks that are not nullable and translations already removed", () => {
+    // Arrange
+    const section: TranslationSectionConfig = {
+      ...entitySection,
+      fields: [
+        { ...shortField, translation: "" },
+        { ...shortField, name: "seoTitle", nullable: true, translation: null },
+      ],
+    };
+
+    // Act
+    const result = getBlankResetBulkValues([section], {});
+
+    // Assert
+    expect(result).toEqual([]);
+  });
+});
+
+describe("hasBlankResetBulkValues", () => {
+  it("returns true only while a stored blank is left as it is", () => {
+    // Arrange
+    const blankField: TranslationField = { ...shortField, nullable: true, translation: "" };
+    const section: TranslationSectionConfig = { ...entitySection, fields: [blankField] };
+
+    // Act & Assert
+    expect(hasBlankResetBulkValues([section], {})).toBe(true);
+    expect(hasBlankResetBulkValues([section], { name: "Nowa nazwa" })).toBe(false);
+    expect(hasBlankResetBulkValues([entitySection], {})).toBe(false);
   });
 });

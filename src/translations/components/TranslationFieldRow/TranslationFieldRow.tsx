@@ -23,6 +23,8 @@ interface TranslationFieldRowProps {
   showPerFieldActions: boolean;
   hideFieldActions?: boolean;
   saveDisabled?: boolean;
+  /** The translation is stored as a blank that shows on the storefront and saving would reset. */
+  showBlankTranslationHint?: boolean;
   disabled: boolean;
   saveButtonState: ConfirmButtonTransitionState;
   richTextResetKey: string;
@@ -199,6 +201,7 @@ export const TranslationFieldRow = ({
   showPerFieldActions,
   hideFieldActions = false,
   saveDisabled = false,
+  showBlankTranslationHint = false,
   disabled,
   saveButtonState,
   richTextResetKey,
@@ -277,6 +280,17 @@ export const TranslationFieldRow = ({
             onDiscard,
             onSubmit,
             onValueChange,
+          )}
+          {showBlankTranslationHint && (
+            <Box marginTop={2}>
+              <Text size={2} color="warning1">
+                <FormattedMessage
+                  {...(isEditing
+                    ? translationDetailMessages.blankTranslationResetHint
+                    : translationDetailMessages.blankTranslationHint)}
+                />
+              </Text>
+            </Box>
           )}
           {fieldError && (
             <Text size={2} color="critical1" marginTop={2}>

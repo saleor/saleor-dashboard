@@ -2,11 +2,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import {
-  getFieldsProgress,
-  getProgressPercentage,
-  isResettableBlankTranslation,
-} from "@dashboard/translations/progress";
+import { getFieldsProgress, getProgressPercentage } from "@dashboard/translations/progress";
 import {
   type TranslationField,
   TranslationFieldType,
@@ -33,6 +29,8 @@ interface TranslationSectionProps {
   activeField?: string | string[];
   disabled: boolean;
   isFieldDirty: (field: TranslationField) => boolean;
+  /** A stored blank that saving resets; Save stays enabled and a hint explains it. */
+  isFieldPendingReset: (field: TranslationField) => boolean;
   saveButtonState: ConfirmButtonTransitionState;
   richTextResetKey: string;
   initialExpanded?: boolean;
@@ -53,6 +51,7 @@ export const TranslationSection = ({
   activeField,
   disabled,
   isFieldDirty,
+  isFieldPendingReset,
   saveButtonState,
   richTextResetKey,
   initialExpanded = true,
@@ -173,8 +172,9 @@ export const TranslationSection = ({
                 !bulk &&
                 isFieldEditing(field.name) &&
                 !isFieldDirty(field) &&
-                !isResettableBlankTranslation(field)
+                !isFieldPendingReset(field)
               }
+              showBlankTranslationHint={isFieldPendingReset(field)}
               disabled={disabled}
               saveButtonState={saveButtonState}
               richTextResetKey={richTextResetKey}

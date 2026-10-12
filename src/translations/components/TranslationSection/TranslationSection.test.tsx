@@ -1,3 +1,4 @@
+import { isPendingBlankReset } from "@dashboard/translations/bulkFieldDirty";
 import {
   type TranslationField,
   TranslationFieldType,
@@ -37,6 +38,7 @@ const renderEditingSection = (field: TranslationField) => {
         activeField={field.name}
         disabled={false}
         isFieldDirty={() => false}
+        isFieldPendingReset={candidate => isPendingBlankReset(candidate, undefined)}
         saveButtonState="default"
         richTextResetKey="PL"
         onEdit={jest.fn()}
@@ -54,6 +56,7 @@ describe("TranslationSection", () => {
 
     // Assert
     expect(screen.getByRole("button", { name: /save/i })).toBeEnabled();
+    expect(screen.getByText(/Saving resets it to the original/)).toBeInTheDocument();
   });
 
   it("keeps Save disabled on an unchanged blank that cannot be reset", () => {

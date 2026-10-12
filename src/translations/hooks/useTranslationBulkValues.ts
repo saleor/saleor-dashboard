@@ -1,7 +1,10 @@
 import {
+  getBlankResetBulkValues,
   getDirtyBulkSubmitValues,
+  hasBlankResetBulkValues,
   hasDirtyBulkFields,
   isBulkFieldDirty,
+  isPendingBlankReset,
 } from "@dashboard/translations/bulkFieldDirty";
 import {
   type BulkTranslationValue,
@@ -48,17 +51,33 @@ export function useTranslationBulkValues(sections: TranslationSectionConfig[]) {
 
   const hasDirtyFields = useMemo(() => hasDirtyBulkFields(sections, values), [sections, values]);
 
-  const getDirtyValues = useCallback(
-    (): BulkTranslationValue[] => getDirtyBulkSubmitValues(sections, values),
+  const isFieldPendingReset = useCallback(
+    (field: TranslationField) => isPendingBlankReset(field, values[field.name]),
+    [values],
+  );
+
+  /** Stored blanks that bulk save resets; they enable saving but are not unsaved edits. */
+  const hasBlankResets = useMemo(
+    () => hasBlankResetBulkValues(sections, values),
+    [sections, values],
+  );
+
+  const getBulkSaveValues = useCallback(
+    (): BulkTranslationValue[] => [
+      ...getDirtyBulkSubmitValues(sections, values),
+      ...getBlankResetBulkValues(sections, values),
+    ],
     [sections, values],
   );
 
   return {
     clearFieldValues,
-    getDirtyValues,
+    getBulkSaveValues,
     handleValueChange,
+    hasBlankResets,
     hasDirtyFields,
     isFieldDirty,
+    isFieldPendingReset,
     resetValues,
   };
 }

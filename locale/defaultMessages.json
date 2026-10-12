@@ -4840,6 +4840,10 @@
   "G/yZLu": {
     "string": "Remove"
   },
+  "G1Yclg": {
+    "context": "hint under a translation stored as an empty value, while editing it",
+    "string": "Saved as empty, so your storefront may show a blank. Saving resets it to the original."
+  },
   "G2WJ1J": {
     "context": "order header date, less than an hour ago",
     "string": "Placed {minutes, plural, one {# minute} other {# minutes}} ago"
@@ -9520,6 +9524,10 @@
   "XGY+yQ": {
     "context": "matrix column header",
     "string": "Auto-confirm"
+  },
+  "XI9F4/": {
+    "context": "hint under a translation stored as an empty value, outside edit mode",
+    "string": "Saved as empty, so your storefront may show a blank. Edit and save to show the original."
   },
   "XJSRDK": {
     "context": "payment status",
