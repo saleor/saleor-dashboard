@@ -7,6 +7,7 @@ import {
 
 import {
   getBlankResetBulkValues,
+  getBulkFieldState,
   getDirtyBulkSubmitValues,
   hasBlankResetBulkValues,
   hasDirtyBulkFields,
@@ -309,5 +310,45 @@ describe("isUnresettableBlankInput", () => {
     expect(isUnresettableBlankInput({ ...richField, translation: "" }, "")).toBe(false);
     expect(isUnresettableBlankInput({ ...variantName, translation: null }, "")).toBe(false);
     expect(isUnresettableBlankInput({ ...variantName, value: "" }, "")).toBe(false);
+  });
+});
+
+describe("getBulkFieldState", () => {
+  it("can save an edit and shows no hint for a translated field", () => {
+    // Arrange & Act & Assert
+    expect(getBulkFieldState(shortField, "Nowa nazwa")).toEqual({
+      canSave: true,
+      blankHint: undefined,
+    });
+    expect(getBulkFieldState(shortField, undefined)).toEqual({
+      canSave: false,
+      blankHint: undefined,
+    });
+  });
+
+  it("can save an unchanged resettable blank and explains the reset", () => {
+    // Arrange
+    const blankField: TranslationField = { ...shortField, nullable: true, translation: "" };
+
+    // Act & Assert
+    expect(getBulkFieldState(blankField, undefined)).toEqual({
+      canSave: true,
+      blankHint: "resettable",
+    });
+  });
+
+  it("warns about a blank that cannot be reset without enabling an empty save", () => {
+    // Arrange
+    const storedBlank: TranslationField = { ...shortField, translation: "" };
+
+    // Act & Assert
+    expect(getBulkFieldState(storedBlank, undefined)).toEqual({
+      canSave: false,
+      blankHint: "unresettable",
+    });
+    expect(getBulkFieldState(shortField, "")).toEqual({
+      canSave: true,
+      blankHint: "unresettable",
+    });
   });
 });

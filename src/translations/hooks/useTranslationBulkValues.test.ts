@@ -33,7 +33,10 @@ describe("useTranslationBulkValues", () => {
 
     // Assert
     expect(result.current.hasBlankResets).toBe(true);
-    expect(result.current.isFieldPendingReset(blankNameField)).toBe(true);
+    expect(result.current.getFieldState(blankNameField)).toEqual({
+      canSave: true,
+      blankHint: "resettable",
+    });
     expect(result.current.hasDirtyFields).toBe(false);
     expect(result.current.getBulkSaveValues()).toEqual([
       expect.objectContaining({ field: blankNameField, data: "" }),
@@ -86,8 +89,10 @@ describe("useTranslationBulkValues", () => {
     });
 
     // Assert
-    expect(result.current.isFieldUnresettableBlank(variantNameField)).toBe(true);
-    expect(result.current.isFieldPendingReset(variantNameField)).toBe(false);
+    expect(result.current.getFieldState(variantNameField)).toEqual({
+      canSave: true,
+      blankHint: "unresettable",
+    });
     expect(result.current.getBulkSaveValues()).toEqual([
       expect.objectContaining({ field: variantNameField, data: "" }),
     ]);

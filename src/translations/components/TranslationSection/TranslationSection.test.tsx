@@ -1,7 +1,4 @@
-import {
-  isPendingBlankReset,
-  isUnresettableBlankInput,
-} from "@dashboard/translations/bulkFieldDirty";
+import { getBulkFieldState } from "@dashboard/translations/bulkFieldDirty";
 import {
   type TranslationField,
   TranslationFieldType,
@@ -40,9 +37,7 @@ const renderEditingSection = (field: TranslationField) => {
         bulk={false}
         activeField={field.name}
         disabled={false}
-        isFieldDirty={() => false}
-        isFieldPendingReset={candidate => isPendingBlankReset(candidate, undefined)}
-        isFieldUnresettableBlank={candidate => isUnresettableBlankInput(candidate, undefined)}
+        getFieldState={candidate => getBulkFieldState(candidate, undefined)}
         saveButtonState="default"
         richTextResetKey="PL"
         onEdit={jest.fn()}

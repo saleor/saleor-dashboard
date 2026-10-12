@@ -4,6 +4,7 @@ import {
   isResettableBlankTranslation,
 } from "@dashboard/translations/progress";
 import {
+  type BlankTranslationHint,
   type BulkTranslationValue,
   type TranslationField,
   TranslationFieldType,
@@ -98,10 +99,8 @@ export const getDirtyBulkSubmitValues = (
   );
 
 /** A stored blank whose input still matches it, so saving resets it rather than keeping an edit. */
-export const isPendingBlankReset = (
-  field: TranslationField,
-  editedValue: string | undefined,
-): boolean => isResettableBlankTranslation(field) && !isBulkFieldDirty(field, editedValue);
+const isPendingBlankReset = (field: TranslationField, editedValue: string | undefined): boolean =>
+  isResettableBlankTranslation(field) && !isBulkFieldDirty(field, editedValue);
 
 /**
  * A text field the API can't reset to untranslated whose input is blank: the stored blank, or a
@@ -125,6 +124,26 @@ export const isUnresettableBlankInput = (
   }
 
   return isBlankTextTranslation(editedValue ?? field.translation);
+};
+
+export interface BulkFieldState {
+  /** Saving writes something: the user's edit, or a reset of a stored blank. */
+  canSave: boolean;
+  blankHint?: BlankTranslationHint;
+}
+
+export const getBulkFieldState = (
+  field: TranslationField,
+  editedValue: string | undefined,
+): BulkFieldState => {
+  if (isPendingBlankReset(field, editedValue)) {
+    return { canSave: true, blankHint: "resettable" };
+  }
+
+  return {
+    canSave: isBulkFieldDirty(field, editedValue),
+    blankHint: isUnresettableBlankInput(field, editedValue) ? "unresettable" : undefined,
+  };
 };
 
 export const hasBlankResetBulkValues = (

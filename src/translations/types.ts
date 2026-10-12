@@ -53,6 +53,9 @@ export interface TranslationField<T extends string = string> {
   ripple?: Ripple;
 }
 
+/** Why a blank field shows a hint: saving resets it, or the API can't reset it yet. */
+export type BlankTranslationHint = "resettable" | "unresettable";
+
 export const TranslationSubmitScope = {
   attribute: "attribute",
   attributeChoice: "attributeChoice",

@@ -1,8 +1,12 @@
-import { type TranslationField, TranslationFieldType } from "@dashboard/translations/types";
+import {
+  type BlankTranslationHint,
+  type TranslationField,
+  TranslationFieldType,
+} from "@dashboard/translations/types";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 
-import { type BlankTranslationHint, TranslationFieldRow } from "./TranslationFieldRow";
+import { TranslationFieldRow } from "./TranslationFieldRow";
 
 const blankNameField: TranslationField = {
   displayName: "Name",

@@ -2,6 +2,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type BulkFieldState } from "@dashboard/translations/bulkFieldDirty";
 import { getFieldsProgress, getProgressPercentage } from "@dashboard/translations/progress";
 import {
   type TranslationField,
@@ -12,10 +13,7 @@ import { type OutputData } from "@editorjs/editorjs";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import {
-  type BlankTranslationHint,
-  TranslationFieldRow,
-} from "../TranslationFieldRow/TranslationFieldRow";
+import { TranslationFieldRow } from "../TranslationFieldRow/TranslationFieldRow";
 import { TranslationGroupBox } from "../TranslationGroupBox/TranslationGroupBox";
 import { TranslationProgressBar } from "../TranslationProgressBar/TranslationProgressBar";
 import { TranslationProgressCompletePill } from "../TranslationProgressBar/TranslationProgressCompletePill";
@@ -31,11 +29,8 @@ interface TranslationSectionProps {
   bulk: boolean;
   activeField?: string | string[];
   disabled: boolean;
-  isFieldDirty: (field: TranslationField) => boolean;
-  /** A stored blank that saving resets; Save stays enabled and a hint explains it. */
-  isFieldPendingReset: (field: TranslationField) => boolean;
-  /** A blank (stored or cleared) that the API can't reset yet; a hint warns about it. */
-  isFieldUnresettableBlank: (field: TranslationField) => boolean;
+  /** Whether saving the field writes anything, and which blank-translation hint it shows. */
+  getFieldState: (field: TranslationField) => BulkFieldState;
   saveButtonState: ConfirmButtonTransitionState;
   richTextResetKey: string;
   initialExpanded?: boolean;
@@ -55,9 +50,7 @@ export const TranslationSection = ({
   bulk,
   activeField,
   disabled,
-  isFieldDirty,
-  isFieldPendingReset,
-  isFieldUnresettableBlank,
+  getFieldState,
   saveButtonState,
   richTextResetKey,
   initialExpanded = true,
@@ -70,18 +63,6 @@ export const TranslationSection = ({
   const progress = getFieldsProgress(section.fields);
   const progressPercentage = getProgressPercentage(progress);
   const isComplete = progressPercentage === 100;
-
-  const getBlankTranslationHint = (field: TranslationField): BlankTranslationHint | undefined => {
-    if (isFieldPendingReset(field)) {
-      return "resettable";
-    }
-
-    if (isFieldUnresettableBlank(field)) {
-      return "unresettable";
-    }
-
-    return undefined;
-  };
 
   const isFieldEditing = (fieldName: string) => {
     if (bulk) {
@@ -176,33 +157,32 @@ export const TranslationSection = ({
           </Text>
         </Box>
         <Box className={styles.fieldRows}>
-          {section.fields.map(field => (
-            <TranslationFieldRow
-              key={field.name}
-              field={field}
-              sourceLanguageCode={sourceLanguageCode}
-              sourceUsesOriginalLabel={sourceUsesOriginalLabel}
-              targetLanguageCode={targetLanguageCode}
-              isEditing={isFieldEditing(field.name)}
-              showPerFieldActions={!bulk}
-              hideFieldActions={bulk}
-              saveDisabled={
-                !bulk &&
-                isFieldEditing(field.name) &&
-                !isFieldDirty(field) &&
-                !isFieldPendingReset(field)
-              }
-              blankTranslationHint={getBlankTranslationHint(field)}
-              disabled={disabled}
-              saveButtonState={saveButtonState}
-              richTextResetKey={richTextResetKey}
-              onEdit={() => onEdit(field.name)}
-              onDiscard={() => onDiscard(field.name)}
-              onSubmit={data => onSubmit(field, data)}
-              onValueChange={onValueChange ? value => onValueChange(field, value) : undefined}
-              fieldError={fieldErrors[field.name]}
-            />
-          ))}
+          {section.fields.map(field => {
+            const { canSave, blankHint } = getFieldState(field);
+
+            return (
+              <TranslationFieldRow
+                key={field.name}
+                field={field}
+                sourceLanguageCode={sourceLanguageCode}
+                sourceUsesOriginalLabel={sourceUsesOriginalLabel}
+                targetLanguageCode={targetLanguageCode}
+                isEditing={isFieldEditing(field.name)}
+                showPerFieldActions={!bulk}
+                hideFieldActions={bulk}
+                saveDisabled={!bulk && isFieldEditing(field.name) && !canSave}
+                blankTranslationHint={blankHint}
+                disabled={disabled}
+                saveButtonState={saveButtonState}
+                richTextResetKey={richTextResetKey}
+                onEdit={() => onEdit(field.name)}
+                onDiscard={() => onDiscard(field.name)}
+                onSubmit={data => onSubmit(field, data)}
+                onValueChange={onValueChange ? value => onValueChange(field, value) : undefined}
+                fieldError={fieldErrors[field.name]}
+              />
+            );
+          })}
         </Box>
         {section.pagination && (
           <Box

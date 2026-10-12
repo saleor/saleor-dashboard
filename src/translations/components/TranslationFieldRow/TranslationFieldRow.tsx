@@ -3,7 +3,11 @@ import { Pill } from "@dashboard/components/Pill/Pill";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { isFieldTranslationComplete } from "@dashboard/translations/progress";
-import { type TranslationField, TranslationFieldType } from "@dashboard/translations/types";
+import {
+  type BlankTranslationHint,
+  type TranslationField,
+  TranslationFieldType,
+} from "@dashboard/translations/types";
 import { type OutputData } from "@editorjs/editorjs";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
@@ -13,8 +17,6 @@ import TranslationFieldsRich from "../TranslationFields/TranslationFieldsRich";
 import TranslationFieldsShort from "../TranslationFields/TranslationFieldsShort";
 import { translationDetailMessages } from "../TranslationsDetailLayout/messages";
 import styles from "./TranslationFieldRow.module.css";
-
-export type BlankTranslationHint = "resettable" | "unresettable";
 
 const blankTranslationHintMessages = {
   resettable: {
