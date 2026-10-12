@@ -13,7 +13,7 @@ import {
 import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { Button, Checkbox, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Checkbox, Skeleton, vars } from "@saleor/macaw-ui-next";
 import { type CSSProperties, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -29,7 +29,6 @@ import {
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
 import { returnItemsCardMessages } from "./messages";
 import ProductErrorCell from "./ProductErrorCell";
-import styles from "./ReturnItemsCard.module.css";
 
 const useStyles = makeStyles(
   theme => {
@@ -179,9 +178,8 @@ const ItemsCard = ({
               return (
                 <TableRowLink key={id}>
                   <TableCellAvatar
-                    className={styles.productCell}
                     thumbnail={thumbnail?.url}
-                    style={{ width: productNameCellWidth }}
+                    style={{ width: productNameCellWidth, paddingLeft: vars.spacing[8] }}
                   >
                     {productName || <Skeleton />}
                   </TableCellAvatar>
