@@ -130,9 +130,11 @@ const DiscountListPage = ({
       <DashboardCard>
         <LegacyFiltersPresetsAlert />
         <Box display="flex" flexDirection="column" gap={3} paddingBottom={2} paddingX={6}>
-          <Box display="flex" alignItems="center" gap={4}>
-            <ExpressionFilters />
-            <Box __width="320px">
+          <Box display="flex" alignItems="center" flexWrap="wrap" gap={4}>
+            <Box flexShrink="0">
+              <ExpressionFilters />
+            </Box>
+            <Box flexGrow="1">
               <SearchInput
                 initialSearch={initialSearch}
                 placeholder={intl.formatMessage({
