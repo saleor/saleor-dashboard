@@ -28677,6 +28677,12 @@ export type OptionalProductWhereInput = {
   category?: Maybe<OptionalGlobalIdFilterInput> | undefined;
   /** Filter by collection. */
   collection?: Maybe<OptionalGlobalIdFilterInput> | undefined;
+  /**
+ * Filter by external reference.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Maybe<OptionalStringFilterInput> | undefined;
   /** Filter on whether product is a gift card or not. */
   giftCard?: ProductWhereInput['giftCard'] | undefined;
   /** Filter by product with category assigned. */
@@ -30584,7 +30590,7 @@ export type OptionalQuery = {
  */
   user?: Maybe<OptionalUser> | undefined;
   /**
- * Look up a voucher by ID.
+ * Look up a voucher by ID or external reference.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  */
@@ -37377,6 +37383,12 @@ export type OptionalVoucher = {
   discountValueType?: Voucher['discountValueType'] | undefined;
   /** The end date and time of voucher. */
   endDate?: Voucher['endDate'] | undefined;
+  /**
+ * External ID of this voucher.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Voucher['externalReference'] | undefined;
   /** The ID of the voucher. */
   id?: Voucher['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
@@ -38003,6 +38015,12 @@ export type OptionalVoucherInput = {
   discountValueType?: VoucherInput['discountValueType'] | undefined;
   /** End date of the voucher in ISO 8601 format. */
   endDate?: VoucherInput['endDate'] | undefined;
+  /**
+ * External ID of this voucher.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: VoucherInput['externalReference'] | undefined;
   /** Minimal quantity of checkout items required to apply the voucher. */
   minCheckoutItemsQuantity?: VoucherInput['minCheckoutItemsQuantity'] | undefined;
   /** Voucher name. */
