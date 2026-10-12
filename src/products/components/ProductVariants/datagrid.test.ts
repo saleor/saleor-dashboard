@@ -9,13 +9,14 @@ describe("isVariantDatagridSupportedAttribute", () => {
       AttributeInputTypeEnum.DROPDOWN,
       AttributeInputTypeEnum.PLAIN_TEXT,
       AttributeInputTypeEnum.SWATCH,
+      AttributeInputTypeEnum.NUMERIC,
     ];
 
     // Act
     const result = supportedInputTypes.map(isVariantDatagridSupportedAttribute);
 
     // Assert
-    expect(result).toEqual([true, true, true]);
+    expect(result).toEqual([true, true, true, true]);
   });
 
   it("should return false for attributes unsupported by variants datagrid", () => {
