@@ -9149,6 +9149,12 @@ export type VoucherInput = {
   discountValueType?: InputMaybe<DiscountValueTypeEnum>;
   /** End date of the voucher in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this voucher.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Minimal quantity of checkout items required to apply the voucher. */
   minCheckoutItemsQuantity?: InputMaybe<Scalars['Int']['input']>;
   /** Voucher name. */

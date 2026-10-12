@@ -17419,7 +17419,8 @@ export type MutationVoucherCreateArgs = {
 
 
 export type MutationVoucherDeleteArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -17431,7 +17432,8 @@ export type MutationVoucherTranslateArgs = {
 
 
 export type MutationVoucherUpdateArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
   input: VoucherInput;
 };
 
@@ -25171,6 +25173,12 @@ export type ProductWhereInput = {
   category: InputMaybe<GlobalIdFilterInput>;
   /** Filter by collection. */
   collection: InputMaybe<GlobalIdFilterInput>;
+  /**
+   * Filter by external reference.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<StringFilterInput>;
   /** Filter on whether product is a gift card or not. */
   giftCard: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by product with category assigned. */
@@ -26689,7 +26697,7 @@ export type Query = {
    */
   user: Maybe<User>;
   /**
-   * Look up a voucher by ID.
+   * Look up a voucher by ID or external reference.
    *
    * Requires one of the following permissions: MANAGE_DISCOUNTS.
    */
@@ -27316,7 +27324,8 @@ export type QueryUserArgs = {
 
 export type QueryVoucherArgs = {
   channel: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -32684,6 +32693,12 @@ export type Voucher = Node & ObjectWithMetadata & {
   discountValueType: DiscountValueTypeEnum;
   /** The end date and time of voucher. */
   endDate: Maybe<Scalars['DateTime']['output']>;
+  /**
+   * External ID of this voucher.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: Maybe<Scalars['String']['output']>;
   /** The ID of the voucher. */
   id: Scalars['ID']['output'];
   /** List of public metadata items. Can be accessed without permissions. */
@@ -33172,6 +33187,12 @@ export type VoucherInput = {
   discountValueType: InputMaybe<DiscountValueTypeEnum>;
   /** End date of the voucher in ISO 8601 format. */
   endDate: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this voucher.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
   /** Minimal quantity of checkout items required to apply the voucher. */
   minCheckoutItemsQuantity: InputMaybe<Scalars['Int']['input']>;
   /** Voucher name. */
