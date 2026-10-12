@@ -2,7 +2,11 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import { getFieldsProgress, getProgressPercentage } from "@dashboard/translations/progress";
+import {
+  getFieldsProgress,
+  getProgressPercentage,
+  isResettableBlankTranslation,
+} from "@dashboard/translations/progress";
 import {
   type TranslationField,
   TranslationFieldType,
@@ -165,7 +169,12 @@ export const TranslationSection = ({
               isEditing={isFieldEditing(field.name)}
               showPerFieldActions={!bulk}
               hideFieldActions={bulk}
-              saveDisabled={!bulk && isFieldEditing(field.name) && !isFieldDirty(field)}
+              saveDisabled={
+                !bulk &&
+                isFieldEditing(field.name) &&
+                !isFieldDirty(field) &&
+                !isResettableBlankTranslation(field)
+              }
               disabled={disabled}
               saveButtonState={saveButtonState}
               richTextResetKey={richTextResetKey}
