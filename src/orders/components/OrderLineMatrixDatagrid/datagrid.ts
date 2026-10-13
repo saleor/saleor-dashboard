@@ -129,12 +129,12 @@ export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableC
   {
     id: "price",
     title: intl.formatMessage(messages.price),
-    width: 130,
+    width: 160,
   },
   {
     id: "total",
     title: intl.formatMessage(messages.total),
-    width: 130,
+    width: 160,
   },
   {
     id: "replaced",
