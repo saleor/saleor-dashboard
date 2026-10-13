@@ -18,6 +18,9 @@ minimumReleaseAgeExclude:
 trustPolicy: no-downgrade
 
 trustPolicyExclude:
+  # Release candidate published manually by a maintainer (not via the GitHub Actions
+  # OIDC release), so it has no provenance attestation. Remove once 3.0.0 ships via CI.
+  - "@saleor/macaw-ui@3.0.0-rc.2"
   # Semver packages are not signed before 7.x. Check pnpm-lock which package is still using 6.x and plan upgrade entire tree.
   - "semver@6.3.1"
   # @graphql-codegen/cli@5 pins several @graphql-tools/* packages to old major
