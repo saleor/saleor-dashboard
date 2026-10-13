@@ -261,6 +261,7 @@ export const createGetCellContent =
               currency: line.unitPrice.gross.currency,
               undiscounted: line.undiscountedUnitPrice.gross.amount,
               locale,
+              hasBreakdown: interactivePricing,
             },
             discountedOpts,
           );
@@ -279,6 +280,7 @@ export const createGetCellContent =
               currency: line.totalPrice.gross.currency,
               undiscounted: line.undiscountedTotalPrice.gross.amount,
               locale,
+              hasBreakdown: interactivePricing,
             },
             discountedOpts,
           );

@@ -208,8 +208,8 @@ export const createGetCellContent =
       }
 
       case "total": {
-        const totalOpts =
-          interactivePricing && isLineExplainable(rowData) ? pointerOptions : readonlyOptions;
+        const showBreakdown = interactivePricing && isLineExplainable(rowData);
+        const totalOpts = showBreakdown ? pointerOptions : readonlyOptions;
 
         if (isLineDiscounted(rowData)) {
           return moneyDiscountedCell(
@@ -218,6 +218,7 @@ export const createGetCellContent =
               currency: rowData.totalPrice.gross.currency,
               undiscounted: rowData.undiscountedTotalPrice.gross.amount,
               locale,
+              hasBreakdown: showBreakdown,
             },
             totalOpts,
           );
@@ -227,6 +228,9 @@ export const createGetCellContent =
           rowData.totalPrice.gross.amount,
           rowData.totalPrice.gross.currency,
           totalOpts,
+          {
+            hasBreakdown: showBreakdown,
+          },
         );
       }
       case "isGift":
