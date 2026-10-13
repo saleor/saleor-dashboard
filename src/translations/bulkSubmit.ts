@@ -1,8 +1,6 @@
 import {
   type BulkTranslationValue,
-  type PageTranslationInputFieldName,
   type TranslationField,
-  type TranslationInputFieldName,
   TranslationSubmitScope,
 } from "@dashboard/translations/types";
 import { getParsedTranslationInputData } from "@dashboard/translations/utils";
@@ -16,8 +14,6 @@ import {
   mapScopedMutationErrors,
   type TranslationMutationError,
 } from "./bulkSubmitResult";
-
-type EntityFieldName = TranslationInputFieldName | PageTranslationInputFieldName;
 
 const DEFAULT_ERROR_MESSAGE = "Translation could not be saved";
 
@@ -40,10 +36,7 @@ export async function submitBulkEntityTranslations({
 
   const input = entityValues.reduce<Record<string, string | null>>(
     (accumulator, { field, data }) => {
-      const parsed = getParsedTranslationInputData({
-        data,
-        fieldName: field.name as EntityFieldName,
-      });
+      const parsed = getParsedTranslationInputData({ data, field });
 
       return {
         ...accumulator,
