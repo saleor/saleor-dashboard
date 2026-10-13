@@ -23421,10 +23421,12 @@ export const UpdateAttributeValueTranslationsDocument = gql`
     attributeValue {
       id
       name
+      plainText
       richText
       translation(languageCode: $language) {
         id
         name
+        plainText
         richText
       }
     }

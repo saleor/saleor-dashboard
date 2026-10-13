@@ -41,11 +41,20 @@ export interface TranslationField<T extends string = string> {
   translation: string | null;
   /** Optional draft shown in edit inputs; persisted baseline remains in `translation`. */
   editInitial?: string | null;
+  /**
+   * The API accepts `null` here: clearing a text field resets it to untranslated instead of saving
+   * `""`, and a stored blank can be reset. Rich text always clears to `null` (every rich column
+   * allows it). The translation row itself stays; only this field's value is cleared.
+   */
+  nullable?: boolean;
   type: TranslationFieldType;
   value: string;
   hint?: string;
   ripple?: Ripple;
 }
+
+/** Why a blank field shows a hint: saving resets it, or the API can't reset it yet. */
+export type BlankTranslationHint = "resettable" | "unresettable";
 
 export const TranslationSubmitScope = {
   attribute: "attribute",

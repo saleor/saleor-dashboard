@@ -2,6 +2,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type BulkFieldState } from "@dashboard/translations/bulkFieldDirty";
 import { getFieldsProgress, getProgressPercentage } from "@dashboard/translations/progress";
 import {
   type TranslationField,
@@ -28,7 +29,8 @@ interface TranslationSectionProps {
   bulk: boolean;
   activeField?: string | string[];
   disabled: boolean;
-  isFieldDirty: (field: TranslationField) => boolean;
+  /** Whether saving the field writes anything, and which blank-translation hint it shows. */
+  getFieldState: (field: TranslationField) => BulkFieldState;
   saveButtonState: ConfirmButtonTransitionState;
   richTextResetKey: string;
   initialExpanded?: boolean;
@@ -48,7 +50,7 @@ export const TranslationSection = ({
   bulk,
   activeField,
   disabled,
-  isFieldDirty,
+  getFieldState,
   saveButtonState,
   richTextResetKey,
   initialExpanded = true,
@@ -155,27 +157,32 @@ export const TranslationSection = ({
           </Text>
         </Box>
         <Box className={styles.fieldRows}>
-          {section.fields.map(field => (
-            <TranslationFieldRow
-              key={field.name}
-              field={field}
-              sourceLanguageCode={sourceLanguageCode}
-              sourceUsesOriginalLabel={sourceUsesOriginalLabel}
-              targetLanguageCode={targetLanguageCode}
-              isEditing={isFieldEditing(field.name)}
-              showPerFieldActions={!bulk}
-              hideFieldActions={bulk}
-              saveDisabled={!bulk && isFieldEditing(field.name) && !isFieldDirty(field)}
-              disabled={disabled}
-              saveButtonState={saveButtonState}
-              richTextResetKey={richTextResetKey}
-              onEdit={() => onEdit(field.name)}
-              onDiscard={() => onDiscard(field.name)}
-              onSubmit={data => onSubmit(field, data)}
-              onValueChange={onValueChange ? value => onValueChange(field, value) : undefined}
-              fieldError={fieldErrors[field.name]}
-            />
-          ))}
+          {section.fields.map(field => {
+            const { canSave, blankHint } = getFieldState(field);
+
+            return (
+              <TranslationFieldRow
+                key={field.name}
+                field={field}
+                sourceLanguageCode={sourceLanguageCode}
+                sourceUsesOriginalLabel={sourceUsesOriginalLabel}
+                targetLanguageCode={targetLanguageCode}
+                isEditing={isFieldEditing(field.name)}
+                showPerFieldActions={!bulk}
+                hideFieldActions={bulk}
+                saveDisabled={!bulk && isFieldEditing(field.name) && !canSave}
+                blankTranslationHint={blankHint}
+                disabled={disabled}
+                saveButtonState={saveButtonState}
+                richTextResetKey={richTextResetKey}
+                onEdit={() => onEdit(field.name)}
+                onDiscard={() => onDiscard(field.name)}
+                onSubmit={data => onSubmit(field, data)}
+                onValueChange={onValueChange ? value => onValueChange(field, value) : undefined}
+                fieldError={fieldErrors[field.name]}
+              />
+            );
+          })}
         </Box>
         {section.pagination && (
           <Box

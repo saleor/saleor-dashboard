@@ -52,6 +52,7 @@ export function createGeneralNameDescriptionSection(
         displayName: options?.nameLabel ?? intl.formatMessage(commonMessages.name),
         hint: intl.formatMessage(translationDetailMessages.nameFieldHint),
         name: TranslationInputFieldName.name,
+        nullable: true,
         translation: data.translationName ?? null,
         type: TranslationFieldType.SHORT,
         value: data.name ?? "",
@@ -60,6 +61,7 @@ export function createGeneralNameDescriptionSection(
         displayName: options?.descriptionLabel ?? intl.formatMessage(commonMessages.description),
         hint: intl.formatMessage(translationDetailMessages.descriptionFieldHint),
         name: TranslationInputFieldName.description,
+        nullable: true,
         translation: data.translationDescription ?? null,
         type: TranslationFieldType.RICH,
         value: data.description ?? "",
@@ -88,6 +90,7 @@ export function createSeoTranslationSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.seoSlugFieldHint),
         name: TranslationInputFieldName.slug,
+        nullable: true,
         ripple: rippleSlugTranslation,
         translation: data.translationSlug ?? null,
         type: TranslationFieldType.SHORT,
@@ -100,6 +103,7 @@ export function createSeoTranslationSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.seoTitleFieldHint),
         name: TranslationInputFieldName.seoTitle,
+        nullable: true,
         translation: data.translationSeoTitle ?? null,
         type: TranslationFieldType.SHORT,
         value: data.seoTitle ?? "",
@@ -111,6 +115,7 @@ export function createSeoTranslationSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.seoDescriptionFieldHint),
         name: TranslationInputFieldName.seoDescription,
+        nullable: true,
         translation: data.translationSeoDescription ?? null,
         type: TranslationFieldType.LONG,
         value: data.seoDescription ?? "",
@@ -142,6 +147,7 @@ export function createPageGeneralSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.pageTitleFieldHint),
         name: PageTranslationInputFieldName.title,
+        nullable: true,
         translation: data.translationTitle ?? null,
         type: TranslationFieldType.SHORT,
         value: data.title ?? "",
@@ -154,6 +160,7 @@ export function createPageGeneralSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.pageContentFieldHint),
         name: PageTranslationInputFieldName.content,
+        nullable: true,
         translation: data.translationContent ?? null,
         type: TranslationFieldType.RICH,
         value: data.content ?? "",
@@ -170,6 +177,7 @@ export function createSingleNameSection(
   },
   options: {
     nameLabel: string;
+    nullableName?: boolean;
   },
 ): TranslationSectionConfig {
   return {
@@ -182,6 +190,7 @@ export function createSingleNameSection(
         displayName: options.nameLabel,
         hint: intl.formatMessage(translationDetailMessages.nameFieldHint),
         name: TranslationInputFieldName.name,
+        nullable: options.nullableName,
         translation: data.translationName ?? null,
         type: TranslationFieldType.SHORT,
         value: data.name ?? "",
