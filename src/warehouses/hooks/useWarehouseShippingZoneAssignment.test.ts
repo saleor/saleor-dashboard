@@ -1,8 +1,4 @@
-import {
-  shippingZonesAssignPageSize,
-  uniqueById,
-  zonesAvailableToAssign,
-} from "./useWarehouseShippingZoneAssignment";
+import { shippingZonesAssignPageSize, uniqueById } from "./useWarehouseShippingZoneAssignment";
 
 interface ZoneRow {
   id: string;
@@ -64,21 +60,5 @@ describe("uniqueById", () => {
       { cursor: "a", node: { id: "zone-eu", name: "Europe" } },
       { cursor: "c", node: { id: "zone-oc", name: "Oceania" } },
     ]);
-  });
-});
-
-describe("zonesAvailableToAssign", () => {
-  it("drops zones this location is already in", () => {
-    // Arrange
-    const zones: ZoneRow[] = [
-      { id: "zone-1", name: "Brazil" },
-      { id: "zone-2", name: "Europe" },
-    ];
-
-    // Act
-    const available = zonesAvailableToAssign(zones, ["zone-1"]);
-
-    // Assert
-    expect(available).toEqual([{ id: "zone-2", name: "Europe" }]);
   });
 });

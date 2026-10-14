@@ -42,15 +42,6 @@ export const uniqueById = <TItem,>(items: TItem[], getId: (item: TItem) => strin
 export const shippingZonesAssignPageSize = (channelCount: number): number =>
   Math.min(MAX_PAGE_SIZE, PAGE_SIZE * Math.max(channelCount, 1));
 
-export const zonesAvailableToAssign = <TZone extends { id: string }>(
-  zones: TZone[],
-  assignedIds: string[],
-): TZone[] => {
-  const assigned = new Set(assignedIds);
-
-  return zones.filter(zone => !assigned.has(zone.id));
-};
-
 /** Links this location to shipping zones through shippingZoneUpdate. */
 export const useWarehouseShippingZoneAssignment = ({
   warehouseId,
@@ -151,6 +142,7 @@ export const useWarehouseShippingZoneAssignment = ({
     return changed;
   };
 
+  const assignedIds = new Set(assignedZoneIds);
   // Same id can appear once per filtered channel — collapse before the dialog.
   const loaded = uniqueById(
     zonesQuery.data?.shippingZones?.edges.map(edge => edge.node) ?? [],
@@ -189,7 +181,7 @@ export const useWarehouseShippingZoneAssignment = ({
           open={open}
           confirmButtonState={busy ? "loading" : "default"}
           shippingZones={loaded}
-          excludeContainer={zone => zonesAvailableToAssign([zone], assignedZoneIds).length === 0}
+          excludeContainer={zone => assignedIds.has(zone.id)}
           loading={zonesQuery.loading}
           hasMore={zonesQuery.data?.shippingZones?.pageInfo.hasNextPage ?? false}
           onFetchMore={() => {
