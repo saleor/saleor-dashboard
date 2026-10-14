@@ -35,6 +35,7 @@
     "e2e:legacy:clean-auth": "rm -rf ./e2e-legacy/.auth",
     "e2e:legacy:ui": "pnpm run e2e:legacy:clean-auth && pnpm exec playwright test --config e2e-legacy/playwright.config.ts --ui",
     "e2e:main": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON e2e/run.ts --target=main",
+    "evaluate:compiler-lint": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/evaluate-compiler-lint.ts",
     "extract-messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --out-file locale/defaultMessages.json --format scripts/formatter.cjs",
     "fetch-local-schema": "node scripts/fetch-local-schema.cjs",
     "fetch-schema": "pnpm run fetch-schema:main && pnpm run fetch-schema:staging",
