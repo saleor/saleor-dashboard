@@ -1,5 +1,5 @@
 /** How many names a sentence lists before the rest collapse into a count. */
-export const CAPPED_LIST_LIMIT = 5;
+const CAPPED_LIST_LIMIT = 5;
 
 /**
  * Names for a sentence like "A, B, C, D, E, and 12 other zones". Long lists of names in one
