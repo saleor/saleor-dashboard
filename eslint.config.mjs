@@ -34,16 +34,6 @@ export default tseslint.config(
   ]),
   eslint.configs.recommended,
   tseslint.configs.recommended,
-  {
-    languageOptions: {
-      parserOptions: {
-        projectService: {
-          allowDefaultProject: [".storybook/*.tsx", ".storybook/*.ts"],
-        },
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
   reactHooks.configs.flat["recommended-latest"],
@@ -305,7 +295,7 @@ export default tseslint.config(
         },
       ],
     },
-  }, // Type-checked rules (only for TypeScript files, not .graphql virtual files)
+  }, // TypeScript-only rules (not .graphql virtual files)
   {
     files: ["**/*.ts", "**/*.tsx"],
     rules: {
@@ -318,10 +308,6 @@ export default tseslint.config(
         },
       ],
     },
-  }, // Disable type-checked linting for non-TypeScript files (no type information available)
-  {
-    files: ["**/*.js", "**/*.mjs", "**/*.cjs"],
-    ...tseslint.configs.disableTypeChecked,
   }, // Graphql plugin
   {
     /**
