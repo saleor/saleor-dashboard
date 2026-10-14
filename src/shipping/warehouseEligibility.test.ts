@@ -3,6 +3,7 @@ import {
   splitWarehousesByLatestCheck,
   splitWarehousesByZoneChannels,
   type WarehouseChoice,
+  warehousesKeptByForm,
   warehousesUnlinkedByZoneChannelChange,
 } from "./warehouseEligibility";
 
@@ -212,5 +213,19 @@ describe("splitWarehousesByLatestCheck", () => {
     // Assert
     expect(split.eligible).toEqual([warsaw, berlin]);
     expect(split.ineligible).toEqual([]);
+  });
+});
+
+describe("warehousesKeptByForm", () => {
+  it("checks only saved warehouses the form still selects", () => {
+    // Arrange
+    const saved: WarehouseChoice[] = [warsaw, berlin];
+    const selectedIds: string[] = ["w-berlin", "w-new"];
+
+    // Act
+    const kept = warehousesKeptByForm({ saved, selectedIds });
+
+    // Assert
+    expect(kept).toEqual([berlin]);
   });
 });

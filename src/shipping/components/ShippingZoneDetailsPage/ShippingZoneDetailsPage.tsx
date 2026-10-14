@@ -31,6 +31,7 @@ import {
   warehousesUnlinkedByRemovingZoneChannels,
 } from "@dashboard/shipping/hooks/useZoneWarehouseEligibility";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
+import { warehousesKeptByForm } from "@dashboard/shipping/warehouseEligibility";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
@@ -157,15 +158,16 @@ export const ShippingZoneDetailsPage = ({
       channelId => !channelIds.includes(channelId),
     );
 
-    // Saleor drops the link in either stock mode, so warn in both.
+    // Saleor drops the link in either stock mode, so warn in both. Only links the form keeps can
+    // be dropped silently: removed ones are meant to go, and new ones are rejected with an error.
     if (removedChannel && shippingZone) {
       try {
         const unlinked = await warehousesUnlinkedByRemovingZoneChannels({
           client,
-          linked: shippingZone.warehouses.map(warehouse => ({
-            id: warehouse.id,
-            name: warehouse.name,
-          })),
+          linked: warehousesKeptByForm({
+            saved: shippingZone.warehouses,
+            selectedIds: data.warehouses.map(warehouse => warehouse.value),
+          }),
           remainingChannelIds: channelIds,
         });
 

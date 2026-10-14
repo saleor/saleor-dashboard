@@ -119,3 +119,18 @@ export const warehousesUnlinkedByZoneChannelChange = ({
 
   return linked.filter(warehouse => !stillSharingIds.has(warehouse.id));
 };
+
+/** Saved zone warehouses the form still has selected, so this save keeps their link. */
+export const warehousesKeptByForm = ({
+  saved,
+  selectedIds,
+}: {
+  saved: WarehouseChoice[];
+  selectedIds: string[];
+}): WarehouseChoice[] => {
+  const selected = new Set(selectedIds);
+
+  return saved
+    .filter(warehouse => selected.has(warehouse.id))
+    .map(warehouse => ({ id: warehouse.id, name: warehouse.name }));
+};
