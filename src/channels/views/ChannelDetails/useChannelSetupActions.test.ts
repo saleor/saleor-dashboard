@@ -88,15 +88,21 @@ const assigned: FetchResult<ChannelUpdateMutation> = {
   },
 };
 
-const renderActions = (): RenderHookResult<ReturnType<typeof useChannelSetupActions>, unknown> =>
-  renderHook(() =>
-    useChannelSetupActions({
-      channelId: "channel-1",
-      warehouseIds: [],
-      onWarehouseCreated: jest.fn(),
-      onShippingCreated: jest.fn(),
-      onAssigned: jest.fn(),
-    }),
+type ActionsProps = { createWarehouseOpen: boolean };
+type Actions = ReturnType<typeof useChannelSetupActions>;
+
+const renderActions = (): RenderHookResult<Actions, ActionsProps> =>
+  renderHook<Actions, ActionsProps>(
+    ({ createWarehouseOpen }) =>
+      useChannelSetupActions({
+        channelId: "channel-1",
+        createWarehouseOpen,
+        warehouseIds: [],
+        onWarehouseCreated: jest.fn(),
+        onShippingCreated: jest.fn(),
+        onAssigned: jest.fn(),
+      }),
+    { initialProps: { createWarehouseOpen: true } },
   );
 
 describe("useChannelSetupActions handleCreateWarehouse", () => {
@@ -154,5 +160,26 @@ describe("useChannelSetupActions handleCreateWarehouse", () => {
     expect(mockCreateWarehouse).toHaveBeenCalledTimes(1);
     expect(mockUpdateWarehouse).not.toHaveBeenCalled();
     expect(mockUpdateChannel).toHaveBeenCalledTimes(2);
+  });
+
+  it("creates a new warehouse after the dialog is reopened", async () => {
+    // Arrange
+    mockCreateWarehouse.mockResolvedValue(created);
+    mockUpdateChannel.mockResolvedValueOnce(assignFailed).mockResolvedValueOnce(assigned);
+
+    const { result, rerender } = renderActions();
+
+    await act(async () => {
+      await result.current.handleCreateWarehouse(formData);
+    });
+    rerender({ createWarehouseOpen: false });
+    rerender({ createWarehouseOpen: true });
+
+    // Act
+    await act(async () => result.current.handleCreateWarehouse({ ...formData, name: "Paris" }));
+
+    // Assert
+    expect(mockCreateWarehouse).toHaveBeenCalledTimes(2);
+    expect(mockUpdateWarehouse).not.toHaveBeenCalled();
   });
 });

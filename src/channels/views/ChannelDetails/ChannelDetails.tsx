@@ -487,13 +487,13 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   });
 
   const {
-    resetPendingWarehouse,
     handleCreateWarehouse,
     handleCreateShipping,
     createWarehouseConfirmState,
     createShippingConfirmState,
   } = useChannelSetupActions({
     channelId: id,
+    createWarehouseOpen: params.action === "create-warehouse",
     warehouseIds: channelWarehouses.map(warehouse => warehouse.id),
     onWarehouseCreated: closeModal,
     onShippingCreated: closeModal,
@@ -717,10 +717,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         <>
           <CreateWarehouseForChannelDialog
             open={params.action === "create-warehouse"}
-            onClose={() => {
-              resetPendingWarehouse();
-              closeModal();
-            }}
+            onClose={closeModal}
             channelName={data.channel.name}
             countries={shop?.countries || []}
             defaultCountryCode={data.channel.defaultCountry.code}

@@ -14,6 +14,7 @@ import {
   WarehouseErrorCode,
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
@@ -43,6 +44,8 @@ const warehouseInputFromForm = (
 
 interface UseChannelSetupActionsArgs {
   channelId: string;
+  /** The create-warehouse dialog starts with an empty form, so it also starts a new warehouse. */
+  createWarehouseOpen: boolean;
   warehouseIds: string[];
   onWarehouseCreated: () => void;
   onShippingCreated: () => void;
@@ -51,6 +54,7 @@ interface UseChannelSetupActionsArgs {
 
 export const useChannelSetupActions = ({
   channelId,
+  createWarehouseOpen,
   warehouseIds,
   onWarehouseCreated,
   onShippingCreated,
@@ -69,6 +73,14 @@ export const useChannelSetupActions = ({
   const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation();
   /** Created but not yet assigned, with the input it was last saved with. */
   const pendingWarehouse = useRef<{ id: string; input: WarehouseInputFromForm } | null>(null);
+
+  // Any way of reopening (close button, browser Back, a link) must not reuse an earlier warehouse.
+  useModalDialogOpen(createWarehouseOpen, {
+    onOpen: () => {
+      pendingWarehouse.current = null;
+    },
+  });
+
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation();
   const [createShippingZone, createShippingZoneOpts] = useCreateShippingZoneMutation();
   const [createShippingRate, createShippingRateOpts] = useCreateShippingRateMutation();
@@ -374,9 +386,6 @@ export const useChannelSetupActions = ({
     updateShippingMethodListingOpts.loading;
 
   return {
-    resetPendingWarehouse: (): void => {
-      pendingWarehouse.current = null;
-    },
     handleCreateWarehouse,
     handleCreateShipping,
     handleAssignWarehouse,
