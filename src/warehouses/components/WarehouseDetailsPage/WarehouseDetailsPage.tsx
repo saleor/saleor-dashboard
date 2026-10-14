@@ -47,8 +47,6 @@ import { type WarehouseDetailsPageFormData } from "./types";
 import { WarehouseDetailsPageLoading } from "./WarehouseDetailsPageLoading";
 import { WarehouseSaveCompositionHint } from "./WarehouseSaveCompositionHint";
 
-export type { WarehouseDetailsPageFormData } from "./types";
-
 interface WarehouseDetailsPageProps {
   countries: CountryWithCodeFragment[];
   disabled: boolean;

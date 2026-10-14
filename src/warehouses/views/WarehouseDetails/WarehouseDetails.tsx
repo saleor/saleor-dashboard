@@ -13,10 +13,8 @@ import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors, getMutationStatus, getStringOrPlaceholder } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
-import {
-  WarehouseDetailsPage,
-  type WarehouseDetailsPageFormData,
-} from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPage";
+import { type WarehouseDetailsPageFormData } from "@dashboard/warehouses/components/WarehouseDetailsPage/types";
+import { WarehouseDetailsPage } from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPage";
 import { WarehouseDetailsPageLoading } from "@dashboard/warehouses/components/WarehouseDetailsPage/WarehouseDetailsPageLoading";
 import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
 import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
