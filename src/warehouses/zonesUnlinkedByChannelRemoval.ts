@@ -50,31 +50,25 @@ export const zonesUnlinkedByRemovingWarehouseChannel = ({
 };
 
 /**
- * What to tell the user before removing a warehouse channel, or null to remove at once.
- * Zones past a truncated list may depend on the channel alone, so those always confirm.
+ * Zone names to confirm before removing a warehouse channel, or null to remove at once.
+ * Pass every linked zone (as `checkChannelRemoval` does), not only a loaded page.
  */
 export const channelRemovalConfirmation = ({
   removedChannelId,
   remainingChannelIds,
   zones,
-  zonesTruncated,
 }: {
   removedChannelId: string;
   remainingChannelIds: string[];
   zones: ZoneChannelMembership[];
-  zonesTruncated: boolean;
-}): { zoneNames: string[]; truncated: boolean } | null => {
+}): { zoneNames: string[] } | null => {
   const unlinked = zonesUnlinkedByRemovingWarehouseChannel({
     removedChannelId,
     remainingChannelIds,
     zones,
   });
 
-  if (unlinked.length === 0 && !zonesTruncated) {
-    return null;
-  }
-
-  return { zoneNames: unlinked.map(zone => zone.name), truncated: zonesTruncated };
+  return unlinked.length > 0 ? { zoneNames: unlinked.map(zone => zone.name) } : null;
 };
 
 type WarehouseZonesGuidance =

@@ -1849,10 +1849,6 @@
     "context": "error message",
     "string": "Value is invalid"
   },
-  "57sj4E": {
-    "context": "warehouse channel remove confirmation when zones would unlink",
-    "string": "{zones} will also be unlinked from this warehouse, because they share no other channel."
-  },
   "59XppT": {
     "context": "button",
     "string": "Approve"
@@ -4734,6 +4730,10 @@
   "FTYkgw": {
     "string": "Delete collections"
   },
+  "FVY0C7": {
+    "context": "warehouse channel remove confirmation, names the zones that would unlink",
+    "string": "{zones} will also be unlinked from this warehouse, because {count, plural, one {it shares} other {they share}} no other channel with it."
+  },
   "FWaL+x": {
     "context": "gift card history message",
     "string": "Gift card balance was reset"
@@ -5826,6 +5826,10 @@
   "JB7OuS": {
     "context": "export scope option disabled when list has no active filters",
     "string": "Apply filters or search on the list to enable this option."
+  },
+  "JBVFb4": {
+    "context": "last item of the unlinked zone list when more zones unlink than are named",
+    "string": "{count, plural, one {# other shipping zone} other {# other shipping zones}}"
   },
   "JBglRB": {
     "context": "badge on recently installed extension",
@@ -7735,10 +7739,6 @@
   "Q8wHwJ": {
     "string": "Deleted collection"
   },
-  "Q9aYIy": {
-    "context": "warehouse channel remove when the zone list is incomplete",
-    "string": "Other shipping zones may be unlinked too."
-  },
   "QAisk4": {
     "context": "Webhook events header",
     "string": "Webhook events"
@@ -9002,10 +9002,6 @@
   "UrZRxo": {
     "context": "bulk publish publish toggle",
     "string": "Publish to channel"
-  },
-  "Us3bWw": {
-    "context": "warehouse channel remove when the zone list is too long to check",
-    "string": "Shipping zones that share no other channel with this warehouse will be unlinked from it."
   },
   "Us9cA1": {
     "context": "profit margin",
@@ -13973,6 +13969,10 @@
   "m7EwFg": {
     "context": "warning when preview is truncated due to too many combinations",
     "string": "Your selection would create {total} variants. You can generate up to {limit} at a time."
+  },
+  "m7dQTa": {
+    "context": "warehouse channel remove confirmation when the shipping zone check failed",
+    "string": "We couldn't check which shipping zones depend on this channel. Zones that share no other channel with this warehouse will be unlinked from it."
   },
   "m8cjcK": {
     "context": "add authorization key error",

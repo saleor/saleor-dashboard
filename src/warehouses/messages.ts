@@ -354,21 +354,21 @@ export const messages = defineMessages({
     description: "warehouse channel remove confirmation title",
   },
   channelsRemoveUnlink: {
-    id: "57sj4E",
+    id: "jofw4F",
     defaultMessage:
-      "{zones} will also be unlinked from this warehouse, because they share no other channel.",
-    description: "warehouse channel remove confirmation when zones would unlink",
+      "{zones} will also be unlinked from this warehouse, because {count, plural, one {it shares} other {they share}} no other channel with it.",
+    description: "warehouse channel remove confirmation, names the zones that would unlink",
+  },
+  channelsRemoveUnlinkOthers: {
+    id: "0Lyinz",
+    defaultMessage: "{count, plural, one {# other shipping zone} other {# other shipping zones}}",
+    description: "last item of the unlinked zone list when more zones unlink than are named",
   },
   channelsRemoveUnlinkUnknown: {
-    id: "Us3bWw",
+    id: "V4OIv3",
     defaultMessage:
-      "Shipping zones that share no other channel with this warehouse will be unlinked from it.",
-    description: "warehouse channel remove when the zone list is too long to check",
-  },
-  channelsRemoveUnlinkMore: {
-    id: "Q9aYIy",
-    defaultMessage: "Other shipping zones may be unlinked too.",
-    description: "warehouse channel remove when the zone list is incomplete",
+      "We couldn't check which shipping zones depend on this channel. Zones that share no other channel with this warehouse will be unlinked from it.",
+    description: "warehouse channel remove confirmation when the shipping zone check failed",
   },
   channelsError: {
     id: "Pb48AH",

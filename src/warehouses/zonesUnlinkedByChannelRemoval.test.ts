@@ -181,7 +181,6 @@ describe("channelRemovalConfirmation", () => {
       removedChannelId: "ch-eu",
       remainingChannelIds: ["ch-us"],
       zones: [shared],
-      zonesTruncated: false,
     };
 
     // Act
@@ -197,30 +196,13 @@ describe("channelRemovalConfirmation", () => {
       removedChannelId: "ch-eu",
       remainingChannelIds: ["ch-us"],
       zones: [europe, shared],
-      zonesTruncated: false,
     };
 
     // Act
     const confirmation = channelRemovalConfirmation(input);
 
     // Assert
-    expect(confirmation).toEqual({ zoneNames: ["Europe"], truncated: false });
-  });
-
-  it("still confirms when the zone list is truncated and no loaded zone unlinks", () => {
-    // Arrange
-    const input: ConfirmationInput = {
-      removedChannelId: "ch-eu",
-      remainingChannelIds: ["ch-us"],
-      zones: [shared],
-      zonesTruncated: true,
-    };
-
-    // Act
-    const confirmation = channelRemovalConfirmation(input);
-
-    // Assert
-    expect(confirmation).toEqual({ zoneNames: [], truncated: true });
+    expect(confirmation).toEqual({ zoneNames: ["Europe"] });
   });
 });
 

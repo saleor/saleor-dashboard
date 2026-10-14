@@ -7,7 +7,6 @@ const meta: Meta<typeof ChannelRemoveUnlinkMessage> = {
   component: ChannelRemoveUnlinkMessage,
   args: {
     zoneNames: ["Europe", "Nordics"],
-    truncated: false,
   },
 };
 
@@ -16,10 +15,12 @@ type Story = StoryObj<typeof ChannelRemoveUnlinkMessage>;
 
 export const NamedZones: Story = {};
 
-export const NamedZonesWithMore: Story = {
-  args: { truncated: true },
+export const ManyZones: Story = {
+  args: {
+    zoneNames: Array.from({ length: 23 }, (_, index) => `Zone ${index + 1}`),
+  },
 };
 
-export const TooManyZonesToCheck: Story = {
-  args: { zoneNames: [], truncated: true },
+export const CheckFailed: Story = {
+  args: { zoneNames: null },
 };

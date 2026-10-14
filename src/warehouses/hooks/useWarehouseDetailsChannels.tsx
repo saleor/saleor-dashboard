@@ -1,3 +1,4 @@
+import { useApolloClient } from "@apollo/client";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { channelUrl } from "@dashboard/channels/urls";
 import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
@@ -10,10 +11,10 @@ import { ChannelRemoveUnlinkMessage } from "@dashboard/warehouses/components/War
 import { WarehouseChannelsAssignDialog } from "@dashboard/warehouses/components/WarehouseChannelsCard/WarehouseChannelsAssignDialog";
 import { WarehouseChannelsCard } from "@dashboard/warehouses/components/WarehouseChannelsCard/WarehouseChannelsCard";
 import { WarehouseSetupChecklist } from "@dashboard/warehouses/components/WarehouseSetupChecklist/WarehouseSetupChecklist";
+import { checkChannelRemoval } from "@dashboard/warehouses/fetchWarehouseZoneMemberships";
 import { messages } from "@dashboard/warehouses/messages";
 import { isWarehouseSetupChecklistVisible } from "@dashboard/warehouses/warehouseSetupChecklistVisibility";
 import {
-  channelRemovalConfirmation,
   warehouseSharesShippingZone,
   type ZoneChannelMembership,
 } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
@@ -57,15 +58,18 @@ export const useWarehouseDetailsChannels = ({
   const permissions = useUserPermissions();
   const canManage = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_CHANNELS]);
   const canManageShipping = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SHIPPING]);
+  const client = useApolloClient();
   const membership = useWarehouseChannelMembership(warehouseId);
   const [assignOpen, setAssignOpen] = useState(false);
   const [allOpen, setAllOpen] = useState(false);
   const [pendingRemove, setPendingRemove] = useState<{
     channelId: string;
     channelName: string;
-    zoneNames: string[];
-    truncated: boolean;
+    /** Null when the zone check failed. */
+    zoneNames: string[] | null;
   } | null>(null);
+  /** Channel whose zone links are being checked before removal. */
+  const [checkingId, setCheckingId] = useState<string | undefined>();
   const assignedIds = new Set(membership.channels.map(channel => channel.id));
   const availableChannels = membership.allChannels.filter(channel => !assignedIds.has(channel.id));
 
@@ -91,27 +95,39 @@ export const useWarehouseDetailsChannels = ({
     }
   };
 
-  const requestRemove = (channelId: string): void => {
+  const requestRemove = async (channelId: string): Promise<void> => {
+    if (!warehouseId) {
+      return;
+    }
+
     const channelName =
       membership.channels.find(channel => channel.id === channelId)?.name ?? channelId;
-    // Saleor drops the zone link in either stock mode, and the zones card shows it in both.
-    const confirmation = channelRemovalConfirmation({
+
+    setCheckingId(channelId);
+
+    // Saleor drops the zone link in either stock mode, so read every linked zone fresh:
+    // the page only loads the first 100, and links may have changed since it loaded.
+    const confirmation = await checkChannelRemoval({
+      client,
+      warehouseId,
       removedChannelId: channelId,
       remainingChannelIds: membership.channels
         .filter(channel => channel.id !== channelId)
         .map(channel => channel.id),
-      zones,
-      zonesTruncated,
     });
 
+    setCheckingId(undefined);
+
     if (confirmation) {
-      setPendingRemove({ channelId, channelName, ...confirmation });
+      setPendingRemove({ channelId, channelName, zoneNames: confirmation.zoneNames });
 
       return;
     }
 
-    void removeChannel(channelId);
+    await removeChannel(channelId);
   };
+  const channelsBusy =
+    membership.assigning || membership.removingId !== undefined || checkingId !== undefined;
 
   const subtitle =
     membership.status === "ready" ? (
@@ -179,9 +195,9 @@ export const useWarehouseDetailsChannels = ({
           channels={membership.channels}
           availableChannels={availableChannels}
           canManage={canManage}
-          disabled={membership.assigning || membership.removingId !== undefined}
+          disabled={channelsBusy}
           onRetry={membership.retry}
-          onRemove={requestRemove}
+          onRemove={channelId => void requestRemove(channelId)}
           onRequestAssign={() => setAssignOpen(true)}
           onShowAll={() => setAllOpen(true)}
         />
@@ -202,8 +218,8 @@ export const useWarehouseDetailsChannels = ({
           removeLabel={channel =>
             intl.formatMessage(messages.channelsRemove, { channel: channel.name })
           }
-          disabled={membership.assigning || membership.removingId !== undefined}
-          onRemoveItem={requestRemove}
+          disabled={channelsBusy}
+          onRemoveItem={channelId => void requestRemove(channelId)}
           onClose={() => setAllOpen(false)}
           data-test-id="warehouse-channels-all"
         />
@@ -268,10 +284,7 @@ export const useWarehouseDetailsChannels = ({
           }}
         >
           {pendingRemove ? (
-            <ChannelRemoveUnlinkMessage
-              zoneNames={pendingRemove.zoneNames}
-              truncated={pendingRemove.truncated}
-            />
+            <ChannelRemoveUnlinkMessage zoneNames={pendingRemove.zoneNames} />
           ) : null}
         </ActionDialog>
       </>
