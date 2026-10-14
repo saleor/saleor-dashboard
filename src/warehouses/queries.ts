@@ -146,15 +146,6 @@ export const warehouseShippingZonesPage = gql`
   }
 `;
 
-export const warehouseStockAvailabilityMode = gql`
-  query WarehouseStockAvailabilityMode {
-    shop {
-      id
-      useLegacyShippingZoneStockAvailability
-    }
-  }
-`;
-
 export const defaultGraphiQLQuery = `query WarehouseDetails($id: ID!) {
   warehouse(id: $id) {
     id

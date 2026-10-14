@@ -15333,11 +15333,6 @@ export type WarehouseShippingZonesPageQueryVariables = Exact<{
 
 export type WarehouseShippingZonesPageQuery = { __typename: 'Query', warehouse: { __typename: 'Warehouse', id: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }> } }>, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, endCursor: string | null } } } | null };
 
-export type WarehouseStockAvailabilityModeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type WarehouseStockAvailabilityModeQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, useLegacyShippingZoneStockAvailability: boolean } };
-
 export type SaveOnBoardingStateMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   input: Array<MetadataInput> | MetadataInput;

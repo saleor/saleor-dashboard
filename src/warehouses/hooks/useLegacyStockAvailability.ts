@@ -1,4 +1,4 @@
-import { useWarehouseStockAvailabilityModeQuery } from "@dashboard/graphql";
+import { useStockVisibilityModeQuery } from "@dashboard/graphql";
 
 /**
  * Undefined while the shop stock mode is loading. When it cannot be read, assume legacy mode:
@@ -6,7 +6,8 @@ import { useWarehouseStockAvailabilityModeQuery } from "@dashboard/graphql";
  * warehouse ready without one.
  */
 export const useLegacyStockAvailability = (): boolean | undefined => {
-  const query = useWarehouseStockAvailabilityModeQuery();
+  // Same operation as the product stock hint, so pages showing both send one request.
+  const query = useStockVisibilityModeQuery();
   const value = query.data?.shop?.useLegacyShippingZoneStockAvailability;
 
   if (typeof value === "boolean") {

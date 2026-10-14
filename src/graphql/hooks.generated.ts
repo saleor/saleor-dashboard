@@ -25263,41 +25263,6 @@ export function useWarehouseShippingZonesPageLazyQuery(baseOptions?: ApolloReact
 export type WarehouseShippingZonesPageQueryHookResult = ReturnType<typeof useWarehouseShippingZonesPageQuery>;
 export type WarehouseShippingZonesPageLazyQueryHookResult = ReturnType<typeof useWarehouseShippingZonesPageLazyQuery>;
 export type WarehouseShippingZonesPageQueryResult = Apollo.QueryResult<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>;
-export const WarehouseStockAvailabilityModeDocument = gql`
-    query WarehouseStockAvailabilityMode {
-  shop {
-    id
-    useLegacyShippingZoneStockAvailability
-  }
-}
-    `;
-
-/**
- * __useWarehouseStockAvailabilityModeQuery__
- *
- * To run a query within a React component, call `useWarehouseStockAvailabilityModeQuery` and pass it any options that fit your needs.
- * When your component renders, `useWarehouseStockAvailabilityModeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useWarehouseStockAvailabilityModeQuery({
- *   variables: {
- *   },
- * });
- */
-export function useWarehouseStockAvailabilityModeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.WarehouseStockAvailabilityModeQuery, Types.WarehouseStockAvailabilityModeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WarehouseStockAvailabilityModeQuery, Types.WarehouseStockAvailabilityModeQueryVariables>(WarehouseStockAvailabilityModeDocument, options);
-      }
-export function useWarehouseStockAvailabilityModeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseStockAvailabilityModeQuery, Types.WarehouseStockAvailabilityModeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WarehouseStockAvailabilityModeQuery, Types.WarehouseStockAvailabilityModeQueryVariables>(WarehouseStockAvailabilityModeDocument, options);
-        }
-export type WarehouseStockAvailabilityModeQueryHookResult = ReturnType<typeof useWarehouseStockAvailabilityModeQuery>;
-export type WarehouseStockAvailabilityModeLazyQueryHookResult = ReturnType<typeof useWarehouseStockAvailabilityModeLazyQuery>;
-export type WarehouseStockAvailabilityModeQueryResult = Apollo.QueryResult<Types.WarehouseStockAvailabilityModeQuery, Types.WarehouseStockAvailabilityModeQueryVariables>;
 export const SaveOnBoardingStateDocument = gql`
     mutation SaveOnBoardingState($id: ID!, $input: [MetadataInput!]!) {
   updateMetadata(id: $id, input: $input) {
