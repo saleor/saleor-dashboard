@@ -1,9 +1,7 @@
+import { cappedListItems } from "@dashboard/utils/cappedList/cappedList";
 import { messages } from "@dashboard/warehouses/messages";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-/** Zones named before the rest collapse into a count, so the dialog stays readable. */
-const NAMED_ZONE_LIMIT = 5;
 
 /** Body of the remove-channel confirmation: which shipping zones lose their link. */
 export const ChannelRemoveUnlinkMessage = ({
@@ -18,12 +16,10 @@ export const ChannelRemoveUnlinkMessage = ({
     return <FormattedMessage {...messages.channelsRemoveUnlinkUnknown} />;
   }
 
-  const named = zoneNames.slice(0, NAMED_ZONE_LIMIT);
-  const otherCount = zoneNames.length - named.length;
-  const items =
-    otherCount > 0
-      ? [...named, intl.formatMessage(messages.channelsRemoveUnlinkOthers, { count: otherCount })]
-      : named;
+  const items = cappedListItems({
+    items: zoneNames,
+    formatOthers: count => intl.formatMessage(messages.channelsRemoveUnlinkOthers, { count }),
+  });
 
   return (
     <FormattedMessage

@@ -26,6 +26,11 @@ export const messages = defineMessages({
     defaultMessage: "Unlink warehouses?",
     description: "confirm removing a channel that unlinks warehouses from the zone",
   },
+  unlinkOtherWarehouses: {
+    id: "Ahb+I1",
+    defaultMessage: "{count, plural, one {# other warehouse} other {# other warehouses}}",
+    description: "last item of the unlink dialog list when more warehouses unlink than are named",
+  },
   unlinkWarehousesBody: {
     id: "BTq6zF",
     defaultMessage:

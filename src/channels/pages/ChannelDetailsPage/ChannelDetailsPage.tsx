@@ -51,6 +51,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
+import { cappedListItems } from "@dashboard/utils/cappedList/cappedList";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
@@ -672,7 +673,16 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             >
               <FormattedMessage
                 {...messages.unlinkWarehousesBody}
-                values={{ links: intl.formatList(unlinkLabels, { type: "conjunction" }) }}
+                values={{
+                  links: intl.formatList(
+                    cappedListItems({
+                      items: unlinkLabels,
+                      formatOthers: count =>
+                        intl.formatMessage(messages.unlinkOtherLinks, { count }),
+                    }),
+                    { type: "conjunction" },
+                  ),
+                }}
               />
             </ActionDialog>
           </DetailPageLayout>

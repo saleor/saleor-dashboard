@@ -34,6 +34,7 @@ import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import { warehousesKeptByForm } from "@dashboard/shipping/warehouseEligibility";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
+import { cappedListItems } from "@dashboard/utils/cappedList/cappedList";
 import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
 import { type Option } from "@saleor/macaw-ui-next";
 import { useLayoutEffect, useMemo, useState } from "react";
@@ -311,7 +312,16 @@ export const ShippingZoneDetailsPage = ({
         {unlinkWarning?.names ? (
           <FormattedMessage
             {...messages.unlinkWarehousesBody}
-            values={{ warehouses: intl.formatList(unlinkWarning.names, { type: "conjunction" }) }}
+            values={{
+              warehouses: intl.formatList(
+                cappedListItems({
+                  items: unlinkWarning.names,
+                  formatOthers: count =>
+                    intl.formatMessage(messages.unlinkOtherWarehouses, { count }),
+                }),
+                { type: "conjunction" },
+              ),
+            }}
           />
         ) : (
           <FormattedMessage {...messages.unlinkWarehousesUnknownBody} />

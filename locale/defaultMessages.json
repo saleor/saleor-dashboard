@@ -1724,6 +1724,10 @@
     "context": "dialog header",
     "string": "Add product from {channelName}"
   },
+  "4YFjVJ": {
+    "context": "last item of the unlink dialog list when more links are dropped than are named",
+    "string": "{count, plural, one {# other link} other {# other links}}"
+  },
   "4YJHut": {
     "string": "Clear search"
   },
@@ -2306,10 +2310,6 @@
   "6eSgIe": {
     "context": "voucher detail section nav item",
     "string": "Countries"
-  },
-  "6f9P9C": {
-    "context": "warehouse channels assign failure, count is how many channels were selected",
-    "string": "{count, plural, one {Couldn't add this warehouse to the channel} other {Couldn't add this warehouse to # channels}}. Try again."
   },
   "6fAGSm": {
     "context": "Product is not visible via public API",
@@ -5853,10 +5853,6 @@
   "JGIW6o": {
     "context": "TopNav destination link tooltip to model types list",
     "string": "All model types"
-  },
-  "JGNXUl": {
-    "context": "warehouse channels assign partial failure",
-    "string": "{ok, plural, one {Added to # channel} other {Added to # channels}}. {failed, plural, one {Couldn't add to # channel} other {Couldn't add to # channels}}."
   },
   "JGm7E5": {
     "context": "option",
@@ -11187,6 +11183,10 @@
     "context": "Channel label",
     "string": "Channel"
   },
+  "cGFXnU": {
+    "context": "warehouse channels assign failure, count is how many channels were selected",
+    "string": "{count, plural, one {Couldn't add this warehouse to the channel} other {Couldn't add this warehouse to # channels}}. Try again."
+  },
   "cGL5Xv": {
     "context": "tooltip for hide action on a widget extension",
     "string": "Hide extension"
@@ -12998,6 +12998,10 @@
     "context": "Manage and Update your warehouse information",
     "string": "Exchange Rates"
   },
+  "j2292d": {
+    "context": "last item of the unlink dialog list when more warehouses unlink than are named",
+    "string": "{count, plural, one {# other warehouse} other {# other warehouses}}"
+  },
   "j23Ryb": {
     "context": "channel delivery empty state title",
     "string": "No shipping zones assigned"
@@ -13711,6 +13715,10 @@
   "lGDCNw": {
     "context": "customer type metadata dialog header",
     "string": "Customer Type Metadata"
+  },
+  "lGej+R": {
+    "context": "warehouse channels assign partial failure",
+    "string": "{ok, plural, one {Added to # channel} other {Added to # channels}}. {failed, plural, one {Couldn't add to # channel} other {Couldn't add to # channels}}."
   },
   "lGlDEH": {
     "context": "header",
