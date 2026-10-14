@@ -14655,10 +14655,11 @@ export type ChannelShippingZonesQuery = { __typename: 'Query', shippingZones: { 
 
 export type ChannelZoneWarehouseLinksQueryVariables = Exact<{
   filter?: InputMaybe<ShippingZoneFilterInput>;
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type ChannelZoneWarehouseLinksQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> } }> } | null };
+export type ChannelZoneWarehouseLinksQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> } }> } | null };
 
 export type ZoneWarehouseEligibilityQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];

@@ -1,4 +1,4 @@
-import { type ApolloClient } from "@apollo/client";
+import { type ApolloClient, type ApolloQueryResult } from "@apollo/client";
 import {
   ChannelZoneWarehouseLinksDocument,
   type ChannelZoneWarehouseLinksQuery,
@@ -31,18 +31,31 @@ const fetchChannelZones = async ({
   client: ApolloClient<unknown>;
   channelId: string;
 }): Promise<ChannelEditZone[]> => {
-  const result = await client.query<ChannelZoneWarehouseLinksQuery>({
-    query: ChannelZoneWarehouseLinksDocument,
-    variables: { filter: { channels: [channelId] } },
-    fetchPolicy: "network-only",
-  });
+  const zones: ChannelEditZone[] = [];
+  let after: string | null = null;
 
-  return (mapEdgesToItems(result.data?.shippingZones) ?? []).map(zone => ({
-    id: zone.id,
-    name: zone.name,
-    channelIds: zone.channels.map(channel => channel.id),
-    warehouses: zone.warehouses,
-  }));
+  // Read every page: a link in an unread zone would be dropped without a warning.
+  do {
+    const result: ApolloQueryResult<ChannelZoneWarehouseLinksQuery> =
+      await client.query<ChannelZoneWarehouseLinksQuery>({
+        query: ChannelZoneWarehouseLinksDocument,
+        variables: { filter: { channels: [channelId] }, after },
+        fetchPolicy: "network-only",
+      });
+    const page = result.data?.shippingZones;
+
+    zones.push(
+      ...(mapEdgesToItems(page) ?? []).map(zone => ({
+        id: zone.id,
+        name: zone.name,
+        channelIds: zone.channels.map(channel => channel.id),
+        warehouses: zone.warehouses,
+      })),
+    );
+    after = page?.pageInfo.hasNextPage ? (page.pageInfo.endCursor ?? null) : null;
+  } while (after);
+
+  return zones;
 };
 
 export const previewChannelEditUnlinks = async ({

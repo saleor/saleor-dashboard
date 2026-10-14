@@ -21703,8 +21703,12 @@ export type ChannelShippingZonesQueryHookResult = ReturnType<typeof useChannelSh
 export type ChannelShippingZonesLazyQueryHookResult = ReturnType<typeof useChannelShippingZonesLazyQuery>;
 export type ChannelShippingZonesQueryResult = Apollo.QueryResult<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>;
 export const ChannelZoneWarehouseLinksDocument = gql`
-    query ChannelZoneWarehouseLinks($filter: ShippingZoneFilterInput) {
-  shippingZones(filter: $filter, first: 100) {
+    query ChannelZoneWarehouseLinks($filter: ShippingZoneFilterInput, $after: String) {
+  shippingZones(filter: $filter, first: 100, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
     edges {
       node {
         id
@@ -21735,6 +21739,7 @@ export const ChannelZoneWarehouseLinksDocument = gql`
  * const { data, loading, error } = useChannelZoneWarehouseLinksQuery({
  *   variables: {
  *      filter: // value for 'filter'
+ *      after: // value for 'after'
  *   },
  * });
  */

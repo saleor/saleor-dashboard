@@ -70,8 +70,12 @@ export const channelShippingZones = gql`
 `;
 
 export const channelZoneWarehouseLinks = gql`
-  query ChannelZoneWarehouseLinks($filter: ShippingZoneFilterInput) {
-    shippingZones(filter: $filter, first: 100) {
+  query ChannelZoneWarehouseLinks($filter: ShippingZoneFilterInput, $after: String) {
+    shippingZones(filter: $filter, first: 100, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       edges {
         node {
           id
