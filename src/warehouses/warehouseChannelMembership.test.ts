@@ -4,6 +4,7 @@ import {
   channelIdsFromMatrix,
   channelIdsPresentInProbe,
   chunkList,
+  MEMBERSHIP_UPDATE_CHUNK_SIZE,
   membershipQueryPlan,
   runPool,
   WAREHOUSE_CHANNEL_MEMBERSHIP_LIMIT,
@@ -110,6 +111,22 @@ describe("buildWarehouseLinkUpdates", () => {
     expect(source).toContain("e1: channelUpdate");
     expect(source).toContain("addWarehouses: [$warehouseId]");
     expect(variables("w1")).toEqual({ warehouseId: "w1", e0: "eu", e1: "us" });
+  });
+
+  it("keeps each chunk within Saleor's default limit of 4 mutations per request", () => {
+    // Arrange
+    const input: LinkUpdatesInput = {
+      entityIds: chunkList(["a", "b", "c", "d", "e"], MEMBERSHIP_UPDATE_CHUNK_SIZE)[0],
+      action: "add",
+      linkVia: "channel",
+    };
+
+    // Act
+    const { document } = buildWarehouseLinkUpdates(input);
+    const source = document.loc?.source.body ?? "";
+
+    // Assert
+    expect(source.match(/: channelUpdate\(/g)).toHaveLength(4);
   });
 
   it("aliases shippingZoneUpdate when linking zones", () => {

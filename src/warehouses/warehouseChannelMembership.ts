@@ -5,8 +5,11 @@ export const WAREHOUSE_CHANNEL_MEMBERSHIP_LIMIT = 5000;
 
 export const MEMBERSHIP_PROBE_CHUNK_SIZE = 20;
 
-/** How many link-update aliases to send in one GraphQL document. */
-export const MEMBERSHIP_UPDATE_CHUNK_SIZE = 20;
+/**
+ * How many link-update aliases to send in one GraphQL document.
+ * Saleor rejects documents with more mutations than its limit (4 by default).
+ */
+export const MEMBERSHIP_UPDATE_CHUNK_SIZE = 4;
 
 export const membershipQueryPlan = ({
   channelCount,
