@@ -121,6 +121,31 @@ export const warehouseShippingZonesToAssign = gql`
   }
 `;
 
+/** Pages through every zone linked to a warehouse; the details query stops at 100. */
+export const warehouseShippingZonesPage = gql`
+  query WarehouseShippingZonesPage($id: ID!, $first: Int!, $after: String) {
+    warehouse(id: $id) {
+      id
+      shippingZones(first: $first, after: $after) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            channels {
+              id
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+`;
+
 export const warehouseStockAvailabilityMode = gql`
   query WarehouseStockAvailabilityMode {
     shop {

@@ -8666,6 +8666,10 @@
     "context": "orders section name",
     "string": "Orders"
   },
+  "TaY9Nk": {
+    "context": "last row of the warehouse channels preview, opens the full list",
+    "string": "Show all {count} channels"
+  },
   "Taa5V7": {
     "context": "dialog subtitle",
     "string": "You can only add products available for the order's channel"
@@ -8998,6 +9002,10 @@
   "UrZRxo": {
     "context": "bulk publish publish toggle",
     "string": "Publish to channel"
+  },
+  "Us3bWw": {
+    "context": "warehouse channel remove when the zone list is too long to check",
+    "string": "Shipping zones that share no other channel with this warehouse will be unlinked from it."
   },
   "Us9cA1": {
     "context": "profit margin",
@@ -11532,10 +11540,6 @@
   "dSyctO": {
     "context": "ripple action",
     "string": "Create a channel"
-  },
-  "dSyqnB": {
-    "context": "warehouse channel remove when the zone list is too long to check",
-    "string": "Shipping zones that share no other channel with this warehouse will be unlinked from it."
   },
   "dTkmON": {
     "context": "edit tracking button",
@@ -15257,6 +15261,10 @@
     "context": "configuration menu item description for customer attributes",
     "string": "Manage attributes used for customer types"
   },
+  "qP42Tb": {
+    "context": "warehouse channels full list, search matched nothing",
+    "string": "No channels found"
+  },
   "qP8fZq": {
     "context": "banner when shipping method channels are missing prices",
     "string": "{count, plural, one {# channel is missing a price} other {# channels are missing a price}}"
@@ -15486,6 +15494,10 @@
   "r2i5Fn": {
     "context": "PageTypeDeleteWarningDialog multiple assigned items description",
     "string": "Are you sure you want to delete selected model types? If you remove them you won’t be able to assign them to created models."
+  },
+  "r3aTtD": {
+    "context": "last row of the warehouse shipping zones preview, opens the full list",
+    "string": "Show all {count} shipping zones"
   },
   "r4UnCw": {
     "string": "When issuing a granted refund, please select the transaction you wish to apply the refund to."
@@ -15966,10 +15978,6 @@
   "sqz22u": {
     "context": "footer when redeem blockers are done",
     "string": "Required steps are complete."
-  },
-  "sqzerb": {
-    "context": "warehouse shipping zones truncated list",
-    "string": "+{count} more"
   },
   "srtbbS": {
     "context": "gift card currency mismatch with delivery channel callout",

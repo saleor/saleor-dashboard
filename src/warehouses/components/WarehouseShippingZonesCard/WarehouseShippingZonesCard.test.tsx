@@ -101,4 +101,41 @@ describe("WarehouseShippingZonesCard", () => {
     expect(screen.getByText("Europe")).toBeInTheDocument();
     expect(screen.queryByTestId("warehouse-zones-add")).not.toBeInTheDocument();
   });
+
+  it("previews five zones and ends the list with a row that opens all of them", async () => {
+    // Arrange
+    const onShowAll = jest.fn();
+    const zones: CardProps["zones"] = Array.from({ length: 100 }, (_, index) => ({
+      id: `zone-${index}`,
+      name: `Zone ${index}`,
+      channelIds: ["channel-1"],
+    }));
+
+    renderCard({ ...baseProps, zones, totalCount: 115, onShowAll });
+
+    // Act
+    await userEvent.click(screen.getByTestId("warehouse-shipping-zones-show-all"));
+
+    // Assert
+    expect(screen.getAllByTestId("assign-list-row")).toHaveLength(5);
+    expect(screen.getByTestId("warehouse-shipping-zones-show-all")).toHaveTextContent(
+      "Show all 115 shipping zones",
+    );
+    expect(onShowAll).toHaveBeenCalledTimes(1);
+  });
+
+  it("shows every zone without a show-all row when they fit the preview", () => {
+    // Arrange
+    const zones: CardProps["zones"] = [
+      { id: "z-eu", name: "Europe", channelIds: ["channel-1"] },
+      { id: "z-asia", name: "Asia", channelIds: ["channel-1"] },
+    ];
+
+    // Act
+    renderCard({ ...baseProps, zones, totalCount: 2, onShowAll: jest.fn() });
+
+    // Assert
+    expect(screen.getAllByTestId("assign-list-row")).toHaveLength(2);
+    expect(screen.queryByTestId("warehouse-shipping-zones-show-all")).not.toBeInTheDocument();
+  });
 });

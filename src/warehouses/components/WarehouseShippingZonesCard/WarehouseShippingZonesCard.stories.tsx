@@ -94,8 +94,21 @@ export const LegacyLinkedWithOutsideChannelZone: Story = {
 
 export const Truncated: Story = {
   args: {
+    zones: Array.from({ length: 100 }, (_, index) => ({
+      id: `zone-${index}`,
+      name: `Zone ${index + 1}`,
+      channelIds: ["ch-eu"],
+    })),
+    totalCount: 115,
+    onShowAll: fn(),
+  },
+};
+
+export const FitsPreview: Story = {
+  args: {
     zones: [europeZone, germanyZone],
-    totalCount: 12,
+    totalCount: 2,
+    onShowAll: fn(),
   },
 };
 

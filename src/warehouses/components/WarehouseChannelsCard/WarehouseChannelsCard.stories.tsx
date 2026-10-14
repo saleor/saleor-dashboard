@@ -43,6 +43,17 @@ export const Assigned: Story = {
   },
 };
 
+export const ManyChannels: Story = {
+  args: {
+    channels: Array.from({ length: 12 }, (_, index) => ({
+      id: `ch-${index}`,
+      name: `Channel ${index + 1}`,
+    })),
+    availableChannels: [{ id: "ch-us", name: "United States" }],
+    onShowAll: fn(),
+  },
+};
+
 export const ReadOnly: Story = {
   args: {
     channels: [{ id: "ch-eu", name: "Europe" }],

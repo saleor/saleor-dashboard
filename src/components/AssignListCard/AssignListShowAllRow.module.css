@@ -1,0 +1,24 @@
+/* Last row of a truncated assign list: reads as part of the list, acts as a button. */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mu-spacing-1);
+  width: 100%;
+  padding: var(--mu-spacing-2) var(--mu-spacing-4);
+  border: none;
+  border-top: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default1);
+  color: var(--mu-colors-text-default1);
+  cursor: pointer;
+  font: inherit;
+}
+
+.row:hover {
+  background-color: var(--mu-colors-background-default1Hovered);
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: -2px;
+}

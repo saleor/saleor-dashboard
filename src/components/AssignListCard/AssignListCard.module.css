@@ -193,3 +193,9 @@
     margin-right: var(--mu-spacing-3);
   }
 }
+
+/* Full list in AssignListAllDialog: rows run edge to edge under the search. */
+.allDialogList {
+  display: flex;
+  flex-direction: column;
+}

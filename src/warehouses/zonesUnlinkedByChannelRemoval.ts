@@ -86,6 +86,12 @@ type WarehouseZonesGuidance =
   | { kind: "legacy-need-zone"; channelNames: string[] }
   | { kind: "legacy-linked" };
 
+/** The zone is linked but shares no channel with the warehouse, so its stock is not sold there. */
+export const isZoneOutsideChannels = (
+  zone: { channelIds: readonly string[] },
+  warehouseChannelIds: readonly string[],
+): boolean => !zone.channelIds.some(channelId => warehouseChannelIds.includes(channelId));
+
 /** True when at least one linked zone shares a channel with the warehouse. */
 export const warehouseSharesShippingZone = ({
   zones,

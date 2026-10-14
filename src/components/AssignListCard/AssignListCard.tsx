@@ -7,8 +7,9 @@ import { type ReactNode } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import styles from "./AssignListCard.module.css";
+import { AssignListShowAllRow } from "./AssignListShowAllRow";
 
-interface AssignListCardItem {
+export interface AssignListCardItem {
   id: string;
   name: string;
   href?: string;
@@ -45,6 +46,8 @@ interface AssignListCardProps {
   items: AssignListCardItem[];
   emptyState: AssignListCardEmptyState;
   footerAction?: ReactNode;
+  /** Set when `items` is a preview: ends the list with a row that opens the full list. */
+  showAll?: { label: ReactNode; onClick: () => void };
   onRemoveItem: (id: string) => void;
   /** Hides the row remove control when the user cannot edit the list. */
   removable?: boolean;
@@ -71,6 +74,7 @@ export const AssignListCard = ({
   items,
   emptyState,
   footerAction,
+  showAll,
   onRemoveItem,
   removable = true,
   removeLabel,
@@ -187,6 +191,13 @@ export const AssignListCard = ({
               </div>
             ))}
           </div>
+          {showAll ? (
+            <AssignListShowAllRow
+              label={showAll.label}
+              onClick={showAll.onClick}
+              data-test-id={dataTestId ? `${dataTestId}-show-all` : undefined}
+            />
+          ) : null}
           {footerAction ? (
             <Box className={styles.listFooter}>
               <Box className={styles.listFooterAction}>{footerAction}</Box>

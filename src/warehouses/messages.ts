@@ -171,10 +171,20 @@ export const messages = defineMessages({
     description:
       "a channel name followed by how many other channels, in warehouse shipping zone guidance",
   },
-  zonesMore: {
-    id: "sqzerb",
-    defaultMessage: "+{count} more",
-    description: "warehouse shipping zones truncated list",
+  zonesShowAll: {
+    id: "r3aTtD",
+    defaultMessage: "Show all {count} shipping zones",
+    description: "last row of the warehouse shipping zones preview, opens the full list",
+  },
+  channelsShowAll: {
+    id: "TaY9Nk",
+    defaultMessage: "Show all {count} channels",
+    description: "last row of the warehouse channels preview, opens the full list",
+  },
+  channelsNoMatch: {
+    id: "qP42Tb",
+    defaultMessage: "No channels found",
+    description: "warehouse channels full list, search matched nothing",
   },
   zonesNeedChannel: {
     id: "dnuJF2",

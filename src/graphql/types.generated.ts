@@ -15324,6 +15324,15 @@ export type WarehouseShippingZonesToAssignQueryVariables = Exact<{
 
 export type WarehouseShippingZonesToAssignQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, endCursor: string | null } } | null };
 
+export type WarehouseShippingZonesPageQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type WarehouseShippingZonesPageQuery = { __typename: 'Query', warehouse: { __typename: 'Warehouse', id: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }> } }>, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, endCursor: string | null } } } | null };
+
 export type WarehouseStockAvailabilityModeQueryVariables = Exact<{ [key: string]: never; }>;
 
 

@@ -36,6 +36,14 @@ export const WithItems: Story = {
   },
 };
 
+export const WithShowAll: Story = {
+  args: {
+    ...WithItems.args,
+    subtitle: "115 assigned",
+    showAll: { label: "Show all 115 shipping zones", onClick: () => undefined },
+  },
+};
+
 export const WithItemIcons: Story = {
   args: {
     ...WithItems.args,

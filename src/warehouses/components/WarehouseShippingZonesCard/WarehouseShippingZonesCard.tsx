@@ -1,9 +1,10 @@
 import { AssignListCard } from "@dashboard/components/AssignListCard/AssignListCard";
+import { ASSIGN_LIST_PREVIEW_COUNT } from "@dashboard/components/AssignListCard/AssignListShowAllRow";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
-import { shippingZonesListUrl, shippingZoneUrl } from "@dashboard/shipping/urls";
+import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { messages } from "@dashboard/warehouses/messages";
 import {
+  isZoneOutsideChannels,
   warehouseZonesGuidance,
   type ZoneChannelMembership,
 } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
@@ -26,6 +27,8 @@ interface WarehouseShippingZonesCardProps {
   disabled?: boolean;
   onRequestAssign: () => void;
   onRemove: (zoneId: string) => void;
+  /** Opens every linked zone; the card itself shows a short preview. */
+  onShowAll?: () => void;
 }
 
 const channelList = (intl: IntlShape, names: string[]): string => {
@@ -71,6 +74,18 @@ const zoneIntro = (
   );
 };
 
+/** The card previews a few zones; past that, its last row opens the full list. */
+const zonesShowAll = (
+  count: number,
+  onShowAll: (() => void) | undefined,
+): { label: ReactNode; onClick: () => void } | undefined =>
+  onShowAll && count > ASSIGN_LIST_PREVIEW_COUNT
+    ? {
+        label: <FormattedMessage {...messages.zonesShowAll} values={{ count }} />,
+        onClick: onShowAll,
+      }
+    : undefined;
+
 export const WarehouseShippingZonesCard = ({
   legacyStockAvailability,
   zones,
@@ -84,6 +99,7 @@ export const WarehouseShippingZonesCard = ({
   disabled = false,
   onRequestAssign,
   onRemove,
+  onShowAll,
 }: WarehouseShippingZonesCardProps): ReactNode => {
   const intl = useIntl();
   const count = totalCount ?? zones.length;
@@ -101,7 +117,6 @@ export const WarehouseShippingZonesCard = ({
     return null;
   }
 
-  const hiddenCount = Math.max(count - zones.length, 0);
   const zoneRequired = guidance.kind === "legacy-need-zone";
   // Zones are offered by shared channel, so without channels the assign dialog would be empty.
   const canAssign =
@@ -110,13 +125,6 @@ export const WarehouseShippingZonesCard = ({
     guidance.kind !== "loading" &&
     guidance.kind !== "legacy-need-channel" &&
     guidance.kind !== "legacy-unknown";
-  // Always mark outside-channel links, including when they are the only zones
-  // (legacy-need-zone) so the list explains why they do not count for selling.
-  const outside = new Set(
-    zones
-      .filter(zone => !zone.channelIds.some(channelId => warehouseChannelIds.includes(channelId)))
-      .map(zone => zone.id),
-  );
 
   return (
     <AssignListCard
@@ -133,24 +141,14 @@ export const WarehouseShippingZonesCard = ({
       loading={guidance.kind === "loading"}
       disabled={disabled}
       removable={canManage}
-      intro={
-        <>
-          {zoneIntro(intl, guidance.kind, channelNames, pickupEnabled && zones.length === 0)}
-          {hiddenCount > 0 ? (
-            <>
-              {" "}
-              <MicrocopyLink to={shippingZonesListUrl()}>
-                <FormattedMessage {...messages.zonesMore} values={{ count: hiddenCount }} />
-              </MicrocopyLink>
-            </>
-          ) : null}
-        </>
-      }
-      items={zones.map(zone => ({
+      intro={zoneIntro(intl, guidance.kind, channelNames, pickupEnabled && zones.length === 0)}
+      items={zones.slice(0, ASSIGN_LIST_PREVIEW_COUNT).map(zone => ({
         id: zone.id,
         name: zone.name,
         href: shippingZoneUrl(zone.id),
-        description: outside.has(zone.id) ? (
+        // Always mark outside-channel links, including when they are the only zones
+        // (legacy-need-zone) so the list explains why they do not count for selling.
+        description: isZoneOutsideChannels(zone, warehouseChannelIds) ? (
           <FormattedMessage {...messages.zonesOutsideChannel} />
         ) : undefined,
       }))}
@@ -169,6 +167,7 @@ export const WarehouseShippingZonesCard = ({
             <FormattedMessage {...messages.zonesEmptyDescription} />
           ),
       }}
+      showAll={zonesShowAll(count, onShowAll)}
       removeLabel={intl.formatMessage(messages.zonesRemove)}
       onRemoveItem={onRemove}
       footerAction={

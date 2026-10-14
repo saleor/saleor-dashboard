@@ -101,6 +101,13 @@
   }
 }
 
+/* Rows here end with their own bottom border, so the show-all row follows the same rule.
+   Scoped under .card to win over the shared row styles regardless of load order. */
+.card .showAll {
+  border-top: none;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
 .footer {
   display: flex;
   align-items: center;

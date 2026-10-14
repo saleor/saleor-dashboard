@@ -1,4 +1,8 @@
 import { AssignListRequiredMeta } from "@dashboard/components/AssignListCard/AssignListCard";
+import {
+  ASSIGN_LIST_PREVIEW_COUNT,
+  AssignListShowAllRow,
+} from "@dashboard/components/AssignListCard/AssignListShowAllRow";
 import { ChannelDetailsLink } from "@dashboard/components/Channel/Channel";
 import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
@@ -24,6 +28,8 @@ interface WarehouseChannelsCardProps {
   onRemove: (channelId: string) => void;
   /** Opens the shared assign dialog, also used by the setup checklist. */
   onRequestAssign: () => void;
+  /** Opens every channel; the card itself shows a short preview. */
+  onShowAll?: () => void;
 }
 
 export const WarehouseChannelsCard = ({
@@ -35,6 +41,7 @@ export const WarehouseChannelsCard = ({
   onRetry,
   onRemove,
   onRequestAssign,
+  onShowAll,
 }: WarehouseChannelsCardProps): ReactNode => {
   const intl = useIntl();
   const hasChannels = channels.length > 0;
@@ -118,7 +125,7 @@ export const WarehouseChannelsCard = ({
       {status === "ready" && hasChannels ? (
         <>
           <div className={styles.list}>
-            {channels.map(channel => (
+            {channels.slice(0, ASSIGN_LIST_PREVIEW_COUNT).map(channel => (
               <div key={channel.id} className={styles.row} data-test-id="warehouse-channel-row">
                 <ChannelDetailsLink channel={channel} size={3} color="default1" />
                 {canManage ? (
@@ -134,6 +141,19 @@ export const WarehouseChannelsCard = ({
               </div>
             ))}
           </div>
+          {onShowAll && channels.length > ASSIGN_LIST_PREVIEW_COUNT ? (
+            <AssignListShowAllRow
+              label={
+                <FormattedMessage
+                  {...messages.channelsShowAll}
+                  values={{ count: channels.length }}
+                />
+              }
+              onClick={onShowAll}
+              className={styles.showAll}
+              data-test-id="warehouse-channels-show-all"
+            />
+          ) : null}
           <Box
             className={clsx(styles.footer, !assignButton && styles.footerHint)}
             data-test-id="warehouse-channels-footer"

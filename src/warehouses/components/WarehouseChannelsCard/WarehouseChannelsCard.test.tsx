@@ -1,6 +1,7 @@
 import { type WarehouseChannelRef } from "@dashboard/warehouses/hooks/useWarehouseChannelMembership";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { type ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 
@@ -9,7 +10,7 @@ import { WarehouseChannelsCard } from "./WarehouseChannelsCard";
 type CardProps = Partial<
   Pick<
     ComponentProps<typeof WarehouseChannelsCard>,
-    "status" | "channels" | "canManage" | "availableChannels"
+    "status" | "channels" | "canManage" | "availableChannels" | "onShowAll"
   >
 >;
 
@@ -28,6 +29,7 @@ const renderCard = (props: CardProps = {}): ReturnType<typeof render> =>
           onRetry={jest.fn()}
           onRemove={jest.fn()}
           onRequestAssign={jest.fn()}
+          onShowAll={props.onShowAll}
         />
       </MemoryRouter>
     </Wrapper>,
@@ -103,5 +105,26 @@ describe("WarehouseChannelsCard", () => {
     expect(screen.getByText("Couldn't load channels.")).toBeInTheDocument();
     expect(screen.queryByText("Stock here can't be sold yet")).not.toBeInTheDocument();
     expect(screen.queryByText("Not in a channel")).not.toBeInTheDocument();
+  });
+
+  it("previews five channels and ends the list with a row that opens all of them", async () => {
+    // Arrange
+    const onShowAll = jest.fn();
+    const channels: WarehouseChannelRef[] = Array.from({ length: 8 }, (_, index) => ({
+      id: `ch-${index}`,
+      name: `Channel ${index}`,
+    }));
+
+    renderCard({ channels, onShowAll });
+
+    // Act
+    await userEvent.click(screen.getByTestId("warehouse-channels-show-all"));
+
+    // Assert
+    expect(screen.getAllByTestId("warehouse-channel-row")).toHaveLength(5);
+    expect(screen.getByTestId("warehouse-channels-show-all")).toHaveTextContent(
+      "Show all 8 channels",
+    );
+    expect(onShowAll).toHaveBeenCalledTimes(1);
   });
 });

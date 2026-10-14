@@ -182,6 +182,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
         shippingZonesDisabled={zoneAssignment.busy}
         onRequestAssignZones={zoneAssignment.openAssign}
         onRemoveShippingZone={zoneAssignment.remove}
+        onShowAllShippingZones={zoneAssignment.openAll}
         onDelete={() => openModal("delete")}
         onShowMetadata={() => openModal("view-warehouse-metadata")}
         onShowSetupChecklist={

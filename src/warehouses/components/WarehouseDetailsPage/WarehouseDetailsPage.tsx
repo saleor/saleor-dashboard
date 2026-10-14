@@ -71,6 +71,7 @@ interface WarehouseDetailsPageProps {
   shippingZonesDisabled?: boolean;
   onRequestAssignZones: () => void;
   onRemoveShippingZone: (zoneId: string) => void;
+  onShowAllShippingZones?: () => void;
   onDelete: () => void;
   onShowMetadata: () => void;
   onShowSetupChecklist?: () => void;
@@ -160,6 +161,7 @@ export const WarehouseDetailsPage = ({
   shippingZonesDisabled,
   onRequestAssignZones,
   onRemoveShippingZone,
+  onShowAllShippingZones,
   onDelete,
   onShowMetadata,
   onShowSetupChecklist,
@@ -243,6 +245,7 @@ export const WarehouseDetailsPage = ({
           shippingZonesDisabled={shippingZonesDisabled}
           onRequestAssignZones={onRequestAssignZones}
           onRemoveShippingZone={onRemoveShippingZone}
+          onShowAllShippingZones={onShowAllShippingZones}
           submit={formData.submit}
           validationErrors={validationErrors}
           warehouse={warehouse}
@@ -283,6 +286,7 @@ interface WarehouseDetailsFormProps {
   shippingZonesDisabled?: boolean;
   onRequestAssignZones: () => void;
   onRemoveShippingZone: (zoneId: string) => void;
+  onShowAllShippingZones?: () => void;
   submit: UseFormResult<WarehouseDetailsPageFormData>["submit"];
   validationErrors: AccountErrorFragment[];
   warehouse: WarehouseDetailsFragment;
@@ -319,6 +323,7 @@ const WarehouseDetailsForm = ({
   shippingZonesDisabled,
   onRequestAssignZones,
   onRemoveShippingZone,
+  onShowAllShippingZones,
   submit,
   validationErrors,
   warehouse,
@@ -434,6 +439,7 @@ const WarehouseDetailsForm = ({
             disabled={shippingZonesDisabled}
             onRequestAssign={onRequestAssignZones}
             onRemove={onRemoveShippingZone}
+            onShowAll={onShowAllShippingZones}
           />
         </Box>
       </DetailPageLayout.RightSidebar>

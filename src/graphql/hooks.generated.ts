@@ -25210,6 +25210,59 @@ export function useWarehouseShippingZonesToAssignLazyQuery(baseOptions?: ApolloR
 export type WarehouseShippingZonesToAssignQueryHookResult = ReturnType<typeof useWarehouseShippingZonesToAssignQuery>;
 export type WarehouseShippingZonesToAssignLazyQueryHookResult = ReturnType<typeof useWarehouseShippingZonesToAssignLazyQuery>;
 export type WarehouseShippingZonesToAssignQueryResult = Apollo.QueryResult<Types.WarehouseShippingZonesToAssignQuery, Types.WarehouseShippingZonesToAssignQueryVariables>;
+export const WarehouseShippingZonesPageDocument = gql`
+    query WarehouseShippingZonesPage($id: ID!, $first: Int!, $after: String) {
+  warehouse(id: $id) {
+    id
+    shippingZones(first: $first, after: $after) {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          channels {
+            id
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWarehouseShippingZonesPageQuery__
+ *
+ * To run a query within a React component, call `useWarehouseShippingZonesPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehouseShippingZonesPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehouseShippingZonesPageQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useWarehouseShippingZonesPageQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>(WarehouseShippingZonesPageDocument, options);
+      }
+export function useWarehouseShippingZonesPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>(WarehouseShippingZonesPageDocument, options);
+        }
+export type WarehouseShippingZonesPageQueryHookResult = ReturnType<typeof useWarehouseShippingZonesPageQuery>;
+export type WarehouseShippingZonesPageLazyQueryHookResult = ReturnType<typeof useWarehouseShippingZonesPageLazyQuery>;
+export type WarehouseShippingZonesPageQueryResult = Apollo.QueryResult<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>;
 export const WarehouseStockAvailabilityModeDocument = gql`
     query WarehouseStockAvailabilityMode {
   shop {

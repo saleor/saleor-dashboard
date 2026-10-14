@@ -1,5 +1,8 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { channelUrl } from "@dashboard/channels/urls";
 import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import { AssignListAllDialog } from "@dashboard/components/AssignListCard/AssignListAllDialog";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
@@ -15,6 +18,7 @@ import {
   type ZoneChannelMembership,
 } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
 import { Text } from "@saleor/macaw-ui-next";
+import { Globe } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -55,6 +59,7 @@ export const useWarehouseDetailsChannels = ({
   const canManageShipping = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SHIPPING]);
   const membership = useWarehouseChannelMembership(warehouseId);
   const [assignOpen, setAssignOpen] = useState(false);
+  const [allOpen, setAllOpen] = useState(false);
   const [pendingRemove, setPendingRemove] = useState<{
     channelId: string;
     channelName: string;
@@ -178,6 +183,29 @@ export const useWarehouseDetailsChannels = ({
           onRetry={membership.retry}
           onRemove={requestRemove}
           onRequestAssign={() => setAssignOpen(true)}
+          onShowAll={() => setAllOpen(true)}
+        />
+        <AssignListAllDialog
+          open={allOpen}
+          title={<FormattedMessage {...messages.channelsTitle} />}
+          items={membership.channels.map(channel => ({
+            id: channel.id,
+            name: channel.name,
+            href: channelUrl(channel.id),
+            icon: <Globe size={iconSize.small} strokeWidth={iconStrokeWidth} />,
+          }))}
+          loading={membership.status === "loading"}
+          searchLabel={intl.formatMessage(messages.channelsSearch)}
+          searchPlaceholder={intl.formatMessage(messages.channelsSearch)}
+          noMatchMessage={<FormattedMessage {...messages.channelsNoMatch} />}
+          removable={canManage}
+          removeLabel={channel =>
+            intl.formatMessage(messages.channelsRemove, { channel: channel.name })
+          }
+          disabled={membership.assigning || membership.removingId !== undefined}
+          onRemoveItem={requestRemove}
+          onClose={() => setAllOpen(false)}
+          data-test-id="warehouse-channels-all"
         />
         {assignOpen ? (
           <WarehouseChannelsAssignDialog
