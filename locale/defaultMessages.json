@@ -645,6 +645,10 @@
   "0Kz+nM": {
     "string": "Cut-off date"
   },
+  "0Lyinz": {
+    "context": "last item of the unlinked zone list when more zones unlink than are named",
+    "string": "{count, plural, one {# other shipping zone} other {# other shipping zones}}"
+  },
   "0MetrR": {
     "context": "webhook input help text",
     "string": "This URL will receive webhook POST requests"
@@ -1503,10 +1507,6 @@
   "3fgyFh": {
     "context": "order history message",
     "string": "Payment was refunded"
-  },
-  "3h8G9p": {
-    "context": "warehouse delete dialog for a single channel",
-    "string": "It is removed from 1 channel."
   },
   "3jdRNZ": {
     "context": "promotion status filter scheduled",
@@ -4272,10 +4272,6 @@
     "context": "transaction event type, transaction was chargeback by payment provider",
     "string": "Chargeback"
   },
-  "DWxcFv": {
-    "context": "warehouse delete dialog when the channel count is known",
-    "string": "It is removed from {count} channels."
-  },
   "DY3rsj": {
     "context": "settings search alias",
     "string": "automatic checkout completion"
@@ -4729,10 +4725,6 @@
   },
   "FTYkgw": {
     "string": "Delete collections"
-  },
-  "FVY0C7": {
-    "context": "warehouse channel remove confirmation, names the zones that would unlink",
-    "string": "{zones} will also be unlinked from this warehouse, because {count, plural, one {it shares} other {they share}} no other channel with it."
   },
   "FWaL+x": {
     "context": "gift card history message",
@@ -5827,10 +5819,6 @@
     "context": "export scope option disabled when list has no active filters",
     "string": "Apply filters or search on the list to enable this option."
   },
-  "JBVFb4": {
-    "context": "last item of the unlinked zone list when more zones unlink than are named",
-    "string": "{count, plural, one {# other shipping zone} other {# other shipping zones}}"
-  },
   "JBglRB": {
     "context": "badge on recently installed extension",
     "string": "New"
@@ -6256,6 +6244,10 @@
   "Krzyo+": {
     "context": "shipment refund title",
     "string": "Shipment was refunded"
+  },
+  "KsBQ04": {
+    "context": "warehouse delete dialog when the stock count is known and above zero",
+    "string": "Deletes {count, plural, one {# stock record and its allocations} other {# stock records and their allocations}}."
   },
   "KszPFx": {
     "context": "dialog header",
@@ -7435,10 +7427,6 @@
     "context": "save preset, header",
     "string": "Save view preset"
   },
-  "PA5SMu": {
-    "context": "warehouse delete dialog for a single stock record",
-    "string": "Deletes 1 stock record and its allocations."
-  },
   "PBd/e+": {
     "context": "dialog header",
     "string": "Change address for order"
@@ -7756,10 +7744,6 @@
   },
   "QFCUEt": {
     "string": "Slug must be unique"
-  },
-  "QFJSRe": {
-    "context": "warehouse delete dialog when the stock count is known",
-    "string": "Deletes {count} stock records and their allocations."
   },
   "QGjJcT": {
     "context": "number of products",
@@ -9086,6 +9070,10 @@
     "context": "customer type detail page, top-bar metadata button tooltip",
     "string": "Edit customer type metadata"
   },
+  "V4OIv3": {
+    "context": "warehouse channel remove confirmation when the shipping zone check failed",
+    "string": "We couldn't check which shipping zones depend on this channel. Zones that share no other channel with this warehouse will be unlinked from it."
+  },
   "V4Pdx+": {
     "context": "product detail page, top-bar metadata button tooltip",
     "string": "Edit product metadata"
@@ -9109,6 +9097,10 @@
   "V8aQTU": {
     "context": "channel order setting name referenced in redemptions hint",
     "string": "Include draft orders in voucher usage"
+  },
+  "V9JpCr": {
+    "context": "warehouse delete dialog when the channel count is known and above zero",
+    "string": "It is removed from {count, plural, one {# channel} other {# channels}}."
   },
   "VEE4gD": {
     "context": "error message",
@@ -13239,6 +13231,10 @@
   "joN8sy": {
     "string": "Extension doesn't have any permissions granted."
   },
+  "jofw4F": {
+    "context": "warehouse channel remove confirmation, names the zones that would unlink",
+    "string": "{zones} will also be unlinked from this warehouse, because {count, plural, one {it shares} other {they share}} no other channel with it."
+  },
   "jp2Jjs": {
     "context": "automatic completion cut-off date description",
     "string": "Only checkouts created on or after this date will be automatically completed. If not set, current time will be used. {link}"
@@ -13969,10 +13965,6 @@
   "m7EwFg": {
     "context": "warning when preview is truncated due to too many combinations",
     "string": "Your selection would create {total} variants. You can generate up to {limit} at a time."
-  },
-  "m7dQTa": {
-    "context": "warehouse channel remove confirmation when the shipping zone check failed",
-    "string": "We couldn't check which shipping zones depend on this channel. Zones that share no other channel with this warehouse will be unlinked from it."
   },
   "m8cjcK": {
     "context": "add authorization key error",

@@ -69,8 +69,6 @@ export const WarehouseDeleteDialog = ({
                 <FormattedMessage {...messages.deleteImpactStockUnknown} />
               ) : stockCount === 0 ? (
                 <FormattedMessage {...messages.deleteImpactNoStock} />
-              ) : stockCount === 1 ? (
-                <FormattedMessage {...messages.deleteImpactStockOne} />
               ) : (
                 <FormattedMessage {...messages.deleteImpactStock} values={{ count: stockCount }} />
               )}{" "}
@@ -78,8 +76,6 @@ export const WarehouseDeleteDialog = ({
                 <FormattedMessage {...messages.deleteImpactChannelsUnknown} />
               ) : channelCount === 0 ? (
                 <FormattedMessage {...messages.deleteImpactNoChannels} />
-              ) : channelCount === 1 ? (
-                <FormattedMessage {...messages.deleteImpactChannelOne} />
               ) : (
                 <FormattedMessage
                   {...messages.deleteImpactChannels}
