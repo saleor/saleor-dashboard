@@ -140,7 +140,11 @@ describe("splitWarehousesByLatestCheck", () => {
       warehouses: [warsaw, berlin, krakow],
       channelIds: ["channel-pl"],
       checkLimit: 100,
-      answer: { checkedIds: ["w-warsaw", "w-berlin"], inChannelIds: ["w-warsaw"] },
+      answer: {
+        checkedIds: ["w-warsaw", "w-berlin"],
+        inChannelIds: ["w-warsaw"],
+        channelIds: ["channel-pl"],
+      },
       failed: false,
     };
 
@@ -158,7 +162,7 @@ describe("splitWarehousesByLatestCheck", () => {
       warehouses: [warsaw, berlin],
       channelIds: ["channel-pl"],
       checkLimit: 1,
-      answer: { checkedIds: ["w-warsaw"], inChannelIds: [] },
+      answer: { checkedIds: ["w-warsaw"], inChannelIds: [], channelIds: ["channel-pl"] },
       failed: false,
     };
 
@@ -177,6 +181,28 @@ describe("splitWarehousesByLatestCheck", () => {
       channelIds: ["channel-pl"],
       checkLimit: 100,
       answer: null,
+      failed: false,
+    };
+
+    // Act
+    const split = splitWarehousesByLatestCheck(input);
+
+    // Assert
+    expect(split.eligible).toEqual([warsaw, berlin]);
+    expect(split.ineligible).toEqual([]);
+  });
+
+  it("ignores an answer made for other channels until the new check arrives", () => {
+    // Arrange
+    const input: LatestCheckInput = {
+      warehouses: [warsaw, berlin],
+      channelIds: ["channel-pl", "channel-de"],
+      checkLimit: 100,
+      answer: {
+        checkedIds: ["w-warsaw", "w-berlin"],
+        inChannelIds: ["w-warsaw"],
+        channelIds: ["channel-pl"],
+      },
       failed: false,
     };
 

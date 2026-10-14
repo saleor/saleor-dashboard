@@ -56,6 +56,13 @@ export const resolveEligibleWarehouseIds = ({
   return new Set(warehouseIds.filter(id => !checked.has(id) || inChannel.has(id)));
 };
 
+/** The same ids, in any order. */
+export const sameIds = (left: readonly string[], right: readonly string[]): boolean => {
+  const rightIds = new Set(right);
+
+  return left.length === right.length && left.every(id => rightIds.has(id));
+};
+
 /**
  * Splits the picker's warehouses using the latest finished check. While a newer check loads,
  * warehouses it has not answered yet stay out of both lists, so earlier results keep their place
@@ -72,22 +79,24 @@ export const splitWarehousesByLatestCheck = ({
   warehouses: WarehouseChoice[];
   channelIds: string[];
   checkLimit: number;
-  /** Null until a check finishes. */
-  answer: { checkedIds: string[]; inChannelIds: string[] } | null;
+  /** Null until a check finishes. `channelIds` are the channels that check was made for. */
+  answer: { checkedIds: string[]; inChannelIds: string[]; channelIds: string[] } | null;
   failed: boolean;
 }): { eligible: WarehouseChoice[]; ineligible: WarehouseChoice[] } => {
+  // An answer for other channels says nothing about these ones; wait for the new check.
+  const current = answer && sameIds(answer.channelIds, channelIds) ? answer : null;
   const checkable = new Set(warehouses.slice(0, checkLimit).map(warehouse => warehouse.id));
-  const answered = new Set(answer?.checkedIds ?? []);
+  const currented = new Set(current?.checkedIds ?? []);
   const visible =
-    answer && !failed
-      ? warehouses.filter(warehouse => !checkable.has(warehouse.id) || answered.has(warehouse.id))
+    current && !failed
+      ? warehouses.filter(warehouse => !checkable.has(warehouse.id) || currented.has(warehouse.id))
       : warehouses;
   const eligibleIds = resolveEligibleWarehouseIds({
     warehouseIds: visible.map(warehouse => warehouse.id),
     channelIds,
-    checkedIds: answer?.checkedIds ?? [],
-    inChannelIds: answer?.inChannelIds ?? [],
-    failed: failed || answer === null,
+    checkedIds: current?.checkedIds ?? [],
+    inChannelIds: current?.inChannelIds ?? [],
+    failed: failed || current === null,
   });
 
   return splitWarehousesByZoneChannels({ warehouses: visible, eligibleIds });
