@@ -2307,6 +2307,10 @@
     "context": "voucher detail section nav item",
     "string": "Countries"
   },
+  "6f9P9C": {
+    "context": "warehouse channels assign failure, count is how many channels were selected",
+    "string": "{count, plural, one {Couldn't add this warehouse to the channel} other {Couldn't add this warehouse to # channels}}. Try again."
+  },
   "6fAGSm": {
     "context": "Product is not visible via public API",
     "string": "Not visible"
@@ -4199,6 +4203,10 @@
   "DACqZK": {
     "string": "They should check their email and use the link to set a password."
   },
+  "DAdjTt": {
+    "context": "warehouse delete dialog when the channel count is known and above zero",
+    "string": "It is removed from {count, plural, one {# channel} other {# channels}}."
+  },
   "DBuWYc": {
     "context": "voucher list status after end date",
     "string": "Ended"
@@ -4942,10 +4950,6 @@
   "G5NKx6": {
     "context": "tooltip",
     "string": "Checkout reservation time threshold is enabled in settings."
-  },
-  "G7z3ad": {
-    "context": "warehouse channels assign partial failure",
-    "string": "{ok, plural, one {Added to # channel} other {Added to # channels}}. Couldn't add to {failed}."
   },
   "G8vJ+G": {
     "context": "account settings card header when the list is empty",
@@ -5850,6 +5854,10 @@
     "context": "TopNav destination link tooltip to model types list",
     "string": "All model types"
   },
+  "JGNXUl": {
+    "context": "warehouse channels assign partial failure",
+    "string": "{ok, plural, one {Added to # channel} other {Added to # channels}}. {failed, plural, one {Couldn't add to # channel} other {Couldn't add to # channels}}."
+  },
   "JGm7E5": {
     "context": "option",
     "string": "Export stock for all warehouses"
@@ -6244,10 +6252,6 @@
   "Krzyo+": {
     "context": "shipment refund title",
     "string": "Shipment was refunded"
-  },
-  "KsBQ04": {
-    "context": "warehouse delete dialog when the stock count is known and above zero",
-    "string": "Deletes {count, plural, one {# stock record and its allocations} other {# stock records and their allocations}}."
   },
   "KszPFx": {
     "context": "dialog header",
@@ -7217,10 +7221,6 @@
   "OPtrMg": {
     "context": "header",
     "string": "{webhookName} Details"
-  },
-  "ORApQI": {
-    "context": "warehouse channels assign failure",
-    "string": "Couldn't add this warehouse to the channel. Try again."
   },
   "ORQvOg": {
     "string": "You don't have permission to perform this action"
@@ -9097,10 +9097,6 @@
   "V8aQTU": {
     "context": "channel order setting name referenced in redemptions hint",
     "string": "Include draft orders in voucher usage"
-  },
-  "V9JpCr": {
-    "context": "warehouse delete dialog when the channel count is known and above zero",
-    "string": "It is removed from {count, plural, one {# channel} other {# channels}}."
   },
   "VEE4gD": {
     "context": "error message",
@@ -11654,6 +11650,10 @@
   "e3NyeN": {
     "context": "fulfill card title for a single line",
     "string": "Item ready to ship"
+  },
+  "e48qES": {
+    "context": "warehouse delete dialog when the stock count is known and above zero",
+    "string": "Deletes {count, plural, one {# stock record and its allocations} other {# stock records and their allocations}}."
   },
   "e4UtKH": {
     "context": "Transaction event status - failure",

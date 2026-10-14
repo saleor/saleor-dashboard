@@ -248,14 +248,16 @@ export const useWarehouseDetailsChannels = ({
                       result.ok === 0
                         ? messages.channelsAssignFailed
                         : messages.channelsAssignPartial,
-                      { ok: result.ok, failed: result.failed },
+                      { ok: result.ok, failed: result.failed, count: result.failed },
                     ),
                   });
                 })
                 .catch(() => {
                   notify({
                     status: "error",
-                    text: intl.formatMessage(messages.channelsAssignFailed),
+                    text: intl.formatMessage(messages.channelsAssignFailed, {
+                      count: channelIds.length,
+                    }),
                   });
                 })
                 .finally(() => {

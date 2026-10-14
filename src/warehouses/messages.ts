@@ -314,14 +314,15 @@ export const messages = defineMessages({
     description: "warehouse channels assign success",
   },
   channelsAssignFailed: {
-    id: "ORApQI",
-    defaultMessage: "Couldn't add this warehouse to the channel. Try again.",
-    description: "warehouse channels assign failure",
+    id: "cGFXnU",
+    defaultMessage:
+      "{count, plural, one {Couldn't add this warehouse to the channel} other {Couldn't add this warehouse to # channels}}. Try again.",
+    description: "warehouse channels assign failure, count is how many channels were selected",
   },
   channelsAssignPartial: {
-    id: "G7z3ad",
+    id: "lGej+R",
     defaultMessage:
-      "{ok, plural, one {Added to # channel} other {Added to # channels}}. Couldn't add to {failed}.",
+      "{ok, plural, one {Added to # channel} other {Added to # channels}}. {failed, plural, one {Couldn't add to # channel} other {Couldn't add to # channels}}.",
     description: "warehouse channels assign partial failure",
   },
   channelsRemoved: {
