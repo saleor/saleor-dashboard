@@ -4,7 +4,8 @@ import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { type ExitFormDialogData, type SubmitFn, type WithFormId } from "./types";
 
 export interface UseExitFormDialogResult
-  extends Omit<
+  extends
+    Omit<
       ExitFormDialogData,
       "setIsDirty" | "setExitDialogSubmitRef" | "setBlockDialogClose" | "unregisterForm"
     >,

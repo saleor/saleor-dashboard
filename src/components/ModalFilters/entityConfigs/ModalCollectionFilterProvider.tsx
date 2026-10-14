@@ -6,8 +6,10 @@ import { type ModalFilterResult } from "../types";
 import { useModalFilters } from "../useModalFilters";
 import { collectionFilterConfig } from "./collectionFilterConfig";
 
-interface ModalCollectionFilterContextValue
-  extends ModalFilterResult<{ filter: CollectionFilterInput; channel: string | undefined }> {
+interface ModalCollectionFilterContextValue extends ModalFilterResult<{
+  filter: CollectionFilterInput;
+  channel: string | undefined;
+}> {
   combinedFilters: {
     filter: CollectionFilterInput;
     channel: string | undefined;

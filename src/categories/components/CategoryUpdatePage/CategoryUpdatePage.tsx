@@ -50,8 +50,10 @@ import { CategorySaveCompositionHint } from "./CategorySaveCompositionHint";
 import CategoryUpdateForm, { type CategoryUpdateData } from "./form";
 import { messages } from "./messages";
 
-interface CategoryUpdatePageProps
-  extends Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings"> {
+interface CategoryUpdatePageProps extends Pick<
+  ListProps<ListViews.CATEGORY_LIST>,
+  "onUpdateListSettings" | "settings"
+> {
   categoryId: string;
   params: CategoryUrlQueryParams;
   errors: ProductErrorFragment[];

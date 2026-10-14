@@ -20,7 +20,8 @@ type Categories = {
 }[];
 
 interface AssignCategoryDialogProps
-  extends FetchMoreProps,
+  extends
+    FetchMoreProps,
     DialogProps,
     Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {
   confirmButtonState: ConfirmButtonTransitionState;

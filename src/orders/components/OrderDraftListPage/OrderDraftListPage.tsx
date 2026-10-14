@@ -21,7 +21,8 @@ import OrderLimitReached from "../OrderLimitReached";
 import { type OrderDraftFilterKeys, type OrderDraftListFilterOpts } from "./filters";
 
 interface OrderDraftListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     FilterPagePropsWithPresets<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
     SortPage<OrderDraftListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];

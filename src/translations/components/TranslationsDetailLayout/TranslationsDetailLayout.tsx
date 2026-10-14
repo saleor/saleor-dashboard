@@ -23,24 +23,23 @@ import { TranslationSection } from "../TranslationSection/TranslationSection";
 import { translationDetailMessages } from "./messages";
 import styles from "./TranslationsDetailLayout.module.css";
 
-interface TranslationsDetailLayoutProps
-  extends Pick<
-    TranslationsEntitiesPageProps,
-    | "activeField"
-    | "bulk"
-    | "disabled"
-    | "languageCode"
-    | "languages"
-    | "saveButtonState"
-    | "onBulkChange"
-    | "onBulkSubmit"
-    | "onDiscard"
-    | "onEdit"
-    | "onSubmit"
-    | "fieldErrors"
-    | "onClearFieldError"
-    | "onClearFieldErrors"
-  > {
+interface TranslationsDetailLayoutProps extends Pick<
+  TranslationsEntitiesPageProps,
+  | "activeField"
+  | "bulk"
+  | "disabled"
+  | "languageCode"
+  | "languages"
+  | "saveButtonState"
+  | "onBulkChange"
+  | "onBulkSubmit"
+  | "onDiscard"
+  | "onEdit"
+  | "onSubmit"
+  | "fieldErrors"
+  | "onClearFieldError"
+  | "onClearFieldErrors"
+> {
   sections: TranslationSectionConfig[];
   richTextResetKey?: string;
   onValueChange?: (field: TranslationField, value: string) => void;

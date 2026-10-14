@@ -35,7 +35,8 @@ import {
 } from "./filters";
 
 interface VoucherListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     FilterPagePropsWithPresets<VoucherFilterKeys, VoucherListFilterOpts>,
     SortPage<VoucherListUrlSortField>,
     ChannelProps {

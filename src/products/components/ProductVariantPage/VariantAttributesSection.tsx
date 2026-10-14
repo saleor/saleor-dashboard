@@ -19,8 +19,10 @@ import { CircleHelp } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
-interface VariantAttributesSectionProps
-  extends Omit<AttributeRowHandlers, "fetchMoreAttributeValues"> {
+interface VariantAttributesSectionProps extends Omit<
+  AttributeRowHandlers,
+  "fetchMoreAttributeValues"
+> {
   title: ReactNode;
   attributes: AttributeInput[];
   /** Total count of all variant attributes (selection + non-selection) */

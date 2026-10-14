@@ -54,9 +54,9 @@ including `packageManager` and `engines`; read aliases from `tsconfig.json`.
 Match verification to the affected code. Complete relevant checks before handing
 back implementation work, and report any checks that could not run.
 
-- Documentation-only changes: format the changed files with Prettier; application
+- Documentation-only changes: format the changed files with oxfmt; application
   tests, type checks, and knip are unnecessary.
-- Code changes: run oxlint with auto-fix and Prettier on the changed files before
+- Code changes: run oxlint with auto-fix and oxfmt on the changed files before
   manually fixing lint errors. ESLint only runs GraphQL rules
   (`eslint.config.mjs`); run it on changed GraphQL operations. Run affected tests
   and the relevant `check-types:*` scripts from `package.json`.
