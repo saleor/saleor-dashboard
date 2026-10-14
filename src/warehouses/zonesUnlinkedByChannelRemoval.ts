@@ -27,6 +27,34 @@ export const zonesUnlinkedByRemovingWarehouseChannel = ({
   });
 };
 
+/**
+ * What to tell the user before removing a warehouse channel, or null to remove at once.
+ * Zones past a truncated list may depend on the channel alone, so those always confirm.
+ */
+export const channelRemovalConfirmation = ({
+  removedChannelId,
+  remainingChannelIds,
+  zones,
+  zonesTruncated,
+}: {
+  removedChannelId: string;
+  remainingChannelIds: string[];
+  zones: ZoneChannelMembership[];
+  zonesTruncated: boolean;
+}): { zoneNames: string[]; truncated: boolean } | null => {
+  const unlinked = zonesUnlinkedByRemovingWarehouseChannel({
+    removedChannelId,
+    remainingChannelIds,
+    zones,
+  });
+
+  if (unlinked.length === 0 && !zonesTruncated) {
+    return null;
+  }
+
+  return { zoneNames: unlinked.map(zone => zone.name), truncated: zonesTruncated };
+};
+
 type WarehouseZonesGuidance =
   | { kind: "loading" }
   | { kind: "hidden" }

@@ -349,6 +349,12 @@ export const messages = defineMessages({
       "{zones} will also be unlinked from this warehouse, because they share no other channel.",
     description: "warehouse channel remove confirmation when zones would unlink",
   },
+  channelsRemoveUnlinkUnknown: {
+    id: "Us3bWw",
+    defaultMessage:
+      "Shipping zones that share no other channel with this warehouse will be unlinked from it.",
+    description: "warehouse channel remove when the zone list is too long to check",
+  },
   channelsRemoveUnlinkMore: {
     id: "Q9aYIy",
     defaultMessage: "Other shipping zones may be unlinked too.",

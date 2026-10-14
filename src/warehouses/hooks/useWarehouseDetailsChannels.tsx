@@ -3,14 +3,15 @@ import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
+import { ChannelRemoveUnlinkMessage } from "@dashboard/warehouses/components/WarehouseChannelsCard/ChannelRemoveUnlinkMessage";
 import { WarehouseChannelsAssignDialog } from "@dashboard/warehouses/components/WarehouseChannelsCard/WarehouseChannelsAssignDialog";
 import { WarehouseChannelsCard } from "@dashboard/warehouses/components/WarehouseChannelsCard/WarehouseChannelsCard";
 import { WarehouseSetupChecklist } from "@dashboard/warehouses/components/WarehouseSetupChecklist/WarehouseSetupChecklist";
 import { messages } from "@dashboard/warehouses/messages";
 import {
+  channelRemovalConfirmation,
   warehouseSharesShippingZone,
   type ZoneChannelMembership,
-  zonesUnlinkedByRemovingWarehouseChannel,
 } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
 import { Text } from "@saleor/macaw-ui-next";
 import { type ReactNode, useState } from "react";
@@ -90,21 +91,17 @@ export const useWarehouseDetailsChannels = ({
     const channelName =
       membership.channels.find(channel => channel.id === channelId)?.name ?? channelId;
     // Saleor drops the zone link in either stock mode, and the zones card shows it in both.
-    const unlinked = zonesUnlinkedByRemovingWarehouseChannel({
+    const confirmation = channelRemovalConfirmation({
       removedChannelId: channelId,
       remainingChannelIds: membership.channels
         .filter(channel => channel.id !== channelId)
         .map(channel => channel.id),
       zones,
+      zonesTruncated,
     });
 
-    if (unlinked.length > 0) {
-      setPendingRemove({
-        channelId,
-        channelName,
-        zoneNames: unlinked.map(zone => zone.name),
-        truncated: zonesTruncated,
-      });
+    if (confirmation) {
+      setPendingRemove({ channelId, channelName, ...confirmation });
 
       return;
     }
@@ -249,17 +246,11 @@ export const useWarehouseDetailsChannels = ({
             void removeChannel(channelId);
           }}
         >
-          <FormattedMessage
-            {...messages.channelsRemoveUnlink}
-            values={{
-              zones: intl.formatList(pendingRemove?.zoneNames ?? [], { type: "conjunction" }),
-            }}
-          />
-          {pendingRemove?.truncated ? (
-            <>
-              {" "}
-              <FormattedMessage {...messages.channelsRemoveUnlinkMore} />
-            </>
+          {pendingRemove ? (
+            <ChannelRemoveUnlinkMessage
+              zoneNames={pendingRemove.zoneNames}
+              truncated={pendingRemove.truncated}
+            />
           ) : null}
         </ActionDialog>
       </>

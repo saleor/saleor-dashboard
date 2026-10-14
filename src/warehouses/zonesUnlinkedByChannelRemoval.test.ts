@@ -1,10 +1,12 @@
 import {
+  channelRemovalConfirmation,
   warehouseSharesShippingZone,
   warehouseZonesGuidance,
   type ZoneChannelMembership,
   zonesUnlinkedByRemovingWarehouseChannel,
 } from "./zonesUnlinkedByChannelRemoval";
 
+type ConfirmationInput = Parameters<typeof channelRemovalConfirmation>[0];
 type UnlinkInput = Parameters<typeof zonesUnlinkedByRemovingWarehouseChannel>[0];
 type GuidanceInput = Parameters<typeof warehouseZonesGuidance>[0];
 
@@ -167,5 +169,55 @@ describe("warehouseZonesGuidance", () => {
 
     // Assert
     expect(guidance).toEqual({ kind: "legacy-linked" });
+  });
+});
+
+describe("channelRemovalConfirmation", () => {
+  it("removes at once when the full zone list has nothing to unlink", () => {
+    // Arrange
+    const input: ConfirmationInput = {
+      removedChannelId: "ch-eu",
+      remainingChannelIds: ["ch-us"],
+      zones: [shared],
+      zonesTruncated: false,
+    };
+
+    // Act
+    const confirmation = channelRemovalConfirmation(input);
+
+    // Assert
+    expect(confirmation).toBeNull();
+  });
+
+  it("names the zones that would unlink", () => {
+    // Arrange
+    const input: ConfirmationInput = {
+      removedChannelId: "ch-eu",
+      remainingChannelIds: ["ch-us"],
+      zones: [europe, shared],
+      zonesTruncated: false,
+    };
+
+    // Act
+    const confirmation = channelRemovalConfirmation(input);
+
+    // Assert
+    expect(confirmation).toEqual({ zoneNames: ["Europe"], truncated: false });
+  });
+
+  it("still confirms when the zone list is truncated and no loaded zone unlinks", () => {
+    // Arrange
+    const input: ConfirmationInput = {
+      removedChannelId: "ch-eu",
+      remainingChannelIds: ["ch-us"],
+      zones: [shared],
+      zonesTruncated: true,
+    };
+
+    // Act
+    const confirmation = channelRemovalConfirmation(input);
+
+    // Assert
+    expect(confirmation).toEqual({ zoneNames: [], truncated: true });
   });
 });

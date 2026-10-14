@@ -11533,6 +11533,10 @@
     "context": "ripple action",
     "string": "Create a channel"
   },
+  "dSyqnB": {
+    "context": "warehouse channel remove when the zone list is too long to check",
+    "string": "Shipping zones that share no other channel with this warehouse will be unlinked from it."
+  },
   "dTkmON": {
     "context": "edit tracking button",
     "string": "Edit tracking"
