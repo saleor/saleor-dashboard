@@ -1,5 +1,7 @@
 import { WarehouseClickAndCollectOptionEnum } from "@dashboard/graphql";
 
+import { warehouseSharesShippingZone } from "./zonesUnlinkedByChannelRemoval";
+
 export interface WarehouseListChannel {
   id: string;
   name: string;
@@ -98,8 +100,10 @@ export const warehouseListRowStatus = ({
   }
 
   if (legacyStockAvailability === true && !zonesTruncated) {
-    const channelIds = new Set(channels.map(channel => channel.id));
-    const sharesZone = zones.some(zone => zone.channelIds.some(id => channelIds.has(id)));
+    const sharesZone = warehouseSharesShippingZone({
+      zones,
+      warehouseChannelIds: channels.map(channel => channel.id),
+    });
 
     if (!sharesZone) {
       return { kind: "no-shipping-zone" };

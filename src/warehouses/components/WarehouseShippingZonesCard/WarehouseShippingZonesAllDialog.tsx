@@ -36,6 +36,7 @@ export const WarehouseShippingZonesAllDialog = ({
   onClose,
 }: WarehouseShippingZonesAllDialogProps): ReactNode => {
   const intl = useIntl();
+  const channelIdSet = new Set(warehouseChannelIds);
 
   return (
     <AssignListAllDialog
@@ -45,7 +46,7 @@ export const WarehouseShippingZonesAllDialog = ({
         id: zone.id,
         name: zone.name,
         href: shippingZoneUrl(zone.id),
-        description: isZoneOutsideChannels(zone, warehouseChannelIds) ? (
+        description: isZoneOutsideChannels(zone, channelIdSet) ? (
           <FormattedMessage {...messages.zonesOutsideChannel} />
         ) : undefined,
       }))}

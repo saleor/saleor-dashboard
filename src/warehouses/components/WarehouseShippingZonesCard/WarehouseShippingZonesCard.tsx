@@ -117,6 +117,7 @@ export const WarehouseShippingZonesCard = ({
     return null;
   }
 
+  const channelIdSet = new Set(warehouseChannelIds);
   const zoneRequired = guidance.kind === "legacy-need-zone";
   // Zones are offered by shared channel, so without channels the assign dialog would be empty.
   const canAssign =
@@ -148,7 +149,7 @@ export const WarehouseShippingZonesCard = ({
         href: shippingZoneUrl(zone.id),
         // Always mark outside-channel links, including when they are the only zones
         // (legacy-need-zone) so the list explains why they do not count for selling.
-        description: isZoneOutsideChannels(zone, warehouseChannelIds) ? (
+        description: isZoneOutsideChannels(zone, channelIdSet) ? (
           <FormattedMessage {...messages.zonesOutsideChannel} />
         ) : undefined,
       }))}

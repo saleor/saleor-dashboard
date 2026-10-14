@@ -80,11 +80,14 @@ type WarehouseZonesGuidance =
   | { kind: "legacy-need-zone"; channelNames: string[] }
   | { kind: "legacy-linked" };
 
-/** The zone is linked but shares no channel with the warehouse, so its stock is not sold there. */
+/**
+ * The zone is linked but shares no channel with the warehouse, so its stock is not sold there.
+ * The single rule for "does this zone count": list status, checklist and zone cards all use it.
+ */
 export const isZoneOutsideChannels = (
   zone: { channelIds: readonly string[] },
-  warehouseChannelIds: readonly string[],
-): boolean => !zone.channelIds.some(channelId => warehouseChannelIds.includes(channelId));
+  warehouseChannelIds: ReadonlySet<string>,
+): boolean => !zone.channelIds.some(channelId => warehouseChannelIds.has(channelId));
 
 /** True when at least one linked zone shares a channel with the warehouse. */
 export const warehouseSharesShippingZone = ({
@@ -96,7 +99,7 @@ export const warehouseSharesShippingZone = ({
 }): boolean => {
   const channelIds = new Set(warehouseChannelIds);
 
-  return zones.some(zone => zone.channelIds.some(channelId => channelIds.has(channelId)));
+  return zones.some(zone => !isZoneOutsideChannels(zone, channelIds));
 };
 
 export const warehouseZonesGuidance = ({

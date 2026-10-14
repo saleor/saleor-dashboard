@@ -15,6 +15,7 @@ import { checkChannelRemoval } from "@dashboard/warehouses/fetchWarehouseZoneMem
 import { messages } from "@dashboard/warehouses/messages";
 import { isWarehouseSetupChecklistVisible } from "@dashboard/warehouses/warehouseSetupChecklistVisibility";
 import {
+  isZoneOutsideChannels,
   warehouseSharesShippingZone,
   type ZoneChannelMembership,
 } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
@@ -154,8 +155,9 @@ export const useWarehouseDetailsChannels = ({
   // legacy shop does not look ready before we know a zone is required.
   const stockModeReady = legacyStockAvailability !== undefined;
   const shippingZoneRequired = legacyStockAvailability === true;
-  const usableZoneCount = zones.filter(zone =>
-    zone.channelIds.some(channelId => warehouseChannelIds.includes(channelId)),
+  const warehouseChannelIdSet = new Set(warehouseChannelIds);
+  const usableZoneCount = zones.filter(
+    zone => !isZoneOutsideChannels(zone, warehouseChannelIdSet),
   ).length;
   // Truncated lists match the warehouse list: do not claim “no zone”.
   const hasShippingZone =
