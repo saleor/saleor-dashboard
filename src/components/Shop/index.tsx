@@ -33,7 +33,7 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
         },
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [data, user]);
 
   return (
