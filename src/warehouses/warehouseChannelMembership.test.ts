@@ -8,6 +8,7 @@ import {
   membershipQueryPlan,
   resolveMemberIds,
   runPool,
+  runWarehouseLinkUpdates,
   WAREHOUSE_CHANNEL_MEMBERSHIP_LIMIT,
   warehouseLinkBatchSucceeded,
 } from "./warehouseChannelMembership";
@@ -17,6 +18,7 @@ type MatrixChannels = Parameters<typeof channelIdsFromMatrix>[0]["channels"];
 type ProbeData = Parameters<typeof channelIdsPresentInProbe>[1];
 type LinkUpdatesInput = Parameters<typeof buildWarehouseLinkUpdates>[0];
 type MemberIdsInput = Parameters<typeof resolveMemberIds>[0];
+type LinkUpdatesRunInput = Parameters<typeof runWarehouseLinkUpdates>[0];
 type LinkBatchData = Parameters<typeof warehouseLinkBatchSucceeded>[1];
 
 describe("membershipQueryPlan", () => {
@@ -260,5 +262,58 @@ describe("resolveMemberIds", () => {
 
     // Assert
     expect(memberIds).toEqual(["eu"]);
+  });
+});
+
+describe("runWarehouseLinkUpdates", () => {
+  it("sends one request per chunk and reports each entity in input order", async () => {
+    // Arrange
+    const mutate = jest
+      .fn()
+      .mockResolvedValueOnce({
+        data: {
+          e0: { errors: [] },
+          e1: { errors: [] },
+          e2: { errors: [{ code: "INVALID" }] },
+          e3: { errors: [] },
+        },
+      })
+      .mockResolvedValueOnce({ data: { e0: { errors: [] } } });
+    const input: LinkUpdatesRunInput = {
+      client: { mutate },
+      warehouseId: "w1",
+      entityIds: ["c1", "c2", "c3", "c4", "c5"],
+      action: "add",
+      linkVia: "channel",
+    };
+
+    // Act
+    const results = await runWarehouseLinkUpdates(input);
+
+    // Assert
+    expect(mutate).toHaveBeenCalledTimes(2);
+    expect(mutate.mock.calls[1][0].variables).toEqual({ warehouseId: "w1", e0: "c5" });
+    expect(results).toEqual([true, true, false, true, true]);
+  });
+
+  it("marks a whole chunk failed when its request is rejected", async () => {
+    // Arrange
+    const mutate = jest
+      .fn()
+      .mockRejectedValueOnce(new Error("Number of mutations exceed the limit of 4"))
+      .mockResolvedValueOnce({ data: { e0: { errors: [], shippingZone: { id: "z5" } } } });
+    const input: LinkUpdatesRunInput = {
+      client: { mutate },
+      warehouseId: "w1",
+      entityIds: ["z1", "z2", "z3", "z4", "z5"],
+      action: "remove",
+      linkVia: "shippingZone",
+    };
+
+    // Act
+    const results = await runWarehouseLinkUpdates(input);
+
+    // Assert
+    expect(results).toEqual([false, false, false, false, true]);
   });
 });

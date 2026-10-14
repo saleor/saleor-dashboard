@@ -1,4 +1,4 @@
-import { type DocumentNode, gql } from "@apollo/client";
+import { type ApolloClient, type DocumentNode, gql } from "@apollo/client";
 
 /** Fast path loads every channel's warehouse ids. Above this product, probe this warehouse only. */
 export const WAREHOUSE_CHANNEL_MEMBERSHIP_LIMIT = 5000;
@@ -193,6 +193,45 @@ export const warehouseLinkBatchSucceeded = (
 
     return true;
   });
+
+type LinkMutationClient = Pick<ApolloClient<unknown>, "mutate">;
+
+/**
+ * Links or unlinks a warehouse in chunks Saleor accepts. One flag per entity, in input order.
+ * A chunk that fails as a whole marks all its entities failed.
+ */
+export const runWarehouseLinkUpdates = async ({
+  client,
+  warehouseId,
+  entityIds,
+  action,
+  linkVia,
+}: {
+  client: LinkMutationClient;
+  warehouseId: string;
+  entityIds: string[];
+  action: "add" | "remove";
+  linkVia: WarehouseLinkVia;
+}): Promise<boolean[]> => {
+  const results: boolean[] = [];
+
+  for (const chunk of chunkList(entityIds, MEMBERSHIP_UPDATE_CHUNK_SIZE)) {
+    try {
+      const batch = buildWarehouseLinkUpdates({ entityIds: chunk, action, linkVia });
+      const result = await client.mutate<Record<string, WarehouseLinkBatchNode | null>>({
+        mutation: batch.document,
+        variables: batch.variables(warehouseId),
+        errorPolicy: "all",
+      });
+
+      results.push(...warehouseLinkBatchSucceeded(chunk, result.data ?? undefined, linkVia));
+    } catch {
+      results.push(...chunk.map(() => false));
+    }
+  }
+
+  return results;
+};
 
 export const runPool = async <TItem, TResult>(
   items: TItem[],

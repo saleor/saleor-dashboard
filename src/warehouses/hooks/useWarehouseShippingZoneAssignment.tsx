@@ -6,12 +6,7 @@ import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum, useWarehouseShippingZonesToAssignQuery } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { messages } from "@dashboard/warehouses/messages";
-import {
-  buildWarehouseLinkUpdates,
-  chunkList,
-  MEMBERSHIP_UPDATE_CHUNK_SIZE,
-  warehouseLinkBatchSucceeded,
-} from "@dashboard/warehouses/warehouseChannelMembership";
+import { runWarehouseLinkUpdates } from "@dashboard/warehouses/warehouseChannelMembership";
 import { type ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -99,35 +94,14 @@ export const useWarehouseShippingZoneAssignment = ({
 
     setBusy(true);
 
-    const results: boolean[] = [];
-
     try {
-      for (const chunk of chunkList(zoneIds, MEMBERSHIP_UPDATE_CHUNK_SIZE)) {
-        try {
-          const batch = buildWarehouseLinkUpdates({
-            entityIds: chunk,
-            action: action === "assign" ? "add" : "remove",
-            linkVia: "shippingZone",
-          });
-          const result = await client.mutate<
-            Record<
-              string,
-              { errors?: unknown[] | null; shippingZone?: { id: string } | null } | null
-            >
-          >({
-            mutation: batch.document,
-            variables: batch.variables(warehouseId),
-            errorPolicy: "all",
-          });
-
-          results.push(
-            ...warehouseLinkBatchSucceeded(chunk, result.data ?? undefined, "shippingZone"),
-          );
-        } catch {
-          results.push(...chunk.map(() => false));
-        }
-      }
-
+      const results = await runWarehouseLinkUpdates({
+        client,
+        warehouseId,
+        entityIds: zoneIds,
+        action: action === "assign" ? "add" : "remove",
+        linkVia: "shippingZone",
+      });
       const failed = results.filter(ok => !ok).length;
       const result =
         failed === 0 ? "success" : failed === results.length ? "error" : "partial_success";

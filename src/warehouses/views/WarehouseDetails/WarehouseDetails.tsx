@@ -18,7 +18,6 @@ import {
   getStringOrPlaceholder,
 } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
 import {
   WarehouseDetailsPage,
@@ -36,7 +35,7 @@ import {
   warehouseUrl,
   type WarehouseUrlQueryParams,
 } from "@dashboard/warehouses/urls";
-import { type ZoneChannelMembership } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
+import { warehouseZoneMemberships } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
@@ -237,21 +236,3 @@ const warehouseLoadFailed = ({
   error: unknown;
   loading: boolean;
 }): boolean => !data?.warehouse && !!error && !loading;
-
-const warehouseZoneMemberships = (
-  shippingZones:
-    | NonNullable<WarehouseDetailsQuery["warehouse"]>["shippingZones"]
-    | null
-    | undefined,
-): { zones: ZoneChannelMembership[]; truncated: boolean } => {
-  const zones = (mapEdgesToItems(shippingZones) ?? []).map(zone => ({
-    id: zone.id,
-    name: zone.name,
-    channelIds: zone.channels.map(channel => channel.id),
-  }));
-
-  return {
-    zones,
-    truncated: (shippingZones?.totalCount ?? 0) > zones.length,
-  };
-};

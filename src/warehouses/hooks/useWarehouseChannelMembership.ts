@@ -8,14 +8,12 @@ import { useEffect, useState } from "react";
 
 import {
   buildMembershipProbe,
-  buildWarehouseLinkUpdates,
   channelIdsPresentInProbe,
   chunkList,
   MEMBERSHIP_PROBE_CHUNK_SIZE,
-  MEMBERSHIP_UPDATE_CHUNK_SIZE,
   membershipQueryPlan,
   resolveMemberIds,
-  warehouseLinkBatchSucceeded,
+  runWarehouseLinkUpdates,
 } from "../warehouseChannelMembership";
 
 export interface WarehouseChannelRef {
@@ -173,41 +171,6 @@ export const useWarehouseChannelMembership = (
     }
   };
 
-  const updateMembershipBatch = async ({
-    targetWarehouseId,
-    channelIds,
-    action,
-  }: {
-    targetWarehouseId: string;
-    channelIds: string[];
-    action: "add" | "remove";
-  }): Promise<boolean[]> => {
-    const results: boolean[] = [];
-
-    for (const chunk of chunkList(channelIds, MEMBERSHIP_UPDATE_CHUNK_SIZE)) {
-      try {
-        const batch = buildWarehouseLinkUpdates({
-          entityIds: chunk,
-          action,
-          linkVia: "channel",
-        });
-        const result = await client.mutate<
-          Record<string, { errors?: unknown[] | null; channel?: { id: string } | null } | null>
-        >({
-          mutation: batch.document,
-          variables: batch.variables(targetWarehouseId),
-          errorPolicy: "all",
-        });
-
-        results.push(...warehouseLinkBatchSucceeded(chunk, result.data ?? undefined, "channel"));
-      } catch {
-        results.push(...chunk.map(() => false));
-      }
-    }
-
-    return results;
-  };
-
   const assignChannels = async (channelIds: string[]): Promise<WarehouseChannelChangeResult> => {
     if (!warehouseId || channelIds.length === 0) {
       return { ok: 0, failed: 0 };
@@ -216,10 +179,12 @@ export const useWarehouseChannelMembership = (
     setAssigning(true);
 
     try {
-      const results = await updateMembershipBatch({
-        targetWarehouseId: warehouseId,
-        channelIds,
+      const results = await runWarehouseLinkUpdates({
+        client,
+        warehouseId,
+        entityIds: channelIds,
         action: "add",
+        linkVia: "channel",
       });
       const ok = results.filter(Boolean).length;
       const failed = results.length - ok;
@@ -250,10 +215,12 @@ export const useWarehouseChannelMembership = (
     setRemovingId(channelId);
 
     try {
-      const [ok] = await updateMembershipBatch({
-        targetWarehouseId: warehouseId,
-        channelIds: [channelId],
+      const [ok] = await runWarehouseLinkUpdates({
+        client,
+        warehouseId,
+        entityIds: [channelId],
         action: "remove",
+        linkVia: "channel",
       });
 
       trackEvent("warehouse_channels_changed", {

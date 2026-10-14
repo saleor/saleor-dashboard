@@ -27,11 +27,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
+import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { messages } from "@dashboard/warehouses/messages";
 import { pickupFormChange } from "@dashboard/warehouses/pickupOptionAfterPrivateChange";
 import { defaultGraphiQLQuery } from "@dashboard/warehouses/queries";
 import { warehouseListPath } from "@dashboard/warehouses/urls";
+import { warehouseZoneMemberships } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ListChecks, Trash2 } from "lucide-react";
 import { type ReactNode, useCallback, useMemo } from "react";
@@ -199,11 +200,7 @@ export const WarehouseDetailsPage = ({
       }),
     [intl, onDelete, onShowSetupChecklist, openPlaygroundURL, warehouse?.id],
   );
-  const zones = (mapEdgesToItems(warehouse?.shippingZones) ?? []).map(zone => ({
-    id: zone.id,
-    name: zone.name,
-    channelIds: zone.channels.map(channel => channel.id),
-  }));
+  const { zones } = warehouseZoneMemberships(warehouse?.shippingZones);
 
   if (!warehouse) {
     return <WarehouseDetailsPageLoading channelsCard={channelsCard} />;

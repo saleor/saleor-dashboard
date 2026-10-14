@@ -1,11 +1,13 @@
 import {
   channelRemovalConfirmation,
   warehouseSharesShippingZone,
+  warehouseZoneMemberships,
   warehouseZonesGuidance,
   type ZoneChannelMembership,
   zonesUnlinkedByRemovingWarehouseChannel,
 } from "./zonesUnlinkedByChannelRemoval";
 
+type ZoneConnection = Parameters<typeof warehouseZoneMemberships>[0];
 type ConfirmationInput = Parameters<typeof channelRemovalConfirmation>[0];
 type UnlinkInput = Parameters<typeof zonesUnlinkedByRemovingWarehouseChannel>[0];
 type GuidanceInput = Parameters<typeof warehouseZonesGuidance>[0];
@@ -219,5 +221,35 @@ describe("channelRemovalConfirmation", () => {
 
     // Assert
     expect(confirmation).toEqual({ zoneNames: [], truncated: true });
+  });
+});
+
+describe("warehouseZoneMemberships", () => {
+  it("maps zones to channel ids and flags a cut-off list", () => {
+    // Arrange
+    const connection: ZoneConnection = {
+      totalCount: 2,
+      edges: [{ node: { id: "z-eu", name: "Europe", channels: [{ id: "ch-eu" }] } }],
+    };
+
+    // Act
+    const memberships = warehouseZoneMemberships(connection);
+
+    // Assert
+    expect(memberships).toEqual({
+      zones: [{ id: "z-eu", name: "Europe", channelIds: ["ch-eu"] }],
+      truncated: true,
+    });
+  });
+
+  it("returns no zones before the warehouse loads", () => {
+    // Arrange
+    const connection: ZoneConnection = undefined;
+
+    // Act
+    const memberships = warehouseZoneMemberships(connection);
+
+    // Assert
+    expect(memberships).toEqual({ zones: [], truncated: false });
   });
 });

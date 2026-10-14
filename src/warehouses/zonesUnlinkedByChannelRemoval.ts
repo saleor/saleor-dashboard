@@ -4,6 +4,28 @@ export interface ZoneChannelMembership {
   channelIds: string[];
 }
 
+/** Zone channel ids from a warehouse's shipping zone connection, and whether the list is cut off. */
+export const warehouseZoneMemberships = (
+  shippingZones:
+    | {
+        totalCount?: number | null;
+        edges: Array<{ node: { id: string; name: string; channels: Array<{ id: string }> } }>;
+      }
+    | null
+    | undefined,
+): { zones: ZoneChannelMembership[]; truncated: boolean } => {
+  const zones = (shippingZones?.edges ?? []).map(({ node }) => ({
+    id: node.id,
+    name: node.name,
+    channelIds: node.channels.map(channel => channel.id),
+  }));
+
+  return {
+    zones,
+    truncated: (shippingZones?.totalCount ?? 0) > zones.length,
+  };
+};
+
 /**
  * Zones that would lose their only shared channel with this warehouse.
  * Saleor deletes that link with no error when the channel is removed.

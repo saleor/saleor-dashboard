@@ -55,7 +55,6 @@ export const useWarehouseDetailsChannels = ({
   const canManageShipping = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SHIPPING]);
   const membership = useWarehouseChannelMembership(warehouseId);
   const [assignOpen, setAssignOpen] = useState(false);
-  const [assigning, setAssigning] = useState(false);
   const [pendingRemove, setPendingRemove] = useState<{
     channelId: string;
     channelName: string;
@@ -179,7 +178,7 @@ export const useWarehouseDetailsChannels = ({
           channels={membership.channels}
           availableChannels={availableChannels}
           canManage={canManage}
-          disabled={assigning || membership.removingId !== undefined}
+          disabled={membership.assigning || membership.removingId !== undefined}
           onRetry={membership.retry}
           onRemove={requestRemove}
           onRequestAssign={() => setAssignOpen(true)}
@@ -188,10 +187,9 @@ export const useWarehouseDetailsChannels = ({
           <WarehouseChannelsAssignDialog
             channels={availableChannels}
             open
-            confirming={assigning}
+            confirming={membership.assigning}
             onClose={() => setAssignOpen(false)}
             onConfirm={channelIds => {
-              setAssigning(true);
               void membership
                 .assignChannels(channelIds)
                 .then(result => {
@@ -221,7 +219,6 @@ export const useWarehouseDetailsChannels = ({
                   });
                 })
                 .finally(() => {
-                  setAssigning(false);
                   setAssignOpen(false);
                 });
             }}
