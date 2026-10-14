@@ -57,7 +57,7 @@ function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
 
     // Using full dependencies array causes debounce function
     // to be recreated on every render (comparing options)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [func]);
 
   // Cleanup

@@ -69,7 +69,7 @@ export function useCombinedRefs<T>(...refs: PossibleRef<T>[]): RefCallback<T> {
         }
       });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     refs, // Dependency array: Recalculate the callback if the array of refs itself changes instance.
   );
 }

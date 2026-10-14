@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* oxlint-disable react-hooks/exhaustive-deps */
 import { stringify } from "qs";
 import { useEffect, useMemo, useState } from "react";
 import { useHistory, useLocation } from "react-router";

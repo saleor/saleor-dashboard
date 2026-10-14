@@ -91,7 +91,7 @@ const AttributeList = ({ params }: AttributeListProps) => {
   ].join("|");
   const selectedTypeIds = useMemo(
     () => normalizeTypeIds(params.typeIds ?? params.pageTypes),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [selectedTypeIdsKey],
   );
 

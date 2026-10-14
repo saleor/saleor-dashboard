@@ -1,9 +1,8 @@
 // @ts-check
-// Most linting runs in oxlint (see .oxlintrc.json). ESLint only runs what oxlint cannot:
-// React Compiler rules and GraphQL operation rules (which need the graphql-eslint processor).
+// Linting, including React Compiler rules, runs in oxlint (see .oxlintrc.json).
+// ESLint retains GraphQL operation rules, which need the graphql-eslint processor.
 import eslintGraphql from "@graphql-eslint/eslint-plugin";
 import { globalIgnores } from "eslint/config";
-import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
@@ -23,8 +22,6 @@ export default tseslint.config(
   {
     // Rules for oxlint-only plugins are not loaded here, so ESLint cannot tell whether
     // their disable directives are used. oxlint reports unused directives instead.
-    // Keep eslint-disable comments for exhaustive-deps: React Compiler also uses
-    // them to skip compilation, and oxlint honors these comments too.
     linterOptions: {
       reportUnusedDisableDirectives: "off",
     },
@@ -32,26 +29,6 @@ export default tseslint.config(
   {
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
     extends: [tseslint.configs.base],
-    plugins: { "react-hooks": reactHooks },
-    // React Compiler rules, warn-only for gradual adoption
-    rules: {
-      "react-hooks/purity": "warn", // Side effects during render
-      "react-hooks/refs": "warn", // Reading/writing refs during render
-      "react-hooks/set-state-in-render": "warn", // setState during render
-      "react-hooks/set-state-in-effect": "warn", // Synchronous setState in effects
-      "react-hooks/immutability": "warn", // Mutation of props/state
-      "react-hooks/static-components": "warn", // Dynamic component creation
-      "react-hooks/use-memo": "warn", // useMemo violations
-      "react-hooks/void-use-memo": "warn", // useMemo returning void
-      "react-hooks/component-hook-factories": "warn", // Component/hook factory violations
-      "react-hooks/preserve-manual-memoization": "warn", // Manual memoization issues
-      "react-hooks/globals": "warn", // Global variable usage
-      "react-hooks/error-boundaries": "warn", // Error boundary violations
-      "react-hooks/config": "warn", // Config violations
-      "react-hooks/gating": "warn", // Conditional rendering violations
-      "react-hooks/incompatible-library": "warn", // Libraries incompatible with memoization
-      "react-hooks/unsupported-syntax": "warn", // Syntax the compiler cannot handle
-    },
   },
   {
     /**
