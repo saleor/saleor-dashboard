@@ -26,6 +26,7 @@ import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { isLimitReached } from "@dashboard/utils/limits";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import {
@@ -140,6 +141,10 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
       warehouses: true,
     },
   });
+
+  // Links and search can open ?action=create directly, so check the limit here too.
+  const canCreateWarehouse =
+    !limitOpts.loading && !isLimitReached(limitOpts.data?.shop.limits, "warehouses");
 
   const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
     onCompleted: data => {
@@ -256,7 +261,7 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
         hasPresetsChanged={hasPresetsChanged}
       />
       <CreateWarehouseDialog
-        open={params.action === "create"}
+        open={params.action === "create" && canCreateWarehouse}
         confirmButtonState={createTransitionState}
         countries={shopCountries}
         defaultCountryCode={defaultCountryCode}
