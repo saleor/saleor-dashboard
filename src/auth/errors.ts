@@ -28,7 +28,10 @@ export function isJwtError(error: GraphQLError): boolean {
   let jwtError: boolean;
 
   try {
-    jwtError = !!findValueInEnum((error.extensions?.exception as ExceptionWithCode)?.code, JWTError);
+    jwtError = !!findValueInEnum(
+      (error.extensions?.exception as ExceptionWithCode)?.code,
+      JWTError,
+    );
   } catch (e) {
     jwtError = false;
   }

@@ -63,6 +63,12 @@
     "@graphql-codegen/typescript",
     "@graphql-codegen/typescript-apollo-client-helpers",
     "@graphql-codegen/typescript-operations",
-    "@graphql-codegen/typescript-react-apollo"
+    "@graphql-codegen/typescript-react-apollo",
+    "@stylistic/eslint-plugin",
+    "eslint-plugin-depend",
+    "eslint-plugin-formatjs",
+    "eslint-plugin-react-you-might-not-need-an-effect",
+    "eslint-plugin-simple-import-sort",
+    "eslint-plugin-storybook"
   ]
 }

@@ -167,12 +167,12 @@ export const useCategoryTreeController = ({
     const serializedExpandedIds = serializeExpandedIds(expandedIds);
 
     if (!isEqual(serializedExpandedIds, storedExpandedIds)) {
-      // eslint-disable-next-line react-you-might-not-need-an-effect/no-pass-data-to-parent
+      // oxlint-disable-next-line react-you-might-not-need-an-effect/no-pass-data-to-parent
       setStoredExpandedIds(serializedExpandedIds);
     }
   }, [expandedIds, setStoredExpandedIds, storedExpandedIds]);
 
-  /* eslint-disable react-you-might-not-need-an-effect/no-event-handler */
+  /* oxlint-disable react-you-might-not-need-an-effect/no-event-handler */
   useEffect(() => {
     if (hasRestoredExpandedIdsRef.current) {
       return;
@@ -206,7 +206,7 @@ export const useCategoryTreeController = ({
       }),
     );
   }, [expandedIds, fetchAndStoreChildrenPage, loadingChildrenIds]);
-  /* eslint-enable react-you-might-not-need-an-effect/no-event-handler */
+  /* oxlint-enable react-you-might-not-need-an-effect/no-event-handler */
 
   const toggleExpanded = useCallback(
     async (categoryId: string): Promise<void> => {

@@ -41,5 +41,5 @@ const config = {
   coveragePathIgnorePatterns: ["<rootDir>/src/index\\.tsx"],
 };
 
-// eslint-disable-next-line no-undef
+// oxlint-disable-next-line no-undef
 module.exports = config;

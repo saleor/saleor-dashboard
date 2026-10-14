@@ -23,6 +23,8 @@ export default tseslint.config(
   {
     // Rules for oxlint-only plugins are not loaded here, so ESLint cannot tell whether
     // their disable directives are used. oxlint reports unused directives instead.
+    // Keep eslint-disable comments for exhaustive-deps: React Compiler also uses
+    // them to skip compilation, and oxlint honors these comments too.
     linterOptions: {
       reportUnusedDisableDirectives: "off",
     },

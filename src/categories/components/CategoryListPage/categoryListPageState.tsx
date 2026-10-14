@@ -47,7 +47,7 @@ export const CategoryListPageStateProvider = ({
   return <JotaiProvider store={store}>{children}</JotaiProvider>;
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
+// oxlint-disable-next-line react-refresh/only-export-components
 export const useCategoryListPageState = (): CategoryListPageState => {
   const state = useAtomValue(categoryListPageStateAtom);
 

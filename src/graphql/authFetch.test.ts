@@ -35,9 +35,9 @@ jest.mock("jwt-decode", () => ({
   default: jest.fn(),
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+// oxlint-disable-next-line @typescript-eslint/no-require-imports
 const { storage } = require("@dashboard/auth/tokenStorage");
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+// oxlint-disable-next-line @typescript-eslint/no-require-imports
 const jwtDecode = require("jwt-decode").default;
 
 const createMockResponse = (body: Record<string, unknown>) => {
@@ -74,7 +74,7 @@ describe("createFetch", () => {
       createFetch: typeof createFetch;
     }>(resolve => {
       jest.isolateModules(() => {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        // oxlint-disable-next-line @typescript-eslint/no-require-imports
         const mod = require("./authFetch");
 
         resolve(mod);
