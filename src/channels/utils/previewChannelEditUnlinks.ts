@@ -80,15 +80,18 @@ export const previewChannelEditUnlinks = async ({
     removeZoneIds,
   });
   const sharesAnother = new Map<string, boolean>();
-  const toProbe = candidates.filter(link => link.otherChannelIds.length > 0);
+  // One probe per warehouse and channel set: deduplicate before the pool, because its workers
+  // start together and would all miss a map that is filled only after each query returns.
+  const toProbe = [
+    ...new Map(
+      candidates
+        .filter(link => link.otherChannelIds.length > 0)
+        .map(link => [shareKey(link), link] as const),
+    ).values(),
+  ];
 
   await runPool(toProbe, 4, async link => {
     const key = shareKey(link);
-
-    if (sharesAnother.has(key)) {
-      return;
-    }
-
     const result = await client.query<WarehouseSharesChannelsQuery>({
       query: WarehouseSharesChannelsDocument,
       variables: { warehouseId: link.warehouseId, channelIds: link.otherChannelIds },
