@@ -3,7 +3,6 @@ import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/S
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  CountryCode,
   useWarehouseCreateMutation,
   useWarehouseDeleteMutation,
   useWarehouseListQuery,
@@ -21,7 +20,7 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import { findValueInEnum, getById, getMutationStatus } from "@dashboard/misc";
+import { getById, getMutationStatus } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -44,6 +43,7 @@ import {
   type WarehouseListUrlQueryParams,
   warehouseUrl,
 } from "@dashboard/warehouses/urls";
+import { warehouseInputFromForm } from "@dashboard/warehouses/warehouseInputFromForm";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -74,22 +74,7 @@ const submitWarehouseCreate = async ({
   onCreated: (warehouseId: string) => void;
 }): Promise<WarehouseErrorFragment[]> => {
   const result = await createWarehouse({
-    variables: {
-      input: {
-        name: data.name,
-        address: {
-          companyName: data.companyName,
-          city: data.city,
-          cityArea: data.cityArea,
-          country: findValueInEnum(data.country, CountryCode),
-          countryArea: data.countryArea,
-          phone: data.phone,
-          postalCode: data.postalCode,
-          streetAddress1: data.streetAddress1,
-          streetAddress2: data.streetAddress2,
-        },
-      },
-    },
+    variables: { input: warehouseInputFromForm(data) },
   });
   const errors = result.data?.createWarehouse?.errors ?? [];
   const warehouseId = result.data?.createWarehouse?.warehouse?.id;

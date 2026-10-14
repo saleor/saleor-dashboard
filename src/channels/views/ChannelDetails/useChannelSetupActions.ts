@@ -1,7 +1,6 @@
 import { type CreateShippingForChannelFormData } from "@dashboard/channels/components/CreateShippingForChannelDialog/CreateShippingForChannelDialog";
 import { type CreateWarehouseForChannelFormData } from "@dashboard/channels/components/CreateWarehouseForChannelDialog/CreateWarehouseForChannelDialog";
 import {
-  CountryCode,
   type ShippingErrorFragment,
   ShippingMethodTypeEnum,
   useChannelUpdateMutation,
@@ -10,37 +9,21 @@ import {
   useShippingMethodChannelListingUpdateMutation,
   useWarehouseCreateMutation,
   useWarehouseUpdateMutation,
-  type WarehouseCreateInput,
   WarehouseErrorCode,
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
+import { extractMutationErrors, getMutationStatus } from "@dashboard/misc";
+import {
+  type WarehouseInputFromForm,
+  warehouseInputFromForm,
+} from "@dashboard/warehouses/warehouseInputFromForm";
 import { useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { getChannelDetailsRefetchQueries } from "./channelRefetchQueries";
-
-type WarehouseInputFromForm = Pick<WarehouseCreateInput, "name" | "address">;
-
-const warehouseInputFromForm = (
-  data: CreateWarehouseForChannelFormData,
-): WarehouseInputFromForm => ({
-  name: data.name,
-  address: {
-    companyName: data.companyName,
-    city: data.city,
-    cityArea: data.cityArea,
-    country: findValueInEnum(data.country, CountryCode),
-    countryArea: data.countryArea,
-    phone: data.phone,
-    postalCode: data.postalCode,
-    streetAddress1: data.streetAddress1,
-    streetAddress2: data.streetAddress2,
-  },
-});
 
 interface UseChannelSetupActionsArgs {
   channelId: string;

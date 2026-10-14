@@ -2,7 +2,6 @@ import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  CountryCode,
   useWarehouseDeleteMutation,
   useWarehouseDetailsQuery,
   useWarehouseUpdateMutation,
@@ -11,12 +10,7 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import {
-  extractMutationErrors,
-  findValueInEnum,
-  getMutationStatus,
-  getStringOrPlaceholder,
-} from "@dashboard/misc";
+import { extractMutationErrors, getMutationStatus, getStringOrPlaceholder } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog/WarehouseDeleteDialog";
 import {
@@ -34,6 +28,7 @@ import {
   warehouseUrl,
   type WarehouseUrlQueryParams,
 } from "@dashboard/warehouses/urls";
+import { warehouseAddressInput } from "@dashboard/warehouses/warehouseInputFromForm";
 import { warehouseZoneMemberships } from "@dashboard/warehouses/zonesUnlinkedByChannelRemoval";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -140,17 +135,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
         variables: {
           id,
           input: {
-            address: {
-              companyName: data.companyName,
-              city: data.city,
-              cityArea: data.cityArea,
-              country: findValueInEnum(data.country, CountryCode),
-              countryArea: data.countryArea,
-              phone: data.phone,
-              postalCode: data.postalCode,
-              streetAddress1: data.streetAddress1,
-              streetAddress2: data.streetAddress2,
-            },
+            address: warehouseAddressInput(data),
             name: data.name,
             email: data.email,
             isPrivate: data.isPrivate,
