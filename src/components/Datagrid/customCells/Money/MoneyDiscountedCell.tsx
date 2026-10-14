@@ -1,12 +1,16 @@
 import { type Locale } from "@dashboard/components/Locale/Locale";
+import { formatMoney } from "@dashboard/components/Money";
 import { type CustomCell, type CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
 
 import {
+  canShowCurrency,
   drawBreakdownMarker,
   drawCurrency,
-  drawLineCrossedPrice,
   drawPrice,
+  drawUndiscountedPrice,
   getFormattedMoney,
+  measureSecondaryText,
+  PRICE_GAP,
 } from "./utils";
 
 interface MoneyDiscountedCellProps {
@@ -37,18 +41,42 @@ export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell
       currency,
       locale,
     );
-    const formattedWithDiscount = formattedUndiscounted + " " + formattedValue;
     const isDiscounted = undiscounted !== undefined && undiscounted !== value;
+    const currencyLabel = hasValue ? currency : "-";
+    const undiscountedWidth = isDiscounted
+      ? measureSecondaryText(ctx, theme, formattedUndiscounted)
+      : 0;
+    // The "-" is the only sign of a missing price, so it is never dropped.
+    const showCurrency =
+      !hasValue ||
+      canShowCurrency({
+        cellWidth: rect.width,
+        currencyWidth: measureSecondaryText(ctx, theme, currencyLabel),
+        pricesWidth:
+          ctx.measureText(formattedValue).width +
+          (isDiscounted ? undiscountedWidth + PRICE_GAP : 0),
+      });
+    // Without room for the currency label, keep the currency on the price itself.
+    const displayedValue = showCurrency
+      ? formattedValue
+      : formatMoney({ amount: Number(value), currency }, locale);
+    const priceWidth = ctx.measureText(displayedValue).width;
 
-    drawPrice(ctx, theme, rect, formattedWithDiscount);
+    drawPrice(ctx, theme, rect, displayedValue);
 
     if (isDiscounted) {
-      drawLineCrossedPrice(ctx, rect, formattedWithDiscount, formattedUndiscounted);
+      drawUndiscountedPrice(ctx, theme, rect, {
+        text: formattedUndiscounted,
+        textWidth: undiscountedWidth,
+        priceWidth,
+      });
     }
 
-    ctx.save();
-    drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
-    ctx.restore();
+    if (showCurrency) {
+      ctx.save();
+      drawCurrency(ctx, theme, rect, currencyLabel);
+      ctx.restore();
+    }
 
     if (hasBreakdown) {
       drawBreakdownMarker(ctx, theme, rect);

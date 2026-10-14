@@ -4,9 +4,10 @@ import {
   type AttributeValueTranslatableFragment,
   LanguageCodeEnum,
 } from "@dashboard/graphql";
+import { type OutputData } from "@editorjs/editorjs";
 import { type IntlShape } from "react-intl";
 
-import { TranslationInputFieldName } from "./types";
+import { type TranslationField, TranslationInputFieldName } from "./types";
 import {
   getAttributeValueTranslationContent,
   getAttributeValueTranslationsInputData,
@@ -20,26 +21,67 @@ const mockIntl: IntlShape = {
 } as IntlShape;
 
 describe("getParsedTranslationInputData", () => {
-  it("returns raw string for non-parseable field names", () => {
+  const nullableName: Pick<TranslationField, "name" | "nullable"> = {
+    name: TranslationInputFieldName.name,
+    nullable: true,
+  };
+  const nonNullableName: Pick<TranslationField, "name" | "nullable"> = {
+    name: TranslationInputFieldName.name,
+  };
+
+  it("returns the raw string for a text field", () => {
     // Arrange & Act
-    const result = getParsedTranslationInputData({
-      fieldName: TranslationInputFieldName.name,
-      data: "some name",
-    });
+    const result = getParsedTranslationInputData({ field: nullableName, data: "some name" });
 
     // Assert
     expect(result).toEqual({ name: "some name" });
   });
 
-  it("returns raw string for seoTitle field", () => {
+  it("returns null for a cleared nullable field so the translation is removed", () => {
     // Arrange & Act
-    const result = getParsedTranslationInputData({
-      fieldName: TranslationInputFieldName.seoTitle,
-      data: "SEO Title",
-    });
+    const result = getParsedTranslationInputData({ field: nullableName, data: "" });
 
     // Assert
-    expect(result).toEqual({ seoTitle: "SEO Title" });
+    expect(result).toEqual({ name: null });
+  });
+
+  it("returns null for a whitespace-only nullable field", () => {
+    // Arrange
+    const field: Pick<TranslationField, "name" | "nullable"> = {
+      name: TranslationInputFieldName.slug,
+      nullable: true,
+    };
+
+    // Act
+    const result = getParsedTranslationInputData({ field, data: "   " });
+
+    // Assert
+    expect(result).toEqual({ slug: null });
+  });
+
+  it("returns an empty string for a cleared field that is not nullable", () => {
+    // Arrange & Act
+    const result = getParsedTranslationInputData({ field: nonNullableName, data: "   " });
+
+    // Assert
+    expect(result).toEqual({ name: "" });
+  });
+
+  it("serializes rich text and returns null when it has no blocks", () => {
+    // Arrange
+    const field: Pick<TranslationField, "name" | "nullable"> = {
+      name: TranslationInputFieldName.description,
+      nullable: true,
+    };
+    const content: OutputData = { blocks: [{ type: "paragraph", data: { text: "Opis" } }] };
+
+    // Act
+    const filled = getParsedTranslationInputData({ field, data: content });
+    const cleared = getParsedTranslationInputData({ field, data: { blocks: [] } });
+
+    // Assert
+    expect(filled).toEqual({ description: JSON.stringify(content) });
+    expect(cleared).toEqual({ description: null });
   });
 });
 
@@ -313,51 +355,64 @@ describe("mapAttributeValuesToTranslationFields", () => {
 
     // Assert
     expect(result[0].name).toBe("translatable-content-99");
+    expect(result[0].nullable).toBe(false);
   });
 });
 
 describe("getAttributeValueTranslationContent", () => {
-  it("returns rich text translation when available", () => {
+  const makeTranslation = (
+    content: Pick<
+      NonNullable<AttributeValueTranslatableFragment["translation"]>,
+      "richText" | "plainText"
+    >,
+  ): AttributeValueTranslatableFragment["translation"] => ({
+    __typename: "AttributeValueTranslation",
+    id: "t-1",
+    name: "",
+    language: {
+      __typename: "LanguageDisplay",
+      code: LanguageCodeEnum.PL,
+      language: "Polish",
+    },
+    ...content,
+  });
+
+  it("returns the rich text translation for a RICH field", () => {
     // Arrange & Act
     const result = getAttributeValueTranslationContent({
-      __typename: "AttributeValueTranslation",
-      id: "t-1",
-      name: "",
-      richText: '{"blocks":[]}',
-      plainText: null,
-      language: {
-        __typename: "LanguageDisplay",
-        code: LanguageCodeEnum.PL,
-        language: "Polish",
-      },
+      translation: makeTranslation({ richText: '{"blocks":[]}', plainText: null }),
+      type: "rich",
     });
 
     // Assert
     expect(result).toBe('{"blocks":[]}');
   });
 
-  it("returns plain text translation when rich text is absent", () => {
+  it("returns the plain text translation for a SHORT field", () => {
     // Arrange & Act
     const result = getAttributeValueTranslationContent({
-      __typename: "AttributeValueTranslation",
-      id: "t-2",
-      name: "",
-      richText: null,
-      plainText: "Bawełna",
-      language: {
-        __typename: "LanguageDisplay",
-        code: LanguageCodeEnum.PL,
-        language: "Polish",
-      },
+      translation: makeTranslation({ richText: null, plainText: "Bawełna" }),
+      type: "short",
     });
 
     // Assert
     expect(result).toBe("Bawełna");
   });
 
+  it("keeps a plain text translation stored as an empty string so it can be reset", () => {
+    // Arrange & Act
+    const result = getAttributeValueTranslationContent({
+      translation: makeTranslation({ richText: null, plainText: "" }),
+      type: "short",
+    });
+
+    // Assert
+    expect(result).toBe("");
+  });
+
   it("returns null when translation is missing", () => {
     // Arrange & Act
-    const result = getAttributeValueTranslationContent(null);
+    const result = getAttributeValueTranslationContent({ translation: null, type: "short" });
 
     // Assert
     expect(result).toBeNull();
@@ -365,12 +420,49 @@ describe("getAttributeValueTranslationContent", () => {
 });
 
 describe("getAttributeValueTranslationsInputData", () => {
-  it("returns richText field for RICH type", () => {
-    // Arrange & Act
-    const result = getAttributeValueTranslationsInputData("rich", '{"blocks":[]}');
+  it("forwards already serialized RICH content", () => {
+    // Arrange
+    const serialized = JSON.stringify({ blocks: [{ type: "paragraph", data: { text: "Opis" } }] });
+
+    // Act
+    const result = getAttributeValueTranslationsInputData("rich", serialized);
 
     // Assert
-    expect(result).toEqual({ richText: '"{\\"blocks\\":[]}"' });
+    expect(result).toEqual({ richText: serialized });
+  });
+
+  it("returns null richText for a blank or empty serialized RICH string", () => {
+    // Arrange & Act
+    const blank = getAttributeValueTranslationsInputData("rich", " ");
+    const emptyDocument = getAttributeValueTranslationsInputData("rich", '{"blocks":[]}');
+
+    // Assert
+    expect(blank).toEqual({ richText: null });
+    expect(emptyDocument).toEqual({ richText: null });
+  });
+
+  it("returns richText field for RICH type", () => {
+    // Arrange
+    const data: OutputData = {
+      blocks: [{ type: "paragraph", data: { text: "Opis" } }],
+    };
+
+    // Act
+    const result = getAttributeValueTranslationsInputData("rich", data);
+
+    // Assert
+    expect(result).toEqual({ richText: JSON.stringify(data) });
+  });
+
+  it("returns null richText for cleared RICH content", () => {
+    // Arrange
+    const data: OutputData = { blocks: [] };
+
+    // Act
+    const result = getAttributeValueTranslationsInputData("rich", data);
+
+    // Assert
+    expect(result).toEqual({ richText: null });
   });
 
   it("returns plainText field for SHORT type", () => {
@@ -379,5 +471,13 @@ describe("getAttributeValueTranslationsInputData", () => {
 
     // Assert
     expect(result).toEqual({ plainText: "plain text value" });
+  });
+
+  it("returns null plainText with an empty name for cleared SHORT content", () => {
+    // Arrange & Act
+    const result = getAttributeValueTranslationsInputData("short", " ");
+
+    // Assert
+    expect(result).toEqual({ name: "", plainText: null });
   });
 });

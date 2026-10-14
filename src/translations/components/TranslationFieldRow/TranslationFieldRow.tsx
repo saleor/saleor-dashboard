@@ -3,16 +3,31 @@ import { Pill } from "@dashboard/components/Pill/Pill";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { isFieldTranslationComplete } from "@dashboard/translations/progress";
-import { type TranslationField, TranslationFieldType } from "@dashboard/translations/types";
+import {
+  type BlankTranslationHint,
+  type TranslationField,
+  TranslationFieldType,
+} from "@dashboard/translations/types";
 import { type OutputData } from "@editorjs/editorjs";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 import TranslationFieldsLong from "../TranslationFields/TranslationFieldsLong";
 import TranslationFieldsRich from "../TranslationFields/TranslationFieldsRich";
 import TranslationFieldsShort from "../TranslationFields/TranslationFieldsShort";
 import { translationDetailMessages } from "../TranslationsDetailLayout/messages";
 import styles from "./TranslationFieldRow.module.css";
+
+const blankTranslationHintMessages = {
+  resettable: {
+    read: translationDetailMessages.blankTranslationHint,
+    editing: translationDetailMessages.blankTranslationResetHint,
+  },
+  unresettable: {
+    read: translationDetailMessages.blankTranslationUnresettableHint,
+    editing: translationDetailMessages.blankTranslationUnresettableEditingHint,
+  },
+} satisfies Record<BlankTranslationHint, Record<"read" | "editing", MessageDescriptor>>;
 
 interface TranslationFieldRowProps {
   field: TranslationField;
@@ -23,6 +38,8 @@ interface TranslationFieldRowProps {
   showPerFieldActions: boolean;
   hideFieldActions?: boolean;
   saveDisabled?: boolean;
+  /** The field is blank in a way the storefront may show: one saving resets, or one it can't yet. */
+  blankTranslationHint?: BlankTranslationHint;
   disabled: boolean;
   saveButtonState: ConfirmButtonTransitionState;
   richTextResetKey: string;
@@ -199,6 +216,7 @@ export const TranslationFieldRow = ({
   showPerFieldActions,
   hideFieldActions = false,
   saveDisabled = false,
+  blankTranslationHint,
   disabled,
   saveButtonState,
   richTextResetKey,
@@ -277,6 +295,17 @@ export const TranslationFieldRow = ({
             onDiscard,
             onSubmit,
             onValueChange,
+          )}
+          {blankTranslationHint && (
+            <Box marginTop={2}>
+              <Text size={2} color="warning1">
+                <FormattedMessage
+                  {...blankTranslationHintMessages[blankTranslationHint][
+                    isEditing ? "editing" : "read"
+                  ]}
+                />
+              </Text>
+            </Box>
           )}
           {fieldError && (
             <Text size={2} color="critical1" marginTop={2}>

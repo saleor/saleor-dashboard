@@ -7,17 +7,12 @@ import { submitBulkTranslations } from "../bulkSubmit";
 import { type BulkTranslationSubmitResult } from "../bulkSubmitResult";
 import { extractTranslationMutationErrors } from "../translationMutationErrors";
 import { type TranslationDetailQueryParams } from "../translationQueryParams";
-import {
-  type PageTranslationInputFieldName,
-  type TranslationField,
-  type TranslationInputFieldName,
-} from "../types";
+import { type TranslationField } from "../types";
 import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from "../utils";
 import { useTranslationDetailNavigation } from "./useTranslationDetailNavigation";
 import { useTranslationSaveFeedback } from "./useTranslationSaveFeedback";
 import { type TranslationMutationOpts, useTranslationSaveState } from "./useTranslationSaveState";
 
-type TranslationFieldName = TranslationInputFieldName | PageTranslationInputFieldName | string;
 type SubmitData = string | OutputData;
 
 type EntityMutationTuple = [
@@ -100,22 +95,19 @@ export function useTranslationEntityView<TTranslation>({
     ...(attributeOpts ? [entityOpts, attributeOpts] : [entityOpts]),
   );
 
-  const submitEntityTranslation = (fieldName: TranslationFieldName, data: SubmitData) =>
+  const submitEntityTranslation = (field: TranslationField, data: SubmitData) =>
     extractTranslationMutationErrors(
       updateEntity({
         variables: {
           id,
-          input: getParsedTranslationInputData({
-            data,
-            fieldName: fieldName as TranslationInputFieldName | PageTranslationInputFieldName,
-          }),
+          input: getParsedTranslationInputData({ data, field }),
           language: languageCode,
         },
       }),
     );
 
   const handleSubmit = (field: TranslationField, data: SubmitData) => {
-    const submitPromise = submitEntityTranslation(field.name, data);
+    const submitPromise = submitEntityTranslation(field, data);
 
     if (multiFieldNavigation) {
       return submitPromise.then(errors => {

@@ -4840,6 +4840,10 @@
   "G/yZLu": {
     "string": "Remove"
   },
+  "G1Yclg": {
+    "context": "hint under a translation stored as an empty value, while editing it",
+    "string": "Saved as empty, so your storefront may show a blank. Saving resets it to the original."
+  },
   "G2WJ1J": {
     "context": "order header date, less than an hour ago",
     "string": "Placed {minutes, plural, one {# minute} other {# minutes}} ago"
@@ -7897,6 +7901,10 @@
     "context": "channel payments mark as paid description",
     "string": "Which object is attached to the order when staff record a payment by hand."
   },
+  "RMrqM8": {
+    "context": "hint under an empty translation of a field that cannot be reset, outside edit mode",
+    "string": "Saved as empty, so your storefront may show a blank. This field can't be reset to the original yet."
+  },
   "RQUkVW": {
     "string": "Manage your employees and their permissions"
   },
@@ -9520,6 +9528,10 @@
   "XGY+yQ": {
     "context": "matrix column header",
     "string": "Auto-confirm"
+  },
+  "XI9F4/": {
+    "context": "hint under a translation stored as an empty value, outside edit mode",
+    "string": "Saved as empty, so your storefront may show a blank. Edit and save to show the original."
   },
   "XJSRDK": {
     "context": "payment status",
@@ -16807,6 +16819,10 @@
   },
   "wUWSv2": {
     "string": "Products deleted"
+  },
+  "wUr1VV": {
+    "context": "hint while a translation of a field that cannot be reset is empty in the editor",
+    "string": "Saving it empty may show a blank on your storefront. This field can't be reset to the original yet."
   },
   "wV0kNo": {
     "context": "confirm dialog title when changing a customer's type",

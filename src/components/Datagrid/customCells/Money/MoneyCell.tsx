@@ -9,7 +9,7 @@ import {
 
 import { usePriceField } from "../../../PriceField/usePriceField";
 import { type NumericEditorEmpty, useDatagridNumericEdit } from "../useDatagridNumericEdit";
-import { drawBreakdownMarker, hasDiscountValue } from "./utils";
+import { drawBreakdownMarker, drawCurrency, hasDiscountValue } from "./utils";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
@@ -124,8 +124,9 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
       }
 
       if (item.type === "currency" && item.value.length > 2 && !isHugging) {
-        ctx.textAlign = "left";
-        ctx.fillText(item.value, rect.x + theme.cellHorizontalPadding, y);
+        ctx.save();
+        drawCurrency(ctx, theme, rect, item.value);
+        ctx.restore();
       } else {
         ctx.fillText(item.value, drawingPosition, y);
 

@@ -15,6 +15,7 @@ import {
 const entityField: TranslationField = {
   displayName: "Name",
   name: "name",
+  nullable: true,
   translation: "Translated name",
   type: TranslationFieldType.SHORT,
   value: "Original name",
@@ -64,6 +65,49 @@ describe("submitBulkEntityTranslations", () => {
     // Assert
     expect(onSubmit).toHaveBeenCalledWith({ name: "Updated name" });
     expect(result.hasErrors).toBe(false);
+  });
+
+  it("sends null for a cleared entity field", async () => {
+    // Arrange
+    const onSubmit = jest.fn().mockResolvedValue([]);
+    const values: BulkTranslationValue[] = [
+      {
+        field: entityField,
+        section: entitySection,
+        data: "",
+      },
+    ];
+
+    // Act
+    await submitBulkEntityTranslations({
+      onSubmit,
+      values,
+    });
+
+    // Assert
+    expect(onSubmit).toHaveBeenCalledWith({ name: null });
+  });
+
+  it("sends an empty string for a cleared field that is not nullable", async () => {
+    // Arrange
+    const onSubmit = jest.fn().mockResolvedValue([]);
+    const nonNullableField: TranslationField = { ...entityField, nullable: false };
+    const values: BulkTranslationValue[] = [
+      {
+        field: nonNullableField,
+        section: { ...entitySection, fields: [nonNullableField] },
+        data: "",
+      },
+    ];
+
+    // Act
+    await submitBulkEntityTranslations({
+      onSubmit,
+      values,
+    });
+
+    // Assert
+    expect(onSubmit).toHaveBeenCalledWith({ name: "" });
   });
 
   it("maps entity mutation errors to field names", async () => {

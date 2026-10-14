@@ -71,13 +71,16 @@ export const TranslationsDetailLayout = ({
   });
   const {
     clearFieldValues,
-    getDirtyValues,
+    getBulkSaveValues,
+    getFieldState,
     handleValueChange,
+    hasBlankResets,
     hasDirtyFields,
-    isFieldDirty,
     resetValues,
   } = useTranslationBulkValues(sections);
+  const canBulkSave = hasDirtyFields || hasBlankResets;
   const isEditMode = isTranslationEditMode(bulk, activeField);
+  // Blank resets are left out: leaving without saving keeps the blanks, so nothing is lost.
   const { resetFormsState } = useTranslationExitForm({
     enabled: isEditMode,
     isDirty: hasDirtyFields,
@@ -158,11 +161,11 @@ export const TranslationsDetailLayout = ({
   };
 
   const handleBulkSave = async () => {
-    if (!onBulkSubmit || !hasDirtyFields) {
+    if (!onBulkSubmit || !canBulkSave) {
       return;
     }
 
-    const values = getDirtyValues();
+    const values = getBulkSaveValues();
     const result = await onBulkSubmit(values);
 
     if (!result.hasErrors) {
@@ -232,7 +235,7 @@ export const TranslationsDetailLayout = ({
           bulk={bulk}
           activeField={activeField}
           disabled={disabled}
-          isFieldDirty={isFieldDirty}
+          getFieldState={getFieldState}
           saveButtonState={saveButtonState}
           richTextResetKey={resolvedRichTextResetKey}
           onEdit={onEdit}
@@ -248,7 +251,7 @@ export const TranslationsDetailLayout = ({
           <Savebar.CancelButton onClick={handleBulkDiscard} />
           <Savebar.ConfirmButton
             transitionState={saveButtonState}
-            disabled={disabled || !hasDirtyFields}
+            disabled={disabled || !canBulkSave}
             onClick={handleBulkSave}
           >
             <FormattedMessage {...translationDetailMessages.saveAllTranslations} />

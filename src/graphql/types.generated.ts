@@ -14990,7 +14990,7 @@ export type UpdateAttributeValueTranslationsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateAttributeValueTranslationsMutation = { __typename: 'Mutation', attributeValueTranslate: { __typename: 'AttributeValueTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, attributeValue: { __typename: 'AttributeValue', id: string, name: string | null, richText: string | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: string | null } | null } | null } | null };
+export type UpdateAttributeValueTranslationsMutation = { __typename: 'Mutation', attributeValueTranslate: { __typename: 'AttributeValueTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, attributeValue: { __typename: 'AttributeValue', id: string, name: string | null, plainText: string | null, richText: string | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null } | null } | null } | null };
 
 export type UpdateShippingMethodTranslationsMutationVariables = Exact<{
   id: Scalars['ID']['input'];
