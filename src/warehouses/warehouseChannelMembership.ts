@@ -50,6 +50,32 @@ export const channelIdsFromMatrix = ({
     .filter(channel => channel.warehouses.some(warehouse => warehouse.id === warehouseId))
     .map(channel => channel.id);
 
+/** Channel ids the warehouse belongs to, or undefined while they are still loading. */
+export const resolveMemberIds = ({
+  plan,
+  warehouseId,
+  matrixChannels,
+  probeIds,
+  channelCount,
+}: {
+  plan: "fast" | "probe" | undefined;
+  warehouseId: string | undefined;
+  matrixChannels: Array<{ id: string; warehouses: Array<{ id: string }> }> | null | undefined;
+  probeIds: string[] | null;
+  channelCount: number;
+}): string[] | undefined => {
+  if (plan === "fast" && matrixChannels && warehouseId) {
+    return channelIdsFromMatrix({ warehouseId, channels: matrixChannels });
+  }
+
+  if (plan === "probe") {
+    // With no channels there is nothing to probe, and the probe never runs.
+    return channelCount === 0 ? [] : (probeIds ?? undefined);
+  }
+
+  return undefined;
+};
+
 /**
  * One alias per channel. Channel ids travel as variables, so a name cannot change the query.
  */

@@ -9,12 +9,12 @@ import { useEffect, useState } from "react";
 import {
   buildMembershipProbe,
   buildWarehouseLinkUpdates,
-  channelIdsFromMatrix,
   channelIdsPresentInProbe,
   chunkList,
   MEMBERSHIP_PROBE_CHUNK_SIZE,
   MEMBERSHIP_UPDATE_CHUNK_SIZE,
   membershipQueryPlan,
+  resolveMemberIds,
   warehouseLinkBatchSucceeded,
 } from "../warehouseChannelMembership";
 
@@ -125,17 +125,13 @@ export const useWarehouseChannelMembership = (
     [client, channelIdsKey, plan, probeToken, warehouseId],
   );
 
-  const memberIds = ((): string[] | undefined => {
-    if (plan === "fast" && matrix.data?.channels && warehouseId) {
-      return channelIdsFromMatrix({ warehouseId, channels: matrix.data.channels });
-    }
-
-    if (plan === "probe" && probeIds) {
-      return probeIds;
-    }
-
-    return undefined;
-  })();
+  const memberIds = resolveMemberIds({
+    plan,
+    warehouseId,
+    matrixChannels: matrix.data?.channels,
+    probeIds,
+    channelCount: allChannels.length,
+  });
 
   const status = ((): "loading" | "error" | "ready" => {
     if (!warehouseId || (counts.loading && !counts.data?.channels)) {

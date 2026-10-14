@@ -6,6 +6,7 @@ import {
   chunkList,
   MEMBERSHIP_UPDATE_CHUNK_SIZE,
   membershipQueryPlan,
+  resolveMemberIds,
   runPool,
   WAREHOUSE_CHANNEL_MEMBERSHIP_LIMIT,
   warehouseLinkBatchSucceeded,
@@ -15,6 +16,7 @@ type MembershipPlanInput = Parameters<typeof membershipQueryPlan>[0];
 type MatrixChannels = Parameters<typeof channelIdsFromMatrix>[0]["channels"];
 type ProbeData = Parameters<typeof channelIdsPresentInProbe>[1];
 type LinkUpdatesInput = Parameters<typeof buildWarehouseLinkUpdates>[0];
+type MemberIdsInput = Parameters<typeof resolveMemberIds>[0];
 type LinkBatchData = Parameters<typeof warehouseLinkBatchSucceeded>[1];
 
 describe("membershipQueryPlan", () => {
@@ -202,5 +204,61 @@ describe("runPool", () => {
     // Assert
     expect(results).toEqual([10, 20, 30, 40]);
     expect(peak).toBeLessThanOrEqual(2);
+  });
+});
+
+describe("resolveMemberIds", () => {
+  it("is ready with no channels when the probe plan has nothing to probe", () => {
+    // Arrange
+    const input: MemberIdsInput = {
+      plan: "probe",
+      warehouseId: "w1",
+      matrixChannels: undefined,
+      probeIds: null,
+      channelCount: 0,
+    };
+
+    // Act
+    const memberIds = resolveMemberIds(input);
+
+    // Assert
+    expect(memberIds).toEqual([]);
+  });
+
+  it("waits for the probe while channels exist", () => {
+    // Arrange
+    const input: MemberIdsInput = {
+      plan: "probe",
+      warehouseId: "w1",
+      matrixChannels: undefined,
+      probeIds: null,
+      channelCount: 3,
+    };
+
+    // Act
+    const memberIds = resolveMemberIds(input);
+
+    // Assert
+    expect(memberIds).toBeUndefined();
+  });
+
+  it("reads membership from the matrix on the fast plan", () => {
+    // Arrange
+    const input: MemberIdsInput = {
+      plan: "fast",
+      warehouseId: "w1",
+      matrixChannels: [
+        { id: "eu", warehouses: [{ id: "w1" }] },
+        { id: "us", warehouses: [{ id: "w2" }] },
+      ],
+      probeIds: null,
+      channelCount: 2,
+    };
+
+    // Act
+    const memberIds = resolveMemberIds(input);
+
+    // Assert
+    expect(memberIds).toEqual(["eu"]);
   });
 });
