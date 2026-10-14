@@ -13,6 +13,7 @@ import {
   MEMBERSHIP_PROBE_CHUNK_SIZE,
   membershipQueryPlan,
   resolveMemberIds,
+  runPool,
   runWarehouseLinkUpdates,
 } from "../warehouseChannelMembership";
 
@@ -26,25 +27,30 @@ interface WarehouseChannelChangeResult {
   failed: number;
 }
 
+/** How many probe requests to keep in flight at once. */
+const PROBE_CONCURRENCY = 4;
+
 const probeWarehouseChannels = async (
   client: ReturnType<typeof useApolloClient>,
   warehouseId: string,
   channelIds: string[],
 ): Promise<string[]> => {
-  const present: string[] = [];
+  const present = await runPool(
+    chunkList(channelIds, MEMBERSHIP_PROBE_CHUNK_SIZE),
+    PROBE_CONCURRENCY,
+    async chunk => {
+      const probe = buildMembershipProbe(chunk);
+      const result = await client.query<Record<string, { totalCount?: number | null }>>({
+        query: probe.document,
+        variables: probe.variables(warehouseId),
+        fetchPolicy: "network-only",
+      });
 
-  for (const chunk of chunkList(channelIds, MEMBERSHIP_PROBE_CHUNK_SIZE)) {
-    const probe = buildMembershipProbe(chunk);
-    const result = await client.query<Record<string, { totalCount?: number | null }>>({
-      query: probe.document,
-      variables: probe.variables(warehouseId),
-      fetchPolicy: "network-only",
-    });
+      return channelIdsPresentInProbe(chunk, result.data);
+    },
+  );
 
-    present.push(...channelIdsPresentInProbe(chunk, result.data));
-  }
-
-  return present;
+  return present.flat();
 };
 
 const changeResult = (ok: number, failed: number): "error" | "partial_success" | "success" => {
