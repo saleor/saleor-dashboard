@@ -37,8 +37,7 @@ export interface PageTypeAttributeCreateParams {
   formatAssignErrors: (errors: PageErrorFragment[]) => string;
 }
 
-export interface PageTypeAttributeCreateOutcome
-  extends CreateMetadataHandlerFunctionResult<AttributeErrorFragment> {
+export interface PageTypeAttributeCreateOutcome extends CreateMetadataHandlerFunctionResult<AttributeErrorFragment> {
   assignErrorMessage?: string;
 }
 

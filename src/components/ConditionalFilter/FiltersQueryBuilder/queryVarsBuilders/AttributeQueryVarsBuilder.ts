@@ -31,9 +31,7 @@ type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
  * Every item uses `value` only — mixing deprecated `values`/`boolean`/`date`
  * with reference `value` makes Saleor reject the whole `attributes` list.
  */
-export class AttributeQueryVarsBuilder
-  implements BothApiQueryVarsBuilder<AttributeFilterQueryPart>
-{
+export class AttributeQueryVarsBuilder implements BothApiQueryVarsBuilder<AttributeFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }

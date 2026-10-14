@@ -25,7 +25,8 @@ import {
 import { type ProductTypeFilterKeys, type ProductTypeListFilterOpts } from "./filters";
 
 interface ProductTypeListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     ListActions,
     Omit<FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>, "onTabDelete">,
     SortPage<ProductTypeListUrlSortField> {

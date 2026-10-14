@@ -30,7 +30,8 @@ import { type AttributeFilterKeys, type AttributeListFilterOpts } from "./filter
 import { attributeListPageMessages } from "./messages";
 
 interface AttributeListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     FilterPagePropsWithPresets<AttributeFilterKeys, AttributeListFilterOpts>,
     SortPage<AttributeListUrlSortField> {
   attributes: AttributeFragment[];

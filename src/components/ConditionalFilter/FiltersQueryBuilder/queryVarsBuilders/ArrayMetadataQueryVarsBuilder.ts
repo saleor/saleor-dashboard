@@ -22,9 +22,7 @@ type ArrayMetadataFilterQueryPart = {
  * [{metadata: {key: "key", value: {oneOf: ["b", c]}}}]
  * For input values: key - b; key - c
  * */
-export class ArrayMetadataQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<ArrayMetadataFilterQueryPart>
-{
+export class ArrayMetadataQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<ArrayMetadataFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     const type = element.value.type;
 

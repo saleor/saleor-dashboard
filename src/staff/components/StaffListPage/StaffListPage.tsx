@@ -26,7 +26,8 @@ import { StaffListDatagrid } from "../StaffListDatagrid/StaffListDatagrid";
 import { type StaffFilterKeys, type StaffListFilterOpts } from "./filters";
 
 interface StaffListPageProps
-  extends ListProps,
+  extends
+    ListProps,
     FilterPagePropsWithPresets<StaffFilterKeys, StaffListFilterOpts>,
     SortPage<StaffListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined;

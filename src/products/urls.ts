@@ -81,7 +81,8 @@ export enum ProductListUrlSortField {
 }
 type ProductListUrlSort = Sort<ProductListUrlSortField>;
 export interface ProductListUrlQueryParams
-  extends BulkAction,
+  extends
+    BulkAction,
     Dialog<ProductListUrlDialog>,
     ProductListUrlFilters,
     ProductListUrlSort,

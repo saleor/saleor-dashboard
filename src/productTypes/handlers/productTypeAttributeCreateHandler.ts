@@ -44,8 +44,7 @@ export interface ProductTypeAttributeCreateParams {
   formatAssignErrors: (errors: ProductErrorFragment[]) => string;
 }
 
-export interface ProductTypeAttributeCreateOutcome
-  extends CreateMetadataHandlerFunctionResult<AttributeErrorFragment> {
+export interface ProductTypeAttributeCreateOutcome extends CreateMetadataHandlerFunctionResult<AttributeErrorFragment> {
   assignErrorMessage?: string;
 }
 

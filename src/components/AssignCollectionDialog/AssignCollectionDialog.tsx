@@ -26,7 +26,8 @@ export type AssignCollectionFilterChangeHandler = (
 ) => void;
 
 interface AssignCollectionDialogProps
-  extends FetchMoreProps,
+  extends
+    FetchMoreProps,
     DialogProps,
     Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {
   confirmButtonState: ConfirmButtonTransitionState;
