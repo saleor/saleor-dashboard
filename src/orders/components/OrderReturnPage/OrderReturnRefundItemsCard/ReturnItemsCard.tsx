@@ -13,7 +13,7 @@ import {
 import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { Button, Checkbox, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Checkbox, Skeleton, vars } from "@saleor/macaw-ui-next";
 import { type CSSProperties, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -179,7 +179,7 @@ const ItemsCard = ({
                 <TableRowLink key={id}>
                   <TableCellAvatar
                     thumbnail={thumbnail?.url}
-                    style={{ width: productNameCellWidth }}
+                    style={{ width: productNameCellWidth, paddingLeft: vars.spacing[8] }}
                   >
                     {productName || <Skeleton />}
                   </TableCellAvatar>
