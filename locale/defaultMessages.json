@@ -2946,6 +2946,10 @@
     "context": "service accounts section name",
     "string": "Service Accounts"
   },
+  "8xvJqe": {
+    "context": "opens the full list of warehouses that share no channel with the shipping zone",
+    "string": "Show {count} more"
+  },
   "8y4+0a": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
@@ -5732,6 +5736,10 @@
     "context": "channel detail cogs menu, opens the delete-confirmation dialog",
     "string": "Delete channel"
   },
+  "IlWEcp": {
+    "context": "title of the full list of warehouses that share no channel with the zone",
+    "string": "Warehouses outside this zone's channels"
+  },
   "Ila7WO": {
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
@@ -5985,10 +5993,6 @@
   "JgXBAw": {
     "context": "dropdown label when there are no channels assigned",
     "string": "No channels"
-  },
-  "Ji3tCA": {
-    "context": "opens the full list of warehouses that share no channel with the shipping zone",
-    "string": "Show {count} more"
   },
   "JiRKgJ": {
     "context": "dialog search placeholder",
@@ -16539,10 +16543,6 @@
   "ujFo4A": {
     "context": "voucher start date",
     "string": "Started"
-  },
-  "uk8zNQ": {
-    "context": "title of the full list of warehouses that share no channel with the zone",
-    "string": "Warehouses outside this zone's channels"
   },
   "ukdRUv": {
     "context": "delete variant dialog subtitle",
