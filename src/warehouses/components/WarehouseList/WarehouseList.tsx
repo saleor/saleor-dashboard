@@ -6,7 +6,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
 import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
-import { type WarehouseWithShippingFragment } from "@dashboard/graphql";
+import { type WarehouseListItemFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { buttonMessages } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
@@ -31,7 +31,7 @@ import { useLocation } from "react-router";
 import styles from "./WarehouseList.module.css";
 
 interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortField> {
-  warehouses: WarehouseWithShippingFragment[] | undefined;
+  warehouses: WarehouseListItemFragment[] | undefined;
   onRemove: (id: string | undefined) => void;
   /** Shows a dash when channel membership is unknown, including when the shop is too large to look up. */
   membership: WarehouseListMembership;
@@ -48,11 +48,7 @@ interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortFie
 
 const numberOfColumns = 5;
 
-const WarehouseListPlace = ({
-  warehouse,
-}: {
-  warehouse: WarehouseWithShippingFragment;
-}): ReactNode => {
+const WarehouseListPlace = ({ warehouse }: { warehouse: WarehouseListItemFragment }): ReactNode => {
   const place = warehouseListPlace({
     city: warehouse.address?.city ?? "",
     country: warehouse.address?.country.country ?? "",
@@ -83,7 +79,7 @@ const WarehouseListStatus = ({
   channels,
   legacyStockAvailability,
 }: {
-  warehouse: WarehouseWithShippingFragment | undefined;
+  warehouse: WarehouseListItemFragment | undefined;
   membership: WarehouseListMembership;
   channels: WarehouseListChannel[];
   legacyStockAvailability: boolean | undefined;

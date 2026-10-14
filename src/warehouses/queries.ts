@@ -8,6 +8,7 @@ export const warehouseList = gql`
     $before: String
     $filter: WarehouseFilterInput
     $sort: WarehouseSortingInput
+    $includeShippingZones: Boolean = false
   ) {
     warehouses(
       before: $before
@@ -19,7 +20,7 @@ export const warehouseList = gql`
     ) {
       edges {
         node {
-          ...WarehouseWithShipping
+          ...WarehouseListItem
         }
       }
       pageInfo {

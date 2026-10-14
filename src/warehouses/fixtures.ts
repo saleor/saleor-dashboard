@@ -2,7 +2,7 @@ import { address } from "@dashboard/fixtures";
 import {
   WarehouseClickAndCollectOptionEnum,
   type WarehouseDetailsFragment,
-  type WarehouseWithShippingFragment,
+  type WarehouseListItemFragment,
 } from "@dashboard/graphql";
 
 import { shippingZones } from "../shipping/fixtures";
@@ -14,7 +14,7 @@ const listAddress = {
   country: address.country,
 };
 
-export const warehouseList: WarehouseWithShippingFragment[] = [
+export const warehouseList: WarehouseListItemFragment[] = [
   {
     __typename: "Warehouse",
     id: "V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==",
@@ -91,11 +91,21 @@ export const warehouseList: WarehouseWithShippingFragment[] = [
 
 const email = "test@saleor.io";
 
+const detailsShippingZones: WarehouseDetailsFragment["shippingZones"] = {
+  __typename: "ShippingZoneCountableConnection",
+  totalCount: shippingZones.length,
+  edges: shippingZones.map(node => ({
+    __typename: "ShippingZoneCountableEdge" as const,
+    node: { __typename: "ShippingZone" as const, id: node.id, name: node.name, channels: [] },
+  })),
+};
+
 export const warehouse: WarehouseDetailsFragment = {
   ...warehouseList[0],
   isPrivate: true,
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
   address,
+  shippingZones: detailsShippingZones,
   email,
   metadata: [],
   privateMetadata: [],
@@ -106,6 +116,7 @@ export const warehouseForPickup: WarehouseDetailsFragment = {
   isPrivate: false,
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
   address,
+  shippingZones: detailsShippingZones,
   email,
   metadata: [],
   privateMetadata: [],

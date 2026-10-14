@@ -131,9 +131,11 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
     [params, settings.rowNumber],
   );
 
+  // Zones only decide row status in legacy stock mode; wait for the mode so we fetch once.
   const { data, loading, refetch } = useWarehouseListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    skip: legacyStockAvailability === undefined,
+    variables: { ...queryVariables, includeShippingZones: legacyStockAvailability === true },
   });
 
   const limitOpts = useShopLimitsQuery({

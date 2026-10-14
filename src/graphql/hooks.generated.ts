@@ -4227,6 +4227,31 @@ export const MenuItemTranslationFragmentDoc = gql`
   }
 }
     `;
+export const WarehouseListItemFragmentDoc = gql`
+    fragment WarehouseListItem on Warehouse {
+  ...Warehouse
+  clickAndCollectOption
+  address {
+    id
+    city
+    country {
+      code
+      country
+    }
+  }
+  shippingZones(first: 100) @include(if: $includeShippingZones) {
+    totalCount
+    edges {
+      node {
+        id
+        channels {
+          id
+        }
+      }
+    }
+  }
+}
+    ${WarehouseFragmentDoc}`;
 export const WarehouseWithShippingFragmentDoc = gql`
     fragment WarehouseWithShipping on Warehouse {
   ...Warehouse
@@ -24825,7 +24850,7 @@ export type WarehouseUpdateMutationHookResult = ReturnType<typeof useWarehouseUp
 export type WarehouseUpdateMutationResult = Apollo.MutationResult<Types.WarehouseUpdateMutation>;
 export type WarehouseUpdateMutationOptions = Apollo.BaseMutationOptions<Types.WarehouseUpdateMutation, Types.WarehouseUpdateMutationVariables>;
 export const WarehouseListDocument = gql`
-    query WarehouseList($first: Int, $after: String, $last: Int, $before: String, $filter: WarehouseFilterInput, $sort: WarehouseSortingInput) {
+    query WarehouseList($first: Int, $after: String, $last: Int, $before: String, $filter: WarehouseFilterInput, $sort: WarehouseSortingInput, $includeShippingZones: Boolean = false) {
   warehouses(
     before: $before
     after: $after
@@ -24836,7 +24861,7 @@ export const WarehouseListDocument = gql`
   ) {
     edges {
       node {
-        ...WarehouseWithShipping
+        ...WarehouseListItem
       }
     }
     pageInfo {
@@ -24844,7 +24869,7 @@ export const WarehouseListDocument = gql`
     }
   }
 }
-    ${WarehouseWithShippingFragmentDoc}
+    ${WarehouseListItemFragmentDoc}
 ${PageInfoFragmentDoc}`;
 
 /**
@@ -24865,6 +24890,7 @@ ${PageInfoFragmentDoc}`;
  *      before: // value for 'before'
  *      filter: // value for 'filter'
  *      sort: // value for 'sort'
+ *      includeShippingZones: // value for 'includeShippingZones'
  *   },
  * });
  */

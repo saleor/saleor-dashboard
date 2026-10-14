@@ -8,7 +8,7 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/F
 import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { type RefreshLimitsQuery, type WarehouseWithShippingFragment } from "@dashboard/graphql";
+import { type RefreshLimitsQuery, type WarehouseListItemFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import {
   type PageListProps,
@@ -34,7 +34,7 @@ interface WarehouseListPageProps
     SortPage<WarehouseListUrlSortField>,
     Omit<TabPageProps, "onTabDelete"> {
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined;
-  warehouses: WarehouseWithShippingFragment[] | undefined;
+  warehouses: WarehouseListItemFragment[] | undefined;
   membership: WarehouseListMembership;
   channelsByWarehouseId: Record<string, WarehouseListChannel[]>;
   legacyStockAvailability: boolean | undefined;

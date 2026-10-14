@@ -1,7 +1,7 @@
 import { pageListProps, sortPageProps } from "@dashboard/fixtures";
 import {
   WarehouseClickAndCollectOptionEnum,
-  type WarehouseWithShippingFragment,
+  type WarehouseListItemFragment,
 } from "@dashboard/graphql";
 import { PaginatorContext, type PaginatorContextValues } from "@dashboard/hooks/usePaginator";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
@@ -34,7 +34,7 @@ const TestWrapper = ({ children }: { children: ReactNode }): ReactNode => (
   </Wrapper>
 );
 
-const warehouse: WarehouseWithShippingFragment = {
+const warehouse: WarehouseListItemFragment = {
   ...warehouseList[1],
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.LOCAL,
 };
