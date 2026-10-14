@@ -8,6 +8,7 @@ import { WarehouseChannelsAssignDialog } from "@dashboard/warehouses/components/
 import { WarehouseChannelsCard } from "@dashboard/warehouses/components/WarehouseChannelsCard/WarehouseChannelsCard";
 import { WarehouseSetupChecklist } from "@dashboard/warehouses/components/WarehouseSetupChecklist/WarehouseSetupChecklist";
 import { messages } from "@dashboard/warehouses/messages";
+import { isWarehouseSetupChecklistVisible } from "@dashboard/warehouses/warehouseSetupChecklistVisibility";
 import {
   channelRemovalConfirmation,
   warehouseSharesShippingZone,
@@ -18,7 +19,6 @@ import { type ReactNode, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useWarehouseChannelMembership } from "./useWarehouseChannelMembership";
-import { isWarehouseSetupChecklistVisible } from "./useWarehouseSetupChecklistDismiss";
 
 export const useWarehouseDetailsChannels = ({
   warehouseId,
@@ -35,7 +35,7 @@ export const useWarehouseDetailsChannels = ({
   zones: ZoneChannelMembership[];
   zonesTruncated: boolean;
   checklistEmphasized: boolean;
-  onDismissChecklist?: (channelCount: number) => void;
+  onDismissChecklist?: () => void;
   onOpenShippingZones?: () => void;
   /** Reload the warehouse: Saleor drops zone links that no longer share a channel. */
   onChannelRemoved?: () => Promise<void>;
@@ -164,11 +164,7 @@ export const useWarehouseDetailsChannels = ({
         hasUsableShippingZone={hasShippingZone}
         onAddChannel={() => setAssignOpen(true)}
         onAddShippingZone={onOpenShippingZones}
-        onDismiss={
-          onDismissChecklist && coreReady
-            ? (): void => onDismissChecklist(membership.channels.length)
-            : undefined
-        }
+        onDismiss={onDismissChecklist && coreReady ? onDismissChecklist : undefined}
       />
     ) : null,
     card: (

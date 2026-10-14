@@ -27,7 +27,6 @@ import { WarehouseDetailsPageLoading } from "@dashboard/warehouses/components/Wa
 import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
 import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
 import { useWarehouseDetailsChannels } from "@dashboard/warehouses/hooks/useWarehouseDetailsChannels";
-import { useWarehouseSetupChecklistDismiss } from "@dashboard/warehouses/hooks/useWarehouseSetupChecklistDismiss";
 import { useWarehouseShippingZoneAssignment } from "@dashboard/warehouses/hooks/useWarehouseShippingZoneAssignment";
 import { useWarehouseStockCount } from "@dashboard/warehouses/hooks/useWarehouseStockCount";
 import {
@@ -48,8 +47,6 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { trackEvent } = useAnalytics();
-  const { dismiss: dismissChecklist, undismiss: undismissChecklist } =
-    useWarehouseSetupChecklistDismiss(id);
   const notify = useNotifier();
   const shop = useShop();
   const { data, loading, error, refetch } = useWarehouseDetailsQuery({
@@ -72,9 +69,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
     zones: shippingZones.zones,
     zonesTruncated: shippingZones.truncated,
     checklistEmphasized: !!data?.warehouse && params.action === "setup",
-    onDismissChecklist: channelCount => {
-      dismissChecklist(channelCount);
-
+    onDismissChecklist: () => {
       if (params.action === "setup") {
         closeModal();
       }
@@ -193,7 +188,6 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
           data?.warehouse && channels.status === "ready" && !channels.checklistVisible
             ? () => {
                 trackEvent("setup_checklist_reopened", { entity_type: "warehouse" });
-                undismissChecklist();
                 openModal("setup");
               }
             : undefined
