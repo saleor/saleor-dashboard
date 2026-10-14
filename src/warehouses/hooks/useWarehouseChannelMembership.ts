@@ -89,8 +89,16 @@ export const useWarehouseChannelMembership = (
     skip: !warehouseId || plan !== "fast",
     errorPolicy: "all",
   });
-  const [probeIds, setProbeIds] = useState<string[] | null>(null);
-  const [probeError, setProbeError] = useState(false);
+  // Keyed by warehouse: navigating between warehouses keeps this hook mounted, and a late
+  // probe must never answer for a different warehouse than the one it asked about.
+  const [probe, setProbe] = useState<{
+    warehouseId: string;
+    ids: string[] | null;
+    failed: boolean;
+  } | null>(null);
+  const currentProbe = probe && probe.warehouseId === warehouseId ? probe : null;
+  const probeIds = currentProbe?.ids ?? null;
+  const probeError = currentProbe?.failed ?? false;
   const [probeToken, setProbeToken] = useState(0);
   const [assigning, setAssigning] = useState(false);
   const [removingId, setRemovingId] = useState<string | undefined>();
@@ -108,17 +116,16 @@ export const useWarehouseChannelMembership = (
       const channelIds = channelIdsKey.split("\0");
       let cancelled = false;
 
-      setProbeIds(null);
-      setProbeError(false);
+      setProbe({ warehouseId, ids: null, failed: false });
       probeWarehouseChannels(client, warehouseId, channelIds)
         .then((ids): void => {
           if (!cancelled) {
-            setProbeIds(ids);
+            setProbe({ warehouseId, ids, failed: false });
           }
         })
         .catch((): void => {
           if (!cancelled) {
-            setProbeError(true);
+            setProbe({ warehouseId, ids: null, failed: true });
           }
         });
 
@@ -173,7 +180,10 @@ export const useWarehouseChannelMembership = (
     }
 
     if (warehouseId && channelIdsKey) {
-      setProbeIds(await probeWarehouseChannels(client, warehouseId, channelIdsKey.split("\0")));
+      const ids = await probeWarehouseChannels(client, warehouseId, channelIdsKey.split("\0"));
+
+      // Tagged with the warehouse it was asked for, so it is ignored after navigating away.
+      setProbe({ warehouseId, ids, failed: false });
     }
   };
 
