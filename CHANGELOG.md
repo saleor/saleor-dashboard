@@ -1,5 +1,31 @@
 # Changelog
 
+## 3.23.40
+
+### Patch Changes
+
+- [#7012](https://github.com/saleor/saleor-dashboard/pull/7012) [`5a111dc`](https://github.com/saleor/saleor-dashboard/commit/5a111dc93783015f9e718f1e2c077a865b6f1d0f) Thanks [@peelar](https://github.com/peelar)! - Prevent duplicate members in permission groups before saving by disabling already assigned members in the picker.
+
+- [#7013](https://github.com/saleor/saleor-dashboard/pull/7013) [`c4de934`](https://github.com/saleor/saleor-dashboard/commit/c4de934b97dc9483e9dc76074f1bccb6ae7a5f30) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Update the Macaw UI component library to version 3. Dialogs, popovers, dropdown menus, and tooltips now use newer Radix UI versions. The dashboard should look and behave the same.
+
+- [#6999](https://github.com/saleor/saleor-dashboard/pull/6999) [`7eb51b4`](https://github.com/saleor/saleor-dashboard/commit/7eb51b46d0bf68eb0035c7d153391ad90d989038) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Deprecated apps with an official replacement now show a "Migrate" button in the installed extensions list. It opens the installation of the replacement app: SMTP → Customer Emails, Product Feed → Google Merchant Center. The button is shown only to staff who can manage apps.
+
+- [#7014](https://github.com/saleor/saleor-dashboard/pull/7014) [`e34cd91`](https://github.com/saleor/saleor-dashboard/commit/e34cd91db8cd51ed9cbd69374b4f3bdb61c0285f) Thanks [@mirekm](https://github.com/mirekm)! - On the order page, discounted Unit price and Total cells now always show the small dot that marks them as clickable for a price breakdown. Before, the dot was missing in the order line grid and in the Total column of the fulfillment grids, even though clicking those cells opened the breakdown.
+
+- [#7014](https://github.com/saleor/saleor-dashboard/pull/7014) [`e34cd91`](https://github.com/saleor/saleor-dashboard/commit/e34cd91db8cd51ed9cbd69374b4f3bdb61c0285f) Thanks [@mirekm](https://github.com/mirekm)! - Discounted unit prices and totals in the order line grids no longer overlap the currency code. The crossed-out original price is now always shown, in a smaller muted font, and currency codes in price cells use the same secondary style. The price columns are a bit wider by default, and when a cell is still too narrow the currency code moves onto the price as a symbol (for example `$10,450.00`) so both prices stay readable.
+
+- [#6929](https://github.com/saleor/saleor-dashboard/pull/6929) [`748b46a`](https://github.com/saleor/saleor-dashboard/commit/748b46a54cef548f891bf202c74021149efc927e) Thanks [@vojtesa](https://github.com/vojtesa)! - Add a "Delivery" column to the orders list. Each order now shows a tag indicating how it is delivered: "Shipping" for a shipping method and "Pickup" for collection at a warehouse (click & collect). Orders without a delivery method, such as draft or digital orders, show a dash. On the order page, a pickup order shows Pickup with the collection point name in the summary, and the customer card shows a "Pickup location" section with the location name, whether stock can come from other warehouses, and its address, instead of "Shipping address". The warehouses list shows a Pickup label on locations customers can collect from.
+
+- [#7005](https://github.com/saleor/saleor-dashboard/pull/7005) [`8b0e4c9`](https://github.com/saleor/saleor-dashboard/commit/8b0e4c9875779dd5395c243f50ab31abb0616c84) Thanks [@mirekm](https://github.com/mirekm)! - Storybook stories that show read-only rich text, such as product media translations, failed to load with "require is not defined", which stopped Chromatic from publishing builds. They now load, and the `react-editor-js` package is no longer a dependency.
+
+- [#6952](https://github.com/saleor/saleor-dashboard/pull/6952) [`0ee605b`](https://github.com/saleor/saleor-dashboard/commit/0ee605ba9c46974f17ba28765d2dcc0fef43cbd0) Thanks [@EugenBodanov](https://github.com/EugenBodanov)! - Add product media to the translation context switcher and provide a dedicated media translation screen with a preview and an Alt text field. Staff with Manage translations permission can translate media, including for unpublished products, without changing the original alt text.
+
+- [#7009](https://github.com/saleor/saleor-dashboard/pull/7009) [`37f8fdd`](https://github.com/saleor/saleor-dashboard/commit/37f8fddb3f0009b0d5cd7719f375956a32cdea4b) Thanks [@mirekm](https://github.com/mirekm)! - Clearing a translated field and saving it now resets the field to untranslated, so storefronts fall back to the original language. Previously the field was saved as an empty value, and storefronts showed a blank instead of the original text. This applies to product, category, collection, sale, voucher, and shipping method names, page titles, SEO fields, slugs, and the text of text attribute values on product, variant, and page translations. Translations already saved as blank can be reset the same way: click Edit on the field and save it without typing. Attribute names, attribute value names, variant names, menu item names, and media alt text still save as empty values because the API cannot remove them yet.
+
+- [#7010](https://github.com/saleor/saleor-dashboard/pull/7010) [`621ffed`](https://github.com/saleor/saleor-dashboard/commit/621ffed6a7eb4e766a2ef2f0c26f68a82f412457) Thanks [@mirekm](https://github.com/mirekm)! - Translation fields saved as empty now show a hint that your storefront may display a blank instead of the original. In bulk edit, Save is available whenever an item has such fields and resets them along with your edits, so the storefront shows the original language again. Leaving bulk edit without saving keeps them as they were and does not warn about unsaved changes. Fields that can't be reset to the original yet (variant names, menu item names, media alt text, attribute names, and attribute value names) show a warning when they are saved as empty or about to be saved empty, until the API supports resetting them.
+
+- [`8e14543`](https://github.com/saleor/saleor-dashboard/commit/8e1454319aabce8a60ca5a24fb6ef17faa1ba49c) Thanks [@peelar](https://github.com/peelar)! - Fix product thumbnails appearing against the card edge on the order return page. Thumbnails now align with the Product column heading.
+
 ## 3.23.39
 
 ### Patch Changes
