@@ -9,6 +9,8 @@ import {
   useCreateShippingZoneMutation,
   useShippingMethodChannelListingUpdateMutation,
   useWarehouseCreateMutation,
+  useWarehouseUpdateMutation,
+  type WarehouseCreateInput,
   WarehouseErrorCode,
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
@@ -19,6 +21,25 @@ import { useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { getChannelDetailsRefetchQueries } from "./channelRefetchQueries";
+
+type WarehouseInputFromForm = Pick<WarehouseCreateInput, "name" | "address">;
+
+const warehouseInputFromForm = (
+  data: CreateWarehouseForChannelFormData,
+): WarehouseInputFromForm => ({
+  name: data.name,
+  address: {
+    companyName: data.companyName,
+    city: data.city,
+    cityArea: data.cityArea,
+    country: findValueInEnum(data.country, CountryCode),
+    countryArea: data.countryArea,
+    phone: data.phone,
+    postalCode: data.postalCode,
+    streetAddress1: data.streetAddress1,
+    streetAddress2: data.streetAddress2,
+  },
+});
 
 interface UseChannelSetupActionsArgs {
   channelId: string;
@@ -45,7 +66,9 @@ export const useChannelSetupActions = ({
   };
 
   const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation();
-  const pendingWarehouseId = useRef<string | null>(null);
+  const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation();
+  /** Created but not yet assigned, with the input it was last saved with. */
+  const pendingWarehouse = useRef<{ id: string; input: WarehouseInputFromForm } | null>(null);
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation();
   const [createShippingZone, createShippingZoneOpts] = useCreateShippingZoneMutation();
   const [createShippingRate, createShippingRateOpts] = useCreateShippingRateMutation();
@@ -56,40 +79,40 @@ export const useChannelSetupActions = ({
     data: CreateWarehouseForChannelFormData,
   ): Promise<WarehouseErrorFragment[]> => {
     try {
-      let warehouseId = pendingWarehouseId.current;
+      const input = warehouseInputFromForm(data);
+      const pending = pendingWarehouse.current;
+      let warehouseId: string;
 
-      if (!warehouseId) {
-        const createResult = await createWarehouse({
-          variables: {
-            input: {
-              name: data.name,
-              address: {
-                companyName: data.companyName,
-                city: data.city,
-                cityArea: data.cityArea,
-                country: findValueInEnum(data.country, CountryCode),
-                countryArea: data.countryArea,
-                phone: data.phone,
-                postalCode: data.postalCode,
-                streetAddress1: data.streetAddress1,
-                streetAddress2: data.streetAddress2,
-              },
-            },
-          },
-        });
+      if (!pending) {
+        const createResult = await createWarehouse({ variables: { input } });
         const createErrors = createResult.data?.createWarehouse?.errors ?? [];
 
         if (createErrors.length) {
           return createErrors;
         }
 
-        warehouseId = createResult.data?.createWarehouse?.warehouse?.id ?? null;
+        const createdId = createResult.data?.createWarehouse?.warehouse?.id;
 
-        if (!warehouseId) {
+        if (!createdId) {
           return [];
         }
 
-        pendingWarehouseId.current = warehouseId;
+        warehouseId = createdId;
+        pendingWarehouse.current = { id: warehouseId, input };
+      } else {
+        warehouseId = pending.id;
+
+        // A retry after a failed assign must not drop edits made since the create.
+        if (JSON.stringify(pending.input) !== JSON.stringify(input)) {
+          const updateResult = await updateWarehouse({ variables: { id: warehouseId, input } });
+          const updateErrors = updateResult.data?.updateWarehouse?.errors ?? [];
+
+          if (updateErrors.length) {
+            return updateErrors;
+          }
+
+          pendingWarehouse.current = { id: warehouseId, input };
+        }
       }
 
       const assignErrors = await extractMutationErrors(
@@ -127,7 +150,7 @@ export const useChannelSetupActions = ({
           defaultMessage: "Warehouse created and assigned",
         }),
       });
-      pendingWarehouseId.current = null;
+      pendingWarehouse.current = null;
       onWarehouseCreated();
 
       return [];
@@ -343,7 +366,8 @@ export const useChannelSetupActions = ({
     onAssigned();
   };
 
-  const warehouseLoading = createWarehouseOpts.loading || updateChannelOpts.loading;
+  const warehouseLoading =
+    createWarehouseOpts.loading || updateWarehouseOpts.loading || updateChannelOpts.loading;
   const shippingLoading =
     createShippingZoneOpts.loading ||
     createShippingRateOpts.loading ||
@@ -351,7 +375,7 @@ export const useChannelSetupActions = ({
 
   return {
     resetPendingWarehouse: (): void => {
-      pendingWarehouseId.current = null;
+      pendingWarehouse.current = null;
     },
     handleCreateWarehouse,
     handleCreateShipping,
