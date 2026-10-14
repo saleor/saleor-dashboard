@@ -5,10 +5,10 @@ import {
 } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
 import { type ConditionValue } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
-import { FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import {
   ExpressionValue,
   type FilterContainer,
+  FilterElement,
 } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";

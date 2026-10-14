@@ -28,7 +28,7 @@ export function isJwtError(error: GraphQLError): boolean {
   let jwtError: boolean;
 
   try {
-    jwtError = !!findValueInEnum((error.extensions?.exception as ExceptionWithCode).code, JWTError);
+    jwtError = !!findValueInEnum((error.extensions?.exception as ExceptionWithCode)?.code, JWTError);
   } catch (e) {
     jwtError = false;
   }
@@ -38,7 +38,7 @@ export function isJwtError(error: GraphQLError): boolean {
 
 export function isTokenExpired(error: GraphQLError): boolean {
   try {
-    return (error.extensions?.exception as ExceptionWithCode).code === JWTError.expired;
+    return (error.extensions?.exception as ExceptionWithCode)?.code === JWTError.expired;
   } catch (e) {
     return false;
   }
