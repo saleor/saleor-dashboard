@@ -1724,10 +1724,6 @@
     "context": "dialog header",
     "string": "Add product from {channelName}"
   },
-  "4YFjVJ": {
-    "context": "last item of the unlink dialog list when more links are dropped than are named",
-    "string": "{count, plural, one {# other link} other {# other links}}"
-  },
   "4YJHut": {
     "string": "Clear search"
   },
@@ -3441,6 +3437,10 @@
   "AgdhYN": {
     "context": "orders list tag: order is picked up by the customer at a warehouse",
     "string": "Pickup"
+  },
+  "Ahb+I1": {
+    "context": "last item of the unlink dialog list when more warehouses unlink than are named",
+    "string": "{count, plural, one {# other warehouse} other {# other warehouses}}"
   },
   "Ai4XSg": {
     "context": "shown when shipping address is required but not set",
@@ -5985,6 +5985,10 @@
   "JgXBAw": {
     "context": "dropdown label when there are no channels assigned",
     "string": "No channels"
+  },
+  "Ji3tCA": {
+    "context": "opens the full list of warehouses that share no channel with the shipping zone",
+    "string": "Show {count} more"
   },
   "JiRKgJ": {
     "context": "dialog search placeholder",
@@ -9030,6 +9034,10 @@
   "UymotP": {
     "context": "channel name",
     "string": "Channel name"
+  },
+  "Uz4zYy": {
+    "context": "last item of the unlink dialog list when more links are dropped than are named",
+    "string": "{count, plural, one {# other link} other {# other links}}"
   },
   "V+h02n": {
     "context": "issued by label",
@@ -12998,10 +13006,6 @@
     "context": "Manage and Update your warehouse information",
     "string": "Exchange Rates"
   },
-  "j2292d": {
-    "context": "last item of the unlink dialog list when more warehouses unlink than are named",
-    "string": "{count, plural, one {# other warehouse} other {# other warehouses}}"
-  },
   "j23Ryb": {
     "context": "channel delivery empty state title",
     "string": "No shipping zones assigned"
@@ -16535,6 +16539,10 @@
   "ujFo4A": {
     "context": "voucher start date",
     "string": "Started"
+  },
+  "uk8zNQ": {
+    "context": "title of the full list of warehouses that share no channel with the zone",
+    "string": "Warehouses outside this zone's channels"
   },
   "ukdRUv": {
     "context": "delete variant dialog subtitle",

@@ -29,10 +29,11 @@ interface AssignListAllDialogProps {
   searchPlaceholder: string;
   /** Shown when the search matches nothing. */
   noMatchMessage: ReactNode;
-  removable: boolean;
-  removeLabel: (item: AssignListCardItem) => string;
+  /** Read-only when omitted. */
+  removable?: boolean;
+  removeLabel?: (item: AssignListCardItem) => string;
   disabled?: boolean;
-  onRemoveItem: (id: string) => void;
+  onRemoveItem?: (id: string) => void;
   onClose: () => void;
   "data-test-id"?: string;
 }
@@ -51,7 +52,7 @@ export const AssignListAllDialog = ({
   searchLabel,
   searchPlaceholder,
   noMatchMessage,
-  removable,
+  removable = false,
   removeLabel,
   disabled = false,
   onRemoveItem,
@@ -138,13 +139,13 @@ export const AssignListAllDialog = ({
                         ) : null}
                       </Box>
                     </Box>
-                    {removable ? (
+                    {removable && onRemoveItem ? (
                       <div className={styles.rowDelete}>
                         <DeletableItem
                           id={item.id}
                           onDelete={onRemoveItem}
                           disabled={disabled}
-                          label={removeLabel(item)}
+                          label={removeLabel?.(item)}
                         />
                       </div>
                     ) : null}

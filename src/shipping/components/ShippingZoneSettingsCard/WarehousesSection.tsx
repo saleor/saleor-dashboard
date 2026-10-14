@@ -1,3 +1,6 @@
+import { AssignListAllDialog } from "@dashboard/components/AssignListCard/AssignListAllDialog";
+import { ASSIGN_LIST_PREVIEW_COUNT } from "@dashboard/components/AssignListCard/AssignListShowAllRow";
+import { messages as assignWarehouseMessages } from "@dashboard/components/AssignWarehouseDialog/messages";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { Multiselect } from "@dashboard/components/Combobox/components/Multiselect";
@@ -7,7 +10,7 @@ import { type FetchMoreProps, type SearchProps } from "@dashboard/types";
 import { WAREHOUSE_CHANNELS_SECTION_ID } from "@dashboard/warehouses/components/WarehouseChannelsCard/WarehouseChannelsCard";
 import { warehouseUrl } from "@dashboard/warehouses/urls";
 import { Box, Button, type Option, Skeleton, Text } from "@saleor/macaw-ui-next";
-import { type ReactElement } from "react";
+import { type ReactElement, useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -44,6 +47,16 @@ const messages = defineMessages({
     defaultMessage: "These warehouses aren't in this zone's channels, so they can't be linked yet.",
     description: "shipping zone warehouses that share no channel",
   },
+  ineligibleShowMore: {
+    id: "8xvJqe",
+    defaultMessage: "Show {count} more",
+    description: "opens the full list of warehouses that share no channel with the shipping zone",
+  },
+  ineligibleDialogTitle: {
+    id: "IlWEcp",
+    defaultMessage: "Warehouses outside this zone's channels",
+    description: "title of the full list of warehouses that share no channel with the zone",
+  },
   addChannelFirst: {
     id: "WrQB8Z",
     defaultMessage: "Add a channel above first.",
@@ -63,6 +76,10 @@ interface WarehousesSectionProps extends FetchMoreProps, SearchProps {
   onExpand: () => void;
 }
 
+/** Adding a channel happens on the warehouse page, so links land on its channels card. */
+const ineligibleWarehouseUrl = (warehouseId: string): string =>
+  `${warehouseUrl(warehouseId)}#${WAREHOUSE_CHANNELS_SECTION_ID}`;
+
 const WarehousesSection = ({
   onSearchChange,
   onChange,
@@ -79,6 +96,7 @@ const WarehousesSection = ({
 }: WarehousesSectionProps): ReactElement => {
   const intl = useIntl();
   const hasZoneChannels = zoneChannelNames.length > 0;
+  const [ineligibleOpen, setIneligibleOpen] = useState(false);
 
   if (legacyStockAvailability === undefined) {
     return <Skeleton __height="2.5rem" __width="100%" />;
@@ -131,10 +149,10 @@ const WarehousesSection = ({
             />
           </DashboardCard.Subtitle>
           {hasZoneChannels
-            ? ineligibleWarehouses.map(warehouse => (
+            ? ineligibleWarehouses.slice(0, ASSIGN_LIST_PREVIEW_COUNT).map(warehouse => (
                 <Link
                   key={warehouse.id}
-                  to={`${warehouseUrl(warehouse.id)}#${WAREHOUSE_CHANNELS_SECTION_ID}`}
+                  to={ineligibleWarehouseUrl(warehouse.id)}
                   style={{ textDecoration: "none" }}
                   data-test-id="shipping-zone-ineligible-warehouse"
                 >
@@ -150,8 +168,41 @@ const WarehousesSection = ({
                 </Link>
               ))
             : null}
+          {hasZoneChannels && ineligibleWarehouses.length > ASSIGN_LIST_PREVIEW_COUNT ? (
+            <Box>
+              <Button
+                variant="tertiary"
+                type="button"
+                size="small"
+                data-test-id="shipping-zone-ineligible-show-more"
+                onClick={() => setIneligibleOpen(true)}
+              >
+                <FormattedMessage
+                  {...messages.ineligibleShowMore}
+                  values={{ count: ineligibleWarehouses.length - ASSIGN_LIST_PREVIEW_COUNT }}
+                />
+              </Button>
+            </Box>
+          ) : null}
         </Box>
       ) : null}
+      <AssignListAllDialog
+        open={ineligibleOpen}
+        title={<FormattedMessage {...messages.ineligibleDialogTitle} />}
+        items={ineligibleWarehouses.map(warehouse => ({
+          id: warehouse.id,
+          name: warehouse.name,
+          href: ineligibleWarehouseUrl(warehouse.id),
+        }))}
+        loading={loading}
+        hasMore={hasMore}
+        onFetchMore={onFetchMore}
+        searchLabel={intl.formatMessage(assignWarehouseMessages.searchLabel)}
+        searchPlaceholder={intl.formatMessage(assignWarehouseMessages.searchPlaceholder)}
+        noMatchMessage={<FormattedMessage {...assignWarehouseMessages.noWarehousesFound} />}
+        onClose={() => setIneligibleOpen(false)}
+        data-test-id="shipping-zone-ineligible-all"
+      />
     </>
   );
 };
