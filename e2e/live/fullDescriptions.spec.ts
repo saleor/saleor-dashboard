@@ -35,6 +35,13 @@ interface EntityConfig {
   translationOperation: "UpdateCategoryTranslations" | "UpdateCollectionTranslations";
 }
 
+interface TranslationCursorPage {
+  translations: {
+    edges: Array<{ cursor: string; node: { id: string; entityId: string } }>;
+    pageInfo: { endCursor: string | null; hasNextPage: boolean };
+  };
+}
+
 const entities: EntityConfig[] = [
   {
     kind: "category",
@@ -230,6 +237,60 @@ async function readEntity(entity: EntityConfig, id: string, token: string): Prom
   return result.entity;
 }
 
+async function findEntityListCursor(
+  entity: EntityConfig,
+  id: string,
+  token: string,
+): Promise<string | null> {
+  const kind = entity.kind === "category" ? "CATEGORY" : "COLLECTION";
+  let after: string | null = null;
+  let previousCursor: string | null = null;
+  let hasNextPage = true;
+
+  while (hasNextPage) {
+    const { translations }: TranslationCursorPage = await graphql<TranslationCursorPage>(
+      `
+        query LiveTranslationProgressCursor($kind: TranslatableKinds!, $after: String) {
+          translations(kind: $kind, first: 100, after: $after) {
+            edges {
+              cursor
+              node {
+                ... on CategoryTranslatableContent {
+                  id
+                  entityId: categoryId
+                }
+                ... on CollectionTranslatableContent {
+                  id
+                  entityId: collectionId
+                }
+              }
+            }
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
+          }
+        }
+      `,
+      { kind, after },
+      token,
+    );
+
+    for (const edge of translations.edges) {
+      if (edge.node.entityId === id) {
+        return previousCursor;
+      }
+
+      previousCursor = edge.cursor;
+    }
+
+    after = translations.pageInfo.endCursor;
+    hasNextPage = translations.pageInfo.hasNextPage;
+  }
+
+  throw new Error("The test entity was not found in the translation list");
+}
+
 async function failSaveRequest(
   page: Page,
   operationName: string,
@@ -296,6 +357,157 @@ async function injectEditorReadFailure(page: Page): Promise<void> {
 }
 
 for (const entity of entities) {
+  test(`${entity.kind}: excludes empty rich text blocks from translation counters #e2e #translations #progress`, async ({
+    page,
+    session,
+  }) => {
+    // Arrange
+    const name = `E2E empty translation ${randomUUID()}`;
+    const description = "Original summary";
+    const fullDescription = "Original detailed description";
+    const emptyParagraph: OutputData = richText("");
+    const { created } = await graphql<{
+      created: { entity: { id: string } | null; errors: MutationError[] };
+    }>(
+      entity.create,
+      {
+        input: {
+          name,
+          description: JSON.stringify(richText(description)),
+          fullDescription: JSON.stringify(richText(fullDescription)),
+        },
+      },
+      session.token,
+    );
+
+    expect(created.errors).toEqual([]);
+
+    if (!created.entity) {
+      throw new Error("Test entity creation did not return an ID");
+    }
+
+    const { id } = created.entity;
+
+    try {
+      const { translated } = await graphql<{ translated: { errors: MutationError[] } }>(
+        entity.translate,
+        {
+          id,
+          input: {
+            description: JSON.stringify(emptyParagraph),
+            fullDescription: JSON.stringify(emptyParagraph),
+          },
+        },
+        session.token,
+      );
+
+      expect(translated.errors).toEqual([]);
+      const savedEmpty = await readEntity(entity, id, session.token);
+
+      // Core must retain the empty paragraphs for this regression to be exercised.
+      expect(JSON.parse(savedEmpty.translation?.description ?? "null")).toMatchObject({
+        blocks: emptyParagraph.blocks,
+      });
+      expect(JSON.parse(savedEmpty.translation?.fullDescription ?? "null")).toMatchObject({
+        blocks: emptyParagraph.blocks,
+      });
+      const cursor = await findEntityListCursor(entity, id, session.token);
+      const listUrl = `/translations/DE?tab=${entity.path}${cursor ? `&after=${encodeURIComponent(cursor)}` : ""}`;
+
+      // Act
+      await page.goto(listUrl);
+      const row = page.getByRole("row").filter({ hasText: name });
+
+      // Assert
+      await expect(row).toContainText("0 of 6");
+
+      // Act
+      await row.click();
+
+      // Assert
+      const progress = page.getByTestId("translation-context-bar");
+      const fullField = page.getByTestId("translation-field-fullDescription");
+
+      await expect(page.getByTestId("translation-field-name")).toContainText(name);
+      await expect(progress).toContainText("0 of 6 fields translated");
+      await expect(progress).toContainText("0%");
+      await expect(fullField).toContainText("Needs translation");
+      await expect(page.getByTestId("translation-field-description")).toContainText(
+        "Needs translation",
+      );
+
+      // Act
+      const translatedDetails = "Übersetzte Details";
+
+      await page.getByTestId("edit-fullDescription").click();
+      await fillEditor(fullField.getByTestId("rich-text-editor-translation"), translatedDetails);
+      await saveMutation(page, entity.translationOperation);
+      await expect(page.getByTestId("edit-fullDescription")).toBeVisible();
+
+      // Assert
+      await expect(progress).toContainText("1 of 6 fields translated");
+      const saved = await readEntity(entity, id, session.token);
+
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(translatedDetails);
+      expect(JSON.parse(saved.translation?.description ?? "null")).toMatchObject({
+        blocks: emptyParagraph.blocks,
+      });
+      expect(textFromRichText(saved.description)).toBe(description);
+      expect(textFromRichText(saved.fullDescription)).toBe(fullDescription);
+
+      // Act
+      await page.goto(listUrl);
+
+      // Assert
+      await expect(row).toContainText("1 of 6");
+
+      const emptyNonTextContents: OutputData[] = [
+        { blocks: [{ type: "list", data: { style: "unordered", items: ["", "<br>"] } }] },
+        { blocks: [{ type: "table", data: { withHeadings: true, content: [["", "&nbsp;"]] } }] },
+      ];
+
+      for (const content of emptyNonTextContents) {
+        // Act
+        const { translated } = await graphql<{ translated: { errors: MutationError[] } }>(
+          entity.translate,
+          {
+            id,
+            input: {
+              description: JSON.stringify(content),
+              fullDescription: JSON.stringify(content),
+            },
+          },
+          session.token,
+        );
+
+        // Assert
+        expect(translated.errors).toEqual([]);
+
+        // Act
+        await page.goto(listUrl);
+
+        // Assert
+        await expect(row).toContainText("0 of 6");
+
+        // Act
+        await row.click();
+
+        // Assert
+        await expect(page.getByTestId("translation-field-name")).toContainText(name);
+        await expect(progress).toContainText("0 of 6 fields translated");
+        await expect(fullField).toContainText("Needs translation");
+      }
+    } finally {
+      const { deleted } = await graphql<{ deleted: { errors: MutationError[] } }>(
+        entity.delete,
+        { id },
+        session.token,
+      );
+
+      expect(deleted.errors).toEqual([]);
+    }
+  });
+
   test(`${entity.kind}: retries a rejected editor read without losing the full description #e2e #editor-read`, async ({
     page,
     session,

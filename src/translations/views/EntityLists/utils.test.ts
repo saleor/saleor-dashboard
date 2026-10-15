@@ -3,6 +3,7 @@ import {
   LanguageCodeEnum,
   type ShippingMethodTranslationsQuery,
 } from "@dashboard/graphql";
+import { type OutputData } from "@editorjs/editorjs";
 
 import {
   getCategoryCollectionTranslationCompletion,
@@ -206,6 +207,23 @@ describe("getGeneralEntityTranslationCompletion", () => {
 });
 
 describe("getCategoryCollectionTranslationCompletion", () => {
+  it("keeps empty description paragraphs out of the six-field list counter", () => {
+    // Arrange
+    const emptyParagraph: OutputData = {
+      blocks: [{ type: "paragraph", data: { text: "" } }],
+    };
+    const translation: Parameters<typeof getCategoryCollectionTranslationCompletion>[0] = {
+      description: JSON.stringify(emptyParagraph),
+      fullDescription: JSON.stringify(emptyParagraph),
+    };
+
+    // Act
+    const result = getCategoryCollectionTranslationCompletion(translation);
+
+    // Assert
+    expect(result).toEqual({ current: 0, max: 6 });
+  });
+
   it("counts a full description separately from the description", () => {
     // Arrange
     const translation = {
