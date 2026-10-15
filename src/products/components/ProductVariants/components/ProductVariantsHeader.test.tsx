@@ -1,11 +1,16 @@
+import { productVariantAddUrl } from "@dashboard/products/urls";
 import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { type ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import { ProductVariantsHeader } from "./ProductVariantsHeader";
 
-const headerProps = {
-  addRowOnDatagrid: jest.fn(),
+const mockNavigate = jest.fn();
+
+jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
+
+const headerProps: ComponentProps<typeof ProductVariantsHeader> = {
   isAnimationOpenFinished: false,
   isFullscreenOpen: false,
   toggleFullscreen: jest.fn(),
@@ -57,5 +62,43 @@ describe("ProductVariantsHeader pagination", () => {
     // Assert
     expect(screen.getByTestId("variants-range-label")).toHaveTextContent("1–20 of 40");
     expect(screen.getByTestId("variants-pagination")).toBeInTheDocument();
+  });
+});
+
+describe("ProductVariantsHeader actions", () => {
+  beforeEach(() => {
+    mockNavigate.mockClear();
+  });
+
+  it("opens the variant create page from Add variant outside bulk edit", () => {
+    // Arrange
+    render(
+      <Wrapper>
+        <MemoryRouter>
+          <ProductVariantsHeader {...headerProps} isFullscreenOpen={false} />
+        </MemoryRouter>
+      </Wrapper>,
+    );
+
+    // Act
+    fireEvent.click(screen.getByTestId("button-add-variant"));
+
+    // Assert
+    expect(mockNavigate).toHaveBeenCalledWith(productVariantAddUrl("prod-1"));
+  });
+
+  it("hides Add variant in bulk edit, where the trailing empty row adds variants", () => {
+    // Act
+    render(
+      <Wrapper>
+        <MemoryRouter>
+          <ProductVariantsHeader {...headerProps} isFullscreenOpen />
+        </MemoryRouter>
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.queryByTestId("button-add-variant")).not.toBeInTheDocument();
+    expect(screen.getByTestId("button-exit-fullscreen")).toBeInTheDocument();
   });
 });

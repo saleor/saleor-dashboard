@@ -133,7 +133,6 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
 
   await productPage.waitForGrid();
   await productPage.clickDatagridFullscreenButton();
-  await productPage.clickAddVariantButton();
   await productPage.editVariantButton.nth(1).scrollIntoViewIfNeeded();
   await productPage.clickGridCell(1, 1, 1);
   await productPage.fillGridCell(1, 1, newVariantName, 1);
