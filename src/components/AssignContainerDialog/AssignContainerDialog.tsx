@@ -47,6 +47,8 @@ export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps 
   backfillExhaustedMessage?: string;
   /** Renders before a row's name — used by the model dialog to show the model type's icon. */
   renderContainerAdornment?: (container: Container) => ReactNode;
+  /** Renders a muted line under a row's name — used by the model dialog to tell apart models that share a name by their slug. */
+  renderContainerDescription?: (container: Container) => ReactNode;
   selectionMode?: "single" | "multiple";
   selectedId?: string;
   filtersSlot?: ReactNode;
@@ -76,6 +78,7 @@ const AssignContainerDialog = ({
   backfillResetKey,
   backfillExhaustedMessage,
   renderContainerAdornment,
+  renderContainerDescription,
   selectionMode = "multiple",
   selectedId,
   filtersSlot,
@@ -219,6 +222,7 @@ const AssignContainerDialog = ({
                         selectedItemId={singleSelection.selectedItemId}
                         onSelect={singleSelection.handleSelect}
                         renderAdornment={renderContainerAdornment}
+                        renderDescription={renderContainerDescription}
                       />
                     ) : (
                       <MultiSelectionRows
@@ -226,6 +230,7 @@ const AssignContainerDialog = ({
                         isSelected={multiSelection.isSelected}
                         onToggle={multiSelection.handleToggle}
                         renderAdornment={renderContainerAdornment}
+                        renderDescription={renderContainerDescription}
                       />
                     )}
                   </>

@@ -42,6 +42,25 @@ export const SingleSelection: Story = {
   ),
 };
 
+/** A muted line under the name tells apart rows that share one — the model picker shows slugs. */
+export const WithDescription: Story = {
+  render: () => (
+    <ResponsiveTable bleed>
+      <TableBody>
+        <SingleSelectionRows
+          containers={[
+            { id: "1", name: "Supreme" },
+            { id: "2", name: "Supreme" },
+          ]}
+          selectedItemId="2"
+          onSelect={fn()}
+          renderDescription={container => (container.id === "1" ? "supreme-eu" : "supreme-us")}
+        />
+      </TableBody>
+    </ResponsiveTable>
+  ),
+};
+
 export const Empty: Story = {
   render: () => (
     <ResponsiveTable bleed>

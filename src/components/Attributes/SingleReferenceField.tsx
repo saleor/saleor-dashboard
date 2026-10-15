@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 
 import { ReferenceValueChip } from "./referenceValueAppearance";
 import { type AttributeRowProps } from "./types";
-import { useModelReferenceIcons } from "./useModelReferenceIcons";
+import { useModelReferenceDetails } from "./useModelReferenceDetails";
 import { mergeReferenceDetails, useProductReferenceDetails } from "./useProductReferenceDetails";
 
 /** Lucide's pencil fills its box; the plus is drawn inset. 12px matches that mark. */
@@ -35,7 +35,7 @@ export const SingleReferenceField = ({
   onReferencesRemove,
 }: SingleReferenceFieldProps) => {
   const intl = useIntl();
-  const referenceIcons = useModelReferenceIcons({
+  const modelDetails = useModelReferenceDetails({
     entityType: attribute.data.entityType,
     ids: attribute.value,
   });
@@ -43,7 +43,7 @@ export const SingleReferenceField = ({
     ids: attribute.value ?? [],
     entityType: attribute.data.entityType,
   });
-  const selected = getSingleReferenceDisplayValue(attribute, referenceIcons);
+  const selected = getSingleReferenceDisplayValue(attribute, modelDetails);
   const selectedWithDetails = selected
     ? mergeReferenceDetails([selected], referenceDetails)[0]
     : null;

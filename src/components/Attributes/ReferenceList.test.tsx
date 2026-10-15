@@ -7,6 +7,11 @@ import { MemoryRouter } from "react-router-dom";
 
 import { ReferenceList } from "./ReferenceList";
 import { type ReferenceListValue } from "./referenceValueAppearance";
+import { type ModelReferenceDetails, useModelReferenceDetails } from "./useModelReferenceDetails";
+
+jest.mock("./useModelReferenceDetails", () => ({
+  useModelReferenceDetails: jest.fn(() => new Map()),
+}));
 
 const RouterWrapper = ({ children }: { children: ReactNode }) => (
   <MemoryRouter>
@@ -283,5 +288,47 @@ describe("ReferenceList", () => {
     );
     expect(screen.queryByTestId("product-reference-row")).not.toBeInTheDocument();
     expect(screen.getByTestId("attribute-reference-search")).toBeInTheDocument();
+  });
+
+  it("shows each model's slug under its name and filters by it", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const modelDetails = new Map<string, ModelReferenceDetails>([
+      ["m1", { icon: { name: "shapes", color: "grey" }, slug: "supreme-eu" }],
+      ["m2", { icon: { name: "shapes", color: "grey" }, slug: "supreme-us" }],
+    ]);
+
+    (
+      useModelReferenceDetails as jest.MockedFunction<typeof useModelReferenceDetails>
+    ).mockReturnValue(modelDetails);
+
+    render(
+      <ReferenceList
+        entityType={AttributeEntityTypeEnum.PAGE}
+        values={[
+          { label: "Supreme", value: "m1", url: "/models/m1" },
+          { label: "Supreme", value: "m2", url: "/models/m2" },
+        ]}
+        onRemove={jest.fn()}
+        onRemoveAll={jest.fn()}
+        onReorder={jest.fn()}
+      />,
+      { wrapper: RouterWrapper },
+    );
+
+    // Assert
+    const rows = screen.getAllByTestId("product-reference-row");
+
+    expect(within(rows[0]).getByText("supreme-eu")).toBeInTheDocument();
+    expect(within(rows[1]).getByText("supreme-us")).toBeInTheDocument();
+
+    // Act
+    await user.type(screen.getByTestId("attribute-reference-search"), "-us");
+
+    // Assert
+    const filteredRows = screen.getAllByTestId("product-reference-row");
+
+    expect(filteredRows).toHaveLength(1);
+    expect(filteredRows[0]).toHaveTextContent("supreme-us");
   });
 });

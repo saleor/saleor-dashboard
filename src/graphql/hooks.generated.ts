@@ -20554,6 +20554,7 @@ export const SearchPagesDocument = gql`
       node {
         id
         title
+        slug
         pageType {
           id
           metadata {

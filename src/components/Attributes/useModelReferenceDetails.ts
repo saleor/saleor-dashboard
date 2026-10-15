@@ -13,29 +13,35 @@ import { useMemo } from "react";
 import { stabilizeReferenceIds } from "./stabilizeReferenceIds";
 
 /** The API returns at most 100 nodes per page. */
-const MODEL_ICONS_PAGE_SIZE = 100;
+const MODEL_DETAILS_PAGE_SIZE = 100;
 
-interface UseModelReferenceIconsArgs {
+export interface ModelReferenceDetails {
+  icon: ModelTypeIcon;
+  /** Models can share a name; merchants tell them apart by slug. */
+  slug: string;
+}
+
+interface UseModelReferenceDetailsArgs {
   entityType: AttributeEntityTypeEnum | null | undefined;
   ids: string[] | null | undefined;
 }
 
 /**
- * A reference attribute value only carries the referenced id and its name, so the icon configured
- * on the referenced model's type has to be fetched separately — the entity query cannot reach it.
- * Reuses the reference search query, which already selects `pageType.metadata`, narrowed to the
- * assigned ids. Returns an empty map for every other entity type.
+ * A reference attribute value only carries the referenced id and its name, so the slug and the
+ * icon configured on the referenced model's type have to be fetched separately — the entity query
+ * cannot reach them. Reuses the reference search query, which already selects both, narrowed to
+ * the assigned ids. Returns an empty map for every other entity type.
  *
- * Call it where the icons are drawn, not on the row: a collapsed reference group does not mount
+ * Call it where the details are drawn, not on the row: a collapsed reference group does not mount
  * its list, so the request waits until the list is opened.
  */
-export const useModelReferenceIcons = ({
+export const useModelReferenceDetails = ({
   entityType,
   ids,
-}: UseModelReferenceIconsArgs): Map<string, ModelTypeIcon> => {
+}: UseModelReferenceDetailsArgs): Map<string, ModelReferenceDetails> => {
   const requestedIds =
     entityType === AttributeEntityTypeEnum.PAGE
-      ? stabilizeReferenceIds(ids ?? [], MODEL_ICONS_PAGE_SIZE)
+      ? stabilizeReferenceIds(ids ?? [], MODEL_DETAILS_PAGE_SIZE)
       : [];
 
   const { data } = useQuery<SearchPagesQuery, SearchPagesQueryVariables>(SearchPagesDocument, {
@@ -48,7 +54,7 @@ export const useModelReferenceIcons = ({
       new Map(
         mapEdgesToItems(data?.search)?.map(page => [
           page.id,
-          getModelTypeIcon(page.pageType?.metadata),
+          { icon: getModelTypeIcon(page.pageType?.metadata), slug: page.slug },
         ]) ?? [],
       ),
     [data],

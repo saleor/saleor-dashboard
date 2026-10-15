@@ -66,12 +66,9 @@ const AssignModelDialogInner = ({
     [pages],
   );
 
-  // Kept off `Container`: that shape is also the submit payload, so the icon is looked up per row
-  // at render time rather than riding along with the selection.
-  const iconsByPageId = useMemo(
-    () => new Map(pages?.map(page => [page.id, getModelTypeIcon(page.pageType?.metadata)]) ?? []),
-    [pages],
-  );
+  // Kept off `Container`: that shape is also the submit payload, so the icon and slug are looked
+  // up per row at render time rather than riding along with the selection.
+  const pagesById = useMemo(() => new Map(pages?.map(page => [page.id, page]) ?? []), [pages]);
 
   const labels: AssignContainerDialogProps["labels"] = {
     title: intl.formatMessage(messages.assignModelDialogHeader),
@@ -90,10 +87,12 @@ const AssignModelDialogInner = ({
       {...restProps}
       containers={containers}
       renderContainerAdornment={container => {
-        const icon = iconsByPageId.get(container.id);
+        const page = pagesById.get(container.id);
 
-        return icon ? <ModelTypeIcon icon={icon} /> : null;
+        return page ? <ModelTypeIcon icon={getModelTypeIcon(page.pageType?.metadata)} /> : null;
       }}
+      // Models can share a name; merchants tell them apart by slug.
+      renderContainerDescription={container => pagesById.get(container.id)?.slug}
       labels={labels}
       open={open}
       onClose={onClose}

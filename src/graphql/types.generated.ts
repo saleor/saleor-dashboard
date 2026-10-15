@@ -14455,7 +14455,7 @@ export type SearchPagesQueryVariables = Exact<{
 }>;
 
 
-export type SearchPagesQuery = { __typename: 'Query', search: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string, pageType: { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type SearchPagesQuery = { __typename: 'Query', search: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string, slug: string, pageType: { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchPageTypesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;

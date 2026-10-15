@@ -14,6 +14,7 @@ export const searchPages = gql`
         node {
           id
           title
+          slug
           pageType {
             id
             metadata {
