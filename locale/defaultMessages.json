@@ -13740,6 +13740,10 @@
     "context": "button",
     "string": "Create shipping zone"
   },
+  "mK1JpE": {
+    "context": "icon button next to a text attribute input whose value is a URL",
+    "string": "Open link in a new tab"
+  },
   "mKr+Rn": {
     "context": "body copy when default delivery selected on self-hosted",
     "string": "Staff mail uses your store’s usual email settings. Switch to Custom SMTP to set your own server and sender in the Dashboard."
