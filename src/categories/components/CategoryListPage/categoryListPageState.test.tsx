@@ -2,8 +2,11 @@ import { type CategoryListRow } from "@dashboard/categories/views/CategoryList/t
 import { type CategoryFragment } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 
-import { type CategoryListPageState, CategoryListPageStateProvider } from "./categoryListPageState";
-import { useCategoryListPageState } from "./categoryListPageState";
+import {
+  type CategoryListPageState,
+  CategoryListPageStateProvider,
+  useCategoryListPageState,
+} from "./categoryListPageState";
 
 const categoriesFixture: CategoryFragment[] = [
   {

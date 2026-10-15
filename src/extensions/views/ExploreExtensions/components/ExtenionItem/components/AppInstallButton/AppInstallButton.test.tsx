@@ -11,7 +11,6 @@ jest.mock("@dashboard/featureFlags/useFlag", () => ({
 }));
 
 jest.mock("@dashboard/components/Link", () => {
-  // eslint-disable-next-line react/display-name
   return ({ children, href }: { children: React.ReactNode; href: string }) => (
     <a href={href}>{children}</a>
   );

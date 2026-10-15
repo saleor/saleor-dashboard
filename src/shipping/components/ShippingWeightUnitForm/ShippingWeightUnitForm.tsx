@@ -36,7 +36,7 @@ const ShippingWeightUnitForm = ({
         label: unit,
         value: unit,
       })),
-    [WeightUnitsEnum],
+    [],
   );
 
   return (

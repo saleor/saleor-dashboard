@@ -98,7 +98,7 @@ export const createFetch =
           "ExternalRefreshWithUser",
         ].includes(
           // INFO: Non-null assertion is enabled because the block is wrapped inside try/catch
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          // oxlint-disable-next-line @typescript-eslint/no-non-null-assertion
           JSON.parse(init.body!.toString()).operationName,
         )
       ) {
