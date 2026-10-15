@@ -124,19 +124,25 @@ export function useCollectionUpdateForm(
   const submit = async (): Promise<unknown[]> => {
     const descriptionDirty = richText.isDirty;
     const fullDescriptionDirty = fullDescriptionRichText.isDirty;
-    const errors = await handleFormSubmit(await getData());
+    let saveSucceeded = false;
 
-    if (errors.length > 0) {
-      if (descriptionDirty) {
-        richText.handleChange();
-      }
+    try {
+      const errors = await handleFormSubmit(await getData());
 
-      if (fullDescriptionDirty) {
-        fullDescriptionRichText.handleChange();
+      saveSucceeded = errors.length === 0;
+
+      return errors;
+    } finally {
+      if (!saveSucceeded) {
+        if (descriptionDirty) {
+          richText.handleChange();
+        }
+
+        if (fullDescriptionDirty) {
+          fullDescriptionRichText.handleChange();
+        }
       }
     }
-
-    return errors;
   };
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);

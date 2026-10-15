@@ -225,6 +225,9 @@ async function failSaveRequest(
   page: Page,
   operationName: string,
 ): Promise<Record<string, unknown>> {
+  const save = page.getByTestId("button-bar-confirm");
+
+  await expect(save).toBeEnabled();
   const handleRequest = async (route: Route): Promise<void> => {
     const request = route.request();
 
@@ -245,14 +248,175 @@ async function failSaveRequest(
       request.method() === "POST" && request.postDataJSON()?.operationName === operationName,
   );
 
-  await page.getByTestId("button-bar-confirm").click();
+  await save.click();
   const request = await failedRequest;
   const body: { variables: { input: Record<string, unknown> } } = request.postDataJSON();
 
   return body.variables.input;
 }
 
+async function injectEditorReadFailure(page: Page): Promise<void> {
+  // Fault injection stays at the editor boundary; reads and writes still use the real Core.
+  await page.route("**/components/RichTextEditor/ReactEditorJS.tsx*", async route => {
+    const response = await route.fetch();
+    const source = await response.text();
+    const saveMethod = "async save() {";
+
+    expect(source.split(saveMethod)).toHaveLength(2);
+
+    const injectedSave = `${saveMethod}
+      await this._editorJS.isReady;
+      const holder = this._editorJS.configuration.holder;
+      const element = typeof holder === "string" ? document.getElementById(holder) : holder;
+      if (!editorReadFailed && element?.closest('[data-test-id="rich-text-editor-fullDescription"]')) {
+        editorReadFailed = true;
+        await new Promise((resolve, reject) => {
+          document.addEventListener("test:reject-editor-read", () => {
+            reject(new Error("Controlled editor read failure"));
+          }, { once: true });
+          document.documentElement.dataset.editorReadPending = "true";
+        });
+      }
+    `;
+
+    await route.fulfill({
+      response,
+      body: `let editorReadFailed = false;\n${source.replace(saveMethod, injectedSave)}`,
+    });
+  });
+}
+
 for (const entity of entities) {
+  test(`${entity.kind}: retries a rejected editor read without losing the full description #e2e #editor-read`, async ({
+    page,
+    session,
+  }) => {
+    // Arrange
+    const name = `E2E editor read retry ${randomUUID()}`;
+    const description = "Original summary";
+    const originalFullDescription = "Original details";
+    const draft = "Full description retained after an editor read failure";
+    const pageErrors: string[] = [];
+    let updateCount = 0;
+
+    page.on("pageerror", error => pageErrors.push(error.message));
+    page.on("request", request => {
+      if (
+        request.method() === "POST" &&
+        request.postDataJSON()?.operationName === entity.updateOperation
+      ) {
+        updateCount += 1;
+      }
+    });
+    await injectEditorReadFailure(page);
+    const { created } = await graphql<{
+      created: { entity: { id: string } | null; errors: MutationError[] };
+    }>(
+      entity.create,
+      {
+        input: {
+          name,
+          description: JSON.stringify(richText(description)),
+          fullDescription: JSON.stringify(richText(originalFullDescription)),
+        },
+      },
+      session.token,
+    );
+
+    expect(created.errors).toEqual([]);
+
+    if (!created.entity) {
+      throw new Error("Test entity creation did not return an ID");
+    }
+
+    const { id } = created.entity;
+
+    try {
+      await page.goto(`/${entity.path}/${encodeURIComponent(id)}`);
+      const editor = page.getByTestId("rich-text-editor-fullDescription");
+      const save = page.getByTestId("button-bar-confirm");
+
+      await expect(editor).toContainText(originalFullDescription, { timeout: 30_000 });
+      await fillEditor(editor, draft);
+      await expect(save).toBeEnabled();
+
+      // Act
+      await save.click();
+      await expect(page.locator("html")).toHaveAttribute("data-editor-read-pending", "true");
+
+      // Assert
+      expect(updateCount).toBe(0);
+      expect(
+        await page.evaluate(
+          () => !window.dispatchEvent(new Event("beforeunload", { cancelable: true })),
+        ),
+      ).toBe(true);
+
+      // Act
+      await page.getByTestId("app-header-back-button").click();
+
+      // Assert
+      await expect(page.getByRole("dialog")).toContainText("Leave without saving changes?");
+
+      // Act
+      await page.getByRole("button", { name: "Keep editing" }).click();
+      const readFailure = page.waitForEvent(
+        "pageerror",
+        error => error.message === "Controlled editor read failure",
+      );
+
+      await page.evaluate(() => document.dispatchEvent(new Event("test:reject-editor-read")));
+      await readFailure;
+
+      // Assert
+      await expect(editor).toContainText(draft);
+      await expect(save).toBeEnabled();
+      expect(updateCount).toBe(0);
+      expect(textFromRichText((await readEntity(entity, id, session.token)).fullDescription)).toBe(
+        originalFullDescription,
+      );
+
+      // Act
+      await page.getByTestId(`${entity.kind}-name-input`).fill(`${name} updated`);
+      await saveMutation(page, entity.updateOperation);
+      await expect(save).toBeDisabled();
+
+      // Assert
+      let saved = await readEntity(entity, id, session.token);
+
+      expect(saved.name).toBe(`${name} updated`);
+      expect(textFromRichText(saved.fullDescription)).toBe(draft);
+      expect(textFromRichText(saved.description)).toBe(description);
+
+      // Act
+      await page.getByTestId(`${entity.kind}-name-input`).fill(`${name} renamed`);
+      const nameOnlyRequest = page.waitForRequest(
+        request =>
+          request.method() === "POST" &&
+          request.postDataJSON()?.operationName === entity.updateOperation,
+      );
+
+      await saveMutation(page, entity.updateOperation);
+      const body: { variables: { input: Record<string, unknown> } } = (
+        await nameOnlyRequest
+      ).postDataJSON();
+
+      // Assert
+      expect(body.variables.input).not.toHaveProperty("fullDescription");
+      saved = await readEntity(entity, id, session.token);
+      expect(textFromRichText(saved.fullDescription)).toBe(draft);
+      expect(pageErrors).toEqual(["Controlled editor read failure"]);
+    } finally {
+      const { deleted } = await graphql<{ deleted: { errors: MutationError[] } }>(
+        entity.delete,
+        { id },
+        session.token,
+      );
+
+      expect(deleted.errors).toEqual([]);
+    }
+  });
+
   test(`${entity.kind}: keeps another translation draft protected after saving one field #e2e #translations`, async ({
     page,
     session,
