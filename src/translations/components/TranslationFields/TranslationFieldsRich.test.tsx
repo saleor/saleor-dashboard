@@ -1,14 +1,36 @@
 import { type RichTextEditorProps } from "@dashboard/components/RichTextEditor/RichTextEditor";
-import { type OutputData } from "@editorjs/editorjs";
+import { type EditorConfig, type OutputData } from "@editorjs/editorjs";
 import { type EditorCore } from "@react-editor-js/core";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { type ComponentProps, useImperativeHandle, useState } from "react";
+import { type ComponentProps, StrictMode, useImperativeHandle, useState } from "react";
 
 import TranslationFieldsRich from "./TranslationFieldsRich";
 
 const richText = (text: string): OutputData => ({
   blocks: [{ type: "paragraph", data: { text } }],
 });
+
+jest.mock("@editorjs/editorjs", () => ({
+  __esModule: true,
+  default: jest.fn(({ holder, data }: EditorConfig) => {
+    const element =
+      typeof holder === "string" ? document.querySelector(`[id="${holder}"]`) : holder;
+    const content = document.createElement("div");
+    const display = (value?: OutputData): void => {
+      content.textContent = value?.blocks.map(block => block.data.text).join(" ") ?? "";
+    };
+
+    // Editor.js consumes initial data on construction; later updates require render().
+    display(data);
+    element?.append(content);
+
+    return {
+      isReady: Promise.resolve(),
+      destroy: (): void => content.remove(),
+      render: async (value: OutputData): Promise<void> => display(value),
+    };
+  }),
+}));
 
 jest.mock("@dashboard/components/RichTextEditor/RichTextEditor", () => ({
   __esModule: true,
@@ -71,6 +93,50 @@ describe("TranslationFieldsRich", () => {
   afterAll(() => {
     global.ResizeObserver = originalResizeObserver;
   });
+
+  it("shows block-only JSON loaded after the preview mounts in StrictMode", async () => {
+    // Arrange
+    const { rerender } = render(
+      <StrictMode>
+        <TranslationFieldsRich {...props} edit={false} initial="" />
+      </StrictMode>,
+    );
+
+    // Act
+    rerender(
+      <StrictMode>
+        <TranslationFieldsRich
+          {...props}
+          edit={false}
+          initial={JSON.stringify(richText("Loaded translation"))}
+        />
+      </StrictMode>,
+    );
+
+    // Assert
+    expect(await screen.findByText("Loaded translation")).toBeVisible();
+  });
+
+  it.each([undefined, 1234])(
+    "updates the preview when content changes and time stays %p",
+    async time => {
+      // Arrange
+      const initial: OutputData = { ...richText("Original translation"), time };
+      const updated: OutputData = { ...richText("Updated translation"), time };
+      const { rerender } = render(
+        <TranslationFieldsRich {...props} edit={false} initial={JSON.stringify(initial)} />,
+      );
+
+      expect(await screen.findByText("Original translation")).toBeVisible();
+
+      // Act
+      rerender(<TranslationFieldsRich {...props} edit={false} initial={JSON.stringify(updated)} />);
+
+      // Assert
+      expect(await screen.findByText("Updated translation")).toBeVisible();
+      expect(screen.queryByText("Original translation")).not.toBeInTheDocument();
+    },
+  );
 
   it.each(["Unsaved translation", ""])(
     "preserves the draft %p through validation failure and retries the same value",

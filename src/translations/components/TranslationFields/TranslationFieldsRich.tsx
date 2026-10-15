@@ -134,7 +134,10 @@ const TranslationFieldsRich = ({
   ) : (
     <Text>
       {isReadyForMount && (
-        <RichTextEditorContent key={resetKey + "_" + defaultValue?.time} value={defaultValue} />
+        <RichTextEditorContent
+          key={`${resetKey}_${JSON.stringify(defaultValue)}`}
+          value={defaultValue}
+        />
       )}
     </Text>
   );

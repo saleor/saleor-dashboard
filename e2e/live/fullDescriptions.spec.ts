@@ -357,6 +357,91 @@ async function injectEditorReadFailure(page: Page): Promise<void> {
 }
 
 for (const entity of entities) {
+  test(`${entity.kind}: previews rich text without time on initial translation load #e2e #translations #preview`, async ({
+    page,
+    session,
+  }) => {
+    // Arrange
+    const name = `E2E translation preview ${randomUUID()}`;
+    const description = "Original summary without a timestamp";
+    const fullDescription = "Original detailed description without a timestamp";
+    const translatedDescription = "Übersetzte Zusammenfassung ohne Zeitstempel";
+    const translatedFullDescription = "Übersetzte Details ohne Zeitstempel";
+    const { created } = await graphql<{
+      created: { entity: { id: string } | null; errors: MutationError[] };
+    }>(
+      entity.create,
+      {
+        input: {
+          name,
+          description: JSON.stringify(richText(description)),
+          fullDescription: JSON.stringify(richText(fullDescription)),
+        },
+      },
+      session.token,
+    );
+
+    expect(created.errors).toEqual([]);
+
+    if (!created.entity) {
+      throw new Error("Test entity creation did not return an ID");
+    }
+
+    const { id } = created.entity;
+
+    try {
+      const { translated } = await graphql<{ translated: { errors: MutationError[] } }>(
+        entity.translate,
+        {
+          id,
+          input: {
+            description: JSON.stringify(richText(translatedDescription)),
+            fullDescription: JSON.stringify(richText(translatedFullDescription)),
+          },
+        },
+        session.token,
+      );
+
+      expect(translated.errors).toEqual([]);
+      const saved = await readEntity(entity, id, session.token);
+      const contents = [
+        saved.description,
+        saved.fullDescription,
+        saved.translation?.description,
+        saved.translation?.fullDescription,
+      ];
+
+      for (const content of contents) {
+        expect(JSON.parse(content ?? "null")).toHaveProperty("blocks");
+        expect(JSON.parse(content ?? "null")).not.toHaveProperty("time");
+      }
+
+      // Act
+      await page.goto(`/translations/DE/${entity.path}/${encodeURIComponent(id)}`);
+
+      // Assert — previews must load without reopening the section or editing a field.
+      const summary = page.getByTestId("translation-field-description");
+      const details = page.getByTestId("translation-field-fullDescription");
+
+      await expect(page.getByTestId("translation-field-name")).toContainText(name);
+      await expect(summary).toContainText(description);
+      await expect(summary).toContainText(translatedDescription);
+      await expect(details).toContainText(fullDescription);
+      await expect(details).toContainText(translatedFullDescription);
+      await expect(page.getByTestId("translation-context-bar")).toContainText(
+        "2 of 6 fields translated",
+      );
+    } finally {
+      const { deleted } = await graphql<{ deleted: { errors: MutationError[] } }>(
+        entity.delete,
+        { id },
+        session.token,
+      );
+
+      expect(deleted.errors).toEqual([]);
+    }
+  });
+
   test(`${entity.kind}: excludes empty rich text blocks from translation counters #e2e #translations #progress`, async ({
     page,
     session,
