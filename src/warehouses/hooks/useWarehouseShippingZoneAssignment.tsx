@@ -85,12 +85,18 @@ export const useWarehouseShippingZoneAssignment = ({
     },
   });
 
-  /** One flag per zone id: whether its link changed. */
+  /**
+   * One flag per zone id: whether its link changed. `onLinked` runs once the links are done,
+   * before the reload; `busy` covers both so the card stays locked until it shows the result.
+   */
   const changeZones = async (
     zoneIds: string[],
     action: "assign" | "remove",
+    onLinked?: () => void,
   ): Promise<boolean[]> => {
     if (!warehouseId || zoneIds.length === 0) {
+      onLinked?.();
+
       return [];
     }
 
@@ -129,14 +135,16 @@ export const useWarehouseShippingZoneAssignment = ({
         status: "error",
         text: intl.formatMessage(messages.zonesAssignFailed),
       });
-    } finally {
-      setBusy(false);
     }
+
+    onLinked?.();
 
     try {
       await onChanged();
     } catch {
       // The toast already reported the mutation. A failed reload leaves the list stale.
+    } finally {
+      setBusy(false);
     }
 
     return changed;
@@ -220,12 +228,17 @@ export const useWarehouseShippingZoneAssignment = ({
             setSearch("");
             setOpen(false);
           }}
-          onSubmit={selected => {
-            void changeZones(
-              selected.map(zone => zone.id),
-              "assign",
-            );
-          }}
+          // Keeps the dialog open and loading until every zone is linked. It closes before the
+          // reload, which would otherwise hide the just-linked rows from the open list.
+          onSubmit={selected =>
+            new Promise<void>(resolve => {
+              void changeZones(
+                selected.map(zone => zone.id),
+                "assign",
+                resolve,
+              );
+            })
+          }
         />
       </>
     ),
