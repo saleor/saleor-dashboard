@@ -1,4 +1,4 @@
-import { iconSize } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Button } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 import { defineMessages, useIntl } from "react-intl";
@@ -40,7 +40,7 @@ export const ExternalLinkAdornment = ({ value }: ExternalLinkAdornmentProps): Re
       title={label}
       aria-label={label}
       data-test-id="external-link-adornment"
-      icon={<ExternalLink size={iconSize.small} />}
+      icon={<ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
     />
   );
 };
