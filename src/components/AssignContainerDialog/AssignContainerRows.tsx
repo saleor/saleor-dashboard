@@ -1,27 +1,46 @@
 import { Radio } from "@dashboard/components/Radio/Radio";
 import { TableCell } from "@dashboard/components/Table/Table";
 import { type Container } from "@dashboard/types";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
 import Checkbox from "../Checkbox/Checkbox";
 import TableRowLink from "../TableRowLink/TableRowLink";
 
-const ContainerLabel = ({ adornment, name }: { adornment?: ReactNode; name: string }) =>
-  adornment ? (
-    <Box display="flex" alignItems="center" gap={2}>
-      {adornment}
+interface ContainerLabelProps {
+  adornment?: ReactNode;
+  description?: ReactNode;
+  name: string;
+}
+
+const ContainerLabel = ({ adornment, description, name }: ContainerLabelProps): ReactNode => {
+  const text = description ? (
+    <Box display="flex" flexDirection="column">
       {name}
+      <Text size={1} color="default2">
+        {description}
+      </Text>
     </Box>
   ) : (
-    <>{name}</>
+    name
   );
+
+  return adornment ? (
+    <Box display="flex" alignItems="center" gap={2}>
+      {adornment}
+      {text}
+    </Box>
+  ) : (
+    <>{text}</>
+  );
+};
 
 interface SingleSelectionRowsProps {
   containers: Container[];
   selectedItemId: string;
   onSelect: (id: string) => void;
   renderAdornment?: (container: Container) => ReactNode;
+  renderDescription?: (container: Container) => ReactNode;
 }
 
 export const SingleSelectionRows = ({
@@ -29,6 +48,7 @@ export const SingleSelectionRows = ({
   selectedItemId,
   onSelect,
   renderAdornment,
+  renderDescription,
 }: SingleSelectionRowsProps) => (
   <>
     {containers?.map(container => {
@@ -44,7 +64,11 @@ export const SingleSelectionRows = ({
             <Radio checked={isSelected} value={container.id} />
           </TableCell>
           <TableCell style={{ width: "100%" }} data-test-id={container.name}>
-            <ContainerLabel adornment={renderAdornment?.(container)} name={container.name} />
+            <ContainerLabel
+              adornment={renderAdornment?.(container)}
+              description={renderDescription?.(container)}
+              name={container.name}
+            />
           </TableCell>
         </TableRowLink>
       );
@@ -57,6 +81,7 @@ interface MultiSelectionRowsProps {
   isSelected: (id: string) => boolean;
   onToggle: (item: Container) => void;
   renderAdornment?: (container: Container) => ReactNode;
+  renderDescription?: (container: Container) => ReactNode;
 }
 
 export const MultiSelectionRows = ({
@@ -64,6 +89,7 @@ export const MultiSelectionRows = ({
   isSelected,
   onToggle,
   renderAdornment,
+  renderDescription,
 }: MultiSelectionRowsProps) => (
   <>
     {containers?.map(container => (
@@ -72,7 +98,11 @@ export const MultiSelectionRows = ({
           <Checkbox checked={isSelected(container.id)} onChange={() => onToggle(container)} />
         </TableCell>
         <TableCell style={{ width: "100%" }} data-test-id={container.name}>
-          <ContainerLabel adornment={renderAdornment?.(container)} name={container.name} />
+          <ContainerLabel
+            adornment={renderAdornment?.(container)}
+            description={renderDescription?.(container)}
+            name={container.name}
+          />
         </TableCell>
       </TableRowLink>
     ))}

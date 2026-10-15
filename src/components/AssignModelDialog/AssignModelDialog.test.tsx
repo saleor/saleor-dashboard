@@ -52,18 +52,21 @@ const mockPages = [
     __typename: "Page" as const,
     id: "page-1",
     title: "Test Page 1",
+    slug: "test-page-1",
     pageType: mockPageType,
   },
   {
     __typename: "Page" as const,
     id: "page-2",
     title: "Test Page 2",
+    slug: "test-page-2",
     pageType: mockPageType,
   },
   {
     __typename: "Page" as const,
     id: "page-3",
     title: "Test Page 3",
+    slug: "test-page-3",
     pageType: mockPageType,
   },
 ];
@@ -225,6 +228,30 @@ describe("AssignModelDialog", () => {
       expect(onSubmit).not.toHaveBeenCalled();
     });
   });
+
+  it.each(["single", "multiple"] as const)(
+    "should show each model's slug under its name in %s selection mode",
+    selectionMode => {
+      // Arrange
+      const sameNamePages: typeof mockPages = [
+        { ...mockPages[0], id: "brand-1", title: "Supreme", slug: "supreme-eu" },
+        { ...mockPages[1], id: "brand-2", title: "Supreme", slug: "supreme-us" },
+      ];
+
+      // Act
+      render(
+        <AssignModelDialog {...defaultProps} pages={sameNamePages} selectionMode={selectionMode} />,
+      );
+
+      // Assert
+      const rows = screen.getAllByTestId("dialog-row");
+
+      expect(within(rows[0]).getByText("Supreme")).toBeInTheDocument();
+      expect(within(rows[0]).getByText("supreme-eu")).toBeInTheDocument();
+      expect(within(rows[1]).getByText("Supreme")).toBeInTheDocument();
+      expect(within(rows[1]).getByText("supreme-us")).toBeInTheDocument();
+    },
+  );
 
   it("should show loading indicator when loading is true", () => {
     // Arrange & Act
