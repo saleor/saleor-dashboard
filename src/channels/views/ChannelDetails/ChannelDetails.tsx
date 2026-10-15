@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { useApolloClient } from "@apollo/client";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { useUser } from "@dashboard/auth/useUser";
 import { BulkPublishToChannelDialog } from "@dashboard/channels/components/BulkPublishToChannelDialog/BulkPublishToChannelDialog";
@@ -30,6 +31,7 @@ import {
   buildChannelDuplicateSource,
   getChannelDuplicateFormPrefill,
 } from "@dashboard/channels/utils/channelDuplicate";
+import { previewChannelEditUnlinks } from "@dashboard/channels/utils/previewChannelEditUnlinks";
 import { getChannelDetailsRefetchQueries } from "@dashboard/channels/views/ChannelDetails/channelRefetchQueries";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
@@ -491,6 +493,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     createShippingConfirmState,
   } = useChannelSetupActions({
     channelId: id,
+    createWarehouseOpen: params.action === "create-warehouse",
     warehouseIds: channelWarehouses.map(warehouse => warehouse.id),
     onWarehouseCreated: closeModal,
     onShippingCreated: closeModal,
@@ -555,6 +558,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     fetchMoreShippingZones,
   );
 
+  const client = useApolloClient();
+
   if (data?.channel === null) {
     return <NotFoundPage onBack={() => navigate(channelsListUrl())} />;
   }
@@ -602,6 +607,18 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         }
         onShowMetadata={() => openModal("view-metadata")}
         onSubmit={handleSubmit}
+        previewChannelUnlinks={
+          canLoadShippingZones
+            ? formData =>
+                previewChannelEditUnlinks({
+                  client,
+                  channelId: id,
+                  channelWarehouseIds: channelWarehouses.map(warehouse => warehouse.id),
+                  removeWarehouseIds: formData.warehousesIdsToRemove,
+                  removeZoneIds: formData.shippingZonesIdsToRemove,
+                })
+            : undefined
+        }
         onToggleChannelStatus={() => openModal(data?.channel?.isActive ? "deactivate" : "activate")}
         assignmentActionsRef={assignmentActionsRef}
         onDisplayedAssignmentIdsChange={handleDisplayedAssignmentIdsChange}

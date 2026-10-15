@@ -100,11 +100,21 @@ export interface AnalyticsEventMap {
   setup_checklist_dismissed: {
     completed_steps: number;
     core_ready: boolean;
-    entity_type: "channel" | "product";
+    entity_type: "channel" | "product" | "warehouse";
     total_steps: number;
   };
   setup_checklist_reopened: {
-    entity_type: "channel" | "product";
+    entity_type: "channel" | "product" | "warehouse";
+  };
+  warehouse_channels_changed: {
+    action: "assign" | "remove";
+    channel_count: number;
+    result: "error" | "partial_success" | "success";
+  };
+  warehouse_shipping_zones_changed: {
+    action: "assign" | "remove";
+    result: "error" | "partial_success" | "success";
+    zone_count: number;
   };
   setup_checklist_step_clicked: {
     completed_steps: number;

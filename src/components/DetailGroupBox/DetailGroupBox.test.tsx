@@ -63,6 +63,32 @@ describe("DetailGroupBox", () => {
     expect(section.querySelector("[data-group-header]")).toBeInTheDocument();
   });
 
+  it("leaves a flush header untinted when the open tint is turned off", async () => {
+    // Arrange
+    render(
+      <DetailGroupBox
+        groupId="advanced"
+        variant="flush"
+        tintExpandedHeader={false}
+        dataTestId="advanced"
+        triggerButtonTestId="advanced-expand"
+        headerStart="Advanced"
+      >
+        <div>Choices</div>
+      </DetailGroupBox>,
+      { wrapper: Wrapper },
+    );
+
+    // Act
+    await userEvent.click(screen.getByTestId("advanced-expand"));
+
+    // Assert
+    expect(screen.getByTestId("advanced")).toHaveAttribute("data-expanded", "true");
+    expect(
+      screen.getByTestId("advanced").querySelector("[class*='headerFlushExpanded']"),
+    ).not.toBeInTheDocument();
+  });
+
   it("collapses a controlled group on the first click", async () => {
     // Arrange
     const Controlled = () => {

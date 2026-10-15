@@ -6,5 +6,5 @@ declare module "@storybook/react-vite" {
 }
 
 declare module "storybook/test" {
-  export { configure, expect, fn, userEvent, within } from "storybook/dist/test/index";
+  export { configure, expect, fn, userEvent, waitFor, within } from "storybook/dist/test/index";
 }

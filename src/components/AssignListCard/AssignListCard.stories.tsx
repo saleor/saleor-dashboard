@@ -36,6 +36,14 @@ export const WithItems: Story = {
   },
 };
 
+export const WithShowAll: Story = {
+  args: {
+    ...WithItems.args,
+    subtitle: "115 assigned",
+    showAll: { label: "Show all 115 shipping zones", onClick: () => undefined },
+  },
+};
+
 export const WithItemIcons: Story = {
   args: {
     ...WithItems.args,
@@ -56,6 +64,7 @@ export const Empty: Story = {
     ...WithItems.args,
     items: [],
     subtitle: "Required to sell",
+    emphasis: "warning",
     footerAction: (
       <Button variant="secondary" type="button">
         Assign shipping zone
