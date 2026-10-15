@@ -160,7 +160,7 @@ export const useCategoryTreeController = ({
     setChildrenByParentId({});
     setChildrenPaginationByParentId({});
     clearRowSelection();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [locationPathname]);
 
   useEffect(() => {

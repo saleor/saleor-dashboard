@@ -71,7 +71,7 @@ export const useDatagridNumericEdit = ({
       }
     },
     // Mount-only: the typed key is applied once when the overlay opens.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

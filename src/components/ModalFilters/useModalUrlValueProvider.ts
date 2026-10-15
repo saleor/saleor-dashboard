@@ -28,7 +28,7 @@ import { useUrlFilterStore } from "./useUrlFilterStore";
  * - So rehydratedValue overwrites user's selection with old data
  *
  * The original useUrlValueProvider has the same issue but works around it by
- * disabling eslint-disable react-hooks/exhaustive-deps and omitting tokenizedUrl
+ * using oxlint-disable react-hooks/exhaustive-deps and omitting tokenizedUrl
  * from effect dependencies. We solve it properly with derived state instead.
  *
  * Solution: UserOverride stores user's selection + URL snapshot.

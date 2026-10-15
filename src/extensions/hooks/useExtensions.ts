@@ -209,7 +209,7 @@ const useExtensionsCore = <T extends AllAppExtensionMounts>(
     if (hasLiveData) {
       writeExtensionsSnapshot(snapshotKey, liveNodes);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const extensions = prepareExtensionsWithActions({

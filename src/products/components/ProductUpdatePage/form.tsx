@@ -85,7 +85,7 @@ export function useProductUpdateForm(
     // Intentionally omit productVariants: simple-product fields come from
     // product.defaultVariant. Re-binding to the paginated grid would reset
     // SKU when the user searches or pages the variants table.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [product],
   );
   const form = useForm(initial, undefined, {

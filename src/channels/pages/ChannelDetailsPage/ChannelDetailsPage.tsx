@@ -404,7 +404,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
       automaticCompletionCutOffTime: cutOffDateTime.time,
     }),
     // Channel fragment + assigned lists are the saved baseline for pristine checks.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [channel, channelShippingZones, channelWarehouses],
   );
   const checkIfSaveIsDisabled = useCallback(
