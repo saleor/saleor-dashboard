@@ -7,6 +7,7 @@ import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attri
 import { attributeListPath } from "@dashboard/attributes/urls";
 import {
   getAttributePageInitialForm,
+  getDeprecatedAttributeInputEvents,
   isAttributeUpdateFormPristine,
 } from "@dashboard/attributes/utils/attributePageForm";
 import {
@@ -30,6 +31,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Savebar } from "@dashboard/components/Savebar";
 import { type ListSettingsUpdate } from "@dashboard/components/TablePagination/TablePagination";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -166,6 +168,7 @@ const AttributePage = ({
   defaultAttributeType,
 }: AttributePageProps) => {
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
@@ -227,6 +230,8 @@ const AttributePage = ({
   );
   const handleSubmit = (data: AttributePageFormData) => {
     const type = attribute === null ? data.type : undefined;
+
+    getDeprecatedAttributeInputEvents(data, initialForm).forEach(event => trackEvent(event));
 
     return onSubmit({
       ...data,

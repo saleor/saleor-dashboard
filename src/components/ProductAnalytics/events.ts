@@ -9,6 +9,8 @@ export interface AnalyticsEventMap {
   $pageview: {
     normalized_path: string;
   };
+  attribute_filterable_in_storefront_submitted: undefined;
+  attribute_storefront_search_position_submitted: undefined;
   contextual_link_clicked: {
     type: string;
   };
@@ -88,6 +90,7 @@ export interface AnalyticsEventMap {
   };
   navigation_pin_changed: NavigationPinChangedProperties;
   product_rating_submitted: undefined;
+  product_type_has_variants_submitted: undefined;
   product_media_translation_opened: {
     source: "media_editor" | "translation_context";
   };
@@ -97,6 +100,7 @@ export interface AnalyticsEventMap {
     result: "error" | "success";
   };
   "ripples.modal-opened": undefined;
+  shop_legacy_update_webhook_emission_submitted: undefined;
   setup_checklist_dismissed: {
     completed_steps: number;
     core_ready: boolean;
@@ -113,6 +117,7 @@ export interface AnalyticsEventMap {
     step_id: string;
     total_steps: number;
   };
+  webhook_secret_key_submitted: undefined;
 }
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;
