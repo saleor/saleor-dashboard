@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-The Assign Model picker now shows each model's slug under its name, in both single and multiple selection. Models that share a name can now be told apart before you assign them.
+Models now show their slug next to their name (under it when a reference list row is narrow), so models that share a name can be told apart. The slug appears in the Assign Model picker, in both single and multiple selection, and on models assigned to a reference attribute: the reference list (list and packed views), the single-reference chip, and the list filter, which now also matches slugs.

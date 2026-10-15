@@ -50,7 +50,7 @@ import {
   ReferenceRowBody,
 } from "./referenceValueAppearance";
 import { savedReferencePosition } from "./savedReferencePosition";
-import { useModelReferenceIcons } from "./useModelReferenceIcons";
+import { useModelReferenceDetails } from "./useModelReferenceDetails";
 import {
   mergeReferenceDetails,
   type ProductReferenceDetails,
@@ -396,19 +396,24 @@ export const ReferenceList = ({
   onReorder,
 }: ReferenceListProps) => {
   const intl = useIntl();
-  const modelIcons = useModelReferenceIcons({
+  const modelDetails = useModelReferenceDetails({
     entityType,
     ids: incomingValues.map(value => value.value),
   });
-  const valuesWithIcons = useMemo(
+  const valuesWithModelDetails = useMemo(
     () =>
-      modelIcons.size === 0
+      modelDetails.size === 0
         ? incomingValues
-        : incomingValues.map(value => ({
-            ...value,
-            icon: modelIcons.get(value.value) ?? value.icon,
-          })),
-    [incomingValues, modelIcons],
+        : incomingValues.map(value => {
+            const model = modelDetails.get(value.value);
+
+            return {
+              ...value,
+              icon: model?.icon ?? value.icon,
+              caption: model?.slug ?? value.caption,
+            };
+          }),
+    [incomingValues, modelDetails],
   );
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
@@ -439,8 +444,8 @@ export const ReferenceList = ({
     return fetchedDetails;
   }, [details, fetchedDetails]);
   const values = useMemo(
-    () => mergeReferenceDetails(valuesWithIcons, resolved),
-    [resolved, valuesWithIcons],
+    () => mergeReferenceDetails(valuesWithModelDetails, resolved),
+    [resolved, valuesWithModelDetails],
   );
   const orderedValues = draft ?? values;
 
