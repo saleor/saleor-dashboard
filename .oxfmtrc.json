@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "arrowParens": "avoid",
+  "trailingComma": "all",
+  "singleQuote": false,
+  "printWidth": 100,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "types/",
+    "schema.graphql",
+    "schema-main.graphql",
+    "schema-staging.graphql",
+    "*.generated.*",
+    ".changeset/",
+    ".featureFlags/",
+    "locale/"
+  ]
+}

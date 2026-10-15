@@ -24,8 +24,7 @@ import { createGetCellContent, permissionGroupsListStaticColumnsAdapter } from "
 import { messages } from "./messages";
 
 interface PermissionGroupListDatagridProps
-  extends ListProps,
-    SortPage<PermissionGroupListUrlSortField> {
+  extends ListProps, SortPage<PermissionGroupListUrlSortField> {
   permissionGroups: PermissionGroupFragment[];
 }
 

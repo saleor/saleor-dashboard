@@ -18,9 +18,7 @@ export type FulfillmentWarehouseFilterQueryPart = {
  * Maps fulfillmentWarehouse field to the nested structure:
  * fulfillments: [{ warehouse: { id: { eq: "warehouseId" } } }]
  */
-export class FulfillmentWarehouseQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<FulfillmentWarehouseFilterQueryPart>
-{
+export class FulfillmentWarehouseQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<FulfillmentWarehouseFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     return element.value.type === "fulfillmentWarehouse";
   }

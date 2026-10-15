@@ -124,16 +124,12 @@ interface FilterProps<TKeys extends string> {
 }
 
 export interface FilterPageProps<TKeys extends string, TOpts extends {}>
-  extends FilterProps<TKeys>,
-    SearchPageProps,
-    TabPageProps {
+  extends FilterProps<TKeys>, SearchPageProps, TabPageProps {
   filterOpts: TOpts;
 }
 
 export interface FilterPagePropsWithPresets<TKeys extends string, TOpts extends {}>
-  extends FilterProps<TKeys>,
-    SearchPageProps,
-    FilterPresetsProps {
+  extends FilterProps<TKeys>, SearchPageProps, FilterPresetsProps {
   filterOpts: TOpts;
 }
 

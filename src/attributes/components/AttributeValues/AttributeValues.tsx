@@ -62,9 +62,7 @@ type AttributeValuesAddMode = "dialog" | "inline";
 type AttributeValuesVariant = "card" | "embedded";
 
 interface AttributeValuesProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
-    PaginateListProps,
-    ListActions {
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>, PaginateListProps, ListActions {
   addMode?: AttributeValuesAddMode;
   attributeName?: string;
   disabled: boolean;

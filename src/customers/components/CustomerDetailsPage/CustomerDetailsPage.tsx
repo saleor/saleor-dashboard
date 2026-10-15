@@ -88,8 +88,7 @@ interface CustomerDetailsPageFormData {
 }
 
 export interface CustomerDetailsPageSubmitData
-  extends CustomerDetailsPageFormData,
-    CustomerDetailsAttributeSubmitData {}
+  extends CustomerDetailsPageFormData, CustomerDetailsAttributeSubmitData {}
 
 interface CustomerDetailsPageProps {
   attributeFormRevision?: number;

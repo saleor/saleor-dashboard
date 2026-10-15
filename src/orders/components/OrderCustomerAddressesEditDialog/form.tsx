@@ -56,11 +56,10 @@ export interface OrderCustomerAddressesEditHandlers {
   selectBillingCountry: FormChange;
 }
 
-interface OrderCustomerAddressesEditFormContextValue
-  extends CommonUseFormResultWithHandlers<
-    OrderCustomerAddressesEditData,
-    OrderCustomerAddressesEditHandlers
-  > {
+interface OrderCustomerAddressesEditFormContextValue extends CommonUseFormResultWithHandlers<
+  OrderCustomerAddressesEditData,
+  OrderCustomerAddressesEditHandlers
+> {
   submit: (event: FormEvent<any>) => SubmitPromise<any[]>;
 }
 

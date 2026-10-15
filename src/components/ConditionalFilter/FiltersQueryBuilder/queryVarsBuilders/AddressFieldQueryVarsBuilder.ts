@@ -14,9 +14,7 @@ type AddressFilterQueryPart = {
   };
 };
 
-export class AddressFieldQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<AddressFilterQueryPart>
-{
+export class AddressFieldQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<AddressFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     const type = element.value.type;
 

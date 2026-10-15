@@ -43,8 +43,10 @@ export interface OrderRefundFormData extends OrderRefundData {
 
 export type OrderRefundSubmitData = OrderRefundFormData;
 
-interface UseOrderRefundFormResult
-  extends CommonUseFormResultWithHandlers<OrderRefundFormData, OrderRefundHandlers> {
+interface UseOrderRefundFormResult extends CommonUseFormResultWithHandlers<
+  OrderRefundFormData,
+  OrderRefundHandlers
+> {
   disabled: boolean;
 }
 

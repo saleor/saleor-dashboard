@@ -13,7 +13,7 @@ const isDomainExcluded = (): boolean => {
 export const isProductAnalyticsEnabled = (): boolean =>
   Boolean(
     process.env.IS_CLOUD_INSTANCE &&
-      process.env.POSTHOG_HOST &&
-      process.env.POSTHOG_KEY &&
-      !isDomainExcluded(),
+    process.env.POSTHOG_HOST &&
+    process.env.POSTHOG_KEY &&
+    !isDomainExcluded(),
   );

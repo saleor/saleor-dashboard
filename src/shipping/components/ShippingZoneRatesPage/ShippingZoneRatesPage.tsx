@@ -58,9 +58,7 @@ import { ShippingMethodDetailsTitle } from "./Title";
 import { type ShippingZoneRateUpdateFormData } from "./types";
 
 interface ShippingZoneRatesPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
-    ListActions,
-    WithFormId {
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>, ListActions, WithFormId {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   savedChannelIds?: string[];

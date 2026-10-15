@@ -17,11 +17,10 @@ type AttributeValueChoice = NonNullable<
   NonNullable<NonNullable<SearchAttributeValuesQuery["attribute"]>["choices"]>["edges"]
 >[number]["node"];
 
-interface UseAttributeValueSearchHandler
-  extends Omit<
-    UseSearchResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>,
-    "search"
-  > {
+interface UseAttributeValueSearchHandler extends Omit<
+  UseSearchResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>,
+  "search"
+> {
   getChoices: (attributeId: string) => AttributeValueChoice[];
   getFetchMore: (attributeId: string) => FetchMoreProps;
   reset: () => void;

@@ -37,7 +37,7 @@ jobs:
       - name: Check for uncommitted lint changes
         run: git diff --exit-code ./src
 
-      - name: Check Prettier formatting
+      - name: Check oxfmt formatting
         run: pnpm run format:check
 
   jest-tests:

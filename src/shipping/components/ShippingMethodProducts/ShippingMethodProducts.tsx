@@ -20,8 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import styles from "./ShippingMethodProducts.module.css";
 
 interface ShippingMethodProductsProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
-    ListActions {
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>, ListActions {
   products: RelayToFlat<
     ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["excludedProducts"]
   >;
