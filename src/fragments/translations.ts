@@ -32,6 +32,7 @@ export const categoryTranslationFragment = gql`
     translation(languageCode: $language) {
       id
       description
+      fullDescription
       language {
         language
       }
@@ -44,6 +45,7 @@ export const categoryTranslationFragment = gql`
       id
       name
       description
+      fullDescription
       slug
       seoDescription
       seoTitle
@@ -56,6 +58,7 @@ export const collectionTranslationFragment = gql`
       id
       name
       description
+      fullDescription
       slug
       seoDescription
       seoTitle
@@ -63,6 +66,7 @@ export const collectionTranslationFragment = gql`
     translation(languageCode: $language) {
       id
       description
+      fullDescription
       language {
         language
       }

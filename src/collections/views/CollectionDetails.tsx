@@ -192,6 +192,9 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
       const input: CollectionInput = {
         backgroundImageAlt: formData.backgroundImageAlt,
         description: getParsedDataForJsonStringField(formData.description),
+        ...(formData.fullDescription !== undefined
+          ? { fullDescription: getParsedDataForJsonStringField(formData.fullDescription) }
+          : {}),
         name: formData.name,
         seo: {
           description: formData.seoDescription,

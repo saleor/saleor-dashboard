@@ -24,8 +24,10 @@ interface SeoTranslationData {
 
 interface GeneralTranslationData {
   description?: string | null;
+  fullDescription?: string | null;
   name?: string | null;
   translationDescription?: string | null;
+  translationFullDescription?: string | null;
   translationName?: string | null;
 }
 
@@ -39,6 +41,7 @@ export function createGeneralNameDescriptionSection(
   data: GeneralTranslationData,
   options?: {
     descriptionLabel?: string;
+    includeFullDescription?: boolean;
     nameLabel?: string;
   },
 ): TranslationSectionConfig {
@@ -66,6 +69,19 @@ export function createGeneralNameDescriptionSection(
         type: TranslationFieldType.RICH,
         value: data.description ?? "",
       },
+      ...(options?.includeFullDescription
+        ? [
+            {
+              displayName: intl.formatMessage(commonMessages.fullDescription),
+              hint: intl.formatMessage(translationDetailMessages.descriptionFieldHint),
+              name: TranslationInputFieldName.fullDescription,
+              nullable: true,
+              translation: data.translationFullDescription ?? null,
+              type: TranslationFieldType.RICH,
+              value: data.fullDescription ?? "",
+            },
+          ]
+        : []),
     ],
   };
 }

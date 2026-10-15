@@ -8941,6 +8941,9 @@
     "context": "product type PDP schematic card subtitle",
     "string": "How this type shows on the Paper Storefront — schematic, not a live preview."
   },
+  "V6FTHW": {
+    "string": "Full Description"
+  },
   "V6SjsS": {
     "context": "setup task complete",
     "string": "{count} {count, plural, one {channel} other {channels}} assigned"

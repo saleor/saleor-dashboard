@@ -233,6 +233,9 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
             input: {
               backgroundImageAlt: formData.backgroundImageAlt,
               description: getParsedDataForJsonStringField(formData?.description!),
+              ...(formData.fullDescription !== undefined
+                ? { fullDescription: getParsedDataForJsonStringField(formData.fullDescription) }
+                : {}),
               name: formData.name,
               seo: {
                 description: formData.seoDescription,

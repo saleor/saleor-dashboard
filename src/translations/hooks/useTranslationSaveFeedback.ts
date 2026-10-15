@@ -1,3 +1,4 @@
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import {
   type BulkTranslationSubmitResult,
@@ -20,6 +21,7 @@ export function useTranslationSaveFeedback({
 }: UseTranslationSaveFeedbackParams) {
   const notify = useNotifier();
   const intl = useIntl();
+  const { resetFormsState } = useExitFormDialog();
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const notifyTranslationSaved = useCallback(() => {
@@ -41,18 +43,20 @@ export function useTranslationSaveFeedback({
   const completeSingleFieldSave = useCallback(
     <TErrors>(errors: TErrors[], onSuccess?: () => void) => {
       if (errors.length === 0) {
+        resetFormsState();
         notifyTranslationSaved();
         (onSuccess ?? exitEditMode)();
       }
 
       return errors;
     },
-    [exitEditMode, notifyTranslationSaved],
+    [exitEditMode, notifyTranslationSaved, resetFormsState],
   );
 
   const completeBulkSave = useCallback(
     (result: BulkTranslationSubmitResult) => {
       if (!result.hasErrors) {
+        resetFormsState();
         setFieldErrors({});
         notifyAllTranslationsSaved();
         exitBulkMode();
@@ -70,7 +74,7 @@ export function useTranslationSaveFeedback({
 
       return result;
     },
-    [exitBulkMode, intl, notify, notifyAllTranslationsSaved],
+    [exitBulkMode, intl, notify, notifyAllTranslationsSaved, resetFormsState],
   );
 
   const clearFieldError = useCallback((fieldName: string) => {

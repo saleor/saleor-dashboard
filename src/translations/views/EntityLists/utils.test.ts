@@ -5,6 +5,7 @@ import {
 } from "@dashboard/graphql";
 
 import {
+  getCategoryCollectionTranslationCompletion,
   getGeneralEntityTranslationCompletion,
   getPageTranslationCompletion,
   getProductTranslationCompletion,
@@ -201,6 +202,36 @@ describe("getGeneralEntityTranslationCompletion", () => {
 
     // Assert
     expect(result).toEqual({ current: 1, max: 5 });
+  });
+});
+
+describe("getCategoryCollectionTranslationCompletion", () => {
+  it("counts a full description separately from the description", () => {
+    // Arrange
+    const translation = {
+      name: "Category",
+      description: null,
+      fullDescription: JSON.stringify({
+        blocks: [{ type: "paragraph", data: { text: "Details" } }],
+      }),
+    };
+
+    // Act
+    const result = getCategoryCollectionTranslationCompletion(translation);
+
+    // Assert
+    expect(result).toEqual({ current: 2, max: 6 });
+  });
+
+  it("keeps an empty full description incomplete", () => {
+    // Arrange
+    const translation = { name: "Collection", fullDescription: JSON.stringify({ blocks: [] }) };
+
+    // Act
+    const result = getCategoryCollectionTranslationCompletion(translation);
+
+    // Assert
+    expect(result).toEqual({ current: 1, max: 6 });
   });
 });
 

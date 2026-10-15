@@ -11,6 +11,49 @@ import { TranslationFieldType, TranslationInputFieldName } from "./types";
 
 const intl = createIntl({ locale: "en", messages: {} });
 
+describe("createGeneralNameDescriptionSection", () => {
+  it("adds a separate rich text field for category and collection full descriptions", () => {
+    // Arrange
+    const original = JSON.stringify({
+      blocks: [{ type: "paragraph", data: { text: "Original" } }],
+    });
+    const translation = JSON.stringify({
+      blocks: [{ type: "paragraph", data: { text: "Translation" } }],
+    });
+
+    // Act
+    const section = createGeneralNameDescriptionSection(
+      intl,
+      { fullDescription: original, translationFullDescription: translation },
+      { includeFullDescription: true },
+    );
+
+    // Assert
+    expect(section.fields).toHaveLength(3);
+    expect(section.fields[2]).toEqual(
+      expect.objectContaining({
+        displayName: "Full Description",
+        name: TranslationInputFieldName.fullDescription,
+        nullable: true,
+        translation,
+        type: TranslationFieldType.RICH,
+        value: original,
+      }),
+    );
+  });
+
+  it("does not add full description to product translations", () => {
+    // Arrange
+    const data = { name: "Product", description: null };
+
+    // Act
+    const section = createGeneralNameDescriptionSection(intl, data);
+
+    // Assert
+    expect(section.fields.map(field => field.name)).toEqual(["name", "description"]);
+  });
+});
+
 describe("createProductMediaAltSection", () => {
   it("maps original and translated alt text to one short translation field", () => {
     // Arrange // Act

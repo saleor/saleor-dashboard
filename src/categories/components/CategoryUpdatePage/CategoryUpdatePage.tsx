@@ -189,7 +189,7 @@ export const CategoryUpdatePage = ({
 
   return (
     <CategoryUpdateForm category={category} onSubmit={onSubmit} disabled={disabled}>
-      {({ data, change, submit, isSaveDisabled, saveComposition }) => (
+      {({ data, change, submit, isSaveDisabled, saveComposition, fullDescriptionRichText }) => (
         <DetailPageLayout>
           <TopNav
             href={backHref}
@@ -232,6 +232,7 @@ export const CategoryUpdatePage = ({
           <DetailPageLayout.Content>
             <DetailPageContent>
               <CategoryDetailsForm
+                fullDescriptionRichText={fullDescriptionRichText}
                 data={data}
                 disabled={disabled}
                 errors={errors}
