@@ -22,4 +22,19 @@ describe("allRipples", () => {
     // Assert
     expect(hasProductMediaAltTranslationRipple).toBe(true);
   });
+
+  it.each([
+    "category-full-description",
+    "collection-full-description",
+    "full-description-translation",
+  ])("includes the %s announcement in What's New", id => {
+    // Arrange
+    const rippleIds = allRipples.map(ripple => ripple.ID);
+
+    // Act
+    const isRegistered = rippleIds.includes(id);
+
+    // Assert
+    expect(isRegistered).toBe(true);
+  });
 });

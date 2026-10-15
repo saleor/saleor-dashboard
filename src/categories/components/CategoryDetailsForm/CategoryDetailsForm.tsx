@@ -1,3 +1,4 @@
+import { rippleCategoryFullDescription } from "@dashboard/categories/ripples/fullDescription";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { EntityBackgroundImageField } from "@dashboard/components/EntityBackgroundImageField/EntityBackgroundImageField";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -121,6 +122,7 @@ export const CategoryDetailsForm = ({
         error={!!formErrors.fullDescription}
         helperText={getProductErrorMessage(formErrors.fullDescription, intl)}
         richText={fullDescriptionRichText}
+        ripple={rippleCategoryFullDescription}
       />
       {onImageUpload && onImageDelete ? (
         <>

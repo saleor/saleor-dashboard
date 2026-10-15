@@ -357,10 +357,10 @@ async function injectEditorReadFailure(page: Page): Promise<void> {
 }
 
 for (const entity of entities) {
-  test(`${entity.kind}: previews rich text without time on initial translation load #e2e #translations #preview`, async ({
+  test(`${entity.kind}: previews rich text without time and announces full descriptions #e2e #translations #preview #ripples`, async ({
     page,
     session,
-  }) => {
+  }, testInfo) => {
     // Arrange
     const name = `E2E translation preview ${randomUUID()}`;
     const description = "Original summary without a timestamp";
@@ -417,6 +417,35 @@ for (const entity of entities) {
       }
 
       // Act
+      await page.goto(`/${entity.path}/${encodeURIComponent(id)}`);
+
+      // Assert
+      const fullDescriptionEditor = page.getByTestId("rich-text-editor-fullDescription");
+      const descriptionHint = page.getByTestId("full-description-ripple");
+      const accountName = page.getByText(requiredEnv("E2E_USER_NAME"), { exact: true });
+
+      await expect(fullDescriptionEditor).toContainText(fullDescription);
+      await expect(page.getByTestId("button-bar-confirm")).toBeDisabled();
+      await descriptionHint.hover();
+      await expect(page.getByRole("tooltip")).toContainText(
+        `Add detailed ${entity.kind} content in Full Description`,
+      );
+      await testInfo.attach(`${entity.kind}-full-description-hint`, {
+        body: await page.screenshot({
+          path: testInfo.outputPath(`${entity.kind}-full-description-hint.png`),
+          animations: "disabled",
+          mask: [accountName],
+        }),
+        contentType: "image/png",
+      });
+      await page.getByRole("tooltip").getByRole("button", { name: "OK", exact: true }).click();
+      await expect(descriptionHint).toBeHidden();
+      await page.reload();
+      await expect(fullDescriptionEditor).toContainText(fullDescription);
+      await expect(descriptionHint).toBeHidden();
+      await expect(page.getByTestId("button-bar-confirm")).toBeDisabled();
+
+      // Act
       await page.goto(`/translations/DE/${entity.path}/${encodeURIComponent(id)}`);
 
       // Assert — previews must load without reopening the section or editing a field.
@@ -431,6 +460,62 @@ for (const entity of entities) {
       await expect(page.getByTestId("translation-context-bar")).toContainText(
         "2 of 6 fields translated",
       );
+
+      // Act
+      const translationHint = details.locator('[data-state="closed"]');
+
+      await expect(translationHint).toHaveCount(1);
+      await translationHint.hover();
+
+      // Assert
+      await expect(page.getByRole("tooltip")).toContainText(
+        "Translate full descriptions for categories and collections",
+      );
+      await testInfo.attach(`${entity.kind}-full-description-translation-hint`, {
+        body: await page.screenshot({
+          path: testInfo.outputPath(`${entity.kind}-full-description-translation-hint.png`),
+          animations: "disabled",
+          mask: [accountName],
+        }),
+        contentType: "image/png",
+      });
+
+      // Act
+      await page.getByRole("tooltip").getByRole("button", { name: "OK", exact: true }).click();
+      await page.reload();
+
+      // Assert
+      await expect(details).toContainText(translatedFullDescription);
+      await expect(details.locator("[data-state]")).toHaveCount(0);
+      await expect(summary).toContainText(translatedDescription);
+
+      // Act
+      const pulseAnnouncement = page.getByTestId("ripple-video-announcement-saleor-pulse");
+
+      if (await pulseAnnouncement.isVisible()) {
+        await pulseAnnouncement.getByTestId("ripple-video-announcement-dismiss").click();
+      }
+      await page.getByText("What's New", { exact: true }).click();
+
+      // Assert
+      const changelog = page.getByRole("dialog");
+
+      for (const title of [
+        "Category full descriptions",
+        "Collection full descriptions",
+        "Full description translations",
+      ]) {
+        await expect(changelog.getByRole("heading", { name: title, exact: true })).toBeVisible();
+      }
+      await testInfo.attach(`${entity.kind}-full-description-announcements`, {
+        body: await page.screenshot({
+          path: testInfo.outputPath(`${entity.kind}-full-description-announcements.png`),
+          animations: "disabled",
+          mask: [accountName],
+        }),
+        contentType: "image/png",
+      });
+      expect(await readEntity(entity, id, session.token)).toEqual(saved);
     } finally {
       const { deleted } = await graphql<{ deleted: { errors: MutationError[] } }>(
         entity.delete,

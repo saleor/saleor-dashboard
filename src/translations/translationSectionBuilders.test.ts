@@ -35,11 +35,13 @@ describe("createGeneralNameDescriptionSection", () => {
         displayName: "Full Description",
         name: TranslationInputFieldName.fullDescription,
         nullable: true,
+        ripple: expect.objectContaining({ ID: "full-description-translation" }),
         translation,
         type: TranslationFieldType.RICH,
         value: original,
       }),
     );
+    expect(section.fields.slice(0, 2).every(field => !field.ripple)).toBe(true);
   });
 
   it("does not add full description to product translations", () => {
@@ -51,6 +53,7 @@ describe("createGeneralNameDescriptionSection", () => {
 
     // Assert
     expect(section.fields.map(field => field.name)).toEqual(["name", "description"]);
+    expect(section.fields.every(field => !field.ripple)).toBe(true);
   });
 });
 

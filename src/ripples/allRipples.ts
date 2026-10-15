@@ -3,8 +3,10 @@ import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attri
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import { rippleTypePageCreateAttribute } from "@dashboard/attributes/ripples/typePageCreateAttribute";
 import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
+import { rippleCategoryFullDescription } from "@dashboard/categories/ripples/fullDescription";
 import { channelCreateSetupFlow } from "@dashboard/channels/ripples/channelCreateSetupFlow";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
+import { rippleCollectionFullDescription } from "@dashboard/collections/ripples/fullDescription";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { rippleGlobalFeedback } from "@dashboard/components/Sidebar/ripples/globalFeedback";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
@@ -38,6 +40,7 @@ import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRi
 import { type Ripple } from "@dashboard/ripples/types";
 import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
 import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
+import { rippleFullDescriptionTranslation } from "@dashboard/translations/ripples/fullDescriptionTranslation";
 import { rippleProductMediaAltTranslation } from "@dashboard/translations/ripples/productMediaAltTranslation";
 import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import { rippleTranslationDetailRefresh } from "@dashboard/translations/ripples/translationDetailRefresh";
@@ -55,6 +58,10 @@ export const allRipples: Ripple[] = [
 
   // Categories
   rippleExpandedSubcategories,
+  rippleCategoryFullDescription,
+
+  // Collections
+  rippleCollectionFullDescription,
 
   // Orders
   rippleNewRefundReasons,
@@ -113,6 +120,7 @@ export const allRipples: Ripple[] = [
   rippleStaffOrderAlertRecipients,
 
   // Translations
+  rippleFullDescriptionTranslation,
   rippleProductMediaAltTranslation,
   rippleSlugTranslation,
   rippleTranslationDetailRefresh,
