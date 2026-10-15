@@ -18,6 +18,7 @@ interface EntityDetails {
   fullDescription: string | null;
   translation: {
     name: string | null;
+    slug: string | null;
     description: string | null;
     fullDescription: string | null;
   } | null;
@@ -49,7 +50,7 @@ const entities: EntityConfig[] = [
     details: `query LiveCategoryFullDescriptionDetails($id: ID!) {
       entity: category(id: $id) {
         id name description fullDescription
-        translation(languageCode: DE) { id name description fullDescription }
+        translation(languageCode: DE) { id name slug description fullDescription }
       }
     }`,
     translate: `mutation LiveCategoryFullDescriptionTranslate($id: ID!, $input: TranslationInput!) {
@@ -75,7 +76,7 @@ const entities: EntityConfig[] = [
     details: `query LiveCollectionFullDescriptionDetails($id: ID!) {
       entity: collection(id: $id) {
         id name description fullDescription
-        translation(languageCode: DE) { id name description fullDescription }
+        translation(languageCode: DE) { id name slug description fullDescription }
       }
     }`,
     translate: `mutation LiveCollectionFullDescriptionTranslate($id: ID!, $input: TranslationInput!) {
@@ -195,7 +196,8 @@ async function saveMutation(
   page: Page,
   operationName: string,
   save: Locator = page.getByTestId("button-bar-confirm"),
-): Promise<void> {
+  expectedErrors: MutationError[] = [],
+): Promise<Record<string, unknown>> {
   await expect(save).toBeEnabled();
   const pendingResponse = page.waitForResponse(response => {
     const request = response.request();
@@ -212,7 +214,14 @@ async function saveMutation(
 
   expect(response.ok()).toBe(true);
   expect(result.errors ?? []).toEqual([]);
-  expect(Object.values(result.data ?? {}).flatMap(payload => payload.errors)).toEqual([]);
+  expect(
+    Object.values(result.data ?? {}).flatMap(payload =>
+      payload.errors.map(({ field, code }) => ({ field, code })),
+    ),
+  ).toEqual(expectedErrors);
+  const body: { variables: { input: Record<string, unknown> } } = response.request().postDataJSON();
+
+  return body.variables.input;
 }
 
 async function readEntity(entity: EntityConfig, id: string, token: string): Promise<EntityDetails> {
@@ -535,6 +544,183 @@ for (const entity of entities) {
     }
   });
 
+  test(`${entity.kind}: preserves translation drafts after slug validation errors #e2e #translations #validation`, async ({
+    page,
+    session,
+  }) => {
+    // Arrange
+    const identifier = randomUUID();
+    const name = `E2E translation validation ${identifier}`;
+    const description = "Source summary";
+    const fullDescription = "Source detailed text";
+    const originalSummary = "Gespeicherte Zusammenfassung";
+    const originalDetails = "Gespeicherte Details";
+    const detailsDraft = "Neue Details nach Validierungsfehler";
+    const conflictingSlug = `e2e-conflict-${identifier}`;
+    const originalSlug = `e2e-original-${identifier}`;
+    const correctedSlug = `e2e-corrected-${identifier}`;
+    const createdIds: string[] = [];
+    const validationErrors: MutationError[] = [{ field: "slug", code: "UNIQUE" }];
+
+    try {
+      // Both the edited object and the conflicting translation belong to this test.
+      for (const role of ["edited", "conflicting"]) {
+        const { created } = await graphql<{
+          created: { entity: { id: string } | null; errors: MutationError[] };
+        }>(
+          entity.create,
+          {
+            input: {
+              name: `${name} ${role}`,
+              description: JSON.stringify(richText(description)),
+              fullDescription: JSON.stringify(richText(fullDescription)),
+            },
+          },
+          session.token,
+        );
+
+        if (created.entity) {
+          createdIds.push(created.entity.id);
+        }
+
+        expect(created.errors).toEqual([]);
+
+        if (!created.entity) {
+          throw new Error("Test entity creation did not return an ID");
+        }
+
+        const { translated } = await graphql<{ translated: { errors: MutationError[] } }>(
+          entity.translate,
+          {
+            id: created.entity.id,
+            input: {
+              slug: role === "edited" ? originalSlug : conflictingSlug,
+              description: JSON.stringify(richText(originalSummary)),
+              fullDescription: JSON.stringify(richText(originalDetails)),
+            },
+          },
+          session.token,
+        );
+
+        expect(translated.errors).toEqual([]);
+      }
+
+      const id = createdIds[0];
+
+      await page.goto(`/translations/DE/${entity.path}/${encodeURIComponent(id)}`);
+      const slugField = page.getByTestId("translation-field-slug");
+      const slugInput = slugField.locator("input");
+      const detailsField = page.getByTestId("translation-field-fullDescription");
+      const detailsEditor = detailsField.getByTestId("rich-text-editor-translation");
+      const detailsSave = detailsField.getByTestId("button-bar-confirm");
+      const slugSave = slugField.getByTestId("button-bar-confirm");
+
+      await expect(slugField).toContainText(originalSlug);
+      // Open the supported multi-field route after loading the saved translation.
+      await page.evaluate(() => {
+        window.history.pushState(
+          window.history.state,
+          "",
+          "?activeField=slug&activeField=fullDescription",
+        );
+        window.dispatchEvent(new PopStateEvent("popstate", { state: window.history.state }));
+      });
+      await expect(detailsEditor).toContainText(originalDetails);
+      await expect(slugInput).toBeVisible();
+      await fillEditor(detailsEditor, detailsDraft);
+      await expect(detailsSave).toBeEnabled();
+      await slugInput.fill(conflictingSlug);
+
+      // Act — a real Core error in one field must preserve the other editors.
+      const failedSingleInput = await saveMutation(
+        page,
+        entity.translationOperation,
+        slugSave,
+        validationErrors,
+      );
+
+      // Assert
+      expect(failedSingleInput).toEqual({ slug: conflictingSlug });
+      await expect(detailsEditor).toContainText(detailsDraft);
+      await expect(detailsSave).toBeEnabled();
+      let saved = await readEntity(entity, id, session.token);
+
+      expect(saved.translation?.slug).toBe(originalSlug);
+      expect(textFromRichText(saved.translation?.description ?? null)).toBe(originalSummary);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(originalDetails);
+      expect(
+        await page.evaluate(
+          () => !window.dispatchEvent(new Event("beforeunload", { cancelable: true })),
+        ),
+      ).toBe(true);
+
+      // Act
+      await slugInput.fill(correctedSlug);
+      await saveMutation(page, entity.translationOperation, slugSave);
+      await expect(page.getByTestId("edit-slug")).toBeVisible();
+      const retriedDetails = await saveMutation(page, entity.translationOperation, detailsSave);
+
+      // Assert
+      expect(textFromRichText(String(retriedDetails.fullDescription))).toBe(detailsDraft);
+      expect(retriedDetails).not.toHaveProperty("description");
+      await expect(page.getByTestId("edit-fullDescription")).toBeVisible();
+
+      // Act
+      await page.locator("button[aria-pressed]").click();
+      const bulkSave = page.getByTestId("button-bar-confirm");
+      const bulkDraft = "Details aus fehlgeschlagener Sammelspeicherung";
+
+      await expect(bulkSave).toBeDisabled();
+      await expect(slugInput).toBeEnabled();
+      await expect(detailsEditor).toContainText(detailsDraft);
+      await fillEditor(detailsEditor, bulkDraft);
+      await expect(bulkSave).toBeEnabled();
+      await slugInput.fill(conflictingSlug);
+      const failedBulkInput = await saveMutation(
+        page,
+        entity.translationOperation,
+        bulkSave,
+        validationErrors,
+      );
+
+      // Assert
+      expect(failedBulkInput.slug).toBe(conflictingSlug);
+      expect(textFromRichText(String(failedBulkInput.fullDescription))).toBe(bulkDraft);
+      await expect(detailsEditor).toContainText(bulkDraft);
+      await expect(bulkSave).toBeEnabled();
+      saved = await readEntity(entity, id, session.token);
+      expect(saved.translation?.slug).toBe(correctedSlug);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(detailsDraft);
+
+      // Act — the visible draft and the submitted bulk value must stay in sync.
+      await slugInput.fill(`${correctedSlug}-bulk`);
+      const retriedBulkInput = await saveMutation(page, entity.translationOperation, bulkSave);
+
+      // Assert
+      expect(textFromRichText(String(retriedBulkInput.fullDescription))).toBe(bulkDraft);
+      expect(retriedBulkInput).not.toHaveProperty("description");
+      await expect(page.getByTestId("edit-fullDescription")).toBeVisible();
+      await expect(detailsField).toContainText(bulkDraft);
+      saved = await readEntity(entity, id, session.token);
+      expect(saved.translation?.slug).toBe(`${correctedSlug}-bulk`);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(bulkDraft);
+      expect(textFromRichText(saved.translation?.description ?? null)).toBe(originalSummary);
+      expect(saved.name).toBe(`${name} edited`);
+      expect(textFromRichText(saved.description)).toBe(description);
+      expect(textFromRichText(saved.fullDescription)).toBe(fullDescription);
+    } finally {
+      for (const id of createdIds) {
+        const { deleted } = await graphql<{ deleted: { errors: MutationError[] } }>(
+          entity.delete,
+          { id },
+          session.token,
+        );
+
+        expect(deleted.errors).toEqual([]);
+      }
+    }
+  });
+
   test(`${entity.kind}: retries full-description saves after a network failure #e2e #translations`, async ({
     page,
     session,
@@ -654,12 +840,16 @@ for (const entity of entities) {
       await page.locator("button[aria-pressed]").click();
       const bulkDraft = "Mehrere Felder nach Netzwerkfehler";
       const translatedName = "Übersetzter Name nach Netzwerkfehler";
+      const translatedNameInput = page.getByTestId("translation-field-name").locator("input");
 
       await expect(save).toBeDisabled();
+      // fill() can type through the editor's CSS lock, so wait for data loading to finish.
+      await expect(translatedNameInput).toBeEnabled();
+      await expect(translationEditor).toContainText(translatedDraft);
       await fillEditor(translationEditor, bulkDraft);
       // Wait for Editor.js to publish its draft before a plain field enables Save.
       await expect(save).toBeEnabled();
-      await page.getByTestId("translation-field-name").locator("input").fill(translatedName);
+      await translatedNameInput.fill(translatedName);
       const failedInput = await failSaveRequest(page, entity.translationOperation);
 
       // Assert

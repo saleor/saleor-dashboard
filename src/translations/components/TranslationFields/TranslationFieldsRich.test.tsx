@@ -72,27 +72,43 @@ describe("TranslationFieldsRich", () => {
     global.ResizeObserver = originalResizeObserver;
   });
 
-  it("keeps the draft during a request and retries it after a failed save", async () => {
-    // Arrange
-    const onSubmit = jest.fn(async (_data: OutputData): Promise<unknown[]> => []);
-    const { rerender } = render(<TranslationFieldsRich {...props} onSubmit={onSubmit} />);
+  it.each(["Unsaved translation", ""])(
+    "preserves the draft %p through validation failure and retries the same value",
+    async draft => {
+      // Arrange
+      const errors: Array<{ field: string; code: string }> = [{ field: "slug", code: "UNIQUE" }];
+      const onSubmit = jest.fn(async (_data: OutputData): Promise<unknown[]> => errors);
+      const { rerender } = render(<TranslationFieldsRich {...props} onSubmit={onSubmit} />);
 
-    // Act
-    fireEvent.change(screen.getByRole("textbox"), { target: { value: "Unsaved translation" } });
-    rerender(
-      <TranslationFieldsRich {...props} onSubmit={onSubmit} disabled saveButtonState="loading" />,
-    );
-    rerender(<TranslationFieldsRich {...props} onSubmit={onSubmit} saveButtonState="error" />);
+      // Act
+      fireEvent.change(screen.getByRole("textbox"), { target: { value: draft } });
+      fireEvent.click(screen.getByTestId("button-bar-confirm"));
+      await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+      rerender(
+        <TranslationFieldsRich {...props} onSubmit={onSubmit} disabled saveButtonState="loading" />,
+      );
 
-    // Assert
-    expect(screen.getByRole("textbox")).toHaveValue("Unsaved translation");
+      // Assert
+      expect(screen.getByRole("textbox")).toBeDisabled();
+      expect(screen.getByRole("textbox")).toHaveValue(draft);
 
-    // Act
-    fireEvent.click(screen.getByTestId("button-bar-confirm"));
+      // Act
+      rerender(<TranslationFieldsRich {...props} onSubmit={onSubmit} saveButtonState="error" />);
 
-    // Assert
-    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(richText("Unsaved translation")));
-  });
+      // Assert
+      expect(screen.getByRole("textbox")).toHaveValue(draft);
+      expect(screen.getByRole("textbox")).toBeEnabled();
+
+      // Act
+      onSubmit.mockResolvedValueOnce([]);
+      fireEvent.click(screen.getByTestId("button-bar-confirm"));
+
+      // Assert
+      await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(2));
+      expect(onSubmit).toHaveBeenNthCalledWith(1, richText(draft));
+      expect(onSubmit).toHaveBeenNthCalledWith(2, richText(draft));
+    },
+  );
 
   it("discards the old draft when the language reset key changes", () => {
     // Arrange
