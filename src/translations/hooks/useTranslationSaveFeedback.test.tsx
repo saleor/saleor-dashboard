@@ -1,92 +1,58 @@
 import { act, renderHook } from "@testing-library/react";
-import { type PropsWithChildren } from "react";
-import { IntlProvider } from "react-intl";
 
 import { createBulkSubmitResult } from "../bulkSubmitResult";
 import { useTranslationSaveFeedback } from "./useTranslationSaveFeedback";
 
-const mockResetFormsState = jest.fn();
 const mockNotify = jest.fn();
 
-jest.mock("@dashboard/components/Form/useExitFormDialog", () => ({
-  useExitFormDialog: () => ({ resetFormsState: mockResetFormsState }),
-}));
 jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
-  useNotifier: () => mockNotify,
+  useNotifier: (): typeof mockNotify => mockNotify,
 }));
-
-const Wrapper = ({ children }: PropsWithChildren): JSX.Element => (
-  <IntlProvider locale="en" messages={{}}>
-    {children}
-  </IntlProvider>
-);
 
 describe("useTranslationSaveFeedback", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it("clears the exit guard before navigating after a successful field save", () => {
+  it("refetches and reports a successful field save", () => {
     // Arrange
-    const events: string[] = [];
-
-    mockResetFormsState.mockImplementation(() => events.push("clear dirty form"));
-
-    const { result } = renderHook(
-      () =>
-        useTranslationSaveFeedback({
-          refetch: jest.fn(),
-          exitEditMode: () => events.push("exit edit mode"),
-          exitBulkMode: jest.fn(),
-        }),
-      { wrapper: Wrapper },
-    );
+    const refetch = jest.fn();
+    const { result } = renderHook(() => useTranslationSaveFeedback({ refetch }));
 
     // Act
     act(() => {
-      result.current.completeSingleFieldSave([]);
+      expect(result.current.completeSingleFieldSave([])).toEqual([]);
     });
 
     // Assert
-    expect(events).toEqual(["clear dirty form", "exit edit mode"]);
+    expect(refetch).toHaveBeenCalledTimes(1);
+    expect(mockNotify).toHaveBeenCalledWith(expect.objectContaining({ status: "success" }));
   });
 
-  it("keeps the exit guard and edit mode when a field save fails", () => {
+  it("preserves field errors without reporting success", () => {
     // Arrange
-    const exitEditMode = jest.fn();
-    const { result } = renderHook(
-      () =>
-        useTranslationSaveFeedback({
-          refetch: jest.fn(),
-          exitEditMode,
-          exitBulkMode: jest.fn(),
-        }),
-      { wrapper: Wrapper },
-    );
+    const refetch = jest.fn();
+    const errors = [{ field: "fullDescription", message: "Invalid description" }];
+    const { result } = renderHook(() => useTranslationSaveFeedback({ refetch }));
 
     // Act
-    act(() => {
-      result.current.completeSingleFieldSave([{ field: "fullDescription" }]);
-    });
+    const returnedErrors = result.current.completeSingleFieldSave(errors);
 
     // Assert
-    expect(mockResetFormsState).not.toHaveBeenCalled();
-    expect(exitEditMode).not.toHaveBeenCalled();
+    expect(returnedErrors).toBe(errors);
+    expect(refetch).not.toHaveBeenCalled();
+    expect(mockNotify).not.toHaveBeenCalled();
   });
 
-  it("clears the exit guard before navigating after a successful bulk save", () => {
+  it("clears previous field errors and reports a successful bulk retry", () => {
     // Arrange
-    const events: string[] = [];
+    const refetch = jest.fn();
+    const { result } = renderHook(() => useTranslationSaveFeedback({ refetch }));
 
-    mockResetFormsState.mockImplementation(() => events.push("clear dirty form"));
-
-    const { result } = renderHook(
-      () =>
-        useTranslationSaveFeedback({
-          refetch: jest.fn(),
-          exitEditMode: jest.fn(),
-          exitBulkMode: () => events.push("exit bulk mode"),
-        }),
-      { wrapper: Wrapper },
-    );
+    act(() => {
+      result.current.completeBulkSave(
+        createBulkSubmitResult([{ fieldName: "fullDescription", message: "Invalid description" }]),
+      );
+    });
+    mockNotify.mockClear();
 
     // Act
     act(() => {
@@ -94,21 +60,15 @@ describe("useTranslationSaveFeedback", () => {
     });
 
     // Assert
-    expect(events).toEqual(["clear dirty form", "exit bulk mode"]);
+    expect(result.current.fieldErrors).toEqual({});
+    expect(refetch).toHaveBeenCalledTimes(1);
+    expect(mockNotify).toHaveBeenCalledWith(expect.objectContaining({ status: "success" }));
   });
 
-  it("keeps unsaved fields protected when a bulk save fails", () => {
+  it("reports partial bulk failures without reporting success", () => {
     // Arrange
-    const exitBulkMode = jest.fn();
-    const { result } = renderHook(
-      () =>
-        useTranslationSaveFeedback({
-          refetch: jest.fn(),
-          exitEditMode: jest.fn(),
-          exitBulkMode,
-        }),
-      { wrapper: Wrapper },
-    );
+    const refetch = jest.fn();
+    const { result } = renderHook(() => useTranslationSaveFeedback({ refetch }));
 
     // Act
     act(() => {
@@ -118,8 +78,8 @@ describe("useTranslationSaveFeedback", () => {
     });
 
     // Assert
-    expect(mockResetFormsState).not.toHaveBeenCalled();
-    expect(exitBulkMode).not.toHaveBeenCalled();
     expect(result.current.fieldErrors).toEqual({ fullDescription: "Invalid description" });
+    expect(refetch).not.toHaveBeenCalled();
+    expect(mockNotify).toHaveBeenCalledWith(expect.objectContaining({ status: "error" }));
   });
 });

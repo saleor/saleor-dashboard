@@ -1,4 +1,3 @@
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import {
   type BulkTranslationSubmitResult,
@@ -10,18 +9,11 @@ import { useIntl } from "react-intl";
 
 interface UseTranslationSaveFeedbackParams {
   refetch: () => void;
-  exitEditMode: () => void;
-  exitBulkMode: () => void;
 }
 
-export function useTranslationSaveFeedback({
-  refetch,
-  exitEditMode,
-  exitBulkMode,
-}: UseTranslationSaveFeedbackParams) {
+export function useTranslationSaveFeedback({ refetch }: UseTranslationSaveFeedbackParams) {
   const notify = useNotifier();
   const intl = useIntl();
-  const { resetFormsState } = useExitFormDialog();
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const notifyTranslationSaved = useCallback(() => {
@@ -41,25 +33,21 @@ export function useTranslationSaveFeedback({
   }, [intl, notify, refetch]);
 
   const completeSingleFieldSave = useCallback(
-    <TErrors>(errors: TErrors[], onSuccess?: () => void) => {
+    <TErrors>(errors: TErrors[]) => {
       if (errors.length === 0) {
-        resetFormsState();
         notifyTranslationSaved();
-        (onSuccess ?? exitEditMode)();
       }
 
       return errors;
     },
-    [exitEditMode, notifyTranslationSaved, resetFormsState],
+    [notifyTranslationSaved],
   );
 
   const completeBulkSave = useCallback(
     (result: BulkTranslationSubmitResult) => {
       if (!result.hasErrors) {
-        resetFormsState();
         setFieldErrors({});
         notifyAllTranslationsSaved();
-        exitBulkMode();
 
         return result;
       }
@@ -74,7 +62,7 @@ export function useTranslationSaveFeedback({
 
       return result;
     },
-    [exitBulkMode, intl, notify, notifyAllTranslationsSaved, resetFormsState],
+    [intl, notify, notifyAllTranslationsSaved],
   );
 
   const clearFieldError = useCallback((fieldName: string) => {
@@ -101,6 +89,5 @@ export function useTranslationSaveFeedback({
     completeBulkSave,
     completeSingleFieldSave,
     fieldErrors,
-    notifyTranslationSaved,
   };
 }

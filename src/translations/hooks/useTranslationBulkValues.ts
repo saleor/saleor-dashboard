@@ -57,17 +57,23 @@ export function useTranslationBulkValues(sections: TranslationSectionConfig[]) {
     [sections, values],
   );
 
+  const getDirtyValues = useCallback(
+    (): BulkTranslationValue[] => getDirtyBulkSubmitValues(sections, values),
+    [sections, values],
+  );
+
   const getBulkSaveValues = useCallback(
     (): BulkTranslationValue[] => [
-      ...getDirtyBulkSubmitValues(sections, values),
+      ...getDirtyValues(),
       ...getBlankResetBulkValues(sections, values),
     ],
-    [sections, values],
+    [getDirtyValues, sections, values],
   );
 
   return {
     clearFieldValues,
     getBulkSaveValues,
+    getDirtyValues,
     getFieldState,
     handleValueChange,
     hasBlankResets,

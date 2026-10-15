@@ -32,7 +32,6 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
     detailsQuery: productTranslations,
     entityMutation,
     attributeValueMutation,
-    multiFieldNavigation: true,
   });
 
   return (

@@ -38,6 +38,7 @@ describe("useTranslationBulkValues", () => {
       blankHint: "resettable",
     });
     expect(result.current.hasDirtyFields).toBe(false);
+    expect(result.current.getDirtyValues()).toEqual([]);
     expect(result.current.getBulkSaveValues()).toEqual([
       expect.objectContaining({ field: blankNameField, data: "" }),
     ]);

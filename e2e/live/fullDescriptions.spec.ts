@@ -191,9 +191,11 @@ async function fillEditor(editor: Locator, text: string): Promise<void> {
   await paragraph.press("Tab");
 }
 
-async function saveMutation(page: Page, operationName: string): Promise<void> {
-  const save = page.getByTestId("button-bar-confirm");
-
+async function saveMutation(
+  page: Page,
+  operationName: string,
+  save: Locator = page.getByTestId("button-bar-confirm"),
+): Promise<void> {
   await expect(save).toBeEnabled();
   const pendingResponse = page.waitForResponse(response => {
     const request = response.request();
@@ -251,6 +253,124 @@ async function failSaveRequest(
 }
 
 for (const entity of entities) {
+  test(`${entity.kind}: keeps another translation draft protected after saving one field #e2e #translations`, async ({
+    page,
+    session,
+  }) => {
+    // Arrange
+    const name = `E2E translation guard ${randomUUID()}`;
+    const description = "Original summary";
+    const fullDescription = "Original detailed text";
+    const originalTranslation = "Gespeicherte Details";
+    const translatedName = "Gespeicherter neuer Name";
+    const translatedDraft = "Noch nicht gespeicherte Details";
+    const { created } = await graphql<{
+      created: { entity: { id: string } | null; errors: MutationError[] };
+    }>(
+      entity.create,
+      {
+        input: {
+          name,
+          description: JSON.stringify(richText(description)),
+          fullDescription: JSON.stringify(richText(fullDescription)),
+        },
+      },
+      session.token,
+    );
+
+    expect(created.errors).toEqual([]);
+
+    if (!created.entity) {
+      throw new Error("Test entity creation did not return an ID");
+    }
+
+    const { id } = created.entity;
+
+    try {
+      const { translated } = await graphql<{ translated: { errors: MutationError[] } }>(
+        entity.translate,
+        {
+          id,
+          input: {
+            name: "Gespeicherter Name",
+            fullDescription: JSON.stringify(richText(originalTranslation)),
+          },
+        },
+        session.token,
+      );
+
+      expect(translated.errors).toEqual([]);
+      await page.goto(
+        `/translations/DE/${entity.path}/${encodeURIComponent(id)}?activeField=name&activeField=fullDescription`,
+      );
+      const nameField = page.getByTestId("translation-field-name");
+      const fullField = page.getByTestId("translation-field-fullDescription");
+      const editor = fullField.getByTestId("rich-text-editor-translation");
+      const fullSave = fullField.getByTestId("button-bar-confirm");
+
+      await expect(editor).toContainText(originalTranslation);
+      await fillEditor(editor, translatedDraft);
+      await expect(fullSave).toBeEnabled();
+      await nameField.locator("input").fill(translatedName);
+
+      // Act
+      await saveMutation(
+        page,
+        entity.translationOperation,
+        nameField.getByTestId("button-bar-confirm"),
+      );
+      await expect(page.getByTestId("edit-name")).toBeVisible();
+
+      // Assert
+      await expect(editor).toContainText(translatedDraft);
+      await expect(fullSave).toBeEnabled();
+      let saved = await readEntity(entity, id, session.token);
+
+      expect(saved.translation?.name).toBe(translatedName);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(
+        originalTranslation,
+      );
+      expect(
+        await page.evaluate(
+          () => !window.dispatchEvent(new Event("beforeunload", { cancelable: true })),
+        ),
+      ).toBe(true);
+
+      // Act
+      await page.getByTestId("app-header-back-button").click();
+
+      // Assert
+      await expect(page.getByRole("dialog")).toContainText("Leave without saving changes?");
+
+      // Act
+      await page.getByRole("button", { name: "Keep editing" }).click();
+      await expect(editor).toContainText(translatedDraft);
+      await saveMutation(page, entity.translationOperation, fullSave);
+      await expect(page.getByTestId("edit-fullDescription")).toBeVisible();
+
+      // Assert
+      saved = await readEntity(entity, id, session.token);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(translatedDraft);
+      expect(saved.translation?.name).toBe(translatedName);
+      expect(saved.name).toBe(name);
+      expect(textFromRichText(saved.description)).toBe(description);
+      expect(textFromRichText(saved.fullDescription)).toBe(fullDescription);
+      expect(
+        await page.evaluate(
+          () => !window.dispatchEvent(new Event("beforeunload", { cancelable: true })),
+        ),
+      ).toBe(false);
+    } finally {
+      const { deleted } = await graphql<{ deleted: { errors: MutationError[] } }>(
+        entity.delete,
+        { id },
+        session.token,
+      );
+
+      expect(deleted.errors).toEqual([]);
+    }
+  });
+
   test(`${entity.kind}: retries full-description saves after a network failure #e2e #translations`, async ({
     page,
     session,
