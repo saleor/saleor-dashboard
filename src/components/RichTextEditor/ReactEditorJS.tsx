@@ -55,6 +55,7 @@ class ClientEditorCore implements EditorCore {
   }
 
   public async render(data: OutputData) {
+    await this._editorJS.isReady;
     await this._editorJS.render(data);
   }
 
