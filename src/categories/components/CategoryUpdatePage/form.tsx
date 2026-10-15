@@ -23,12 +23,14 @@ interface CategoryUpdateFormData {
 }
 export interface CategoryUpdateData extends CategoryUpdateFormData {
   description: OutputData | null;
+  fullDescription?: OutputData | null;
 }
 
 type UseCategoryUpdateFormResult = CommonUseFormResult<CategoryUpdateData> & {
   hasUnsavedChanges: boolean;
   isSaveDisabled: boolean;
   richText: RichTextContextValues;
+  fullDescriptionRichText: RichTextContextValues;
   saveComposition: CategorySaveComposition;
 };
 
@@ -49,7 +51,7 @@ const getInitialData = (
   slug: category?.slug || "",
 });
 
-function useCategoryUpdateForm(
+export function useCategoryUpdateForm(
   category: CategoryDetailsFragment | undefined | null,
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>,
   disabled: boolean,
@@ -74,6 +76,11 @@ function useCategoryUpdateForm(
     loading: !category,
     triggerChange,
   });
+  const fullDescriptionRichText = useRichText({
+    initial: category?.fullDescription,
+    loading: !category,
+    triggerChange,
+  });
   const data: CategoryUpdateData = {
     ...formData,
     description: null,
@@ -81,12 +88,40 @@ function useCategoryUpdateForm(
   const getData = async (): Promise<CategoryUpdateData> => ({
     ...formData,
     description: await richText.getValue(),
+    ...(fullDescriptionRichText.isDirty
+      ? { fullDescription: await fullDescriptionRichText.getValue() }
+      : {}),
   });
-  const submit = async () => handleFormSubmit(await getData());
+  const submit = async (): Promise<unknown[]> => {
+    const descriptionDirty = richText.isDirty;
+    const fullDescriptionDirty = fullDescriptionRichText.isDirty;
+    let saveSucceeded = false;
+
+    try {
+      const errors = await handleFormSubmit(await getData());
+
+      saveSucceeded = errors.length === 0;
+
+      return errors;
+    } finally {
+      if (!saveSucceeded) {
+        if (descriptionDirty) {
+          richText.handleChange();
+        }
+
+        if (fullDescriptionDirty) {
+          fullDescriptionRichText.handleChange();
+        }
+      }
+    }
+  };
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const saveComposition = buildCategorySaveComposition(Object.keys(changedData), richText.isDirty);
+  const saveComposition = buildCategorySaveComposition(
+    Object.keys(changedData),
+    richText.isDirty || fullDescriptionRichText.isDirty,
+  );
   const hasUnsavedChanges = hasCategorySaveComposition(saveComposition);
   const isSaveDisabled = disabled || !hasUnsavedChanges || !formData.name.trim();
 
@@ -104,6 +139,7 @@ function useCategoryUpdateForm(
     saveComposition,
     submit,
     richText,
+    fullDescriptionRichText,
   };
 }
 

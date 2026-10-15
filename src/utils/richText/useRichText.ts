@@ -28,20 +28,29 @@ export function useRichText({
   const [isReadyForMount, setIsReadyForMount] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const [defaultValue, setDefaultValue] = useState<OutputData | undefined>(undefined);
+  const changeVersionRef = useRef(0);
 
-  const handleChange = () => {
+  const handleChange = (): void => {
+    changeVersionRef.current += 1;
     setIsDirty(true);
     triggerChange();
   };
 
-  const getValue = async () => {
-    if (editorRef.current) {
-      setIsDirty(false);
+  const getValue = async (): Promise<OutputData> => {
+    const editor = editorRef.current;
 
-      return editorRef.current.save();
+    if (!editor) {
+      throw new Error("Editor instance is not available");
     }
 
-    throw new Error("Editor instance is not available");
+    const changeVersion = changeVersionRef.current;
+    const value = await editor.save();
+
+    if (changeVersion === changeVersionRef.current) {
+      setIsDirty(false);
+    }
+
+    return value;
   };
 
   useEffect(() => {

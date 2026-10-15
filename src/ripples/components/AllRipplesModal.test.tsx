@@ -1,3 +1,4 @@
+import { allRipples } from "@dashboard/ripples/allRipples";
 import { type useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { type Ripple } from "@dashboard/ripples/types";
 import { Text, ThemeProvider } from "@saleor/macaw-ui-next";
@@ -5,7 +6,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "jotai";
 import { type ReactNode, StrictMode } from "react";
-import { defineMessage } from "react-intl";
+import { createIntl, defineMessage, type useIntl } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 
 import { getRipplesSortedAndGroupedByMonths, RippleGlobalDescription } from "./AllRipplesModal";
@@ -19,6 +20,9 @@ const mockNavigate = jest.fn();
 const mockOnChange = jest.fn();
 const mockTrackEvent = jest.fn();
 const mockSetManuallyHidden = jest.fn();
+const { useIntl: mockUseIntl } = jest.requireActual<{
+  useIntl: jest.MockedFunction<typeof useIntl>;
+}>("react-intl");
 
 jest.mock("@dashboard/hooks/useNavigator", () => ({
   __esModule: true,
@@ -352,6 +356,42 @@ describe("AllRipplesModal", () => {
       intent: "install",
       loading: false,
     });
+  });
+
+  it("localizes message titles and video labels in the active language", () => {
+    // Arrange
+    const { createIntl: createRealIntl } = jest.requireActual<{
+      createIntl: typeof createIntl;
+    }>("../../../node_modules/react-intl");
+    const title = defineMessage({ defaultMessage: "Category full descriptions", id: "E+9QV7" });
+    const translatedTitle = "Vollständige Kategoriebeschreibungen";
+    const originalRipples = [...allRipples];
+    const localizedRipple = createMockRipple("localized-title", new Date(2026, 9, 15), {
+      content: { oneLiner: title, contextual: "Context", global: "Details" },
+      media: { kind: "video", src: "https://example.com/video.mp4" },
+    });
+
+    mockUseIntl.mockReturnValue(
+      createRealIntl({
+        locale: "de",
+        messages: { [title.id]: translatedTitle },
+        onError: jest.fn(),
+      }),
+    );
+    allRipples.push(localizedRipple);
+
+    try {
+      // Act
+      render(<AllRipplesModal open onChange={mockOnChange} />, { wrapper: Wrapper });
+
+      // Assert
+      expect(screen.getByRole("heading", { name: translatedTitle })).toBeInTheDocument();
+      expect(screen.getByLabelText(translatedTitle).tagName).toBe("VIDEO");
+      expect(screen.getByText("Saleor Pulse")).toBeInTheDocument();
+    } finally {
+      allRipples.splice(0, allRipples.length, ...originalRipples);
+      mockUseIntl.mockReturnValue(createIntl({ locale: "en", messages: {} }));
+    }
   });
 
   it("tracks each modal open once", () => {

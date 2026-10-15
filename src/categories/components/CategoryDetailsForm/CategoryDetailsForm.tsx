@@ -1,13 +1,15 @@
+import { rippleCategoryFullDescription } from "@dashboard/categories/ripples/fullDescription";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { EntityBackgroundImageField } from "@dashboard/components/EntityBackgroundImageField/EntityBackgroundImageField";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { FullDescriptionEditor } from "@dashboard/components/FullDescriptionEditor/FullDescriptionEditor";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
 import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type CategoryDetailsFragment, type ProductErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { useRichTextContext } from "@dashboard/utils/richText/context";
+import { type RichTextContextValues, useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
 import { Input } from "@saleor/macaw-ui-next";
 import type * as React from "react";
@@ -24,6 +26,7 @@ interface CategoryDetailsFormProps {
   };
   disabled: boolean;
   errors: ProductErrorFragment[];
+  fullDescriptionRichText: RichTextContextValues;
   image?: CategoryDetailsFragment["backgroundImage"];
   backgroundImageRevision?: number;
   backgroundImageUploadPreview?: string | null;
@@ -46,10 +49,11 @@ export const CategoryDetailsForm = ({
   onImageDelete,
   onImageUpload,
   errors,
+  fullDescriptionRichText,
 }: CategoryDetailsFormProps) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
-  const formErrors = getFormErrors(["name", "description"], errors);
+  const formErrors = getFormErrors(["name", "description", "fullDescription"], errors);
   const previousImage = useRef(image);
 
   useEffect(() => {
@@ -112,6 +116,14 @@ export const CategoryDetailsForm = ({
           name="description"
         />
       )}
+      <FormSpacer />
+      <FullDescriptionEditor
+        disabled={disabled}
+        error={!!formErrors.fullDescription}
+        helperText={getProductErrorMessage(formErrors.fullDescription, intl)}
+        richText={fullDescriptionRichText}
+        ripple={rippleCategoryFullDescription}
+      />
       {onImageUpload && onImageDelete ? (
         <>
           <FormSpacer />

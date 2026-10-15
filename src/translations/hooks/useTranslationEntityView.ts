@@ -55,7 +55,6 @@ interface UseTranslationEntityViewOptions {
   detailsQuery: TranslationDetailsQueryResult;
   entityMutation: EntityMutationTuple;
   attributeValueMutation?: AttributeValueMutationTuple;
-  multiFieldNavigation?: boolean;
 }
 
 export function useTranslationEntityView<TTranslation>({
@@ -66,21 +65,16 @@ export function useTranslationEntityView<TTranslation>({
   detailsQuery,
   entityMutation,
   attributeValueMutation,
-  multiFieldNavigation = false,
 }: UseTranslationEntityViewOptions) {
   const shop = useShop();
-  const { onBulkChange, onDiscard, onEdit, navigateToQuery } =
-    useTranslationDetailNavigation(params);
+  const { onBulkChange, onDiscard, onEdit } = useTranslationDetailNavigation(params);
   const {
     clearFieldError,
     clearFieldErrors,
     completeBulkSave,
     completeSingleFieldSave,
     fieldErrors,
-    notifyTranslationSaved,
   } = useTranslationSaveFeedback({
-    exitBulkMode: () => navigateToQuery({}),
-    exitEditMode: () => navigateToQuery({ bulk: params.bulk }),
     refetch: () => {
       void detailsQuery.refetch();
     },
@@ -108,17 +102,6 @@ export function useTranslationEntityView<TTranslation>({
 
   const handleSubmit = (field: TranslationField, data: SubmitData) => {
     const submitPromise = submitEntityTranslation(field, data);
-
-    if (multiFieldNavigation) {
-      return submitPromise.then(errors => {
-        if (errors.length === 0) {
-          notifyTranslationSaved();
-          onDiscard(field.name);
-        }
-
-        return errors;
-      });
-    }
 
     return submitPromise.then(completeSingleFieldSave);
   };

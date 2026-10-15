@@ -38,6 +38,10 @@ export const commonMessages = defineMessages({
     id: "Q8Qw5B",
     defaultMessage: "Description",
   },
+  fullDescription: {
+    id: "V6FTHW",
+    defaultMessage: "Full Description",
+  },
   descriptionOptional: {
     id: "bZenNC",
     defaultMessage: "Description (optional)",

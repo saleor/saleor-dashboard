@@ -406,6 +406,7 @@ export const CategoryDetailsFragmentDoc = gql`
   name
   slug
   description
+  fullDescription
   seoDescription
   seoTitle
   parent {
@@ -520,6 +521,7 @@ export const CollectionDetailsFragmentDoc = gql`
   }
   slug
   description
+  fullDescription
   seoDescription
   seoTitle
 }
@@ -3936,6 +3938,7 @@ export const CategoryTranslationFragmentDoc = gql`
   translation(languageCode: $language) {
     id
     description
+    fullDescription
     language {
       language
     }
@@ -3948,6 +3951,7 @@ export const CategoryTranslationFragmentDoc = gql`
     id
     name
     description
+    fullDescription
     slug
     seoDescription
     seoTitle
@@ -3960,6 +3964,7 @@ export const CollectionTranslationFragmentDoc = gql`
     id
     name
     description
+    fullDescription
     slug
     seoDescription
     seoTitle
@@ -3967,6 +3972,7 @@ export const CollectionTranslationFragmentDoc = gql`
   translation(languageCode: $language) {
     id
     description
+    fullDescription
     language {
       language
     }
@@ -23257,12 +23263,14 @@ export const UpdateCategoryTranslationsDocument = gql`
       id
       name
       description
+      fullDescription
       seoDescription
       seoTitle
       slug
       translation(languageCode: $language) {
         id
         description
+        fullDescription
         language {
           language
         }
@@ -23313,12 +23321,14 @@ export const UpdateCollectionTranslationsDocument = gql`
       id
       name
       description
+      fullDescription
       seoDescription
       seoTitle
       slug
       translation(languageCode: $language) {
         id
         description
+        fullDescription
         language {
           language
         }

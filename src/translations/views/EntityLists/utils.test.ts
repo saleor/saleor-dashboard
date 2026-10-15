@@ -3,8 +3,10 @@ import {
   LanguageCodeEnum,
   type ShippingMethodTranslationsQuery,
 } from "@dashboard/graphql";
+import { type OutputData } from "@editorjs/editorjs";
 
 import {
+  getCategoryCollectionTranslationCompletion,
   getGeneralEntityTranslationCompletion,
   getPageTranslationCompletion,
   getProductTranslationCompletion,
@@ -201,6 +203,53 @@ describe("getGeneralEntityTranslationCompletion", () => {
 
     // Assert
     expect(result).toEqual({ current: 1, max: 5 });
+  });
+});
+
+describe("getCategoryCollectionTranslationCompletion", () => {
+  it("keeps empty description paragraphs out of the six-field list counter", () => {
+    // Arrange
+    const emptyParagraph: OutputData = {
+      blocks: [{ type: "paragraph", data: { text: "" } }],
+    };
+    const translation: Parameters<typeof getCategoryCollectionTranslationCompletion>[0] = {
+      description: JSON.stringify(emptyParagraph),
+      fullDescription: JSON.stringify(emptyParagraph),
+    };
+
+    // Act
+    const result = getCategoryCollectionTranslationCompletion(translation);
+
+    // Assert
+    expect(result).toEqual({ current: 0, max: 6 });
+  });
+
+  it("counts a full description separately from the description", () => {
+    // Arrange
+    const translation = {
+      name: "Category",
+      description: null,
+      fullDescription: JSON.stringify({
+        blocks: [{ type: "paragraph", data: { text: "Details" } }],
+      }),
+    };
+
+    // Act
+    const result = getCategoryCollectionTranslationCompletion(translation);
+
+    // Assert
+    expect(result).toEqual({ current: 2, max: 6 });
+  });
+
+  it("keeps an empty full description incomplete", () => {
+    // Arrange
+    const translation = { name: "Collection", fullDescription: JSON.stringify({ blocks: [] }) };
+
+    // Act
+    const result = getCategoryCollectionTranslationCompletion(translation);
+
+    // Assert
+    expect(result).toEqual({ current: 1, max: 6 });
   });
 });
 

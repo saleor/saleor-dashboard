@@ -43,15 +43,11 @@ jest.mock("@dashboard/ripples/cornerRipples/allCornerRipples", () => {
     allCornerRipples: [
       {
         model: olderModel,
-        Component: ({ model }: { model: Ripple }) => (
-          <div data-test-id={model.ID}>{model.content.oneLiner}</div>
-        ),
+        Component: ({ model }: { model: Ripple }) => <div data-test-id={model.ID} />,
       },
       {
         model: newerModel,
-        Component: ({ model }: { model: Ripple }) => (
-          <div data-test-id={model.ID}>{model.content.oneLiner}</div>
-        ),
+        Component: ({ model }: { model: Ripple }) => <div data-test-id={model.ID} />,
       },
     ],
   };

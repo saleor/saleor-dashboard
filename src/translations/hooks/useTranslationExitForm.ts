@@ -10,7 +10,7 @@ interface UseTranslationExitFormParams {
 }
 
 interface UseTranslationExitFormResult {
-  resetFormsState: () => void;
+  setIsDirty: (isDirty: boolean) => void;
 }
 
 /**
@@ -25,8 +25,7 @@ export function useTranslationExitForm({
   enabled,
   isDirty,
 }: UseTranslationExitFormParams): UseTranslationExitFormResult {
-  const { setIsDirty, setExitDialogSubmitRef, resetFormsState, showDialog, unregisterForm } =
-    useExitFormDialog();
+  const { setIsDirty, setExitDialogSubmitRef, showDialog, unregisterForm } = useExitFormDialog();
 
   useEffect(
     function syncTranslationExitFormDirty() {
@@ -54,5 +53,5 @@ export function useTranslationExitForm({
     [enabled, unregisterForm],
   );
 
-  return { resetFormsState };
+  return { setIsDirty };
 }

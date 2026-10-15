@@ -1135,6 +1135,14 @@ export type CategoryInput = {
    */
   externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
+   * Full description of the category. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription?: InputMaybe<Scalars['JSONString']['input']>;
+  /**
    * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -1605,6 +1613,14 @@ export type CollectionCreateInput = {
    * Added in Saleor 3.23.
    */
   externalReference?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription?: InputMaybe<Scalars['JSONString']['input']>;
   /** Informs whether a collection is published. */
   isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -1676,6 +1692,14 @@ export type CollectionInput = {
    * Added in Saleor 3.23.
    */
   externalReference?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription?: InputMaybe<Scalars['JSONString']['input']>;
   /** Informs whether a collection is published. */
   isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -9318,6 +9342,14 @@ export type TranslationInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description?: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * Translated full description. Only supported for categories and collections; product translation mutations reject this field. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription?: InputMaybe<Scalars['JSONString']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   seoDescription?: InputMaybe<Scalars['String']['input']>;
   seoTitle?: InputMaybe<Scalars['String']['input']>;
@@ -11049,7 +11081,7 @@ export type CategoryCreateMutationVariables = Exact<{
 }>;
 
 
-export type CategoryCreateMutation = { __typename: 'Mutation', categoryCreate: { __typename: 'CategoryCreate', category: { __typename: 'Category', id: string, name: string, slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
+export type CategoryCreateMutation = { __typename: 'Mutation', categoryCreate: { __typename: 'CategoryCreate', category: { __typename: 'Category', id: string, name: string, slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CategoryUpdateMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11057,7 +11089,7 @@ export type CategoryUpdateMutationVariables = Exact<{
 }>;
 
 
-export type CategoryUpdateMutation = { __typename: 'Mutation', categoryUpdate: { __typename: 'CategoryUpdate', category: { __typename: 'Category', id: string, name: string, slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
+export type CategoryUpdateMutation = { __typename: 'Mutation', categoryUpdate: { __typename: 'CategoryUpdate', category: { __typename: 'Category', id: string, name: string, slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CategoryBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
@@ -11087,7 +11119,7 @@ export type CategoryDetailsQueryVariables = Exact<{
 }>;
 
 
-export type CategoryDetailsQuery = { __typename: 'Query', category: { __typename: 'Category', id: string, name: string, slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, children: { __typename: 'CategoryCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, children: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type CategoryDetailsQuery = { __typename: 'Query', category: { __typename: 'Category', id: string, name: string, slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, children: { __typename: 'CategoryCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, children: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type CategoryProductsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11228,7 +11260,7 @@ export type CollectionUpdateMutationVariables = Exact<{
 }>;
 
 
-export type CollectionUpdateMutation = { __typename: 'Mutation', collectionUpdate: { __typename: 'CollectionUpdate', collection: { __typename: 'Collection', slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
+export type CollectionUpdateMutation = { __typename: 'Mutation', collectionUpdate: { __typename: 'CollectionUpdate', collection: { __typename: 'Collection', slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CollectionAssignProductMutationVariables = Exact<{
   collectionId: Scalars['ID']['input'];
@@ -11244,7 +11276,7 @@ export type CreateCollectionMutationVariables = Exact<{
 }>;
 
 
-export type CreateCollectionMutation = { __typename: 'Mutation', collectionCreate: { __typename: 'CollectionCreate', collection: { __typename: 'Collection', slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
+export type CreateCollectionMutation = { __typename: 'Mutation', collectionCreate: { __typename: 'CollectionCreate', collection: { __typename: 'Collection', slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
 
 export type RemoveCollectionMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11278,7 +11310,7 @@ export type CollectionChannelListingUpdateMutationVariables = Exact<{
 }>;
 
 
-export type CollectionChannelListingUpdateMutation = { __typename: 'Mutation', collectionChannelListingUpdate: { __typename: 'CollectionChannelListingUpdate', collection: { __typename: 'Collection', slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'CollectionChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null }> } | null };
+export type CollectionChannelListingUpdateMutation = { __typename: 'Mutation', collectionChannelListingUpdate: { __typename: 'CollectionChannelListingUpdate', collection: { __typename: 'Collection', slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'CollectionChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null }> } | null };
 
 export type ReorderProductsInCollectionMutationVariables = Exact<{
   collectionId: Scalars['ID']['input'];
@@ -11306,7 +11338,7 @@ export type CollectionDetailsQueryVariables = Exact<{
 }>;
 
 
-export type CollectionDetailsQuery = { __typename: 'Query', collection: { __typename: 'Collection', slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type CollectionDetailsQuery = { __typename: 'Query', collection: { __typename: 'Collection', slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type CollectionProductsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -12384,7 +12416,7 @@ export type UserBaseAvatarFragment = { __typename: 'User', id: string, firstName
 
 export type CategoryFragment = { __typename: 'Category', id: string, name: string, children: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
-export type CategoryDetailsFragment = { __typename: 'Category', id: string, name: string, slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+export type CategoryDetailsFragment = { __typename: 'Category', id: string, name: string, slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type CategoryWithAncestorsFragment = { __typename: 'Category', id: string, name: string, level: number, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
 
@@ -12398,7 +12430,7 @@ export type ChannelDetailsFragment = { __typename: 'Channel', hasOrders: boolean
 
 export type CollectionFragment = { __typename: 'Collection', id: string, name: string, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null };
 
-export type CollectionDetailsFragment = { __typename: 'Collection', slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+export type CollectionDetailsFragment = { __typename: 'Collection', slug: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type CollectionProductFragment = { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string, isActive: boolean } }> | null };
 
@@ -12922,9 +12954,9 @@ export type TaxClassFragment = { __typename: 'TaxClass', id: string, name: strin
 
 export type AttributeValueTranslatableFragment = { __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
-export type CategoryTranslationFragment = { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null };
+export type CategoryTranslationFragment = { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: string | null, fullDescription: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: string | null, fullDescription: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null };
 
-export type CollectionTranslationFragment = { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null };
+export type CollectionTranslationFragment = { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: string | null, fullDescription: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, fullDescription: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null };
 
 export type ProductTranslationFragment = { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, slug: string | null, seoTitle: string | null, seoDescription: string | null, name: string | null, description: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
 
@@ -14955,7 +14987,7 @@ export type UpdateCategoryTranslationsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCategoryTranslationsMutation = { __typename: 'Mutation', categoryTranslate: { __typename: 'CategoryTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, category: { __typename: 'Category', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null, slug: string, translation: { __typename: 'CategoryTranslation', id: string, description: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
+export type UpdateCategoryTranslationsMutation = { __typename: 'Mutation', categoryTranslate: { __typename: 'CategoryTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, category: { __typename: 'Category', id: string, name: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, slug: string, translation: { __typename: 'CategoryTranslation', id: string, description: string | null, fullDescription: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
 
 export type UpdateCollectionTranslationsMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -14964,7 +14996,7 @@ export type UpdateCollectionTranslationsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCollectionTranslationsMutation = { __typename: 'Mutation', collectionTranslate: { __typename: 'CollectionTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, collection: { __typename: 'Collection', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null, slug: string, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
+export type UpdateCollectionTranslationsMutation = { __typename: 'Mutation', collectionTranslate: { __typename: 'CollectionTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, collection: { __typename: 'Collection', id: string, name: string, description: string | null, fullDescription: string | null, seoDescription: string | null, seoTitle: string | null, slug: string, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, fullDescription: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
 
 export type UpdatePageTranslationsMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -15038,7 +15070,7 @@ export type CategoryTranslationsQueryVariables = Exact<{
 }>;
 
 
-export type CategoryTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type CategoryTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: string | null, fullDescription: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: string | null, fullDescription: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type CollectionTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
@@ -15049,7 +15081,7 @@ export type CollectionTranslationsQueryVariables = Exact<{
 }>;
 
 
-export type CollectionTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type CollectionTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: string | null, fullDescription: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, fullDescription: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type ProductTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
@@ -15166,7 +15198,7 @@ export type CategoryTranslationDetailsQueryVariables = Exact<{
 }>;
 
 
-export type CategoryTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+export type CategoryTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: string | null, fullDescription: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: string | null, fullDescription: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type CollectionTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -15174,7 +15206,7 @@ export type CollectionTranslationDetailsQueryVariables = Exact<{
 }>;
 
 
-export type CollectionTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+export type CollectionTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: string | null, fullDescription: string | null, slug: string, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, fullDescription: string | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductMediaTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type PageTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];

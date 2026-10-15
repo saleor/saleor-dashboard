@@ -72,6 +72,7 @@ export const TranslationsDetailLayout = ({
   const {
     clearFieldValues,
     getBulkSaveValues,
+    getDirtyValues,
     getFieldState,
     handleValueChange,
     hasBlankResets,
@@ -81,7 +82,7 @@ export const TranslationsDetailLayout = ({
   const canBulkSave = hasDirtyFields || hasBlankResets;
   const isEditMode = isTranslationEditMode(bulk, activeField);
   // Blank resets are left out: leaving without saving keeps the blanks, so nothing is lost.
-  const { resetFormsState } = useTranslationExitForm({
+  const { setIsDirty } = useTranslationExitForm({
     enabled: isEditMode,
     isDirty: hasDirtyFields,
   });
@@ -147,7 +148,7 @@ export const TranslationsDetailLayout = ({
 
   const clearEditState = () => {
     resetValues();
-    resetFormsState();
+    setIsDirty(false);
   };
 
   const handleFieldValueChange = (field: TranslationField, value: string) => {
@@ -170,6 +171,7 @@ export const TranslationsDetailLayout = ({
 
     if (!result.hasErrors) {
       clearEditState();
+      onBulkChange(false);
     }
   };
 
@@ -180,10 +182,11 @@ export const TranslationsDetailLayout = ({
   };
 
   const handleFieldDiscard = (fieldName?: string) => {
-    const activeFields = getActiveFieldsFromParams({ activeField });
+    if (fieldName) {
+      const hasOtherDirtyFields = getDirtyValues().some(({ field }) => field.name !== fieldName);
 
-    if (fieldName && activeFields.length > 1) {
       clearFieldValues([fieldName]);
+      setIsDirty(hasOtherDirtyFields);
     } else {
       clearEditState();
     }
@@ -192,15 +195,9 @@ export const TranslationsDetailLayout = ({
   };
 
   const handleFieldSubmit = (field: TranslationField, data: string | OutputData) => {
-    const activeFields = getActiveFieldsFromParams({ activeField });
-
     return onSubmit(field, data).then(errors => {
       if (errors.length === 0) {
-        if (activeFields.length > 1) {
-          clearFieldValues([field.name]);
-        } else {
-          clearEditState();
-        }
+        handleFieldDiscard(field.name);
       }
 
       return errors;

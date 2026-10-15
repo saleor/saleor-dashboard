@@ -102,13 +102,10 @@ export function useExitFormDialogProvider() {
     enableExitDialog.current = value;
   }, []);
 
-  const setIsSubmitting = useCallback(
-    (value: boolean) => {
-      setEnableExitDialog(!value);
-      isSubmitting.current = value;
-    },
-    [setEnableExitDialog],
-  );
+  const setIsSubmitting = useCallback((value: boolean) => {
+    isSubmitting.current = value;
+    enableExitDialog.current = !value;
+  }, []);
 
   const setFormData = useCallback((id: symbol, newData: Partial<FormData>) => {
     const updatedFormData = { ...formsData.current[id], ...newData };

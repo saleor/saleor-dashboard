@@ -1,6 +1,7 @@
 import { type Ripple } from "@dashboard/ripples/types";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createIntl, defineMessage, type useIntl } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 
 import { RippleVideoAnnouncement } from "./RippleVideoAnnouncement";
@@ -8,6 +9,9 @@ import { RippleVideoAnnouncement } from "./RippleVideoAnnouncement";
 const mockSetFirstSeenFlag = jest.fn();
 const mockSetManuallyHidden = jest.fn();
 const mockGetShouldShow = jest.fn();
+const { useIntl: mockUseIntl } = jest.requireActual<{
+  useIntl: jest.MockedFunction<typeof useIntl>;
+}>("react-intl");
 
 jest.mock("@dashboard/ripples/hooks/useRipplesStorage", () => ({
   useRippleStorage: () => ({
@@ -79,5 +83,40 @@ describe("RippleVideoAnnouncement", () => {
 
     await user.click(screen.getByTestId("ripple-video-announcement-dismiss"));
     expect(mockSetManuallyHidden).toHaveBeenCalledWith(model);
+  });
+
+  it("localizes the title and video label in the active language", () => {
+    // Arrange
+    const { createIntl: createRealIntl } = jest.requireActual<{
+      createIntl: typeof createIntl;
+    }>("../../../../node_modules/react-intl");
+    const title = defineMessage({ defaultMessage: "Full description translations", id: "ira4iG" });
+    const translatedTitle = "Übersetzungen vollständiger Beschreibungen";
+    const localizedModel: Ripple = { ...model, content: { ...model.content, oneLiner: title } };
+
+    mockGetShouldShow.mockReturnValue(true);
+    mockUseIntl.mockReturnValue(
+      createRealIntl({ locale: "de", messages: { [title.id]: translatedTitle } }),
+    );
+
+    try {
+      // Act
+      render(
+        <MemoryRouter>
+          <RippleVideoAnnouncement
+            model={localizedModel}
+            videoUrl="https://example.com/video.mp4"
+            dismissAriaLabel="Dismiss"
+            primaryAction={{ href: "/install", label: "Install" }}
+          />
+        </MemoryRouter>,
+      );
+
+      // Assert
+      expect(screen.getByText(translatedTitle)).toBeInTheDocument();
+      expect(screen.getByLabelText(translatedTitle).tagName).toBe("VIDEO");
+    } finally {
+      mockUseIntl.mockReturnValue(createIntl({ locale: "en", messages: {} }));
+    }
   });
 });

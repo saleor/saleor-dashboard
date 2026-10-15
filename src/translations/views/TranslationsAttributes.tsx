@@ -38,8 +38,7 @@ interface TranslationsAttributesProps {
 
 const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttributesProps) => {
   const shop = useShop();
-  const { onBulkChange, onDiscard, onEdit, navigateToQuery } =
-    useTranslationDetailNavigation(params);
+  const { onBulkChange, onDiscard, onEdit } = useTranslationDetailNavigation(params);
   const { updateListSettings, settings } = useListSettings(
     ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST,
   );
@@ -63,8 +62,6 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
     completeSingleFieldSave,
     fieldErrors,
   } = useTranslationSaveFeedback({
-    exitBulkMode: () => navigateToQuery({}),
-    exitEditMode: () => navigateToQuery({ bulk: params.bulk }),
     refetch: () => attributeTranslations.refetch(),
   });
   const translationData = attributeTranslations?.data?.translation;

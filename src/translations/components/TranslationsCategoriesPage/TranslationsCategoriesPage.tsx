@@ -59,12 +59,18 @@ export const TranslationsCategoriesPage = ({
   const navigate = useNavigator();
   const sections = useMemo(
     () => [
-      createGeneralNameDescriptionSection(intl, {
-        description: data?.category?.description,
-        name: data?.category?.name,
-        translationDescription: data?.translation?.description,
-        translationName: data?.translation?.name,
-      }),
+      createGeneralNameDescriptionSection(
+        intl,
+        {
+          description: data?.category?.description,
+          fullDescription: data?.category?.fullDescription,
+          name: data?.category?.name,
+          translationDescription: data?.translation?.description,
+          translationFullDescription: data?.translation?.fullDescription,
+          translationName: data?.translation?.name,
+        },
+        { includeFullDescription: true },
+      ),
       createSeoTranslationSection(intl, {
         seoDescription: data?.category?.seoDescription,
         seoTitle: data?.category?.seoTitle,

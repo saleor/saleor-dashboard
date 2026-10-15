@@ -1,13 +1,15 @@
+import { rippleCollectionFullDescription } from "@dashboard/collections/ripples/fullDescription";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { EntityBackgroundImageField } from "@dashboard/components/EntityBackgroundImageField/EntityBackgroundImageField";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { FullDescriptionEditor } from "@dashboard/components/FullDescriptionEditor/FullDescriptionEditor";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
 import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type CollectionDetailsFragment, type CollectionErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { useRichTextContext } from "@dashboard/utils/richText/context";
+import { type RichTextContextValues, useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
 import { Input } from "@saleor/macaw-ui-next";
 import type * as React from "react";
@@ -19,11 +21,12 @@ import { collectionBackgroundImageMessages } from "./collectionBackgroundImageMe
 interface CollectionDetailsProps {
   data: {
     backgroundImageAlt: string;
-    description: OutputData;
+    description: OutputData | null;
     name: string;
   };
   disabled: boolean;
   errors: CollectionErrorFragment[];
+  fullDescriptionRichText: RichTextContextValues;
   image?: CollectionDetailsFragment["backgroundImage"];
   backgroundImageRevision?: number;
   backgroundImageUploadPreview?: string | null;
@@ -46,10 +49,11 @@ export const CollectionDetails = ({
   onImageDelete,
   onImageUpload,
   errors,
+  fullDescriptionRichText,
 }: CollectionDetailsProps) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
-  const formErrors = getFormErrors(["name", "description"], errors);
+  const formErrors = getFormErrors(["name", "description", "fullDescription"], errors);
   const previousImage = useRef(image);
 
   useEffect(() => {
@@ -106,6 +110,14 @@ export const CollectionDetails = ({
           name="description"
         />
       )}
+      <FormSpacer />
+      <FullDescriptionEditor
+        disabled={disabled}
+        error={!!formErrors.fullDescription}
+        helperText={getProductErrorMessage(formErrors.fullDescription, intl)}
+        richText={fullDescriptionRichText}
+        ripple={rippleCollectionFullDescription}
+      />
       {onImageUpload && onImageDelete ? (
         <>
           <FormSpacer />
