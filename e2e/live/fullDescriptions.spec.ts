@@ -1,5 +1,5 @@
 import { type OutputData } from "@editorjs/editorjs";
-import { expect, type Locator, type Page, test as base } from "@playwright/test";
+import { expect, type Locator, type Page, type Route, test as base } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 
 interface Session {
@@ -17,6 +17,7 @@ interface EntityDetails {
   description: string | null;
   fullDescription: string | null;
   translation: {
+    name: string | null;
     description: string | null;
     fullDescription: string | null;
   } | null;
@@ -48,7 +49,7 @@ const entities: EntityConfig[] = [
     details: `query LiveCategoryFullDescriptionDetails($id: ID!) {
       entity: category(id: $id) {
         id name description fullDescription
-        translation(languageCode: DE) { id description fullDescription }
+        translation(languageCode: DE) { id name description fullDescription }
       }
     }`,
     translate: `mutation LiveCategoryFullDescriptionTranslate($id: ID!, $input: TranslationInput!) {
@@ -74,7 +75,7 @@ const entities: EntityConfig[] = [
     details: `query LiveCollectionFullDescriptionDetails($id: ID!) {
       entity: collection(id: $id) {
         id name description fullDescription
-        translation(languageCode: DE) { id description fullDescription }
+        translation(languageCode: DE) { id name description fullDescription }
       }
     }`,
     translate: `mutation LiveCollectionFullDescriptionTranslate($id: ID!, $input: TranslationInput!) {
@@ -218,7 +219,197 @@ async function readEntity(entity: EntityConfig, id: string, token: string): Prom
   return result.entity;
 }
 
+async function failSaveRequest(
+  page: Page,
+  operationName: string,
+): Promise<Record<string, unknown>> {
+  const handleRequest = async (route: Route): Promise<void> => {
+    const request = route.request();
+
+    if (request.method() === "POST" && request.postDataJSON()?.operationName === operationName) {
+      await route.abort("failed");
+      await page.unroute(requiredEnv("API_URL"), handleRequest);
+
+      return;
+    }
+
+    await route.continue();
+  };
+
+  await page.route(requiredEnv("API_URL"), handleRequest);
+  const failedRequest = page.waitForEvent(
+    "requestfailed",
+    request =>
+      request.method() === "POST" && request.postDataJSON()?.operationName === operationName,
+  );
+
+  await page.getByTestId("button-bar-confirm").click();
+  const request = await failedRequest;
+  const body: { variables: { input: Record<string, unknown> } } = request.postDataJSON();
+
+  return body.variables.input;
+}
+
 for (const entity of entities) {
+  test(`${entity.kind}: retries full-description saves after a network failure #e2e #translations`, async ({
+    page,
+    session,
+  }) => {
+    // Arrange
+    const name = `E2E save retry ${randomUUID()}`;
+    const description = "Original summary";
+    const originalFullDescription = "Original details";
+    const translatedDescription = "Ursprüngliche Zusammenfassung";
+    const originalTranslation = "Ursprüngliche Details";
+    const { created } = await graphql<{
+      created: { entity: { id: string } | null; errors: MutationError[] };
+    }>(
+      entity.create,
+      {
+        input: {
+          name,
+          description: JSON.stringify(richText(description)),
+          fullDescription: JSON.stringify(richText(originalFullDescription)),
+        },
+      },
+      session.token,
+    );
+
+    expect(created.errors).toEqual([]);
+
+    if (!created.entity) {
+      throw new Error("Test entity creation did not return an ID");
+    }
+
+    const { id } = created.entity;
+
+    try {
+      const { translated } = await graphql<{ translated: { errors: MutationError[] } }>(
+        entity.translate,
+        {
+          id,
+          input: {
+            description: JSON.stringify(richText(translatedDescription)),
+            fullDescription: JSON.stringify(richText(originalTranslation)),
+          },
+        },
+        session.token,
+      );
+
+      expect(translated.errors).toEqual([]);
+      await page.goto(`/${entity.path}/${encodeURIComponent(id)}`);
+      const fullEditor = page.getByTestId("rich-text-editor-fullDescription");
+      const save = page.getByTestId("button-bar-confirm");
+      const draft = "Detailed text kept for retry";
+
+      await expect(fullEditor).toContainText(originalFullDescription);
+
+      // Act
+      await fillEditor(fullEditor, draft);
+      await failSaveRequest(page, entity.updateOperation);
+
+      // Assert
+      await expect(save).not.toHaveAttribute("aria-busy", "true");
+      await expect(save).toBeEnabled();
+      await expect(save).not.toHaveAttribute("data-test-state", "success");
+      await expect(fullEditor).toContainText(draft);
+      expect(textFromRichText((await readEntity(entity, id, session.token)).fullDescription)).toBe(
+        originalFullDescription,
+      );
+      expect(
+        await page.evaluate(
+          () => !window.dispatchEvent(new Event("beforeunload", { cancelable: true })),
+        ),
+      ).toBe(true);
+
+      // Act — another field change must not omit the unsaved full description.
+      await page.getByTestId(`${entity.kind}-name-input`).fill(`${name} updated`);
+      await saveMutation(page, entity.updateOperation);
+      await expect(save).toBeDisabled();
+      await page.reload();
+
+      // Assert
+      await expect(fullEditor).toContainText(draft);
+      let saved = await readEntity(entity, id, session.token);
+
+      expect(saved.name).toBe(`${name} updated`);
+      expect(textFromRichText(saved.fullDescription)).toBe(draft);
+      expect(textFromRichText(saved.description)).toBe(description);
+
+      // Act — a failed translation must stay editable and be retried with its draft.
+      await page.goto(`/translations/DE/${entity.path}/${encodeURIComponent(id)}`);
+      const translationField = page.getByTestId("translation-field-fullDescription");
+      const translationEditor = translationField.getByTestId("rich-text-editor-translation");
+      const translatedDraft = "Übersetzung nach Netzwerkfehler";
+
+      await page.getByTestId("edit-fullDescription").click();
+      await fillEditor(translationEditor, translatedDraft);
+      await failSaveRequest(page, entity.translationOperation);
+
+      // Assert
+      await expect(page.getByTestId("edit-fullDescription")).toBeHidden();
+      await expect(translationEditor).toContainText(translatedDraft);
+      await expect(save).toBeEnabled();
+      saved = await readEntity(entity, id, session.token);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(
+        originalTranslation,
+      );
+
+      // Act
+      await saveMutation(page, entity.translationOperation);
+      await expect(page.getByTestId("edit-fullDescription")).toBeVisible();
+      await page.reload();
+
+      // Assert
+      saved = await readEntity(entity, id, session.token);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(translatedDraft);
+      expect(textFromRichText(saved.translation?.description ?? null)).toBe(translatedDescription);
+      expect(textFromRichText(saved.fullDescription)).toBe(draft);
+
+      // Act — bulk retries must preserve every pending field.
+      await page.locator("button[aria-pressed]").click();
+      const bulkDraft = "Mehrere Felder nach Netzwerkfehler";
+      const translatedName = "Übersetzter Name nach Netzwerkfehler";
+
+      await expect(save).toBeDisabled();
+      await fillEditor(translationEditor, bulkDraft);
+      // Wait for Editor.js to publish its draft before a plain field enables Save.
+      await expect(save).toBeEnabled();
+      await page.getByTestId("translation-field-name").locator("input").fill(translatedName);
+      const failedInput = await failSaveRequest(page, entity.translationOperation);
+
+      // Assert
+      expect(textFromRichText(String(failedInput.fullDescription))).toBe(bulkDraft);
+      expect(failedInput.name).toBe(translatedName);
+      await expect(save).not.toHaveAttribute("aria-busy", "true");
+      await expect(save).toBeEnabled();
+      await expect(translationEditor).toContainText(bulkDraft);
+      saved = await readEntity(entity, id, session.token);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(translatedDraft);
+
+      // Act
+      await saveMutation(page, entity.translationOperation);
+      await expect(page.getByTestId("edit-fullDescription")).toBeVisible();
+      await page.reload();
+
+      // Assert
+      saved = await readEntity(entity, id, session.token);
+      expect(textFromRichText(saved.translation?.fullDescription ?? null)).toBe(bulkDraft);
+      expect(saved.translation?.name).toBe(translatedName);
+      expect(saved.name).toBe(`${name} updated`);
+      expect(textFromRichText(saved.translation?.description ?? null)).toBe(translatedDescription);
+      expect(textFromRichText(saved.fullDescription)).toBe(draft);
+    } finally {
+      const { deleted } = await graphql<{ deleted: { errors: MutationError[] } }>(
+        entity.delete,
+        { id },
+        session.token,
+      );
+
+      expect(deleted.errors).toEqual([]);
+    }
+  });
+
   test(`${entity.kind}: saves, translates and clears full description #e2e #translations`, async ({
     page,
     session,

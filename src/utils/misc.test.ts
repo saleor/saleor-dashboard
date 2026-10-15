@@ -1,4 +1,102 @@
-import { fuzzySearch, joinDateTime, splitDateTime } from "@dashboard/misc";
+import { type FetchResult } from "@apollo/client";
+import {
+  extractMutationErrors,
+  fuzzySearch,
+  getMutationErrors,
+  joinDateTime,
+  splitDateTime,
+} from "@dashboard/misc";
+import { GraphQLError } from "graphql";
+
+interface SaveError {
+  field: string;
+  message: string;
+}
+
+interface SaveResult {
+  update: {
+    errors: SaveError[];
+    results?: Array<{ errors: SaveError[] }>;
+  } | null;
+}
+
+describe("getMutationErrors", () => {
+  it("returns GraphQL execution errors when the response has no data", () => {
+    // Arrange
+    const error = new GraphQLError("Permission denied");
+    const result: FetchResult<SaveResult> = { errors: [error] };
+
+    // Act
+    const errors = getMutationErrors(result);
+
+    // Assert
+    expect(errors).toEqual([error]);
+  });
+
+  it("preserves execution and validation errors from a partial response", () => {
+    // Arrange
+    const executionError = new GraphQLError("A field could not be resolved");
+    const validationError: SaveError = { field: "name", message: "Invalid name" };
+    const result: FetchResult<SaveResult> = {
+      data: { update: { errors: [validationError] } },
+      errors: [executionError],
+    };
+
+    // Act
+    const errors = getMutationErrors(result);
+
+    // Assert
+    expect(errors).toEqual([executionError, validationError]);
+  });
+
+  it("handles a null mutation payload with an execution error", async () => {
+    // Arrange
+    const error = new GraphQLError("Permission denied");
+    const result: FetchResult<SaveResult> = { data: { update: null }, errors: [error] };
+
+    // Act
+    const errors = await extractMutationErrors(Promise.resolve(result));
+
+    // Assert
+    expect(errors).toEqual([error]);
+  });
+
+  it("collects validation errors from bulk results", () => {
+    // Arrange
+    const error: SaveError = { field: "name", message: "Invalid name" };
+    const result: FetchResult<SaveResult> = {
+      data: { update: { errors: [], results: [{ errors: [error] }] } },
+    };
+
+    // Act
+    const errors = getMutationErrors(result);
+
+    // Assert
+    expect(errors).toEqual([error]);
+  });
+
+  it("returns no errors for a successful response", () => {
+    // Arrange
+    const result: FetchResult<SaveResult> = { data: { update: { errors: [] } } };
+
+    // Act
+    const errors = getMutationErrors(result);
+
+    // Assert
+    expect(errors).toEqual([]);
+  });
+
+  it("returns no errors before a mutation has data or errors", () => {
+    // Arrange
+    const result: FetchResult<SaveResult> = {};
+
+    // Act
+    const errors = getMutationErrors(result);
+
+    // Assert
+    expect(errors).toEqual([]);
+  });
+});
 
 describe("fuzzySearch", () => {
   it("searches for a result in array of objects", () => {

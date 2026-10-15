@@ -230,7 +230,7 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
           variables: channelUpdateVariables,
         });
 
-        channelErrors = channelResult.data?.collectionChannelListingUpdate?.errors ?? [];
+        channelErrors = getMutationErrors(channelResult);
       }
 
       const errors = [...collectionErrors, ...channelErrors];
@@ -270,6 +270,8 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
     updateCollectionOpts.called || updateChannelsOpts.called,
     updateCollectionOpts.loading || updateChannelsOpts.loading,
     saveErrors,
+    updateCollectionOpts.error ? [updateCollectionOpts.error] : [],
+    updateChannelsOpts.error ? [updateChannelsOpts.error] : [],
   );
 
   if (collection === null) {

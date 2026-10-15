@@ -44,8 +44,9 @@ const TranslationFieldsRich = ({
   const intl = useIntl();
   const [isFocused, setIsFocused] = useState(false);
   const showShortcut = !hideActions;
+  // Mutation loading disables editing without unmounting the editor and losing its draft.
   const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } =
-    useRichTextSubmit(initial ?? "", onSubmit ?? (async () => []), disabled, false);
+    useRichTextSubmit(initial ?? "", onSubmit ?? (async () => []), false, false);
   const canSubmitWithShortcut =
     showShortcut && !disabled && !saveDisabled && saveButtonState !== "loading";
   const handleCmdEnterSubmit = useMemo(
@@ -82,6 +83,7 @@ const TranslationFieldsRich = ({
             }
           >
             <RichTextEditor
+              key={resetKey}
               defaultValue={defaultValue}
               editorRef={editorRef}
               onChange={changeEvent => {

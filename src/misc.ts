@@ -275,17 +275,24 @@ export const getMutationErrors = <
 >(
   result: T,
 ): TErrors[] => {
+  // Apollo 3 can resolve a failed mutation with an ApolloError in `errors`
+  // when an onError callback is registered. GraphQL responses use an array.
+  const responseErrors = result?.errors;
+  const errors = (
+    responseErrors ? (Array.isArray(responseErrors) ? responseErrors : [responseErrors]) : []
+  ) as TErrors[];
+
   if (!result?.data) {
-    return [] as TErrors;
+    return errors;
   }
 
   return Object.values<TData>(result.data).reduce(
     (acc: TErrors[], mut) => [
       ...acc,
-      ...(mut.errors || []),
+      ...(mut?.errors || []),
       ...(mut?.results?.flatMap((res: { errors: TErrors[] }) => res.errors) || []),
     ],
-    [] as TErrors[],
+    errors,
   ) as TErrors;
 };
 
