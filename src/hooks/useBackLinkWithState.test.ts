@@ -1,13 +1,24 @@
 import { renderHook } from "@testing-library/react";
 import { useLocation } from "react-router";
 
-import { useBackLinkWithState } from "./useBackLinkWithState";
+import { getPrevLocationState, useBackLinkWithState } from "./useBackLinkWithState";
 
 jest.mock("react-router", () => ({
   useLocation: jest.fn(),
 }));
 
 describe("useBackLinkWithState", () => {
+  it("captures the current order list page and filters", () => {
+    // Arrange
+    const location = { pathname: "/orders", search: "?after=cursor&query=Alice" };
+
+    // Act
+    const state = getPrevLocationState(location);
+
+    // Assert
+    expect(state).toEqual({ prevLocation: location });
+  });
+
   // Arrange
   it("should return path if there is no previous location in state", () => {
     (useLocation as jest.Mock).mockReturnValue({
@@ -32,7 +43,7 @@ describe("useBackLinkWithState", () => {
       state: {
         prevLocation: {
           pathname: "/orders",
-          search: "?asc=false&after=cursor",
+          search: "?asc=false&after=cursor&query=Alice",
         },
       },
     });
@@ -45,7 +56,7 @@ describe("useBackLinkWithState", () => {
     );
 
     // Assert
-    expect(result.current).toBe("/orders?asc=false&after=cursor");
+    expect(result.current).toBe("/orders?asc=false&after=cursor&query=Alice");
   });
 
   it("should return the previous URL if it is a draft order list path", () => {
