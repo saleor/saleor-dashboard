@@ -31,7 +31,7 @@ interface AssignModelDialogProps
   confirmButtonState: ConfirmButtonTransitionState;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
   loading: boolean;
-  onFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
+  onFilterChange?: (filterVariables: PageWhereInput, query: string) => void | Promise<unknown>;
   onSubmit: (data: Container[]) => void;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
   selectionMode?: "single" | "multiple";
@@ -54,7 +54,7 @@ const AssignModelDialogInner = ({
   const intl = useIntl();
   const { combinedFilters, clearFilters } = useModalPageFilterContext();
 
-  const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
+  const { query, onQueryChange, resetQuery, isSearching } = useModalSearchWithFilters({
     filterVariables: combinedFilters,
     open,
     skipFetchOnOpen,
@@ -100,7 +100,7 @@ const AssignModelDialogInner = ({
       onFetch={() => {}}
       emptyMessage={emptyMessage}
       backfillExhaustedMessage={intl.formatMessage(messages.allLoadedModelsFilteredOut)}
-      search={{ query, onQueryChange, resetQuery }}
+      search={{ query, onQueryChange, resetQuery, isSearching }}
       filtersSlot={<ModalFilters />}
       onResetFilters={clearFilters}
     />
