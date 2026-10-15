@@ -80,7 +80,6 @@ interface MenuItemsActions {
 export interface DatagridRenderHeaderProps {
   isFullscreenOpen: boolean;
   toggleFullscreen: () => void;
-  addRowOnDatagrid: () => void;
   isAnimationOpenFinished: boolean;
 }
 
@@ -367,7 +366,7 @@ export const Datagrid = ({
 
   const showTrailingGhost =
     trailingGhostRow === true || (trailingGhostRow === "fullscreen" && isOpen);
-  const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex, onRowAdded } =
+  const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex } =
     useDatagridChange(
       availableColumns,
       rows,
@@ -646,26 +645,6 @@ export const Datagrid = ({
     },
     [themeValues, availableColumns],
   );
-  const focusTrailingGhostOrAddRow = useCallback(() => {
-    if (!showTrailingGhost) {
-      onRowAdded();
-
-      return;
-    }
-
-    const ghostRow = dataRowsTotal;
-
-    setSelectionState({
-      current: {
-        cell: [0, ghostRow],
-        range: { x: 0, y: ghostRow, width: 1, height: 1 },
-        rangeStack: [],
-      },
-      columns: CompactSelection.empty(),
-      rows: CompactSelection.empty(),
-    });
-    editor.current?.scrollTo(0, ghostRow, "vertical", 0, 0, { vAlign: "end" });
-  }, [dataRowsTotal, onRowAdded, setSelectionState, showTrailingGhost]);
   const handleRemoveRows = useCallback(
     (rowsToRemove: number[]) => {
       const removable = showTrailingGhost
@@ -744,7 +723,6 @@ export const Datagrid = ({
         <DashboardCard position="relative" __height={isOpen ? "100%" : "auto"} gap={0}>
           {renderHeader?.({
             toggleFullscreen: toggle,
-            addRowOnDatagrid: focusTrailingGhostOrAddRow,
             isFullscreenOpen: isOpen,
             isAnimationOpenFinished,
           })}
