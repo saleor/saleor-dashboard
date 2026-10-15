@@ -17,9 +17,9 @@ import {
 
 interface UseAssignAttributeValueDialogFilterChangeHandlersParams {
   refetchProducts: (variables: SearchProductsQueryVariables) => void;
-  refetchPages: (variables: SearchPagesQueryVariables) => void;
-  refetchCategories: (variables: SearchCategoriesQueryVariables) => void;
-  refetchCollections: (variables: SearchCollectionsQueryVariables) => void;
+  refetchPages: (variables: SearchPagesQueryVariables) => void | Promise<unknown>;
+  refetchCategories: (variables: SearchCategoriesQueryVariables) => void | Promise<unknown>;
+  refetchCollections: (variables: SearchCollectionsQueryVariables) => void | Promise<unknown>;
   referenceWhereConstraints?: ReferenceWhereConstraints;
 }
 
@@ -56,14 +56,14 @@ export const useAssignAttributeValueDialogFilterChangeHandlers = ({
           includeVariants: true,
         });
       },
-      [AttributeEntityTypeEnum.PAGE]: (where, query): void => {
+      // Page, category and collection pickers show a pending search while the refetch runs.
+      [AttributeEntityTypeEnum.PAGE]: (where, query) =>
         refetchPages({
           ...DEFAULT_INITIAL_SEARCH_DATA,
           where: mergePageReferenceWhereConstraints(where, referenceWhereConstraints?.pageTypeIds),
           query,
-        });
-      },
-      [AttributeEntityTypeEnum.CATEGORY]: (filterVariables, query): void => {
+        }),
+      [AttributeEntityTypeEnum.CATEGORY]: (filterVariables, query) =>
         refetchCategories({
           after: DEFAULT_INITIAL_SEARCH_DATA.after,
           first: DEFAULT_INITIAL_SEARCH_DATA.first,
@@ -71,9 +71,8 @@ export const useAssignAttributeValueDialogFilterChangeHandlers = ({
             ...filterVariables,
             search: query,
           },
-        });
-      },
-      [AttributeEntityTypeEnum.COLLECTION]: (filterVariables, channel, query): void => {
+        }),
+      [AttributeEntityTypeEnum.COLLECTION]: (filterVariables, channel, query) =>
         refetchCollections({
           after: DEFAULT_INITIAL_SEARCH_DATA.after,
           first: DEFAULT_INITIAL_SEARCH_DATA.first,
@@ -82,8 +81,7 @@ export const useAssignAttributeValueDialogFilterChangeHandlers = ({
             search: query,
           },
           channel,
-        });
-      },
+        }),
     }),
     [
       refetchCategories,

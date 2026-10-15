@@ -50,6 +50,16 @@ export const Loading: Story = {
   args: { containers: [], loading: true },
 };
 
+/**
+ * A search is in flight that `loading` does not report: the logo spinner sits in the search
+ * field and the previous results stay put, dimmed, until the new ones arrive.
+ */
+export const Searching: Story = {
+  args: {
+    search: { query: "Channel", onQueryChange: fn(), resetQuery: fn(), isSearching: true },
+  },
+};
+
 export const Empty: Story = {
   args: { containers: [], emptyMessage: "No channels found" },
 };

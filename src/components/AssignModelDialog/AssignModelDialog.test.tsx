@@ -33,11 +33,14 @@ jest.mock("@dashboard/hooks/useModalDialogOpen/useModalDialogOpen", () => ({
   default: jest.fn(),
 }));
 
+const mockSearchState = { isSearching: false };
+
 jest.mock("@dashboard/hooks/useModalSearchWithFilters", () => ({
   useModalSearchWithFilters: () => ({
     query: "",
     onQueryChange: jest.fn(),
     resetQuery: jest.fn(),
+    isSearching: mockSearchState.isSearching,
   }),
 }));
 
@@ -85,6 +88,7 @@ const defaultProps = {
 describe("AssignModelDialog", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockSearchState.isSearching = false;
   });
 
   describe("Multiple selection mode", () => {
@@ -264,6 +268,34 @@ describe("AssignModelDialog", () => {
 
     expect(inputContainer).toBeInTheDocument();
     expect(within(inputContainer).getByRole("progressbar")).toBeInTheDocument();
+  });
+
+  it("should show the spinner and mark the list busy while a search is pending", () => {
+    // Arrange
+    mockSearchState.isSearching = true;
+
+    // Act
+    render(<AssignModelDialog {...defaultProps} loading={false} />);
+
+    // Assert
+    const searchInput = screen.getByPlaceholderText("Search Models");
+    const inputContainer = searchInput.closest("label") as HTMLElement;
+    const rowsBody = screen.getAllByTestId("dialog-row")[0].closest("tbody") as HTMLElement;
+
+    expect(within(inputContainer).getByRole("progressbar")).toBeInTheDocument();
+    expect(rowsBody).toHaveAttribute("aria-busy", "true");
+    expect(screen.getByText("Test Page 1")).toBeInTheDocument();
+  });
+
+  it("should not show the spinner when no search is pending", () => {
+    // Arrange & Act
+    render(<AssignModelDialog {...defaultProps} loading={false} />);
+
+    // Assert
+    const searchInput = screen.getByPlaceholderText("Search Models");
+    const inputContainer = searchInput.closest("label") as HTMLElement;
+
+    expect(within(inputContainer).queryByRole("progressbar")).not.toBeInTheDocument();
   });
 
   it("should show 'no models available' message when pages array is empty", () => {

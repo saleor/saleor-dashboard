@@ -12,6 +12,7 @@ import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { Input } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { type ChangeEvent, type ReactNode, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -19,6 +20,7 @@ import { AssignPickerBackfillExhaustedRow } from "../AssignPickerBackfillExhaust
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "../BackButton";
+import styles from "./AssignContainerDialog.module.css";
 import { MultiSelectionRows, SingleSelectionRows } from "./AssignContainerRows";
 import { messages } from "./messages";
 import { useAssignContainerSearch } from "./useAssignContainerSearch";
@@ -56,6 +58,8 @@ export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps 
     query: string;
     onQueryChange: (event: ChangeEvent<HTMLInputElement>) => void;
     resetQuery: () => void;
+    /** A search is in flight that `loading` does not report (e.g. an Apollo `refetch`). */
+    isSearching?: boolean;
   };
   onResetFilters?: () => void;
 }
@@ -86,12 +90,14 @@ const AssignContainerDialog = ({
   onResetFilters,
 }: AssignContainerDialogProps) => {
   const intl = useIntl();
-  const { query, onQueryChange, handleClose } = useAssignContainerSearch({
-    onFetch,
-    externalSearch,
-    onClose,
-    onResetFilters,
-  });
+  const { query, onQueryChange, handleClose, isSearching, showSearchProgress } =
+    useAssignContainerSearch({
+      onFetch,
+      externalSearch,
+      onClose,
+      onResetFilters,
+      loading,
+    });
 
   // Single selection resolves the submitted item by id, so it needs the unfiltered list:
   // the current assignment is usually the very row exclusion would drop.
@@ -175,7 +181,7 @@ const AssignContainerDialog = ({
                 label={labels.label}
                 placeholder={labels.placeholder}
                 autoComplete="off"
-                endAdornment={loading && <SaleorThrobber size={16} />}
+                endAdornment={showSearchProgress && <SaleorThrobber size={20} />}
               />
 
               {filtersSlot}
@@ -195,7 +201,10 @@ const AssignContainerDialog = ({
             scrollableTarget={scrollableTargetId}
           >
             <ResponsiveTable bleed fillHeight>
-              <TableBody>
+              <TableBody
+                aria-busy={showSearchProgress}
+                className={clsx(styles.rows, { [styles.rowsStale]: isSearching })}
+              >
                 {showBackfillLoading ? (
                   <AssignPickerListLoadingRow colSpan={2} />
                 ) : showBackfillExhausted ? (
