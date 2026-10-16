@@ -1,5 +1,6 @@
 import { type FetchResult } from "@apollo/client";
 import { type AuthSDK } from "@dashboard/auth/authSdk";
+import { assertCurrentSession, getSessionVersion } from "@dashboard/auth/sessionRefresh";
 import { isInternalToken, type JWTToken, storage } from "@dashboard/auth/tokenStorage";
 import jwtDecode from "jwt-decode";
 
@@ -19,6 +20,7 @@ let refreshPromise:
   | ReturnType<AuthSDK["refreshToken"]>
   | ReturnType<AuthSDK["refreshExternalToken"]>
   | null = null;
+let refreshVersion = -1;
 const isTokenRefreshExternal = (
   result: RefreshTokenMutation | ExternalRefreshMutation,
 ): result is ExternalRefreshMutation => "externalRefresh" in result;
@@ -34,7 +36,7 @@ const isTokenRefreshExternal = (
  * the request is still running.
  */
 const runTokenRefresh = (owner: string) => {
-  if (refreshPromise) {
+  if (refreshPromise && refreshVersion === getSessionVersion()) {
     return refreshPromise;
   }
 
@@ -43,6 +45,7 @@ const runTokenRefresh = (owner: string) => {
     : authClient!.refreshExternalToken();
 
   refreshPromise = pending;
+  refreshVersion = getSessionVersion();
 
   void pending
     .finally(() => {
@@ -96,6 +99,10 @@ export const createFetch =
           "RefreshTokenWithUser",
           "ExternalRefresh",
           "ExternalRefreshWithUser",
+          "Login",
+          "ExternalObtainAccessTokens",
+          "SetPassword",
+          "ExternalLogout",
         ].includes(
           // INFO: Non-null assertion is enabled because the block is wrapped inside try/catch
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -108,6 +115,8 @@ export const createFetch =
       // ignore
     }
 
+    const version = getSessionVersion();
+
     if (autoTokenRefresh && token) {
       // auto refresh token before provided time skew (in seconds) until it expires
       const decodedToken = jwtDecode<JWTToken>(token);
@@ -115,7 +124,7 @@ export const createFetch =
       const owner = decodedToken.owner;
 
       try {
-        if (refreshPromise) {
+        if (refreshPromise && refreshVersion === version) {
           await refreshPromise;
         } else if (Date.now() >= expirationTime) {
           await runTokenRefresh(owner);
@@ -124,6 +133,7 @@ export const createFetch =
         // ignore
       }
 
+      assertCurrentSession(version);
       token = storage.getAccessToken();
     }
 
@@ -136,7 +146,13 @@ export const createFetch =
 
     if (refreshOnUnauthorized && token) {
       const response = await fetch(input, init);
+
+      assertCurrentSession(version);
+
       const data: FetchResult = await response.clone().json();
+
+      assertCurrentSession(version);
+
       const isUnauthenticated = data?.errors?.some(
         error =>
           (error.extensions?.exception as Record<string, unknown>)?.code ===
@@ -152,6 +168,7 @@ export const createFetch =
       if (isUnauthenticated) {
         try {
           refreshTokenResponse = await runTokenRefresh(owner);
+          assertCurrentSession(version);
 
           if (
             refreshTokenResponse.data && isTokenRefreshExternal(refreshTokenResponse.data)
@@ -169,12 +186,18 @@ export const createFetch =
             authClient.logout();
           }
         } catch {
-          // ignore
+          // Preserve the existing handling of refresh failures within the same session.
         }
+
+        assertCurrentSession(version);
       }
 
       return response;
     }
 
-    return fetch(input, init);
+    const response = await fetch(input, init);
+
+    assertCurrentSession(version);
+
+    return response;
   };
