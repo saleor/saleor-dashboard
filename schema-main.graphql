@@ -1815,6 +1815,13 @@ type Webhook implements Node @doc(category: "Webhooks") {
 
   """Custom headers, which will be added to HTTP request."""
   customHeaders: JSONString
+
+  """
+  Determines when the subscription payload is built for asynchronous events that defer payload generation. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+  
+  Added in Saleor 3.23.
+  """
+  payloadGeneration: WebhookPayloadGenerationEnum!
 }
 
 """An object with an ID"""
@@ -3565,9 +3572,16 @@ type User implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(categ
   """The avatar of the user."""
   avatar(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -4194,9 +4208,16 @@ type Product implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(ca
   """Thumbnail of the product."""
   thumbnail(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -4405,6 +4426,15 @@ type Category implements Node & ObjectWithMetadata @doc(category: "Products") {
   """
   description: JSONString
 
+  """
+  Full description of the category. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
   """Slug of the category."""
   slug: String!
 
@@ -4508,9 +4538,16 @@ type Category implements Node & ObjectWithMetadata @doc(category: "Products") {
   """Background image of the category."""
   backgroundImage(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -4980,6 +5017,19 @@ type Image {
   alt: String
 }
 
+"""
+Determines how a requested size is matched to an available thumbnail size: 32, 64, 128, 256, 512, 1024, 2048, 4096.
+
+NEAREST - the closest available size; it may be smaller than requested.
+UP - the smallest available size not smaller than requested, so the image is never smaller than requested unless the original is smaller or the requested size exceeds 4096.
+
+Added in Saleor 3.23.
+"""
+enum ThumbnailSizeRoundingEnum {
+  NEAREST
+  UP
+}
+
 enum ThumbnailFormatEnum {
   ORIGINAL
   AVIF
@@ -5016,6 +5066,15 @@ type CategoryTranslation implements Node @doc(category: "Products") {
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Translated full description of the category. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """
   Translated description of the category.
@@ -7410,6 +7469,15 @@ type CategoryTranslatableContent implements Node @doc(category: "Products") {
   description: JSONString
 
   """
+  Category's full description to translate. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
+  """
   Description of the category.
   
   Rich text format. For reference see https://editorjs.io/
@@ -7623,6 +7691,13 @@ type ProductVariantChannelListing implements Node @doc(category: "Products") {
   Added in Saleor 3.21.
   """
   priorPrice: Money
+
+  """
+  Determines whether the variant can be bought in this channel. When set to `false`, the variant behaves as if it had no listing in this channel: it is hidden from customers and cannot be added to a checkout or an order. Its prices are preserved.
+  
+  Added in Saleor 3.23.
+  """
+  isAvailableForPurchase: Boolean!
 
   """
   Gross margin percentage value.
@@ -9878,9 +9953,16 @@ type ProductImage @doc(category: "Products") {
   """The URL of the image."""
   url(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -9953,9 +10035,16 @@ type ProductMedia implements Node & ObjectWithMetadata @doc(category: "Products"
   """The URL of the media."""
   url(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -10348,6 +10437,15 @@ type Collection implements Node & ObjectWithMetadata @doc(category: "Products") 
   """
   description: JSONString
 
+  """
+  Full description of the collection. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
   """Slug of the collection."""
   slug: String!
 
@@ -10404,9 +10502,16 @@ type Collection implements Node & ObjectWithMetadata @doc(category: "Products") 
   """Background image of the collection."""
   backgroundImage(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -10460,6 +10565,15 @@ type CollectionTranslation implements Node @doc(category: "Products") {
   description: JSONString
 
   """
+  Translated full description of the collection. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
+  """
   Translated description of the collection.
   
   Rich text format. For reference see https://editorjs.io/
@@ -10502,6 +10616,15 @@ type CollectionTranslatableContent implements Node @doc(category: "Products") {
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Collection's full description to translate. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """
   Description of the collection.
@@ -12628,9 +12751,16 @@ type OrderLine implements Node & ObjectWithMetadata @doc(category: "Orders") {
   taxRate: Float!
   thumbnail(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -14540,9 +14670,16 @@ type AppBrandLogo @doc(category: "Apps") {
   """URL to the default logo image."""
   default(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -14712,6 +14849,20 @@ enum EventDeliverySortField @doc(category: "Webhooks") {
 input EventDeliveryFilterInput {
   status: EventDeliveryStatusEnum
   eventType: WebhookEventTypeEnum
+}
+
+"""
+Determines when the subscription payload of an asynchronous webhook is built for events that defer payload generation.
+
+`DEFERRED`: the payload is built in a background task and reflects the object's state at the time the task runs.
+
+`IMMEDIATE`: the payload is built by whatever triggered the event, a request or a background task, and reflects the object's state at that moment, at the cost of slowing that request or task.
+
+Added in Saleor 3.23.
+"""
+enum WebhookPayloadGenerationEnum @doc(category: "Webhooks") {
+  DEFERRED
+  IMMEDIATE
 }
 
 enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
@@ -19540,6 +19691,26 @@ type Mutation {
   ): ProductVariantChannelListingUpdate @doc(category: "Products")
 
   """
+  Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productVariantChannelListingAvailabilityUpdate(
+    """ID of a product variant to update."""
+    id: ID
+
+    """
+    List of channels to toggle the variant's availability in. Max 100 items.
+    """
+    input: [ProductVariantChannelListingAvailabilityInput!]!
+
+    """SKU of a product variant to update."""
+    sku: String
+  ): ProductVariantChannelListingAvailabilityUpdate @doc(category: "Products")
+
+  """
   Reorder product variant attribute values. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -23359,6 +23530,13 @@ input WebhookCreateInput @doc(category: "Webhooks") {
   Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed.
   """
   customHeaders: JSONString
+
+  """
+  Determines when the subscription payload is built for asynchronous events that defer payload generation. Defaults to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+  
+  Added in Saleor 3.23.
+  """
+  payloadGeneration: WebhookPayloadGenerationEnum
 }
 
 """
@@ -23422,6 +23600,13 @@ input WebhookUpdateInput @doc(category: "Webhooks") {
   Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed.
   """
   customHeaders: JSONString
+
+  """
+  Determines when the subscription payload is built for asynchronous events that defer payload generation. Omit to keep the current value, `null` resets it to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload. A change applies to events triggered after the update. Deliveries already created finish the way they started, so around a change a newer delivery can be sent before an older one.
+  
+  Added in Saleor 3.23.
+  """
+  payloadGeneration: WebhookPayloadGenerationEnum
 }
 
 """
@@ -25063,6 +25248,15 @@ input CategoryInput @doc(category: "Products") {
   """Search engine optimization fields."""
   seo: SeoInput
 
+  """
+  Full description of the category. Pass null to clear it. Omit to preserve the current value on update.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
   """Background image file."""
   backgroundImage: Upload
 
@@ -25154,6 +25348,15 @@ input TranslationInput {
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Translated full description. Only supported for categories and collections; product translation mutations reject this field. Pass null to clear it. Omit to preserve the current value on update.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 }
 
 """
@@ -25229,6 +25432,15 @@ input CollectionCreateInput @doc(category: "Products") {
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """Background image file."""
   backgroundImage: Upload
@@ -25351,6 +25563,15 @@ input CollectionInput @doc(category: "Products") {
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """Background image file."""
   backgroundImage: Upload
@@ -25932,6 +26153,13 @@ input ProductVariantChannelListingAddInput @doc(category: "Products") {
 
   """The threshold for preorder variant in channel."""
   preorderThreshold: Int @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
+
+  """
+  Determines whether the variant can be bought in this channel. When omitted on an existing listing, the current value is kept.
+  
+  Added in Saleor 3.23.
+  """
+  isAvailableForPurchase: Boolean
 }
 
 """
@@ -26724,6 +26952,13 @@ input ChannelListingUpdateInput @doc(category: "Products") {
 
   """The threshold for preorder variant in channel."""
   preorderThreshold: Int @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
+
+  """
+  Determines whether the variant can be bought in this channel. When omitted, the current value is kept.
+  
+  Added in Saleor 3.23.
+  """
+  isAvailableForPurchase: Boolean
 }
 
 """
@@ -27004,6 +27239,53 @@ type ProductVariantChannelListingUpdate @doc(category: "Products") {
   variant: ProductVariant
   productChannelListingErrors: [ProductChannelListingError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [ProductChannelListingError!]!
+}
+
+"""
+Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: MANAGE_PRODUCTS.
+"""
+type ProductVariantChannelListingAvailabilityUpdate @doc(category: "Products") {
+  """An updated product variant instance."""
+  variant: ProductVariant
+  errors: [ProductVariantChannelListingAvailabilityUpdateError!]!
+}
+
+"""
+Error of the `productVariantChannelListingAvailabilityUpdate` mutation.
+
+Added in Saleor 3.23.
+"""
+type ProductVariantChannelListingAvailabilityUpdateError @doc(category: "Products") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: ProductErrorCode!
+
+  """List of channels IDs which causes the error."""
+  channels: [ID!]
+}
+
+"""
+Fields required to toggle a product variant's availability in a channel.
+
+Added in Saleor 3.23.
+"""
+input ProductVariantChannelListingAvailabilityInput @doc(category: "Products") {
+  """ID of a channel."""
+  channelId: ID!
+
+  """Determines whether the variant can be bought in this channel."""
+  isAvailableForPurchase: Boolean!
 }
 
 """
@@ -33883,9 +34165,16 @@ type AppManifestBrandLogo @doc(category: "Apps") {
   """Data URL with a base64 encoded logo image."""
   default(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = NEAREST
 
     """
     The format of the image. When not provided, format of the original image will be used.
