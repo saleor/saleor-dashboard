@@ -167,6 +167,7 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
           channelId: listing.id,
           costPrice: listing.value.costPrice || null,
           price: listing.value.price,
+          isAvailableForPurchase: listing.value.isAvailableForPurchase,
         })),
       },
     });

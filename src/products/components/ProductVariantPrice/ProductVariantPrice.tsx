@@ -1,8 +1,7 @@
 import {
   type ChannelData,
-  type ChannelPriceArgs,
-  type IChannelPriceArgs,
   sortChannelShippingDataByName,
+  type VariantChannelListingArgs,
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelIcon } from "@dashboard/components/ChannelAvailability/primitives";
@@ -13,6 +12,7 @@ import {
   type ProductChannelListingErrorFragment,
   type ProductErrorFragment,
 } from "@dashboard/graphql";
+import { messages as productDoctorMessages } from "@dashboard/products/components/ProductDoctor/messages";
 import {
   type ChannelError,
   getFormChannelError,
@@ -21,7 +21,7 @@ import {
 } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { applySpreadsheetPaste } from "@dashboard/utils/spreadsheetPaste/applySpreadsheetPaste";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
 import { type ClipboardEvent, useCallback, useMemo } from "react";
 import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
@@ -46,7 +46,7 @@ interface ProductVariantPriceProps {
   errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   loading?: boolean;
   disabled?: boolean;
-  onChange?: (id: string, data: ChannelPriceArgs | IChannelPriceArgs) => void;
+  onChange?: (id: string, data: VariantChannelListingArgs) => void;
   onChannelsReplace?: (listings: ChannelData[]) => void;
   onManageClick?: () => void;
   listedInChannelsCount?: number;
@@ -220,6 +220,9 @@ export const ProductVariantPrice = ({
                 description="tabel column header"
               />
             </Text>
+            <Text size={2} color="default2">
+              {intl.formatMessage(productDoctorMessages.availableForPurchaseLabel)}
+            </Text>
           </Box>
           {sortedListings.map((listing, index) => {
             const fieldName = `${listing.id}-channelListing-price`;
@@ -238,6 +241,14 @@ export const ProductVariantPrice = ({
               ? getProductErrorMessage(costPriceError as ProductChannelListingErrorFragment, intl)
               : undefined;
             const channelStatus = getVariantPricingChannelStatus(listing, intl);
+            const isAvailableForPurchase = listing.isAvailableForPurchase ?? true;
+            const changeListing = (patch: Partial<VariantChannelListingArgs>) =>
+              onChange?.(listing.id, {
+                price: listing.price ?? "",
+                costPrice: listing.costPrice ?? "",
+                isAvailableForPurchase,
+                ...patch,
+              });
 
             return (
               <Box key={listing.id} className={styles.row} data-test-id={listing.name}>
@@ -285,12 +296,7 @@ export const ProductVariantPrice = ({
                       { channelName: listing.name },
                     )}
                     value={listing.price ?? ""}
-                    onChange={value =>
-                      onChange?.(listing.id, {
-                        costPrice: listing.costPrice ?? "",
-                        price: value,
-                      })
-                    }
+                    onChange={value => changeListing({ price: value })}
                   />
                 </div>
                 <div
@@ -314,14 +320,20 @@ export const ProductVariantPrice = ({
                       { channelName: listing.name },
                     )}
                     value={listing.costPrice ?? ""}
-                    onChange={value =>
-                      onChange?.(listing.id, {
-                        costPrice: value,
-                        price: listing.price ?? "",
-                      })
-                    }
+                    onChange={value => changeListing({ costPrice: value })}
                   />
                 </div>
+                <Box className={styles.toggleCell}>
+                  <Toggle
+                    data-test-id="available-for-purchase-toggle"
+                    aria-label={intl.formatMessage(messages.availableForPurchaseAriaLabel, {
+                      channelName: listing.name,
+                    })}
+                    pressed={isAvailableForPurchase}
+                    disabled={inputsDisabled || !onChange}
+                    onPressedChange={pressed => changeListing({ isAvailableForPurchase: pressed })}
+                  />
+                </Box>
               </Box>
             );
           })}

@@ -226,6 +226,10 @@
     "context": "Badge shown when channel has validation errors",
     "string": "error"
   },
+  "+q5pum": {
+    "context": "product variant channel availability toggle aria label",
+    "string": "Available for purchase in {channelName}"
+  },
   "+qDoi0": {
     "context": "button",
     "string": "Create model type"
@@ -741,6 +745,10 @@
   "0f6YvV": {
     "context": "dialog title",
     "string": "Capture Payment"
+  },
+  "0fWfqg": {
+    "context": "variant pricing channel status when variant is not available for purchase",
+    "string": "Unavailable for purchase"
   },
   "0g0LHg": {
     "context": "card header and checkbox label",
@@ -3699,6 +3707,10 @@
   "BaxGjT": {
     "context": "variant stocks section subtitle",
     "string": "Assigning the stocks will be possible after the variant is saved."
+  },
+  "BbLOvI": {
+    "context": "variant pricing channel status description when variant is not available for purchase",
+    "string": "Customers can't see or buy this variant in this channel. Prices are kept."
   },
   "BbP+k3": {
     "context": "variant availability in channel",

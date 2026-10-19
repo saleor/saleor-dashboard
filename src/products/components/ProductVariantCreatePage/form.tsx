@@ -17,7 +17,7 @@ import {
 } from "@dashboard/attributes/utils/handlers";
 import {
   type ChannelData,
-  type IChannelPriceArgs,
+  type VariantChannelListingArgs,
   type VariantChannelPriceData,
 } from "@dashboard/channels/utils";
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
@@ -82,7 +82,7 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
   stocks: ProductStockInput[];
-  channelListings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
+  channelListings: FormsetData<VariantChannelPriceData, VariantChannelListingArgs>;
 }
 
 interface UseProductVariantCreateFormOpts {

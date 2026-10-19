@@ -17,7 +17,7 @@ import {
 } from "@dashboard/attributes/utils/handlers";
 import {
   type ChannelData,
-  type IChannelPriceArgs,
+  type VariantChannelListingArgs,
   type VariantChannelPriceData,
 } from "@dashboard/channels/utils";
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
@@ -76,7 +76,7 @@ interface ProductVariantUpdateFormData {
   media: string[];
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
-  channelListings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
+  channelListings: FormsetData<VariantChannelPriceData, VariantChannelListingArgs>;
   attributes: AttributeInput[];
   stocks: ProductStockInput[];
 }
@@ -84,7 +84,7 @@ export interface ProductVariantUpdateSubmitData extends ProductVariantUpdateForm
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
   addStocks: ProductStockInput[];
-  channelListings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
+  channelListings: FormsetData<VariantChannelPriceData, VariantChannelListingArgs>;
   updateStocks: ProductStockInput[];
   removeStocks: string[];
 }
@@ -269,6 +269,7 @@ function useProductVariantUpdateForm(
           currency: variantChannel.channel.currencyCode,
           isActive: listing.channel.isActive ?? true,
           isPublished: listing.isPublished,
+          isAvailableForPurchase: variantChannel.isAvailableForPurchase,
           price,
           costPrice,
         };
