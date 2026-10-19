@@ -133,7 +133,7 @@ const AttributeRow = ({
       ) : null;
       // The group header is the fold button, so the description lives in the body instead of beside the label.
       const internalDescription = attribute.data.internalDescription?.trim() ? (
-        <Box paddingX={isCardRow ? 6 : 0} paddingBottom={3}>
+        <Box paddingX={isCardRow ? 6 : 0} paddingTop={isCardRow ? 3 : 0} paddingBottom={3}>
           <AttributeInternalDescription>
             {attribute.data.internalDescription}
           </AttributeInternalDescription>
