@@ -2689,6 +2689,10 @@
     "context": "setup review row description",
     "string": "How tax is calculated for this channel."
   },
+  "86Ufj1": {
+    "context": "attribute row, button that collapses the attribute internal description",
+    "string": "Hide description"
+  },
   "87NGDZ": {
     "string": "Plugin doesn't have any configuration fields"
   },
@@ -13513,6 +13517,10 @@
   },
   "kVL3LM": {
     "string": "Voucher codes"
+  },
+  "kVNXNN": {
+    "context": "attribute row, button that expands the attribute internal description",
+    "string": "Show description"
   },
   "kVOslW": {
     "context": "reason for discount label",

@@ -263,7 +263,7 @@ describe("Attributes", () => {
       { wrapper: RouterWrapper },
     );
 
-    const [numericLabel, richTextLabel] = screen.getAllByTestId("attribute-label");
+    const [numericLabel, richTextLabel] = screen.getAllByTestId("attribute-label-column");
 
     // Assert
     expect(numericLabel).toHaveStyle({ alignSelf: "center" });

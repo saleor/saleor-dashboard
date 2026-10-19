@@ -20,6 +20,8 @@ export function getAttributeRowLabelProps(attribute: AttributeInput) {
     inputType: attribute.data.inputType,
     entityType: attribute.data.entityType,
     unit: attribute.data.unit,
+    attributeId: attribute.id,
+    internalDescription: attribute.data.internalDescription,
   };
 }
 
