@@ -56,9 +56,10 @@ back implementation work, and report any checks that could not run.
 
 - Documentation-only changes: format the changed files with Prettier; application
   tests, type checks, and knip are unnecessary.
-- Code changes: run ESLint with auto-fix and Prettier on the changed files before
-  manually fixing lint errors. Run affected tests and the relevant `check-types:*`
-  scripts from `package.json`.
+- Code changes: run oxlint with auto-fix and Prettier on the changed files before
+  manually fixing lint errors. ESLint only runs React Compiler and GraphQL rules
+  (`eslint.config.mjs`); run it on changed React components and GraphQL operations.
+  Run affected tests and the relevant `check-types:*` scripts from `package.json`.
 - Use `pnpm run test:quiet <file_path>` for individual Jest files. Switch to
   `pnpm run test:debug <file_path>` when debugging requires console or DOM output.
 - Add or update unit tests for changed utility behavior and complex components;

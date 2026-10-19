@@ -11,10 +11,42 @@ export const warehouseWithShippingFragment = gql`
     ...Warehouse
     clickAndCollectOption
     shippingZones(first: 100) {
+      totalCount
       edges {
         node {
           id
           name
+          channels {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+/** List rows only need zone channel ids, and only when zones decide stock availability. */
+export const warehouseListItemFragment = gql`
+  fragment WarehouseListItem on Warehouse {
+    ...Warehouse
+    clickAndCollectOption
+    address {
+      id
+      city
+      country {
+        code
+        country
+      }
+    }
+    shippingZones(first: 100) @include(if: $includeShippingZones) {
+      totalCount
+      edges {
+        node {
+          id
+          channels {
+            id
+          }
         }
       }
     }

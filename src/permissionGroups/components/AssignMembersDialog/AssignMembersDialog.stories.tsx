@@ -67,3 +67,7 @@ export const Loading: Story = {
 export const Empty: Story = {
   args: { staffMembers: [] },
 };
+
+export const AlreadyAssigned: Story = {
+  args: { assignedMemberIds: [staffMembers[0].id] },
+};

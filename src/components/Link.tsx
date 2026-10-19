@@ -108,7 +108,6 @@ export const Link = (props: LinkProps): React.ReactNode => {
     );
   } else {
     return (
-      // @ts-expect-error - spreading HTML link props on Text is not compatbile, fixme
       <Text
         as="a"
         href={disabled ? undefined : href}

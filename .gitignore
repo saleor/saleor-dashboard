@@ -8,6 +8,7 @@
 !.coveragerc
 !.dockerignore
 !.eslintrc.json
+!.oxlintrc.json
 !.flowconfig
 !.gqlconfig
 !.github

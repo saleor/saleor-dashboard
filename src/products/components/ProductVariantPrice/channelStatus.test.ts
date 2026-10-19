@@ -34,4 +34,29 @@ describe("getVariantPricingChannelStatus", () => {
     expect(status.type).toBe("warning");
     expect(status.label).toBe("Unpublished");
   });
+
+  it("returns hidden when variant is unavailable for purchase in a published channel", () => {
+    // Arrange
+    // Act
+    const status = getVariantPricingChannelStatus(
+      { isActive: true, isPublished: true, isAvailableForPurchase: false },
+      intl,
+    );
+
+    // Assert
+    expect(status.type).toBe("hidden");
+    expect(status.label).toBe("Unavailable for purchase");
+  });
+
+  it("prefers product-level unpublished status over variant unavailability", () => {
+    // Arrange
+    // Act
+    const status = getVariantPricingChannelStatus(
+      { isActive: true, isPublished: false, isAvailableForPurchase: false },
+      intl,
+    );
+
+    // Assert
+    expect(status.label).toBe("Unpublished");
+  });
 });

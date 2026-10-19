@@ -3,18 +3,18 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   warehouseAddPath,
+  warehouseAddUrl,
   warehouseListPath,
   type WarehouseListUrlQueryParams,
   WarehouseListUrlSortField,
   warehousePath,
   type WarehouseUrlQueryParams,
 } from "./urls";
-import WarehouseCreate from "./views/WarehouseCreate/WarehouseCreate";
 import WarehouseDetailsComponent from "./views/WarehouseDetails/WarehouseDetails";
 import WarehouseListComponent from "./views/WarehouseList/WarehouseList";
 
@@ -31,6 +31,8 @@ const WarehouseDetails = ({ match, location }: RouteComponentProps<{ id: string 
   return <WarehouseDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
+const WarehouseCreateRedirect = () => <Redirect to={warehouseAddUrl} />;
+
 const WarehouseSection = () => {
   const intl = useIntl();
 
@@ -39,7 +41,7 @@ const WarehouseSection = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.warehouses)} />
       <Switch>
         <Route exact path={warehouseListPath} component={WarehouseList} />
-        <Route exact path={warehouseAddPath} component={WarehouseCreate} />
+        <Route exact path={warehouseAddPath} component={WarehouseCreateRedirect} />
         <Route path={warehousePath(":id")} component={WarehouseDetails} />
       </Switch>
     </>

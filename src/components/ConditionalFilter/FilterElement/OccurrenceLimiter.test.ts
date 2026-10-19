@@ -1,7 +1,6 @@
 import { type LeftOperand } from "../LeftOperandsProvider";
 import { Condition } from "./Condition";
-import { ExpressionValue } from "./FilterElement";
-import { type FilterContainer, FilterElement } from "./FilterElement";
+import { ExpressionValue, type FilterContainer, FilterElement } from "./FilterElement";
 import { OccurrenceLimiter } from "./OccurrenceLimiter";
 
 describe("OccurrenceLimiter", () => {

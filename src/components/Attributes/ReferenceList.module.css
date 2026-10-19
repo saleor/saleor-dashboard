@@ -222,6 +222,7 @@ a.name:focus-visible {
   gap: var(--mu-spacing-3);
   min-width: 0;
   padding-left: var(--mu-spacing-1);
+  container-type: inline-size;
 }
 
 .copy {
@@ -264,6 +265,25 @@ a.name:focus-visible {
   line-height: inherit;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+/* A narrow row cannot fit a model's name and slug on one line, so the slug drops under the name. */
+@container (max-width: 360px) {
+  .modelTitleLine {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+  }
+
+  .modelTitleLine > * {
+    max-width: 100%;
+  }
+
+  .modelTitleLine .nameSecondary {
+    flex: none;
+    font-size: var(--mu-font-size-2);
+    line-height: var(--mu-line-height-2);
+  }
 }
 
 .subtitle {

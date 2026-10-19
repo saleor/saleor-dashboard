@@ -171,7 +171,6 @@ interface ProductVariantsHeaderProps extends DatagridRenderHeaderProps {
 }
 
 export const ProductVariantsHeader = ({
-  addRowOnDatagrid,
   isAnimationOpenFinished,
   isFullscreenOpen,
   toggleFullscreen,
@@ -198,15 +197,9 @@ export const ProductVariantsHeader = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const handleAddNewRow = useCallback(() => {
-    if (isFullscreenOpen) {
-      addRowOnDatagrid();
-
-      return;
-    }
-
+  const handleAddVariant = useCallback(() => {
     navigate(productVariantAddUrl(productId));
-  }, [isFullscreenOpen, addRowOnDatagrid, navigate, productId]);
+  }, [navigate, productId]);
 
   const headerTitle = isAnimationOpenFinished
     ? intl.formatMessage(messages.fullScreenTitle, {
@@ -259,23 +252,26 @@ export const ProductVariantsHeader = ({
               />
             )}
           </Button>
-          <Button
-            data-test-id="button-add-variant"
-            variant="secondary"
-            size="small"
-            onClick={handleAddNewRow}
-            icon={<PlusIcon {...headerActionIconProps} />}
-          >
-            <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
-          </Button>
+          {/* Bulk edit adds variants by typing into the trailing empty row. */}
           {!isFullscreenOpen && (
-            <GenerateVariantsButton
-              productTypeId={productTypeId}
-              hasVariants={hasVariants}
-              hasVariantAttributes={hasVariantAttributes}
-              unsupportedRequiredAttributes={unsupportedRequiredAttributes}
-              onGenerateVariants={onGenerateVariants}
-            />
+            <>
+              <Button
+                data-test-id="button-add-variant"
+                variant="secondary"
+                size="small"
+                onClick={handleAddVariant}
+                icon={<PlusIcon {...headerActionIconProps} />}
+              >
+                <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
+              </Button>
+              <GenerateVariantsButton
+                productTypeId={productTypeId}
+                hasVariants={hasVariants}
+                hasVariantAttributes={hasVariantAttributes}
+                unsupportedRequiredAttributes={unsupportedRequiredAttributes}
+                onGenerateVariants={onGenerateVariants}
+              />
+            </>
           )}
         </Box>
       </Box>

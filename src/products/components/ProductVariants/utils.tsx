@@ -92,6 +92,8 @@ interface GetDataOrError {
 
 interface GetDataParams extends GetDataOrError {
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
+  /** Text color for prices of listings that are unavailable for purchase. */
+  mutedTextColor?: string;
 }
 
 const enrichSwatchSearchOptions = (options: Option[]): AttributeSearchOption[] =>
@@ -129,6 +131,7 @@ export function getData({
   variantAttributes,
   searchAttributeValues,
   loading,
+  mutedTextColor,
 }: GetDataParams): GridCell {
   // For some reason it happens when user deselects channel
   if (column === -1) {
@@ -166,10 +169,11 @@ export function getData({
   if (getColumnChannel(columnId)) {
     const channelId = getColumnChannel(columnId);
     const listing = dataRow?.channelListings.find(listing => listing.channel.id === channelId);
-    const available =
-      changes.current[getChangeIndex(`availableInChannel:${channelId}`, row)]?.data ?? !!listing;
+    const availabilityChange: boolean | undefined =
+      changes.current[getChangeIndex(`availableInChannel:${channelId}`, row)]?.data;
+    const isListed = !!listing || availabilityChange === true || typeof change?.value === "number";
 
-    if (!available) {
+    if (!isListed) {
       return {
         ...numberCell(numberCellEmptyValue, { hasFloatingPoint: true }),
         readonly: false,
@@ -179,14 +183,19 @@ export function getData({
 
     const currency = channels.find(channel => channelId === channel.id)?.currency;
     const value = change?.value ?? listing?.price?.amount ?? null;
+    const isAvailable = availabilityChange ?? listing?.isAvailableForPurchase ?? true;
 
-    return moneyCell(value, currency);
+    return moneyCell(
+      value,
+      currency,
+      !isAvailable && mutedTextColor ? { themeOverride: { textDark: mutedTextColor } } : undefined,
+    );
   }
 
   if (getColumnChannelAvailability(columnId)) {
     const channelId = getColumnChannelAvailability(columnId);
     const listing = dataRow?.channelListings.find(listing => listing.channel.id === channelId);
-    const value = change ?? !!listing;
+    const value = change ?? listing?.isAvailableForPurchase ?? false;
 
     return booleanCell(value);
   }

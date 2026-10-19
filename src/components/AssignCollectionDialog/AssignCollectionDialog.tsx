@@ -23,7 +23,7 @@ export type AssignCollectionFilterChangeHandler = (
   filterVariables: CollectionFilterInput,
   channel: string | undefined,
   query: string,
-) => void;
+) => void | Promise<unknown>;
 
 interface AssignCollectionDialogProps
   extends FetchMoreProps,
@@ -53,14 +53,12 @@ const AssignCollectionDialogInner = ({
   const intl = useIntl();
   const { combinedFilters, clearFilters } = useModalCollectionFilterContext();
 
-  const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
+  const { query, onQueryChange, resetQuery, isSearching } = useModalSearchWithFilters({
     filterVariables: combinedFilters,
     open,
     onFetch: (filters, query) => {
       if (onFilterChange) {
-        onFilterChange(filters.filter, filters.channel, query);
-
-        return;
+        return onFilterChange(filters.filter, filters.channel, query);
       }
 
       onFetch(query);
@@ -85,7 +83,7 @@ const AssignCollectionDialogInner = ({
       onFetch={() => {}}
       emptyMessage={intl.formatMessage(messages.noCollectionsFound)}
       backfillExhaustedMessage={intl.formatMessage(messages.allLoadedCollectionsFilteredOut)}
-      search={{ query, onQueryChange, resetQuery }}
+      search={{ query, onQueryChange, resetQuery, isSearching }}
       filtersSlot={<ModalFilters />}
       onResetFilters={clearFilters}
     />

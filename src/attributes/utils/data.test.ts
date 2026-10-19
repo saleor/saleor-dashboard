@@ -74,6 +74,7 @@ const createMockReferenceData = (data: {
       __typename: "Page",
       id: p.id,
       title: p.title,
+      slug: `${p.id}-slug`,
       pageType: { __typename: "PageType" as const, id: "page-type-1", metadata: [] },
     }));
   }

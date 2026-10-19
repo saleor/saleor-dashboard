@@ -185,6 +185,19 @@ export const PageFactory = definePageFactory({
           "FAQ",
         ][seq % 8],
     ),
+    slug: dynamic(
+      ({ seq }) =>
+        [
+          "about-us",
+          "return-policy",
+          "shipping-information",
+          "size-guide",
+          "terms-of-service",
+          "privacy-policy",
+          "contact-us",
+          "faq",
+        ][seq % 8],
+    ),
   },
 });
 

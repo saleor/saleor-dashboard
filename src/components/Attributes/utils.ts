@@ -13,6 +13,7 @@ import { type Option } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
 
 import { type AttributeFieldError } from "./types";
+import { type ModelReferenceDetails } from "./useModelReferenceDetails";
 
 export function getAttributeRowLabelProps(attribute: AttributeInput) {
   return {
@@ -71,7 +72,7 @@ export function getReferenceDisplayValue(
 
 export function getSingleReferenceDisplayValue(
   attribute: AttributeInput,
-  icons?: Map<string, ModelTypeIcon>,
+  modelDetails?: Map<string, ModelReferenceDetails>,
 ): ReferenceListValue | null {
   if (!attribute.value || attribute.value.length === 0) {
     return null;
@@ -83,8 +84,8 @@ export function getSingleReferenceDisplayValue(
     return {
       label: reference.primary ?? reference.label,
       value: reference.value,
-      icon: icons?.get(reference.value) ?? reference.icon,
-      caption: reference.caption,
+      icon: modelDetails?.get(reference.value)?.icon ?? reference.icon,
+      caption: modelDetails?.get(reference.value)?.slug ?? reference.caption,
       thumbnailUrl: reference.thumbnailUrl,
       url: getEntityUrl({
         entityType: attribute.data.entityType,

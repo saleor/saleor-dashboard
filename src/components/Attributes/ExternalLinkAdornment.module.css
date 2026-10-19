@@ -1,0 +1,4 @@
+/* The 24px button is taller than the input's text line; keep the input height unchanged when it appears. */
+.button {
+  margin-block: -2px;
+}

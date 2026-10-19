@@ -151,4 +151,30 @@ describe("useAssignAttributeValueDialogFilterChangeHandlers", () => {
       }),
     );
   });
+
+  it("returns the refetch promise from page, category and collection handlers so pickers can show a pending search", () => {
+    // Arrange
+    const { result, refetchPages, refetchCategories, refetchCollections } = setup();
+    const pagesRequest = Promise.resolve();
+    const categoriesRequest = Promise.resolve();
+    const collectionsRequest = Promise.resolve();
+
+    refetchPages.mockReturnValue(pagesRequest);
+    refetchCategories.mockReturnValue(categoriesRequest);
+    refetchCollections.mockReturnValue(collectionsRequest);
+
+    // Act
+    const pageResult = result.current[AttributeEntityTypeEnum.PAGE]({}, "brand");
+    const categoryResult = result.current[AttributeEntityTypeEnum.CATEGORY]({}, "shoes");
+    const collectionResult = result.current[AttributeEntityTypeEnum.COLLECTION](
+      {},
+      undefined,
+      "summer",
+    );
+
+    // Assert
+    expect(pageResult).toBe(pagesRequest);
+    expect(categoryResult).toBe(categoriesRequest);
+    expect(collectionResult).toBe(collectionsRequest);
+  });
 });

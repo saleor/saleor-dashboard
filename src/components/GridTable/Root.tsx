@@ -12,7 +12,6 @@ export const GridTableRoot = React.forwardRef<GridTableRootElement, GridTableRoo
     const { children, ...rest } = props;
 
     return (
-      // @ts-expect-error - incorrect types
       <Box
         ref={forwardedRef}
         as="table"

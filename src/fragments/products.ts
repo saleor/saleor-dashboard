@@ -84,6 +84,7 @@ export const channelListingProductVariantFragment = gql`
     costPrice {
       ...Money
     }
+    isAvailableForPurchase
   }
 `;
 

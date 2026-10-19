@@ -1,0 +1,12 @@
+.rows {
+  transition: opacity 150ms ease;
+}
+
+/*
+ * Pending starts at the keystroke, so the delay covers the 200ms search debounce plus a quick
+ * response: fast searches never dim, slow ones do.
+ */
+.rowsStale {
+  opacity: 0.5;
+  transition-delay: 400ms;
+}

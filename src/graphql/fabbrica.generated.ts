@@ -854,6 +854,9 @@ import type {
   ProductVariantBulkUpdateInput,
   ProductVariantChannelListing,
   ProductVariantChannelListingAddInput,
+  ProductVariantChannelListingAvailabilityInput,
+  ProductVariantChannelListingAvailabilityUpdate,
+  ProductVariantChannelListingAvailabilityUpdateError,
   ProductVariantChannelListingUpdate,
   ProductVariantChannelListingUpdateInput,
   ProductVariantCountableConnection,
@@ -6294,6 +6297,14 @@ export type OptionalCategory = {
  * Added in Saleor 3.23.
  */
   externalReference?: Category['externalReference'] | undefined;
+  /**
+ * Full description of the category. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: Category['fullDescription'] | undefined;
   /** The ID of the category. */
   id?: Category['id'] | undefined;
   /** Level of the category. */
@@ -6548,6 +6559,14 @@ export type OptionalCategoryInput = {
  */
   externalReference?: CategoryInput['externalReference'] | undefined;
   /**
+ * Full description of the category. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryInput['fullDescription'] | undefined;
+  /**
  * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
@@ -6618,6 +6637,14 @@ export type OptionalCategoryTranslatableContent = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CategoryTranslatableContent['descriptionJson'] | undefined;
+  /**
+ * Category's full description to translate. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryTranslatableContent['fullDescription'] | undefined;
   /** The ID of the category translatable content. */
   id?: CategoryTranslatableContent['id'] | undefined;
   /** Name of the category translatable content. */
@@ -6685,6 +6712,14 @@ export type OptionalCategoryTranslation = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CategoryTranslation['descriptionJson'] | undefined;
+  /**
+ * Translated full description of the category. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryTranslation['fullDescription'] | undefined;
   /** The ID of the category translation. */
   id?: CategoryTranslation['id'] | undefined;
   /** Translation language. */
@@ -7153,6 +7188,12 @@ export type OptionalChannelListingUpdateInput = {
   channelListing?: ChannelListingUpdateInput['channelListing'] | undefined;
   /** Cost price of the variant in channel. */
   costPrice?: ChannelListingUpdateInput['costPrice'] | undefined;
+  /**
+ * Determines whether the variant can be bought in this channel. When omitted, the current value is kept.
+ *
+ * Added in Saleor 3.23.
+ */
+  isAvailableForPurchase?: ChannelListingUpdateInput['isAvailableForPurchase'] | undefined;
   /** The threshold for preorder variant in channel. */
   preorderThreshold?: ChannelListingUpdateInput['preorderThreshold'] | undefined;
   /** Price of the particular variant in channel. */
@@ -8942,6 +8983,14 @@ export type OptionalCollection = {
  * Added in Saleor 3.23.
  */
   externalReference?: Collection['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: Collection['fullDescription'] | undefined;
   /** The ID of the collection. */
   id?: Collection['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
@@ -9213,6 +9262,14 @@ export type OptionalCollectionCreateInput = {
  * Added in Saleor 3.23.
  */
   externalReference?: CollectionCreateInput['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionCreateInput['fullDescription'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionCreateInput['isPublished'] | undefined;
   /**
@@ -9388,6 +9445,14 @@ export type OptionalCollectionInput = {
  * Added in Saleor 3.23.
  */
   externalReference?: CollectionInput['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionInput['fullDescription'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionInput['isPublished'] | undefined;
   /**
@@ -9537,6 +9602,14 @@ export type OptionalCollectionTranslatableContent = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CollectionTranslatableContent['descriptionJson'] | undefined;
+  /**
+ * Collection's full description to translate. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionTranslatableContent['fullDescription'] | undefined;
   /** The ID of the collection translatable content. */
   id?: CollectionTranslatableContent['id'] | undefined;
   /** Collection's name to translate. */
@@ -9604,6 +9677,14 @@ export type OptionalCollectionTranslation = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CollectionTranslation['descriptionJson'] | undefined;
+  /**
+ * Translated full description of the collection. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionTranslation['fullDescription'] | undefined;
   /** The ID of the collection translation. */
   id?: CollectionTranslation['id'] | undefined;
   /** Translation language. */
@@ -18027,6 +18108,14 @@ export type OptionalMutation = {
  * Requires one of the following permissions: MANAGE_PRODUCTS.
  */
   productVariantBulkUpdate?: Maybe<OptionalProductVariantBulkUpdate> | undefined;
+  /**
+ * Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_PRODUCTS.
+ */
+  productVariantChannelListingAvailabilityUpdate?: Maybe<OptionalProductVariantChannelListingAvailabilityUpdate> | undefined;
   /**
  * Manage product variant prices in channels.
  *
@@ -27728,6 +27817,12 @@ export type OptionalProductVariantChannelListing = {
   /** The ID of the variant channel listing. */
   id?: ProductVariantChannelListing['id'] | undefined;
   /**
+ * Determines whether the variant can be bought in this channel. When set to `false`, the variant behaves as if it had no listing in this channel: it is hidden from customers and cannot be added to a checkout or an order. Its prices are preserved.
+ *
+ * Added in Saleor 3.23.
+ */
+  isAvailableForPurchase?: ProductVariantChannelListing['isAvailableForPurchase'] | undefined;
+  /**
  * Gross margin percentage value.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -27764,6 +27859,12 @@ export type OptionalProductVariantChannelListingAddInput = {
   channelId?: ProductVariantChannelListingAddInput['channelId'] | undefined;
   /** Cost price of the variant in channel. */
   costPrice?: ProductVariantChannelListingAddInput['costPrice'] | undefined;
+  /**
+ * Determines whether the variant can be bought in this channel. When omitted on an existing listing, the current value is kept.
+ *
+ * Added in Saleor 3.23.
+ */
+  isAvailableForPurchase?: ProductVariantChannelListingAddInput['isAvailableForPurchase'] | undefined;
   /** The threshold for preorder variant in channel. */
   preorderThreshold?: ProductVariantChannelListingAddInput['preorderThreshold'] | undefined;
   /** Price of the particular variant in channel. */
@@ -27784,6 +27885,83 @@ export type OptionalProductVariantChannelListingAddInput = {
  */
 export const defineProductVariantChannelListingAddInputFactory: DefineTypeFactoryInterface<
   OptionalProductVariantChannelListingAddInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Fields required to toggle a product variant's availability in a channel.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductVariantChannelListingAvailabilityInput = {
+  __typename?: 'ProductVariantChannelListingAvailabilityInput';
+  /** ID of a channel. */
+  channelId?: ProductVariantChannelListingAvailabilityInput['channelId'] | undefined;
+  /** Determines whether the variant can be bought in this channel. */
+  isAvailableForPurchase?: ProductVariantChannelListingAvailabilityInput['isAvailableForPurchase'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantChannelListingAvailabilityInput} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantChannelListingAvailabilityInputFactoryInterface}
+ */
+export const defineProductVariantChannelListingAvailabilityInputFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantChannelListingAvailabilityInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_PRODUCTS.
+ */
+export type OptionalProductVariantChannelListingAvailabilityUpdate = {
+  __typename?: 'ProductVariantChannelListingAvailabilityUpdate';
+  errors?: OptionalProductVariantChannelListingAvailabilityUpdateError[] | undefined;
+  /** An updated product variant instance. */
+  variant?: Maybe<OptionalProductVariant> | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantChannelListingAvailabilityUpdate} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantChannelListingAvailabilityUpdateFactoryInterface}
+ */
+export const defineProductVariantChannelListingAvailabilityUpdateFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantChannelListingAvailabilityUpdate,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Error of the `productVariantChannelListingAvailabilityUpdate` mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductVariantChannelListingAvailabilityUpdateError = {
+  __typename?: 'ProductVariantChannelListingAvailabilityUpdateError';
+  /** List of channels IDs which causes the error. */
+  channels?: ProductVariantChannelListingAvailabilityUpdateError['channels'] | undefined;
+  /** The error code. */
+  code?: ProductVariantChannelListingAvailabilityUpdateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: ProductVariantChannelListingAvailabilityUpdateError['field'] | undefined;
+  /** The error message. */
+  message?: ProductVariantChannelListingAvailabilityUpdateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantChannelListingAvailabilityUpdateError} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantChannelListingAvailabilityUpdateErrorFactoryInterface}
+ */
+export const defineProductVariantChannelListingAvailabilityUpdateErrorFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantChannelListingAvailabilityUpdateError,
   {}
 > = defineTypeFactory;
 
@@ -28677,6 +28855,12 @@ export type OptionalProductWhereInput = {
   category?: Maybe<OptionalGlobalIdFilterInput> | undefined;
   /** Filter by collection. */
   collection?: Maybe<OptionalGlobalIdFilterInput> | undefined;
+  /**
+ * Filter by external reference.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Maybe<OptionalStringFilterInput> | undefined;
   /** Filter on whether product is a gift card or not. */
   giftCard?: ProductWhereInput['giftCard'] | undefined;
   /** Filter by product with category assigned. */
@@ -30584,7 +30768,7 @@ export type OptionalQuery = {
  */
   user?: Maybe<OptionalUser> | undefined;
   /**
- * Look up a voucher by ID.
+ * Look up a voucher by ID or external reference.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  */
@@ -36700,6 +36884,14 @@ export type OptionalTranslationInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: TranslationInput['description'] | undefined;
+  /**
+ * Translated full description. Only supported for categories and collections; product translation mutations reject this field. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: TranslationInput['fullDescription'] | undefined;
   name?: TranslationInput['name'] | undefined;
   seoDescription?: TranslationInput['seoDescription'] | undefined;
   seoTitle?: TranslationInput['seoTitle'] | undefined;
@@ -37377,6 +37569,12 @@ export type OptionalVoucher = {
   discountValueType?: Voucher['discountValueType'] | undefined;
   /** The end date and time of voucher. */
   endDate?: Voucher['endDate'] | undefined;
+  /**
+ * External ID of this voucher.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Voucher['externalReference'] | undefined;
   /** The ID of the voucher. */
   id?: Voucher['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
@@ -38003,6 +38201,12 @@ export type OptionalVoucherInput = {
   discountValueType?: VoucherInput['discountValueType'] | undefined;
   /** End date of the voucher in ISO 8601 format. */
   endDate?: VoucherInput['endDate'] | undefined;
+  /**
+ * External ID of this voucher.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: VoucherInput['externalReference'] | undefined;
   /** Minimal quantity of checkout items required to apply the voucher. */
   minCheckoutItemsQuantity?: VoucherInput['minCheckoutItemsQuantity'] | undefined;
   /** Voucher name. */
@@ -38723,6 +38927,12 @@ export type OptionalWebhook = {
   isActive?: Webhook['isActive'] | undefined;
   /** The name of webhook. */
   name?: Webhook['name'] | undefined;
+  /**
+ * Determines when the subscription payload is built for asynchronous events that defer payload generation. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+ *
+ * Added in Saleor 3.23.
+ */
+  payloadGeneration?: Webhook['payloadGeneration'] | undefined;
   /** Used to create a hash signature for each payload. */
   secretKey?: Webhook['secretKey'] | undefined;
   /** Used to define payloads for specific events. */
@@ -38787,6 +38997,12 @@ export type OptionalWebhookCreateInput = {
   isActive?: WebhookCreateInput['isActive'] | undefined;
   /** The name of the webhook. */
   name?: WebhookCreateInput['name'] | undefined;
+  /**
+ * Determines when the subscription payload is built for asynchronous events that defer payload generation. Defaults to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+ *
+ * Added in Saleor 3.23.
+ */
+  payloadGeneration?: WebhookCreateInput['payloadGeneration'] | undefined;
   /** Subscription query used to define a webhook payload. */
   query?: WebhookCreateInput['query'] | undefined;
   /** The secret key used to create a hash signature with each payload. */
@@ -39042,6 +39258,12 @@ export type OptionalWebhookUpdateInput = {
   isActive?: WebhookUpdateInput['isActive'] | undefined;
   /** The new name of the webhook. */
   name?: WebhookUpdateInput['name'] | undefined;
+  /**
+ * Determines when the subscription payload is built for asynchronous events that defer payload generation. Omit to keep the current value, `null` resets it to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload. A change applies to events triggered after the update. Deliveries already created finish the way they started, so around a change a newer delivery can be sent before an older one.
+ *
+ * Added in Saleor 3.23.
+ */
+  payloadGeneration?: WebhookUpdateInput['payloadGeneration'] | undefined;
   /** Subscription query used to define a webhook payload. */
   query?: WebhookUpdateInput['query'] | undefined;
   /** Use to create a hash signature with each payload. */

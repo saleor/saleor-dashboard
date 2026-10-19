@@ -241,7 +241,7 @@ const VisibilityCard = (props: VisibilityCardProps) => {
                     },
                   });
                 }}
-                //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //oxlint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore todo
                 error={getFieldError(errors, "isPublishedAt")}
                 fullWidth

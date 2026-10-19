@@ -718,6 +718,7 @@ export const product: (
             __typename: "Money",
           },
           __typename: "ProductVariantChannelListing",
+          isAvailableForPurchase: true,
         },
         {
           id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNDM=",
@@ -739,6 +740,7 @@ export const product: (
             __typename: "Money",
           },
           __typename: "ProductVariantChannelListing",
+          isAvailableForPurchase: true,
         },
       ],
       quantityLimitPerCustomer: null,
@@ -810,6 +812,7 @@ export const product: (
             __typename: "Money",
           },
           __typename: "ProductVariantChannelListing",
+          isAvailableForPurchase: true,
         },
         {
           id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoreNTM=",
@@ -831,6 +834,7 @@ export const product: (
             __typename: "Money",
           },
           __typename: "ProductVariantChannelListing",
+          isAvailableForPurchase: true,
         },
       ],
       quantityLimitPerCustomer: null,
@@ -969,6 +973,7 @@ export const product: (
             __typename: "Money",
           },
           __typename: "ProductVariantChannelListing",
+          isAvailableForPurchase: true,
         },
         {
           id: "UHJvZHVjdFZhcmlhdwxDaGFubmVsTGlzdGluZzoyNTM=",
@@ -990,6 +995,7 @@ export const product: (
             __typename: "Money",
           },
           __typename: "ProductVariantChannelListing",
+          isAvailableForPurchase: true,
         },
       ],
       quantityLimitPerCustomer: null,
@@ -1072,6 +1078,7 @@ export const product: (
             __typename: "Money",
           },
           __typename: "ProductVariantChannelListing",
+          isAvailableForPurchase: true,
         },
       ],
       quantityLimitPerCustomer: 5,
@@ -1154,6 +1161,7 @@ export const product: (
             __typename: "Money",
           },
           __typename: "ProductVariantChannelListing",
+          isAvailableForPurchase: true,
         },
       ],
       quantityLimitPerCustomer: null,
@@ -3591,6 +3599,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     {
       id: "UHJvZHVjdFZhcasdasdASDDaGFubmVsTGlzdGluZzoyNTM=",
       __typename: "ProductVariantChannelListing",
+      isAvailableForPurchase: true,
       channel: {
         __typename: "Channel",
         currencyCode: "USD",
@@ -3611,6 +3620,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     {
       id: "UHJvZHVjdFZhcmlhbnRDaGGSAEdsWsTGlzdGluZzoyNTM=",
       __typename: "ProductVariantChannelListing",
+      isAvailableForPurchase: true,
       channel: {
         __typename: "Channel",
         currencyCode: "USD",

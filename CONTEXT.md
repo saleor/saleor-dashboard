@@ -47,3 +47,37 @@ _Avoid_: pin location, pin destination, pin group.
 A sidebar section that exists only when it holds at least one navigation pin, and only ever
 holds user pins. Organization pins cannot target it.
 _Avoid_: favourites, my pins, quick links.
+
+## Fulfillment
+
+**Warehouse**:
+A location that holds stock. Stock there can be sold only in channels the warehouse is assigned to.
+_API name_: `Warehouse`. _Avoid_: treating "stock location" as a separate object.
+
+**Stock**:
+The quantity of one product variant in one warehouse. Edited on the product, not on the warehouse.
+_API name_: `Stock`.
+
+**Channel assignment**:
+The link that makes a warehouse's stock available in a channel. It is written on the channel, because a warehouse has no channel field of its own.
+_API name_: `Channel.warehouses`, `channelUpdate.addWarehouses`. _Avoid_: `Warehouse.channels`.
+
+**Allocation strategy**:
+How a channel chooses which of its warehouses fulfills an order. The warehouse order on the channel matters only when the strategy is prioritize sorting order.
+_API name_: `allocationStrategy`.
+
+**Pickup**:
+Letting the customer collect an order at a warehouse. The warehouse address is what they see, and tax is calculated for that address.
+_API name_: `clickAndCollectOption`. _Avoid_: "click and collect" in dashboard copy.
+
+**Offer pickup**:
+Whether customers can collect an order at this warehouse. The usual choice, used when pickup is turned on, is stock at this location, which saves the warehouse as public. Where the items come from is an advanced choice. Stock at any location, or pickup off, saves the warehouse as private. Stock still sells either way.
+_API name_: `clickAndCollectOption`, `isPrivate`. _Avoid_: internal location, private stock, public stock, "stock won't be shown".
+
+**Stock availability mode**:
+Whether stock counts through the warehouse–channel link (direct, the default) or also requires a shipping zone that covers the destination country (legacy).
+_API name_: `Shop.useLegacyShippingZoneStockAvailability`.
+
+**Shipping zone**:
+Countries and the delivery rates offered there. Linking a zone to a warehouse changes which stock counts only in legacy stock mode. Delivery rates never depend on that link.
+_API name_: `ShippingZone`.

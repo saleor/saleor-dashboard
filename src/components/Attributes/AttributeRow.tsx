@@ -32,6 +32,8 @@ import { AttributeReferenceEntityIcon } from "./AttributeReferenceEntityIcon";
 import styles from "./AttributeRow.module.css";
 import { useAttributeRowChrome } from "./attributeRowChrome";
 import { DropdownRow } from "./DropdownRow";
+import { ExternalLinkAdornment } from "./ExternalLinkAdornment";
+import { HexColorIndicator } from "./HexColorIndicator";
 import { ReferenceList } from "./ReferenceList";
 import { ReferenceMark, ReferenceTitle, showsThumbnail } from "./referenceValueAppearance";
 import { SingleReferenceField } from "./SingleReferenceField";
@@ -363,6 +365,12 @@ const AttributeRow = ({
             value={value}
             size="small"
             id={`attribute:${attribute.label}`}
+            endAdornment={
+              <>
+                <HexColorIndicator value={value} />
+                <ExternalLinkAdornment value={value} />
+              </>
+            }
             helperText={
               isTooLong
                 ? intl.formatMessage(inputTypeMessages.plainTextTruncated, {

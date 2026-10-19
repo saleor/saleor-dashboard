@@ -6,7 +6,7 @@ interface VoucherDiscountSubsectionHeaderProps {
   hint: ReactNode;
 }
 
-/** Stacked title + hint — matches DetailSettingsCard / ChannelSettingRadioGroup microcopy. */
+/** Stacked title + hint — matches DetailSettingsCard / DetailSettingRadioGroup microcopy. */
 export const VoucherDiscountSubsectionHeader = ({
   title,
   hint,

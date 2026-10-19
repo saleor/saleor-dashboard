@@ -1,7 +1,6 @@
 import { type CreateShippingForChannelFormData } from "@dashboard/channels/components/CreateShippingForChannelDialog/CreateShippingForChannelDialog";
 import { type CreateWarehouseForChannelFormData } from "@dashboard/channels/components/CreateWarehouseForChannelDialog/CreateWarehouseForChannelDialog";
 import {
-  CountryCode,
   type ShippingErrorFragment,
   ShippingMethodTypeEnum,
   useChannelUpdateMutation,
@@ -9,17 +8,27 @@ import {
   useCreateShippingZoneMutation,
   useShippingMethodChannelListingUpdateMutation,
   useWarehouseCreateMutation,
+  useWarehouseUpdateMutation,
+  WarehouseErrorCode,
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
+import { extractMutationErrors, getMutationStatus } from "@dashboard/misc";
+import {
+  type WarehouseInputFromForm,
+  warehouseInputFromForm,
+} from "@dashboard/warehouses/warehouseInputFromForm";
+import { useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { getChannelDetailsRefetchQueries } from "./channelRefetchQueries";
 
 interface UseChannelSetupActionsArgs {
   channelId: string;
+  /** The create-warehouse dialog starts with an empty form, so it also starts a new warehouse. */
+  createWarehouseOpen: boolean;
   warehouseIds: string[];
   onWarehouseCreated: () => void;
   onShippingCreated: () => void;
@@ -28,6 +37,7 @@ interface UseChannelSetupActionsArgs {
 
 export const useChannelSetupActions = ({
   channelId,
+  createWarehouseOpen,
   warehouseIds,
   onWarehouseCreated,
   onShippingCreated,
@@ -43,6 +53,17 @@ export const useChannelSetupActions = ({
   };
 
   const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation();
+  const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation();
+  /** Created but not yet assigned, with the input it was last saved with. */
+  const pendingWarehouse = useRef<{ id: string; input: WarehouseInputFromForm } | null>(null);
+
+  // Any way of reopening (close button, browser Back, a link) must not reuse an earlier warehouse.
+  useModalDialogOpen(createWarehouseOpen, {
+    onOpen: () => {
+      pendingWarehouse.current = null;
+    },
+  });
+
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation();
   const [createShippingZone, createShippingZoneOpts] = useCreateShippingZoneMutation();
   const [createShippingRate, createShippingRateOpts] = useCreateShippingRateMutation();
@@ -53,34 +74,40 @@ export const useChannelSetupActions = ({
     data: CreateWarehouseForChannelFormData,
   ): Promise<WarehouseErrorFragment[]> => {
     try {
-      const createResult = await createWarehouse({
-        variables: {
-          input: {
-            name: data.name,
-            address: {
-              companyName: data.companyName,
-              city: data.city,
-              cityArea: data.cityArea,
-              country: findValueInEnum(data.country, CountryCode),
-              countryArea: data.countryArea,
-              phone: data.phone,
-              postalCode: data.postalCode,
-              streetAddress1: data.streetAddress1,
-              streetAddress2: data.streetAddress2,
-            },
-          },
-        },
-      });
-      const createErrors = createResult.data?.createWarehouse?.errors ?? [];
+      const input = warehouseInputFromForm(data);
+      const pending = pendingWarehouse.current;
+      let warehouseId: string;
 
-      if (createErrors.length) {
-        return createErrors;
-      }
+      if (!pending) {
+        const createResult = await createWarehouse({ variables: { input } });
+        const createErrors = createResult.data?.createWarehouse?.errors ?? [];
 
-      const warehouseId = createResult.data?.createWarehouse?.warehouse?.id;
+        if (createErrors.length) {
+          return createErrors;
+        }
 
-      if (!warehouseId) {
-        return [];
+        const createdId = createResult.data?.createWarehouse?.warehouse?.id;
+
+        if (!createdId) {
+          return [];
+        }
+
+        warehouseId = createdId;
+        pendingWarehouse.current = { id: warehouseId, input };
+      } else {
+        warehouseId = pending.id;
+
+        // A retry after a failed assign must not drop edits made since the create.
+        if (JSON.stringify(pending.input) !== JSON.stringify(input)) {
+          const updateResult = await updateWarehouse({ variables: { id: warehouseId, input } });
+          const updateErrors = updateResult.data?.updateWarehouse?.errors ?? [];
+
+          if (updateErrors.length) {
+            return updateErrors;
+          }
+
+          pendingWarehouse.current = { id: warehouseId, input };
+        }
       }
 
       const assignErrors = await extractMutationErrors(
@@ -96,17 +123,19 @@ export const useChannelSetupActions = ({
       );
 
       if (assignErrors.length) {
-        notify({
-          status: "error",
-          text:
-            assignErrors[0]?.message ||
-            intl.formatMessage({
-              id: "kwS+Nw",
-              defaultMessage: "Warehouse was created but could not be assigned to this channel",
-            }),
-        });
-
-        return [];
+        return [
+          {
+            __typename: "WarehouseError",
+            code: WarehouseErrorCode.INVALID,
+            field: null,
+            message:
+              assignErrors[0]?.message ||
+              intl.formatMessage({
+                id: "kwS+Nw",
+                defaultMessage: "Warehouse was created but could not be assigned to this channel",
+              }),
+          },
+        ];
       }
 
       notify({
@@ -116,13 +145,19 @@ export const useChannelSetupActions = ({
           defaultMessage: "Warehouse created and assigned",
         }),
       });
+      pendingWarehouse.current = null;
       onWarehouseCreated();
 
       return [];
     } catch {
-      notifyUnexpectedError();
-
-      return [];
+      return [
+        {
+          __typename: "WarehouseError",
+          code: WarehouseErrorCode.INVALID,
+          field: null,
+          message: intl.formatMessage(commonMessages.somethingWentWrong),
+        },
+      ];
     }
   };
 
@@ -326,7 +361,8 @@ export const useChannelSetupActions = ({
     onAssigned();
   };
 
-  const warehouseLoading = createWarehouseOpts.loading || updateChannelOpts.loading;
+  const warehouseLoading =
+    createWarehouseOpts.loading || updateWarehouseOpts.loading || updateChannelOpts.loading;
   const shippingLoading =
     createShippingZoneOpts.loading ||
     createShippingRateOpts.loading ||

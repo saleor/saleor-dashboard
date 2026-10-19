@@ -1,4 +1,10 @@
 import {
+  isBlankTextTranslation,
+  isFieldTranslationComplete,
+  isResettableBlankTranslation,
+} from "@dashboard/translations/progress";
+import {
+  type BlankTranslationHint,
   type BulkTranslationValue,
   type TranslationField,
   TranslationFieldType,
@@ -89,5 +95,79 @@ export const getDirtyBulkSubmitValues = (
         field,
         section,
         data: parseBulkFieldValue(field, values[field.name]),
+      })),
+  );
+
+/** A stored blank whose input still matches it, so saving resets it rather than keeping an edit. */
+const isPendingBlankReset = (field: TranslationField, editedValue: string | undefined): boolean =>
+  isResettableBlankTranslation(field) && !isBulkFieldDirty(field, editedValue);
+
+/**
+ * A text field the API can't reset to untranslated whose input is blank: the stored blank, or a
+ * translation the user cleared. Saving it stores `""`, so storefronts may show a blank.
+ */
+export const isUnresettableBlankInput = (
+  field: TranslationField,
+  editedValue: string | undefined,
+): boolean => {
+  if (
+    field.nullable === true ||
+    field.type === TranslationFieldType.RICH ||
+    field.translation === null ||
+    field.editInitial != null
+  ) {
+    return false;
+  }
+
+  if (!isFieldTranslationComplete(field.value, field.type)) {
+    return false;
+  }
+
+  return isBlankTextTranslation(editedValue ?? field.translation);
+};
+
+export interface BulkFieldState {
+  /** Saving writes something: the user's edit, or a reset of a stored blank. */
+  canSave: boolean;
+  blankHint?: BlankTranslationHint;
+}
+
+export const getBulkFieldState = (
+  field: TranslationField,
+  editedValue: string | undefined,
+): BulkFieldState => {
+  if (isPendingBlankReset(field, editedValue)) {
+    return { canSave: true, blankHint: "resettable" };
+  }
+
+  return {
+    canSave: isBulkFieldDirty(field, editedValue),
+    blankHint: isUnresettableBlankInput(field, editedValue) ? "unresettable" : undefined,
+  };
+};
+
+export const hasBlankResetBulkValues = (
+  sections: TranslationSectionConfig[],
+  values: Record<string, string>,
+): boolean =>
+  sections.some(section =>
+    section.fields.some(field => isPendingBlankReset(field, values[field.name])),
+  );
+
+/**
+ * Resets for pending blanks. Bulk save sends them with the edits, so saving an item also fixes
+ * fields that show a blank on the storefront.
+ */
+export const getBlankResetBulkValues = (
+  sections: TranslationSectionConfig[],
+  values: Record<string, string>,
+): BulkTranslationValue[] =>
+  sections.flatMap(section =>
+    section.fields
+      .filter(field => isPendingBlankReset(field, values[field.name]))
+      .map(field => ({
+        field,
+        section,
+        data: parseBulkFieldValue(field, ""),
       })),
   );

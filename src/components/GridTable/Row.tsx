@@ -10,7 +10,6 @@ type GridTableRowProps = GridTableProps<HTMLAttributes<HTMLTableRowElement>>;
 export const GridTableRow = React.forwardRef<GridTableRowElement, GridTableRowProps>(
   ({ children, ...props }, forwardedRef) => {
     return (
-      // @ts-expect-error - incorrect types
       <Box as="tr" ref={forwardedRef} {...props}>
         {children}
       </Box>

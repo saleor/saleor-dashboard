@@ -17,7 +17,7 @@ export interface ReferenceListValue {
   value: string;
   url?: string;
   icon?: ModelTypeIcon;
-  /** Parent product for a variant, shown secondary on the first line. */
+  /** Shown secondary on the first line: a variant's parent product, or a model's slug. */
   caption?: string;
   thumbnailUrl?: string;
 }
@@ -91,7 +91,7 @@ const markName = (value: ReferenceListValue, entityType?: AttributeEntityTypeEnu
     ? (value.caption ?? value.label)
     : value.label;
 
-/** Variant name (primary) and parent product (secondary) on one line. */
+/** Name (primary) and caption (secondary) on one line: variant and parent product, or model and slug. */
 export const ReferenceTitle = ({
   value,
   entityType,
@@ -118,6 +118,20 @@ export const ReferenceTitle = ({
             {line.productName}
           </span>
         ) : null}
+      </span>
+    );
+  }
+
+  // Models can share a name; merchants tell them apart by slug.
+  if (entityType === AttributeEntityTypeEnum.PAGE && value.caption) {
+    return (
+      <span className={lineClassName}>
+        <ReferenceName value={value} className={nameClassName}>
+          {value.label}
+        </ReferenceName>
+        <span className={secondaryClassName} data-test-id="attribute-reference-model-slug">
+          {value.caption}
+        </span>
       </span>
     );
   }
@@ -172,7 +186,7 @@ export const ReferenceRowBody = ({
         <ReferenceTitle
           value={value}
           entityType={entityType}
-          lineClassName={styles.titleLine}
+          lineClassName={clsx(styles.titleLine, styles.modelTitleLine)}
           nameClassName={styles.name}
           secondaryClassName={styles.nameSecondary}
         />

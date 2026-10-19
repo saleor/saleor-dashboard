@@ -1,9 +1,9 @@
+import { DetailSettingRadioGroup } from "@dashboard/components/DetailSettingRadioGroup/DetailSettingRadioGroup";
 import { MarkAsPaidStrategyEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { TriangleAlert } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
-import { ChannelSettingRadioGroup } from "./ChannelSettingRadioGroup";
 import { messages } from "./messages";
 
 interface MarkAsPaidProps {
@@ -15,7 +15,7 @@ interface MarkAsPaidProps {
 const legacyMarkerIconSize = 12;
 
 export const MarkAsPaid = ({ value, onValueChange, disabled }: MarkAsPaidProps) => (
-  <ChannelSettingRadioGroup
+  <DetailSettingRadioGroup
     testId="order-settings-mark-as-paid"
     name="markAsPaidStrategy"
     title={<FormattedMessage {...messages.markAsPaid} />}

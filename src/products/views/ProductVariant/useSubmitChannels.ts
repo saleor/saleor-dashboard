@@ -19,7 +19,10 @@ const isFormDataChanged = (data: Product, variant: Variant) =>
     const costPriceHasChanged =
       channel.value.costPrice !== variantChannel?.costPrice?.amount.toString();
 
-    return priceHasChanged || costPriceHasChanged;
+    const availabilityHasChanged =
+      channel.value.isAvailableForPurchase !== variantChannel?.isAvailableForPurchase;
+
+    return priceHasChanged || costPriceHasChanged || availabilityHasChanged;
   });
 const hasRecordDeleted = (data: Product, variant: Variant) =>
   data.channelListings.length !== variant.channelListings.length;
@@ -36,6 +39,7 @@ const createVariantUpdateListingInput = (data: Product) =>
     channelId: listing.id,
     costPrice: listing.value.costPrice || null,
     price: listing.value.price,
+    isAvailableForPurchase: listing.value.isAvailableForPurchase,
   }));
 
 export const useSubmitChannels = () => {

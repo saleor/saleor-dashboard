@@ -1,0 +1,49 @@
+.indicator {
+  display: block;
+  flex: none;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1px solid color-mix(in srgb, var(--hex-color) 80%, black);
+  border-radius: 50%;
+  background-color: var(--hex-color);
+  transition:
+    background-color 500ms,
+    border-color 500ms;
+  animation: pop-in 300ms ease-out;
+}
+
+.leaving {
+  animation: shrink-out 150ms ease-in forwards;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shrink-out {
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+/* Keep animations near-instant rather than off, so `animationend` still unmounts the indicator. */
+@media (prefers-reduced-motion: reduce) {
+  .indicator,
+  .leaving {
+    animation-duration: 1ms;
+  }
+}

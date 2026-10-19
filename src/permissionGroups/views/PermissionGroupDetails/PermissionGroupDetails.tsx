@@ -200,6 +200,8 @@ export const PermissionGroupDetails = ({ id, params }: PermissionGroupDetailsPro
       />
 
       <AssignMembersDialog
+        key={params.action ?? "closed"}
+        assignedMemberIds={membersList.map(member => member.id)}
         loading={searchResult.loading}
         staffMembers={mapEdgesToItems(searchResult?.data?.search) ?? []}
         onSearchChange={search}
@@ -211,7 +213,17 @@ export const PermissionGroupDetails = ({ id, params }: PermissionGroupDetailsPro
         open={params.action === "assign"}
         onClose={closeModal}
         onSubmit={formData => {
-          setMembersList([...(membersList ?? []), ...formData] as Members);
+          setMembersList(currentMembers => {
+            const membersById = new Map(currentMembers.map(member => [member.id, member]));
+
+            for (const member of formData) {
+              if (!membersById.has(member.id)) {
+                membersById.set(member.id, { ...member, lastLogin: null });
+              }
+            }
+
+            return Array.from(membersById.values());
+          });
           closeModal();
         }}
       />

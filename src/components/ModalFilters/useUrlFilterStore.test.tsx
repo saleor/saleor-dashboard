@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 import { useUrlFilterStore } from "./useUrlFilterStore";
 
 const createWrapper = (initialPath: string) => {
-  // eslint-disable-next-line react/display-name
+  // oxlint-disable-next-line react/display-name
   return ({ children }: { children: ReactNode }): JSX.Element => (
     <MemoryRouter initialEntries={[initialPath]}>{children}</MemoryRouter>
   );

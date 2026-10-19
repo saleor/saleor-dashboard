@@ -1,6 +1,6 @@
 import { createEmptyCodition } from "@dashboard/discounts/models/Condition";
 import { type Rule } from "@dashboard/discounts/models/Rule";
-import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
+import { PromotionTypeEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -8,7 +8,7 @@ import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/uti
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Combobox, Input, type Option } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -54,13 +54,6 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
       })),
     [channels],
   );
-
-  useEffect(() => {
-    // Restart reward type to percentage if  no currency
-    if (!currencySymbol) {
-      setValue("rewardValueType", RewardValueTypeEnum.PERCENTAGE);
-    }
-  }, [currencySymbol]);
 
   const handleChannelChange = (e: ChangeEvent) => {
     const channelId = e.target.value;

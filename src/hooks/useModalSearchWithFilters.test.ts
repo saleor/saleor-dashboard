@@ -478,4 +478,208 @@ describe("useModalSearchWithFilters", () => {
       expect(result.current.query).toBe("new value");
     });
   });
+  describe("isSearching", () => {
+    interface Deferred {
+      promise: Promise<void>;
+      resolve: () => void;
+      reject: () => void;
+    }
+
+    const createDeferred = (): Deferred => {
+      let resolve: () => void = () => {};
+      let reject: () => void = () => {};
+      const promise = new Promise<void>((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+
+      return { promise, resolve, reject };
+    };
+
+    // Lets the hook's `then` callbacks run inside act().
+    const settle = async (settleRequest: () => void): Promise<void> => {
+      await act(async () => {
+        settleRequest();
+      });
+    };
+
+    it("should stay false when onFetch returns no promise", () => {
+      // Arrange
+      const { result } = renderHook(() =>
+        useModalSearchWithFilters({ ...defaultOptions, onFetch: mockOnFetch }),
+      );
+
+      // Act
+      act(() => {
+        result.current.onQueryChange(createChangeEvent("a"));
+      });
+
+      // Assert
+      expect(result.current.isSearching).toBe(false);
+
+      act(() => {
+        jest.advanceTimersByTime(DEBOUNCE_MS);
+      });
+
+      expect(result.current.isSearching).toBe(false);
+    });
+
+    it("should be true from the keystroke until the debounced request settles", async () => {
+      // Arrange
+      const openRequest = createDeferred();
+      const queryRequest = createDeferred();
+
+      mockOnFetch
+        .mockReturnValueOnce(openRequest.promise)
+        .mockReturnValueOnce(queryRequest.promise);
+
+      const { result } = renderHook(() =>
+        useModalSearchWithFilters({ ...defaultOptions, onFetch: mockOnFetch }),
+      );
+
+      await settle(openRequest.resolve);
+      expect(result.current.isSearching).toBe(false);
+
+      // Act
+      act(() => {
+        result.current.onQueryChange(createChangeEvent("a"));
+      });
+
+      // Assert - pending during the debounce, before any request goes out
+      expect(result.current.isSearching).toBe(true);
+      expect(mockOnFetch).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        jest.advanceTimersByTime(DEBOUNCE_MS);
+      });
+
+      expect(mockOnFetch).toHaveBeenLastCalledWith({}, "a");
+      expect(result.current.isSearching).toBe(true);
+
+      await settle(queryRequest.resolve);
+      expect(result.current.isSearching).toBe(false);
+    });
+
+    it("should ignore an older request settling while a newer one is in flight", async () => {
+      // Arrange
+      const olderRequest = createDeferred();
+      const newerRequest = createDeferred();
+
+      mockOnFetch
+        .mockReturnValueOnce(olderRequest.promise)
+        .mockReturnValueOnce(newerRequest.promise);
+
+      const { result, rerender } = renderHook(props => useModalSearchWithFilters(props), {
+        initialProps: { ...defaultOptions, onFetch: mockOnFetch },
+      });
+
+      // Act - a filter change fires a second request immediately
+      rerender({
+        ...defaultOptions,
+        onFetch: mockOnFetch,
+        filterVariables: { category: { oneOf: ["cat-1"] } },
+      });
+      await settle(olderRequest.resolve);
+
+      // Assert
+      expect(result.current.isSearching).toBe(true);
+
+      await settle(newerRequest.resolve);
+      expect(result.current.isSearching).toBe(false);
+    });
+
+    it("should clear when a later fetch returns no promise", async () => {
+      // Arrange
+      mockOnFetch.mockReturnValueOnce(Promise.resolve()).mockReturnValueOnce(undefined);
+
+      const { result } = renderHook(() =>
+        useModalSearchWithFilters({ ...defaultOptions, onFetch: mockOnFetch }),
+      );
+
+      await settle(() => {});
+
+      act(() => {
+        result.current.onQueryChange(createChangeEvent("a"));
+      });
+      expect(result.current.isSearching).toBe(true);
+
+      // Act
+      act(() => {
+        jest.advanceTimersByTime(DEBOUNCE_MS);
+      });
+
+      // Assert
+      expect(mockOnFetch).toHaveBeenLastCalledWith({}, "a");
+      expect(result.current.isSearching).toBe(false);
+    });
+
+    it("should clear when the latest request fails", async () => {
+      // Arrange
+      const request = createDeferred();
+
+      mockOnFetch.mockReturnValueOnce(request.promise);
+
+      const { result } = renderHook(() =>
+        useModalSearchWithFilters({ ...defaultOptions, onFetch: mockOnFetch }),
+      );
+
+      expect(result.current.isSearching).toBe(true);
+
+      // Act
+      await settle(request.reject);
+
+      // Assert
+      expect(result.current.isSearching).toBe(false);
+    });
+
+    it("should clear when the dialog closes mid-request and stay clear after a late response", async () => {
+      // Arrange
+      const request = createDeferred();
+
+      mockOnFetch.mockReturnValueOnce(request.promise);
+
+      const { result, rerender } = renderHook(props => useModalSearchWithFilters(props), {
+        initialProps: { ...defaultOptions, onFetch: mockOnFetch },
+      });
+
+      expect(result.current.isSearching).toBe(true);
+
+      // Act
+      rerender({ ...defaultOptions, onFetch: mockOnFetch, open: false });
+
+      // Assert
+      expect(result.current.isSearching).toBe(false);
+
+      await settle(request.resolve);
+      expect(result.current.isSearching).toBe(false);
+    });
+
+    it("should not reopen with a spinner when the dialog closed between keystroke and fetch", async () => {
+      // Arrange
+      mockOnFetch.mockReturnValue(Promise.resolve());
+
+      const { result, rerender } = renderHook(props => useModalSearchWithFilters(props), {
+        initialProps: { ...defaultOptions, onFetch: mockOnFetch },
+      });
+
+      await settle(() => {});
+
+      act(() => {
+        result.current.onQueryChange(createChangeEvent("a"));
+      });
+
+      // Act - close, let the debounced fetch fire and settle, then reopen without an open fetch
+      rerender({ ...defaultOptions, onFetch: mockOnFetch, open: false });
+      act(() => {
+        jest.advanceTimersByTime(DEBOUNCE_MS);
+      });
+      await settle(() => {});
+      expect(result.current.isSearching).toBe(false);
+
+      rerender({ ...defaultOptions, onFetch: mockOnFetch, open: true, skipFetchOnOpen: true });
+
+      // Assert
+      expect(result.current.isSearching).toBe(false);
+    });
+  });
 });
