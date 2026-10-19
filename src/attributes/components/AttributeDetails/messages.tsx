@@ -1,6 +1,17 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  internalDescription: {
+    id: "y+43V1",
+    defaultMessage: "Internal description",
+    description: "attribute internal description field label",
+  },
+  internalDescriptionHelper: {
+    id: "BPjTyd",
+    defaultMessage:
+      "Visible only to staff and apps. Explain what this attribute means and how to fill it in.",
+    description: "attribute internal description field helper text",
+  },
   attributeLabel: {
     id: "xOEZjV",
     defaultMessage: "Default Label",

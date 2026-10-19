@@ -45,6 +45,8 @@ import { resolveByAttributeId, resolveFetchMoreByAttributeId } from "./utils";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
+  /** Staff-only guidance shown under the attribute label. */
+  internalDescription?: string | null;
   entityType?: AttributeEntityTypeEnum;
   unit?: MeasurementUnitsEnum | null;
   variantAttributeScope?: VariantAttributeScope;

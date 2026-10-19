@@ -15,6 +15,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       availableInGrid: false,
       storefrontSearchPosition: 0,
       metadata: [],
@@ -87,6 +88,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       availableInGrid: false,
       storefrontSearchPosition: 0,
       metadata: [],
@@ -199,6 +201,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       availableInGrid: false,
       storefrontSearchPosition: 0,
       metadata: [],
@@ -251,6 +254,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       availableInGrid: false,
       storefrontSearchPosition: 0,
       metadata: [],
@@ -343,6 +347,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       availableInGrid: false,
       storefrontSearchPosition: 0,
       metadata: [],
@@ -415,6 +420,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       availableInGrid: false,
       storefrontSearchPosition: 0,
       metadata: [],
@@ -507,6 +513,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTox",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -573,6 +580,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMg==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -719,6 +727,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo3",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -785,6 +794,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -851,6 +861,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -917,6 +928,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      internalDescription: null,
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo0",
       inputType: AttributeInputTypeEnum.DROPDOWN,

@@ -6,7 +6,9 @@ import {
 } from "@dashboard/graphql";
 import { type Container } from "@dashboard/types";
 
+import { getAttributePageInitialForm } from "./attributePageForm";
 import {
+  getAttributeData,
   getAttributesDisplayData,
   getReferenceAttributeDisplayData,
   getSelectedAttributeValues,
@@ -1113,5 +1115,33 @@ describe("attributes/utils/data", () => {
       expect(second[0]).not.toBe(first[0]);
       expect(second[0].data.references).toEqual(first[0].data.references);
     });
+  });
+});
+
+describe("getAttributeData internalDescription", () => {
+  it.each([
+    AttributeInputTypeEnum.DROPDOWN,
+    AttributeInputTypeEnum.SWATCH,
+    AttributeInputTypeEnum.PLAIN_TEXT,
+  ])("sends null for a whitespace-only description of a %s attribute", inputType => {
+    // Arrange
+    const formData = { ...getAttributePageInitialForm(), inputType, internalDescription: " \n " };
+
+    // Act
+    const input = getAttributeData(formData, []);
+
+    // Assert
+    expect(input.internalDescription).toBeNull();
+  });
+
+  it("sends the description as typed when it has text", () => {
+    // Arrange
+    const formData = { ...getAttributePageInitialForm(), internalDescription: " Weight in g. " };
+
+    // Act
+    const input = getAttributeData(formData, []);
+
+    // Assert
+    expect(input.internalDescription).toBe(" Weight in g. ");
   });
 });

@@ -549,6 +549,12 @@ export type AttributeCreateInput = {
   externalReference?: InputMaybe<Scalars['String']['input']>;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: InputMaybe<AttributeInputTypeEnum>;
+  /**
+   * Plain-text description of the attribute for staff users and apps. Not exposed to customers.
+   *
+   * Added in Saleor 3.23.
+   */
+  internalDescription?: InputMaybe<Scalars['String']['input']>;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of an attribute displayed in the interface. */
@@ -717,6 +723,12 @@ export type AttributeUpdateInput = {
   addValues?: InputMaybe<Array<AttributeValueUpdateInput>>;
   /** External ID of this product. */
   externalReference?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Plain-text description of the attribute for staff users and apps. Not exposed to customers.
+   *
+   * Added in Saleor 3.23.
+   */
+  internalDescription?: InputMaybe<Scalars['String']['input']>;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of an attribute displayed in the interface. */

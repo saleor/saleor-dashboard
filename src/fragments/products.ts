@@ -262,6 +262,7 @@ export const variantAttributeFragment = gql`
   fragment VariantAttribute on Attribute {
     id
     name
+    internalDescription
     slug
     inputType
     entityType

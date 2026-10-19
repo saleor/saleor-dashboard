@@ -131,6 +131,7 @@ export interface AttributePageFormData extends MetadataFormData {
   inputType: AttributeInputTypeEnum;
   entityType: AttributeEntityTypeEnum | null;
   filterableInStorefront: boolean;
+  internalDescription: string;
   name: string;
   slug: string;
   storefrontSearchPosition: string;

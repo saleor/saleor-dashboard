@@ -14,6 +14,7 @@ export const page: PageDetailsFragment = {
     {
       attribute: {
         id: "QXR0cmlidXRlOjI3",
+        internalDescription: null,
         slug: "author",
         name: "Author",
         entityType: null,
@@ -115,6 +116,7 @@ export const page: PageDetailsFragment = {
     {
       attribute: {
         id: "QXR0cmlidXRlOjI5",
+        internalDescription: null,
         slug: "tag",
         name: "Tag",
         entityType: null,
@@ -250,6 +252,7 @@ export const page: PageDetailsFragment = {
     attributes: [
       {
         id: "QXR0cmlidXRlOjI3",
+        internalDescription: null,
         name: "Author",
         entityType: null,
         inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -324,6 +327,7 @@ export const page: PageDetailsFragment = {
       },
       {
         id: "QXR0cmlidXRlOjI5",
+        internalDescription: null,
         name: "Tag",
         entityType: null,
         inputType: AttributeInputTypeEnum.MULTISELECT,

@@ -134,6 +134,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         __typename: "SelectedAttribute" as const,
         attribute: {
           __typename: "Attribute" as const,
+          internalDescription: null,
           id: "QXR0cmlidXRlOjY4MQ==",
           name: "Reference",
           slug: "reference",

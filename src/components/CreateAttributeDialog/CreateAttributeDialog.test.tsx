@@ -208,6 +208,7 @@ describe("CreateAttributeDialog", () => {
       entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
       filterableInStorefront: true,
       inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
+      internalDescription: "",
       metadata: [],
       name: "",
       privateMetadata: [],

@@ -2689,6 +2689,10 @@
     "context": "setup review row description",
     "string": "How tax is calculated for this channel."
   },
+  "86Ufj1": {
+    "context": "attribute row, button that collapses the attribute internal description",
+    "string": "Hide description"
+  },
   "87NGDZ": {
     "string": "Plugin doesn't have any configuration fields"
   },
@@ -3635,6 +3639,10 @@
   "BOYxG5": {
     "context": "Product purchasability status in a channel",
     "string": "Not purchasable"
+  },
+  "BPjTyd": {
+    "context": "attribute internal description field helper text",
+    "string": "Visible only to staff and apps. Explain what this attribute means and how to fill it in."
   },
   "BR8au7": {
     "context": "delete channel",
@@ -13510,6 +13518,10 @@
   "kVL3LM": {
     "string": "Voucher codes"
   },
+  "kVNXNN": {
+    "context": "attribute row, button that expands the attribute internal description",
+    "string": "Show description"
+  },
   "kVOslW": {
     "context": "reason for discount label",
     "string": "Reason for discount"
@@ -17583,6 +17595,10 @@
   "xzzNba": {
     "context": "helper under currency on create",
     "string": "Prices and payments use this currency. It can’t be changed later."
+  },
+  "y+43V1": {
+    "context": "attribute internal description field label",
+    "string": "Internal description"
   },
   "y+718D": {
     "context": "factor label for whole-order voucher propagated to a line",

@@ -12,6 +12,7 @@ const baseFormData: AttributePageFormData = {
   entityType: null,
   filterableInStorefront: true,
   inputType: AttributeInputTypeEnum.DROPDOWN,
+  internalDescription: "",
   metadata: [],
   name: "Color",
   privateMetadata: [],
@@ -100,6 +101,30 @@ describe("isAttributeUpdateFormPristine", () => {
       ...baseFormData,
       name: "Size",
     };
+
+    // Act
+    const pristine = isAttributeUpdateFormPristine(current, initial);
+
+    // Assert
+    expect(pristine).toBe(false);
+  });
+
+  it("treats a whitespace-only internal description as unchanged from an empty one", () => {
+    // Arrange
+    const initial = baseFormData;
+    const current: AttributePageFormData = { ...baseFormData, internalDescription: "  " };
+
+    // Act
+    const pristine = isAttributeUpdateFormPristine(current, initial);
+
+    // Assert
+    expect(pristine).toBe(true);
+  });
+
+  it("returns false when the internal description changes", () => {
+    // Arrange
+    const initial = baseFormData;
+    const current: AttributePageFormData = { ...baseFormData, internalDescription: "Weight" };
 
     // Act
     const pristine = isAttributeUpdateFormPristine(current, initial);

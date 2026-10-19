@@ -15,7 +15,7 @@ import { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { Box, Combobox, Input } from "@saleor/macaw-ui-next";
+import { Box, Combobox, Input, Textarea } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
@@ -164,6 +164,16 @@ const AttributeDetails = (props: AttributeDetailsProps): React.ReactNode => {
         placeholder={slugPlaceholder}
         value={data.slug}
         width="100%"
+        onChange={onChange}
+      />
+      <Textarea
+        data-test-id="attribute-internal-description-input"
+        disabled={disabled}
+        helperText={intl.formatMessage(messages.internalDescriptionHelper)}
+        label={intl.formatMessage(messages.internalDescription)}
+        name="internalDescription"
+        rows={3}
+        value={data.internalDescription}
         onChange={onChange}
       />
       <Box

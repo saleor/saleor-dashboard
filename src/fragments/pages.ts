@@ -38,6 +38,7 @@ export const pageAttributesFragment = gql`
       attributes {
         id
         name
+        internalDescription
         inputType
         entityType
         valueRequired

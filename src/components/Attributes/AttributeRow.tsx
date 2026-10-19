@@ -1,7 +1,10 @@
 // @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { AttributeInputTypeTooltip } from "@dashboard/components/AttributeInputTypeIcon/AttributeInputTypeTooltip";
-import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
+import {
+  AttributeInternalDescription,
+  BasicAttributeRow,
+} from "@dashboard/components/Attributes/BasicAttributeRow";
 import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
 import {
   getAttributeRowLabelProps,
@@ -128,6 +131,14 @@ const AttributeRow = ({
           </Text>
         </Box>
       ) : null;
+      // The group header is the fold button, so the description lives in the body instead of beside the label.
+      const internalDescription = attribute.data.internalDescription?.trim() ? (
+        <Box paddingX={isCardRow ? 6 : 0} paddingTop={isCardRow ? 3 : 0} paddingBottom={3}>
+          <AttributeInternalDescription>
+            {attribute.data.internalDescription}
+          </AttributeInternalDescription>
+        </Box>
+      ) : null;
       const referenceList = (
         <ReferenceList
           entityType={attribute.data.entityType}
@@ -249,6 +260,7 @@ const AttributeRow = ({
                 </>
               }
             >
+              {internalDescription}
               {referenceList}
             </DetailGroupBox>
             {errorMessage}
@@ -297,7 +309,10 @@ const AttributeRow = ({
               </>
             }
           >
-            <Box padding={4}>{referenceList}</Box>
+            <Box padding={4}>
+              {internalDescription}
+              {referenceList}
+            </Box>
           </DetailGroupBox>
           {errorMessage}
         </Box>

@@ -42,6 +42,7 @@ export function getAttributeInputFromProduct(product: ProductFragment): Attribut
       data: {
         entityType: attribute.attribute.entityType,
         inputType: attribute.attribute.inputType,
+        internalDescription: attribute.attribute.internalDescription,
         isRequired: attribute.attribute.valueRequired,
         selectedValues: attribute.values,
         values: mergeChoicesWithValues(attribute),
@@ -76,6 +77,7 @@ export function getAttributeInputFromProductType(productType: ProductType): Attr
     data: {
       entityType: attribute.entityType,
       inputType: attribute.inputType,
+      internalDescription: attribute.internalDescription,
       isRequired: attribute.valueRequired,
       values: mapEdgesToItems(attribute.choices) || [],
       unit: attribute.unit,
@@ -94,6 +96,7 @@ function getAttributeInputFromAttributes(
     data: {
       entityType: attribute.entityType,
       inputType: attribute.inputType,
+      internalDescription: attribute.internalDescription,
       isRequired: attribute.valueRequired,
       values: mapEdgesToItems(attribute.choices) || [],
       unit: attribute.unit,
@@ -113,6 +116,7 @@ function getAttributeInputFromSelectedAttributes(
     data: {
       entityType: attribute.attribute.entityType,
       inputType: attribute.attribute.inputType,
+      internalDescription: attribute.attribute.internalDescription,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
       values: mergeChoicesWithValues(attribute),

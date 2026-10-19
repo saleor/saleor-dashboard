@@ -12,6 +12,7 @@ export function getAttributeInputFromPage(page: PageDetailsFragment): AttributeI
     data: {
       entityType: attribute.attribute.entityType,
       inputType: attribute.attribute.inputType,
+      internalDescription: attribute.attribute.internalDescription,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
       values: mergeChoicesWithValues(attribute),
@@ -40,6 +41,7 @@ export function getAttributeInputFromPageType(
     data: {
       entityType: attribute.entityType,
       inputType: attribute.inputType,
+      internalDescription: attribute.internalDescription,
       isRequired: attribute.valueRequired,
       values: mapEdgesToItems(attribute.choices) || [],
     },

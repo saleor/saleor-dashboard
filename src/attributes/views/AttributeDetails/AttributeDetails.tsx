@@ -6,8 +6,13 @@ import {
   DEPRECATED_FACETED_NAVIGATION_INPUT,
 } from "@dashboard/attributes/utils/data";
 import { getAssignedModelTypesForAttribute } from "@dashboard/attributes/utils/getAssignedModelTypesForAttribute";
+import {
+  getInternalDescriptionChange,
+  normalizeInternalDescription,
+} from "@dashboard/attributes/utils/internalDescription";
 import { mapAssignedTypeConnection } from "@dashboard/attributes/utils/mapAssignedTypeConnection";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   AttributeTypeEnum,
   OrderDirection,
@@ -60,6 +65,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeUrlDialog,
     AttributeUrlQueryParams
@@ -354,20 +360,36 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
         beforeValues: valuesPaginationState.before,
       },
     });
-  const handleSubmit = async (data: AttributePageFormData) =>
-    extractMutationErrors(
+  const handleSubmit = async (formData: AttributePageFormData) => {
+    const previousInternalDescription = attribute?.internalDescription;
+    const errors = await extractMutationErrors(
       attributeUpdate({
         variables: {
           id,
           input: {
-            ...omit(data, ["entityType", "inputType", "metadata", "privateMetadata"]),
-            storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
-            referenceTypes: data.referenceTypes.map(ref => ref.value),
+            ...omit(formData, ["entityType", "inputType", "metadata", "privateMetadata"]),
+            internalDescription: normalizeInternalDescription(formData.internalDescription),
+            storefrontSearchPosition: parseInt(formData.storefrontSearchPosition, 10),
+            referenceTypes: formData.referenceTypes.map(ref => ref.value),
             ...DEPRECATED_FACETED_NAVIGATION_INPUT,
           },
         },
       }),
     );
+    const internalDescriptionChange = getInternalDescriptionChange(
+      previousInternalDescription,
+      formData.internalDescription,
+    );
+
+    if (errors.length === 0 && internalDescriptionChange) {
+      trackEvent("attribute_internal_description_saved", {
+        action: internalDescriptionChange,
+        context: "update",
+      });
+    }
+
+    return errors;
+  };
 
   return (
     <AttributePage
