@@ -9,6 +9,7 @@ import {
 
 export const attribute: AttributeDetailsQuery["attribute"] = {
   __typename: "Attribute" as const,
+  internalDescription: null,
   availableInGrid: true,
   entityType: null,
   filterableInStorefront: true,
@@ -102,6 +103,7 @@ export const attributes: Array<
 > = [
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PRODUCT,
     filterableInStorefront: false,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
@@ -170,6 +172,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PAGE,
     filterableInStorefront: false,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo2",
@@ -276,6 +279,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PRODUCT,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZToz",
@@ -325,6 +329,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PRODUCT,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo4",
@@ -412,6 +417,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PAGE,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo1",
@@ -480,6 +486,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PRODUCT,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZToy",
@@ -567,6 +574,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PAGE,
     filterableInStorefront: false,
     id: "UHJvZHVjdEF0dHJpYnV0ZTox",
@@ -635,6 +643,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PRODUCT,
     filterableInStorefront: false,
     id: "UHJvZHVjdEF0dHJpYnV0ZToxMg==",
@@ -777,6 +786,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PRODUCT,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo3",
@@ -843,6 +853,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PRODUCT,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
@@ -909,6 +920,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PAGE,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
@@ -975,6 +987,7 @@ export const attributes: Array<
   },
   {
     __typename: "Attribute" as const,
+    internalDescription: null,
     entityType: AttributeEntityTypeEnum.PRODUCT,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo0",

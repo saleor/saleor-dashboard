@@ -27,6 +27,7 @@ export const product: (
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute" as const,
+        internalDescription: null,
         availableInGrid: false,
         storefrontSearchPosition: 0,
         entityType: null,
@@ -112,6 +113,7 @@ export const product: (
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute" as const,
+        internalDescription: null,
         availableInGrid: false,
         storefrontSearchPosition: 0,
         entityType: null,
@@ -344,6 +346,7 @@ export const product: (
     nonSelectionVariantAttributes: [
       {
         __typename: "Attribute",
+        internalDescription: null,
         entityType: null,
         id: "isdugfhud",
         inputType: AttributeInputTypeEnum.FILE,
@@ -391,6 +394,7 @@ export const product: (
     selectionVariantAttributes: [
       {
         __typename: "Attribute",
+        internalDescription: null,
         entityType: null,
         id: "pta18161",
         inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -452,6 +456,7 @@ export const product: (
     variantAttributes: [
       {
         __typename: "Attribute",
+        internalDescription: null,
         id: "isdugfhud",
         name: "Attachment",
         inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -497,6 +502,7 @@ export const product: (
       },
       {
         __typename: "Attribute",
+        internalDescription: null,
         id: "pta18161",
         name: "Color",
         slug: "color",
@@ -3674,6 +3680,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute",
+        internalDescription: null,
         entityType: null,
         id: "nfnyffcf8eyfm",
         inputType: AttributeInputTypeEnum.FILE,
@@ -3872,6 +3879,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute" as const,
+        internalDescription: null,
         entityType: null,
         id: "pta18161",
         inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -3950,6 +3958,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       __typename: "SelectedAttribute",
       attribute: {
         __typename: "Attribute" as const,
+        internalDescription: null,
         entityType: null,
         id: "pta22785",
         inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -4329,6 +4338,7 @@ export const gridAttributesResult: GridAttributesQuery = {
 export const variantAttributes: VariantAttributeFragment[] = [
   {
     __typename: "Attribute",
+    internalDescription: null,
     id: "QXR0cmlidXRlOjE1",
     name: "Bottle size",
     slug: "bottle-size",
@@ -4351,6 +4361,7 @@ export const variantAttributes: VariantAttributeFragment[] = [
   },
   {
     __typename: "Attribute",
+    internalDescription: null,
     id: "QXR0cmlidXRlOjY4MQ==",
     name: "Plain text",
     slug: "plain-text",
