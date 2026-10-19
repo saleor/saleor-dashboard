@@ -28,6 +28,17 @@ const messages = defineMessages({
   },
 });
 
+export const AttributeInternalDescription = ({ children }: { children: ReactNode }) => (
+  <Text
+    size={2}
+    color="default2"
+    className={styles.description}
+    data-test-id="attribute-description"
+  >
+    {children}
+  </Text>
+);
+
 interface BasicAttributeRowProps {
   label: string | ReactNode;
   inputType?: AttributeInputTypeEnum;
@@ -120,14 +131,7 @@ export const BasicAttributeRow = ({
           )}
         </Box>
         {hasDescription && !collapsed && (
-          <Text
-            size={2}
-            color="default2"
-            className={styles.description}
-            data-test-id="attribute-description"
-          >
-            {internalDescription}
-          </Text>
+          <AttributeInternalDescription>{internalDescription}</AttributeInternalDescription>
         )}
       </Box>
       <Box data-test-id="attribute-value" minWidth={0}>

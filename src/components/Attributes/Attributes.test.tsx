@@ -99,6 +99,31 @@ describe("Attributes", () => {
     );
   });
 
+  it("shows the internal description inside an expanded reference group", async () => {
+    // Arrange
+    const described: AttributeInput = {
+      ...relatedProductsAttribute,
+      data: {
+        ...relatedProductsAttribute.data,
+        internalDescription: "Pick items bought together.",
+      },
+    };
+
+    render(<Attributes {...baseProps} chrome="card" attributes={[described]} />, {
+      wrapper: RouterWrapper,
+    });
+
+    const group = screen.getByTestId("attribute-reference-group");
+
+    // Act
+    await userEvent.click(within(group).getByTestId("attribute-reference-group-expand"));
+
+    // Assert
+    expect(within(group).getByTestId("attribute-description")).toHaveTextContent(
+      "Pick items bought together.",
+    );
+  });
+
   it("omits the reference count when no references are assigned", () => {
     // Arrange // Act
     render(<Attributes {...baseProps} chrome="card" attributes={[numericAttribute]} />, {
