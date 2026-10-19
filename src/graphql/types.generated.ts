@@ -574,6 +574,12 @@ export type AttributeCreateInput = {
   filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: InputMaybe<AttributeInputTypeEnum>;
+  /**
+   * Plain-text description of the attribute for staff users and apps. Not exposed to customers.
+   *
+   * Added in Saleor 3.23.
+   */
+  internalDescription?: InputMaybe<Scalars['String']['input']>;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of an attribute displayed in the interface. */
@@ -801,6 +807,12 @@ export type AttributeUpdateInput = {
    * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
    */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * Plain-text description of the attribute for staff users and apps. Not exposed to customers.
+   *
+   * Added in Saleor 3.23.
+   */
+  internalDescription?: InputMaybe<Scalars['String']['input']>;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of an attribute displayed in the interface. */

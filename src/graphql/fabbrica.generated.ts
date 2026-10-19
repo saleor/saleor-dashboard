@@ -4380,6 +4380,14 @@ export type OptionalAttribute = {
   id?: Attribute['id'] | undefined;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: Attribute['inputType'] | undefined;
+  /**
+ * Plain-text description of the attribute for staff users and apps. Not exposed to customers.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+ */
+  internalDescription?: Attribute['internalDescription'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
   metadata?: OptionalMetadataItem[] | undefined;
   /**
@@ -4813,6 +4821,12 @@ export type OptionalAttributeCreateInput = {
   filterableInStorefront?: AttributeCreateInput['filterableInStorefront'] | undefined;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: AttributeCreateInput['inputType'] | undefined;
+  /**
+ * Plain-text description of the attribute for staff users and apps. Not exposed to customers.
+ *
+ * Added in Saleor 3.23.
+ */
+  internalDescription?: AttributeCreateInput['internalDescription'] | undefined;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: AttributeCreateInput['isVariantOnly'] | undefined;
   /** Name of an attribute displayed in the interface. */
@@ -5234,6 +5248,12 @@ export type OptionalAttributeUpdateInput = {
   filterableInDashboard?: AttributeUpdateInput['filterableInDashboard'] | undefined;
   /** Whether the attribute can be filtered in storefront. */
   filterableInStorefront?: AttributeUpdateInput['filterableInStorefront'] | undefined;
+  /**
+ * Plain-text description of the attribute for staff users and apps. Not exposed to customers.
+ *
+ * Added in Saleor 3.23.
+ */
+  internalDescription?: AttributeUpdateInput['internalDescription'] | undefined;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: AttributeUpdateInput['isVariantOnly'] | undefined;
   /** Name of an attribute displayed in the interface. */
