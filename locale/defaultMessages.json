@@ -624,6 +624,9 @@
     "context": "confirm dialog title when disabling staff email sending",
     "string": "Turn off staff emails?"
   },
+  "0H1iBF": {
+    "string": "Translate full descriptions for categories and collections. Existing description translations stay separate."
+  },
   "0HBlkO": {
     "string": "Search channels"
   },
@@ -3297,6 +3300,9 @@
     "context": "reference types multiselect search placeholder",
     "string": "Search by name…"
   },
+  "A9y531": {
+    "string": "Categories now have a separate Full Description field. For example, keep an introduction in Description and add detailed content in Full Description."
+  },
   "AA0eYf": {
     "context": "staff details sidebar card title for dashboard locale",
     "string": "Dashboard language"
@@ -3503,6 +3509,9 @@
   "Av27o5": {
     "context": "Short merchant-facing tooltip for OrderSettings.allowUnpaidOrders (avoid GraphQL mutation names)",
     "string": "Lets checkout finish and create an order before payment fully covers the total."
+  },
+  "AyCQx0": {
+    "string": "Collections now have a separate Full Description field. For example, keep an introduction in Description and add detailed content in Full Description."
   },
   "AyQkmp": {
     "string": "Sorting by this column is not available"
@@ -4347,6 +4356,9 @@
   "DzPVnj": {
     "context": "date time attribute type",
     "string": "Date Time"
+  },
+  "E+9QV7": {
+    "string": "Category full descriptions"
   },
   "E+n6Pt": {
     "string": "Nothing will change in terms of permissions. The Dashboard will redirect to the extension and inform it that you denied the request."
@@ -5237,6 +5249,9 @@
   },
   "GxsQuO": {
     "string": "You must select at least one gift"
+  },
+  "GyI/0N": {
+    "string": "Category and collection translations now include Full Description. Translate this field on its own or with other fields in bulk edit. The original text and existing Description translation stay separate."
   },
   "GyXEWS": {
     "string": "App created"
@@ -6824,6 +6839,9 @@
   "Mwk9vC": {
     "context": "staff details profile card title when viewing another staff member",
     "string": "Profile"
+  },
+  "MxJcz6": {
+    "string": "Add detailed collection content in Full Description. The existing description stays separate."
   },
   "MxhVZv": {
     "string": "Are you sure you want to delete collection's image?"
@@ -9098,6 +9116,9 @@
     "context": "product type PDP schematic card subtitle",
     "string": "How this type shows on the Paper Storefront — schematic, not a live preview."
   },
+  "V6FTHW": {
+    "string": "Full Description"
+  },
   "V6SjsS": {
     "context": "setup task complete",
     "string": "{count} {count, plural, one {channel} other {channels}} assigned"
@@ -9253,6 +9274,9 @@
   "VmMDLN": {
     "context": "permission list item description",
     "string": "This group is last source of that permission"
+  },
+  "Vmla01": {
+    "string": "Add detailed category content in Full Description. The existing description stays separate."
   },
   "Vqz/Gs": {
     "context": "cannot unset default customer type",
@@ -12977,6 +13001,9 @@
     "context": "empty state description for staff order alert recipients",
     "string": "Staff will not be emailed when a customer places an order."
   },
+  "ira4iG": {
+    "string": "Full description translations"
+  },
   "isM94c": {
     "context": "create service token, button",
     "string": "Create"
@@ -14706,6 +14733,9 @@
   "oZrwSn": {
     "context": "settings search alias",
     "string": "return reasons"
+  },
+  "oa3Bw5": {
+    "string": "Collection full descriptions"
   },
   "obHpf0": {
     "string": "No extensions found"

@@ -1,6 +1,8 @@
+import { type FetchResult } from "@apollo/client";
 import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
-import { VoucherTypeEnum } from "@dashboard/graphql";
+import { type VoucherCreateMutation, VoucherTypeEnum } from "@dashboard/graphql";
+import { GraphQLError } from "graphql";
 
 import { createHandler } from "./handlers";
 
@@ -36,9 +38,11 @@ const formData: FormData = {
 };
 
 describe("createHandler", () => {
-  it("should not call channel update when voucherCreate return error", async () => {
+  it("returns the execution error without updating channels when voucher creation fails", async () => {
     // Arrange
-    const voucherCreate = jest.fn().mockResolvedValue({ errors: ["error"] });
+    const error = new GraphQLError("Voucher creation failed");
+    const response: FetchResult<VoucherCreateMutation> = { errors: [error] };
+    const voucherCreate = jest.fn().mockResolvedValue(response);
     const updateChannels = jest.fn();
     const validateFn = jest.fn().mockReturnValue(true);
     const handler = createHandler(voucherCreate, updateChannels, validateFn);
@@ -47,7 +51,7 @@ describe("createHandler", () => {
     const result = await handler(formData);
 
     // Assert
-    expect(result).toEqual({ errors: ["Could not update channels"] });
+    expect(result).toEqual({ errors: [error] });
     expect(voucherCreate).toHaveBeenCalled();
     expect(updateChannels).not.toHaveBeenCalled();
   });

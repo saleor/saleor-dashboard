@@ -192,6 +192,9 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
       const input: CollectionInput = {
         backgroundImageAlt: formData.backgroundImageAlt,
         description: getParsedDataForJsonStringField(formData.description),
+        ...(formData.fullDescription !== undefined
+          ? { fullDescription: getParsedDataForJsonStringField(formData.fullDescription) }
+          : {}),
         name: formData.name,
         seo: {
           description: formData.seoDescription,
@@ -227,7 +230,7 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
           variables: channelUpdateVariables,
         });
 
-        channelErrors = channelResult.data?.collectionChannelListingUpdate?.errors ?? [];
+        channelErrors = getMutationErrors(channelResult);
       }
 
       const errors = [...collectionErrors, ...channelErrors];
@@ -267,6 +270,8 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
     updateCollectionOpts.called || updateChannelsOpts.called,
     updateCollectionOpts.loading || updateChannelsOpts.loading,
     saveErrors,
+    updateCollectionOpts.error ? [updateCollectionOpts.error] : [],
+    updateChannelsOpts.error ? [updateChannelsOpts.error] : [],
   );
 
   if (collection === null) {

@@ -268,6 +268,12 @@ interface RippleEntryRowProps {
 }
 
 const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEntryRowProps) => {
+  const intl = useIntl();
+  const title =
+    typeof ripple.content.oneLiner === "string"
+      ? ripple.content.oneLiner
+      : intl.formatMessage(ripple.content.oneLiner);
+
   return (
     <Box display="flex" gap={4}>
       {/* Timeline column - dot and line */}
@@ -306,7 +312,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
           marginBottom={2}
           color="default1"
         >
-          {ripple.content.oneLiner}
+          {title}
         </Text>
 
         {ripple.media?.kind === "video" ? (
@@ -323,7 +329,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
               playsInline
               preload="metadata"
               poster={ripple.media.poster}
-              aria-label={ripple.content.oneLiner}
+              aria-label={title}
             >
               <source src={ripple.media.src} type="video/mp4" />
             </video>

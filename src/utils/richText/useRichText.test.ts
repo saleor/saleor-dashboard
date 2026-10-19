@@ -1,4 +1,5 @@
 import { type OutputData } from "@editorjs/editorjs";
+import { type EditorCore } from "@react-editor-js/core";
 import { act, renderHook } from "@testing-library/react";
 
 import useRichText from "./useRichText";
@@ -18,6 +19,14 @@ const fixtures: Fixtures = {
   },
 };
 const triggerChange = jest.fn();
+
+const createEditor = (save: EditorCore["save"]): EditorCore => ({
+  save,
+  destroy: jest.fn(),
+  clear: jest.fn(),
+  render: jest.fn(),
+  dangerouslyLowLevelInstance: null,
+});
 
 describe("useRichText", () => {
   it("properly informs RichTextEditor when data is ready to mount", () => {
@@ -85,6 +94,83 @@ describe("useRichText", () => {
       result.current.handleChange();
     });
     expect(triggerChange).toHaveBeenCalled();
+    expect(result.current.isDirty).toBe(true);
+  });
+
+  it("keeps changes dirty until the editor has finished reading", async () => {
+    // Arrange
+    let finishRead: (value: OutputData) => void = () => undefined;
+    const read = new Promise<OutputData>(resolve => {
+      finishRead = resolve;
+    });
+    const { result } = renderHook(() => useRichText({ initial: "", triggerChange }));
+
+    result.current.editorRef.current = createEditor(() => read);
+    act(() => result.current.handleChange());
+
+    let pendingRead: Promise<OutputData>;
+
+    // Act
+    act(() => {
+      pendingRead = result.current.getValue();
+    });
+
+    // Assert
+    expect(result.current.isDirty).toBe(true);
+
+    // Act
+    await act(async () => {
+      finishRead(fixtures.short);
+      await pendingRead;
+    });
+
+    // Assert
+    expect(result.current.isDirty).toBe(false);
+  });
+
+  it("keeps changes dirty when reading the editor rejects", async () => {
+    // Arrange
+    const error = new Error("Cannot read editor");
+    const { result } = renderHook(() => useRichText({ initial: "", triggerChange }));
+
+    result.current.editorRef.current = createEditor(async () => {
+      throw error;
+    });
+    act(() => result.current.handleChange());
+
+    // Act
+    await act(async () => {
+      await expect(result.current.getValue()).rejects.toBe(error);
+    });
+
+    // Assert
+    expect(result.current.isDirty).toBe(true);
+  });
+
+  it("keeps edits made while the editor is being read dirty", async () => {
+    // Arrange
+    let finishRead: (value: OutputData) => void = () => undefined;
+    const read = new Promise<OutputData>(resolve => {
+      finishRead = resolve;
+    });
+    const { result } = renderHook(() => useRichText({ initial: "", triggerChange }));
+
+    result.current.editorRef.current = createEditor(() => read);
+    act(() => result.current.handleChange());
+
+    let pendingRead: Promise<OutputData>;
+
+    // Act
+    act(() => {
+      pendingRead = result.current.getValue();
+    });
+    act(() => result.current.handleChange());
+    await act(async () => {
+      finishRead(fixtures.short);
+      await pendingRead;
+    });
+
+    // Assert
     expect(result.current.isDirty).toBe(true);
   });
 });

@@ -1041,6 +1041,14 @@ export type CategoryInput = {
    */
   externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
+   * Full description of the category. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription?: InputMaybe<Scalars['JSONString']['input']>;
+  /**
    * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -1490,6 +1498,14 @@ export type CollectionCreateInput = {
    * Added in Saleor 3.23.
    */
   externalReference?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription?: InputMaybe<Scalars['JSONString']['input']>;
   /** Informs whether a collection is published. */
   isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -1561,6 +1577,14 @@ export type CollectionInput = {
    * Added in Saleor 3.23.
    */
   externalReference?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription?: InputMaybe<Scalars['JSONString']['input']>;
   /** Informs whether a collection is published. */
   isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -8946,6 +8970,14 @@ export type TranslationInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description?: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * Translated full description. Only supported for categories and collections; product translation mutations reject this field. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription?: InputMaybe<Scalars['JSONString']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   seoDescription?: InputMaybe<Scalars['String']['input']>;
   seoTitle?: InputMaybe<Scalars['String']['input']>;

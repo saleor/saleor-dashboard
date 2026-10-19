@@ -9,15 +9,9 @@ import { useIntl } from "react-intl";
 
 interface UseTranslationSaveFeedbackParams {
   refetch: () => void;
-  exitEditMode: () => void;
-  exitBulkMode: () => void;
 }
 
-export function useTranslationSaveFeedback({
-  refetch,
-  exitEditMode,
-  exitBulkMode,
-}: UseTranslationSaveFeedbackParams) {
+export function useTranslationSaveFeedback({ refetch }: UseTranslationSaveFeedbackParams) {
   const notify = useNotifier();
   const intl = useIntl();
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -39,15 +33,14 @@ export function useTranslationSaveFeedback({
   }, [intl, notify, refetch]);
 
   const completeSingleFieldSave = useCallback(
-    <TErrors>(errors: TErrors[], onSuccess?: () => void) => {
+    <TErrors>(errors: TErrors[]) => {
       if (errors.length === 0) {
         notifyTranslationSaved();
-        (onSuccess ?? exitEditMode)();
       }
 
       return errors;
     },
-    [exitEditMode, notifyTranslationSaved],
+    [notifyTranslationSaved],
   );
 
   const completeBulkSave = useCallback(
@@ -55,7 +48,6 @@ export function useTranslationSaveFeedback({
       if (!result.hasErrors) {
         setFieldErrors({});
         notifyAllTranslationsSaved();
-        exitBulkMode();
 
         return result;
       }
@@ -70,7 +62,7 @@ export function useTranslationSaveFeedback({
 
       return result;
     },
-    [exitBulkMode, intl, notify, notifyAllTranslationsSaved],
+    [intl, notify, notifyAllTranslationsSaved],
   );
 
   const clearFieldError = useCallback((fieldName: string) => {
@@ -97,6 +89,5 @@ export function useTranslationSaveFeedback({
     completeBulkSave,
     completeSingleFieldSave,
     fieldErrors,
-    notifyTranslationSaved,
   };
 }

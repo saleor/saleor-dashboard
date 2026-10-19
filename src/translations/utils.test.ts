@@ -29,6 +29,44 @@ describe("getParsedTranslationInputData", () => {
     name: TranslationInputFieldName.name,
   };
 
+  it("serializes only the full description field", () => {
+    // Arrange
+    const field: Pick<TranslationField, "name" | "nullable"> = {
+      name: TranslationInputFieldName.fullDescription,
+      nullable: true,
+    };
+    const data: OutputData = {
+      blocks: [{ type: "paragraph", data: { text: "Full description translation" } }],
+    };
+
+    // Act
+    const result = getParsedTranslationInputData({
+      field,
+      data,
+    });
+
+    // Assert
+    expect(result).toEqual({ fullDescription: JSON.stringify(data) });
+  });
+
+  it("clears an empty full description with null", () => {
+    // Arrange
+    const field: Pick<TranslationField, "name" | "nullable"> = {
+      name: TranslationInputFieldName.fullDescription,
+      nullable: true,
+    };
+    const data: OutputData = { blocks: [] };
+
+    // Act
+    const result = getParsedTranslationInputData({
+      field,
+      data,
+    });
+
+    // Assert
+    expect(result).toEqual({ fullDescription: null });
+  });
+
   it("returns the raw string for a text field", () => {
     // Arrange & Act
     const result = getParsedTranslationInputData({ field: nullableName, data: "some name" });

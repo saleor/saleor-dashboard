@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { createChannelsChangeHandler } from "@dashboard/collections/utils";
 import { COLLECTION_DETAILS_FORM_ID } from "@dashboard/collections/views/consts";
@@ -27,7 +26,8 @@ interface CollectionUpdateFormData {
   seoTitle: string;
 }
 export interface CollectionUpdateData extends CollectionUpdateFormData {
-  description: OutputData;
+  description: OutputData | null;
+  fullDescription?: OutputData | null;
 }
 
 interface CollectionUpdateHandlers {
@@ -41,12 +41,13 @@ export type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
   hasUnsavedChanges: boolean;
   isSaveDisabled: boolean;
   richText: RichTextContextValues;
+  fullDescriptionRichText: RichTextContextValues;
   saveComposition: CollectionSaveComposition;
 };
 
 interface CollectionUpdateFormProps {
   children: (props: UseCollectionUpdateFormResult) => React.ReactNode;
-  collection: CollectionDetailsFragment;
+  collection: CollectionDetailsFragment | null | undefined;
   currentChannels: ChannelCollectionData[];
   savedChannelListings: ChannelCollectionData[];
   setChannels: (data: ChannelCollectionData[]) => void;
@@ -55,7 +56,7 @@ interface CollectionUpdateFormProps {
 }
 
 const getInitialData = (
-  collection: CollectionDetailsFragment,
+  collection: CollectionDetailsFragment | null | undefined,
   currentChannels: ChannelCollectionData[],
 ): CollectionUpdateFormData => ({
   backgroundImageAlt: collection?.backgroundImage?.alt || "",
@@ -67,7 +68,7 @@ const getInitialData = (
 });
 
 export function useCollectionUpdateForm(
-  collection: CollectionDetailsFragment,
+  collection: CollectionDetailsFragment | null | undefined,
   currentChannels: ChannelCollectionData[],
   savedChannelListings: ChannelCollectionData[],
   setChannels: (data: ChannelCollectionData[]) => void,
@@ -97,6 +98,11 @@ export function useCollectionUpdateForm(
     loading: !collection,
     triggerChange,
   });
+  const fullDescriptionRichText = useRichText({
+    initial: collection?.fullDescription,
+    loading: !collection,
+    triggerChange,
+  });
   const data: CollectionUpdateData = {
     ...formData,
     description: null,
@@ -105,6 +111,9 @@ export function useCollectionUpdateForm(
     ...formData,
     channelListings: currentChannels,
     description: await richText.getValue(),
+    ...(fullDescriptionRichText.isDirty
+      ? { fullDescription: await fullDescriptionRichText.getValue() }
+      : {}),
   });
   const handleChannelChange = createChannelsChangeHandler(
     currentChannels,
@@ -112,13 +121,35 @@ export function useCollectionUpdateForm(
     triggerChange,
     savedChannelListings,
   );
-  const submit = async () => handleFormSubmit(await getData());
+  const submit = async (): Promise<unknown[]> => {
+    const descriptionDirty = richText.isDirty;
+    const fullDescriptionDirty = fullDescriptionRichText.isDirty;
+    let saveSucceeded = false;
+
+    try {
+      const errors = await handleFormSubmit(await getData());
+
+      saveSucceeded = errors.length === 0;
+
+      return errors;
+    } finally {
+      if (!saveSucceeded) {
+        if (descriptionDirty) {
+          richText.handleChange();
+        }
+
+        if (fullDescriptionDirty) {
+          fullDescriptionRichText.handleChange();
+        }
+      }
+    }
+  };
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const saveComposition = buildCollectionSaveComposition(
     Object.keys(changedData),
-    richText.isDirty,
+    richText.isDirty || fullDescriptionRichText.isDirty,
     currentChannels,
     savedChannelListings,
   );
@@ -143,6 +174,7 @@ export function useCollectionUpdateForm(
     saveComposition,
     submit,
     richText,
+    fullDescriptionRichText,
   };
 }
 

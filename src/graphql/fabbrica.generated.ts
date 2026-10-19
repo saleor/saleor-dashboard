@@ -6294,6 +6294,14 @@ export type OptionalCategory = {
  * Added in Saleor 3.23.
  */
   externalReference?: Category['externalReference'] | undefined;
+  /**
+ * Full description of the category. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: Category['fullDescription'] | undefined;
   /** The ID of the category. */
   id?: Category['id'] | undefined;
   /** Level of the category. */
@@ -6548,6 +6556,14 @@ export type OptionalCategoryInput = {
  */
   externalReference?: CategoryInput['externalReference'] | undefined;
   /**
+ * Full description of the category. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryInput['fullDescription'] | undefined;
+  /**
  * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
@@ -6618,6 +6634,14 @@ export type OptionalCategoryTranslatableContent = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CategoryTranslatableContent['descriptionJson'] | undefined;
+  /**
+ * Category's full description to translate. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryTranslatableContent['fullDescription'] | undefined;
   /** The ID of the category translatable content. */
   id?: CategoryTranslatableContent['id'] | undefined;
   /** Name of the category translatable content. */
@@ -6685,6 +6709,14 @@ export type OptionalCategoryTranslation = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CategoryTranslation['descriptionJson'] | undefined;
+  /**
+ * Translated full description of the category. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryTranslation['fullDescription'] | undefined;
   /** The ID of the category translation. */
   id?: CategoryTranslation['id'] | undefined;
   /** Translation language. */
@@ -8942,6 +8974,14 @@ export type OptionalCollection = {
  * Added in Saleor 3.23.
  */
   externalReference?: Collection['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: Collection['fullDescription'] | undefined;
   /** The ID of the collection. */
   id?: Collection['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
@@ -9213,6 +9253,14 @@ export type OptionalCollectionCreateInput = {
  * Added in Saleor 3.23.
  */
   externalReference?: CollectionCreateInput['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionCreateInput['fullDescription'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionCreateInput['isPublished'] | undefined;
   /**
@@ -9388,6 +9436,14 @@ export type OptionalCollectionInput = {
  * Added in Saleor 3.23.
  */
   externalReference?: CollectionInput['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionInput['fullDescription'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionInput['isPublished'] | undefined;
   /**
@@ -9537,6 +9593,14 @@ export type OptionalCollectionTranslatableContent = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CollectionTranslatableContent['descriptionJson'] | undefined;
+  /**
+ * Collection's full description to translate. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionTranslatableContent['fullDescription'] | undefined;
   /** The ID of the collection translatable content. */
   id?: CollectionTranslatableContent['id'] | undefined;
   /** Collection's name to translate. */
@@ -9604,6 +9668,14 @@ export type OptionalCollectionTranslation = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CollectionTranslation['descriptionJson'] | undefined;
+  /**
+ * Translated full description of the collection. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionTranslation['fullDescription'] | undefined;
   /** The ID of the collection translation. */
   id?: CollectionTranslation['id'] | undefined;
   /** Translation language. */
@@ -36706,6 +36778,14 @@ export type OptionalTranslationInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: TranslationInput['description'] | undefined;
+  /**
+ * Translated full description. Only supported for categories and collections; product translation mutations reject this field. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: TranslationInput['fullDescription'] | undefined;
   name?: TranslationInput['name'] | undefined;
   seoDescription?: TranslationInput['seoDescription'] | undefined;
   seoTitle?: TranslationInput['seoTitle'] | undefined;

@@ -36,7 +36,6 @@ interface RippleActionWithHref extends RippleActionBase {
  */
 export type RippleAction = RippleActionWithOnClick | RippleActionWithHref;
 
-// TODO Consider translations
 export type Ripple = {
   /**
    * Type of change - used for badge display in the changelog
@@ -49,9 +48,10 @@ export type Ripple = {
   dateAdded: Date;
   content: {
     /**
-     * Short header-like text for global view
+     * Short header for global view. Use a MessageDescriptor for localized titles.
+     * Existing plain-string titles remain supported.
      */
-    oneLiner: string;
+    oneLiner: string | MessageDescriptor;
     /**
      * In global changelog-like list
      */

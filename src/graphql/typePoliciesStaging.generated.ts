@@ -1006,7 +1006,7 @@ export type CardPaymentMethodDetailsFieldPolicy = {
 	lastDigits?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CategoryKeySpecifier = ('ancestors' | 'backgroundImage' | 'children' | 'description' | 'descriptionJson' | 'externalReference' | 'id' | 'level' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'parent' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'products' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | 'updatedAt' | CategoryKeySpecifier)[];
+export type CategoryKeySpecifier = ('ancestors' | 'backgroundImage' | 'children' | 'description' | 'descriptionJson' | 'externalReference' | 'fullDescription' | 'id' | 'level' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'parent' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'products' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | 'updatedAt' | CategoryKeySpecifier)[];
 export type CategoryFieldPolicy = {
 	ancestors?: FieldPolicy<any> | FieldReadFunction<any>,
 	backgroundImage?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1014,6 +1014,7 @@ export type CategoryFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
 	externalReference?: FieldPolicy<any> | FieldReadFunction<any>,
+	fullDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	level?: FieldPolicy<any> | FieldReadFunction<any>,
 	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1076,12 +1077,13 @@ export type CategoryDeletedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CategoryTranslatableContentKeySpecifier = ('category' | 'categoryId' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CategoryTranslatableContentKeySpecifier)[];
+export type CategoryTranslatableContentKeySpecifier = ('category' | 'categoryId' | 'description' | 'descriptionJson' | 'fullDescription' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CategoryTranslatableContentKeySpecifier)[];
 export type CategoryTranslatableContentFieldPolicy = {
 	category?: FieldPolicy<any> | FieldReadFunction<any>,
 	categoryId?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
+	fullDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1095,10 +1097,11 @@ export type CategoryTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CategoryTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translatableContent' | CategoryTranslationKeySpecifier)[];
+export type CategoryTranslationKeySpecifier = ('description' | 'descriptionJson' | 'fullDescription' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translatableContent' | CategoryTranslationKeySpecifier)[];
 export type CategoryTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
+	fullDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1544,7 +1547,7 @@ export type ChoiceValueFieldPolicy = {
 	raw?: FieldPolicy<any> | FieldReadFunction<any>,
 	verbose?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CollectionKeySpecifier = ('backgroundImage' | 'channel' | 'channelListings' | 'description' | 'descriptionJson' | 'externalReference' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'products' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CollectionKeySpecifier)[];
+export type CollectionKeySpecifier = ('backgroundImage' | 'channel' | 'channelListings' | 'description' | 'descriptionJson' | 'externalReference' | 'fullDescription' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'products' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CollectionKeySpecifier)[];
 export type CollectionFieldPolicy = {
 	backgroundImage?: FieldPolicy<any> | FieldReadFunction<any>,
 	channel?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1552,6 +1555,7 @@ export type CollectionFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
 	externalReference?: FieldPolicy<any> | FieldReadFunction<any>,
+	fullDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafield?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1667,12 +1671,13 @@ export type CollectionReorderProductsFieldPolicy = {
 	collectionErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CollectionTranslatableContentKeySpecifier = ('collection' | 'collectionId' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CollectionTranslatableContentKeySpecifier)[];
+export type CollectionTranslatableContentKeySpecifier = ('collection' | 'collectionId' | 'description' | 'descriptionJson' | 'fullDescription' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CollectionTranslatableContentKeySpecifier)[];
 export type CollectionTranslatableContentFieldPolicy = {
 	collection?: FieldPolicy<any> | FieldReadFunction<any>,
 	collectionId?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
+	fullDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1686,10 +1691,11 @@ export type CollectionTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CollectionTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translatableContent' | CollectionTranslationKeySpecifier)[];
+export type CollectionTranslationKeySpecifier = ('description' | 'descriptionJson' | 'fullDescription' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translatableContent' | CollectionTranslationKeySpecifier)[];
 export type CollectionTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
+	fullDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,

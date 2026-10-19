@@ -11,6 +11,28 @@ New tests belong in `e2e/`. See [`e2e/README.md`](../e2e/README.md) — it cover
 Saleor targets (latest stable and unreleased main), how seeds are built and cached, and how
 to port a spec across.
 
+## Full descriptions against an existing local Core
+
+Use the live Playwright configuration to check category and collection full descriptions
+against a Core that is already running. The API must include `fullDescription` from Core
+commit `0da8266192b80432b610ad86c66d56d45a822313`. Set `API_URL`, `BASE_URL`,
+`E2E_USER_NAME`, and `E2E_USER_PASSWORD` in `.env`. The test user needs permission to
+manage products and translations.
+
+For example, with Core on port 8000 and Dashboard on port 9000:
+
+```shell
+pnpm run dev
+# In another terminal:
+pnpm exec playwright test --config e2e/live/playwright.config.ts
+```
+
+These tests create their own categories and collections and delete them after each test.
+They do not restore a database or start Docker services. They check saving, single-field
+translation, bulk translation, and clearing while preserving the other description.
+Screenshots are saved under `e2e/test-results/live-full-descriptions/`. Browser traces
+and videos are disabled to keep login data out of artifacts.
+
 ## The legacy suite
 
 > [!NOTE]
