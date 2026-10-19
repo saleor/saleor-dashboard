@@ -258,6 +258,7 @@ export const AttributeAssignedListFragmentDoc = gql`
 export const AttributeUpdateResultFragmentDoc = gql`
     fragment AttributeUpdateResult on Attribute {
   ...Attribute
+  internalDescription
   availableInGrid @lockSchema(schema: "main")
   storefrontSearchPosition @lockSchema(schema: "main")
   valueRequired
@@ -3023,6 +3024,7 @@ export const PageFragmentDoc = gql`
 export const AttributeDetailsFragmentDoc = gql`
     fragment AttributeDetails on Attribute {
   ...Attribute
+  internalDescription
   availableInGrid @lockSchema(schema: "main")
   entityType
   storefrontSearchPosition @lockSchema(schema: "main")
@@ -3071,6 +3073,7 @@ export const PageAttributesFragmentDoc = gql`
     attributes {
       id
       name
+      internalDescription
       inputType
       entityType
       valueRequired
@@ -3383,6 +3386,7 @@ export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
   id
   name
+  internalDescription
   slug
   inputType
   entityType

@@ -51,6 +51,7 @@ export const attributeAssignedListFragment = gql`
 export const attributeUpdateResultFragment = gql`
   fragment AttributeUpdateResult on Attribute {
     ...Attribute
+    internalDescription
     # Removed from Attribute in 3.24, see the note on filterableInStorefront above
     availableInGrid @lockSchema(schema: "main")
     storefrontSearchPosition @lockSchema(schema: "main")
@@ -98,6 +99,7 @@ export const attributeAssignedTypesFragment = gql`
 export const attributeDetailsFragment = gql`
   fragment AttributeDetails on Attribute {
     ...Attribute
+    internalDescription
     # Removed from Attribute in 3.24, see the note on filterableInStorefront above
     availableInGrid @lockSchema(schema: "main")
     entityType
