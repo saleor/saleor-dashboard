@@ -5,10 +5,10 @@ import {
 } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
 import {
+  ExpressionValue,
   type FilterContainer,
   FilterElement,
 } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
-import { ExpressionValue } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import { prepareStructure } from "@dashboard/components/ConditionalFilter/ValueProvider/utils";
 import { createChannelFilterElement } from "@dashboard/products/components/ProductListDatagrid/utils";
 import { productListPath } from "@dashboard/products/urls";

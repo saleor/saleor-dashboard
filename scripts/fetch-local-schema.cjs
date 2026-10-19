@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* oxlint-disable no-console */
+/* oxlint-disable no-undef */
+/* oxlint-disable @typescript-eslint/no-var-requires */
 const fs = require("fs");
 const path = require("path");
 const { buildClientSchema, getIntrospectionQuery, printSchema } = require("graphql");
