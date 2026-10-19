@@ -7,11 +7,14 @@ import {
 import isEqual from "lodash/isEqual";
 import slugify from "slugify";
 
+import { normalizeInternalDescription } from "./internalDescription";
+
 type Attribute = NonNullable<AttributeDetailsQuery["attribute"]>;
 
 export interface AttributeUpdateComparableData {
   availableInGrid: boolean;
   filterableInStorefront: boolean;
+  internalDescription: string | null;
   name: string;
   referenceTypes: string[];
   slug: string;
@@ -31,6 +34,7 @@ export function getAttributePageInitialForm(
       entityType: null,
       filterableInStorefront: true,
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      internalDescription: "",
       metadata: [],
       name: "",
       privateMetadata: [],
@@ -51,6 +55,7 @@ export function getAttributePageInitialForm(
     entityType: attribute.entityType,
     filterableInStorefront: attribute.filterableInStorefront ?? true,
     inputType: attribute.inputType ?? AttributeInputTypeEnum.DROPDOWN,
+    internalDescription: attribute.internalDescription ?? "",
     metadata: [],
     name: attribute.name ?? "",
     privateMetadata: [],
@@ -73,6 +78,7 @@ export function getAttributeUpdateComparableData(
   return {
     availableInGrid: data.availableInGrid,
     filterableInStorefront: data.filterableInStorefront,
+    internalDescription: normalizeInternalDescription(data.internalDescription),
     name: data.name,
     referenceTypes: [...data.referenceTypes.map(ref => ref.value)].sort(),
     slug: data.slug || slugify(data.name).toLowerCase(),

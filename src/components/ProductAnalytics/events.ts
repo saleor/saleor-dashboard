@@ -9,6 +9,10 @@ export interface AnalyticsEventMap {
   $pageview: {
     normalized_path: string;
   };
+  attribute_internal_description_saved: {
+    action: "added" | "changed" | "removed";
+    context: "create" | "update";
+  };
   contextual_link_clicked: {
     type: string;
   };

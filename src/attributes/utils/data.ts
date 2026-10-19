@@ -33,6 +33,7 @@ import {
 
 import { type AttributePageFormData } from "../components/AttributePage/AttributePage";
 import { formatVariantReferenceLabel } from "./formatVariantReferenceLabel";
+import { normalizeInternalDescription } from "./internalDescription";
 import { productVariantCacheManager } from "./productVariantCache";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
@@ -106,6 +107,7 @@ function getSimpleAttributeData(
 ) {
   return {
     ...data,
+    internalDescription: normalizeInternalDescription(data.internalDescription),
     metadata: undefined,
     privateMetadata: undefined,
     storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
@@ -133,6 +135,7 @@ function getSwatchAttributeData(
 ) {
   return {
     ...data,
+    internalDescription: normalizeInternalDescription(data.internalDescription),
     metadata: undefined,
     privateMetadata: undefined,
     storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),

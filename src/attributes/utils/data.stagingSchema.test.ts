@@ -13,6 +13,7 @@ const formData: AttributePageFormData = {
   entityType: null,
   filterableInStorefront: true,
   inputType: AttributeInputTypeEnum.DROPDOWN,
+  internalDescription: "",
   metadata: [],
   name: "Color",
   privateMetadata: [],

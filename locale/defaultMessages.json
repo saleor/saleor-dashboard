@@ -3636,6 +3636,10 @@
     "context": "Product purchasability status in a channel",
     "string": "Not purchasable"
   },
+  "BPjTyd": {
+    "context": "attribute internal description field helper text",
+    "string": "Visible only to staff and apps. Explain what this attribute means and how to fill it in."
+  },
   "BR8au7": {
     "context": "delete channel",
     "string": "Select channel that you wish to move existing orders to."
@@ -17583,6 +17587,10 @@
   "xzzNba": {
     "context": "helper under currency on create",
     "string": "Prices and payments use this currency. It can’t be changed later."
+  },
+  "y+43V1": {
+    "context": "attribute internal description field label",
+    "string": "Internal description"
   },
   "y+718D": {
     "context": "factor label for whole-order voucher propagated to a line",

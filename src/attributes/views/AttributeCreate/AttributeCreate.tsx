@@ -1,4 +1,6 @@
+import { getInternalDescriptionChange } from "@dashboard/attributes/utils/internalDescription";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   type AttributeCreateInput,
   AttributeErrorCode,
@@ -57,6 +59,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const [values, setValues] = useState<AttributeValueEditDialogFormData[]>([]);
   const [valueErrors, setValueErrors] = useState<AttributeErrorFragment[]>([]);
   const valueListActions = useBulkActions();
@@ -180,6 +183,14 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
         input: getAttributeData(data, values) as AttributeCreateInput,
       },
     });
+    const internalDescriptionChange = getInternalDescriptionChange(null, data.internalDescription);
+
+    if (result.data?.attributeCreate?.attribute && internalDescriptionChange) {
+      trackEvent("attribute_internal_description_saved", {
+        action: internalDescriptionChange,
+        context: "create",
+      });
+    }
 
     return {
       id: result.data?.attributeCreate?.attribute?.id ?? undefined,

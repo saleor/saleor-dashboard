@@ -16,6 +16,7 @@ const formData: AttributePageFormData = {
   entityType: null,
   filterableInStorefront: true,
   inputType: AttributeInputTypeEnum.PLAIN_TEXT,
+  internalDescription: "",
   metadata: [],
   name: "Care instructions",
   privateMetadata: [],
