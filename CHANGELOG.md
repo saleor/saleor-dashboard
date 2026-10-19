@@ -1,5 +1,27 @@
 # Changelog
 
+## 3.23.41
+
+### Patch Changes
+
+- [#7026](https://github.com/saleor/saleor-dashboard/pull/7026) [`ab51f7f`](https://github.com/saleor/saleor-dashboard/commit/ab51f7f1859af843d7bc2d93766fdced78be2a34) Thanks [@mirekm](https://github.com/mirekm)! - Variant bulk edit no longer shows an "Add variant" button. In bulk edit the button only moved focus to the empty last row, where you add variants by typing. The button is still shown on the product page, where it opens the variant create page.
+
+- [#7027](https://github.com/saleor/saleor-dashboard/pull/7027) [`d482164`](https://github.com/saleor/saleor-dashboard/commit/d482164b789d3dea174d8cdcca96dcb4a68be92c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Plain text attribute inputs whose value is an `http` or `https` link now show a button that opens the link in a new tab.
+
+- [#7025](https://github.com/saleor/saleor-dashboard/pull/7025) [`8c08937`](https://github.com/saleor/saleor-dashboard/commit/8c089377901db57db655d83c863547a34a41b042) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Show a color preview next to plain text attribute inputs whose value is a hex color, such as `[#111](https://github.com/saleor/saleor-dashboard/issues/111)` or `#fafafa`.
+
+- [#7028](https://github.com/saleor/saleor-dashboard/pull/7028) [`c4877ae`](https://github.com/saleor/saleor-dashboard/commit/c4877aeeef7934c9dc0355bc6caca58c1bbbdce8) Thanks [@mirekm](https://github.com/mirekm)! - Models now show their slug next to their name (under it when a reference list row is narrow), so models that share a name can be told apart. The slug appears in the Assign Model picker, in both single and multiple selection, and on models assigned to a reference attribute: the reference list (list and packed views), the single-reference chip, and the list filter, which now also matches slugs.
+
+- [#7029](https://github.com/saleor/saleor-dashboard/pull/7029) [`309bc83`](https://github.com/saleor/saleor-dashboard/commit/309bc83d73dd441f7fa3491f6ced4d5556465136) Thanks [@mirekm](https://github.com/mirekm)! - Searching in the model, category and collection pickers now shows progress. Previously, nothing indicated that a search was running, which on a slow connection made the picker look unresponsive. Now a spinner appears in the search field while you type and until results arrive. On slow responses, the previous results stay visible but dimmed in the meantime.
+
+- [#7034](https://github.com/saleor/saleor-dashboard/pull/7034) [`e50d48c`](https://github.com/saleor/saleor-dashboard/commit/e50d48ca493baf867842da10f89bb3263658fb89) Thanks [@lkostrowski](https://github.com/lkostrowski)! - You can now make a product variant unavailable for purchase in a single channel without losing its prices. The variant Pricing card (on both the variant details and create pages) has an "Available for purchase" toggle for each channel. Channels where the variant is unavailable show an "Unavailable for purchase" status.
+
+  In the product variants datagrid, the per-channel "Available" checkbox now sets this flag. Before, unticking it deleted the variant's channel listing and its prices, and ticking it again recreated the listing at price 0. Now unticking hides the variant from customers and keeps its prices, which are shown muted. To remove a variant from a channel completely, use "Manage channels" on the variant page.
+
+  Requires Saleor 3.23.42 or later.
+
+- [#6995](https://github.com/saleor/saleor-dashboard/pull/6995) [`d1f1951`](https://github.com/saleor/saleor-dashboard/commit/d1f1951043d2aea30ad5ebcf47afe072fa94ee1c) Thanks [@mirekm](https://github.com/mirekm)! - A warehouse can be set up from its own page: assign channels, link shipping zones that share a channel, and follow the setup checklist until the warehouse can sell stock. Pickup is now a single "Offer pickup" setting that replaces public and private stock. The warehouse list shows whether its stock can be sold, the city and country, and a pickup label when pickup is on. New warehouses are created from the list, and deleting one names the stock and channels it removes. The shipping zone page only offers warehouses that share one of its channels, and removing a channel that would unlink warehouses from shipping zones asks for confirmation first.
+
 ## 3.23.40
 
 ### Patch Changes
