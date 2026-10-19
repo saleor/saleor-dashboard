@@ -47,6 +47,10 @@ export interface IChannelPriceArgs {
 }
 export type ChannelPriceArgs = RequireOnlyOne<IChannelPriceArgs, "price" | "costPrice">;
 
+export interface VariantChannelListingArgs extends IChannelPriceArgs {
+  isAvailableForPurchase: boolean;
+}
+
 export interface VariantChannelPriceData {
   id: string;
   name: string;
@@ -55,6 +59,7 @@ export interface VariantChannelPriceData {
   costPrice?: string;
   isActive?: boolean;
   isPublished?: boolean;
+  isAvailableForPurchase?: boolean;
 }
 
 export interface ChannelVoucherData {
@@ -109,6 +114,7 @@ export const createVariantChannels = (
           id: listing.channel.id,
           isActive: productChannelListing?.channel.isActive ?? true,
           isPublished: productChannelListing?.isPublished,
+          isAvailableForPurchase: listing.isAvailableForPurchase,
           name: listing.channel.name,
           price: listing.price?.amount?.toString() ?? "",
         };

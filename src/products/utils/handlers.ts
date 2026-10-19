@@ -150,6 +150,7 @@ export const getChannelsInput = (channels: VariantChannelPriceData[]) =>
     value: {
       costPrice: channel.costPrice || "",
       price: channel.price || "",
+      isAvailableForPurchase: channel.isAvailableForPurchase ?? true,
     },
   }));
 

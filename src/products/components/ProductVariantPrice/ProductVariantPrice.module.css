@@ -16,11 +16,11 @@
 .headerRow,
 .row {
   display: grid;
-  /* Channel + two price fields; min-width keeps columns usable and scrolls on narrow viewports. */
-  grid-template-columns: minmax(8rem, 1fr) 15rem 15rem;
+  /* Channel + two price fields + availability; min-width keeps columns usable and scrolls on narrow viewports. */
+  grid-template-columns: minmax(8rem, 1fr) 15rem 15rem 10rem;
   align-items: center;
   gap: var(--mu-spacing-4);
-  min-width: 40rem;
+  min-width: 52rem;
 }
 
 .headerRow {
@@ -60,4 +60,9 @@
 
 .amountInput {
   width: 100%;
+}
+
+.toggleCell {
+  display: flex;
+  align-items: center;
 }

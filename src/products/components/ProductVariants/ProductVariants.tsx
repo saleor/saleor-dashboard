@@ -30,7 +30,7 @@ import { datagridAddedRowsToCreateInputs } from "@dashboard/products/hooks/datag
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { CompactSelection, type GridSelection, type Item } from "@glideapps/glide-data-grid";
-import { Box, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, type Option, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Pencil, Rows3 } from "lucide-react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
@@ -421,6 +421,8 @@ export const ProductVariants = ({
     selectedColumns: columnSettings ?? [],
     onSave: handleColumnChange,
   });
+  const { themeValues } = useTheme();
+  const mutedTextColor = themeValues.colors.text.default2;
   const getCellContent = useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getData({
@@ -432,10 +434,12 @@ export const ProductVariants = ({
         variantAttributes,
         searchAttributeValues: onAttributeValuesSearch,
         loading: variantsLoading,
+        mutedTextColor,
         ...opts,
       }),
     [
       channels,
+      mutedTextColor,
       visibleColumns,
       onAttributeValuesSearch,
       variantAttributes,

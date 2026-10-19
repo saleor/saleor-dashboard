@@ -143,6 +143,41 @@ describe("ProductVariantPrice", () => {
     expect(onChange).toHaveBeenCalledWith("1", {
       price: "12.50",
       costPrice: "",
+      isAvailableForPurchase: true,
+    });
+  });
+
+  it("should toggle availability for purchase and keep prices", () => {
+    // Arrange
+    const onChange = jest.fn();
+    const pricedListing: ChannelData[] = [
+      {
+        id: "1",
+        name: "Channel-USD",
+        currency: "USD",
+        price: "10",
+        costPrice: "4",
+        isAvailableForPurchase: true,
+      },
+    ];
+
+    render(
+      <ProductVariantPrice
+        errors={[]}
+        productVariantChannelListings={pricedListing}
+        onChange={onChange}
+      />,
+      { wrapper },
+    );
+
+    // Act
+    fireEvent.click(screen.getByRole("button", { name: "Available for purchase in Channel-USD" }));
+
+    // Assert
+    expect(onChange).toHaveBeenCalledWith("1", {
+      price: "10",
+      costPrice: "4",
+      isAvailableForPurchase: false,
     });
   });
 

@@ -3320,6 +3320,7 @@ export const ChannelListingProductVariantFragmentDoc = gql`
   costPrice {
     ...Money
   }
+  isAvailableForPurchase
 }
     ${MoneyFragmentDoc}`;
 export const ProductDetailsVariantFragmentDoc = gql`

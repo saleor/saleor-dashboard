@@ -104,6 +104,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
       {
         id: "123",
         __typename: "ProductVariantChannelListing" as const,
+        isAvailableForPurchase: true,
         channel: {
           __typename: "Channel" as const,
           currencyCode: "USD",

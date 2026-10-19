@@ -34,10 +34,21 @@ const messages = defineMessages({
     defaultMessage: "The product is not published on this channel yet.",
     description: "variant pricing channel status description when product is unpublished",
   },
+  unavailableLabel: {
+    id: "0fWfqg",
+    defaultMessage: "Unavailable for purchase",
+    description: "variant pricing channel status when variant is not available for purchase",
+  },
+  unavailableDescription: {
+    id: "BbLOvI",
+    defaultMessage: "Customers can't see or buy this variant in this channel. Prices are kept.",
+    description:
+      "variant pricing channel status description when variant is not available for purchase",
+  },
 });
 
 export const getVariantPricingChannelStatus = (
-  listing: Pick<ChannelData, "isActive" | "isPublished">,
+  listing: Pick<ChannelData, "isActive" | "isPublished" | "isAvailableForPurchase">,
   intl: IntlShape,
 ): ChannelAvailabilityStatus => {
   if (listing.isActive === false) {
@@ -53,6 +64,14 @@ export const getVariantPricingChannelStatus = (
       type: "warning",
       label: intl.formatMessage(messages.unpublishedLabel),
       description: intl.formatMessage(messages.unpublishedDescription),
+    };
+  }
+
+  if (listing.isAvailableForPurchase === false) {
+    return {
+      type: "hidden",
+      label: intl.formatMessage(messages.unavailableLabel),
+      description: intl.formatMessage(messages.unavailableDescription),
     };
   }
 
