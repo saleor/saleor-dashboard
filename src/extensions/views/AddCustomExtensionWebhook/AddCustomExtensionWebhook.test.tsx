@@ -9,6 +9,11 @@ import { type WebhookFormData } from "../../components/WebhookDetailsPage/Webhoo
 import { AddCustomExtensionWebhook } from "./AddCustomExtensionWebhook";
 
 const mockWebhookDetailsPage = jest.fn();
+const mockTrackEvent = jest.fn();
+
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
 
 jest.mock("@dashboard/graphql", () => ({
   ...(jest.requireActual("@dashboard/graphql") as object),
@@ -100,6 +105,7 @@ describe("AddCustomExtensionWebhook", () => {
         },
       },
     });
+    expect(mockTrackEvent).toHaveBeenCalledWith("webhook_secret_key_submitted");
   });
 
   it("collapses async events to ANY_EVENTS when it is selected", async () => {

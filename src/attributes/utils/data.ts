@@ -154,12 +154,16 @@ function getFileOrReferenceAttributeData(
 }
 
 /**
- * `filterableInStorefront` and `storefrontSearchPosition` are removed from the API in 3.24,
+ * `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are removed from the API in 3.24,
  * so the staging schema build stops sending them. Drop this (and the form fields) once staging becomes main.
  */
 export const DEPRECATED_FACETED_NAVIGATION_INPUT = isMainSchema()
   ? {}
-  : { filterableInStorefront: undefined, storefrontSearchPosition: undefined };
+  : {
+      availableInGrid: undefined,
+      filterableInStorefront: undefined,
+      storefrontSearchPosition: undefined,
+    };
 
 export function getAttributeData(
   data: AttributePageFormData,

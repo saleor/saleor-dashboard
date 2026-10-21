@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
@@ -24,6 +25,7 @@ export const AddCustomExtensionWebhook = ({ appId }: CustomAppWebhookCreateProps
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
   const { data } = useAppQuery({
     variables: { id: appId, hasManagedAppsPermission: true },
   });
@@ -41,8 +43,13 @@ export const AddCustomExtensionWebhook = ({ appId }: CustomAppWebhookCreateProps
       }
     },
   });
-  const handleSubmit = (data: WebhookFormData) =>
-    extractMutationErrors(
+  const handleSubmit = (data: WebhookFormData) => {
+    // secretKey is deprecated in the API - track who still sets it.
+    if (data.secretKey) {
+      trackEvent("webhook_secret_key_submitted");
+    }
+
+    return extractMutationErrors(
       webhookCreate({
         variables: {
           input: {
@@ -61,6 +68,7 @@ export const AddCustomExtensionWebhook = ({ appId }: CustomAppWebhookCreateProps
         },
       }),
     );
+  };
 
   return (
     <>
