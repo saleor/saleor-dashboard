@@ -42,11 +42,10 @@ interface ProductsTableProps {
   reorderable?: boolean;
 }
 
-interface ProductsTableBodyProps
-  extends Omit<
-    ProductsTableProps,
-    "numberOfColumns" | "updateListSettings" | "numberOfRows" | "paginationState" | "reorderable"
-  > {
+interface ProductsTableBodyProps extends Omit<
+  ProductsTableProps,
+  "numberOfColumns" | "updateListSettings" | "numberOfRows" | "paginationState" | "reorderable"
+> {
   items: Product[];
   reorderable: boolean;
   draggable: boolean;

@@ -12,7 +12,8 @@ import { messages } from "./messages";
 const EMPTY_SEARCH_FILTERS = {};
 
 interface AssignWarehouseDialogProps
-  extends FetchMoreProps,
+  extends
+    FetchMoreProps,
     DialogProps,
     Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {
   confirmButtonState?: ConfirmButtonTransitionState;

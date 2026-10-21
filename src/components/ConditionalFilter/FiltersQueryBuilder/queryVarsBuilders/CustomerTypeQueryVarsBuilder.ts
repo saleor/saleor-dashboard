@@ -8,12 +8,9 @@ import { type BothApiQueryVarsBuilder } from "./types";
 type CustomerTypeQueryPart = { eq?: string } | { oneOf?: string[] };
 
 /** Customer type only exists on CustomerWhereInput, not the deprecated CustomerFilterInput. */
-export class CustomerTypeQueryVarsBuilder
-  implements
-    BothApiQueryVarsBuilder<{
-      customerType?: CustomerTypeQueryPart;
-    }>
-{
+export class CustomerTypeQueryVarsBuilder implements BothApiQueryVarsBuilder<{
+  customerType?: CustomerTypeQueryPart;
+}> {
   canHandle(element: FilterElement): boolean {
     return element.value.type === "customerType";
   }

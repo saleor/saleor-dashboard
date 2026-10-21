@@ -28,9 +28,7 @@ type ProductExportFieldQueryPart = {
  * ProductFilterInput requires arrays for these fields per GraphQL schema.
  * This mapper transforms filter values into the required array format.
  */
-export class ProductExportFieldMapper
-  implements FilterOnlyQueryVarsBuilder<ProductExportFieldQueryPart>
-{
+export class ProductExportFieldMapper implements FilterOnlyQueryVarsBuilder<ProductExportFieldQueryPart> {
   private static readonly FIELD_MAP: Record<string, keyof ProductExportFieldQueryPart> = {
     collection: "collections",
     category: "categories",

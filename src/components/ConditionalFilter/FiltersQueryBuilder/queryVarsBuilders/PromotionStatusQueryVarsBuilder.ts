@@ -13,9 +13,7 @@ import { type WhereOnlyQueryVarsBuilder } from "./types";
  * DateTimeFilterInput (no isnull). Bounded actives (start ≤ now ≤ end) match;
  * open-ended live promotions are a known API gap until status lands on WHERE.
  */
-export class PromotionStatusQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<PromotionWhereInput>
-{
+export class PromotionStatusQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<PromotionWhereInput> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "promotionStatus";
   }

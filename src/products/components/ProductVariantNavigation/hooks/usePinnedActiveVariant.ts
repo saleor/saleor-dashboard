@@ -103,8 +103,8 @@ export const usePinnedActiveVariant = ({
   // (never while measurement is still null — that caused the click flash).
   const shouldPin = Boolean(
     currentId &&
-      pinnedVariant &&
-      (pinReason === "not-loaded" || (pinReason === "out-of-viewport" && isInViewport === false)),
+    pinnedVariant &&
+    (pinReason === "not-loaded" || (pinReason === "out-of-viewport" && isInViewport === false)),
   );
 
   return {

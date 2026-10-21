@@ -39,8 +39,7 @@ export interface CustomerTypeAttributeCreateParams {
   formatAssignErrors: (errors: CustomerTypeAssignAttributesErrorFragment[]) => string;
 }
 
-export interface CustomerTypeAttributeCreateOutcome
-  extends CreateMetadataHandlerFunctionResult<AttributeErrorFragment> {
+export interface CustomerTypeAttributeCreateOutcome extends CreateMetadataHandlerFunctionResult<AttributeErrorFragment> {
   assignErrorMessage?: string;
 }
 

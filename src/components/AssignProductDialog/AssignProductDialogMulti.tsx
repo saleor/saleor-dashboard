@@ -20,7 +20,8 @@ import {
 } from "./useAssignProductPicker";
 
 interface AssignProductDialogMultiProps
-  extends FetchMoreProps,
+  extends
+    FetchMoreProps,
     Pick<
       UseAssignProductPickerProps,
       "backfillResetKey" | "excludeProduct" | "selectAllMode" | "onMaxSelectionReached"

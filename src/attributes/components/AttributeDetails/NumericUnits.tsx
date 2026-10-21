@@ -19,11 +19,10 @@ import {
   unitTypeChoices,
 } from "./utils";
 
-interface NumericUnitsProps
-  extends Pick<
-    UseFormResult<AttributePageFormData>,
-    "setError" | "data" | "errors" | "clearErrors"
-  > {
+interface NumericUnitsProps extends Pick<
+  UseFormResult<AttributePageFormData>,
+  "setError" | "data" | "errors" | "clearErrors"
+> {
   disabled: boolean;
   onUnitChange: (unit: AttributePageFormData["unit"]) => void;
 }

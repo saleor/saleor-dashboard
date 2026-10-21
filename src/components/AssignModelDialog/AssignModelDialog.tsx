@@ -25,7 +25,8 @@ import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { messages } from "./messages";
 
 interface AssignModelDialogProps
-  extends FetchMoreProps,
+  extends
+    FetchMoreProps,
     DialogProps,
     Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {
   confirmButtonState: ConfirmButtonTransitionState;

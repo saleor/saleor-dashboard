@@ -262,14 +262,14 @@ export const ProductVariants = ({
 
   const hasAddedRows = Boolean(
     datagridState &&
-      datagridAddedRowsToCreateInputs(
-        {
-          added: datagridState.added,
-          removed: datagridState.removed,
-          updates: datagridState.changes.current,
-        },
-        variantAttributes as VariantAttributeFragment[],
-      ).length > 0,
+    datagridAddedRowsToCreateInputs(
+      {
+        added: datagridState.added,
+        removed: datagridState.removed,
+        updates: datagridState.changes.current,
+      },
+      variantAttributes as VariantAttributeFragment[],
+    ).length > 0,
   );
   const guardAddedRowsThen = useCallback(
     (action: () => void) => {
