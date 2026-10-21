@@ -33,6 +33,7 @@ import {
 } from "@dashboard/graphql";
 
 import { resetAuthState, setAuthState } from "./authState";
+import { advanceSession, getSessionVersion } from "./sessionRefresh";
 import { storage } from "./tokenStorage";
 import {
   type GetExternalAccessTokenOpts,
@@ -138,6 +139,7 @@ export const auth = ({
   };
 
   const login: AuthSDK["login"] = opts => {
+    advanceSession();
     setAuthState({ authenticating: true });
 
     return client.mutate<LoginMutation, LoginMutationVariables>({
@@ -165,6 +167,8 @@ export const auth = ({
   };
 
   const logout: AuthSDK["logout"] = async opts => {
+    advanceSession();
+
     const authPluginId = storage.getAuthPluginId();
 
     storage.clear();
@@ -191,6 +195,7 @@ export const auth = ({
   };
 
   const refreshToken: AuthSDK["refreshToken"] = (includeUser = false) => {
+    const version = getSessionVersion();
     const refreshToken = storage.getRefreshToken();
 
     if (!refreshToken) {
@@ -199,11 +204,16 @@ export const auth = ({
 
     if (includeUser) {
       return client.mutate<RefreshTokenWithUserMutation, RefreshTokenWithUserMutationVariables>({
+        fetchPolicy: "no-cache",
         mutation: REFRESH_TOKEN_WITH_USER,
         variables: {
           refreshToken,
         },
         update: (_, { data }) => {
+          if (version !== getSessionVersion()) {
+            return;
+          }
+
           if (data?.tokenRefresh?.token) {
             storage.setAccessToken(data.tokenRefresh.token);
             setAuthState({
@@ -219,11 +229,16 @@ export const auth = ({
     }
 
     return client.mutate<RefreshTokenMutation, RefreshTokenMutationVariables>({
+      fetchPolicy: "no-cache",
       mutation: REFRESH_TOKEN,
       variables: {
         refreshToken,
       },
       update: (_, { data }) => {
+        if (version !== getSessionVersion()) {
+          return;
+        }
+
         if (data?.tokenRefresh?.token) {
           storage.setAccessToken(data.tokenRefresh.token);
         } else {
@@ -234,6 +249,8 @@ export const auth = ({
   };
 
   const setPassword: AuthSDK["setPassword"] = opts => {
+    advanceSession();
+
     return client.mutate<SetPasswordMutation, SetPasswordMutationVariables>({
       mutation: SET_PASSWORD,
       variables: { ...opts },
@@ -266,6 +283,7 @@ export const auth = ({
   };
 
   const getExternalAccessToken: AuthSDK["getExternalAccessToken"] = opts => {
+    advanceSession();
     setAuthState({ authenticating: true });
 
     return client.mutate<
@@ -300,6 +318,7 @@ export const auth = ({
   };
 
   const refreshExternalToken: AuthSDK["refreshExternalToken"] = (includeUser = false) => {
+    const version = getSessionVersion();
     const refreshToken = storage.getRefreshToken();
     const authPluginId = storage.getAuthPluginId();
 
@@ -312,6 +331,7 @@ export const auth = ({
         ExternalRefreshWithUserMutation,
         ExternalRefreshWithUserMutationVariables
       >({
+        fetchPolicy: "no-cache",
         mutation: EXTERNAL_REFRESH_WITH_USER,
         variables: {
           pluginId: authPluginId,
@@ -320,6 +340,10 @@ export const auth = ({
           }),
         },
         update: (_, { data }) => {
+          if (version !== getSessionVersion()) {
+            return;
+          }
+
           if (data?.externalRefresh?.token) {
             storage.setTokens({
               accessToken: data.externalRefresh.token,
@@ -338,6 +362,7 @@ export const auth = ({
     }
 
     return client.mutate<ExternalRefreshMutation, ExternalRefreshMutationVariables>({
+      fetchPolicy: "no-cache",
       mutation: EXTERNAL_REFRESH,
       variables: {
         pluginId: authPluginId,
@@ -346,6 +371,10 @@ export const auth = ({
         }),
       },
       update: (_, { data }) => {
+        if (version !== getSessionVersion()) {
+          return;
+        }
+
         if (data?.externalRefresh?.token) {
           storage.setTokens({
             accessToken: data.externalRefresh.token,
