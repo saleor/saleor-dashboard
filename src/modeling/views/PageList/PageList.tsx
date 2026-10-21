@@ -88,7 +88,7 @@ const PageList = ({ params }: PageListProps) => {
     : (params.pageTypes ?? "");
   const selectedPageTypes = useMemo(
     () => normalizePageTypes(params.pageTypes),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [selectedPageTypesKey],
   );
 

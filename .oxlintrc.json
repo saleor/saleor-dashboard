@@ -177,7 +177,20 @@
     "typescript/triple-slash-reference": "error",
     "typescript/explicit-function-return-type": "warn",
     "typescript/no-non-null-assertion": "warn",
-    "react/require-render-return": "error"
+    "react/require-render-return": "error",
+    "react/purity": "warn",
+    "react/refs": "warn",
+    "react/set-state-in-render": "warn",
+    "react/set-state-in-effect": "warn",
+    "react/immutability": "warn",
+    "react/static-components": "warn",
+    "react/use-memo": "warn",
+    "react/void-use-memo": "warn",
+    "react/preserve-manual-memoization": "warn",
+    "react/globals": "warn",
+    "react/error-boundaries": "warn",
+    "react/incompatible-library": "warn",
+    "react/unsupported-syntax": "warn"
   },
   "overrides": [
     {

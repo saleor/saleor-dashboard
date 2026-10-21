@@ -25,7 +25,7 @@ export const useAvailablePinTargets = (scope: PinScope): PinTarget[] => {
           hasOneOfPermissions(userPermissions, target.permissions)
         );
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [scope, userPermissions.length],
   );
 };
