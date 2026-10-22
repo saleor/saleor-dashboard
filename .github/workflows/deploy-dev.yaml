@@ -40,8 +40,8 @@ jobs:
         if: hashFiles('.github/cloud-extensions.ref') != ''
         uses: ./.github/actions/checkout-cloud-extensions
         with:
-          client-id: ${{ vars.CLOUD_EXTENSIONS_APP_CLIENT_ID }}
-          private-key: ${{ secrets.CLOUD_EXTENSIONS_APP_PRIVATE_KEY }}
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
 
       - name: Set custom version
         run: |

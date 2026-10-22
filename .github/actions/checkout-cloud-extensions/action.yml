@@ -3,11 +3,11 @@ description: >
   Checks out the private Saleor Cloud features at the cloud-console commit pinned in
   .github/cloud-extensions.ref and copies them over src/cloud.
 inputs:
-  client-id:
-    description: Client ID of the GitHub App installed on saleor/cloud-console
+  vault-url:
+    description: URL of the Vault that issues Saleor's GitHub tokens
     required: true
-  private-key:
-    description: Private key of that GitHub App
+  vault-jwt:
+    description: JWT for that Vault
     required: true
 runs:
   using: composite
@@ -17,15 +17,12 @@ runs:
       shell: bash
       run: echo "sha=$(< .github/cloud-extensions.ref)" >> "$GITHUB_OUTPUT"
 
-    - name: Get cloud-console read token
+    - name: Get token
       id: token
-      uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+      uses: saleor/saleor-internal-actions/request-vault-token@6a0fa7c073b3857a11d414f25a149065fe5a0fcf # v1.4.0
       with:
-        client-id: ${{ inputs.client-id }}
-        private-key: ${{ inputs.private-key }}
-        owner: saleor
-        repositories: cloud-console
-        permission-contents: read
+        vault-url: ${{ inputs.vault-url }}
+        vault-jwt: ${{ inputs.vault-jwt }}
 
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
