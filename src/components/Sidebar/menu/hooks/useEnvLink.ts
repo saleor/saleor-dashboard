@@ -6,6 +6,7 @@ const stagingLink = (hostname: string) =>
 
 const prodLink = (hostname: string) => `https://cloud.saleor.io/env/${hostname}${UTM_PARAMS}`;
 
+/** @public Used by the Saleor Cloud extensions. */
 export const useEnvLink = () => {
   const { hostname } = window.location;
 

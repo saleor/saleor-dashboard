@@ -71,3 +71,7 @@ playwright-failures*/
 /build-e2e-*/
 /e2e/.cache/
 /e2e/test-results/
+
+# Private Saleor Cloud code copied in by Cloud builds and local Cloud development
+/src/cloud/*
+!/src/cloud/index.ts

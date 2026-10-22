@@ -146,6 +146,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       SENTRY_RELEASE: ${{ needs.prepare-release.outputs.SENTRY_RELEASE }}
       EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
+      CLOUD_API_URL: "https://cloud.staging.saleor.io/platform/api"
       SALEOR_CLOUD_APP_DOMAIN: saleor.app
       VERSION: ${{ github.ref_name }}
       IS_CLOUD_INSTANCE: true
@@ -156,6 +157,14 @@ jobs:
         with:
           ref: ${{ env.VERSION }}
           persist-credentials: false
+
+      # Skipped for Dashboard versions without the Cloud extensions seam
+      - name: Check out Saleor Cloud extensions
+        if: hashFiles('.github/cloud-extensions.ref') != ''
+        uses: ./.github/actions/checkout-cloud-extensions
+        with:
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
 
