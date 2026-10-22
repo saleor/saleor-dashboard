@@ -3,15 +3,27 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { type ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import { Sidebar } from "./Sidebar";
 import { SidebarProvider } from "./SidebarContext";
 
 const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true }));
+const renderEnvironmentSwitcherStub = (): ReactElement => (
+  <div data-test-id="cloud-environment-switcher" />
+);
+const mockEnvironmentSwitcher = jest.fn(renderEnvironmentSwitcherStub);
+const mockCaptureException = jest.fn();
+
+jest.mock("@dashboard/cloud", () => ({
+  EnvironmentSwitcher: () => mockEnvironmentSwitcher(),
+}));
+jest.mock("@dashboard/services/errorTracking", () => ({
+  errorTracker: { captureException: (error: Error) => mockCaptureException(error) },
+}));
 
 jest.mock("./user/useFeedbackSurvey", () => ({
   useFeedbackSurvey: () => mockFeedbackSurvey(),
@@ -74,6 +86,11 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 };
 
 describe("Sidebar", () => {
+  beforeEach(() => {
+    mockEnvironmentSwitcher.mockImplementation(renderEnvironmentSwitcherStub).mockClear();
+    mockCaptureException.mockClear();
+  });
+
   it("renders the global feedback trigger", () => {
     // Arrange
     mockFeedbackSurvey.mockReturnValue({ isAvailable: true });
@@ -104,25 +121,51 @@ describe("Sidebar", () => {
     );
   });
 
-  it("should render cloud environment link when is cloud instance", () => {
+  it("should render the Saleor Cloud environment switcher when signed in via Saleor Cloud", async () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({
+      isCloudInstance: true,
       isAuthenticatedViaCloud: true,
     }));
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
     // Assert
-    expect(screen.getByTestId("cloud-environment-link")).toBeInTheDocument();
+    expect(await screen.findByTestId("cloud-environment-switcher")).toBeInTheDocument();
   });
-  it("should not render cloud environment link when is not cloud instance", () => {
+  it("should not load the Saleor Cloud environment switcher when not signed in via Saleor Cloud", async () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({
+      isCloudInstance: true,
       isAuthenticatedViaCloud: false,
     }));
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
+    await act(() => import("@dashboard/cloud"));
     // Assert
-    expect(screen.queryByTestId("cloud-environment-link")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("cloud-environment-switcher")).not.toBeInTheDocument();
+    expect(mockEnvironmentSwitcher).not.toHaveBeenCalled();
+  });
+  it("should keep the sidebar and report the error when the environment switcher fails", async () => {
+    // Arrange
+    const error = new Error("cloud extension crashed");
+
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => undefined);
+
+    mockEnvironmentSwitcher.mockImplementation(() => {
+      throw error;
+    });
+    (useCloud as jest.Mock).mockImplementation(() => ({
+      isCloudInstance: true,
+      isAuthenticatedViaCloud: true,
+    }));
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+    // Assert
+    await screen.findByText("Saleor Dashboard");
+    await act(() => import("@dashboard/cloud"));
+    expect(mockCaptureException).toHaveBeenCalledWith(error);
+    expect(screen.getByText("Saleor Dashboard")).toBeInTheDocument();
+    consoleError.mockRestore();
   });
   it("should render keyboard shortcuts", () => {
     // Arrange & Act

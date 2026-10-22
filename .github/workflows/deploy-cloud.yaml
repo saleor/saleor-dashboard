@@ -45,6 +45,7 @@ jobs:
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       EXTENSIONS_API_URL: "https://apps.saleor.io/api/v1/extensions"
+      CLOUD_API_URL: "https://cloud.saleor.io/platform/api"
       SALEOR_CLOUD_APP_DOMAIN: saleor.app
       IS_CLOUD_INSTANCE: true
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
@@ -57,6 +58,14 @@ jobs:
         with:
           ref: refs/tags/${{ github.event.client_payload.ref }}
           persist-credentials: false
+
+      # Skipped for Dashboard versions without the Cloud extensions seam
+      - name: Check out Saleor Cloud extensions
+        if: hashFiles('.github/cloud-extensions.ref') != ''
+        uses: ./.github/actions/checkout-cloud-extensions
+        with:
+          client-id: ${{ vars.CLOUD_EXTENSIONS_APP_CLIENT_ID }}
+          private-key: ${{ secrets.CLOUD_EXTENSIONS_APP_PRIVATE_KEY }}
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
         if: needs.determine-build.outputs.use-pnpm == 'true'
