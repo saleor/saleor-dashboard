@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { type SaveFilterTabDialogFormData } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
@@ -37,6 +38,7 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
   builtInPresets?: GetFilterTabsOutput<string>;
 }): UseFilterPresets => {
   const navigate = useNavigator();
+  const { trackEvent } = useAnalytics();
   const baseUrl = getUrl();
   const [presetIdToDelete, setPresetIdToDelete] = useState<number | null>(null);
   const customPresets = storageUtils.getFilterTabs();
@@ -48,6 +50,11 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
       : undefined;
   const onPresetChange = (index: number) => {
     reset?.();
+
+    trackEvent("list_filter_preset_changed", {
+      action: "selected",
+      preset_kind: index <= builtInPresetCount ? "built_in" : "custom",
+    });
 
     const allPresets = getAllPresets();
     const qs = new URLSearchParams(allPresets[index - 1]?.data ?? "");
@@ -63,6 +70,10 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
     const customPresetId = presetIdToDelete - builtInPresetCount;
 
     storageUtils.deleteFilterTab(customPresetId);
+    trackEvent("list_filter_preset_changed", {
+      action: "deleted",
+      preset_kind: "custom",
+    });
     reset?.();
 
     // When deleting the current tab, navigate to the All products
@@ -93,6 +104,10 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
       ]),
       stringify(parsedQs),
     );
+    trackEvent("list_filter_preset_changed", {
+      action: "saved",
+      preset_kind: "custom",
+    });
     onPresetChange(builtInPresetCount + currentCustomPresets.length + 1);
   };
   const onPresetUpdate = (tabName: string) => {
@@ -100,6 +115,10 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
     const currentCustomPresets = storageUtils.getFilterTabs();
 
     storageUtils.updateFilterTab(tabName, stringify(parsedQs));
+    trackEvent("list_filter_preset_changed", {
+      action: "updated",
+      preset_kind: "custom",
+    });
     onPresetChange(
       builtInPresetCount + currentCustomPresets.findIndex(tab => tab.name === tabName) + 1,
     );

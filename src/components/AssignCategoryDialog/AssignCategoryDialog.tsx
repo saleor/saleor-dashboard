@@ -27,7 +27,7 @@ interface AssignCategoryDialogProps
   categories: Categories | null;
   loading: boolean;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
-  onFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
+  onFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void | Promise<unknown>;
   onFetch: (value: string) => void;
   onSubmit: (data: Container[]) => void;
   selectionMode?: "single" | "multiple";
@@ -46,14 +46,12 @@ const AssignCategoryDialogInner = ({
   const intl = useIntl();
   const { combinedFilters, clearFilters } = useModalCategoryFilterContext();
 
-  const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
+  const { query, onQueryChange, resetQuery, isSearching } = useModalSearchWithFilters({
     filterVariables: combinedFilters,
     open,
     onFetch: (filters, query) => {
       if (onFilterChange) {
-        onFilterChange(filters.filter, query);
-
-        return;
+        return onFilterChange(filters.filter, query);
       }
 
       onFetch(query);
@@ -78,7 +76,7 @@ const AssignCategoryDialogInner = ({
       onFetch={() => {}}
       emptyMessage={intl.formatMessage(messages.noCategoriesFound)}
       backfillExhaustedMessage={intl.formatMessage(messages.allLoadedCategoriesFilteredOut)}
-      search={{ query, onQueryChange, resetQuery }}
+      search={{ query, onQueryChange, resetQuery, isSearching }}
       filtersSlot={<ModalFilters />}
       onResetFilters={clearFilters}
     />

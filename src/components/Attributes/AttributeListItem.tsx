@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { memo } from "react";
+
 import AttributeRow from "./AttributeRow";
 import { type AttributeFieldError, type AttributeRowProps } from "./types";
 
@@ -7,7 +9,7 @@ type AttributeListItemProps = Omit<AttributeRowProps, "error"> & {
   onAttributeSelectBlur: () => void;
 };
 
-export const AttributeListItem = ({
+const AttributeListItemComponent = ({
   errors,
   attribute,
   onAttributeSelectBlur,
@@ -24,3 +26,5 @@ export const AttributeListItem = ({
     />
   );
 };
+
+export const AttributeListItem = memo(AttributeListItemComponent);

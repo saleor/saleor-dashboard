@@ -112,7 +112,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
     : (params.customerTypes ?? "");
   const selectedCustomerTypes = useMemo(
     () => normalizeCustomerTypes(params.customerTypes),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [selectedCustomerTypesKey],
   );
 
@@ -181,7 +181,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
     },
     // Sanitize when the tab selection or type catalog changes. Spreading `params` from this
     // render preserves search/sort; do not depend on the whole params object (new each render).
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [selectedCustomerTypes, customerTypes, customerTypesLoading, navigate],
   );
 

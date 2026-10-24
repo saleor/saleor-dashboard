@@ -113,10 +113,14 @@ export const OrderProductAddDialog = ({
   const isValidVariant = hasVariantPricing;
   const getValidProductVariants = (product: OrderSearchProduct) =>
     product.variants.filter(isValidVariant);
-  // Products with nothing priced in this channel are dropped from the fetched page, so on a
-  // sparsely priced channel a whole page can disappear and leave the list unscrollable.
+  // A product whose priced variants sit past the first page still has to stay visible, or its
+  // Load more control disappears with it. Hide it only once every channel-listed variant is
+  // loaded and none of them have a price.
   const productChoices =
-    products?.filter(product => getValidProductVariants(product).length > 0) || [];
+    products?.filter(
+      product =>
+        getValidProductVariants(product).length > 0 || isOrderVariantsListTruncated(product),
+    ) || [];
   const displayedProductChoices = useStalePickerList(productChoices, loading, open);
   const selectedVariantsToProductsMap = displayedProductChoices.map(product =>
     getValidProductVariants(product).map(variant => isVariantSelected(variant, variants)),
@@ -311,18 +315,31 @@ export const OrderProductAddDialog = ({
                                     intl.formatMessage(messages.loadMoreVariants)
                                   )}
                                 </Button>
-                                {product.variantsTotalCount !== null && (
+                                {product.channelVariantIds ? (
                                   <Text
                                     size={3}
                                     color="default2"
                                     data-test-id="load-more-variants-progress"
                                   >
-                                    {intl.formatMessage(messages.loadMoreVariantsProgress, {
+                                    {intl.formatMessage(messages.loadMoreVariantsChannelProgress, {
                                       shown: product.variants.filter(isValidVariant).length,
-                                      loaded: product.variants.length,
-                                      total: product.variantsTotalCount,
+                                      available: product.channelVariantIds.length,
                                     })}
                                   </Text>
+                                ) : (
+                                  product.variantsTotalCount !== null && (
+                                    <Text
+                                      size={3}
+                                      color="default2"
+                                      data-test-id="load-more-variants-progress"
+                                    >
+                                      {intl.formatMessage(messages.loadMoreVariantsProgress, {
+                                        shown: product.variants.filter(isValidVariant).length,
+                                        loaded: product.variants.length,
+                                        total: product.variantsTotalCount,
+                                      })}
+                                    </Text>
+                                  )
                                 )}
                               </Box>
                             </TableCell>

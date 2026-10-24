@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import RichTextEditorContent from "@dashboard/components/RichTextEditor/RichTextEditorContent";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { SendFormKeyboardShortcutHint } from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";
@@ -62,31 +63,48 @@ const TranslationFieldsRich = ({
         void handleSubmit();
       }}
     >
-      <Box position="relative">
+      <Box>
         {isReadyForMount ? (
-          <RichTextEditor
-            defaultValue={defaultValue}
-            editorRef={editorRef}
-            onChange={changeEvent => {
-              handleChange();
+          <RichTextEditorClamp
+            tall
+            footer={
+              showShortcut ? (
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  paddingX={3}
+                  paddingTop={1}
+                  paddingBottom={2}
+                >
+                  <SendFormKeyboardShortcutHint visible={isFocused} action="save" />
+                </Box>
+              ) : null
+            }
+          >
+            <RichTextEditor
+              defaultValue={defaultValue}
+              editorRef={editorRef}
+              onChange={changeEvent => {
+                handleChange();
 
-              if (onValueChange) {
-                onValueChange(JSON.stringify(changeEvent));
-              }
-            }}
-            disabled={disabled}
-            error={undefined}
-            helperText={undefined}
-            label={intl.formatMessage({
-              id: "/vCXIP",
-              defaultMessage: "Translation",
-            })}
-            name="translation"
-            data-test-id="translation-field"
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            onKeyDownCapture={handleCmdEnterSubmit}
-          />
+                if (onValueChange) {
+                  onValueChange(JSON.stringify(changeEvent));
+                }
+              }}
+              disabled={disabled}
+              error={undefined}
+              helperText={undefined}
+              label={intl.formatMessage({
+                id: "/vCXIP",
+                defaultMessage: "Translation",
+              })}
+              name="translation"
+              data-test-id="translation-field"
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              onKeyDownCapture={handleCmdEnterSubmit}
+            />
+          </RichTextEditorClamp>
         ) : (
           <RichTextEditorLoading
             label={intl.formatMessage({
@@ -96,11 +114,6 @@ const TranslationFieldsRich = ({
             name="translation"
             data-test-id="translation-field"
           />
-        )}
-        {showShortcut && (
-          <Box position="absolute" __bottom="8px" __right="8px" zIndex="3">
-            <SendFormKeyboardShortcutHint visible={isFocused} action="save" />
-          </Box>
         )}
       </Box>
       {!hideActions && (

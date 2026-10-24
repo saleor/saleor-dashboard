@@ -16,7 +16,7 @@ export const ORDER_PRODUCT_ADD_VARIANTS_PAGE_SIZE = 50;
 
 /**
  * Caps variants per product in order add-line search. Further pages load via
- * OrderProductVariantsForAdd in the dialog.
+ * OrderProductChannelVariantIds and OrderProductVariantsForAdd in the dialog.
  */
 export const searchOrderVariant = gql`
   query SearchOrderVariant(

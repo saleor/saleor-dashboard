@@ -14,8 +14,10 @@ const getAlerts = (
   order?: OrderDetailsFragment,
   channelUsabilityData?: ChannelUsabilityDataQuery,
 ) => {
+  // An order that carries no shippable lines is finalized without a shipping method,
+  // so the absence of one is not a blocker and must not be reported as such.
   const canDetermineShippingMethods =
-    order?.shippingAddress?.country.code && !!order?.lines?.length;
+    !!order?.isShippingRequired && !!order?.shippingAddress?.country.code && !!order?.lines?.length;
   const isChannelInactive = order && !order.channel.isActive;
   const noProductsInChannel = channelUsabilityData?.products?.totalCount === 0;
   const noShippingMethodsInChannel =

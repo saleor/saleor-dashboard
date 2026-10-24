@@ -120,7 +120,7 @@ function ReactEditorJSClient({
         destroyTimeoutRef.current = null;
       }, 0);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

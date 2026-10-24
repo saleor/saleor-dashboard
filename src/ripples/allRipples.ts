@@ -6,6 +6,7 @@ import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expan
 import { channelCreateSetupFlow } from "@dashboard/channels/ripples/channelCreateSetupFlow";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
+import { rippleGlobalFeedback } from "@dashboard/components/Sidebar/ripples/globalFeedback";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
@@ -23,6 +24,7 @@ import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrder
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
 import { rippleNewReturnReasons } from "@dashboard/orders/ripples/newReturnReasons";
 import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
+import { rippleOrderDeliveryMethod } from "@dashboard/orders/ripples/orderDeliveryMethod";
 import { rippleOrderLineDiscountDiscoverability } from "@dashboard/orders/ripples/orderLineDiscountDiscoverability";
 import { rippleOrderLineMatrixView } from "@dashboard/orders/ripples/orderLineMatrixView";
 import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
@@ -36,6 +38,7 @@ import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRi
 import { type Ripple } from "@dashboard/ripples/types";
 import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
 import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
+import { rippleProductMediaAltTranslation } from "@dashboard/translations/ripples/productMediaAltTranslation";
 import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import { rippleTranslationDetailRefresh } from "@dashboard/translations/ripples/translationDetailRefresh";
 import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
@@ -63,6 +66,7 @@ export const allRipples: Ripple[] = [
   rippleOrderLinePriceBreakdown,
   rippleOrderLineMatrixView,
   rippleOrderChannelInHeader,
+  rippleOrderDeliveryMethod,
 
   // Warehouses
   rippleWarehouseMetadata,
@@ -109,12 +113,14 @@ export const allRipples: Ripple[] = [
   rippleStaffOrderAlertRecipients,
 
   // Translations
+  rippleProductMediaAltTranslation,
   rippleSlugTranslation,
   rippleTranslationDetailRefresh,
 
   // Sidebar
   rippleCloudEnvLink,
   rippleNavigationPins,
+  rippleGlobalFeedback,
 ];
 
 /**

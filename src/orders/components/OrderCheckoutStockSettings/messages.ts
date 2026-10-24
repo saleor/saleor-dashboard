@@ -32,10 +32,15 @@ export const messages = defineMessages({
     defaultMessage: "Checkout line limit",
     description: "input label",
   },
-  stockWillNotBeReserved: {
-    id: "YEv+6G",
-    defaultMessage: "Leaving this setting empty will mean that stock won’t be reserved",
-    description: "input helper text",
+  enableStockReservationForAuthenticatedUser: {
+    id: "MhtjvQ",
+    defaultMessage: "Enable checkout stock reservation for authenticated users",
+    description: "checkbox label",
+  },
+  enableStockReservationForAnonymousUser: {
+    id: "lybc+B",
+    defaultMessage: "Enable checkout stock reservation for anonymous users",
+    description: "checkbox label",
   },
   checkoutLimitsDescription: {
     id: "+do3gl",

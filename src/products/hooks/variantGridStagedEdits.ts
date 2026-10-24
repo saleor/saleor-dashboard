@@ -16,7 +16,7 @@ export interface VariantGridStagedEditsState {
   snapshots: Map<string, ProductDetailsVariantFragment>;
   removedIds: Set<string>;
   updatesById: Map<string, VariantColumnUpdate[]>;
-  /** Generator (and future) creates waiting for product Save — survive pagination. */
+  /** Generator and manually added creates waiting for product Save — survive pagination. */
   creates: ProductVariantBulkCreateInput[];
 }
 
@@ -184,14 +184,11 @@ interface VariantGridSubmitPayload {
   removedVariantIds: string[];
   updateVariants: ProductDetailsVariantFragment[];
   updateChanges: DatagridChangeOpts;
-  /** Staged bulk creates from the generator (and similar) waiting for Save. */
+  /** Staged bulk creates (generator and manual) waiting for Save. */
   stagedCreates: ProductVariantBulkCreateInput[];
 }
 
-/**
- * Build handler inputs for cross-page deletes/updates/creates from the staged store.
- * Page-local datagrid `added` rows are still taken from the live datagrid opts.
- */
+/** Build handler inputs for cross-page deletes/updates/creates from the staged store. */
 export const buildVariantGridSubmitPayload = (
   state: VariantGridStagedEditsState,
 ): VariantGridSubmitPayload => {
@@ -313,7 +310,7 @@ export const stageVariantCreatesInStore = (
 
 /**
  * Drop bulk-create inputs that collide with an existing set (by attribute signature or SKU).
- * Used when merging page-local adds with staged generator creates before Save.
+ * Only for generator output — manually added rows have no attribute identity yet.
  */
 export const dedupeBulkCreateInputs = (
   inputs: ProductVariantBulkCreateInput[],
@@ -349,7 +346,31 @@ export const dedupeBulkCreateInputs = (
   return { unique, skippedCount };
 };
 
-/** Clear accepted generator creates after the API has persisted them. */
+/**
+ * Append one create as-is. Manually added rows start without attributes, so the
+ * attribute-signature dedupe would collapse them into one.
+ */
+export const appendStagedVariantCreate = (
+  state: VariantGridStagedEditsState,
+  input: ProductVariantBulkCreateInput,
+): VariantGridStagedEditsState => appendStagedVariantCreates(state, [input]);
+
+/** Append creates as-is (manual / datagrid-added rows). No attribute-signature dedupe. */
+export const appendStagedVariantCreates = (
+  state: VariantGridStagedEditsState,
+  inputs: ProductVariantBulkCreateInput[],
+): VariantGridStagedEditsState => {
+  if (inputs.length === 0) {
+    return state;
+  }
+
+  return {
+    ...state,
+    creates: [...state.creates, ...inputs],
+  };
+};
+
+/** Clear staged creates after the API has persisted them. */
 export const clearStagedVariantCreates = (
   state: VariantGridStagedEditsState,
 ): VariantGridStagedEditsState => ({

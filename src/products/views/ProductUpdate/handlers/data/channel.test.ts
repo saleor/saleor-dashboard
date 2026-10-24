@@ -1,400 +1,205 @@
-// @ts-strict-ignore
-import { type DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import {
+  type DatagridChange,
+  type DatagridChangeOpts,
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
 
-import { getUpdateVariantChannelInputs, getVariantChannelsInputs } from "./channel";
+import { getUpdateVariantChannelInputs } from "./channel";
 
-const channelListings = [
-  {
-    id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=",
-    channel: {
-      id: "Q2hhbm5lbDox",
-    },
-  },
-  {
-    id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=",
-    channel: {
-      id: "Q2hhbm5lbDot",
-    },
-  },
-];
+const LISTED_CHANNEL = "Q2hhbm5lbDox";
+const OTHER_LISTED_CHANNEL = "Q2hhbm5lbDot";
+const UNLISTED_CHANNEL = "Q2hhbm5lbDod";
+const LISTING_ID = "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=";
+const OTHER_LISTING_ID = "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=";
+
+const variant = {
+  channelListings: [
+    { id: LISTING_ID, channel: { id: LISTED_CHANNEL } },
+    { id: OTHER_LISTING_ID, channel: { id: OTHER_LISTED_CHANNEL } },
+  ],
+} as Pick<ProductDetailsVariantFragment, "channelListings">;
+
+const priceChange = (channelId: string, value: number | null, row = 1): DatagridChange => ({
+  column: `channel:${channelId}`,
+  row,
+  data: { kind: "money-cell", value, currency: "USD" },
+});
+
+const availabilityChange = (channelId: string, value: boolean, row = 1): DatagridChange => ({
+  column: `availableInChannel:${channelId}`,
+  row,
+  data: value,
+});
+
+const changes = (...updates: DatagridChange[]): DatagridChangeOpts => ({
+  added: [],
+  removed: [],
+  updates,
+});
 
 describe("getUpdateVariantChannelInputs", () => {
-  test("should handle updated channels", () => {
+  test("should update prices of existing listings", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          column: "channel:Q2hhbm5lbDox",
-          row: 1,
-          data: {
-            kind: "money-cell",
-            value: 43343,
-            currency: "USD",
-          },
-        },
-        {
-          column: "channel:Q2hhbm5lbDot",
-          row: 1,
-          data: {
-            kind: "money-cell",
-            value: 123,
-            currency: "PLN",
-          },
-        },
-      ],
-    };
+    const data = changes(
+      priceChange(LISTED_CHANNEL, 43343),
+      priceChange(OTHER_LISTED_CHANNEL, 123),
+    );
+
     // Act
-    const channels = getUpdateVariantChannelInputs(changeData, 1, {
-      channelListings,
-    } as ProductDetailsVariantFragment);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual({
+    expect(result).toEqual({
       create: [],
       remove: [],
       update: [
-        {
-          channelListing: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=",
-          price: 43343,
-        },
-        {
-          channelListing: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=",
-          price: 123,
-        },
+        { channelListing: LISTING_ID, price: 43343 },
+        { channelListing: OTHER_LISTING_ID, price: 123 },
       ],
     });
   });
-  test("should handle removed channels", () => {
+
+  test("should mark existing listing unavailable instead of removing it", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          data: false,
-          column: "availableInChannel:Q2hhbm5lbDox",
-          row: 1,
-        },
-        {
-          data: false,
-          column: "availableInChannel:Q2hhbm5lbDot",
-          row: 1,
-        },
-      ],
-    };
+    const data = changes(availabilityChange(OTHER_LISTED_CHANNEL, false));
+
     // Act
-    const channels = getUpdateVariantChannelInputs(changeData, 1, {
-      channelListings,
-    } as ProductDetailsVariantFragment);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual({
-      create: [],
-      remove: [
-        "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=",
-        "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=",
-      ],
-      update: [],
-    });
-  });
-  test("should not overwrite price when re-enabling availability on an existing listing", () => {
-    // Arrange — untick then re-tick Available without editing price
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          data: false,
-          column: "availableInChannel:Q2hhbm5lbDox",
-          row: 1,
-        },
-        {
-          data: true,
-          column: "availableInChannel:Q2hhbm5lbDox",
-          row: 1,
-        },
-      ],
-    };
-    // Act
-    const channels = getUpdateVariantChannelInputs(changeData, 1, {
-      channelListings,
-    } as ProductDetailsVariantFragment);
-
-    // Assert — no-op preserves existing price and costPrice on the listing
-    expect(channels).toEqual({
+    expect(result).toEqual({
       create: [],
       remove: [],
-      update: [],
+      update: [{ channelListing: OTHER_LISTING_ID, isAvailableForPurchase: false }],
     });
   });
-  test("should not change price when enabling availability on an already listed channel", () => {
+
+  test("should mark existing listing available without touching its price", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          data: true,
-          column: "availableInChannel:Q2hhbm5lbDox",
-          row: 1,
-        },
-      ],
-    };
+    const data = changes(availabilityChange(LISTED_CHANNEL, true));
+
     // Act
-    const channels = getUpdateVariantChannelInputs(changeData, 1, {
-      channelListings,
-    } as ProductDetailsVariantFragment);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual({
+    expect(result).toEqual({
       create: [],
       remove: [],
-      update: [],
+      update: [{ channelListing: LISTING_ID, isAvailableForPurchase: true }],
     });
   });
-  test("should keep price edit when availability is re-enabled after editing price", () => {
-    // Arrange — price change then Available toggled on (both map to channel column)
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          column: "channel:Q2hhbm5lbDox",
-          row: 1,
-          data: {
-            kind: "money-cell",
-            value: 29.43,
-            currency: "EUR",
-          },
-        },
-        {
-          data: true,
-          column: "availableInChannel:Q2hhbm5lbDox",
-          row: 1,
-        },
-      ],
-    };
-    // Act
-    const channels = getUpdateVariantChannelInputs(changeData, 1, {
-      channelListings,
-    } as ProductDetailsVariantFragment);
 
-    // Assert
-    expect(channels).toEqual({
-      create: [],
-      remove: [],
-      update: [
-        {
-          channelListing: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=",
-          price: 29.43,
-        },
-      ],
-    });
-  });
-  test("should handle created channels", () => {
+  test("should use the latest availability change for a channel", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          data: true,
-          column: "availableInChannel:Q2hhbm5lbDod",
-          row: 1,
-        },
-        {
-          data: {
-            kind: "money-cell",
-            value: 3434,
-            currency: "USD",
-          },
-          column: "channel:Q2hhbm5lbDod",
-          row: 1,
-        },
-      ],
-    };
+    const data = changes(
+      availabilityChange(LISTED_CHANNEL, false),
+      availabilityChange(LISTED_CHANNEL, true),
+    );
+
     // Act
-    const channels = getUpdateVariantChannelInputs(changeData, 1, {
-      channelListings,
-    } as ProductDetailsVariantFragment);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual({
-      create: [
-        {
-          channelId: "Q2hhbm5lbDod",
-          price: 3434,
-        },
-      ],
-      remove: [],
-      update: [],
-    });
+    expect(result.update).toEqual([{ channelListing: LISTING_ID, isAvailableForPurchase: true }]);
   });
-  test("should return empty arrays when no changes for given row", () => {
+
+  test("should combine price edit and availability into one listing update", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          column: "channel:Q2hhbm5lbDox",
-          row: 11,
-          data: {
-            kind: "money-cell",
-            value: 43343,
-            currency: "USD",
-          },
-        },
-      ],
-    };
+    const data = changes(
+      priceChange(LISTED_CHANNEL, 15),
+      availabilityChange(LISTED_CHANNEL, false),
+    );
+
     // Act
-    const channels = getUpdateVariantChannelInputs(changeData, 1, {
-      channelListings,
-    } as ProductDetailsVariantFragment);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual({
-      create: [],
-      remove: [],
-      update: [],
-    });
-  });
-  test("should return empty arrays when no changes for given column", () => {
-    // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        { column: "attribute:1", row: 1, data: { value: { value: "test" } } },
-        { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
-      ],
-    };
-    // Act
-    const channels = getUpdateVariantChannelInputs(changeData, 1, {
-      channelListings,
-    } as ProductDetailsVariantFragment);
-
-    // Assert
-    expect(channels).toEqual({
-      create: [],
-      remove: [],
-      update: [],
-    });
-  });
-});
-describe("getVariantChannelsInputs", () => {
-  test("should filter and map change data to channel format", () => {
-    // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          column: "channel:Q2hhbm5lbDox",
-          row: 1,
-          data: {
-            kind: "money-cell",
-            value: 43343,
-            currency: "USD",
-          },
-        },
-      ],
-    };
-    // Act
-    const channels = getVariantChannelsInputs(changeData, 1);
-
-    // Assert
-
-    expect(channels).toEqual([
-      {
-        channelId: "Q2hhbm5lbDox",
-        price: 43343,
-      },
+    expect(result.update).toEqual([
+      { channelListing: LISTING_ID, price: 15, isAvailableForPurchase: false },
     ]);
   });
-  test("should filter out changes with null prices", () => {
+
+  test("should create available listing with zero price when ticking an unlisted channel", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          data: false,
-          column: "availableInChannel:Q2hhbm5lbDox",
-          row: 1,
-        },
-      ],
-    };
+    const data = changes(availabilityChange(UNLISTED_CHANNEL, true));
+
     // Act
-    const channels = getVariantChannelsInputs(changeData, 1);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual([]);
+    expect(result).toEqual({
+      create: [{ channelId: UNLISTED_CHANNEL, price: 0, isAvailableForPurchase: true }],
+      remove: [],
+      update: [],
+    });
   });
-  test("should create listing with default price when only availability is enabled", () => {
+
+  test("should create listing with entered price for an unlisted channel", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          data: true,
-          column: "availableInChannel:Q2hhbm5lbDox",
-          row: 1,
-        },
-      ],
-    };
+    const data = changes(
+      availabilityChange(UNLISTED_CHANNEL, true),
+      priceChange(UNLISTED_CHANNEL, 10),
+    );
+
     // Act
-    const channels = getVariantChannelsInputs(changeData, 1);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual([
-      {
-        channelId: "Q2hhbm5lbDox",
-        price: 0,
-      },
+    expect(result.create).toEqual([
+      { channelId: UNLISTED_CHANNEL, price: 10, isAvailableForPurchase: true },
     ]);
   });
-  test("should return empty arrays when no changes for given row", () => {
+
+  test("should create unavailable listing when price was entered and availability unticked", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        {
-          column: "channel:Q2hhbm5lbDox",
-          row: 11,
-          data: {
-            kind: "money-cell",
-            value: 43343,
-            currency: "USD",
-          },
-        },
-      ],
-    };
+    const data = changes(
+      priceChange(UNLISTED_CHANNEL, 10),
+      availabilityChange(UNLISTED_CHANNEL, false),
+    );
+
     // Act
-    const channels = getVariantChannelsInputs(changeData, 1);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual([]);
+    expect(result.create).toEqual([
+      { channelId: UNLISTED_CHANNEL, price: 10, isAvailableForPurchase: false },
+    ]);
   });
-  test("should return empty arrays when no changes for given column", () => {
+
+  test("should not create listing when unlisted channel is unticked without price", () => {
     // Arrange
-    const changeData: DatagridChangeOpts = {
-      added: [],
-      removed: [],
-      updates: [
-        { column: "attribute:1", row: 1, data: { value: { value: "test" } } },
-        { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
-      ],
-    };
+    const data = changes(availabilityChange(UNLISTED_CHANNEL, false));
+
     // Act
-    const channels = getVariantChannelsInputs(changeData, 1);
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
 
     // Assert
-    expect(channels).toEqual([]);
+    expect(result).toEqual({ create: [], remove: [], update: [] });
+  });
+
+  test("should ignore cleared price instead of removing the listing", () => {
+    // Arrange
+    const data = changes(priceChange(LISTED_CHANNEL, null));
+
+    // Act
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
+
+    // Assert
+    expect(result).toEqual({ create: [], remove: [], update: [] });
+  });
+
+  test("should ignore changes from other rows and non-channel columns", () => {
+    // Arrange
+    const data = changes(priceChange(LISTED_CHANNEL, 43343, 11), {
+      column: "attribute:1",
+      row: 1,
+      data: { value: { value: "test" } },
+    });
+
+    // Act
+    const result = getUpdateVariantChannelInputs(data, 1, variant);
+
+    // Assert
+    expect(result).toEqual({ create: [], remove: [], update: [] });
   });
 });

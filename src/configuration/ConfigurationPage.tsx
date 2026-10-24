@@ -21,6 +21,7 @@ import {
 import navigationCardStyles from "./navigation-card.module.css";
 import { useStyles } from "./styles";
 import { type MenuSection } from "./types";
+import { useConfigurationSearchAnalytics } from "./useConfigurationSearchAnalytics";
 import { useConfigurationSettingsSearchKeyboard } from "./useConfigurationSettingsSearchKeyboard";
 import { hasUserMenuItemPermissions } from "./utils";
 
@@ -52,6 +53,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
   const showMenu = settingsQuery.trim().length === 0;
   const { results, activeIndex, onSearchKeyDown, setActiveIndex } =
     useConfigurationSettingsSearchKeyboard(settingsQuery);
+
+  useConfigurationSearchAnalytics(settingsQuery, results.length);
+
   const activeOptionId =
     activeIndex >= 0 && results[activeIndex]
       ? getConfigurationSettingsOptionId(results[activeIndex].id)

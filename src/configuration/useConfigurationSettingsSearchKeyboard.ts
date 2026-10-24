@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   type ResolvedSettingsCatalogEntry,
   useSettingsCatalogSearch,
@@ -19,6 +20,7 @@ export const useConfigurationSettingsSearchKeyboard = (
   query: string,
 ): UseConfigurationSettingsSearchKeyboardResult => {
   const navigate = useNavigator();
+  const { trackEvent } = useAnalytics();
   const results = useSettingsCatalogSearch(query);
   const hasQuery = query.trim().length > 0;
   const [activeIndex, setActiveIndex] = useState(0);
@@ -60,10 +62,17 @@ export const useConfigurationSettingsSearchKeyboard = (
         }
 
         event.preventDefault();
+        trackEvent("configuration_search_result_clicked", {
+          input_method: "keyboard",
+          position: resolvedActiveIndex + 1,
+          result_count: results.length,
+          result_id: active.id,
+          result_kind: active.kind,
+        });
         navigate(active.href);
       }
     },
-    [hasQuery, navigate, resolvedActiveIndex, results],
+    [hasQuery, navigate, resolvedActiveIndex, results, trackEvent],
   );
 
   return {

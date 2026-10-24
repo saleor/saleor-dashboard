@@ -1,6 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { type ExtensionData } from "@dashboard/extensions/types";
+import { DeprecatedExtensionBadge } from "@dashboard/extensions/views/InstalledExtensions/components/DeprecatedExtensionBadge/DeprecatedExtensionBadge";
+import { isLegacySmtpApp } from "@dashboard/notificationsSettings/constants";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 
 import { InstalledBadge } from "./components/InstalledBadge";
@@ -24,7 +26,10 @@ export const ExtensionItem = ({ extension }: ExtensionItemProps) => {
           <ExtensionAvatar>{avatar}</ExtensionAvatar>
 
           <Box>
-            <DashboardCard.Title fontSize={6}>{title}</DashboardCard.Title>
+            <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+              <DashboardCard.Title fontSize={6}>{title}</DashboardCard.Title>
+              {isLegacySmtpApp(extension.id) ? <DeprecatedExtensionBadge /> : null}
+            </Box>
             <DashboardCard.Subtitle fontSize={2}>{subtitle}</DashboardCard.Subtitle>
           </Box>
         </Box>

@@ -67,6 +67,7 @@ export const TranslationsSalesPage = ({
             id: "s40PZt",
             defaultMessage: "Sale Name",
           }),
+          nullableName: true,
         },
       ),
     ],

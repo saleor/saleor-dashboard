@@ -164,6 +164,11 @@ pnpm run fetch-schema:main
 pnpm run fetch-schema:staging
 ```
 
+`fetch-schema:main` downloads `schema.graphql` attached to the newest published
+Saleor release matching `config.saleor.schemaVersion` in `package.json` (for
+example `3.23.35`), so it never includes fields that are merged but not yet
+released. `fetch-schema:staging` takes the schema from Saleor's `main` branch.
+
 ### Generating Types
 
 ```bash
@@ -334,7 +339,7 @@ As new schema versions are released:
 2. Run `pnpm run generate`
 3. Fix any type errors in application code
 4. Test thoroughly with the new schema
-5. When ready, promote staging to main by updating `fetch-schema:main` to point to the new version
+5. When ready, promote staging to main by bumping `config.saleor.schemaVersion` in `package.json` (requires a published release of that version)
 
 ## Related Documentation
 

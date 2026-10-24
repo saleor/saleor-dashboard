@@ -2,6 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type PageErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -61,20 +62,22 @@ const PageInfo = (props: PageInfoProps) => {
         />
         <FormSpacer />
         {isReadyForMount ? (
-          <RichTextEditor
-            defaultValue={defaultValue}
-            editorRef={editorRef}
-            onChange={handleChange}
-            disabled={disabled}
-            error={!!formErrors.content}
-            helperText={getPageErrorMessage(formErrors.content, intl)}
-            label={intl.formatMessage({
-              id: "gMwpNC",
-              defaultMessage: "Content",
-              description: "page content",
-            })}
-            name={"content" as keyof PageData}
-          />
+          <RichTextEditorClamp tall>
+            <RichTextEditor
+              defaultValue={defaultValue}
+              editorRef={editorRef}
+              onChange={handleChange}
+              disabled={disabled}
+              error={!!formErrors.content}
+              helperText={getPageErrorMessage(formErrors.content, intl)}
+              label={intl.formatMessage({
+                id: "gMwpNC",
+                defaultMessage: "Content",
+                description: "page content",
+              })}
+              name={"content" as keyof PageData}
+            />
+          </RichTextEditorClamp>
         ) : (
           <RichTextEditorLoading
             label={intl.formatMessage({

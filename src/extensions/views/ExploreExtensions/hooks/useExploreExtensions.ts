@@ -14,6 +14,7 @@ import {
 } from "@dashboard/notificationsSettings/constants";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
+import { isHiddenFromExplore } from "../exploreExtensionVisibility";
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
 
 const CONFIGURATION_OWNED_PLUGIN_IDS = new Set<string>([
@@ -82,7 +83,8 @@ const getFilteredExtensions = ({
       extension =>
         !(extension.type === "PLUGIN" && CONFIGURATION_OWNED_PLUGIN_IDS.has(extension.id)),
     )
-    .map(extension => toExtension(extension, installedApps, allPlugins));
+    .map(extension => toExtension(extension, installedApps, allPlugins))
+    .filter(extension => !isHiddenFromExplore(extension));
 };
 
 export const useExploreExtensions = () => {

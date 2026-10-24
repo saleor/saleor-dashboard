@@ -11,6 +11,7 @@ interface SettingsLinkCardProps {
   description: ReactNode;
   to: string;
   ownership?: SettingsOwnership;
+  icon?: ReactNode;
   id?: string;
   "data-test-id"?: string;
 }
@@ -24,6 +25,7 @@ export const SettingsLinkCard = ({
   description,
   to,
   ownership,
+  icon,
   id,
   "data-test-id": dataTestId,
 }: SettingsLinkCardProps): React.ReactNode => {
@@ -43,6 +45,11 @@ export const SettingsLinkCard = ({
         borderColor="default1"
         borderRadius={3}
       >
+        {icon ? (
+          <Box className={styles.icon} flexShrink="0" aria-hidden>
+            {icon}
+          </Box>
+        ) : null}
         <Box display="flex" flexDirection="column" gap={2} __minWidth={0} flexGrow="1">
           <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
             <Text size={5} fontWeight="bold" color="default1">

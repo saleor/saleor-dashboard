@@ -27,6 +27,11 @@ export const productVariantPriceMessages = defineMessages({
     defaultMessage: "Add channels in the Channels section to set prices",
     description: "simple product create pricing empty state",
   },
+  availableForPurchaseAriaLabel: {
+    id: "+q5pum",
+    defaultMessage: "Available for purchase in {channelName}",
+    description: "product variant channel availability toggle aria label",
+  },
   manageChannels: {
     id: "hF952H",
     defaultMessage: "Manage channels",

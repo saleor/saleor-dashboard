@@ -16,6 +16,7 @@ export const SidebarContent = () => {
       as="aside"
       height="100%"
       display="grid"
+      __gridTemplateColumns="minmax(0, 1fr)"
       __gridTemplateRows="auto 1fr auto"
     >
       <Box>

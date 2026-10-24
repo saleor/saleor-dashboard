@@ -1,13 +1,27 @@
 # Running E2E tests
 
-The dashboard uses Playwright for running E2E tests.
+There are two Playwright suites.
+
+| Suite         | Runs against                                  | Command           |
+| ------------- | --------------------------------------------- | ----------------- |
+| `e2e/`        | A disposable Saleor in docker, seeded locally | `pnpm e2e`        |
+| `e2e-legacy/` | A provisioned Saleor Cloud instance           | `pnpm e2e:legacy` |
+
+New tests belong in `e2e/`. See [`e2e/README.md`](../e2e/README.md) — it covers the two
+Saleor targets (latest stable and unreleased main), how seeds are built and cached, and how
+to port a spec across.
+
+## The legacy suite
 
 > [!NOTE]
-> The tests are based on Saleor Cloud and use snapshots with prepared data.
-> If you want to run those tests on your infrastructure you should update test data with your own created objects
-> https://github.com/saleor/saleor-dashboard/blob/main/playwright/data/e2eTestData.ts and make sure to create snapshot.
+> `e2e-legacy/` is frozen. It is kept running until its specs have been reviewed and ported
+> to `e2e/`; it should not be extended or edited.
 
-Playwright-specific env variables to `.env` file
+It is based on Saleor Cloud and uses snapshots with prepared data. To run it against your
+own infrastructure you need to update the test data with your own created objects in
+[`e2e-legacy/data/e2eTestData.ts`](../e2e-legacy/data/e2eTestData.ts) and create a snapshot.
+
+Playwright-specific env variables for `.env`:
 
 ```
 BASE_URL=
@@ -20,14 +34,15 @@ E2E_PERMISSIONS_USERS_PASSWORD=
 MAILPITURL=
 ```
 
-You are ready to run Playwright commands like:
+Then:
 
 ```shell
-pnpm run e2e
+pnpm run e2e:legacy
 ```
 
-Note that if you have changed `BASE_URL` to run tests on different environment you will need to clear login data which is stored locally in `playwright/.auth` folder:
+If you change `BASE_URL` to run against a different environment, clear the login data cached
+in `e2e-legacy/.auth`:
 
-```
-pnpm run e2e:clean-auth
+```shell
+pnpm run e2e:legacy:clean-auth
 ```

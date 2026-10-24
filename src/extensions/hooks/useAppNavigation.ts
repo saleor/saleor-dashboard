@@ -5,7 +5,7 @@ import {
   writeInstalledAppsSnapshot,
 } from "@dashboard/extensions/installed-apps-snapshot";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { findInstalledAppByIdentifier } from "@dashboard/extensions/utils/findInstalledAppByIdentifier";
+import { findInstalledAppForIdentifier } from "@dashboard/extensions/utils/findInstalledAppByIdentifier";
 import { resolveInstalledAppHref } from "@dashboard/extensions/utils/resolveInstalledAppHref";
 import { InstalledAppsSnapshotDocument, type InstalledAppsSnapshotQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -25,7 +25,7 @@ export const useAppNavigation = () => {
    */
   const resolveApp = useCallback(
     async (identifier: string): Promise<InstalledAppSnapshotNode | null> => {
-      const cachedApp = findInstalledAppByIdentifier(readInstalledAppsSnapshot(), identifier);
+      const cachedApp = findInstalledAppForIdentifier(readInstalledAppsSnapshot(), identifier);
 
       if (cachedApp) {
         return cachedApp;
@@ -39,7 +39,7 @@ export const useAppNavigation = () => {
 
       writeInstalledAppsSnapshot(apps);
 
-      return findInstalledAppByIdentifier(apps, identifier) ?? null;
+      return findInstalledAppForIdentifier(apps, identifier) ?? null;
     },
     [client],
   );

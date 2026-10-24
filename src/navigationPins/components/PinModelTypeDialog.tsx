@@ -3,6 +3,7 @@ import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
 import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -10,6 +11,7 @@ import { Box, Button, Select, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { getNavigationPinChangedProperties } from "../analytics";
 import { FAVORITES_TARGET_ID, MAX_PINS_PER_TARGET } from "../constants";
 import { useAvailablePinTargets } from "../hooks/useAvailablePinTargets";
 import { useNavigationPins } from "../hooks/useNavigationPins";
@@ -34,6 +36,7 @@ export const PinModelTypeDialog = ({
 }: PinModelTypeDialogProps) => {
   const intl = useIntl();
   const notify = useNotifier();
+  const { trackEvent } = useAnalytics();
   const { user } = useUser();
   const { userPins, organizationPins, setUserPins, setOrganizationPins } = useNavigationPins();
 
@@ -69,9 +72,27 @@ export const PinModelTypeDialog = ({
         await setOrganizationPins(next);
       }
 
+      trackEvent(
+        "navigation_pin_changed",
+        getNavigationPinChangedProperties({
+          action: "pin",
+          result: "success",
+          scope,
+          target,
+        }),
+      );
       notify({ status: "success", text: intl.formatMessage(messages.pinnedSuccess) });
       onClose();
     } catch {
+      trackEvent(
+        "navigation_pin_changed",
+        getNavigationPinChangedProperties({
+          action: "pin",
+          result: "error",
+          scope,
+          target,
+        }),
+      );
       notify({ status: "error", text: intl.formatMessage(commonMessages.somethingWentWrong) });
     } finally {
       setSubmitting(false);

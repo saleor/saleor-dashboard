@@ -50,6 +50,7 @@ export const Header = ({
         appId={data.id}
         goBackUrl={getBackButtonUrl()}
         showMangeAppButton={false}
+        deprecationReason={data.deprecationReason}
       />
 
       <AppHeaderOptions

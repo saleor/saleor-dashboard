@@ -53,6 +53,7 @@ const richTextGetters: RichTextGetters<string> = {
 };
 
 const defaultProps: AttributeRowProps = {
+  referenceLayoutView: "product",
   attribute: numericAttribute,
   attributeValues: [],
   disabled: false,

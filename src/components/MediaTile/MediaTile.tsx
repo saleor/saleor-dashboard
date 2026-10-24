@@ -23,6 +23,9 @@ const useStyles = makeStyles(
         "& $mediaOverlay": {
           display: "block",
         },
+        "& $mediaOverlayToolbar": {
+          display: "flex",
+        },
         "& $selectionCheckbox": {
           opacity: 1,
           pointerEvents: "auto",
@@ -59,25 +62,40 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "center",
     },
-    mediaOverlayToolbar: {
+    tileControls: {
+      alignItems: "center",
       display: "flex",
-      gap: vars.spacing[1],
+      justifyContent: "space-between",
+      left: theme.spacing(2),
+      pointerEvents: "none",
       position: "absolute",
-      right: vars.spacing[1],
-      top: vars.spacing[1],
+      right: theme.spacing(2),
+      top: theme.spacing(2),
+      zIndex: 2,
+    },
+    mediaOverlayToolbar: {
+      display: "none",
+      gap: vars.spacing[1],
+      marginLeft: "auto",
+      pointerEvents: "auto",
     },
     selectionCheckbox: {
-      position: "absolute",
-      top: theme.spacing(2),
-      left: theme.spacing(2),
-      zIndex: 2,
-      background: theme.palette.background.paper,
       borderRadius: theme.spacing(0.5),
       opacity: 0,
       pointerEvents: "none",
       transition: theme.transitions.create("opacity", {
         duration: theme.transitions.duration.shorter,
       }),
+      // Unchecked uses the theme surface, which disappears on a dark photo.
+      "& button[data-state='unchecked'], & button[data-state='unchecked']:hover, & button[data-state='unchecked']:active, & button[data-state='unchecked']:focus-visible":
+        {
+          backgroundColor: "#fff",
+          borderColor: "rgba(0, 0, 0, 0.55)",
+        },
+      "& button[data-state='unchecked']:hover:after, & button[data-state='unchecked']:active:after, & button[data-state='unchecked']:focus-visible:after":
+        {
+          backgroundColor: "transparent",
+        },
     },
     selectionCheckboxVisible: {
       opacity: 1,
@@ -85,14 +103,16 @@ const useStyles = makeStyles(
     },
     controlButton: {
       color: theme.palette.saleor.main[1],
-      backgroundColor: "transparent",
+      backgroundColor: `color-mix(in srgb, ${theme.palette.background.paper} 72%, transparent)`,
       border: "none",
+      borderRadius: theme.spacing(0.5),
       cursor: "pointer",
       margin: 0,
-      padding: 0,
+      padding: theme.spacing(0.5),
 
       "&:hover": {
         color: theme.palette.saleor.active[1],
+        backgroundColor: theme.palette.background.paper,
       },
     },
   }),
@@ -152,20 +172,49 @@ const MediaTile = (props: MediaTileProps) => {
       data-test-id="product-image"
       data-test-selected={selected ? "true" : "false"}
     >
-      {onSelectionChange && !loading ? (
-        <div
-          className={clsx(classes.selectionCheckbox, {
-            [classes.selectionCheckboxVisible]: selected,
-          })}
-          onClick={event => event.stopPropagation()}
-          onMouseDown={event => event.stopPropagation()}
-          data-test-id="product-media-select"
-        >
-          <Checkbox
-            checked={selected}
-            onCheckedChange={checked => onSelectionChange(checked === true)}
-            tabIndex={-1}
-          />
+      {(onSelectionChange || onEdit || editHref || onDelete) && !loading ? (
+        <div className={classes.tileControls}>
+          {onSelectionChange ? (
+            <div
+              className={clsx(classes.selectionCheckbox, {
+                [classes.selectionCheckboxVisible]: selected,
+              })}
+              onClick={event => event.stopPropagation()}
+              onMouseDown={event => event.stopPropagation()}
+              data-test-id="product-media-select"
+            >
+              <Checkbox
+                checked={selected}
+                onCheckedChange={checked => onSelectionChange(checked === true)}
+                tabIndex={-1}
+              />
+            </div>
+          ) : null}
+          {!disableOverlay && (onEdit || editHref || onDelete) ? (
+            <div className={classes.mediaOverlayToolbar}>
+              {(onEdit || editHref) && (
+                <IconButton
+                  href={editHref}
+                  hoverOutline={false}
+                  variant="secondary"
+                  className={classes.controlButton}
+                  onClick={onEdit}
+                >
+                  <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                </IconButton>
+              )}
+              {onDelete && (
+                <IconButton
+                  variant="secondary"
+                  hoverOutline={false}
+                  className={classes.controlButton}
+                  onClick={onDelete}
+                >
+                  <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                </IconButton>
+              )}
+            </div>
+          ) : null}
         </div>
       ) : null}
       <div
@@ -174,33 +223,7 @@ const MediaTile = (props: MediaTileProps) => {
           [classes.disableOverlay]: disableOverlay,
         })}
       >
-        {loading ? (
-          <SaleorThrobber size={32} data-test-id="media-tile-loading" />
-        ) : (
-          <div className={classes.mediaOverlayToolbar}>
-            {(onEdit || editHref) && (
-              <IconButton
-                href={editHref}
-                hoverOutline={false}
-                variant="secondary"
-                className={classes.controlButton}
-                onClick={onEdit}
-              >
-                <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-              </IconButton>
-            )}
-            {onDelete && (
-              <IconButton
-                variant="secondary"
-                hoverOutline={false}
-                className={classes.controlButton}
-                onClick={onDelete}
-              >
-                <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-              </IconButton>
-            )}
-          </div>
-        )}
+        {loading ? <SaleorThrobber size={32} data-test-id="media-tile-loading" /> : null}
       </div>
       <MediaWithFallback
         key={mediaUrl}

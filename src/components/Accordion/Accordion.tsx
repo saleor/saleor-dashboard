@@ -22,9 +22,7 @@ const Accordion = ({
   className,
   dataTestId = "expand-icon",
 }: AccordionProps) => {
-  const [openedAccordionId, setOpenedAccordionId] = useState<undefined | string>(
-    initialExpand ? AccordionItemId : undefined,
-  );
+  const [openedAccordionId, setOpenedAccordionId] = useState(initialExpand ? AccordionItemId : "");
 
   return (
     <div className={className}>

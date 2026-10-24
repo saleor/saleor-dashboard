@@ -1,5 +1,129 @@
 # Changelog
 
+## 3.23.41
+
+### Patch Changes
+
+- [#7026](https://github.com/saleor/saleor-dashboard/pull/7026) [`ab51f7f`](https://github.com/saleor/saleor-dashboard/commit/ab51f7f1859af843d7bc2d93766fdced78be2a34) Thanks [@mirekm](https://github.com/mirekm)! - Variant bulk edit no longer shows an "Add variant" button. In bulk edit the button only moved focus to the empty last row, where you add variants by typing. The button is still shown on the product page, where it opens the variant create page.
+
+- [#7027](https://github.com/saleor/saleor-dashboard/pull/7027) [`d482164`](https://github.com/saleor/saleor-dashboard/commit/d482164b789d3dea174d8cdcca96dcb4a68be92c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Plain text attribute inputs whose value is an `http` or `https` link now show a button that opens the link in a new tab.
+
+- [#7025](https://github.com/saleor/saleor-dashboard/pull/7025) [`8c08937`](https://github.com/saleor/saleor-dashboard/commit/8c089377901db57db655d83c863547a34a41b042) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Show a color preview next to plain text attribute inputs whose value is a hex color, such as `[#111](https://github.com/saleor/saleor-dashboard/issues/111)` or `#fafafa`.
+
+- [#7028](https://github.com/saleor/saleor-dashboard/pull/7028) [`c4877ae`](https://github.com/saleor/saleor-dashboard/commit/c4877aeeef7934c9dc0355bc6caca58c1bbbdce8) Thanks [@mirekm](https://github.com/mirekm)! - Models now show their slug next to their name (under it when a reference list row is narrow), so models that share a name can be told apart. The slug appears in the Assign Model picker, in both single and multiple selection, and on models assigned to a reference attribute: the reference list (list and packed views), the single-reference chip, and the list filter, which now also matches slugs.
+
+- [#7029](https://github.com/saleor/saleor-dashboard/pull/7029) [`309bc83`](https://github.com/saleor/saleor-dashboard/commit/309bc83d73dd441f7fa3491f6ced4d5556465136) Thanks [@mirekm](https://github.com/mirekm)! - Searching in the model, category and collection pickers now shows progress. Previously, nothing indicated that a search was running, which on a slow connection made the picker look unresponsive. Now a spinner appears in the search field while you type and until results arrive. On slow responses, the previous results stay visible but dimmed in the meantime.
+
+- [#7034](https://github.com/saleor/saleor-dashboard/pull/7034) [`e50d48c`](https://github.com/saleor/saleor-dashboard/commit/e50d48ca493baf867842da10f89bb3263658fb89) Thanks [@lkostrowski](https://github.com/lkostrowski)! - You can now make a product variant unavailable for purchase in a single channel without losing its prices. The variant Pricing card (on both the variant details and create pages) has an "Available for purchase" toggle for each channel. Channels where the variant is unavailable show an "Unavailable for purchase" status.
+
+  In the product variants datagrid, the per-channel "Available" checkbox now sets this flag. Before, unticking it deleted the variant's channel listing and its prices, and ticking it again recreated the listing at price 0. Now unticking hides the variant from customers and keeps its prices, which are shown muted. To remove a variant from a channel completely, use "Manage channels" on the variant page.
+
+  Requires Saleor 3.23.42 or later.
+
+- [#6995](https://github.com/saleor/saleor-dashboard/pull/6995) [`d1f1951`](https://github.com/saleor/saleor-dashboard/commit/d1f1951043d2aea30ad5ebcf47afe072fa94ee1c) Thanks [@mirekm](https://github.com/mirekm)! - A warehouse can be set up from its own page: assign channels, link shipping zones that share a channel, and follow the setup checklist until the warehouse can sell stock. Pickup is now a single "Offer pickup" setting that replaces public and private stock. The warehouse list shows whether its stock can be sold, the city and country, and a pickup label when pickup is on. New warehouses are created from the list, and deleting one names the stock and channels it removes. The shipping zone page only offers warehouses that share one of its channels, and removing a channel that would unlink warehouses from shipping zones asks for confirmation first.
+
+## 3.23.40
+
+### Patch Changes
+
+- [#7012](https://github.com/saleor/saleor-dashboard/pull/7012) [`5a111dc`](https://github.com/saleor/saleor-dashboard/commit/5a111dc93783015f9e718f1e2c077a865b6f1d0f) Thanks [@peelar](https://github.com/peelar)! - Prevent duplicate members in permission groups before saving by disabling already assigned members in the picker.
+
+- [#7013](https://github.com/saleor/saleor-dashboard/pull/7013) [`c4de934`](https://github.com/saleor/saleor-dashboard/commit/c4de934b97dc9483e9dc76074f1bccb6ae7a5f30) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Update the Macaw UI component library to version 3. Dialogs, popovers, dropdown menus, and tooltips now use newer Radix UI versions. The dashboard should look and behave the same.
+
+- [#6999](https://github.com/saleor/saleor-dashboard/pull/6999) [`7eb51b4`](https://github.com/saleor/saleor-dashboard/commit/7eb51b46d0bf68eb0035c7d153391ad90d989038) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Deprecated apps with an official replacement now show a "Migrate" button in the installed extensions list. It opens the installation of the replacement app: SMTP → Customer Emails, Product Feed → Google Merchant Center. The button is shown only to staff who can manage apps.
+
+- [#7014](https://github.com/saleor/saleor-dashboard/pull/7014) [`e34cd91`](https://github.com/saleor/saleor-dashboard/commit/e34cd91db8cd51ed9cbd69374b4f3bdb61c0285f) Thanks [@mirekm](https://github.com/mirekm)! - On the order page, discounted Unit price and Total cells now always show the small dot that marks them as clickable for a price breakdown. Before, the dot was missing in the order line grid and in the Total column of the fulfillment grids, even though clicking those cells opened the breakdown.
+
+- [#7014](https://github.com/saleor/saleor-dashboard/pull/7014) [`e34cd91`](https://github.com/saleor/saleor-dashboard/commit/e34cd91db8cd51ed9cbd69374b4f3bdb61c0285f) Thanks [@mirekm](https://github.com/mirekm)! - Discounted unit prices and totals in the order line grids no longer overlap the currency code. The crossed-out original price is now always shown, in a smaller muted font, and currency codes in price cells use the same secondary style. The price columns are a bit wider by default, and when a cell is still too narrow the currency code moves onto the price as a symbol (for example `$10,450.00`) so both prices stay readable.
+
+- [#6929](https://github.com/saleor/saleor-dashboard/pull/6929) [`748b46a`](https://github.com/saleor/saleor-dashboard/commit/748b46a54cef548f891bf202c74021149efc927e) Thanks [@vojtesa](https://github.com/vojtesa)! - Add a "Delivery" column to the orders list. Each order now shows a tag indicating how it is delivered: "Shipping" for a shipping method and "Pickup" for collection at a warehouse (click & collect). Orders without a delivery method, such as draft or digital orders, show a dash. On the order page, a pickup order shows Pickup with the collection point name in the summary, and the customer card shows a "Pickup location" section with the location name, whether stock can come from other warehouses, and its address, instead of "Shipping address". The warehouses list shows a Pickup label on locations customers can collect from.
+
+- [#7005](https://github.com/saleor/saleor-dashboard/pull/7005) [`8b0e4c9`](https://github.com/saleor/saleor-dashboard/commit/8b0e4c9875779dd5395c243f50ab31abb0616c84) Thanks [@mirekm](https://github.com/mirekm)! - Storybook stories that show read-only rich text, such as product media translations, failed to load with "require is not defined", which stopped Chromatic from publishing builds. They now load, and the `react-editor-js` package is no longer a dependency.
+
+- [#6952](https://github.com/saleor/saleor-dashboard/pull/6952) [`0ee605b`](https://github.com/saleor/saleor-dashboard/commit/0ee605ba9c46974f17ba28765d2dcc0fef43cbd0) Thanks [@EugenBodanov](https://github.com/EugenBodanov)! - Add product media to the translation context switcher and provide a dedicated media translation screen with a preview and an Alt text field. Staff with Manage translations permission can translate media, including for unpublished products, without changing the original alt text.
+
+- [#7009](https://github.com/saleor/saleor-dashboard/pull/7009) [`37f8fdd`](https://github.com/saleor/saleor-dashboard/commit/37f8fddb3f0009b0d5cd7719f375956a32cdea4b) Thanks [@mirekm](https://github.com/mirekm)! - Clearing a translated field and saving it now resets the field to untranslated, so storefronts fall back to the original language. Previously the field was saved as an empty value, and storefronts showed a blank instead of the original text. This applies to product, category, collection, sale, voucher, and shipping method names, page titles, SEO fields, slugs, and the text of text attribute values on product, variant, and page translations. Translations already saved as blank can be reset the same way: click Edit on the field and save it without typing. Attribute names, attribute value names, variant names, menu item names, and media alt text still save as empty values because the API cannot remove them yet.
+
+- [#7010](https://github.com/saleor/saleor-dashboard/pull/7010) [`621ffed`](https://github.com/saleor/saleor-dashboard/commit/621ffed6a7eb4e766a2ef2f0c26f68a82f412457) Thanks [@mirekm](https://github.com/mirekm)! - Translation fields saved as empty now show a hint that your storefront may display a blank instead of the original. In bulk edit, Save is available whenever an item has such fields and resets them along with your edits, so the storefront shows the original language again. Leaving bulk edit without saving keeps them as they were and does not warn about unsaved changes. Fields that can't be reset to the original yet (variant names, menu item names, media alt text, attribute names, and attribute value names) show a warning when they are saved as empty or about to be saved empty, until the API supports resetting them.
+
+- [`8e14543`](https://github.com/saleor/saleor-dashboard/commit/8e1454319aabce8a60ca5a24fb6ef17faa1ba49c) Thanks [@peelar](https://github.com/peelar)! - Fix product thumbnails appearing against the card edge on the order return page. Thumbnails now align with the Product column heading.
+
+## 3.23.39
+
+### Patch Changes
+
+- [#6986](https://github.com/saleor/saleor-dashboard/pull/6986) [`38c0c57`](https://github.com/saleor/saleor-dashboard/commit/38c0c570db62fdad1f21220ea571c6af158fb60b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Apps can now mark themselves as deprecated, and the dashboard shows it. The installed extensions list, the app page, and the app's manage page show the app's deprecation message. Installing a deprecated app shows the message and asks you to confirm before you can install it. Deprecated apps keep working as before. Requires Saleor 3.23.38 or later.
+
+- [#6973](https://github.com/saleor/saleor-dashboard/pull/6973) [`07af74d`](https://github.com/saleor/saleor-dashboard/commit/07af74da834e74374219d61d8990cf00feba782c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Cmd+K now has "Copy … ID" actions for the page you are on. On orders and draft orders, you can also copy the order number. On a product variant, you can copy both the variant ID and its product ID. Other detail pages (customers, collections, categories, gift cards, vouchers, discounts, models, model types, structures, channels) get a "Copy … ID" action too. The copied value is the GraphQL ID used by the API, and a toast confirms the copy.
+
+- [#6939](https://github.com/saleor/saleor-dashboard/pull/6939) [`f9093f2`](https://github.com/saleor/saleor-dashboard/commit/f9093f26918a1e1e508b851e07e47594606491df) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Draft order errors now disappear once the missing details are filled in.
+
+  Clicking "Finalize" on an incomplete draft order marks the missing billing address, shipping address and shipping method. Those errors come from the `draftOrderComplete` result, which Apollo keeps until the mutation runs again, so they stayed on screen even after the customer, addresses and carrier had been picked. Each of them is now dropped as soon as the draft actually carries the data it was complaining about.
+
+- [#6941](https://github.com/saleor/saleor-dashboard/pull/6941) [`e215f89`](https://github.com/saleor/saleor-dashboard/commit/e215f8964034fc5a6c202cc6677ef2eb4fb6ff5b) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Draft orders that don't need shipping no longer warn about missing shipping methods.
+
+  A draft made up entirely of non-shippable products (digital goods, for instance) has no shipping methods to offer, so the draft page warned that the destination country was unavailable for the channel and listed it under "You will not be able to finalize this draft because:". Finalizing such an order never checks shipping at all, so the warning named a blocker that did not exist. The alert is now limited to drafts that actually require shipping; the inactive-channel and no-products alerts are unchanged.
+
+- [#6949](https://github.com/saleor/saleor-dashboard/pull/6949) [`19b5bb1`](https://github.com/saleor/saleor-dashboard/commit/19b5bb142e427fabaa1ae2cd0d921bc360bb7152) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The Product Rating field on the product details page is now marked as deprecated. Product rating will be removed in the next minor version — create a numeric "rating" attribute instead. The field still works for now.
+
+- [#6982](https://github.com/saleor/saleor-dashboard/pull/6982) [`0f14255`](https://github.com/saleor/saleor-dashboard/commit/0f14255e13201394c68017ecd656c8c9cd269937) Thanks [@peelar](https://github.com/peelar)! - Fixed the feedback button staying hidden even when its survey loaded successfully. The button now appears when feedback is available, including surveys configured to match the feedback button, and stays hidden in production when surveys are blocked or unavailable. Local development continues to show the feedback button without analytics configuration.
+
+- [#6983](https://github.com/saleor/saleor-dashboard/pull/6983) [`d1510fb`](https://github.com/saleor/saleor-dashboard/commit/d1510fbe36a2f6cbab2a335d6518a862e77bde95) Thanks [@mirekm](https://github.com/mirekm)! - Rich text fields, such as product descriptions, now use the same border as other form fields. Before, that outline looked thicker than name fields and text boxes.
+
+- [#6991](https://github.com/saleor/saleor-dashboard/pull/6991) [`a37698e`](https://github.com/saleor/saleor-dashboard/commit/a37698e9ed566a686a87d8c9890e9807a9393ea8) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Checkout stock reservation in order settings is now toggled with "Enable checkout stock reservation" checkboxes for authenticated and anonymous users. Previously you had to clear the duration input to turn reservation off, which wasn't obvious. Unchecking now saves `0` (reservation disabled) and hides the input; checking shows the input prefilled with a default (400 minutes for authenticated users, 200 for anonymous users).
+
+## 3.23.38
+
+### Patch Changes
+
+- [#6978](https://github.com/saleor/saleor-dashboard/pull/6978) [`8d00479`](https://github.com/saleor/saleor-dashboard/commit/8d0047902dbe7ad12077f33948d61ac40010999b) Thanks [@mirekm](https://github.com/mirekm)! - Customer emails in Configuration → Notifications now open the Customer Emails app, where shopper messages can follow the language they checked out in. If this shop still has the older SMTP app installed, it appears on the same card, marked Deprecated, so you can open it or switch over.
+
+  Notification links and app redirects identify installed apps by their identifier, falling back to the manifest URL only when the identifier is missing. Apps with the same name or a conflicting identifier are no longer mistaken for the intended app.
+
+- [#6979](https://github.com/saleor/saleor-dashboard/pull/6979) [`be83464`](https://github.com/saleor/saleor-dashboard/commit/be8346489ee25aeb9a6430fc2841a7bd3fac183a) Thanks [@peelar](https://github.com/peelar)! - Fixed sidebar overflow and an unresponsive feedback button. Account names now truncate to leave room for both footer buttons, and feedback appears only when its survey is ready.
+
+## 3.23.37
+
+### Patch Changes
+
+- [#6974](https://github.com/saleor/saleor-dashboard/pull/6974) [`e4a5acd`](https://github.com/saleor/saleor-dashboard/commit/e4a5acd3190e37033ff103b583dfded7759624a9) Thanks [@mirekm](https://github.com/mirekm)! - Bulk edit now saves every variant you filled in, not just one. An empty row stays at the bottom, ready for the next variant, so you do not have to click Add variant. That empty row is not saved until you type something. On a selected number or price cell, typing replaces the current value instead of adding onto it.
+
+## 3.23.36
+
+### Patch Changes
+
+- [#6962](https://github.com/saleor/saleor-dashboard/pull/6962) [`8d678ea`](https://github.com/saleor/saleor-dashboard/commit/8d678ea217a17187e3bc3dda03df468f3a826617) Thanks [@mirekm](https://github.com/mirekm)! - Long rich text stays shortened until you edit it or choose Show all. Descriptions, such as a product description, stay about twice as tall as an attribute value. The fade appears only when text is actually cut off.
+
+- [#6962](https://github.com/saleor/saleor-dashboard/pull/6962) [`8d678ea`](https://github.com/saleor/saleor-dashboard/commit/8d678ea217a17187e3bc3dda03df468f3a826617) Thanks [@mirekm](https://github.com/mirekm)! - Reference attributes on products, variants, models, and customers now use the same card. Multi-value attributes start as folded, so a long list does not take over the page. Open a group to reorder the references in a list. Switch between a list and chips. That choice, and which groups you left open, is remembered for the type — Shoes stay consistent across Shoes, and stay separate from Bags (if that's a different type), variants, models, and customers.
+
+- [#6943](https://github.com/saleor/saleor-dashboard/pull/6943) [`1b1ad3b`](https://github.com/saleor/saleor-dashboard/commit/1b1ad3b7c7617c281a011c63b0eef417427971be) Thanks [@peelar](https://github.com/peelar)! - Added a global feedback button to the sidebar on cloud instances where product analytics is enabled, making it possible to open PostHog feedback surveys from anywhere in the Dashboard.
+
+- [#6934](https://github.com/saleor/saleor-dashboard/pull/6934) [`248fb36`](https://github.com/saleor/saleor-dashboard/commit/248fb36e81c1bcdb3678b38b9838843feb7bf4a9) Thanks [@mirekm](https://github.com/mirekm)! - Fix how order value shipping handles long carrier method names. Now the name is truncated (full text on hover), and **Change** sits next to Shipping instead of linking the raw method string.
+
+- [#6968](https://github.com/saleor/saleor-dashboard/pull/6968) [`9835b91`](https://github.com/saleor/saleor-dashboard/commit/9835b91354d09654231092e8222da101b7825fb2) Thanks [@mirekm](https://github.com/mirekm)! - For a simple product, shipping weight is in General information and is used to calculate shipping rates. The unit is the shop default, set with shipping zones, not on the product.
+
+## 3.23.35
+
+### Patch Changes
+
+- [#6951](https://github.com/saleor/saleor-dashboard/pull/6951) [`a1c34ce`](https://github.com/saleor/saleor-dashboard/commit/a1c34ce380cabaa737211c52f907ad16cdde927a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The customers list now offers "Company name" and "External reference" columns in the column picker. Company name comes from the customer's default billing address. Both columns are hidden by default — enable them from the column picker to have them persist in your list settings.
+
+  Column headers that the API cannot order by no longer respond to clicks or show a sort arrow. Previously, clicking such a header (for example "Content type" on the models list) wrote a sort into the URL and drew a sort direction arrow while the rows stayed in their original order.
+
+- [#6950](https://github.com/saleor/saleor-dashboard/pull/6950) [`c4b4306`](https://github.com/saleor/saleor-dashboard/commit/c4b43061b87b7a5a283c52f504700fbf06b78ae7) Thanks [@peelar](https://github.com/peelar)! - Prevent the unsaved changes dialog from appearing after successfully creating a discount.
+
+- [#6959](https://github.com/saleor/saleor-dashboard/pull/6959) [`fbef31b`](https://github.com/saleor/saleor-dashboard/commit/fbef31bccec2420a3e25bcfab23b565ed543614e) Thanks [@mirekm](https://github.com/mirekm)! - Products can be added to an order again when their variants priced in the order's channel are not among the first 50 variants. Previously, the "Add products" dialog loaded only the first 50 variants of a product and hid the product entirely when none of them had a price in the channel, so those products could not be added at all.
+
+  The dialog now loads the variants assigned to the order's channel for such products and shows them, with "Load more variants" fetching only channel variants. This is a temporary workaround until Saleor core can filter a product's variants by their channel listing; the dashboard will drop it once that exists.
+
+- [#6955](https://github.com/saleor/saleor-dashboard/pull/6955) [`20f1769`](https://github.com/saleor/saleor-dashboard/commit/20f17693233be697115c4cc16639b04397ca4c02) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The Docker image now serves the dashboard's HTML with `Cache-Control: no-cache`. Previously, after upgrading the image (for example in Saleor Core's `.devcontainer` setup), the browser could keep reusing the cached HTML of the previous release. It then requested files that no longer existed and crashed with "Unable to preload CSS". Now the browser checks for a new version on every load, so it always gets the current release.
+
+## 3.23.34
+
+### Patch Changes
+
+- [#6935](https://github.com/saleor/saleor-dashboard/pull/6935) [`3096c22`](https://github.com/saleor/saleor-dashboard/commit/3096c22f290fcf7f2825dc398283f8c89e0e02e2) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed logging in with an external authentication plugin (OpenID Connect, "Login with Saleor Cloud") failing with "You don't have permission to login". The external login and external token refresh mutations asked for user data that only an already-authenticated request may read, so Saleor rejected them. They now request the same minimal user payload as before 3.23.33, and existing SSO sessions no longer get logged out on reload.
+
 ## 3.23.33
 
 ### Patch Changes

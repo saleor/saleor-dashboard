@@ -8,13 +8,15 @@ import { useExtensionPreferences } from "./useExtensionPreferences";
 
 interface InlineExtensionPreferenceControlsProps {
   extension: PreferenceKeyInput & { label: string };
+  surface?: "entity_page" | "home";
 }
 
 export const InlineExtensionPreferenceControls = ({
   extension,
+  surface = "entity_page",
 }: InlineExtensionPreferenceControlsProps) => {
   const intl = useIntl();
-  const { getState, setState, isSaving } = useExtensionPreferences();
+  const { getState, setState, isSaving } = useExtensionPreferences(surface);
   const state = getState(extension);
   const isPinned = state === "pinned";
 

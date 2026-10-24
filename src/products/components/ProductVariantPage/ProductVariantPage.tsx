@@ -364,7 +364,6 @@ export const ProductVariantPage = ({
                       onManageClick={variant ? toggleManageChannels : undefined}
                       availableChannelsCount={variant?.product?.channelListings?.length}
                     />
-                    <CardSpacer />
                     {variant?.product?.productType && (
                       <VariantAttributesSection
                         title={intl.formatMessage(messages.nonSelectionAttributes)}
@@ -373,6 +372,7 @@ export const ProductVariantPage = ({
                         selectionAttributesExist={selectionAttributes.length > 0}
                         hasVariants={hasVariants}
                         attributeValues={attributeValues}
+                        productTypeId={variant.product.productType.id}
                         productTypeName={variant.product.productType.name}
                         productTypeUrl={productTypeUrl(variant.product.productType.id)}
                         loading={loading}
@@ -390,60 +390,57 @@ export const ProductVariantPage = ({
                       />
                     )}
                     {hasVariants && selectionAttributes.length > 0 && (
-                      <>
-                        <CardSpacer />
-                        <Attributes
-                          title={
-                            <Box display="flex" alignItems="center" gap={2}>
-                              <Text size={6} fontWeight="medium">
-                                {intl.formatMessage(messages.selectionAttributesHeader)}
-                              </Text>
-                              <Tooltip>
-                                <Tooltip.Trigger>
-                                  <Box color="default2" display="flex" alignItems="center">
-                                    <CircleHelp
-                                      size={iconSize.small}
-                                      strokeWidth={iconStrokeWidthBySize.small}
-                                    />
-                                  </Box>
-                                </Tooltip.Trigger>
-                                <Tooltip.Content side="bottom">
-                                  <Tooltip.Arrow />
-                                  <FormattedMessage
-                                    id="LhGd2m"
-                                    defaultMessage="Attributes that define variant options customers can choose from on the storefront.{br}Can be adjusted in the {productTypeLink} settings."
-                                    description="tooltip for variant selection attributes"
-                                    values={{
-                                      br: <br />,
-                                      productTypeLink: variant?.product?.productType ? (
-                                        <Link href={productTypeUrl(variant.product.productType.id)}>
-                                          {variant.product.productType.name}
-                                        </Link>
-                                      ) : null,
-                                    }}
+                      <Attributes
+                        chrome="card"
+                        referenceLayoutView="variant"
+                        referenceTypeId={variant?.product?.productType?.id}
+                        title={
+                          <Box as="span" display="inline-flex" alignItems="center" gap={2}>
+                            {intl.formatMessage(messages.selectionAttributesHeader)}
+                            <Tooltip>
+                              <Tooltip.Trigger>
+                                <Box color="default2" display="flex" alignItems="center">
+                                  <CircleHelp
+                                    size={iconSize.small}
+                                    strokeWidth={iconStrokeWidthBySize.small}
                                   />
-                                </Tooltip.Content>
-                              </Tooltip>
-                            </Box>
-                          }
-                          attributes={selectionAttributes}
-                          attributeValues={attributeValues}
-                          loading={loading}
-                          disabled={loading}
-                          errors={errors}
-                          onChange={handlers.selectAttribute}
-                          onMultiChange={handlers.selectAttributeMultiple}
-                          onFileChange={handlers.selectAttributeFile}
-                          onReferencesRemove={handlers.selectAttributeReference}
-                          onReferencesAddClick={onAssignReferencesClick}
-                          onReferencesReorder={handlers.reorderAttributeValue}
-                          fetchAttributeValues={fetchAttributeValues}
-                          fetchMoreAttributeValues={fetchMoreAttributeValues}
-                          onAttributeSelectBlur={onAttributeSelectBlur}
-                          richTextGetters={attributeRichTextGetters}
-                        />
-                        <CardSpacer />
-                      </>
+                                </Box>
+                              </Tooltip.Trigger>
+                              <Tooltip.Content side="bottom">
+                                <Tooltip.Arrow />
+                                <FormattedMessage
+                                  id="LhGd2m"
+                                  defaultMessage="Attributes that define variant options customers can choose from on the storefront.{br}Can be adjusted in the {productTypeLink} settings."
+                                  description="tooltip for variant selection attributes"
+                                  values={{
+                                    br: <br />,
+                                    productTypeLink: variant?.product?.productType ? (
+                                      <Link href={productTypeUrl(variant.product.productType.id)}>
+                                        {variant.product.productType.name}
+                                      </Link>
+                                    ) : null,
+                                  }}
+                                />
+                              </Tooltip.Content>
+                            </Tooltip>
+                          </Box>
+                        }
+                        attributes={selectionAttributes}
+                        attributeValues={attributeValues}
+                        loading={loading}
+                        disabled={loading}
+                        errors={errors}
+                        onChange={handlers.selectAttribute}
+                        onMultiChange={handlers.selectAttributeMultiple}
+                        onFileChange={handlers.selectAttributeFile}
+                        onReferencesRemove={handlers.selectAttributeReference}
+                        onReferencesAddClick={onAssignReferencesClick}
+                        onReferencesReorder={handlers.reorderAttributeValue}
+                        fetchAttributeValues={fetchAttributeValues}
+                        fetchMoreAttributeValues={fetchMoreAttributeValues}
+                        onAttributeSelectBlur={onAttributeSelectBlur}
+                        richTextGetters={attributeRichTextGetters}
+                      />
                     )}
                     <ProductVariantMedia
                       disabled={loading || productMedia.length === 0}

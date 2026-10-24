@@ -103,7 +103,7 @@ export const OrderSummary = (props: Props) => {
         )}
       </Box>
 
-      <Box display="grid" __gridTemplateColumns="1fr 1fr" gap={3}>
+      <Box display="grid" __gridTemplateColumns="minmax(0, 1fr) minmax(0, 1fr)" gap={3}>
         {isEditable && editableProps ? (
           <OrderValue
             orderSubtotal={order.subtotal}
@@ -122,6 +122,8 @@ export const OrderSummary = (props: Props) => {
             shippingMethods={order.shippingMethods}
             shippingMethod={order.shippingMethod}
             shippingAddress={order.shippingAddress}
+            deliveryMethod={order.deliveryMethod}
+            collectionPointName={order.collectionPointName}
             isShippingRequired={order.isShippingRequired}
             errors={editableProps.errors}
             orderDiscount={editableProps.orderDiscount}
@@ -142,6 +144,8 @@ export const OrderSummary = (props: Props) => {
             orderTotal={order.total}
             discounts={order.discounts}
             voucherId={order.voucher?.id ?? null}
+            deliveryMethod={order.deliveryMethod}
+            collectionPointName={order.collectionPointName}
             isShippingRequired={order.isShippingRequired}
             shippingMethods={order.shippingMethods}
             shippingMethod={order.shippingMethod}

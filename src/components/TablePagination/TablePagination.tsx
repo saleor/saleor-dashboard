@@ -1,4 +1,4 @@
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { PaginationButtons } from "@dashboard/components/PaginationButtons/PaginationButtons";
 import { TableCell } from "@dashboard/components/Table/Table";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -7,8 +7,7 @@ import {
   PaginationRowNumberSelect,
   type PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
-import { Box, Button } from "@saleor/macaw-ui-next";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
@@ -88,19 +87,12 @@ export const TablePagination = ({
       )}
 
       <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
-        <Button
-          variant="secondary"
-          disabled={!hasPreviousPage || disabled}
-          onClick={handlers.onPreviousPage}
-          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-          data-test-id="button-pagination-back"
-        />
-        <Button
-          variant="secondary"
-          disabled={!hasNextPage || disabled}
-          onClick={handlers.onNextPage}
-          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-          data-test-id="button-pagination-next"
+        <PaginationButtons
+          hasPreviousPage={hasPreviousPage}
+          hasNextPage={hasNextPage}
+          disabled={disabled}
+          onPreviousPage={handlers.onPreviousPage}
+          onNextPage={handlers.onNextPage}
         />
       </Box>
     </Box>

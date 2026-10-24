@@ -7,6 +7,18 @@
   border-radius: 8px;
 }
 
+/* Popovers such as the rich text block menu render inside the card and must escape it.
+   Without overflow clipping, the tinted header is a rectangle that covers the card's
+   rounded corners, so those corners are rounded on the header itself. */
+.cardVisible {
+  overflow: visible;
+}
+
+.cardVisible .header {
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
 .header {
   display: flex;
   align-items: center;

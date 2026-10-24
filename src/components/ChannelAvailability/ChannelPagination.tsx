@@ -1,6 +1,5 @@
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { PaginationButtons } from "@dashboard/components/PaginationButtons/PaginationButtons";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { channelAvailabilityMessages } from "./messages";
@@ -34,19 +33,13 @@ export const ChannelPagination = ({
         })}
       </Text>
       <Box display="flex" alignItems="center" gap={2}>
-        <Button
-          variant="secondary"
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-          data-test-id="pagination-prev"
-        />
-        <Button
-          variant="secondary"
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-          data-test-id="pagination-next"
+        <PaginationButtons
+          hasPreviousPage={currentPage > 1}
+          hasNextPage={currentPage < totalPages}
+          onPreviousPage={() => onPageChange(currentPage - 1)}
+          onNextPage={() => onPageChange(currentPage + 1)}
+          previousTestId="pagination-prev"
+          nextTestId="pagination-next"
         />
       </Box>
     </Box>

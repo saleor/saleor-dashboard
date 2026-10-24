@@ -34,9 +34,14 @@ export const messages = defineMessages({
     description: "savebar hint when variants are marked for deletion but not saved yet",
   },
   saveCompositionDetails: {
-    id: "FaL3f6",
+    id: "qcTYIh",
     defaultMessage: "details",
-    description: "Save composition segment for product details/SEO/organization/attributes",
+    description: "Save composition segment for product name, SEO, organization, and description",
+  },
+  saveCompositionAttributes: {
+    id: "083Fld",
+    defaultMessage: "attributes",
+    description: "Save composition segment for product attribute values",
   },
   saveCompositionChannels: {
     id: "Fwt3tF",
@@ -62,9 +67,9 @@ export const messages = defineMessages({
     description: "Save composition segment for staged variant deletes",
   },
   leaveDialogDescription: {
-    id: "sh4Ozn",
+    id: "R1ot+e",
     defaultMessage:
-      "Media and metadata changes are already saved. Unsaved product details, availability, and variant edits will be lost.",
+      "Media and metadata changes are already saved. Unsaved product details, attributes, availability, and variant edits will be lost.",
     description: "Exit form dialog body on product update page",
   },
   saveStepsTitle: {

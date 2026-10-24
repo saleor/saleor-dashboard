@@ -43,3 +43,20 @@ export const Empty: Story = {
 export const HasMore: Story = {
   args: { hasMore: true },
 };
+
+/** Channel-listed variants sit past the embedded page, so the product stays visible with nothing priced yet. */
+export const ChannelVariantsBeyondFirstPage: Story = {
+  args: {
+    products: [
+      {
+        ...products[0],
+        name: "Wool Scarf",
+        variants: [],
+        variantsHasNextPage: true,
+        variantsTotalCount: 100,
+        channelVariantIds: Array.from({ length: 50 }, (_, index) => `variant-${index + 51}`),
+        missingVariantIds: Array.from({ length: 50 }, (_, index) => `variant-${index + 51}`),
+      },
+    ],
+  },
+};

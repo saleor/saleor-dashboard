@@ -10,6 +10,7 @@ export const appManifestFragment = gql`
     tokenTargetUrl
     dataPrivacy
     dataPrivacyUrl
+    deprecationReason
     homepageUrl
     supportUrl
     extensions {
@@ -46,6 +47,7 @@ export const appFragment = gql`
     manifestUrl
     supportUrl
     version
+    deprecationReason
     accessToken
     brand {
       logo {
@@ -200,11 +202,13 @@ export const InstalledApp = gql`
 export const InstalledAppDetails = gql`
   fragment InstalledAppDetails on App {
     id
+    identifier
     isActive
     name
     type
     appUrl
     created
+    deprecationReason
     problems {
       __typename
       key

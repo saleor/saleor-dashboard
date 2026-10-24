@@ -50,12 +50,12 @@ export const orderDraftDetailsStaticColumnsAdapter = (
   {
     id: "price",
     title: intl.formatMessage(columnsMessages.price),
-    width: 150,
+    width: 160,
   },
   {
     id: "total",
     title: intl.formatMessage(columnsMessages.total),
-    width: 150,
+    width: 160,
   },
   {
     id: "isGift",

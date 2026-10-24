@@ -85,7 +85,7 @@ export const MenuItemDialog = ({
       reset(initial);
     },
     // Form should reset only when dialog opens, not when `initial` identity changes on every render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [open],
   );
 

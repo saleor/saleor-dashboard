@@ -38,6 +38,10 @@ export const ProductSaveCompositionHint = ({
     segments.push(intl.formatMessage(messages.saveCompositionDetails));
   }
 
+  if (resolved.hasAttributes) {
+    segments.push(intl.formatMessage(messages.saveCompositionAttributes));
+  }
+
   if (resolved.dirtyChannelCount > 0) {
     segments.push(
       intl.formatMessage(messages.saveCompositionChannels, {

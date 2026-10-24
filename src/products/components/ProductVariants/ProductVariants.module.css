@@ -1,0 +1,36 @@
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mu-spacing-2);
+  min-height: 120px;
+  padding: 16px;
+  text-align: center;
+  border-style: dashed;
+  border-width: 1px;
+  border-color: var(--mu-colors-border-default1);
+  border-radius: 6px;
+}
+
+.emptyIcon {
+  color: var(--mu-colors-text-default2);
+  flex-shrink: 0;
+}
+
+.card.card :global(.dashboard-datagrid) {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.card.card :global(.dashboard-datagrid):not(:global(.dvn-scroller)) {
+  /* The grid's last line sits on the card edge. Tuck that pixel under the card border. */
+  margin-bottom: -1px;
+}
+
+.card.card :global(.dvn-scroller) {
+  /* Keep horizontal overflow for wide columns. Vertical overflow must stay
+     hidden so a wheel over the grid scrolls the page, not the rows. */
+  overflow-x: auto;
+  overflow-y: hidden;
+}

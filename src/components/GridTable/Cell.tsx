@@ -10,7 +10,6 @@ type GridTableCellProps = GridTableProps<TdHTMLAttributes<HTMLTableCellElement>>
 export const GridTableCell = React.forwardRef<GridTableCellElement, GridTableCellProps>(
   ({ children, ...props }, forwardedRef) => {
     return (
-      // @ts-expect-error - incorrect types
       <Box
         as="td"
         ref={forwardedRef}

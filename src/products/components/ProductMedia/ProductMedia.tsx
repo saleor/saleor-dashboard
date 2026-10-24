@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type FetchResult } from "@apollo/client";
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { Draggable } from "@dashboard/components/Draggable/Draggable";
 import MediaTile from "@dashboard/components/MediaTile/MediaTile";
 import {
@@ -399,151 +399,148 @@ const ProductMedia = (props: ProductMediaProps) => {
   const showGallery = (media?.length ?? 0) > 0 || pendingMedia.length > 0;
 
   return (
-    <DashboardCard data-test-id="product-media">
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          <FormattedMessage {...messages.media} />
-        </DashboardCard.Title>
-        <DashboardCard.Toolbar>
-          <Box display="flex" gap={2} alignItems="center">
-            {hasSelection ? (
-              <>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={allSelected ? handleClearSelection : handleSelectAll}
-                  data-test-id="product-media-select-all"
-                >
-                  {intl.formatMessage(allSelected ? messages.clearSelection : messages.selectAll)}
-                </Button>
-                <Button
-                  variant="error"
-                  type="button"
-                  onClick={handleDeleteSelected}
-                  disabled={isUploading}
-                  data-test-id="product-media-delete-selected"
-                >
-                  {intl.formatMessage(messages.deleteSelected, { quantity: selectedCount })}
-                </Button>
-              </>
-            ) : null}
-            <Dropdown>
-              <Dropdown.Trigger>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  data-test-id="button-upload-image"
-                  ref={anchor}
-                >
-                  {intl.formatMessage(messages.upload)}
-                </Button>
-              </Dropdown.Trigger>
-              <Dropdown.Content align="end">
-                <List
-                  padding={2}
-                  borderRadius={4}
-                  boxShadow="defaultOverlay"
-                  backgroundColor="default1"
-                >
-                  <Dropdown.Item>
-                    <List.Item
-                      borderRadius={4}
-                      paddingX={1.5}
-                      paddingY={2}
-                      onClick={() => imagesUpload.current.click()}
-                      data-test-id="upload-images"
-                    >
-                      <Text>{intl.formatMessage(messages.uploadImages)}</Text>
-                    </List.Item>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <List.Item
-                      borderRadius={4}
-                      paddingX={1.5}
-                      paddingY={2}
-                      onClick={openMediaUrlModal}
-                      data-test-id="upload-media-url"
-                    >
-                      <Text>{intl.formatMessage(messages.uploadUrl)}</Text>
-                    </List.Item>
-                  </Dropdown.Item>
-                </List>
-              </Dropdown.Content>
-            </Dropdown>
-          </Box>
-        </DashboardCard.Toolbar>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        <input
-          className={styles.hiddenInput}
-          data-test-id="product-media-file-input"
-          id="product-media-file-upload"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            if (event.target.files) {
-              handleImageUpload(event.target.files);
-            }
-
-            // Allow selecting the same file again
-            event.target.value = "";
-          }}
-          multiple
-          type="file"
-          ref={imagesUpload}
-          accept="image/*"
-        />
-        <Box position="relative">
-          {media === undefined ? (
-            <Box padding={5}>
-              <Skeleton />
-            </Box>
-          ) : showGallery ? (
-            <ProductMediaGalleryDropzone
-              variant="gallery"
-              disableClick={true}
-              onImageUpload={handleImageUpload}
-            >
-              {({ isDragActive }) => (
-                <DndContext
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragStart={handleDragStart}
-                  onDragOver={handleDragOver}
-                  onDragEnd={handleDragEnd}
-                  onDragCancel={handleDragCancel}
-                >
-                  <SortableContext items={items} strategy={disableSortingStrategy}>
-                    <MediaList
-                      media={orderedMedia}
-                      preview={pendingMedia}
-                      placeholders={placeholders}
-                      selectedIds={selectedIds}
-                      disabled={isUploading}
-                      className={clsx(styles.mediaList, isDragActive && styles.mediaListDimmed)}
-                      onDelete={onImageDelete}
-                      onSelectionChange={handleSelectionChange}
-                      getEditHref={getImageEditUrl}
-                      onPlaceholderUnused={handlePlaceholderUnused}
-                    />
-                  </SortableContext>
-                  {createPortal(
-                    <DragOverlay dropAnimation={null} style={{ zIndex: 1000 }}>
-                      {activeMedia ? (
-                        <div className={styles.dragOverlayTile}>
-                          <MediaTile media={activeMedia} disableOverlay />
-                        </div>
-                      ) : null}
-                    </DragOverlay>,
-                    document.body,
-                  )}
-                </DndContext>
-              )}
-            </ProductMediaGalleryDropzone>
-          ) : (
-            <ProductMediaGalleryDropzone variant="empty" onImageUpload={handleImageUpload} />
-          )}
+    <DetailSettingsCard
+      data-test-id="product-media"
+      title={<FormattedMessage {...messages.media} />}
+      allowOverflow
+      headerEnd={
+        <Box display="flex" gap={2} alignItems="center">
+          {hasSelection ? (
+            <>
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={allSelected ? handleClearSelection : handleSelectAll}
+                data-test-id="product-media-select-all"
+              >
+                {intl.formatMessage(allSelected ? messages.clearSelection : messages.selectAll)}
+              </Button>
+              <Button
+                variant="error"
+                type="button"
+                onClick={handleDeleteSelected}
+                disabled={isUploading}
+                data-test-id="product-media-delete-selected"
+              >
+                {intl.formatMessage(messages.deleteSelected, { quantity: selectedCount })}
+              </Button>
+            </>
+          ) : null}
+          <Dropdown>
+            <Dropdown.Trigger>
+              <Button
+                variant="secondary"
+                type="button"
+                data-test-id="button-upload-image"
+                ref={anchor}
+              >
+                {intl.formatMessage(messages.upload)}
+              </Button>
+            </Dropdown.Trigger>
+            <Dropdown.Content align="end">
+              <List
+                padding={2}
+                borderRadius={4}
+                boxShadow="defaultOverlay"
+                backgroundColor="default1"
+              >
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={1.5}
+                    paddingY={2}
+                    onClick={() => imagesUpload.current.click()}
+                    data-test-id="upload-images"
+                  >
+                    <Text>{intl.formatMessage(messages.uploadImages)}</Text>
+                  </List.Item>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={1.5}
+                    paddingY={2}
+                    onClick={openMediaUrlModal}
+                    data-test-id="upload-media-url"
+                  >
+                    <Text>{intl.formatMessage(messages.uploadUrl)}</Text>
+                  </List.Item>
+                </Dropdown.Item>
+              </List>
+            </Dropdown.Content>
+          </Dropdown>
         </Box>
-      </DashboardCard.Content>
-    </DashboardCard>
+      }
+    >
+      <input
+        className={styles.hiddenInput}
+        data-test-id="product-media-file-input"
+        id="product-media-file-upload"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          if (event.target.files) {
+            handleImageUpload(event.target.files);
+          }
+
+          // Allow selecting the same file again
+          event.target.value = "";
+        }}
+        multiple
+        type="file"
+        ref={imagesUpload}
+        accept="image/*"
+      />
+      <Box position="relative">
+        {media === undefined ? (
+          <Box padding={5}>
+            <Skeleton />
+          </Box>
+        ) : showGallery ? (
+          <ProductMediaGalleryDropzone
+            variant="gallery"
+            disableClick={true}
+            onImageUpload={handleImageUpload}
+          >
+            {({ isDragActive }) => (
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDragEnd={handleDragEnd}
+                onDragCancel={handleDragCancel}
+              >
+                <SortableContext items={items} strategy={disableSortingStrategy}>
+                  <MediaList
+                    media={orderedMedia}
+                    preview={pendingMedia}
+                    placeholders={placeholders}
+                    selectedIds={selectedIds}
+                    disabled={isUploading}
+                    className={clsx(styles.mediaList, isDragActive && styles.mediaListDimmed)}
+                    onDelete={onImageDelete}
+                    onSelectionChange={handleSelectionChange}
+                    getEditHref={getImageEditUrl}
+                    onPlaceholderUnused={handlePlaceholderUnused}
+                  />
+                </SortableContext>
+                {createPortal(
+                  <DragOverlay dropAnimation={null} style={{ zIndex: 1000 }}>
+                    {activeMedia ? (
+                      <div className={styles.dragOverlayTile}>
+                        <MediaTile media={activeMedia} disableOverlay />
+                      </div>
+                    ) : null}
+                  </DragOverlay>,
+                  document.body,
+                )}
+              </DndContext>
+            )}
+          </ProductMediaGalleryDropzone>
+        ) : (
+          <ProductMediaGalleryDropzone variant="empty" onImageUpload={handleImageUpload} />
+        )}
+      </Box>
+    </DetailSettingsCard>
   );
 };
 

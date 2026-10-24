@@ -44,7 +44,6 @@ export const ProductSaveStepsBanner = ({ steps, onDismiss }: ProductSaveStepsBan
 
   return (
     <Box
-      marginBottom={4}
       padding={4}
       borderRadius={4}
       borderWidth={1}

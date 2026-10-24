@@ -39,11 +39,15 @@ const formatMessageImpl = (
   return msg;
 };
 
+const formatListImpl = (values: string[], options?: Intl.ListFormatOptions): string =>
+  new Intl.ListFormat("en", options).format(values);
+
 const useIntl = jest.fn(() => ({
   formatMessage: jest.fn(formatMessageImpl),
   formatDate: jest.fn(x => x),
   formatTime: jest.fn(x => x),
   formatNumber: jest.fn(x => x),
+  formatList: jest.fn(formatListImpl),
   locale: "en",
 }));
 
@@ -70,6 +74,7 @@ const createIntl = jest.fn(() => ({
   formatDate: jest.fn(x => x),
   formatTime: jest.fn(x => x),
   formatNumber: jest.fn(x => x),
+  formatList: jest.fn(formatListImpl),
   locale: "en",
 }));
 

@@ -72,6 +72,12 @@ export type InstalledExtension = {
   criticalProblemCount: number;
   /** Installed within the last 48 hours - renders a "New" badge in the list. */
   isNew?: boolean;
+  /** Legacy SMTP app, or an app that declared itself deprecated. Renders a Deprecated badge. */
+  deprecated?: boolean;
+  /** Set by the app itself; shown under its row. The app keeps working. */
+  deprecationReason?: string | null;
+  /** Install URL of the app that replaces this deprecated one. Renders a Migrate button. */
+  migrateUrl?: string | null;
 };
 
 export interface Extension {

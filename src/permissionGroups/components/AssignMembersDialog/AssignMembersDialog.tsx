@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AssignPickerListEmptyStateRow } from "@dashboard/components/AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "@dashboard/components/AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "@dashboard/components/BackButton";
@@ -83,20 +82,23 @@ const useStyles = makeStyles(
   { name: "AssignStaffMembersDialog" },
 );
 
+type StaffMembers = NonNullable<RelayToFlat<SearchStaffMembersQuery["search"]>>;
+
 interface AssignMembersDialogProps extends DialogProps, FetchMoreProps, SearchPageProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
-  staffMembers: RelayToFlat<SearchStaffMembersQuery["search"]>;
+  assignedMemberIds?: string[];
+  staffMembers: StaffMembers;
   hasMore: boolean;
   onFetchMore: () => void;
-  onSubmit: (data: RelayToFlat<SearchStaffMembersQuery["search"]>) => void;
+  onSubmit: (data: StaffMembers) => void;
 }
 
 function handleStaffMemberAssign(
-  member: RelayToFlat<SearchStaffMembersQuery["search"]>[0],
+  member: StaffMembers[0],
   isSelected: boolean,
-  selectedMembers: RelayToFlat<SearchStaffMembersQuery["search"]>,
-  setSelectedMembers: (data: RelayToFlat<SearchStaffMembersQuery["search"]>) => void,
+  selectedMembers: StaffMembers,
+  setSelectedMembers: (data: StaffMembers) => void,
 ) {
   if (isSelected) {
     setSelectedMembers(selectedMembers.filter(selectedMember => selectedMember.id !== member.id));
@@ -108,6 +110,7 @@ function handleStaffMemberAssign(
 const scrollableTargetId = "assignMemberScrollableDialog";
 
 const AssignMembersDialog = ({
+  assignedMemberIds = [],
   confirmButtonState,
   disabled,
   loading,
@@ -122,9 +125,7 @@ const AssignMembersDialog = ({
   const intl = useIntl();
   const classes = useStyles({});
   const [query, onQueryChange] = useSearchQuery(onSearchChange);
-  const [selectedMembers, setSelectedMembers] = useState<
-    RelayToFlat<SearchStaffMembersQuery["search"]>
-  >([]);
+  const [selectedMembers, setSelectedMembers] = useState<StaffMembers>([]);
   const displayedMembers = useStalePickerList(staffMembers, loading, open);
   const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
     loading,
@@ -173,6 +174,7 @@ const AssignMembersDialog = ({
                         return null;
                       }
 
+                      const isAssigned = assignedMemberIds.includes(member.id);
                       const isSelected = selectedMembers.some(
                         selectedMember => selectedMember.id === member.id,
                       );
@@ -182,7 +184,8 @@ const AssignMembersDialog = ({
                           <TableCell padding="checkbox" className={classes.checkboxCell}>
                             <Checkbox
                               color="primary"
-                              checked={isSelected}
+                              checked={isAssigned || isSelected}
+                              disabled={disabled || isAssigned}
                               onChange={() =>
                                 handleStaffMemberAssign(
                                   member,
@@ -238,7 +241,7 @@ const AssignMembersDialog = ({
             type="submit"
             transitionState={confirmButtonState}
             onClick={() => {
-              onSubmit(selectedMembers);
+              onSubmit(selectedMembers.filter(member => !assignedMemberIds.includes(member.id)));
             }}
           >
             <FormattedMessage {...buttonMessages.assign} />

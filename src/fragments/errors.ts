@@ -506,6 +506,14 @@ export const productVariantTranslateErrorFragment = gql`
   }
 `;
 
+export const productMediaTranslateErrorFragment = gql`
+  fragment ProductMediaTranslateErrorFragment on ProductMediaTranslateError {
+    code
+    field
+    message
+  }
+`;
+
 export const categoryTranslateErrorFragment = gql`
   fragment CategoryTranslateErrorFragment on TranslationError {
     code

@@ -1,3 +1,4 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { SearchInput } from "@dashboard/components/SearchInput/SearchInput";
 import { SettingsOwnershipChip } from "@dashboard/components/Settings/SettingsOwnershipChip";
 import { type ResolvedSettingsCatalogEntry } from "@dashboard/configuration/settingsCatalog/catalog";
@@ -111,6 +112,7 @@ export const ConfigurationSettingsSearchResults = ({
   onActiveIndexChange,
 }: ConfigurationSettingsSearchResultsProps): React.ReactNode => {
   const listRef = useRef<HTMLUListElement | null>(null);
+  const { trackEvent } = useAnalytics();
 
   useEffect(
     function scrollActiveResultIntoView() {
@@ -181,6 +183,15 @@ export const ConfigurationSettingsSearchResults = ({
                   className={clsx(styles.resultLink, isActive && styles.resultLinkActive)}
                   data-test-id={`configuration-settings-search-result-${entry.id}`}
                   onMouseEnter={() => onActiveIndexChange(index)}
+                  onClick={() =>
+                    trackEvent("configuration_search_result_clicked", {
+                      input_method: "mouse",
+                      position: index + 1,
+                      result_count: results.length,
+                      result_id: entry.id,
+                      result_kind: entry.kind,
+                    })
+                  }
                 >
                   <Box className={styles.resultRow} display="flex" flexDirection="column" gap={1}>
                     <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">

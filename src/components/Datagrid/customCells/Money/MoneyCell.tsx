@@ -8,7 +8,8 @@ import {
 } from "@glideapps/glide-data-grid";
 
 import { usePriceField } from "../../../PriceField/usePriceField";
-import { drawBreakdownMarker, hasDiscountValue } from "./utils";
+import { type NumericEditorEmpty, useDatagridNumericEdit } from "../useDatagridNumericEdit";
+import { drawBreakdownMarker, drawCurrency, hasDiscountValue } from "./utils";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
@@ -23,25 +24,44 @@ export type MoneyCell = CustomCell<MoneyCellProps>;
 const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   value: cell,
   onChange: onChangeBase,
+  initialValue,
+  isHighlighted,
 }) => {
-  const { onChange, onKeyDown, minValue, step } = usePriceField(cell.data.currency, event =>
+  const committedValue = Array.isArray(cell.data.value) ? null : cell.data.value;
+  const commit = (next: number | NumericEditorEmpty): void => {
     onChangeBase({
       ...cell,
       data: {
         ...cell.data,
-        value: event.target.value,
+        value: typeof next === "number" ? next : null,
       },
-    }),
-  );
+    });
+  };
+  const { draft, inputRef, setDraft } = useDatagridNumericEdit({
+    committedValue,
+    emptyValue: null,
+    initialValue,
+    isHighlighted,
+    onCommit: commit,
+  });
+  const { onChange, onKeyDown, minValue, step } = usePriceField(cell.data.currency, event => {
+    const next = event.target.value;
+
+    commit(typeof next === "number" && Number.isFinite(next) ? next : null);
+  });
 
   // TODO: range is read only - we don't need support for editing,
   // it is better to split component into range and editable money cell
   return (
     <input
+      ref={inputRef}
       type="number"
-      onChange={onChange}
+      onChange={event => {
+        setDraft(event.target.value);
+        onChange(event);
+      }}
       onKeyDown={onKeyDown}
-      value={Array.isArray(cell.data.value) ? "" : (cell.data.value ?? "")}
+      value={Array.isArray(cell.data.value) ? "" : draft}
       min={minValue}
       step={step}
       autoFocus
@@ -104,8 +124,9 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
       }
 
       if (item.type === "currency" && item.value.length > 2 && !isHugging) {
-        ctx.textAlign = "left";
-        ctx.fillText(item.value, rect.x + theme.cellHorizontalPadding, y);
+        ctx.save();
+        drawCurrency(ctx, theme, rect, item.value);
+        ctx.restore();
       } else {
         ctx.fillText(item.value, drawingPosition, y);
 
@@ -129,7 +150,7 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
       copyData: "",
       data: {
         ...cell.data,
-        value: cell.data.value ?? null,
+        value: null,
       },
     }),
   }),

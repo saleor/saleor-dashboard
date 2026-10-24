@@ -13,6 +13,8 @@ interface TranslationGroupBoxProps {
 export const TranslationGroupBox = ({
   defaultExpanded = true,
   ...props
-}: TranslationGroupBoxProps) => <DetailGroupBox defaultExpanded={defaultExpanded} {...props} />;
+}: TranslationGroupBoxProps) => (
+  <DetailGroupBox defaultExpanded={defaultExpanded} clipOverflow={false} {...props} />
+);
 
 TranslationGroupBox.displayName = "TranslationGroupBox";

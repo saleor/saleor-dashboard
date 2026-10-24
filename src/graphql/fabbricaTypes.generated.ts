@@ -911,6 +911,12 @@ export type App = Node & ObjectWithMetadata & {
   dataPrivacy: Maybe<Scalars['String']['output']>;
   /** URL to details about the privacy policy on the app owner page. */
   dataPrivacyUrl: Maybe<Scalars['String']['output']>;
+  /**
+   * Reason why the app is deprecated, set by the app itself. Null when the app is not deprecated. A deprecated app keeps working as usual, but usually means it should not be used anymore.
+   *
+   * Added in Saleor 3.23.
+   */
+  deprecationReason: Maybe<Scalars['String']['output']>;
   /** App's dashboard extensions. */
   extensions: Array<AppExtension>;
   /** Homepage of the app. */
@@ -1044,6 +1050,7 @@ export type AppBrandLogo = {
 export type AppBrandLogoDefaultArgs = {
   format?: InputMaybe<IconThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 export type AppCountableConnection = {
@@ -1351,6 +1358,7 @@ export type AppManifestBrandLogo = {
 export type AppManifestBrandLogoDefaultArgs = {
   format?: InputMaybe<IconThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 export type AppManifestExtension = {
@@ -1635,6 +1643,67 @@ export type AppRetryInstall = {
   appErrors: Array<AppError>;
   appInstallation: Maybe<AppInstallation>;
   errors: Array<AppError>;
+};
+
+/**
+ * Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+export type AppSelfUpdate = {
+  __typename: 'AppSelfUpdate';
+  /**
+   * The updated app.
+   *
+   * Added in Saleor 3.23.
+   */
+  app: Maybe<App>;
+  errors: Array<AppSelfUpdateError>;
+};
+
+/**
+ * Represents errors in the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export type AppSelfUpdateError = {
+  __typename: 'AppSelfUpdateError';
+  /**
+   * The error code.
+   *
+   * Added in Saleor 3.23.
+   */
+  code: AppSelfUpdateErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * Error codes for the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export type AppSelfUpdateErrorCode =
+  | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'REQUIRED';
+
+/**
+ * Fields to update on the calling app.
+ *
+ * Added in Saleor 3.23.
+ */
+export type AppSelfUpdateInput = {
+  /**
+   * Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  deprecationReason: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AppSortField =
@@ -3666,6 +3735,20 @@ export type Category = Node & ObjectWithMetadata & {
    * @deprecated Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars['JSONString']['output']>;
+  /**
+   * External ID of this category.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: Maybe<Scalars['String']['output']>;
+  /**
+   * Full description of the category. Returns null when unset.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: Maybe<Scalars['JSONString']['output']>;
   /** The ID of the category. */
   id: Scalars['ID']['output'];
   /** Level of the category. */
@@ -3722,6 +3805,7 @@ export type CategoryAncestorsArgs = {
 export type CategoryBackgroundImageArgs = {
   format?: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 
@@ -3885,6 +3969,20 @@ export type CategoryInput = {
    */
   description: InputMaybe<Scalars['JSONString']['input']>;
   /**
+   * External ID of this category.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Full description of the category. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: InputMaybe<Scalars['JSONString']['input']>;
+  /**
    * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -3947,6 +4045,14 @@ export type CategoryTranslatableContent = Node & {
    * @deprecated Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars['JSONString']['output']>;
+  /**
+   * Category's full description to translate. Returns null when unset.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: Maybe<Scalars['JSONString']['output']>;
   /** The ID of the category translatable content. */
   id: Scalars['ID']['output'];
   /** Name of the category translatable content. */
@@ -4000,6 +4106,14 @@ export type CategoryTranslation = Node & {
    * @deprecated Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars['JSONString']['output']>;
+  /**
+   * Translated full description of the category. Returns null when unset.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: Maybe<Scalars['JSONString']['output']>;
   /** The ID of the category translation. */
   id: Scalars['ID']['output'];
   /** Translation language. */
@@ -4356,6 +4470,12 @@ export type ChannelListingUpdateInput = {
   channelListing: Scalars['ID']['input'];
   /** Cost price of the variant in channel. */
   costPrice: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  /**
+   * Determines whether the variant can be bought in this channel. When omitted, the current value is kept.
+   *
+   * Added in Saleor 3.23.
+   */
+  isAvailableForPurchase: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * The threshold for preorder variant in channel.
    * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
@@ -5079,6 +5199,12 @@ export type CheckoutError = {
   lines: Maybe<Array<Scalars['ID']['output']>>;
   /** The error message. */
   message: Maybe<Scalars['String']['output']>;
+  /**
+   * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+   *
+   * Added in Saleor 3.23.
+   */
+  promoCodeDetails: Maybe<PromoCodeRejectionDetails>;
   /** List of variant IDs which causes the error. */
   variants: Maybe<Array<Scalars['ID']['output']>>;
 };
@@ -5688,6 +5814,20 @@ export type Collection = Node & ObjectWithMetadata & {
    * @deprecated Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars['JSONString']['output']>;
+  /**
+   * External ID of this collection.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: Maybe<Scalars['String']['output']>;
+  /**
+   * Full description of the collection. Returns null when unset.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: Maybe<Scalars['JSONString']['output']>;
   /** The ID of the collection. */
   id: Scalars['ID']['output'];
   /** List of public metadata items. Can be accessed without permissions. */
@@ -5729,6 +5869,7 @@ export type Collection = Node & ObjectWithMetadata & {
 export type CollectionBackgroundImageArgs = {
   format?: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 
@@ -5896,6 +6037,20 @@ export type CollectionCreateInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * External ID of this collection.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: InputMaybe<Scalars['JSONString']['input']>;
   /** Informs whether a collection is published. */
   isPublished: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -6026,6 +6181,20 @@ export type CollectionInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * External ID of this collection.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: InputMaybe<Scalars['JSONString']['input']>;
   /** Informs whether a collection is published. */
   isPublished: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -6165,6 +6334,14 @@ export type CollectionTranslatableContent = Node & {
    * @deprecated Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars['JSONString']['output']>;
+  /**
+   * Collection's full description to translate. Returns null when unset.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: Maybe<Scalars['JSONString']['output']>;
   /** The ID of the collection translatable content. */
   id: Scalars['ID']['output'];
   /** Collection's name to translate. */
@@ -6218,6 +6395,14 @@ export type CollectionTranslation = Node & {
    * @deprecated Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars['JSONString']['output']>;
+  /**
+   * Translated full description of the collection. Returns null when unset.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: Maybe<Scalars['JSONString']['output']>;
   /** The ID of the collection translation. */
   id: Scalars['ID']['output'];
   /** Translation language. */
@@ -6317,6 +6502,8 @@ export type ConfigurationTypeFieldEnum =
  *
  * Triggers the following webhook events:
  * - ACCOUNT_CONFIRMED (async): Account was confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
  */
 export type ConfirmAccount = {
   __typename: 'ConfirmAccount';
@@ -7950,6 +8137,9 @@ export type DraftOrderBulkDelete = {
  * Completes creating an order.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
+ *
+ * Triggers the following webhook events:
+ * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
  */
 export type DraftOrderComplete = {
   __typename: 'DraftOrderComplete';
@@ -11992,6 +12182,12 @@ export type Manifest = {
   dataPrivacy: Maybe<Scalars['String']['output']>;
   /** URL to the full privacy policy. */
   dataPrivacyUrl: Maybe<Scalars['String']['output']>;
+  /**
+   * Reason why the app is deprecated, declared in the manifest. Null when the app is not deprecated. A deprecated app can still be installed and works as usual, but usually means it should not be used anymore.
+   *
+   * Added in Saleor 3.23.
+   */
+  deprecationReason: Maybe<Scalars['String']['output']>;
   /** List of extensions that will be mounted in Saleor's dashboard. For details, please [see the extension section.](https://docs.saleor.io/developer/extending/apps/extending-dashboard-with-apps#key-concepts) */
   extensions: Array<AppManifestExtension>;
   /** External URL to the app homepage. */
@@ -12994,6 +13190,14 @@ export type Mutation = {
    */
   appRetryInstall: Maybe<AppRetryInstall>;
   /**
+   * Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_APP.
+   */
+  appSelfUpdate: Maybe<AppSelfUpdate>;
+  /**
    * Creates a new token.
    *
    * Requires one of the following permissions: MANAGE_APPS.
@@ -13453,6 +13657,8 @@ export type Mutation = {
    *
    * Triggers the following webhook events:
    * - ACCOUNT_CONFIRMED (async): Account was confirmed.
+   * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+   * - STAFF_UPDATED (async): Called if a staff account was confirmed.
    */
   confirmAccount: Maybe<ConfirmAccount>;
   /**
@@ -13628,6 +13834,9 @@ export type Mutation = {
    * Completes creating an order.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   *
+   * Triggers the following webhook events:
+   * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
    */
   draftOrderComplete: Maybe<DraftOrderComplete>;
   /**
@@ -14468,6 +14677,14 @@ export type Mutation = {
    */
   productMediaReorder: Maybe<ProductMediaReorder>;
   /**
+   * Creates or updates a product media translation.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_TRANSLATIONS.
+   */
+  productMediaTranslate: Maybe<ProductMediaTranslate>;
+  /**
    * Updates a product media.
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -14549,6 +14766,14 @@ export type Mutation = {
    * Requires one of the following permissions: MANAGE_PRODUCTS.
    */
   productVariantBulkUpdate: Maybe<ProductVariantBulkUpdate>;
+  /**
+   * Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_PRODUCTS.
+   */
+  productVariantChannelListingAvailabilityUpdate: Maybe<ProductVariantChannelListingAvailabilityUpdate>;
   /**
    * Manage product variant prices in channels.
    *
@@ -14872,7 +15097,14 @@ export type Mutation = {
    * - ACCOUNT_CONFIRMATION_REQUESTED (async): An account confirmation was requested. This event is always sent regardless of settings.
    */
   sendConfirmationEmail: Maybe<SendConfirmationEmail>;
-  /** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+  /**
+   * Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+   *
+   * Triggers the following webhook events:
+   * - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+   * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+   * - STAFF_UPDATED (async): Called if a staff account was confirmed.
+   */
   setPassword: Maybe<SetPassword>;
   /**
    * Manage shipping method's availability in channels.
@@ -15443,6 +15675,11 @@ export type MutationAppRetryInstallArgs = {
 };
 
 
+export type MutationAppSelfUpdateArgs = {
+  input: AppSelfUpdateInput;
+};
+
+
 export type MutationAppTokenCreateArgs = {
   input: AppTokenInput;
 };
@@ -15579,7 +15816,8 @@ export type MutationCategoryCreateArgs = {
 
 
 export type MutationCategoryDeleteArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -15591,7 +15829,8 @@ export type MutationCategoryTranslateArgs = {
 
 
 export type MutationCategoryUpdateArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
   input: CategoryInput;
 };
 
@@ -15806,7 +16045,8 @@ export type MutationCollectionCreateArgs = {
 
 
 export type MutationCollectionDeleteArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -15830,7 +16070,8 @@ export type MutationCollectionTranslateArgs = {
 
 
 export type MutationCollectionUpdateArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
   input: CollectionInput;
 };
 
@@ -16623,6 +16864,13 @@ export type MutationProductMediaReorderArgs = {
 };
 
 
+export type MutationProductMediaTranslateArgs = {
+  id: Scalars['ID']['input'];
+  input: ProductMediaTranslationInput;
+  languageCode: LanguageCodeEnum;
+};
+
+
 export type MutationProductMediaUpdateArgs = {
   id: Scalars['ID']['input'];
   input: ProductMediaUpdateInput;
@@ -16701,6 +16949,13 @@ export type MutationProductVariantBulkUpdateArgs = {
   errorPolicy: InputMaybe<ErrorPolicyEnum>;
   product: Scalars['ID']['input'];
   variants: Array<ProductVariantBulkUpdateInput>;
+};
+
+
+export type MutationProductVariantChannelListingAvailabilityUpdateArgs = {
+  id: InputMaybe<Scalars['ID']['input']>;
+  input: Array<ProductVariantChannelListingAvailabilityInput>;
+  sku: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -16793,7 +17048,8 @@ export type MutationPromotionCreateArgs = {
 
 
 export type MutationPromotionDeleteArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -16828,7 +17084,8 @@ export type MutationPromotionTranslateArgs = {
 
 
 export type MutationPromotionUpdateArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
   input: PromotionUpdateInput;
 };
 
@@ -17259,7 +17516,8 @@ export type MutationVoucherCreateArgs = {
 
 
 export type MutationVoucherDeleteArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -17271,7 +17529,8 @@ export type MutationVoucherTranslateArgs = {
 
 
 export type MutationVoucherUpdateArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
   input: VoucherInput;
 };
 
@@ -17613,6 +17872,12 @@ export type Order = Node & ObjectWithMetadata & {
   totalRemainingGrant: Money;
   /** Google Analytics tracking client ID. */
   trackingClientId: Scalars['String']['output'];
+  /**
+   * Payment history of the order, with one entry per payment transaction that moved any money. Unlike `transactions`, it requires no permission and exposes only the payment method and the amounts, so it can be used to display payment details to the customer without exposing internal information.
+   *
+   * Added in Saleor 3.23.
+   */
+  transactionSummaries: Array<TransactionSummary>;
   /** List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. */
   transactions: Array<TransactionItem>;
   /**
@@ -18212,6 +18477,12 @@ export type OrderCreateFromCheckoutError = {
   lines: Maybe<Array<Scalars['ID']['output']>>;
   /** The error message. */
   message: Maybe<Scalars['String']['output']>;
+  /**
+   * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+   *
+   * Added in Saleor 3.23.
+   */
+  promoCodeDetails: Maybe<PromoCodeRejectionDetails>;
   /** List of variant IDs which causes the error. */
   variants: Maybe<Array<Scalars['ID']['output']>>;
 };
@@ -18365,6 +18636,12 @@ export type OrderError = {
   message: Maybe<Scalars['String']['output']>;
   /** List of order line IDs that cause the error. */
   orderLines: Maybe<Array<Scalars['ID']['output']>>;
+  /**
+   * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+   *
+   * Added in Saleor 3.23.
+   */
+  promoCodeDetails: Maybe<PromoCodeRejectionDetails>;
   /** List of product variants that are associated with the error */
   variants: Maybe<Array<Scalars['ID']['output']>>;
   /** Warehouse ID which causes the error. */
@@ -19161,6 +19438,7 @@ export type OrderLinePrivateMetafieldsArgs = {
 export type OrderLineThumbnailArgs = {
   format?: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 export type OrderLineCreateInput = {
@@ -22123,7 +22401,10 @@ export type Product = Node & ObjectWithAttributes & ObjectWithMetadata & {
    * Added in Saleor 3.21.
    */
   productVariants: Maybe<ProductVariantCountableConnection>;
-  /** Rating of the product. */
+  /**
+   * Rating of the product.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating: Maybe<Scalars['Float']['output']>;
   /** SEO description of the product. */
   seoDescription: Maybe<Scalars['String']['output']>;
@@ -22251,6 +22532,7 @@ export type ProductProductVariantsArgs = {
 export type ProductThumbnailArgs = {
   format?: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 
@@ -22418,7 +22700,10 @@ export type ProductBulkCreateInput = {
   privateMetadata: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID']['input'];
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo: InputMaybe<SeoInput>;
@@ -22700,7 +22985,10 @@ export type ProductCreateInput = {
   privateMetadata: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID']['input'];
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo: InputMaybe<SeoInput>;
@@ -22909,6 +23197,7 @@ export type ProductImage = {
 export type ProductImageUrlArgs = {
   format?: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 export type ProductInput = {
@@ -22945,7 +23234,10 @@ export type ProductInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata: InputMaybe<Array<MetadataInput>>;
-  /** Defines the product rating value. */
+  /**
+   * Defines the product rating value.
+   * @deprecated Product rating is deprecated and will be removed. Use a numeric attribute instead.
+   */
   rating: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo: InputMaybe<SeoInput>;
@@ -22995,6 +23287,12 @@ export type ProductMedia = Node & ObjectWithMetadata & {
   productId: Maybe<Scalars['ID']['output']>;
   /** The sort order of the media. */
   sortOrder: Maybe<Scalars['Int']['output']>;
+  /**
+   * Returns translated product media fields for the given language code.
+   *
+   * Added in Saleor 3.23.
+   */
+  translation: Maybe<ProductMediaTranslation>;
   /** The type of the media. */
   type: ProductMediaType;
   /** The URL of the media. */
@@ -23027,9 +23325,16 @@ export type ProductMediaPrivateMetafieldsArgs = {
 
 
 /** Represents a product media. */
+export type ProductMediaTranslationArgs = {
+  languageCode: LanguageCodeEnum;
+};
+
+
+/** Represents a product media. */
 export type ProductMediaUrlArgs = {
   format?: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 /**
@@ -23127,6 +23432,96 @@ export type ProductMediaReorder = {
   product: Maybe<Product>;
   /** @deprecated Use `errors` field instead. */
   productErrors: Array<ProductError>;
+};
+
+/**
+ * Represents product media's original translatable fields and related translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslatableContent = Node & {
+  __typename: 'ProductMediaTranslatableContent';
+  /** Product media alt text to translate. */
+  alt: Scalars['String']['output'];
+  /** The ID of the product media translatable content. */
+  id: Scalars['ID']['output'];
+  /** Represents a product media. */
+  productMedia: Maybe<ProductMedia>;
+  /** The ID of the product media to translate. */
+  productMediaId: Scalars['ID']['output'];
+  /** Returns translated product media fields for the given language code. */
+  translation: Maybe<ProductMediaTranslation>;
+};
+
+
+/**
+ * Represents product media's original translatable fields and related translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslatableContentTranslationArgs = {
+  languageCode: LanguageCodeEnum;
+};
+
+/**
+ * Creates or updates a product media translation.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_TRANSLATIONS.
+ */
+export type ProductMediaTranslate = {
+  __typename: 'ProductMediaTranslate';
+  errors: Array<ProductMediaTranslateError>;
+  productMedia: Maybe<ProductMedia>;
+};
+
+/**
+ * Represents an error in product media translation input.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslateError = {
+  __typename: 'ProductMediaTranslateError';
+  /** The error code. */
+  code: ProductMediaTranslateErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']['output']>;
+};
+
+export type ProductMediaTranslateErrorCode =
+  | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'NOT_FOUND'
+  | 'REQUIRED';
+
+/**
+ * Represents product media translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslation = Node & {
+  __typename: 'ProductMediaTranslation';
+  /** Translated product media alt text. */
+  alt: Scalars['String']['output'];
+  /** The ID of the product media translation. */
+  id: Scalars['ID']['output'];
+  /** Translation language. */
+  language: LanguageDisplay;
+  /** Represents the product media fields to translate. */
+  translatableContent: Maybe<ProductMediaTranslatableContent>;
+};
+
+/**
+ * Fields required to translate product media.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductMediaTranslationInput = {
+  /** Translated product media alt text. */
+  alt: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductMediaType =
@@ -24226,6 +24621,12 @@ export type ProductVariantChannelListing = Node & {
   /** The ID of the variant channel listing. */
   id: Scalars['ID']['output'];
   /**
+   * Determines whether the variant can be bought in this channel. When set to `false`, the variant behaves as if it had no listing in this channel: it is hidden from customers and cannot be added to a checkout or an order. Its prices are preserved.
+   *
+   * Added in Saleor 3.23.
+   */
+  isAvailableForPurchase: Scalars['Boolean']['output'];
+  /**
    * Gross margin percentage value.
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -24254,6 +24655,12 @@ export type ProductVariantChannelListingAddInput = {
   /** Cost price of the variant in channel. */
   costPrice: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /**
+   * Determines whether the variant can be bought in this channel. When omitted on an existing listing, the current value is kept.
+   *
+   * Added in Saleor 3.23.
+   */
+  isAvailableForPurchase: InputMaybe<Scalars['Boolean']['input']>;
+  /**
    * The threshold for preorder variant in channel.
    * @deprecated Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
    */
@@ -24266,6 +24673,49 @@ export type ProductVariantChannelListingAddInput = {
    * Added in Saleor 3.21.
    */
   priorPrice: InputMaybe<Scalars['PositiveDecimal']['input']>;
+};
+
+/**
+ * Fields required to toggle a product variant's availability in a channel.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductVariantChannelListingAvailabilityInput = {
+  /** ID of a channel. */
+  channelId: Scalars['ID']['input'];
+  /** Determines whether the variant can be bought in this channel. */
+  isAvailableForPurchase: Scalars['Boolean']['input'];
+};
+
+/**
+ * Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_PRODUCTS.
+ */
+export type ProductVariantChannelListingAvailabilityUpdate = {
+  __typename: 'ProductVariantChannelListingAvailabilityUpdate';
+  errors: Array<ProductVariantChannelListingAvailabilityUpdateError>;
+  /** An updated product variant instance. */
+  variant: Maybe<ProductVariant>;
+};
+
+/**
+ * Error of the `productVariantChannelListingAvailabilityUpdate` mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductVariantChannelListingAvailabilityUpdateError = {
+  __typename: 'ProductVariantChannelListingAvailabilityUpdateError';
+  /** List of channels IDs which causes the error. */
+  channels: Maybe<Array<Scalars['ID']['output']>>;
+  /** The error code. */
+  code: ProductErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']['output']>;
 };
 
 /**
@@ -24630,6 +25080,12 @@ export type ProductVariantSetDefault = {
 };
 
 export type ProductVariantSortField =
+  /**
+   * Sort product variants by ID.
+   *
+   * Added in Saleor 3.23.
+   */
+  | 'ID'
   /** Sort product variants by last modification date. */
   | 'LAST_MODIFIED_AT';
 
@@ -24873,6 +25329,12 @@ export type ProductWhereInput = {
   category: InputMaybe<GlobalIdFilterInput>;
   /** Filter by collection. */
   collection: InputMaybe<GlobalIdFilterInput>;
+  /**
+   * Filter by external reference.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<StringFilterInput>;
   /** Filter on whether product is a gift card or not. */
   giftCard: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by product with category assigned. */
@@ -24910,6 +25372,46 @@ export type ProductWhereInput = {
   updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
+/**
+ * Details explaining why a promo code cannot be applied.
+ *
+ * Added in Saleor 3.23.
+ */
+export type PromoCodeRejectionDetails = {
+  __typename: 'PromoCodeRejectionDetails';
+  /** The minimum number of items required by the voucher. Set only when `reason` is `MIN_QUANTITY_NOT_REACHED`. */
+  minCheckoutItemsQuantity: Maybe<Scalars['Int']['output']>;
+  /** The minimum order value required by the voucher. Set only when `reason` is `MIN_SPENT_NOT_REACHED`. */
+  minSpent: Maybe<Money>;
+  /** The specific reason why the promo code cannot be applied. */
+  reason: PromoCodeRejectionReason;
+};
+
+/** The specific reason why a promo code cannot be applied. A code that has not been proven usable yet is only ever reported as `NOT_FOUND`, `EXPIRED` or `USAGE_LIMIT_REACHED`, so that a rejected code cannot be told apart from one that does not exist. The reason never depends on the caller's permissions. */
+export type PromoCodeRejectionReason =
+  /** The voucher is limited to one use per customer, so a customer email must be set on the checkout before it can be applied. */
+  | 'CUSTOMER_EMAIL_REQUIRED'
+  /** The voucher applies to shipping, but no delivery method is selected yet. Selecting one may make the voucher applicable. */
+  | 'DELIVERY_METHOD_NOT_SET'
+  /** The voucher's end date, or the gift card's expiry date, is in the past. */
+  | 'EXPIRED'
+  /** The order contains fewer items than the voucher's minimum. Populates the `minCheckoutItemsQuantity` field. */
+  | 'MIN_QUANTITY_NOT_REACHED'
+  /** The order value is below the voucher's minimum. Populates the `minSpent` field. */
+  | 'MIN_SPENT_NOT_REACHED'
+  /** The promo code exists but cannot be used here. Reported when the reason is specific to the code's configuration rather than to something the customer can change: a voucher limited to staff, to other countries, to another channel or to one use per customer, or a gift card restricted to another customer. */
+  | 'NOT_APPLICABLE'
+  /** No promo code matches the given code. Also reported in place of a reason that may not be disclosed, so this value does not prove that no voucher or gift card exists with that code. */
+  | 'NOT_FOUND'
+  /** The voucher applies to specific products, collections or categories, and none of the ordered lines match. */
+  | 'NO_ELIGIBLE_PRODUCTS'
+  /** The promo code was applicable when it was added to the checkout, but is no longer available. */
+  | 'NO_LONGER_AVAILABLE'
+  /** The voucher applies to shipping, but nothing in the order requires shipping. */
+  | 'SHIPPING_NOT_REQUIRED'
+  /** The voucher's total usage limit, summed over all of its codes, is exhausted, or a single-use code was already redeemed. */
+  | 'USAGE_LIMIT_REACHED';
+
 /** Represents the promotion that allow creating discounts based on given conditions, and is visible to all the customers. */
 export type Promotion = Node & ObjectWithMetadata & {
   __typename: 'Promotion';
@@ -24921,6 +25423,12 @@ export type Promotion = Node & ObjectWithMetadata & {
   endDate: Maybe<Scalars['DateTime']['output']>;
   /** The list of events associated with the promotion. */
   events: Maybe<Array<PromotionEvent>>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   /** List of public metadata items. Can be accessed without permissions. */
   metadata: Array<MetadataItem>;
@@ -25069,13 +25577,20 @@ export type PromotionCreateErrorCode =
   | 'MULTIPLE_CURRENCIES_NOT_ALLOWED'
   | 'NOT_FOUND'
   | 'REQUIRED'
-  | 'RULES_NUMBER_LIMIT';
+  | 'RULES_NUMBER_LIMIT'
+  | 'UNIQUE';
 
 export type PromotionCreateInput = {
   /** Promotion description. */
   description: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
   endDate: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
   /** Promotion name. */
   name: Scalars['String']['input'];
   /** List of promotion rules. */
@@ -25865,13 +26380,20 @@ export type PromotionUpdateErrorCode =
   | 'GRAPHQL_ERROR'
   | 'INVALID'
   | 'NOT_FOUND'
-  | 'REQUIRED';
+  | 'REQUIRED'
+  | 'UNIQUE';
 
 export type PromotionUpdateInput = {
   /** Promotion description. */
   description: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
   endDate: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this promotion.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
   /** Promotion name. */
   name: InputMaybe<Scalars['String']['input']>;
   /** The start date of the promotion in ISO 8601 format. */
@@ -25988,7 +26510,7 @@ export type Query = {
   attributes: Maybe<AttributeCountableConnection>;
   /** List of the shop's categories. */
   categories: Maybe<CategoryCountableConnection>;
-  /** Look up a category by ID or slug. */
+  /** Look up a category by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. */
   category: Maybe<Category>;
   /** Look up a channel by ID or slug. */
   channel: Maybe<Channel>;
@@ -26016,7 +26538,7 @@ export type Query = {
    * Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_PAYMENTS.
    */
   checkouts: Maybe<CheckoutCountableConnection>;
-  /** Look up a collection by ID or slug. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
+  /** Look up a collection by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collection: Maybe<Collection>;
   /** List of the shop's collections. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collections: Maybe<CollectionCountableConnection>;
@@ -26193,7 +26715,7 @@ export type Query = {
   /** List of the shop's products. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   products: Maybe<ProductCountableConnection>;
   /**
-   * Look up a promotion by ID.
+   * Look up a promotion by ID or external reference.
    *
    * Requires one of the following permissions: MANAGE_DISCOUNTS.
    */
@@ -26331,7 +26853,7 @@ export type Query = {
    */
   user: Maybe<User>;
   /**
-   * Look up a voucher by ID.
+   * Look up a voucher by ID or external reference.
    *
    * Requires one of the following permissions: MANAGE_DISCOUNTS.
    */
@@ -26448,6 +26970,7 @@ export type QueryCategoriesArgs = {
 
 
 export type QueryCategoryArgs = {
+  externalReference: InputMaybe<Scalars['String']['input']>;
   id: InputMaybe<Scalars['ID']['input']>;
   slug: InputMaybe<Scalars['String']['input']>;
   slugLanguageCode: InputMaybe<LanguageCodeEnum>;
@@ -26487,6 +27010,7 @@ export type QueryCheckoutsArgs = {
 
 export type QueryCollectionArgs = {
   channel: InputMaybe<Scalars['String']['input']>;
+  externalReference: InputMaybe<Scalars['String']['input']>;
   id: InputMaybe<Scalars['ID']['input']>;
   slug: InputMaybe<Scalars['String']['input']>;
   slugLanguageCode: InputMaybe<LanguageCodeEnum>;
@@ -26799,7 +27323,8 @@ export type QueryProductsArgs = {
 
 
 export type QueryPromotionArgs = {
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -26955,7 +27480,8 @@ export type QueryUserArgs = {
 
 export type QueryVoucherArgs = {
   channel: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['ID']['input'];
+  externalReference: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -27865,7 +28391,14 @@ export type SeoInput = {
   title: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+/**
+ * Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+ *
+ * Triggers the following webhook events:
+ * - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
+ */
 export type SetPassword = {
   __typename: 'SetPassword';
   /** @deprecated Use `errors` field instead. */
@@ -30755,6 +31288,18 @@ export type ThumbnailFormatEnum =
   | 'ORIGINAL'
   | 'WEBP';
 
+/**
+ * Determines how a requested size is matched to an available thumbnail size: 32, 64, 128, 256, 512, 1024, 2048, 4096.
+ *
+ * NEAREST - the closest available size; it may be smaller than requested.
+ * UP - the smallest available size not smaller than requested, so the image is never smaller than requested unless the original is smaller or the requested size exceeds 4096.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ThumbnailSizeRoundingEnum =
+  | 'NEAREST'
+  | 'UP';
+
 export type TimePeriod = {
   __typename: 'TimePeriod';
   /** The length of the period. */
@@ -30844,6 +31389,12 @@ export type TransactionCancelationRequested = Event & {
   __typename: 'TransactionCancelationRequested';
   /** Requested action data. */
   action: TransactionAction;
+  /**
+   * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+   *
+   * Added in Saleor 3.23.
+   */
+  idempotencyKey: Scalars['String']['output'];
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
@@ -30861,6 +31412,12 @@ export type TransactionChargeRequested = Event & {
   __typename: 'TransactionChargeRequested';
   /** Requested action data. */
   action: TransactionAction;
+  /**
+   * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+   *
+   * Added in Saleor 3.23.
+   */
+  idempotencyKey: Scalars['String']['output'];
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
@@ -31399,6 +31956,12 @@ export type TransactionRefundRequested = Event & {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   grantedRefund: Maybe<OrderGrantedRefund>;
+  /**
+   * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+   *
+   * Added in Saleor 3.23.
+   */
+  idempotencyKey: Scalars['String']['output'];
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
@@ -31488,6 +32051,31 @@ export type TransactionSortingInput = {
   direction: OrderDirection;
   /** Sort transactions by the selected field. */
   field: TransactionSortField;
+};
+
+/**
+ * Customer-facing summary of a single payment transaction. Exposes the payment method and the amounts, without the identifiers, events and actions available on `TransactionItem`.
+ *
+ * Added in Saleor 3.23.
+ */
+export type TransactionSummary = {
+  __typename: 'TransactionSummary';
+  /** Total amount of ongoing authorization requests for the transaction. */
+  authorizePendingAmount: Money;
+  /** Total amount authorized for this payment. */
+  authorizedAmount: Money;
+  /** Total amount canceled for this payment. */
+  canceledAmount: Money;
+  /** Total amount of ongoing charge requests for the transaction. */
+  chargePendingAmount: Money;
+  /** Total amount charged for this payment. */
+  chargedAmount: Money;
+  /** Date and time at which payment transaction was created. */
+  createdAt: Scalars['DateTime']['output'];
+  /** The payment method used for this transaction. As this field is public, card number digits and expiration date are stripped: `firstDigits`, `lastDigits`, `expMonth` and `expYear` of `CardPaymentMethodDetails` are always `null` here. Read them through `Order.transactions` instead, which requires MANAGE_ORDERS or HANDLE_PAYMENTS. */
+  paymentMethodDetails: Maybe<PaymentMethodDetails>;
+  /** Total amount refunded for this payment. */
+  refundedAmount: Money;
 };
 
 /**
@@ -31588,7 +32176,7 @@ export type TransactionWhereInput = {
   pspReference: InputMaybe<StringFilterInput>;
 };
 
-export type TranslatableItem = AttributeTranslatableContent | AttributeValueTranslatableContent | CategoryTranslatableContent | CollectionTranslatableContent | MenuItemTranslatableContent | PageTranslatableContent | ProductTranslatableContent | ProductVariantTranslatableContent | PromotionRuleTranslatableContent | PromotionTranslatableContent | SaleTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent;
+export type TranslatableItem = AttributeTranslatableContent | AttributeValueTranslatableContent | CategoryTranslatableContent | CollectionTranslatableContent | MenuItemTranslatableContent | PageTranslatableContent | ProductMediaTranslatableContent | ProductTranslatableContent | ProductVariantTranslatableContent | PromotionRuleTranslatableContent | PromotionTranslatableContent | SaleTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent;
 
 export type TranslatableItemConnection = {
   __typename: 'TranslatableItemConnection';
@@ -31615,6 +32203,7 @@ export type TranslatableKinds =
   | 'MENU_ITEM'
   | 'PAGE'
   | 'PRODUCT'
+  | 'PRODUCT_MEDIA'
   | 'PROMOTION'
   | 'PROMOTION_RULE'
   | 'SALE'
@@ -31661,13 +32250,21 @@ export type TranslationInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description: InputMaybe<Scalars['JSONString']['input']>;
+  /**
+   * Translated full description. Only supported for categories and collections; product translation mutations reject this field. Pass null to clear it. Omit to preserve the current value on update.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   *
+   * Added in Saleor 3.23.
+   */
+  fullDescription: InputMaybe<Scalars['JSONString']['input']>;
   name: InputMaybe<Scalars['String']['input']>;
   seoDescription: InputMaybe<Scalars['String']['input']>;
   seoTitle: InputMaybe<Scalars['String']['input']>;
   slug: InputMaybe<Scalars['String']['input']>;
 };
 
-export type TranslationTypes = AttributeTranslation | AttributeValueTranslation | CategoryTranslation | CollectionTranslation | MenuItemTranslation | PageTranslation | ProductTranslation | ProductVariantTranslation | PromotionRuleTranslation | PromotionTranslation | SaleTranslation | ShippingMethodTranslation | VoucherTranslation;
+export type TranslationTypes = AttributeTranslation | AttributeValueTranslation | CategoryTranslation | CollectionTranslation | MenuItemTranslation | PageTranslation | ProductMediaTranslation | ProductTranslation | ProductVariantTranslation | PromotionRuleTranslation | PromotionTranslation | SaleTranslation | ShippingMethodTranslation | VoucherTranslation;
 
 /** Event sent when translation is updated. */
 export type TranslationUpdated = Event & {
@@ -31891,6 +32488,7 @@ export type UserAssignedAttributesArgs = {
 export type UserAvatarArgs = {
   format?: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']['input']>;
+  sizeRounding?: InputMaybe<ThumbnailSizeRoundingEnum>;
 };
 
 
@@ -32272,6 +32870,12 @@ export type Voucher = Node & ObjectWithMetadata & {
   discountValueType: DiscountValueTypeEnum;
   /** The end date and time of voucher. */
   endDate: Maybe<Scalars['DateTime']['output']>;
+  /**
+   * External ID of this voucher.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: Maybe<Scalars['String']['output']>;
   /** The ID of the voucher. */
   id: Scalars['ID']['output'];
   /** List of public metadata items. Can be accessed without permissions. */
@@ -32760,6 +33364,12 @@ export type VoucherInput = {
   discountValueType: InputMaybe<DiscountValueTypeEnum>;
   /** End date of the voucher in ISO 8601 format. */
   endDate: InputMaybe<Scalars['DateTime']['input']>;
+  /**
+   * External ID of this voucher.
+   *
+   * Added in Saleor 3.23.
+   */
+  externalReference: InputMaybe<Scalars['String']['input']>;
   /** Minimal quantity of checkout items required to apply the voucher. */
   minCheckoutItemsQuantity: InputMaybe<Scalars['Int']['input']>;
   /** Voucher name. */
@@ -33323,6 +33933,12 @@ export type Webhook = Node & {
   /** The name of webhook. */
   name: Maybe<Scalars['String']['output']>;
   /**
+   * Determines when the subscription payload is built for asynchronous events that defer payload generation. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+   *
+   * Added in Saleor 3.23.
+   */
+  payloadGeneration: WebhookPayloadGenerationEnum;
+  /**
    * Used to create a hash signature for each payload.
    * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
    */
@@ -33381,6 +33997,12 @@ export type WebhookCreateInput = {
   isActive: InputMaybe<Scalars['Boolean']['input']>;
   /** The name of the webhook. */
   name: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Determines when the subscription payload is built for asynchronous events that defer payload generation. Defaults to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+   *
+   * Added in Saleor 3.23.
+   */
+  payloadGeneration: InputMaybe<WebhookPayloadGenerationEnum>;
   /** Subscription query used to define a webhook payload. */
   query: InputMaybe<Scalars['String']['input']>;
   /**
@@ -34252,6 +34874,19 @@ export type WebhookEventTypeSyncEnum =
   /** Event called when refund has been requested for transaction. */
   | 'TRANSACTION_REFUND_REQUESTED';
 
+/**
+ * Determines when the subscription payload of an asynchronous webhook is built for events that defer payload generation.
+ *
+ * `DEFERRED`: the payload is built in a background task and reflects the object's state at the time the task runs.
+ *
+ * `IMMEDIATE`: the payload is built by whatever triggered the event, a request or a background task, and reflects the object's state at that moment, at the cost of slowing that request or task.
+ *
+ * Added in Saleor 3.23.
+ */
+export type WebhookPayloadGenerationEnum =
+  | 'DEFERRED'
+  | 'IMMEDIATE';
+
 export type WebhookSampleEventTypeEnum =
   | 'ACCOUNT_CHANGE_EMAIL_REQUESTED'
   | 'ACCOUNT_CONFIRMATION_REQUESTED'
@@ -34472,6 +35107,12 @@ export type WebhookUpdateInput = {
   isActive: InputMaybe<Scalars['Boolean']['input']>;
   /** The new name of the webhook. */
   name: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Determines when the subscription payload is built for asynchronous events that defer payload generation. Omit to keep the current value, `null` resets it to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload. A change applies to events triggered after the update. Deliveries already created finish the way they started, so around a change a newer delivery can be sent before an older one.
+   *
+   * Added in Saleor 3.23.
+   */
+  payloadGeneration: InputMaybe<WebhookPayloadGenerationEnum>;
   /** Subscription query used to define a webhook payload. */
   query: InputMaybe<Scalars['String']['input']>;
   /**

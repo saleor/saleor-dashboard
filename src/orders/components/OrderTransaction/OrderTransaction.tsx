@@ -33,9 +33,7 @@ const OrderTransaction = ({
   defaultExpanded = true,
 }: OrderTransactionProps) => {
   const events = getTransactionEvents(transaction, fakeEvents);
-  const [expanded, setExpanded] = useState<string | undefined>(
-    defaultExpanded ? transaction.id : undefined,
-  );
+  const [expanded, setExpanded] = useState(defaultExpanded ? transaction.id : "");
 
   return (
     <Box

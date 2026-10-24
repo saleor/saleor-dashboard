@@ -4,7 +4,7 @@ import {
   channelAvailabilityMessages,
 } from "@dashboard/components/ChannelAvailability/messages";
 import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { PaginationButtons } from "@dashboard/components/PaginationButtons/PaginationButtons";
 import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import {
   type ChannelFragment,
@@ -12,16 +12,7 @@ import {
   type ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
 import { Accordion, Box, Button, Skeleton, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
-import {
-  CheckCircle,
-  ChevronLeft,
-  ChevronRight,
-  Info,
-  Layers,
-  Search,
-  X,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle, Info, Layers, Search, X, XCircle } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -788,19 +779,13 @@ const ChannelPagination = ({
         {intl.formatMessage(messages.paginationShowing, { start, end, total: totalItems })}
       </Text>
       <Box display="flex" alignItems="center" gap={2}>
-        <Button
-          variant="secondary"
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-          data-test-id="pagination-prev"
-        />
-        <Button
-          variant="secondary"
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-          data-test-id="pagination-next"
+        <PaginationButtons
+          hasPreviousPage={currentPage > 1}
+          hasNextPage={currentPage < totalPages}
+          onPreviousPage={() => onPageChange(currentPage - 1)}
+          onNextPage={() => onPageChange(currentPage + 1)}
+          previousTestId="pagination-prev"
+          nextTestId="pagination-next"
         />
       </Box>
     </Box>

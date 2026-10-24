@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { formatAddressForClipboard } from "@dashboard/components/AddressFormatter/formatForClipboard";
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Link from "@dashboard/components/Link";
 import { ReadonlyAddress } from "@dashboard/components/ReadonlyAddress/ReadonlyAddress";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
@@ -16,15 +17,15 @@ import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail, orderListUrlWithCustomerId } from "@dashboard/orders/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Button, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
-import { CheckIcon, CopyIcon } from "lucide-react";
+import { Box, Button, Skeleton, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
+import { CheckIcon, CopyIcon, Store } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { AddressTextError } from "./AddressTextError";
 import { orderCustomerMessages } from "./messages";
-import { PickupAnnotation } from "./PickupAnnotation";
+import { formatPickupLocationForClipboard, PickupLocation } from "./PickupLocation";
 
 export interface CustomerEditData {
   user?: string;
@@ -96,6 +97,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
 
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);
+  const isPickup = order?.deliveryMethod?.__typename === "Warehouse";
 
   const noBillingAddressError = errors.find(
     error => error.code === OrderErrorCode.BILLING_ADDRESS_NOT_SET,
@@ -240,10 +242,26 @@ const OrderCustomer = (props: OrderCustomerProps) => {
           {/* Shipping Address */}
           <Box data-test-id="shipping-address-section">
             <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={2}>
-              <Text color="default2" size={4}>
-                <FormattedMessage id="ZpVtCa" defaultMessage="Shipping address" />
-              </Text>
-              {canEditAddresses && (
+              <Box display="flex" alignItems="center" gap={1.5}>
+                {isPickup && (
+                  <Store
+                    size={iconSize.small}
+                    strokeWidth={iconStrokeWidthBySize.small}
+                    color={vars.colors.text.default2}
+                    aria-hidden
+                  />
+                )}
+                <Text color="default2" size={4} data-test-id="shipping-address-section-title">
+                  {isPickup ? (
+                    <FormattedMessage {...orderCustomerMessages.pickupLocation} />
+                  ) : (
+                    <FormattedMessage id="ZpVtCa" defaultMessage="Shipping address" />
+                  )}
+                </Text>
+              </Box>
+              {/* The collection point can't be changed after checkout; editing would only
+                  detach the order's address copy from the location the customer collects at. */}
+              {canEditAddresses && !isPickup && (
                 <Button
                   data-test-id="edit-shipping-address"
                   variant="secondary"
@@ -273,12 +291,28 @@ const OrderCustomer = (props: OrderCustomerProps) => {
                     onMouseEnter={() => setShowShippingCopy(true)}
                     onMouseLeave={() => setShowShippingCopy(false)}
                   >
-                    <ReadonlyAddress address={shippingAddress} variant="default" />
-                    <PickupAnnotation order={order} />
+                    {isPickup && order?.deliveryMethod?.__typename === "Warehouse" ? (
+                      <PickupLocation
+                        name={order.collectionPointName}
+                        address={shippingAddress}
+                        clickAndCollectOption={order.deliveryMethod.clickAndCollectOption}
+                      />
+                    ) : (
+                      <ReadonlyAddress address={shippingAddress} variant="default" />
+                    )}
                     <CopyButton
                       show={showShippingCopy}
                       copied={copiedShipping}
-                      onClick={() => copyShipping(formatAddressForClipboard(shippingAddress))}
+                      onClick={() =>
+                        copyShipping(
+                          isPickup
+                            ? formatPickupLocationForClipboard({
+                                name: order?.collectionPointName,
+                                address: shippingAddress,
+                              })
+                            : formatAddressForClipboard(shippingAddress),
+                        )
+                      }
                       className={iconClassName}
                       ariaLabel={copyAriaLabel}
                     />
@@ -320,11 +354,15 @@ const OrderCustomer = (props: OrderCustomerProps) => {
                   </Text>
                 ) : maybe(() => shippingAddress.id) === billingAddress.id ? (
                   <Text>
-                    <FormattedMessage
-                      id="GLX9II"
-                      defaultMessage="Same as shipping address"
-                      description="billing address"
-                    />
+                    {isPickup ? (
+                      <FormattedMessage {...orderCustomerMessages.sameAsPickup} />
+                    ) : (
+                      <FormattedMessage
+                        id="GLX9II"
+                        defaultMessage="Same as shipping address"
+                        description="billing address"
+                      />
+                    )}
                   </Text>
                 ) : (
                   <Box

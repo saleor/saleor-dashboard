@@ -23,10 +23,10 @@ import pick from "lodash/pick";
 import uniq from "lodash/uniq";
 
 import { getAttributeData, getAttributeInput, getAttributeType } from "./data/attributes";
-import { getUpdateVariantChannelInputs, getVariantChannelsInputs } from "./data/channel";
+import { getUpdateVariantChannelInputs } from "./data/channel";
 import { getNameData } from "./data/name";
 import { getSkuData } from "./data/sku";
-import { getStockData, getVaraintUpdateStockData } from "./data/stock";
+import { getVaraintUpdateStockData } from "./data/stock";
 
 export function getProductUpdateVariables(
   product: ProductFragment,
@@ -101,20 +101,6 @@ export function getProductUpdateVariables(
   }
 
   return variables;
-}
-
-export function getCreateVariantInput(
-  data: DatagridChangeOpts,
-  index: number,
-  variantAttributes: VariantAttributeFragment[],
-) {
-  return {
-    attributes: getAttributeData(data.updates, index, variantAttributes),
-    sku: getSkuData(data.updates, index),
-    name: getNameData(data.updates, index),
-    channelListings: getVariantChannelsInputs(data, index),
-    stocks: getStockData(data.updates, index),
-  };
 }
 
 export function getProductChannelsUpdateVariables(

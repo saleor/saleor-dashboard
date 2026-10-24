@@ -2,7 +2,7 @@ import { type OutputData } from "@editorjs/editorjs";
 import { type EditorCore } from "@react-editor-js/core";
 import { type MutableRefObject, useEffect, useRef, useState } from "react";
 
-const EMPTY_EDITOR_DATA: OutputData = { blocks: [] };
+import { parseEditorData } from "./parseEditorData";
 
 export interface UseRichTextOptions {
   initial: string | null | undefined;
@@ -17,14 +17,6 @@ export interface UseRichTextResult {
   defaultValue: OutputData | undefined;
   isReadyForMount: boolean;
   isDirty: boolean;
-}
-
-function parseInitialDescription(initial: string): OutputData | null {
-  try {
-    return JSON.parse(initial) as OutputData;
-  } catch {
-    return null;
-  }
 }
 
 export function useRichText({
@@ -61,17 +53,7 @@ export function useRichText({
       return;
     }
 
-    if (!initial) {
-      setDefaultValue(EMPTY_EDITOR_DATA);
-      setIsReadyForMount(true);
-      setIsDirty(false);
-
-      return;
-    }
-
-    const parsed = parseInitialDescription(initial);
-
-    setDefaultValue(parsed ?? EMPTY_EDITOR_DATA);
+    setDefaultValue(parseEditorData(initial));
     setIsReadyForMount(true);
     setIsDirty(false);
   }, [initial, loading]);

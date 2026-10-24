@@ -8,8 +8,11 @@ import {
 import { Condition } from "./FilterElement/Condition";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
-import { type FilterContainer, FilterElement } from "./FilterElement/FilterElement";
-import { ExpressionValue } from "./FilterElement/FilterElement";
+import {
+  ExpressionValue,
+  type FilterContainer,
+  FilterElement,
+} from "./FilterElement/FilterElement";
 import {
   createAttributesQueryVariables,
   createCategoryQueryVariables,

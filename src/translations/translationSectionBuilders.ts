@@ -1,4 +1,5 @@
 import { commonMessages } from "@dashboard/intl";
+import { rippleProductMediaAltTranslation } from "@dashboard/translations/ripples/productMediaAltTranslation";
 import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import {
   PageTranslationInputFieldName,
@@ -28,6 +29,11 @@ interface GeneralTranslationData {
   translationName?: string | null;
 }
 
+interface ProductMediaTranslationData {
+  alt?: string | null;
+  translationAlt?: string | null;
+}
+
 export function createGeneralNameDescriptionSection(
   intl: IntlShape,
   data: GeneralTranslationData,
@@ -46,6 +52,7 @@ export function createGeneralNameDescriptionSection(
         displayName: options?.nameLabel ?? intl.formatMessage(commonMessages.name),
         hint: intl.formatMessage(translationDetailMessages.nameFieldHint),
         name: TranslationInputFieldName.name,
+        nullable: true,
         translation: data.translationName ?? null,
         type: TranslationFieldType.SHORT,
         value: data.name ?? "",
@@ -54,6 +61,7 @@ export function createGeneralNameDescriptionSection(
         displayName: options?.descriptionLabel ?? intl.formatMessage(commonMessages.description),
         hint: intl.formatMessage(translationDetailMessages.descriptionFieldHint),
         name: TranslationInputFieldName.description,
+        nullable: true,
         translation: data.translationDescription ?? null,
         type: TranslationFieldType.RICH,
         value: data.description ?? "",
@@ -82,6 +90,7 @@ export function createSeoTranslationSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.seoSlugFieldHint),
         name: TranslationInputFieldName.slug,
+        nullable: true,
         ripple: rippleSlugTranslation,
         translation: data.translationSlug ?? null,
         type: TranslationFieldType.SHORT,
@@ -94,6 +103,7 @@ export function createSeoTranslationSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.seoTitleFieldHint),
         name: TranslationInputFieldName.seoTitle,
+        nullable: true,
         translation: data.translationSeoTitle ?? null,
         type: TranslationFieldType.SHORT,
         value: data.seoTitle ?? "",
@@ -105,6 +115,7 @@ export function createSeoTranslationSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.seoDescriptionFieldHint),
         name: TranslationInputFieldName.seoDescription,
+        nullable: true,
         translation: data.translationSeoDescription ?? null,
         type: TranslationFieldType.LONG,
         value: data.seoDescription ?? "",
@@ -136,6 +147,7 @@ export function createPageGeneralSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.pageTitleFieldHint),
         name: PageTranslationInputFieldName.title,
+        nullable: true,
         translation: data.translationTitle ?? null,
         type: TranslationFieldType.SHORT,
         value: data.title ?? "",
@@ -148,6 +160,7 @@ export function createPageGeneralSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.pageContentFieldHint),
         name: PageTranslationInputFieldName.content,
+        nullable: true,
         translation: data.translationContent ?? null,
         type: TranslationFieldType.RICH,
         value: data.content ?? "",
@@ -164,6 +177,7 @@ export function createSingleNameSection(
   },
   options: {
     nameLabel: string;
+    nullableName?: boolean;
   },
 ): TranslationSectionConfig {
   return {
@@ -176,9 +190,49 @@ export function createSingleNameSection(
         displayName: options.nameLabel,
         hint: intl.formatMessage(translationDetailMessages.nameFieldHint),
         name: TranslationInputFieldName.name,
+        nullable: options.nullableName,
         translation: data.translationName ?? null,
         type: TranslationFieldType.SHORT,
         value: data.name ?? "",
+      },
+    ],
+  };
+}
+
+export function createProductMediaAltSection(
+  intl: IntlShape,
+  data: ProductMediaTranslationData,
+): TranslationSectionConfig {
+  return {
+    id: "media",
+    submitScope: TranslationSubmitScope.entity,
+    subtitle: intl.formatMessage({
+      id: "qG6eS+",
+      defaultMessage: "Alternative text used by storefronts and assistive technologies",
+      description: "product media translation section subtitle",
+    }),
+    title: intl.formatMessage({
+      id: "9RvXNg",
+      defaultMessage: "Media Information",
+      description: "section header",
+    }),
+    fields: [
+      {
+        displayName: intl.formatMessage({
+          id: "SwtcgX",
+          defaultMessage: "Alt text",
+          description: "product media alt text field label",
+        }),
+        hint: intl.formatMessage({
+          id: "CQDz75",
+          defaultMessage: "Describes this media for screen readers and unavailable previews",
+          description: "product media alt text translation hint",
+        }),
+        name: TranslationInputFieldName.alt,
+        ripple: rippleProductMediaAltTranslation,
+        translation: data.translationAlt ?? null,
+        type: TranslationFieldType.SHORT,
+        value: data.alt ?? "",
       },
     ],
   };

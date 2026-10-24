@@ -25,6 +25,7 @@ export const AppManifestFragmentDoc = gql`
   tokenTargetUrl
   dataPrivacy
   dataPrivacyUrl
+  deprecationReason
   homepageUrl
   supportUrl
   extensions {
@@ -71,6 +72,7 @@ export const AppFragmentDoc = gql`
   manifestUrl
   supportUrl
   version
+  deprecationReason
   accessToken
   brand {
     logo {
@@ -207,11 +209,13 @@ export const InstalledAppFragmentDoc = gql`
 export const InstalledAppDetailsFragmentDoc = gql`
     fragment InstalledAppDetails on App {
   id
+  identifier
   isActive
   name
   type
   appUrl
   created
+  deprecationReason
   problems {
     __typename
     key
@@ -1607,6 +1611,13 @@ export const ProductVariantTranslateErrorFragmentFragmentDoc = gql`
   message
 }
     `;
+export const ProductMediaTranslateErrorFragmentFragmentDoc = gql`
+    fragment ProductMediaTranslateErrorFragment on ProductMediaTranslateError {
+  code
+  field
+  message
+}
+    `;
 export const CategoryTranslateErrorFragmentFragmentDoc = gql`
     fragment CategoryTranslateErrorFragment on TranslationError {
   code
@@ -2966,6 +2977,12 @@ export const ActivitiesFragmentDoc = gql`
   }
 }
     `;
+export const OrderNumberFragmentDoc = gql`
+    fragment OrderNumber on Order {
+  id
+  number
+}
+    `;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -3303,6 +3320,7 @@ export const ChannelListingProductVariantFragmentDoc = gql`
   costPrice {
     ...Money
   }
+  isAvailableForPurchase
 }
     ${MoneyFragmentDoc}`;
 export const ProductDetailsVariantFragmentDoc = gql`
@@ -3642,6 +3660,14 @@ export const ProductListAttributeFragmentDoc = gql`
   }
 }
     ${AttributeValueFragmentDoc}`;
+export const ProductVariantProductIdFragmentDoc = gql`
+    fragment ProductVariantProductId on ProductVariant {
+  id
+  product {
+    id
+  }
+}
+    `;
 export const ShippingMethodWithPostalCodesFragmentDoc = gql`
     fragment ShippingMethodWithPostalCodes on ShippingMethodType {
   id
@@ -4024,6 +4050,29 @@ export const ProductVariantTranslationFragmentDoc = gql`
   }
 }
     ${AttributeValueTranslatableFragmentDoc}`;
+export const ProductMediaTranslationFragmentDoc = gql`
+    fragment ProductMediaTranslation on ProductMediaTranslatableContent {
+  id
+  productMediaId
+  alt
+  productMedia {
+    id
+    productId
+    alt
+    url(size: 1024)
+    type
+    oembedData
+  }
+  translation(languageCode: $language) {
+    id
+    alt
+    language {
+      code
+      language
+    }
+  }
+}
+    `;
 export const SaleTranslationFragmentDoc = gql`
     fragment SaleTranslation on SaleTranslatableContent {
   sale {
@@ -4179,14 +4228,45 @@ export const MenuItemTranslationFragmentDoc = gql`
   }
 }
     `;
+export const WarehouseListItemFragmentDoc = gql`
+    fragment WarehouseListItem on Warehouse {
+  ...Warehouse
+  clickAndCollectOption
+  address {
+    id
+    city
+    country {
+      code
+      country
+    }
+  }
+  shippingZones(first: 100) @include(if: $includeShippingZones) {
+    totalCount
+    edges {
+      node {
+        id
+        channels {
+          id
+        }
+      }
+    }
+  }
+}
+    ${WarehouseFragmentDoc}`;
 export const WarehouseWithShippingFragmentDoc = gql`
     fragment WarehouseWithShipping on Warehouse {
   ...Warehouse
+  clickAndCollectOption
   shippingZones(first: 100) {
+    totalCount
     edges {
       node {
         id
         name
+        channels {
+          id
+          name
+        }
       }
     }
   }
@@ -7031,6 +7111,105 @@ export function useAddressValidationRulesLazyQuery(baseOptions?: ApolloReactHook
 export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddressValidationRulesQuery>;
 export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
+export const ProductReferenceListDetailsDocument = gql`
+    query ProductReferenceListDetails($ids: [ID!]!, $first: Int!) {
+  products(first: $first, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        thumbnail {
+          url
+        }
+        category {
+          id
+          name
+        }
+        productType {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductReferenceListDetailsQuery__
+ *
+ * To run a query within a React component, call `useProductReferenceListDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductReferenceListDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductReferenceListDetailsQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useProductReferenceListDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>(ProductReferenceListDetailsDocument, options);
+      }
+export function useProductReferenceListDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>(ProductReferenceListDetailsDocument, options);
+        }
+export type ProductReferenceListDetailsQueryHookResult = ReturnType<typeof useProductReferenceListDetailsQuery>;
+export type ProductReferenceListDetailsLazyQueryHookResult = ReturnType<typeof useProductReferenceListDetailsLazyQuery>;
+export type ProductReferenceListDetailsQueryResult = Apollo.QueryResult<Types.ProductReferenceListDetailsQuery, Types.ProductReferenceListDetailsQueryVariables>;
+export const VariantReferenceListDetailsDocument = gql`
+    query VariantReferenceListDetails($ids: [ID!]!, $first: Int!) {
+  productVariants(first: $first, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        product {
+          name
+          thumbnail {
+            url
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useVariantReferenceListDetailsQuery__
+ *
+ * To run a query within a React component, call `useVariantReferenceListDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVariantReferenceListDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVariantReferenceListDetailsQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useVariantReferenceListDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>(VariantReferenceListDetailsDocument, options);
+      }
+export function useVariantReferenceListDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>(VariantReferenceListDetailsDocument, options);
+        }
+export type VariantReferenceListDetailsQueryHookResult = ReturnType<typeof useVariantReferenceListDetailsQuery>;
+export type VariantReferenceListDetailsLazyQueryHookResult = ReturnType<typeof useVariantReferenceListDetailsLazyQuery>;
+export type VariantReferenceListDetailsQueryResult = Apollo.QueryResult<Types.VariantReferenceListDetailsQuery, Types.VariantReferenceListDetailsQueryVariables>;
 export const _GetDynamicLeftOperandsDocument = gql`
     query _GetDynamicLeftOperands($first: Int!, $query: String!, $type: AttributeTypeEnum!, $after: String) {
   attributes(
@@ -9472,6 +9651,11 @@ export const ListCustomersDocument = gql`
     edges {
       node {
         ...Customer
+        externalReference
+        defaultBillingAddress {
+          id
+          companyName
+        }
         orders @include(if: $PERMISSION_MANAGE_ORDERS) {
           totalCount
         }
@@ -11686,6 +11870,8 @@ export const InstalledAppsSnapshotDocument = gql`
       node {
         id
         identifier
+        name
+        manifestUrl
         isActive
         type
         appUrl
@@ -15965,6 +16151,9 @@ export const OrderListDocument = gql`
           }
         }
         userEmail
+        deliveryMethod {
+          __typename
+        }
         chargeStatus
       }
     }
@@ -19572,34 +19761,65 @@ export function useGlobalSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type GlobalSearchQueryHookResult = ReturnType<typeof useGlobalSearchQuery>;
 export type GlobalSearchLazyQueryHookResult = ReturnType<typeof useGlobalSearchLazyQuery>;
 export type GlobalSearchQueryResult = Apollo.QueryResult<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>;
-export const OrderProductVariantsForAddDocument = gql`
-    query OrderProductVariantsForAdd($id: ID!, $first: Int!, $after: String, $channel: String!, $address: AddressInput) {
+export const OrderProductChannelVariantIdsDocument = gql`
+    query OrderProductChannelVariantIds($id: ID!, $channel: String!) {
   product(id: $id, channel: $channel) {
     id
-    productVariants(first: $first, after: $after) {
-      totalCount
-      pageInfo {
-        hasNextPage
-        endCursor
+    variants {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useOrderProductChannelVariantIdsQuery__
+ *
+ * To run a query within a React component, call `useOrderProductChannelVariantIdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderProductChannelVariantIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderProductChannelVariantIdsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useOrderProductChannelVariantIdsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>(OrderProductChannelVariantIdsDocument, options);
       }
-      edges {
-        node {
-          id
-          name
-          sku
-          pricing(address: $address) {
-            priceUndiscounted {
-              gross {
-                ...Money
-              }
+export function useOrderProductChannelVariantIdsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>(OrderProductChannelVariantIdsDocument, options);
+        }
+export type OrderProductChannelVariantIdsQueryHookResult = ReturnType<typeof useOrderProductChannelVariantIdsQuery>;
+export type OrderProductChannelVariantIdsLazyQueryHookResult = ReturnType<typeof useOrderProductChannelVariantIdsLazyQuery>;
+export type OrderProductChannelVariantIdsQueryResult = Apollo.QueryResult<Types.OrderProductChannelVariantIdsQuery, Types.OrderProductChannelVariantIdsQueryVariables>;
+export const OrderProductVariantsForAddDocument = gql`
+    query OrderProductVariantsForAdd($ids: [ID!]!, $first: Int!, $channel: String!, $address: AddressInput) {
+  productVariants(first: $first, channel: $channel, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        sku
+        pricing(address: $address) {
+          priceUndiscounted {
+            gross {
+              ...Money
             }
-            price {
-              gross {
-                ...Money
-              }
-            }
-            onSale
           }
+          price {
+            gross {
+              ...Money
+            }
+          }
+          onSale
         }
       }
     }
@@ -19619,9 +19839,8 @@ export const OrderProductVariantsForAddDocument = gql`
  * @example
  * const { data, loading, error } = useOrderProductVariantsForAddQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      ids: // value for 'ids'
  *      first: // value for 'first'
- *      after: // value for 'after'
  *      channel: // value for 'channel'
  *      address: // value for 'address'
  *   },
@@ -20366,6 +20585,7 @@ export const SearchPagesDocument = gql`
       node {
         id
         title
+        slug
         pageType {
           id
           metadata {
@@ -21501,6 +21721,106 @@ export function useChannelShippingZonesLazyQuery(baseOptions?: ApolloReactHooks.
 export type ChannelShippingZonesQueryHookResult = ReturnType<typeof useChannelShippingZonesQuery>;
 export type ChannelShippingZonesLazyQueryHookResult = ReturnType<typeof useChannelShippingZonesLazyQuery>;
 export type ChannelShippingZonesQueryResult = Apollo.QueryResult<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>;
+export const ChannelZoneWarehouseLinksDocument = gql`
+    query ChannelZoneWarehouseLinks($filter: ShippingZoneFilterInput, $after: String) {
+  shippingZones(filter: $filter, first: 100, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        channels {
+          id
+        }
+        warehouses {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelZoneWarehouseLinksQuery__
+ *
+ * To run a query within a React component, call `useChannelZoneWarehouseLinksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelZoneWarehouseLinksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelZoneWarehouseLinksQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useChannelZoneWarehouseLinksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelZoneWarehouseLinksQuery, Types.ChannelZoneWarehouseLinksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelZoneWarehouseLinksQuery, Types.ChannelZoneWarehouseLinksQueryVariables>(ChannelZoneWarehouseLinksDocument, options);
+      }
+export function useChannelZoneWarehouseLinksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelZoneWarehouseLinksQuery, Types.ChannelZoneWarehouseLinksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelZoneWarehouseLinksQuery, Types.ChannelZoneWarehouseLinksQueryVariables>(ChannelZoneWarehouseLinksDocument, options);
+        }
+export type ChannelZoneWarehouseLinksQueryHookResult = ReturnType<typeof useChannelZoneWarehouseLinksQuery>;
+export type ChannelZoneWarehouseLinksLazyQueryHookResult = ReturnType<typeof useChannelZoneWarehouseLinksLazyQuery>;
+export type ChannelZoneWarehouseLinksQueryResult = Apollo.QueryResult<Types.ChannelZoneWarehouseLinksQuery, Types.ChannelZoneWarehouseLinksQueryVariables>;
+export const ZoneWarehouseEligibilityDocument = gql`
+    query ZoneWarehouseEligibility($ids: [ID!]!, $channels: [ID!]!, $first: Int!) {
+  checked: warehouses(first: $first, filter: {ids: $ids}) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+  inChannels: warehouses(first: $first, filter: {ids: $ids, channels: $channels}) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useZoneWarehouseEligibilityQuery__
+ *
+ * To run a query within a React component, call `useZoneWarehouseEligibilityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useZoneWarehouseEligibilityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useZoneWarehouseEligibilityQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      channels: // value for 'channels'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useZoneWarehouseEligibilityQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>(ZoneWarehouseEligibilityDocument, options);
+      }
+export function useZoneWarehouseEligibilityLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>(ZoneWarehouseEligibilityDocument, options);
+        }
+export type ZoneWarehouseEligibilityQueryHookResult = ReturnType<typeof useZoneWarehouseEligibilityQuery>;
+export type ZoneWarehouseEligibilityLazyQueryHookResult = ReturnType<typeof useZoneWarehouseEligibilityLazyQuery>;
+export type ZoneWarehouseEligibilityQueryResult = Apollo.QueryResult<Types.ZoneWarehouseEligibilityQuery, Types.ZoneWarehouseEligibilityQueryVariables>;
 export const ShippingZonesCountDocument = gql`
     query ShippingZonesCount {
   shippingZones {
@@ -22879,6 +23199,55 @@ export function useUpdateProductVariantTranslationsMutation(baseOptions?: Apollo
 export type UpdateProductVariantTranslationsMutationHookResult = ReturnType<typeof useUpdateProductVariantTranslationsMutation>;
 export type UpdateProductVariantTranslationsMutationResult = Apollo.MutationResult<Types.UpdateProductVariantTranslationsMutation>;
 export type UpdateProductVariantTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateProductVariantTranslationsMutation, Types.UpdateProductVariantTranslationsMutationVariables>;
+export const UpdateProductMediaTranslationDocument = gql`
+    mutation UpdateProductMediaTranslation($id: ID!, $input: ProductMediaTranslationInput!, $language: LanguageCodeEnum!) @lockSchema(schema: "main") {
+  productMediaTranslate(id: $id, input: $input, languageCode: $language) {
+    errors {
+      ...ProductMediaTranslateErrorFragment
+    }
+    productMedia {
+      id
+      alt
+      translation(languageCode: $language) {
+        id
+        alt
+        language {
+          code
+          language
+        }
+      }
+    }
+  }
+}
+    ${ProductMediaTranslateErrorFragmentFragmentDoc}`;
+export type UpdateProductMediaTranslationMutationFn = Apollo.MutationFunction<Types.UpdateProductMediaTranslationMutation, Types.UpdateProductMediaTranslationMutationVariables>;
+
+/**
+ * __useUpdateProductMediaTranslationMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductMediaTranslationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductMediaTranslationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductMediaTranslationMutation, { data, loading, error }] = useUpdateProductMediaTranslationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *      language: // value for 'language'
+ *   },
+ * });
+ */
+export function useUpdateProductMediaTranslationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateProductMediaTranslationMutation, Types.UpdateProductMediaTranslationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UpdateProductMediaTranslationMutation, Types.UpdateProductMediaTranslationMutationVariables>(UpdateProductMediaTranslationDocument, options);
+      }
+export type UpdateProductMediaTranslationMutationHookResult = ReturnType<typeof useUpdateProductMediaTranslationMutation>;
+export type UpdateProductMediaTranslationMutationResult = Apollo.MutationResult<Types.UpdateProductMediaTranslationMutation>;
+export type UpdateProductMediaTranslationMutationOptions = Apollo.BaseMutationOptions<Types.UpdateProductMediaTranslationMutation, Types.UpdateProductMediaTranslationMutationVariables>;
 export const UpdateCategoryTranslationsDocument = gql`
     mutation UpdateCategoryTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
   categoryTranslate(id: $id, input: $input, languageCode: $language) {
@@ -23184,10 +23553,12 @@ export const UpdateAttributeValueTranslationsDocument = gql`
     attributeValue {
       id
       name
+      plainText
       richText
       translation(languageCode: $language) {
         id
         name
+        plainText
         richText
       }
     }
@@ -23870,6 +24241,94 @@ export function useProductVariantTranslationDetailsLazyQuery(baseOptions?: Apoll
 export type ProductVariantTranslationDetailsQueryHookResult = ReturnType<typeof useProductVariantTranslationDetailsQuery>;
 export type ProductVariantTranslationDetailsLazyQueryHookResult = ReturnType<typeof useProductVariantTranslationDetailsLazyQuery>;
 export type ProductVariantTranslationDetailsQueryResult = Apollo.QueryResult<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>;
+export const ProductTranslationContextDocument = gql`
+    query ProductTranslationContext($id: ID!) {
+  translation(kind: PRODUCT, id: $id) {
+    ... on ProductTranslatableContent {
+      id
+      product {
+        id
+        media {
+          id
+          alt
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductTranslationContextQuery__
+ *
+ * To run a query within a React component, call `useProductTranslationContextQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductTranslationContextQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductTranslationContextQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProductTranslationContextQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>(ProductTranslationContextDocument, options);
+      }
+export function useProductTranslationContextLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>(ProductTranslationContextDocument, options);
+        }
+export type ProductTranslationContextQueryHookResult = ReturnType<typeof useProductTranslationContextQuery>;
+export type ProductTranslationContextLazyQueryHookResult = ReturnType<typeof useProductTranslationContextLazyQuery>;
+export type ProductTranslationContextQueryResult = Apollo.QueryResult<Types.ProductTranslationContextQuery, Types.ProductTranslationContextQueryVariables>;
+export const ProductMediaTranslationDetailsDocument = gql`
+    query ProductMediaTranslationDetails($id: ID!, $productId: ID!, $language: LanguageCodeEnum!) @lockSchema(schema: "main") {
+  translation(kind: PRODUCT_MEDIA, id: $id) {
+    ...ProductMediaTranslation
+  }
+  productTranslation: translation(kind: PRODUCT, id: $productId) {
+    ... on ProductTranslatableContent {
+      id
+      productId
+      name
+    }
+  }
+}
+    ${ProductMediaTranslationFragmentDoc}`;
+
+/**
+ * __useProductMediaTranslationDetailsQuery__
+ *
+ * To run a query within a React component, call `useProductMediaTranslationDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductMediaTranslationDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductMediaTranslationDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      productId: // value for 'productId'
+ *      language: // value for 'language'
+ *   },
+ * });
+ */
+export function useProductMediaTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>(ProductMediaTranslationDetailsDocument, options);
+      }
+export function useProductMediaTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>(ProductMediaTranslationDetailsDocument, options);
+        }
+export type ProductMediaTranslationDetailsQueryHookResult = ReturnType<typeof useProductMediaTranslationDetailsQuery>;
+export type ProductMediaTranslationDetailsLazyQueryHookResult = ReturnType<typeof useProductMediaTranslationDetailsLazyQuery>;
+export type ProductMediaTranslationDetailsQueryResult = Apollo.QueryResult<Types.ProductMediaTranslationDetailsQuery, Types.ProductMediaTranslationDetailsQueryVariables>;
 export const CategoryTranslationDetailsDocument = gql`
     query CategoryTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: CATEGORY, id: $id) {
@@ -24387,7 +24846,7 @@ export type WarehouseUpdateMutationHookResult = ReturnType<typeof useWarehouseUp
 export type WarehouseUpdateMutationResult = Apollo.MutationResult<Types.WarehouseUpdateMutation>;
 export type WarehouseUpdateMutationOptions = Apollo.BaseMutationOptions<Types.WarehouseUpdateMutation, Types.WarehouseUpdateMutationVariables>;
 export const WarehouseListDocument = gql`
-    query WarehouseList($first: Int, $after: String, $last: Int, $before: String, $filter: WarehouseFilterInput, $sort: WarehouseSortingInput) {
+    query WarehouseList($first: Int, $after: String, $last: Int, $before: String, $filter: WarehouseFilterInput, $sort: WarehouseSortingInput, $includeShippingZones: Boolean = false) {
   warehouses(
     before: $before
     after: $after
@@ -24398,7 +24857,7 @@ export const WarehouseListDocument = gql`
   ) {
     edges {
       node {
-        ...WarehouseWithShipping
+        ...WarehouseListItem
       }
     }
     pageInfo {
@@ -24406,7 +24865,7 @@ export const WarehouseListDocument = gql`
     }
   }
 }
-    ${WarehouseWithShippingFragmentDoc}
+    ${WarehouseListItemFragmentDoc}
 ${PageInfoFragmentDoc}`;
 
 /**
@@ -24427,6 +24886,7 @@ ${PageInfoFragmentDoc}`;
  *      before: // value for 'before'
  *      filter: // value for 'filter'
  *      sort: // value for 'sort'
+ *      includeShippingZones: // value for 'includeShippingZones'
  *   },
  * });
  */
@@ -24510,6 +24970,295 @@ export function useWarehousesCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type WarehousesCountQueryHookResult = ReturnType<typeof useWarehousesCountQuery>;
 export type WarehousesCountLazyQueryHookResult = ReturnType<typeof useWarehousesCountLazyQuery>;
 export type WarehousesCountQueryResult = Apollo.QueryResult<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>;
+export const WarehouseStockCountDocument = gql`
+    query WarehouseStockCount($id: ID!) {
+  warehouse(id: $id) {
+    id
+    stocks(first: 1) {
+      totalCount
+    }
+  }
+}
+    `;
+
+/**
+ * __useWarehouseStockCountQuery__
+ *
+ * To run a query within a React component, call `useWarehouseStockCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehouseStockCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehouseStockCountQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useWarehouseStockCountQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WarehouseStockCountQuery, Types.WarehouseStockCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehouseStockCountQuery, Types.WarehouseStockCountQueryVariables>(WarehouseStockCountDocument, options);
+      }
+export function useWarehouseStockCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseStockCountQuery, Types.WarehouseStockCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseStockCountQuery, Types.WarehouseStockCountQueryVariables>(WarehouseStockCountDocument, options);
+        }
+export type WarehouseStockCountQueryHookResult = ReturnType<typeof useWarehouseStockCountQuery>;
+export type WarehouseStockCountLazyQueryHookResult = ReturnType<typeof useWarehouseStockCountLazyQuery>;
+export type WarehouseStockCountQueryResult = Apollo.QueryResult<Types.WarehouseStockCountQuery, Types.WarehouseStockCountQueryVariables>;
+export const WarehouseChannelMembershipCountsDocument = gql`
+    query WarehouseChannelMembershipCounts {
+  channels {
+    id
+    name
+  }
+  warehouses(first: 1) {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useWarehouseChannelMembershipCountsQuery__
+ *
+ * To run a query within a React component, call `useWarehouseChannelMembershipCountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehouseChannelMembershipCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehouseChannelMembershipCountsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWarehouseChannelMembershipCountsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.WarehouseChannelMembershipCountsQuery, Types.WarehouseChannelMembershipCountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehouseChannelMembershipCountsQuery, Types.WarehouseChannelMembershipCountsQueryVariables>(WarehouseChannelMembershipCountsDocument, options);
+      }
+export function useWarehouseChannelMembershipCountsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseChannelMembershipCountsQuery, Types.WarehouseChannelMembershipCountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseChannelMembershipCountsQuery, Types.WarehouseChannelMembershipCountsQueryVariables>(WarehouseChannelMembershipCountsDocument, options);
+        }
+export type WarehouseChannelMembershipCountsQueryHookResult = ReturnType<typeof useWarehouseChannelMembershipCountsQuery>;
+export type WarehouseChannelMembershipCountsLazyQueryHookResult = ReturnType<typeof useWarehouseChannelMembershipCountsLazyQuery>;
+export type WarehouseChannelMembershipCountsQueryResult = Apollo.QueryResult<Types.WarehouseChannelMembershipCountsQuery, Types.WarehouseChannelMembershipCountsQueryVariables>;
+export const WarehouseChannelMembershipMatrixDocument = gql`
+    query WarehouseChannelMembershipMatrix {
+  channels {
+    id
+    warehouses {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useWarehouseChannelMembershipMatrixQuery__
+ *
+ * To run a query within a React component, call `useWarehouseChannelMembershipMatrixQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehouseChannelMembershipMatrixQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehouseChannelMembershipMatrixQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWarehouseChannelMembershipMatrixQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.WarehouseChannelMembershipMatrixQuery, Types.WarehouseChannelMembershipMatrixQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehouseChannelMembershipMatrixQuery, Types.WarehouseChannelMembershipMatrixQueryVariables>(WarehouseChannelMembershipMatrixDocument, options);
+      }
+export function useWarehouseChannelMembershipMatrixLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseChannelMembershipMatrixQuery, Types.WarehouseChannelMembershipMatrixQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseChannelMembershipMatrixQuery, Types.WarehouseChannelMembershipMatrixQueryVariables>(WarehouseChannelMembershipMatrixDocument, options);
+        }
+export type WarehouseChannelMembershipMatrixQueryHookResult = ReturnType<typeof useWarehouseChannelMembershipMatrixQuery>;
+export type WarehouseChannelMembershipMatrixLazyQueryHookResult = ReturnType<typeof useWarehouseChannelMembershipMatrixLazyQuery>;
+export type WarehouseChannelMembershipMatrixQueryResult = Apollo.QueryResult<Types.WarehouseChannelMembershipMatrixQuery, Types.WarehouseChannelMembershipMatrixQueryVariables>;
+export const WarehousesInChannelsDocument = gql`
+    query WarehousesInChannels($ids: [ID!]!, $channels: [ID!]!, $first: Int!) {
+  warehouses(first: $first, filter: {ids: $ids, channels: $channels}) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWarehousesInChannelsQuery__
+ *
+ * To run a query within a React component, call `useWarehousesInChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehousesInChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehousesInChannelsQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      channels: // value for 'channels'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useWarehousesInChannelsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WarehousesInChannelsQuery, Types.WarehousesInChannelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehousesInChannelsQuery, Types.WarehousesInChannelsQueryVariables>(WarehousesInChannelsDocument, options);
+      }
+export function useWarehousesInChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehousesInChannelsQuery, Types.WarehousesInChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehousesInChannelsQuery, Types.WarehousesInChannelsQueryVariables>(WarehousesInChannelsDocument, options);
+        }
+export type WarehousesInChannelsQueryHookResult = ReturnType<typeof useWarehousesInChannelsQuery>;
+export type WarehousesInChannelsLazyQueryHookResult = ReturnType<typeof useWarehousesInChannelsLazyQuery>;
+export type WarehousesInChannelsQueryResult = Apollo.QueryResult<Types.WarehousesInChannelsQuery, Types.WarehousesInChannelsQueryVariables>;
+export const WarehouseSharesChannelsDocument = gql`
+    query WarehouseSharesChannels($warehouseId: ID!, $channelIds: [ID!]!) {
+  warehouses(first: 1, filter: {ids: [$warehouseId], channels: $channelIds}) {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useWarehouseSharesChannelsQuery__
+ *
+ * To run a query within a React component, call `useWarehouseSharesChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehouseSharesChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehouseSharesChannelsQuery({
+ *   variables: {
+ *      warehouseId: // value for 'warehouseId'
+ *      channelIds: // value for 'channelIds'
+ *   },
+ * });
+ */
+export function useWarehouseSharesChannelsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WarehouseSharesChannelsQuery, Types.WarehouseSharesChannelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehouseSharesChannelsQuery, Types.WarehouseSharesChannelsQueryVariables>(WarehouseSharesChannelsDocument, options);
+      }
+export function useWarehouseSharesChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseSharesChannelsQuery, Types.WarehouseSharesChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseSharesChannelsQuery, Types.WarehouseSharesChannelsQueryVariables>(WarehouseSharesChannelsDocument, options);
+        }
+export type WarehouseSharesChannelsQueryHookResult = ReturnType<typeof useWarehouseSharesChannelsQuery>;
+export type WarehouseSharesChannelsLazyQueryHookResult = ReturnType<typeof useWarehouseSharesChannelsLazyQuery>;
+export type WarehouseSharesChannelsQueryResult = Apollo.QueryResult<Types.WarehouseSharesChannelsQuery, Types.WarehouseSharesChannelsQueryVariables>;
+export const WarehouseShippingZonesToAssignDocument = gql`
+    query WarehouseShippingZonesToAssign($filter: ShippingZoneFilterInput, $first: Int!, $after: String) {
+  shippingZones(first: $first, after: $after, filter: $filter) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __useWarehouseShippingZonesToAssignQuery__
+ *
+ * To run a query within a React component, call `useWarehouseShippingZonesToAssignQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehouseShippingZonesToAssignQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehouseShippingZonesToAssignQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useWarehouseShippingZonesToAssignQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WarehouseShippingZonesToAssignQuery, Types.WarehouseShippingZonesToAssignQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehouseShippingZonesToAssignQuery, Types.WarehouseShippingZonesToAssignQueryVariables>(WarehouseShippingZonesToAssignDocument, options);
+      }
+export function useWarehouseShippingZonesToAssignLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseShippingZonesToAssignQuery, Types.WarehouseShippingZonesToAssignQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseShippingZonesToAssignQuery, Types.WarehouseShippingZonesToAssignQueryVariables>(WarehouseShippingZonesToAssignDocument, options);
+        }
+export type WarehouseShippingZonesToAssignQueryHookResult = ReturnType<typeof useWarehouseShippingZonesToAssignQuery>;
+export type WarehouseShippingZonesToAssignLazyQueryHookResult = ReturnType<typeof useWarehouseShippingZonesToAssignLazyQuery>;
+export type WarehouseShippingZonesToAssignQueryResult = Apollo.QueryResult<Types.WarehouseShippingZonesToAssignQuery, Types.WarehouseShippingZonesToAssignQueryVariables>;
+export const WarehouseShippingZonesPageDocument = gql`
+    query WarehouseShippingZonesPage($id: ID!, $first: Int!, $after: String) {
+  warehouse(id: $id) {
+    id
+    shippingZones(first: $first, after: $after) {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          channels {
+            id
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWarehouseShippingZonesPageQuery__
+ *
+ * To run a query within a React component, call `useWarehouseShippingZonesPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWarehouseShippingZonesPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWarehouseShippingZonesPageQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useWarehouseShippingZonesPageQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>(WarehouseShippingZonesPageDocument, options);
+      }
+export function useWarehouseShippingZonesPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>(WarehouseShippingZonesPageDocument, options);
+        }
+export type WarehouseShippingZonesPageQueryHookResult = ReturnType<typeof useWarehouseShippingZonesPageQuery>;
+export type WarehouseShippingZonesPageLazyQueryHookResult = ReturnType<typeof useWarehouseShippingZonesPageLazyQuery>;
+export type WarehouseShippingZonesPageQueryResult = Apollo.QueryResult<Types.WarehouseShippingZonesPageQuery, Types.WarehouseShippingZonesPageQueryVariables>;
 export const SaveOnBoardingStateDocument = gql`
     mutation SaveOnBoardingState($id: ID!, $input: [MetadataInput!]!) {
   updateMetadata(id: $id, input: $input) {

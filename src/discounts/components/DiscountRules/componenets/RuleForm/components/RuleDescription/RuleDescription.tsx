@@ -1,4 +1,5 @@
 import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import { RichTextEditorClamp } from "@dashboard/components/RichTextEditor/RichTextEditorClamp";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
 import { type Rule } from "@dashboard/discounts/models/Rule";
@@ -24,20 +25,22 @@ export const RuleDescription = ({ error = false }: RuleDescriptionProps) => {
   return (
     <RuleInputWrapper>
       {isReadyForMount ? (
-        <RichTextEditor
-          defaultValue={defaultValue}
-          editorRef={editorRef}
-          onChange={data => {
-            handleChange();
-            field.onChange(JSON.stringify(data));
-          }}
-          onBlur={field.onBlur}
-          disabled={disabled}
-          error={error}
-          helperText=""
-          label={intl.formatMessage(commonMessages.description)}
-          name="rule-description"
-        />
+        <RichTextEditorClamp tall>
+          <RichTextEditor
+            defaultValue={defaultValue}
+            editorRef={editorRef}
+            onChange={data => {
+              handleChange();
+              field.onChange(JSON.stringify(data));
+            }}
+            onBlur={field.onBlur}
+            disabled={disabled}
+            error={error}
+            helperText=""
+            label={intl.formatMessage(commonMessages.description)}
+            name="rule-description"
+          />
+        </RichTextEditorClamp>
       ) : (
         <RichTextEditorLoading
           label={intl.formatMessage(commonMessages.description)}

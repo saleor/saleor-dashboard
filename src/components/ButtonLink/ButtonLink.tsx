@@ -42,6 +42,9 @@ export const ButtonLink = ({
         margin: 0,
         height: "auto",
         minHeight: 0,
+        // Buttons default to centered text; keep link copy left-aligned when it wraps.
+        textAlign: "start",
+        justifyContent: "flex-start",
         color,
         fontWeight: "inherit",
         fontSize: "inherit",

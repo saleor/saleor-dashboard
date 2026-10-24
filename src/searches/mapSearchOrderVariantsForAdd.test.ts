@@ -3,6 +3,7 @@ import { type RelayToFlat } from "@dashboard/types";
 
 import {
   appendOrderProductVariantsPage,
+  applyChannelVariantIds,
   isOrderVariantsListTruncated,
   mapSearchOrderVariantsForAdd,
   type OrderSearchProduct,
@@ -29,6 +30,19 @@ const createVariant = (id: string): OrderSearchVariant => ({
   name: id,
   sku: id,
   pricing: null,
+});
+
+const baseProduct = (overrides: Partial<OrderSearchProduct> = {}): OrderSearchProduct => ({
+  __typename: "Product",
+  id: "product-1",
+  name: "Product 1",
+  thumbnail: null,
+  variants: [createVariant("v1"), createVariant("v2")],
+  variantsTotalCount: 4,
+  variantsHasNextPage: true,
+  channelVariantIds: null,
+  missingVariantIds: [],
+  ...overrides,
 });
 
 describe("mapSearchOrderVariantsForAdd", () => {
@@ -67,7 +81,8 @@ describe("mapSearchOrderVariantsForAdd", () => {
         id: "product-1",
         variantsTotalCount: 40,
         variantsHasNextPage: true,
-        variantsEndCursor: "cursor-1",
+        channelVariantIds: null,
+        missingVariantIds: [],
         variants: [expect.objectContaining({ id: "v1" }), expect.objectContaining({ id: "v2" })],
       }),
     ]);
@@ -82,48 +97,86 @@ describe("mapSearchOrderVariantsForAdd", () => {
     expect(mapped[0].variants).toEqual([]);
     expect(mapped[0].variantsTotalCount).toBeNull();
     expect(mapped[0].variantsHasNextPage).toBe(false);
-    expect(mapped[0].variantsEndCursor).toBeNull();
+    expect(mapped[0].channelVariantIds).toBeNull();
+    expect(mapped[0].missingVariantIds).toEqual([]);
   });
 
-  it("detects truncated variant lists from pageInfo only", () => {
+  it("treats the list as truncated from pageInfo until channel ids are known", () => {
     // Arrange // Act // Assert
     expect(
       isOrderVariantsListTruncated({
+        channelVariantIds: null,
+        missingVariantIds: [],
         variantsHasNextPage: true,
       }),
     ).toBe(true);
     expect(
       isOrderVariantsListTruncated({
+        channelVariantIds: null,
+        missingVariantIds: [],
         variantsHasNextPage: false,
+      }),
+    ).toBe(false);
+    expect(
+      isOrderVariantsListTruncated({
+        channelVariantIds: ["v1", "v2"],
+        missingVariantIds: ["v2"],
+        variantsHasNextPage: false,
+      }),
+    ).toBe(true);
+    expect(
+      isOrderVariantsListTruncated({
+        channelVariantIds: ["v1"],
+        missingVariantIds: [],
+        variantsHasNextPage: true,
       }),
     ).toBe(false);
   });
 
-  it("appends the next variants page without duplicates", () => {
+  it("keeps only channel-listed variants and records the ones still missing", () => {
     // Arrange
-    const product: OrderSearchProduct = {
-      __typename: "Product",
-      id: "product-1",
-      name: "Product 1",
-      thumbnail: null,
-      variants: [createVariant("v1"), createVariant("v2")],
-      variantsTotalCount: 4,
-      variantsHasNextPage: true,
-      variantsEndCursor: "cursor-1",
-    };
+    const product = baseProduct({
+      variants: [createVariant("v1"), createVariant("off-channel"), createVariant("v3")],
+    });
+
+    // Act
+    const next = applyChannelVariantIds(product, ["v3", "v1", "v2"]);
+
+    // Assert
+    expect(next.variants.map(variant => variant.id)).toEqual(["v3", "v1"]);
+    expect(next.channelVariantIds).toEqual(["v3", "v1", "v2"]);
+    expect(next.missingVariantIds).toEqual(["v2"]);
+  });
+
+  it("appends fetched variants in channel order without duplicates", () => {
+    // Arrange
+    const product = applyChannelVariantIds(baseProduct(), ["v2", "v1", "v3", "v4"]);
 
     // Act
     const next = appendOrderProductVariantsPage(product, {
-      variants: [createVariant("v2"), createVariant("v3"), createVariant("v4")],
-      totalCount: 4,
-      hasNextPage: false,
-      endCursor: "cursor-2",
+      variants: [createVariant("v1"), createVariant("v3"), createVariant("v4")],
+      requestedIds: ["v3", "v4"],
     });
 
     // Assert
-    expect(next.variants.map(variant => variant.id)).toEqual(["v1", "v2", "v3", "v4"]);
-    expect(next.variantsHasNextPage).toBe(false);
-    expect(next.variantsEndCursor).toBe("cursor-2");
-    expect(next.variantsTotalCount).toBe(4);
+    expect(next.variants.map(variant => variant.id)).toEqual(["v2", "v1", "v3", "v4"]);
+    expect(next.missingVariantIds).toEqual([]);
+    expect(next.channelVariantIds).toEqual(["v2", "v1", "v3", "v4"]);
+  });
+
+  it("stops treating requested ids as missing when the API does not return them", () => {
+    // Arrange
+    const product = applyChannelVariantIds(baseProduct({ variants: [] }), ["v1", "v2", "v3"]);
+
+    // Act
+    const next = appendOrderProductVariantsPage(product, {
+      variants: [createVariant("v1")],
+      requestedIds: ["v1", "v2"],
+    });
+
+    // Assert
+    expect(next.variants.map(variant => variant.id)).toEqual(["v1"]);
+    expect(next.missingVariantIds).toEqual(["v3"]);
+    expect(isOrderVariantsListTruncated(next)).toBe(true);
   });
 });

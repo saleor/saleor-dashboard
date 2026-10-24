@@ -37,12 +37,15 @@ export type ProductFilterChangeHandler = (
   query: string,
 ) => void;
 
-export type PageFilterChangeHandler = (filterVariables: PageWhereInput, query: string) => void;
+export type PageFilterChangeHandler = (
+  filterVariables: PageWhereInput,
+  query: string,
+) => void | Promise<unknown>;
 
 export type CategoryFilterChangeHandler = (
   filterVariables: CategoryFilterInput,
   query: string,
-) => void;
+) => void | Promise<unknown>;
 
 export type AssignAttributeValueDialogFilterChangeMap = {
   [AttributeEntityTypeEnum.PRODUCT]: ProductFilterChangeHandler;

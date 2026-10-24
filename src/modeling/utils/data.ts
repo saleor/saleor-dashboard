@@ -16,6 +16,7 @@ export function getAttributeInputFromPage(page: PageDetailsFragment): AttributeI
       selectedValues: attribute.values,
       values: mergeChoicesWithValues(attribute),
       unit: attribute.attribute.unit,
+      savedReferenceIds: getSelectedAttributeValues(attribute),
     },
     id: attribute.attribute.id,
     label: attribute.attribute.name,

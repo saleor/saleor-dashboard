@@ -53,4 +53,19 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Channel",
     id: "KeO51o",
   },
+  delivery: {
+    defaultMessage: "Delivery",
+    id: "ufYgcB",
+    description: "orders list column: how the order is delivered (shipping or warehouse pickup)",
+  },
+  deliveryShipping: {
+    defaultMessage: "Shipping",
+    id: "NOlC2k",
+    description: "orders list tag: order is shipped to the customer by a shipping method",
+  },
+  deliveryWarehouse: {
+    defaultMessage: "Pickup",
+    id: "AgdhYN",
+    description: "orders list tag: order is picked up by the customer at a warehouse",
+  },
 });

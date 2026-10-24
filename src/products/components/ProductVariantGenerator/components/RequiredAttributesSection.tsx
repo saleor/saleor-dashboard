@@ -1,6 +1,6 @@
-import { getBooleanDropdownOptions } from "@dashboard/components/Attributes/utils";
+import { AttributeBooleanControl } from "@dashboard/components/Attributes/AttributeBooleanControl";
 import { AttributeInputTypeEnum, type VariantAttributeFragment } from "@dashboard/graphql";
-import { Box, DynamicCombobox, Input, type Option, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Input, type Option, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -29,7 +29,6 @@ const AttributeInput = ({
   onChange,
   onSearch,
 }: AttributeInputProps): ReactNode => {
-  const intl = useIntl();
   const inputType = attribute.inputType;
   const [searchedOptions, setSearchedOptions] = useState<Option[]>([]);
 
@@ -70,12 +69,6 @@ const AttributeInput = ({
     return { label: value[0], value: value[0] };
   }, [value, choices, searchedOptions]);
 
-  // Memoize boolean options (filtered to exclude "unset" for required attributes)
-  const booleanOptions = useMemo(
-    () => getBooleanDropdownOptions(intl).filter(opt => opt.value !== "unset"),
-    [intl],
-  );
-
   // DROPDOWN and SWATCH - use DynamicCombobox with search
   if (
     inputType === AttributeInputTypeEnum.DROPDOWN ||
@@ -106,16 +99,18 @@ const AttributeInput = ({
     );
   }
 
-  // BOOLEAN - True/False only (no "Unset" for required attributes)
-  // The API rejects null for required Boolean attributes
+  // Required attributes are two-state. The API rejects null for required booleans.
   if (inputType === AttributeInputTypeEnum.BOOLEAN) {
+    const booleanValue = value[0] === "true" ? true : value[0] === "false" ? false : null;
+
     return (
-      <Select
-        size="small"
-        value={value[0] ?? ""}
-        onChange={v => onChange(v ? [String(v)] : [])}
-        options={booleanOptions}
-        placeholder={intl.formatMessage(messages.selectValue)}
+      <AttributeBooleanControl
+        name={`attribute:${attribute.id}`}
+        label={attribute.name ?? ""}
+        value={booleanValue}
+        required
+        invalid={booleanValue === null}
+        onChange={next => onChange(next === undefined ? [] : [next ? "true" : "false"])}
       />
     );
   }

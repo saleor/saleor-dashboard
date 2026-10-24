@@ -76,6 +76,9 @@ import type {
   AppProblemDismissed,
   AppReenableSyncWebhooks,
   AppRetryInstall,
+  AppSelfUpdate,
+  AppSelfUpdateError,
+  AppSelfUpdateInput,
   AppSortingInput,
   AppStatusChanged,
   AppToken,
@@ -805,6 +808,11 @@ import type {
   ProductMediaDelete,
   ProductMediaDeleted,
   ProductMediaReorder,
+  ProductMediaTranslatableContent,
+  ProductMediaTranslate,
+  ProductMediaTranslateError,
+  ProductMediaTranslation,
+  ProductMediaTranslationInput,
   ProductMediaUpdate,
   ProductMediaUpdateInput,
   ProductMediaUpdated,
@@ -846,6 +854,9 @@ import type {
   ProductVariantBulkUpdateInput,
   ProductVariantChannelListing,
   ProductVariantChannelListingAddInput,
+  ProductVariantChannelListingAvailabilityInput,
+  ProductVariantChannelListingAvailabilityUpdate,
+  ProductVariantChannelListingAvailabilityUpdateError,
   ProductVariantChannelListingUpdate,
   ProductVariantChannelListingUpdateInput,
   ProductVariantCountableConnection,
@@ -879,6 +890,7 @@ import type {
   ProductVariantUpdated,
   ProductVariantWhereInput,
   ProductWhereInput,
+  PromoCodeRejectionDetails,
   Promotion,
   PromotionBulkDelete,
   PromotionCountableConnection,
@@ -1133,6 +1145,7 @@ import type {
   TransactionRequestRefundForGrantedRefund,
   TransactionRequestRefundForGrantedRefundError,
   TransactionSortingInput,
+  TransactionSummary,
   TransactionUpdate,
   TransactionUpdateError,
   TransactionUpdateInput,
@@ -2284,6 +2297,12 @@ export type OptionalApp = {
   dataPrivacy?: App['dataPrivacy'] | undefined;
   /** URL to details about the privacy policy on the app owner page. */
   dataPrivacyUrl?: App['dataPrivacyUrl'] | undefined;
+  /**
+ * Reason why the app is deprecated, set by the app itself. Null when the app is not deprecated. A deprecated app keeps working as usual, but usually means it should not be used anymore.
+ *
+ * Added in Saleor 3.23.
+ */
+  deprecationReason?: App['deprecationReason'] | undefined;
   /** App's dashboard extensions. */
   extensions?: OptionalAppExtension[] | undefined;
   /** Homepage of the app. */
@@ -3378,6 +3397,91 @@ export type OptionalAppRetryInstall = {
  */
 export const defineAppRetryInstallFactory: DefineTypeFactoryInterface<
   OptionalAppRetryInstall,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+export type OptionalAppSelfUpdate = {
+  __typename?: 'AppSelfUpdate';
+  /**
+ * The updated app.
+ *
+ * Added in Saleor 3.23.
+ */
+  app?: Maybe<OptionalApp> | undefined;
+  errors?: OptionalAppSelfUpdateError[] | undefined;
+};
+
+/**
+ * Define factory for {@link AppSelfUpdate} model.
+ *
+ * @param options
+ * @returns factory {@link AppSelfUpdateFactoryInterface}
+ */
+export const defineAppSelfUpdateFactory: DefineTypeFactoryInterface<
+  OptionalAppSelfUpdate,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents errors in the appSelfUpdate mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalAppSelfUpdateError = {
+  __typename?: 'AppSelfUpdateError';
+  /**
+ * The error code.
+ *
+ * Added in Saleor 3.23.
+ */
+  code?: AppSelfUpdateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: AppSelfUpdateError['field'] | undefined;
+  /** The error message. */
+  message?: AppSelfUpdateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppSelfUpdateError} model.
+ *
+ * @param options
+ * @returns factory {@link AppSelfUpdateErrorFactoryInterface}
+ */
+export const defineAppSelfUpdateErrorFactory: DefineTypeFactoryInterface<
+  OptionalAppSelfUpdateError,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Fields to update on the calling app.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalAppSelfUpdateInput = {
+  __typename?: 'AppSelfUpdateInput';
+  /**
+ * Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+ *
+ * Added in Saleor 3.23.
+ */
+  deprecationReason?: AppSelfUpdateInput['deprecationReason'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppSelfUpdateInput} model.
+ *
+ * @param options
+ * @returns factory {@link AppSelfUpdateInputFactoryInterface}
+ */
+export const defineAppSelfUpdateInputFactory: DefineTypeFactoryInterface<
+  OptionalAppSelfUpdateInput,
   {}
 > = defineTypeFactory;
 
@@ -6187,6 +6291,20 @@ export type OptionalCategory = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: Category['descriptionJson'] | undefined;
+  /**
+ * External ID of this category.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Category['externalReference'] | undefined;
+  /**
+ * Full description of the category. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: Category['fullDescription'] | undefined;
   /** The ID of the category. */
   id?: Category['id'] | undefined;
   /** Level of the category. */
@@ -6435,6 +6553,20 @@ export type OptionalCategoryInput = {
  */
   description?: CategoryInput['description'] | undefined;
   /**
+ * External ID of this category.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: CategoryInput['externalReference'] | undefined;
+  /**
+ * Full description of the category. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryInput['fullDescription'] | undefined;
+  /**
  * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
@@ -6505,6 +6637,14 @@ export type OptionalCategoryTranslatableContent = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CategoryTranslatableContent['descriptionJson'] | undefined;
+  /**
+ * Category's full description to translate. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryTranslatableContent['fullDescription'] | undefined;
   /** The ID of the category translatable content. */
   id?: CategoryTranslatableContent['id'] | undefined;
   /** Name of the category translatable content. */
@@ -6572,6 +6712,14 @@ export type OptionalCategoryTranslation = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CategoryTranslation['descriptionJson'] | undefined;
+  /**
+ * Translated full description of the category. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CategoryTranslation['fullDescription'] | undefined;
   /** The ID of the category translation. */
   id?: CategoryTranslation['id'] | undefined;
   /** Translation language. */
@@ -7040,6 +7188,12 @@ export type OptionalChannelListingUpdateInput = {
   channelListing?: ChannelListingUpdateInput['channelListing'] | undefined;
   /** Cost price of the variant in channel. */
   costPrice?: ChannelListingUpdateInput['costPrice'] | undefined;
+  /**
+ * Determines whether the variant can be bought in this channel. When omitted, the current value is kept.
+ *
+ * Added in Saleor 3.23.
+ */
+  isAvailableForPurchase?: ChannelListingUpdateInput['isAvailableForPurchase'] | undefined;
   /** The threshold for preorder variant in channel. */
   preorderThreshold?: ChannelListingUpdateInput['preorderThreshold'] | undefined;
   /** Price of the particular variant in channel. */
@@ -7966,6 +8120,12 @@ export type OptionalCheckoutError = {
   lines?: CheckoutError['lines'] | undefined;
   /** The error message. */
   message?: CheckoutError['message'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of variant IDs which causes the error. */
   variants?: CheckoutError['variants'] | undefined;
 };
@@ -8817,6 +8977,20 @@ export type OptionalCollection = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: Collection['descriptionJson'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Collection['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: Collection['fullDescription'] | undefined;
   /** The ID of the collection. */
   id?: Collection['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
@@ -9082,6 +9256,20 @@ export type OptionalCollectionCreateInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: CollectionCreateInput['description'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: CollectionCreateInput['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionCreateInput['fullDescription'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionCreateInput['isPublished'] | undefined;
   /**
@@ -9251,6 +9439,20 @@ export type OptionalCollectionInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: CollectionInput['description'] | undefined;
+  /**
+ * External ID of this collection.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: CollectionInput['externalReference'] | undefined;
+  /**
+ * Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionInput['fullDescription'] | undefined;
   /** Informs whether a collection is published. */
   isPublished?: CollectionInput['isPublished'] | undefined;
   /**
@@ -9400,6 +9602,14 @@ export type OptionalCollectionTranslatableContent = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CollectionTranslatableContent['descriptionJson'] | undefined;
+  /**
+ * Collection's full description to translate. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionTranslatableContent['fullDescription'] | undefined;
   /** The ID of the collection translatable content. */
   id?: CollectionTranslatableContent['id'] | undefined;
   /** Collection's name to translate. */
@@ -9467,6 +9677,14 @@ export type OptionalCollectionTranslation = {
  * Rich text format. For reference see https://editorjs.io/
  */
   descriptionJson?: CollectionTranslation['descriptionJson'] | undefined;
+  /**
+ * Translated full description of the collection. Returns null when unset.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: CollectionTranslation['fullDescription'] | undefined;
   /** The ID of the collection translation. */
   id?: CollectionTranslation['id'] | undefined;
   /** Translation language. */
@@ -9618,6 +9836,8 @@ export const defineConfigurationItemInputFactory: DefineTypeFactoryInterface<
  *
  * Triggers the following webhook events:
  * - ACCOUNT_CONFIRMED (async): Account was confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
  */
 export type OptionalConfirmAccount = {
   __typename?: 'ConfirmAccount';
@@ -11292,6 +11512,9 @@ export const defineDraftOrderBulkDeleteFactory: DefineTypeFactoryInterface<
  * Completes creating an order.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
+ *
+ * Triggers the following webhook events:
+ * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
  */
 export type OptionalDraftOrderComplete = {
   __typename?: 'DraftOrderComplete';
@@ -14960,6 +15183,12 @@ export type OptionalManifest = {
   dataPrivacy?: Manifest['dataPrivacy'] | undefined;
   /** URL to the full privacy policy. */
   dataPrivacyUrl?: Manifest['dataPrivacyUrl'] | undefined;
+  /**
+ * Reason why the app is deprecated, declared in the manifest. Null when the app is not deprecated. A deprecated app can still be installed and works as usual, but usually means it should not be used anymore.
+ *
+ * Added in Saleor 3.23.
+ */
+  deprecationReason?: Manifest['deprecationReason'] | undefined;
   /** List of extensions that will be mounted in Saleor's dashboard. For details, please [see the extension section.](https://docs.saleor.io/developer/extending/apps/extending-dashboard-with-apps#key-concepts) */
   extensions?: OptionalAppManifestExtension[] | undefined;
   /** External URL to the app homepage. */
@@ -16329,6 +16558,14 @@ export type OptionalMutation = {
  */
   appRetryInstall?: Maybe<OptionalAppRetryInstall> | undefined;
   /**
+ * Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+  appSelfUpdate?: Maybe<OptionalAppSelfUpdate> | undefined;
+  /**
  * Creates a new token.
  *
  * Requires one of the following permissions: MANAGE_APPS.
@@ -16783,6 +17020,8 @@ export type OptionalMutation = {
  *
  * Triggers the following webhook events:
  * - ACCOUNT_CONFIRMED (async): Account was confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
  */
   confirmAccount?: Maybe<OptionalConfirmAccount> | undefined;
   /**
@@ -16958,6 +17197,9 @@ export type OptionalMutation = {
  * Completes creating an order.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
+ *
+ * Triggers the following webhook events:
+ * - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
  */
   draftOrderComplete?: Maybe<OptionalDraftOrderComplete> | undefined;
   /**
@@ -17777,6 +18019,14 @@ export type OptionalMutation = {
  */
   productMediaReorder?: Maybe<OptionalProductMediaReorder> | undefined;
   /**
+ * Creates or updates a product media translation.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_TRANSLATIONS.
+ */
+  productMediaTranslate?: Maybe<OptionalProductMediaTranslate> | undefined;
+  /**
  * Updates a product media.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -17858,6 +18108,14 @@ export type OptionalMutation = {
  * Requires one of the following permissions: MANAGE_PRODUCTS.
  */
   productVariantBulkUpdate?: Maybe<OptionalProductVariantBulkUpdate> | undefined;
+  /**
+ * Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_PRODUCTS.
+ */
+  productVariantChannelListingAvailabilityUpdate?: Maybe<OptionalProductVariantChannelListingAvailabilityUpdate> | undefined;
   /**
  * Manage product variant prices in channels.
  *
@@ -18173,7 +18431,14 @@ export type OptionalMutation = {
  * - ACCOUNT_CONFIRMATION_REQUESTED (async): An account confirmation was requested. This event is always sent regardless of settings.
  */
   sendConfirmationEmail?: Maybe<OptionalSendConfirmationEmail> | undefined;
-  /** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+  /**
+ * Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+ *
+ * Triggers the following webhook events:
+ * - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
+ */
   setPassword?: Maybe<OptionalSetPassword> | undefined;
   /**
  * Manage shipping method's availability in channels.
@@ -18643,7 +18908,7 @@ export const defineNameTranslationInputFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /** An object with an ID */
-export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalCustomerType | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
+export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalCustomerType | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductMediaTranslatableContent | OptionalProductMediaTranslation | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
 
 /**
  * An object with attributes.
@@ -18843,6 +19108,12 @@ export type OptionalOrder = {
   totalRemainingGrant?: OptionalMoney | undefined;
   /** Google Analytics tracking client ID. */
   trackingClientId?: Order['trackingClientId'] | undefined;
+  /**
+ * Payment history of the order, with one entry per payment transaction that moved any money. Unlike `transactions`, it requires no permission and exposes only the payment method and the amounts, so it can be used to display payment details to the customer without exposing internal information.
+ *
+ * Added in Saleor 3.23.
+ */
+  transactionSummaries?: OptionalTransactionSummary[] | undefined;
   /** List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. */
   transactions?: OptionalTransactionItem[] | undefined;
   /** Translated discount name. */
@@ -19630,6 +19901,12 @@ export type OptionalOrderCreateFromCheckoutError = {
   lines?: OrderCreateFromCheckoutError['lines'] | undefined;
   /** The error message. */
   message?: OrderCreateFromCheckoutError['message'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of variant IDs which causes the error. */
   variants?: OrderCreateFromCheckoutError['variants'] | undefined;
 };
@@ -19838,6 +20115,12 @@ export type OptionalOrderError = {
   message?: OrderError['message'] | undefined;
   /** List of order line IDs that cause the error. */
   orderLines?: OrderError['orderLines'] | undefined;
+  /**
+ * Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+ *
+ * Added in Saleor 3.23.
+ */
+  promoCodeDetails?: Maybe<OptionalPromoCodeRejectionDetails> | undefined;
   /** List of product variants that are associated with the error */
   variants?: OrderError['variants'] | undefined;
   /** Warehouse ID which causes the error. */
@@ -25992,6 +26275,12 @@ export type OptionalProductMedia = {
   productId?: ProductMedia['productId'] | undefined;
   /** The sort order of the media. */
   sortOrder?: ProductMedia['sortOrder'] | undefined;
+  /**
+ * Returns translated product media fields for the given language code.
+ *
+ * Added in Saleor 3.23.
+ */
+  translation?: Maybe<OptionalProductMediaTranslation> | undefined;
   /** The type of the media. */
   type?: ProductMedia['type'] | undefined;
   /** The URL of the media. */
@@ -26177,6 +26466,136 @@ export type OptionalProductMediaReorder = {
  */
 export const defineProductMediaReorderFactory: DefineTypeFactoryInterface<
   OptionalProductMediaReorder,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents product media's original translatable fields and related translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductMediaTranslatableContent = {
+  __typename?: 'ProductMediaTranslatableContent';
+  /** Product media alt text to translate. */
+  alt?: ProductMediaTranslatableContent['alt'] | undefined;
+  /** The ID of the product media translatable content. */
+  id?: ProductMediaTranslatableContent['id'] | undefined;
+  /** Represents a product media. */
+  productMedia?: Maybe<OptionalProductMedia> | undefined;
+  /** The ID of the product media to translate. */
+  productMediaId?: ProductMediaTranslatableContent['productMediaId'] | undefined;
+  /** Returns translated product media fields for the given language code. */
+  translation?: Maybe<OptionalProductMediaTranslation> | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslatableContent} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslatableContentFactoryInterface}
+ */
+export const defineProductMediaTranslatableContentFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslatableContent,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Creates or updates a product media translation.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_TRANSLATIONS.
+ */
+export type OptionalProductMediaTranslate = {
+  __typename?: 'ProductMediaTranslate';
+  errors?: OptionalProductMediaTranslateError[] | undefined;
+  productMedia?: Maybe<OptionalProductMedia> | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslate} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslateFactoryInterface}
+ */
+export const defineProductMediaTranslateFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslate,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents an error in product media translation input.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductMediaTranslateError = {
+  __typename?: 'ProductMediaTranslateError';
+  /** The error code. */
+  code?: ProductMediaTranslateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: ProductMediaTranslateError['field'] | undefined;
+  /** The error message. */
+  message?: ProductMediaTranslateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslateError} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslateErrorFactoryInterface}
+ */
+export const defineProductMediaTranslateErrorFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslateError,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents product media translations.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductMediaTranslation = {
+  __typename?: 'ProductMediaTranslation';
+  /** Translated product media alt text. */
+  alt?: ProductMediaTranslation['alt'] | undefined;
+  /** The ID of the product media translation. */
+  id?: ProductMediaTranslation['id'] | undefined;
+  /** Translation language. */
+  language?: OptionalLanguageDisplay | undefined;
+  /** Represents the product media fields to translate. */
+  translatableContent?: Maybe<OptionalProductMediaTranslatableContent> | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslation} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslationFactoryInterface}
+ */
+export const defineProductMediaTranslationFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslation,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Fields required to translate product media.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductMediaTranslationInput = {
+  __typename?: 'ProductMediaTranslationInput';
+  /** Translated product media alt text. */
+  alt?: ProductMediaTranslationInput['alt'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductMediaTranslationInput} model.
+ *
+ * @param options
+ * @returns factory {@link ProductMediaTranslationInputFactoryInterface}
+ */
+export const defineProductMediaTranslationInputFactory: DefineTypeFactoryInterface<
+  OptionalProductMediaTranslationInput,
   {}
 > = defineTypeFactory;
 
@@ -27398,6 +27817,12 @@ export type OptionalProductVariantChannelListing = {
   /** The ID of the variant channel listing. */
   id?: ProductVariantChannelListing['id'] | undefined;
   /**
+ * Determines whether the variant can be bought in this channel. When set to `false`, the variant behaves as if it had no listing in this channel: it is hidden from customers and cannot be added to a checkout or an order. Its prices are preserved.
+ *
+ * Added in Saleor 3.23.
+ */
+  isAvailableForPurchase?: ProductVariantChannelListing['isAvailableForPurchase'] | undefined;
+  /**
  * Gross margin percentage value.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -27434,6 +27859,12 @@ export type OptionalProductVariantChannelListingAddInput = {
   channelId?: ProductVariantChannelListingAddInput['channelId'] | undefined;
   /** Cost price of the variant in channel. */
   costPrice?: ProductVariantChannelListingAddInput['costPrice'] | undefined;
+  /**
+ * Determines whether the variant can be bought in this channel. When omitted on an existing listing, the current value is kept.
+ *
+ * Added in Saleor 3.23.
+ */
+  isAvailableForPurchase?: ProductVariantChannelListingAddInput['isAvailableForPurchase'] | undefined;
   /** The threshold for preorder variant in channel. */
   preorderThreshold?: ProductVariantChannelListingAddInput['preorderThreshold'] | undefined;
   /** Price of the particular variant in channel. */
@@ -27454,6 +27885,83 @@ export type OptionalProductVariantChannelListingAddInput = {
  */
 export const defineProductVariantChannelListingAddInputFactory: DefineTypeFactoryInterface<
   OptionalProductVariantChannelListingAddInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Fields required to toggle a product variant's availability in a channel.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductVariantChannelListingAvailabilityInput = {
+  __typename?: 'ProductVariantChannelListingAvailabilityInput';
+  /** ID of a channel. */
+  channelId?: ProductVariantChannelListingAvailabilityInput['channelId'] | undefined;
+  /** Determines whether the variant can be bought in this channel. */
+  isAvailableForPurchase?: ProductVariantChannelListingAvailabilityInput['isAvailableForPurchase'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantChannelListingAvailabilityInput} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantChannelListingAvailabilityInputFactoryInterface}
+ */
+export const defineProductVariantChannelListingAvailabilityInputFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantChannelListingAvailabilityInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_PRODUCTS.
+ */
+export type OptionalProductVariantChannelListingAvailabilityUpdate = {
+  __typename?: 'ProductVariantChannelListingAvailabilityUpdate';
+  errors?: OptionalProductVariantChannelListingAvailabilityUpdateError[] | undefined;
+  /** An updated product variant instance. */
+  variant?: Maybe<OptionalProductVariant> | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantChannelListingAvailabilityUpdate} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantChannelListingAvailabilityUpdateFactoryInterface}
+ */
+export const defineProductVariantChannelListingAvailabilityUpdateFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantChannelListingAvailabilityUpdate,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Error of the `productVariantChannelListingAvailabilityUpdate` mutation.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductVariantChannelListingAvailabilityUpdateError = {
+  __typename?: 'ProductVariantChannelListingAvailabilityUpdateError';
+  /** List of channels IDs which causes the error. */
+  channels?: ProductVariantChannelListingAvailabilityUpdateError['channels'] | undefined;
+  /** The error code. */
+  code?: ProductVariantChannelListingAvailabilityUpdateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: ProductVariantChannelListingAvailabilityUpdateError['field'] | undefined;
+  /** The error message. */
+  message?: ProductVariantChannelListingAvailabilityUpdateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantChannelListingAvailabilityUpdateError} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantChannelListingAvailabilityUpdateErrorFactoryInterface}
+ */
+export const defineProductVariantChannelListingAvailabilityUpdateErrorFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantChannelListingAvailabilityUpdateError,
   {}
 > = defineTypeFactory;
 
@@ -28347,6 +28855,12 @@ export type OptionalProductWhereInput = {
   category?: Maybe<OptionalGlobalIdFilterInput> | undefined;
   /** Filter by collection. */
   collection?: Maybe<OptionalGlobalIdFilterInput> | undefined;
+  /**
+ * Filter by external reference.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Maybe<OptionalStringFilterInput> | undefined;
   /** Filter on whether product is a gift card or not. */
   giftCard?: ProductWhereInput['giftCard'] | undefined;
   /** Filter by product with category assigned. */
@@ -28392,6 +28906,32 @@ export const defineProductWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Details explaining why a promo code cannot be applied.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalPromoCodeRejectionDetails = {
+  __typename?: 'PromoCodeRejectionDetails';
+  /** The minimum number of items required by the voucher. Set only when `reason` is `MIN_QUANTITY_NOT_REACHED`. */
+  minCheckoutItemsQuantity?: PromoCodeRejectionDetails['minCheckoutItemsQuantity'] | undefined;
+  /** The minimum order value required by the voucher. Set only when `reason` is `MIN_SPENT_NOT_REACHED`. */
+  minSpent?: Maybe<OptionalMoney> | undefined;
+  /** The specific reason why the promo code cannot be applied. */
+  reason?: PromoCodeRejectionDetails['reason'] | undefined;
+};
+
+/**
+ * Define factory for {@link PromoCodeRejectionDetails} model.
+ *
+ * @param options
+ * @returns factory {@link PromoCodeRejectionDetailsFactoryInterface}
+ */
+export const definePromoCodeRejectionDetailsFactory: DefineTypeFactoryInterface<
+  OptionalPromoCodeRejectionDetails,
+  {}
+> = defineTypeFactory;
+
 /** Represents the promotion that allow creating discounts based on given conditions, and is visible to all the customers. */
 export type OptionalPromotion = {
   __typename?: 'Promotion';
@@ -28403,6 +28943,12 @@ export type OptionalPromotion = {
   endDate?: Promotion['endDate'] | undefined;
   /** The list of events associated with the promotion. */
   events?: Maybe<OptionalPromotionEvent[]> | undefined;
+  /**
+ * External ID of this promotion.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Promotion['externalReference'] | undefined;
   id?: Promotion['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
   metadata?: OptionalMetadataItem[] | undefined;
@@ -28583,6 +29129,12 @@ export type OptionalPromotionCreateInput = {
   description?: PromotionCreateInput['description'] | undefined;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: PromotionCreateInput['endDate'] | undefined;
+  /**
+ * External ID of this promotion.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: PromotionCreateInput['externalReference'] | undefined;
   /** Promotion name. */
   name?: PromotionCreateInput['name'] | undefined;
   /** List of promotion rules. */
@@ -29711,6 +30263,12 @@ export type OptionalPromotionUpdateInput = {
   description?: PromotionUpdateInput['description'] | undefined;
   /** The end date of the promotion in ISO 8601 format. */
   endDate?: PromotionUpdateInput['endDate'] | undefined;
+  /**
+ * External ID of this promotion.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: PromotionUpdateInput['externalReference'] | undefined;
   /** Promotion name. */
   name?: PromotionUpdateInput['name'] | undefined;
   /** The start date of the promotion in ISO 8601 format. */
@@ -29881,7 +30439,7 @@ export type OptionalQuery = {
   attributes?: Maybe<OptionalAttributeCountableConnection> | undefined;
   /** List of the shop's categories. */
   categories?: Maybe<OptionalCategoryCountableConnection> | undefined;
-  /** Look up a category by ID or slug. */
+  /** Look up a category by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. */
   category?: Maybe<OptionalCategory> | undefined;
   /** Look up a channel by ID or slug. */
   channel?: Maybe<OptionalChannel> | undefined;
@@ -29909,7 +30467,7 @@ export type OptionalQuery = {
  * Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_PAYMENTS.
  */
   checkouts?: Maybe<OptionalCheckoutCountableConnection> | undefined;
-  /** Look up a collection by ID or slug. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
+  /** Look up a collection by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collection?: Maybe<OptionalCollection> | undefined;
   /** List of the shop's collections. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collections?: Maybe<OptionalCollectionCountableConnection> | undefined;
@@ -30078,7 +30636,7 @@ export type OptionalQuery = {
   /** List of the shop's products. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   products?: Maybe<OptionalProductCountableConnection> | undefined;
   /**
- * Look up a promotion by ID.
+ * Look up a promotion by ID or external reference.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  */
@@ -30210,7 +30768,7 @@ export type OptionalQuery = {
  */
   user?: Maybe<OptionalUser> | undefined;
   /**
- * Look up a voucher by ID.
+ * Look up a voucher by ID or external reference.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  */
@@ -31394,7 +31952,14 @@ export const defineSeoInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+/**
+ * Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+ *
+ * Triggers the following webhook events:
+ * - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+ * - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+ * - STAFF_UPDATED (async): Called if a staff account was confirmed.
+ */
 export type OptionalSetPassword = {
   __typename?: 'SetPassword';
   accountErrors?: OptionalAccountError[] | undefined;
@@ -35217,6 +35782,12 @@ export type OptionalTransactionCancelationRequested = {
   __typename?: 'TransactionCancelationRequested';
   /** Requested action data. */
   action?: OptionalTransactionAction | undefined;
+  /**
+ * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+ *
+ * Added in Saleor 3.23.
+ */
+  idempotencyKey?: TransactionCancelationRequested['idempotencyKey'] | undefined;
   /** Time of the event. */
   issuedAt?: TransactionCancelationRequested['issuedAt'] | undefined;
   /** The user or application that triggered the event. */
@@ -35245,6 +35816,12 @@ export type OptionalTransactionChargeRequested = {
   __typename?: 'TransactionChargeRequested';
   /** Requested action data. */
   action?: OptionalTransactionAction | undefined;
+  /**
+ * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+ *
+ * Added in Saleor 3.23.
+ */
+  idempotencyKey?: TransactionChargeRequested['idempotencyKey'] | undefined;
   /** Time of the event. */
   issuedAt?: TransactionChargeRequested['issuedAt'] | undefined;
   /** The user or application that triggered the event. */
@@ -35905,6 +36482,12 @@ export type OptionalTransactionRefundRequested = {
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
   grantedRefund?: Maybe<OptionalOrderGrantedRefund> | undefined;
+  /**
+ * Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+ *
+ * Added in Saleor 3.23.
+ */
+  idempotencyKey?: TransactionRefundRequested['idempotencyKey'] | undefined;
   /** Time of the event. */
   issuedAt?: TransactionRefundRequested['issuedAt'] | undefined;
   /** The user or application that triggered the event. */
@@ -36030,6 +36613,42 @@ export type OptionalTransactionSortingInput = {
  */
 export const defineTransactionSortingInputFactory: DefineTypeFactoryInterface<
   OptionalTransactionSortingInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Customer-facing summary of a single payment transaction. Exposes the payment method and the amounts, without the identifiers, events and actions available on `TransactionItem`.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalTransactionSummary = {
+  __typename?: 'TransactionSummary';
+  /** Total amount of ongoing authorization requests for the transaction. */
+  authorizePendingAmount?: OptionalMoney | undefined;
+  /** Total amount authorized for this payment. */
+  authorizedAmount?: OptionalMoney | undefined;
+  /** Total amount canceled for this payment. */
+  canceledAmount?: OptionalMoney | undefined;
+  /** Total amount of ongoing charge requests for the transaction. */
+  chargePendingAmount?: OptionalMoney | undefined;
+  /** Total amount charged for this payment. */
+  chargedAmount?: OptionalMoney | undefined;
+  /** Date and time at which payment transaction was created. */
+  createdAt?: TransactionSummary['createdAt'] | undefined;
+  /** The payment method used for this transaction. As this field is public, card number digits and expiration date are stripped: `firstDigits`, `lastDigits`, `expMonth` and `expYear` of `CardPaymentMethodDetails` are always `null` here. Read them through `Order.transactions` instead, which requires MANAGE_ORDERS or HANDLE_PAYMENTS. */
+  paymentMethodDetails?: Maybe<OptionalPaymentMethodDetails> | undefined;
+  /** Total amount refunded for this payment. */
+  refundedAmount?: OptionalMoney | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionSummary} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionSummaryFactoryInterface}
+ */
+export const defineTransactionSummaryFactory: DefineTypeFactoryInterface<
+  OptionalTransactionSummary,
   {}
 > = defineTypeFactory;
 
@@ -36169,7 +36788,7 @@ export const defineTransactionWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-export type OptionalTranslatableItem = OptionalAttributeTranslatableContent | OptionalAttributeValueTranslatableContent | OptionalCategoryTranslatableContent | OptionalCollectionTranslatableContent | OptionalMenuItemTranslatableContent | OptionalPageTranslatableContent | OptionalProductTranslatableContent | OptionalProductVariantTranslatableContent | OptionalPromotionRuleTranslatableContent | OptionalPromotionTranslatableContent | OptionalSaleTranslatableContent | OptionalShippingMethodTranslatableContent | OptionalVoucherTranslatableContent;
+export type OptionalTranslatableItem = OptionalAttributeTranslatableContent | OptionalAttributeValueTranslatableContent | OptionalCategoryTranslatableContent | OptionalCollectionTranslatableContent | OptionalMenuItemTranslatableContent | OptionalPageTranslatableContent | OptionalProductMediaTranslatableContent | OptionalProductTranslatableContent | OptionalProductVariantTranslatableContent | OptionalPromotionRuleTranslatableContent | OptionalPromotionTranslatableContent | OptionalSaleTranslatableContent | OptionalShippingMethodTranslatableContent | OptionalVoucherTranslatableContent;
 
 export type OptionalTranslatableItemConnection = {
   __typename?: 'TranslatableItemConnection';
@@ -36265,6 +36884,14 @@ export type OptionalTranslationInput = {
  * Rich text format. For reference see https://editorjs.io/
  */
   description?: TranslationInput['description'] | undefined;
+  /**
+ * Translated full description. Only supported for categories and collections; product translation mutations reject this field. Pass null to clear it. Omit to preserve the current value on update.
+ *
+ * Rich text format. For reference see https://editorjs.io/
+ *
+ * Added in Saleor 3.23.
+ */
+  fullDescription?: TranslationInput['fullDescription'] | undefined;
   name?: TranslationInput['name'] | undefined;
   seoDescription?: TranslationInput['seoDescription'] | undefined;
   seoTitle?: TranslationInput['seoTitle'] | undefined;
@@ -36282,7 +36909,7 @@ export const defineTranslationInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-export type OptionalTranslationTypes = OptionalAttributeTranslation | OptionalAttributeValueTranslation | OptionalCategoryTranslation | OptionalCollectionTranslation | OptionalMenuItemTranslation | OptionalPageTranslation | OptionalProductTranslation | OptionalProductVariantTranslation | OptionalPromotionRuleTranslation | OptionalPromotionTranslation | OptionalSaleTranslation | OptionalShippingMethodTranslation | OptionalVoucherTranslation;
+export type OptionalTranslationTypes = OptionalAttributeTranslation | OptionalAttributeValueTranslation | OptionalCategoryTranslation | OptionalCollectionTranslation | OptionalMenuItemTranslation | OptionalPageTranslation | OptionalProductMediaTranslation | OptionalProductTranslation | OptionalProductVariantTranslation | OptionalPromotionRuleTranslation | OptionalPromotionTranslation | OptionalSaleTranslation | OptionalShippingMethodTranslation | OptionalVoucherTranslation;
 
 /** Event sent when translation is updated. */
 export type OptionalTranslationUpdated = {
@@ -36942,6 +37569,12 @@ export type OptionalVoucher = {
   discountValueType?: Voucher['discountValueType'] | undefined;
   /** The end date and time of voucher. */
   endDate?: Voucher['endDate'] | undefined;
+  /**
+ * External ID of this voucher.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Voucher['externalReference'] | undefined;
   /** The ID of the voucher. */
   id?: Voucher['id'] | undefined;
   /** List of public metadata items. Can be accessed without permissions. */
@@ -37568,6 +38201,12 @@ export type OptionalVoucherInput = {
   discountValueType?: VoucherInput['discountValueType'] | undefined;
   /** End date of the voucher in ISO 8601 format. */
   endDate?: VoucherInput['endDate'] | undefined;
+  /**
+ * External ID of this voucher.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: VoucherInput['externalReference'] | undefined;
   /** Minimal quantity of checkout items required to apply the voucher. */
   minCheckoutItemsQuantity?: VoucherInput['minCheckoutItemsQuantity'] | undefined;
   /** Voucher name. */
@@ -38288,6 +38927,12 @@ export type OptionalWebhook = {
   isActive?: Webhook['isActive'] | undefined;
   /** The name of webhook. */
   name?: Webhook['name'] | undefined;
+  /**
+ * Determines when the subscription payload is built for asynchronous events that defer payload generation. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+ *
+ * Added in Saleor 3.23.
+ */
+  payloadGeneration?: Webhook['payloadGeneration'] | undefined;
   /** Used to create a hash signature for each payload. */
   secretKey?: Webhook['secretKey'] | undefined;
   /** Used to define payloads for specific events. */
@@ -38352,6 +38997,12 @@ export type OptionalWebhookCreateInput = {
   isActive?: WebhookCreateInput['isActive'] | undefined;
   /** The name of the webhook. */
   name?: WebhookCreateInput['name'] | undefined;
+  /**
+ * Determines when the subscription payload is built for asynchronous events that defer payload generation. Defaults to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+ *
+ * Added in Saleor 3.23.
+ */
+  payloadGeneration?: WebhookCreateInput['payloadGeneration'] | undefined;
   /** Subscription query used to define a webhook payload. */
   query?: WebhookCreateInput['query'] | undefined;
   /** The secret key used to create a hash signature with each payload. */
@@ -38607,6 +39258,12 @@ export type OptionalWebhookUpdateInput = {
   isActive?: WebhookUpdateInput['isActive'] | undefined;
   /** The new name of the webhook. */
   name?: WebhookUpdateInput['name'] | undefined;
+  /**
+ * Determines when the subscription payload is built for asynchronous events that defer payload generation. Omit to keep the current value, `null` resets it to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload. A change applies to events triggered after the update. Deliveries already created finish the way they started, so around a change a newer delivery can be sent before an older one.
+ *
+ * Added in Saleor 3.23.
+ */
+  payloadGeneration?: WebhookUpdateInput['payloadGeneration'] | undefined;
   /** Subscription query used to define a webhook payload. */
   query?: WebhookUpdateInput['query'] | undefined;
   /** Use to create a hash signature with each payload. */

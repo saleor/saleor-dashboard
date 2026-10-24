@@ -2,7 +2,8 @@
 
 ## Quick start
 
-Run `cp .env.template .env` to create default configuration that will be connected to [Saleor Demo shop](https://demo.saleor.io/dashboard/)
+Run `cp .env.template .env`, then set `API_URL` to your running Saleor instance.
+The template defaults to `http://localhost:8000/graphql/`.
 
 ## All environment variables
 
@@ -26,4 +27,4 @@ Create or edit `.env` file in a root directory or set environment variables with
 
 ## Fetching schema
 
-By default dashboard will use `fetch-schema` script from package.json to get Saleor schema from specific branch e.g `main` for unstable one. If you need to generate types based on your own schema use `fetch-local-schema` that will fetch it from `API_URL`.
+By default dashboard will use `fetch-schema` script from package.json to get Saleor schemas: the stable one from the newest published release matching `config.saleor.schemaVersion`, and the unstable one from the `main` branch. If you need to generate types based on your own schema use `fetch-local-schema` that will fetch it from `API_URL`.

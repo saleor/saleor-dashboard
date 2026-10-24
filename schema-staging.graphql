@@ -337,7 +337,9 @@ type Query {
     last: Int
   ): CategoryCountableConnection @doc(category: "Products")
 
-  """Look up a category by ID or slug."""
+  """
+  Look up a category by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation.
+  """
   category(
     """ID of the category."""
     id: ID
@@ -347,10 +349,17 @@ type Query {
 
     """Language code of the category slug, omit to use primary slug."""
     slugLanguageCode: LanguageCodeEnum
+
+    """
+    External ID of the category.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
   ): Category @doc(category: "Products")
 
   """
-  Look up a collection by ID or slug. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
+  Look up a collection by ID, slug or external reference. If slugLanguageCode is provided, category will be fetched by slug translation. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
   """
   collection(
     """ID of the collection."""
@@ -361,6 +370,13 @@ type Query {
 
     """Language code of the collection slug, omit to use primary slug."""
     slugLanguageCode: LanguageCodeEnum
+
+    """
+    External ID of the collection.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
 
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -1152,13 +1168,20 @@ type Query {
   ): SaleCountableConnection @doc(category: "Discounts") @deprecated(reason: "Use the `promotions` query instead.")
 
   """
-  Look up a voucher by ID.
+  Look up a voucher by ID or external reference.
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   """
   voucher(
     """ID of the voucher."""
-    id: ID!
+    id: ID
+
+    """
+    External ID of the voucher.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
 
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -1200,13 +1223,20 @@ type Query {
   ): VoucherCountableConnection @doc(category: "Discounts")
 
   """
-  Look up a promotion by ID.
+  Look up a promotion by ID or external reference.
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   """
   promotion(
     """ID of the promotion."""
-    id: ID!
+    id: ID
+
+    """
+    External ID of the promotion.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
   ): Promotion @doc(category: "Discounts")
 
   """
@@ -1762,6 +1792,13 @@ type Webhook implements Node @doc(category: "Webhooks") {
 
   """Custom headers, which will be added to HTTP request."""
   customHeaders: JSONString
+
+  """
+  Determines when the subscription payload is built for asynchronous events that defer payload generation. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+  
+  Added in Saleor 3.23.
+  """
+  payloadGeneration: WebhookPayloadGenerationEnum!
 }
 
 """An object with an ID"""
@@ -3000,6 +3037,13 @@ type App implements Node & ObjectWithMetadata @doc(category: "Apps") {
   """The App's author name."""
   author: String
 
+  """
+  Reason why the app is deprecated, set by the app itself. Null when the app is not deprecated. A deprecated app keeps working as usual, but usually means it should not be used anymore.
+  
+  Added in Saleor 3.23.
+  """
+  deprecationReason: String
+
   """App's dashboard extensions."""
   extensions: [AppExtension!]!
 
@@ -3491,9 +3535,16 @@ type User implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(categ
   """The avatar of the user."""
   avatar(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -4078,7 +4129,7 @@ type Product implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(ca
   defaultVariant: ProductVariant
 
   """Rating of the product."""
-  rating: Float
+  rating: Float @deprecated(reason: "Product rating is deprecated and will be removed. Use a numeric attribute instead.")
 
   """
   Channel given to retrieve this product. Also used by federation gateway to resolve this object in a federated query.
@@ -4095,9 +4146,16 @@ type Product implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(ca
   """Thumbnail of the product."""
   thumbnail(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -4295,8 +4353,24 @@ type Category implements Node & ObjectWithMetadata @doc(category: "Products") {
   """
   description: JSONString
 
+  """
+  Full description of the category. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
   """Slug of the category."""
   slug: String!
+
+  """
+  External ID of this category.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """Parent category."""
   parent: Category
@@ -4391,9 +4465,16 @@ type Category implements Node & ObjectWithMetadata @doc(category: "Products") {
   """Background image of the category."""
   backgroundImage(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -4670,6 +4751,13 @@ input ProductWhereInput @doc(category: "Products") {
   """Filter by product slug."""
   slug: StringFilterInput
 
+  """
+  Filter by external reference.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: StringFilterInput
+
   """Filter by product type."""
   productType: GlobalIDFilterInput
 
@@ -4835,7 +4923,7 @@ enum ProductOrderField @doc(category: "Products") {
   COLLECTION
 
   """Sort products by rating."""
-  RATING
+  RATING @deprecated(reason: "Product rating is deprecated and will be removed. Use a numeric attribute instead.")
 
   """Sort products by creation date."""
   CREATED_AT
@@ -4848,6 +4936,19 @@ type Image {
 
   """Alt text for an image."""
   alt: String
+}
+
+"""
+Determines how a requested size is matched to an available thumbnail size: 32, 64, 128, 256, 512, 1024, 2048, 4096.
+
+NEAREST - the closest available size; it may be smaller than requested.
+UP - the smallest available size not smaller than requested, so the image is never smaller than requested unless the original is smaller or the requested size exceeds 4096.
+
+Added in Saleor 3.23.
+"""
+enum ThumbnailSizeRoundingEnum {
+  NEAREST
+  UP
 }
 
 enum ThumbnailFormatEnum {
@@ -4882,6 +4983,15 @@ type CategoryTranslation implements Node @doc(category: "Products") {
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Translated full description of the category. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """
   Translated description of the category.
@@ -7272,6 +7382,15 @@ type CategoryTranslatableContent implements Node @doc(category: "Products") {
   description: JSONString
 
   """
+  Category's full description to translate. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
+  """
   Description of the category.
   
   Rich text format. For reference see https://editorjs.io/
@@ -7480,6 +7599,13 @@ type ProductVariantChannelListing implements Node @doc(category: "Products") {
    Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
   """
   priorPrice: Money
+
+  """
+  Determines whether the variant can be bought in this channel. When set to `false`, the variant behaves as if it had no listing in this channel: it is hidden from customers and cannot be added to a checkout or an order. Its prices are preserved.
+  
+  Added in Saleor 3.23.
+  """
+  isAvailableForPurchase: Boolean!
 
   """
   Gross margin percentage value.
@@ -9685,9 +9811,16 @@ type ProductImage @doc(category: "Products") {
   """The URL of the image."""
   url(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -9737,6 +9870,20 @@ type ProductMedia implements Node & ObjectWithMetadata @doc(category: "Products"
   """The alt text of the media."""
   alt: String!
 
+  """
+  Returns translated product media fields for the given language code.
+  
+  Added in Saleor 3.23.
+  """
+  translation(
+    """
+    A language code to return the translation for product media.
+    
+    Added in Saleor 3.23.
+    """
+    languageCode: LanguageCodeEnum!
+  ): ProductMediaTranslation
+
   """The type of the media."""
   type: ProductMediaType!
 
@@ -9746,9 +9893,16 @@ type ProductMedia implements Node & ObjectWithMetadata @doc(category: "Products"
   """The URL of the media."""
   url(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -9758,6 +9912,50 @@ type ProductMedia implements Node & ObjectWithMetadata @doc(category: "Products"
 
   """Product id the media refers to."""
   productId: ID
+}
+
+"""
+Represents product media translations.
+
+Added in Saleor 3.23.
+"""
+type ProductMediaTranslation implements Node @doc(category: "Products") {
+  """The ID of the product media translation."""
+  id: ID!
+
+  """Translation language."""
+  language: LanguageDisplay!
+
+  """Translated product media alt text."""
+  alt: String!
+
+  """Represents the product media fields to translate."""
+  translatableContent: ProductMediaTranslatableContent
+}
+
+"""
+Represents product media's original translatable fields and related translations.
+
+Added in Saleor 3.23.
+"""
+type ProductMediaTranslatableContent implements Node @doc(category: "Products") {
+  """The ID of the product media translatable content."""
+  id: ID!
+
+  """The ID of the product media to translate."""
+  productMediaId: ID!
+
+  """Product media alt text to translate."""
+  alt: String!
+
+  """Returns translated product media fields for the given language code."""
+  translation(
+    """A language code to return the translation for product media."""
+    languageCode: LanguageCodeEnum!
+  ): ProductMediaTranslation
+
+  """Represents a product media."""
+  productMedia: ProductMedia
 }
 
 enum ProductMediaType @doc(category: "Products") {
@@ -10005,6 +10203,13 @@ input ProductVariantSortingInput @doc(category: "Products") {
 enum ProductVariantSortField @doc(category: "Products") {
   """Sort product variants by last modification date."""
   LAST_MODIFIED_AT
+
+  """
+  Sort product variants by ID.
+  
+  Added in Saleor 3.23.
+  """
+  ID
 }
 
 input MediaSortingInput @doc(category: "Products") {
@@ -10071,8 +10276,24 @@ type Collection implements Node & ObjectWithMetadata @doc(category: "Products") 
   """
   description: JSONString
 
+  """
+  Full description of the collection. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
   """Slug of the collection."""
   slug: String!
+
+  """
+  External ID of this collection.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """
   Channel given to retrieve this collection. Also used by federation gateway to resolve this object in a federated query.
@@ -10120,9 +10341,16 @@ type Collection implements Node & ObjectWithMetadata @doc(category: "Products") 
   """Background image of the collection."""
   backgroundImage(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -10172,6 +10400,15 @@ type CollectionTranslation implements Node @doc(category: "Products") {
   description: JSONString
 
   """
+  Translated full description of the collection. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
+
+  """
   Translated description of the collection.
   
   Rich text format. For reference see https://editorjs.io/
@@ -10210,6 +10447,15 @@ type CollectionTranslatableContent implements Node @doc(category: "Products") {
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Collection's full description to translate. Returns null when unset.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """
   Description of the collection.
@@ -10904,6 +11150,13 @@ type Voucher implements Node & ObjectWithMetadata @doc(category: "Discounts") {
 
   """The name of the voucher."""
   name: String
+
+  """
+  External ID of this voucher.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """List of codes available for this voucher."""
   codes(
@@ -11896,6 +12149,13 @@ type Order implements Node & ObjectWithMetadata @doc(category: "Orders") {
   """
   transactions: [TransactionItem!]!
 
+  """
+  Payment history of the order, with one entry per payment transaction that moved any money. Unlike `transactions`, it requires no permission and exposes only the payment method and the amounts, so it can be used to display payment details to the customer without exposing internal information.
+  
+  Added in Saleor 3.23.
+  """
+  transactionSummaries: [TransactionSummary!]!
+
   """List of payments for the order."""
   payments: [Payment!]! @deprecated(reason: "The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.")
 
@@ -12264,9 +12524,16 @@ type OrderLine implements Node & ObjectWithMetadata @doc(category: "Orders") {
   taxRate: Float!
   thumbnail(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -12813,6 +13080,49 @@ enum OrderChargeStatusEnum @doc(category: "Orders") {
 }
 
 """
+Customer-facing summary of a single payment transaction. Exposes the payment method and the amounts, without the identifiers, events and actions available on `TransactionItem`.
+
+Added in Saleor 3.23.
+"""
+type TransactionSummary @doc(category: "Payments") {
+  """Date and time at which payment transaction was created."""
+  createdAt: DateTime!
+
+  """
+  The payment method used for this transaction. As this field is public, card number digits and expiration date are stripped: `firstDigits`, `lastDigits`, `expMonth` and `expYear` of `CardPaymentMethodDetails` are always `null` here. Read them through `Order.transactions` instead, which requires MANAGE_ORDERS or HANDLE_PAYMENTS.
+  """
+  paymentMethodDetails: PaymentMethodDetails
+
+  """Total amount authorized for this payment."""
+  authorizedAmount: Money!
+
+  """Total amount of ongoing authorization requests for the transaction."""
+  authorizePendingAmount: Money!
+
+  """Total amount charged for this payment."""
+  chargedAmount: Money!
+
+  """Total amount of ongoing charge requests for the transaction."""
+  chargePendingAmount: Money!
+
+  """Total amount refunded for this payment."""
+  refundedAmount: Money!
+
+  """Total amount canceled for this payment."""
+  canceledAmount: Money!
+}
+
+"""
+Represents a payment method used for a transaction.
+
+Added in Saleor 3.22.
+"""
+interface PaymentMethodDetails {
+  """Name of the payment method."""
+  name: String!
+}
+
+"""
 Represents a payment of a given type.
 
 The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
@@ -13229,6 +13539,13 @@ type OrderError @doc(category: "Orders") {
 
   """A type of address that causes the error."""
   addressType: AddressTypeEnum
+
+  """
+  Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+  
+  Added in Saleor 3.23.
+  """
+  promoCodeDetails: PromoCodeRejectionDetails
 }
 
 enum OrderErrorCode @doc(category: "Orders") {
@@ -13274,6 +13591,86 @@ enum OrderErrorCode @doc(category: "Orders") {
 enum AddressTypeEnum {
   BILLING
   SHIPPING
+}
+
+"""
+Details explaining why a promo code cannot be applied.
+
+Added in Saleor 3.23.
+"""
+type PromoCodeRejectionDetails @doc(category: "Checkout") {
+  """The specific reason why the promo code cannot be applied."""
+  reason: PromoCodeRejectionReason!
+
+  """
+  The minimum order value required by the voucher. Set only when `reason` is `MIN_SPENT_NOT_REACHED`.
+  """
+  minSpent: Money
+
+  """
+  The minimum number of items required by the voucher. Set only when `reason` is `MIN_QUANTITY_NOT_REACHED`.
+  """
+  minCheckoutItemsQuantity: Int
+}
+
+"""
+The specific reason why a promo code cannot be applied. A code that has not been proven usable yet is only ever reported as `NOT_FOUND`, `EXPIRED` or `USAGE_LIMIT_REACHED`, so that a rejected code cannot be told apart from one that does not exist. The reason never depends on the caller's permissions.
+"""
+enum PromoCodeRejectionReason @doc(category: "Discounts") {
+  """
+  No promo code matches the given code. Also reported in place of a reason that may not be disclosed, so this value does not prove that no voucher or gift card exists with that code.
+  """
+  NOT_FOUND
+
+  """
+  The voucher's end date, or the gift card's expiry date, is in the past.
+  """
+  EXPIRED
+
+  """
+  The voucher's total usage limit, summed over all of its codes, is exhausted, or a single-use code was already redeemed.
+  """
+  USAGE_LIMIT_REACHED
+
+  """
+  The promo code exists but cannot be used here. Reported when the reason is specific to the code's configuration rather than to something the customer can change: a voucher limited to staff, to other countries, to another channel or to one use per customer, or a gift card restricted to another customer.
+  """
+  NOT_APPLICABLE
+
+  """
+  The order value is below the voucher's minimum. Populates the `minSpent` field.
+  """
+  MIN_SPENT_NOT_REACHED
+
+  """
+  The order contains fewer items than the voucher's minimum. Populates the `minCheckoutItemsQuantity` field.
+  """
+  MIN_QUANTITY_NOT_REACHED
+
+  """
+  The voucher is limited to one use per customer, so a customer email must be set on the checkout before it can be applied.
+  """
+  CUSTOMER_EMAIL_REQUIRED
+
+  """
+  The voucher applies to shipping, but nothing in the order requires shipping.
+  """
+  SHIPPING_NOT_REQUIRED
+
+  """
+  The voucher applies to shipping, but no delivery method is selected yet. Selecting one may make the voucher applicable.
+  """
+  DELIVERY_METHOD_NOT_SET
+
+  """
+  The voucher applies to specific products, collections or categories, and none of the ordered lines match.
+  """
+  NO_ELIGIBLE_PRODUCTS
+
+  """
+  The promo code was applicable when it was added to the checkout, but is no longer available.
+  """
+  NO_LONGER_AVAILABLE
 }
 
 """The details of granted refund."""
@@ -13453,16 +13850,6 @@ enum TransactionEventTypeEnum @doc(category: "Payments") {
 }
 
 union UserOrApp = User | App
-
-"""
-Represents a payment method used for a transaction.
-
-Added in Saleor 3.22.
-"""
-interface PaymentMethodDetails {
-  """Name of the payment method."""
-  name: String!
-}
 
 """
 Determine a current authorize status for checkout.
@@ -14024,9 +14411,16 @@ type AppBrandLogo @doc(category: "Apps") {
   """URL to the default logo image."""
   default(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -14196,6 +14590,20 @@ enum EventDeliverySortField @doc(category: "Webhooks") {
 input EventDeliveryFilterInput {
   status: EventDeliveryStatusEnum
   eventType: WebhookEventTypeEnum
+}
+
+"""
+Determines when the subscription payload of an asynchronous webhook is built for events that defer payload generation.
+
+`DEFERRED`: the payload is built in a background task and reflects the object's state at the time the task runs.
+
+`IMMEDIATE`: the payload is built by whatever triggered the event, a request or a background task, and reflects the object's state at that moment, at the cost of slowing that request or task.
+
+Added in Saleor 3.23.
+"""
+enum WebhookPayloadGenerationEnum @doc(category: "Webhooks") {
+  DEFERRED
+  IMMEDIATE
 }
 
 enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
@@ -14409,7 +14817,7 @@ type TranslatableItemEdge {
   cursor: String!
 }
 
-union TranslatableItem = ProductTranslatableContent | CollectionTranslatableContent | CategoryTranslatableContent | AttributeTranslatableContent | AttributeValueTranslatableContent | ProductVariantTranslatableContent | PageTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent | MenuItemTranslatableContent | PromotionTranslatableContent | PromotionRuleTranslatableContent | SaleTranslatableContent
+union TranslatableItem = ProductTranslatableContent | CollectionTranslatableContent | CategoryTranslatableContent | AttributeTranslatableContent | AttributeValueTranslatableContent | ProductMediaTranslatableContent | ProductVariantTranslatableContent | PageTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent | MenuItemTranslatableContent | PromotionTranslatableContent | PromotionRuleTranslatableContent | SaleTranslatableContent
 
 """
 Represents menu item's original translatable fields and related translations.
@@ -14916,6 +15324,7 @@ enum TranslatableKinds {
   MENU_ITEM
   PAGE
   PRODUCT
+  PRODUCT_MEDIA
   PROMOTION
   PROMOTION_RULE
   SALE
@@ -16709,6 +17118,13 @@ type Promotion implements Node & ObjectWithMetadata @doc(category: "Discounts") 
   name: String!
 
   """
+  External ID of this promotion.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
+  """
   The type of the promotion. Implicate if the discount is applied on catalogue or order level.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
@@ -18268,8 +18684,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   categoryDelete(
+    """
+    External ID of a category to delete.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a category to delete."""
-    id: ID!
+    id: ID
   ): CategoryDelete @doc(category: "Products")
 
   """
@@ -18290,8 +18713,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   categoryUpdate(
+    """
+    External ID of a category to update.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a category to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a category."""
     input: CategoryInput!
@@ -18342,8 +18772,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   collectionDelete(
+    """
+    External ID of a collection to delete.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a collection to delete."""
-    id: ID!
+    id: ID
   ): CollectionDelete @doc(category: "Products")
 
   """
@@ -18390,8 +18827,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   collectionUpdate(
+    """
+    External ID of a collection to update.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a collection to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a collection."""
     input: CollectionInput!
@@ -18593,6 +19037,24 @@ type Mutation {
     """ID of product that media order will be altered."""
     productId: ID!
   ): ProductMediaReorder @doc(category: "Products")
+
+  """
+  Creates or updates a product media translation.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  productMediaTranslate(
+    """ProductMedia ID or ProductMediaTranslatableContent ID."""
+    id: ID!
+
+    """Fields required to update product media translations."""
+    input: ProductMediaTranslationInput!
+
+    """Translation language code."""
+    languageCode: LanguageCodeEnum!
+  ): ProductMediaTranslate @doc(category: "Products")
 
   """
   Updates a product media. 
@@ -18921,6 +19383,26 @@ type Mutation {
     """SKU of a product variant to update."""
     sku: String
   ): ProductVariantChannelListingUpdate @doc(category: "Products")
+
+  """
+  Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  productVariantChannelListingAvailabilityUpdate(
+    """ID of a product variant to update."""
+    id: ID
+
+    """
+    List of channels to toggle the variant's availability in. Max 100 items.
+    """
+    input: [ProductVariantChannelListingAvailabilityInput!]!
+
+    """SKU of a product variant to update."""
+    sku: String
+  ): ProductVariantChannelListingAvailabilityUpdate @doc(category: "Products")
 
   """
   Reorder product variant attribute values. 
@@ -19508,11 +19990,14 @@ type Mutation {
   Completes creating an order. 
   
   Requires one of the following permissions: MANAGE_ORDERS.
+  
+  Triggers the following webhook events:
+  - NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
   """
   draftOrderComplete(
     """ID of the order that will be completed."""
     id: ID!
-  ): DraftOrderComplete @doc(category: "Orders")
+  ): DraftOrderComplete @doc(category: "Orders") @webhookEventsInfo(asyncEvents: [NOTIFY_USER], syncEvents: [])
 
   """
   Creates a new draft order. 
@@ -20498,8 +20983,15 @@ type Mutation {
   - PROMOTION_ENDED (async): Optionally called if promotion was ended.
   """
   promotionUpdate(
+    """
+    External ID of a promotion to update.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of the promotion to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a promotion."""
     input: PromotionUpdateInput!
@@ -20514,8 +21006,15 @@ type Mutation {
   - PROMOTION_DELETED (async): A promotion was deleted.
   """
   promotionDelete(
+    """
+    External ID of the promotion to remove.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """The ID of the promotion to remove."""
-    id: ID!
+    id: ID
   ): PromotionDelete @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [PROMOTION_DELETED], syncEvents: [])
 
   """
@@ -20749,8 +21248,15 @@ type Mutation {
   - VOUCHER_DELETED (async): A voucher was deleted.
   """
   voucherDelete(
+    """
+    External ID of a voucher to delete.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a voucher to delete."""
-    id: ID!
+    id: ID
   ): VoucherDelete @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_DELETED], syncEvents: [])
 
   """
@@ -20778,8 +21284,15 @@ type Mutation {
   - VOUCHER_CODES_CREATED (async): A voucher code was created.
   """
   voucherUpdate(
+    """
+    External ID of a voucher to update.
+    
+    Added in Saleor 3.23.
+    """
+    externalReference: String
+
     """ID of a voucher to update."""
-    id: ID!
+    id: ID
 
     """Fields required to update a voucher."""
     input: VoucherInput!
@@ -21800,6 +22313,22 @@ type Mutation {
   ): AppProblemDismiss @doc(category: "Apps")
 
   """
+  Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: AUTHENTICATED_APP.
+  """
+  appSelfUpdate(
+    """
+    Fields to update on the calling app.
+    
+    Added in Saleor 3.23.
+    """
+    input: AppSelfUpdateInput!
+  ): AppSelfUpdate @doc(category: "Apps")
+
+  """
   Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends. 
   
   Requires one of the following permissions: MANAGE_APPS.
@@ -21939,6 +22468,8 @@ type Mutation {
   
   Triggers the following webhook events:
   - ACCOUNT_CONFIRMED (async): Account was confirmed.
+  - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+  - STAFF_UPDATED (async): Called if a staff account was confirmed.
   """
   confirmAccount(
     """E-mail of the user performing account confirmation."""
@@ -21951,10 +22482,15 @@ type Mutation {
 
     """A one-time token required to confirm the account."""
     token: String!
-  ): ConfirmAccount @doc(category: "Users") @webhookEventsInfo(asyncEvents: [ACCOUNT_CONFIRMED], syncEvents: [])
+  ): ConfirmAccount @doc(category: "Users") @webhookEventsInfo(asyncEvents: [ACCOUNT_CONFIRMED, CUSTOMER_UPDATED, STAFF_UPDATED], syncEvents: [])
 
   """
   Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+  
+  Triggers the following webhook events:
+  - ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+  - CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+  - STAFF_UPDATED (async): Called if a staff account was confirmed.
   """
   setPassword(
     """Email of a user."""
@@ -21965,7 +22501,7 @@ type Mutation {
 
     """A one-time token required to set the password."""
     token: String!
-  ): SetPassword @doc(category: "Users")
+  ): SetPassword @doc(category: "Users") @webhookEventsInfo(asyncEvents: [ACCOUNT_CONFIRMED, CUSTOMER_UPDATED, STAFF_UPDATED], syncEvents: [])
 
   """
   Change the password of the logged in user. 
@@ -22622,6 +23158,13 @@ input WebhookCreateInput @doc(category: "Webhooks") {
   Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed.
   """
   customHeaders: JSONString
+
+  """
+  Determines when the subscription payload is built for asynchronous events that defer payload generation. Defaults to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload.
+  
+  Added in Saleor 3.23.
+  """
+  payloadGeneration: WebhookPayloadGenerationEnum
 }
 
 """
@@ -22685,6 +23228,13 @@ input WebhookUpdateInput @doc(category: "Webhooks") {
   Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed.
   """
   customHeaders: JSONString
+
+  """
+  Determines when the subscription payload is built for asynchronous events that defer payload generation. Omit to keep the current value, `null` resets it to `DEFERRED`. Ignored for webhooks without a subscription query, for synchronous events and for events that do not defer their payload. A change applies to events triggered after the update. Deliveries already created finish the way they started, so around a change a newer delivery can be sent before an older one.
+  
+  Added in Saleor 3.23.
+  """
+  payloadGeneration: WebhookPayloadGenerationEnum
 }
 
 """
@@ -24234,8 +24784,24 @@ input CategoryInput @doc(category: "Products") {
   """Category slug."""
   slug: String
 
+  """
+  External ID of this category.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
   """Search engine optimization fields."""
   seo: SeoInput
+
+  """
+  Full description of the category. Pass null to clear it. Omit to preserve the current value on update.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """Background image file."""
   backgroundImage: Upload
@@ -24328,6 +24894,15 @@ input TranslationInput {
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Translated full description. Only supported for categories and collections; product translation mutations reject this field. Pass null to clear it. Omit to preserve the current value on update.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 }
 
 """
@@ -24391,11 +24966,27 @@ input CollectionCreateInput @doc(category: "Products") {
   slug: String
 
   """
+  External ID of this collection.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
+  """
   Description of the collection.
   
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """Background image file."""
   backgroundImage: Upload
@@ -24506,11 +25097,27 @@ input CollectionInput @doc(category: "Products") {
   slug: String
 
   """
+  External ID of this collection.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
+  """
   Description of the collection.
   
   Rich text format. For reference see https://editorjs.io/
   """
   description: JSONString
+
+  """
+  Full description of the collection. Pass null to clear it. Omit to preserve the current value on update.
+  
+  Rich text format. For reference see https://editorjs.io/
+  
+  Added in Saleor 3.23.
+  """
+  fullDescription: JSONString
 
   """Background image file."""
   backgroundImage: Upload
@@ -24658,7 +25265,7 @@ input ProductCreateInput @doc(category: "Products") {
   weight: WeightScalar
 
   """Defines the product rating value."""
-  rating: Float
+  rating: Float @deprecated(reason: "Product rating is deprecated and will be removed. Use a numeric attribute instead.")
 
   """
   Fields required to update the product metadata. Can be read by any API client authorized to read the object it's attached to.
@@ -24875,7 +25482,7 @@ input ProductBulkCreateInput @doc(category: "Products") {
   weight: WeightScalar
 
   """Defines the product rating value."""
-  rating: Float
+  rating: Float @deprecated(reason: "Product rating is deprecated and will be removed. Use a numeric attribute instead.")
 
   """
   Fields required to update the product metadata. Can be read by any API client authorized to read the object it's attached to.
@@ -25071,6 +25678,13 @@ input ProductVariantChannelListingAddInput @doc(category: "Products") {
   Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
   """
   priorPrice: PositiveDecimal
+
+  """
+  Determines whether the variant can be bought in this channel. When omitted on an existing listing, the current value is kept.
+  
+  Added in Saleor 3.23.
+  """
+  isAvailableForPurchase: Boolean
 }
 
 """
@@ -25137,7 +25751,7 @@ input ProductInput @doc(category: "Products") {
   weight: WeightScalar
 
   """Defines the product rating value."""
-  rating: Float
+  rating: Float @deprecated(reason: "Product rating is deprecated and will be removed. Use a numeric attribute instead.")
 
   """
   Fields required to update the product metadata. Can be read by any API client authorized to read the object it's attached to.
@@ -25394,6 +26008,53 @@ type ProductMediaReorder @doc(category: "Products") {
   media: [ProductMedia!]
   productErrors: [ProductError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [ProductError!]!
+}
+
+"""
+Creates or updates a product media translation.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: MANAGE_TRANSLATIONS.
+"""
+type ProductMediaTranslate @doc(category: "Products") {
+  errors: [ProductMediaTranslateError!]!
+  productMedia: ProductMedia
+}
+
+"""
+Represents an error in product media translation input.
+
+Added in Saleor 3.23.
+"""
+type ProductMediaTranslateError @doc(category: "Products") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: ProductMediaTranslateErrorCode!
+}
+
+enum ProductMediaTranslateErrorCode @doc(category: "Products") {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+}
+
+"""
+Fields required to translate product media.
+
+Added in Saleor 3.23.
+"""
+input ProductMediaTranslationInput @doc(category: "Products") {
+  """Translated product media alt text."""
+  alt: String
 }
 
 """
@@ -25802,6 +26463,13 @@ input ChannelListingUpdateInput @doc(category: "Products") {
 
   """Price of the variant before discount."""
   priorPrice: PositiveDecimal
+
+  """
+  Determines whether the variant can be bought in this channel. When omitted, the current value is kept.
+  
+  Added in Saleor 3.23.
+  """
+  isAvailableForPurchase: Boolean
 }
 
 """
@@ -26079,6 +26747,53 @@ type ProductVariantChannelListingUpdate @doc(category: "Products") {
   variant: ProductVariant
   productChannelListingErrors: [ProductChannelListingError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [ProductChannelListingError!]!
+}
+
+"""
+Toggle whether a product variant can be bought in the given channels, without touching its prices. An unavailable variant is hidden from customers and cannot be added to a checkout or an order.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: MANAGE_PRODUCTS.
+"""
+type ProductVariantChannelListingAvailabilityUpdate @doc(category: "Products") {
+  """An updated product variant instance."""
+  variant: ProductVariant
+  errors: [ProductVariantChannelListingAvailabilityUpdateError!]!
+}
+
+"""
+Error of the `productVariantChannelListingAvailabilityUpdate` mutation.
+
+Added in Saleor 3.23.
+"""
+type ProductVariantChannelListingAvailabilityUpdateError @doc(category: "Products") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: ProductErrorCode!
+
+  """List of channels IDs which causes the error."""
+  channels: [ID!]
+}
+
+"""
+Fields required to toggle a product variant's availability in a channel.
+
+Added in Saleor 3.23.
+"""
+input ProductVariantChannelListingAvailabilityInput @doc(category: "Products") {
+  """ID of a channel."""
+  channelId: ID!
+
+  """Determines whether the variant can be bought in this channel."""
+  isAvailableForPurchase: Boolean!
 }
 
 """
@@ -27270,8 +27985,11 @@ type PageReorderAttributeValues @doc(category: "Pages") {
 Completes creating an order. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
+
+Triggers the following webhook events:
+- NOTIFY_USER (async): Optionally triggered when staff notification recipients are configured.
 """
-type DraftOrderComplete @doc(category: "Orders") {
+type DraftOrderComplete @doc(category: "Orders") @webhookEventsInfo(asyncEvents: [NOTIFY_USER], syncEvents: []) {
   """Completed order."""
   order: Order
   orderErrors: [OrderError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -29681,6 +30399,7 @@ enum PromotionCreateErrorCode {
   NOT_FOUND
   REQUIRED
   INVALID
+  UNIQUE
   MULTIPLE_CURRENCIES_NOT_ALLOWED
   INVALID_PRECISION
   MISSING_CHANNELS
@@ -29698,6 +30417,13 @@ input PromotionCreateInput @doc(category: "Discounts") {
 
   """The end date of the promotion in ISO 8601 format."""
   endDate: DateTime
+
+  """
+  External ID of this promotion.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """Promotion name."""
   name: String!
@@ -29836,6 +30562,7 @@ enum PromotionUpdateErrorCode {
   NOT_FOUND
   REQUIRED
   INVALID
+  UNIQUE
 }
 
 input PromotionUpdateInput {
@@ -29847,6 +30574,13 @@ input PromotionUpdateInput {
 
   """The end date of the promotion in ISO 8601 format."""
   endDate: DateTime
+
+  """
+  External ID of this promotion.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
 
   """Promotion name."""
   name: String
@@ -30400,6 +31134,13 @@ input VoucherInput @doc(category: "Discounts") {
   """Voucher name."""
   name: String
 
+  """
+  External ID of this voucher.
+  
+  Added in Saleor 3.23.
+  """
+  externalReference: String
+
   """Code to use the voucher."""
   code: String @deprecated(reason: "Use `addCodes` instead.")
 
@@ -30777,6 +31518,13 @@ type CheckoutError @doc(category: "Checkout") {
 
   """A type of address that causes the error."""
   addressType: AddressTypeEnum
+
+  """
+  Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+  
+  Added in Saleor 3.23.
+  """
+  promoCodeDetails: PromoCodeRejectionDetails
 }
 
 enum CheckoutErrorCode @doc(category: "Checkout") {
@@ -31364,6 +32112,13 @@ type OrderCreateFromCheckoutError @doc(category: "Orders") {
 
   """List of line Ids which cause the error."""
   lines: [ID!]
+
+  """
+  Details of the promo code that caused the error. Null when the error is not a promo code rejection.
+  
+  Added in Saleor 3.23.
+  """
+  promoCodeDetails: PromoCodeRejectionDetails
 }
 
 enum OrderCreateFromCheckoutErrorCode @doc(category: "Orders") {
@@ -32533,6 +33288,13 @@ type Manifest @doc(category: "Apps") {
   """URL to the full privacy policy."""
   dataPrivacyUrl: String
 
+  """
+  Reason why the app is deprecated, declared in the manifest. Null when the app is not deprecated. A deprecated app can still be installed and works as usual, but usually means it should not be used anymore.
+  
+  Added in Saleor 3.23.
+  """
+  deprecationReason: String
+
   """External URL to the app homepage."""
   homepageUrl: String
 
@@ -32635,9 +33397,16 @@ type AppManifestBrandLogo @doc(category: "Apps") {
   """Data URL with a base64 encoded logo image."""
   default(
     """
-    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended). Thumbnails are generated only in the available sizes: 32, 64, 128, 256, 512, 1024, 2048, 4096; `sizeRounding` determines which one is used.
     """
     size: Int
+
+    """
+    Determines how the requested size is matched to an available thumbnail size.
+    
+    Added in Saleor 3.23.
+    """
+    sizeRounding: ThumbnailSizeRoundingEnum = UP
 
     """
     The format of the image. When not provided, format of the original image will be used.
@@ -32795,6 +33564,70 @@ input AppProblemDismissByStaffWithKeysInput @doc(category: "Apps") {
 
   """ID of the app whose problems to dismiss."""
   app: ID!
+}
+
+"""
+Updates the app that calls this mutation. Only the app itself can change these fields - staff users cannot set them via `appUpdate`.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: AUTHENTICATED_APP.
+"""
+type AppSelfUpdate @doc(category: "Apps") {
+  """
+  The updated app.
+  
+  Added in Saleor 3.23.
+  """
+  app: App
+  errors: [AppSelfUpdateError!]!
+}
+
+"""
+Represents errors in the appSelfUpdate mutation.
+
+Added in Saleor 3.23.
+"""
+type AppSelfUpdateError @doc(category: "Apps") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """
+  The error code.
+  
+  Added in Saleor 3.23.
+  """
+  code: AppSelfUpdateErrorCode!
+}
+
+"""
+Error codes for the appSelfUpdate mutation.
+
+Added in Saleor 3.23.
+"""
+enum AppSelfUpdateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  REQUIRED
+}
+
+"""
+Fields to update on the calling app.
+
+Added in Saleor 3.23.
+"""
+input AppSelfUpdateInput @doc(category: "Apps") {
+  """
+  Reason why the app is deprecated. Setting it marks the app as deprecated in the dashboard; the app itself keeps working as usual. Pass a blank value to clear it. Omit the field or pass `null` to leave it unchanged. Values longer than 2048 characters are truncated.
+  
+  Added in Saleor 3.23.
+  """
+  deprecationReason: String
 }
 
 """
@@ -33050,8 +33883,10 @@ Confirm user account with token sent by email during registration.
 
 Triggers the following webhook events:
 - ACCOUNT_CONFIRMED (async): Account was confirmed.
+- CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+- STAFF_UPDATED (async): Called if a staff account was confirmed.
 """
-type ConfirmAccount @doc(category: "Users") @webhookEventsInfo(asyncEvents: [ACCOUNT_CONFIRMED], syncEvents: []) {
+type ConfirmAccount @doc(category: "Users") @webhookEventsInfo(asyncEvents: [ACCOUNT_CONFIRMED, CUSTOMER_UPDATED, STAFF_UPDATED], syncEvents: []) {
   """An activated user account."""
   user: User
   accountErrors: [AccountError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -33060,8 +33895,13 @@ type ConfirmAccount @doc(category: "Users") @webhookEventsInfo(asyncEvents: [ACC
 
 """
 Sets the user's password from the token sent by email using the RequestPasswordReset mutation.
+
+Triggers the following webhook events:
+- ACCOUNT_CONFIRMED (async): Called if the account was not previously confirmed.
+- CUSTOMER_UPDATED (async): Called if a customer account was confirmed.
+- STAFF_UPDATED (async): Called if a staff account was confirmed.
 """
-type SetPassword @doc(category: "Users") {
+type SetPassword @doc(category: "Users") @webhookEventsInfo(asyncEvents: [ACCOUNT_CONFIRMED, CUSTOMER_UPDATED, STAFF_UPDATED], syncEvents: []) {
   """JWT token, required to authenticate."""
   token: String
 
@@ -37425,7 +38265,7 @@ type TranslationCreated implements Event @doc(category: "Miscellaneous") {
   translation: TranslationTypes
 }
 
-union TranslationTypes = ProductTranslation | CollectionTranslation | CategoryTranslation | AttributeTranslation | AttributeValueTranslation | ProductVariantTranslation | PageTranslation | ShippingMethodTranslation | VoucherTranslation | MenuItemTranslation | PromotionTranslation | PromotionRuleTranslation | SaleTranslation
+union TranslationTypes = ProductTranslation | CollectionTranslation | CategoryTranslation | AttributeTranslation | AttributeValueTranslation | ProductMediaTranslation | ProductVariantTranslation | PageTranslation | ShippingMethodTranslation | VoucherTranslation | MenuItemTranslation | PromotionTranslation | PromotionRuleTranslation | SaleTranslation
 
 """Event sent when translation is updated."""
 type TranslationUpdated implements Event @doc(category: "Miscellaneous") {
@@ -37837,6 +38677,13 @@ type TransactionCancelationRequested implements Event @doc(category: "Payments")
 
   """Requested action data."""
   action: TransactionAction!
+
+  """
+  Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+  
+  Added in Saleor 3.23.
+  """
+  idempotencyKey: String!
 }
 
 type TransactionAction @doc(category: "Payments") {
@@ -37869,6 +38716,13 @@ type TransactionChargeRequested implements Event @doc(category: "Payments") {
 
   """Requested action data."""
   action: TransactionAction!
+
+  """
+  Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+  
+  Added in Saleor 3.23.
+  """
+  idempotencyKey: String!
 }
 
 """Event sent when transaction refund is requested."""
@@ -37890,6 +38744,13 @@ type TransactionRefundRequested implements Event @doc(category: "Payments") {
 
   """Requested action data."""
   action: TransactionAction!
+
+  """
+  Idempotency key assigned to this requested action. Saleor's delivery retries of this request carry the same key, so an app can use it to avoid performing the action twice. Requesting the action again is a new request and gets a new key.
+  
+  Added in Saleor 3.23.
+  """
+  idempotencyKey: String!
 
   """
   Granted refund related to refund request.

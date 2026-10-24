@@ -122,6 +122,30 @@ export const productVariantTranslationFragment = gql`
   }
 `;
 
+export const productMediaTranslationFragment = gql`
+  fragment ProductMediaTranslation on ProductMediaTranslatableContent {
+    id
+    productMediaId
+    alt
+    productMedia {
+      id
+      productId
+      alt
+      url(size: 1024)
+      type
+      oembedData
+    }
+    translation(languageCode: $language) {
+      id
+      alt
+      language {
+        code
+        language
+      }
+    }
+  }
+`;
+
 export const saleTranslationFragment = gql`
   fragment SaleTranslation on SaleTranslatableContent {
     sale {

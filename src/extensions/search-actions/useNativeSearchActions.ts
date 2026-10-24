@@ -1,3 +1,5 @@
+import { useCopyIdSearchActions } from "@dashboard/components/NavigatorSearch/useCopyIdSearchActions";
+
 import { type ContextualSearchAction } from "./types";
 
 /**
@@ -11,5 +13,7 @@ import { type ContextualSearchAction } from "./types";
  * only need to declare `views`/`permissions` — no manual gating required.
  */
 export const useNativeSearchActions = (): ContextualSearchAction[] => {
-  return [];
+  const copyIdActions = useCopyIdSearchActions();
+
+  return [...copyIdActions];
 };

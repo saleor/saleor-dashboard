@@ -67,6 +67,7 @@ export const TranslationsVouchersPage = ({
             id: "sfErC+",
             defaultMessage: "Voucher Name",
           }),
+          nullableName: true,
         },
       ),
     ],

@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { mergeFileUploadErrors } from "@dashboard/attributes/utils/data";
 import { handleUploadMultipleFiles } from "@dashboard/attributes/utils/handlers";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import {
   type AttributeErrorFragment,
   ErrorPolicyEnum,
@@ -9,7 +10,6 @@ import {
   type ProductErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductFragment,
-  type ProductVariantBulkCreateInput,
   type UploadErrorFragment,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
@@ -20,7 +20,6 @@ import {
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
-import { dedupeBulkCreateInputs } from "@dashboard/products/hooks/variantGridStagedEdits";
 import {
   getProductSubmitErrorNotificationMessages,
   splitProductSubmitErrors,
@@ -41,7 +40,6 @@ import {
 } from "./productSaveSteps";
 import {
   getBulkVariantUpdateInputs,
-  getCreateVariantInput,
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
   hasProductChannelsUpdate,
@@ -75,6 +73,7 @@ export function useProductUpdateHandler(
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
+  const { trackEvent } = useAnalytics();
   const [variantListErrors, setVariantListErrors] = useState<ProductVariantListError[]>([]);
   const [submitErrors, setSubmitErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
   const [submitChannelsErrors, setSubmitChannelsErrors] = useState<
@@ -114,10 +113,20 @@ export function useProductUpdateHandler(
 
     const updateProductChannelsData = getProductChannelsUpdateVariables(product, data);
 
+    const updateProductVariables = getProductUpdateVariables(product, data, uploadFilesResult);
+
+    // rating is deprecated in the API - track who still changes it. Submitting the
+    // unchanged value (any other field was edited) is not a write worth counting.
+    const submittedRating = updateProductVariables.input.rating;
+
+    if (submittedRating !== undefined && submittedRating !== (product.rating ?? null)) {
+      trackEvent("product_rating_submitted");
+    }
+
     // Persist product fields (including category) before channel listing updates so
     // publish validation sees the latest saved product state in the same submit.
     const updateProductResult = await updateProduct({
-      variables: getProductUpdateVariables(product, data, uploadFilesResult),
+      variables: updateProductVariables,
     });
     const productUpdateErrors = updateProductResult?.data?.productUpdate?.errors ?? [];
 
@@ -171,41 +180,27 @@ export function useProductUpdateHandler(
       }
     }
 
-    if (data.variants.added.length > 0 || (data.variants.stagedCreates?.length ?? 0) > 0) {
-      const fromGrid: ProductVariantBulkCreateInput[] = data.variants.added.map(index =>
-        getCreateVariantInput(data.variants, index, product?.productType?.variantAttributes ?? []),
-      );
-      const stagedCreates = data.variants.stagedCreates ?? [];
-      const { unique: createInputs } = dedupeBulkCreateInputs([...fromGrid, ...stagedCreates]);
-      // Track each submitted input's origin (grid add vs staged create) so row-level
-      // errors can be mapped back for precise retry trimming. Object identity is
-      // stable: dedupe returns references to the original inputs.
-      const createInputSources = createInputs.map(input => {
-        const gridIndex = fromGrid.indexOf(input);
+    const stagedCreates = data.variants.stagedCreates ?? [];
 
-        return gridIndex !== -1 ? { gridIndex } : { stagedIndex: stagedCreates.indexOf(input) };
+    if (stagedCreates.length > 0) {
+      const createVariantsResults = await createVariants({
+        variables: {
+          id: product.id,
+          inputs: stagedCreates,
+          // The form keeps every new variant for retry when any row is rejected,
+          // which is only safe while BulkCreate is all-or-nothing.
+          errorPolicy: ErrorPolicyEnum.REJECT_EVERYTHING,
+        },
       });
+      const createVariantsErrors = getCreateVariantMutationError(createVariantsResults);
 
-      if (createInputs.length > 0) {
-        const createVariantsResults = await createVariants({
-          variables: {
-            id: product.id,
-            inputs: createInputs,
-          },
-        });
-        const createVariantsErrors = getCreateVariantMutationError(
-          createVariantsResults,
-          createInputSources,
-        );
-
-        errors.push(...createVariantsErrors);
-        variantErrors.push(...createVariantsErrors);
-        steps = setProductSaveStepStatus(
-          steps,
-          "variantCreate",
-          createVariantsErrors.length > 0 ? "error" : "success",
-        );
-      }
+      errors.push(...createVariantsErrors);
+      variantErrors.push(...createVariantsErrors);
+      steps = setProductSaveStepStatus(
+        steps,
+        "variantCreate",
+        createVariantsErrors.length > 0 ? "error" : "success",
+      );
     }
 
     const updateChanges = data.variants.stagedUpdateChanges ?? data.variants;

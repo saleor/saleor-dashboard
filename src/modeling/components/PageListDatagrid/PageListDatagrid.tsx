@@ -11,6 +11,7 @@ import { usePreloadedLucideIcons } from "@dashboard/components/ModelTypeIcon/use
 import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { type Page, type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField } from "@dashboard/modeling/urls";
+import { canBeSorted } from "@dashboard/modeling/views/PageList/sort";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
 import { useTheme } from "@saleor/macaw-ui-next";
@@ -108,7 +109,11 @@ export const PageListDatagrid = ({
   );
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const columnName = visibleColumns[col].id as PageListUrlSortField;
+      const columnName = visibleColumns[col]?.id;
+
+      if (!columnName || !canBeSorted(columnName)) {
+        return;
+      }
 
       onSort(columnName);
     },

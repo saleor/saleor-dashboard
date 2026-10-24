@@ -28,4 +28,14 @@ export const columnsMessages = defineMessages({
     defaultMessage: "No. of orders",
     description: "column header",
   },
+  companyName: {
+    defaultMessage: "Company name",
+    id: "mj0RUG",
+    description: "column header",
+  },
+  externalReference: {
+    defaultMessage: "External reference",
+    id: "FMUGjs",
+    description: "column header",
+  },
 });

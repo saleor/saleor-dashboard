@@ -26,6 +26,8 @@ const targetApp: InstalledAppSnapshotNode = {
   __typename: "App",
   id: "target-app-id",
   identifier: "target.app",
+  name: "Target",
+  manifestUrl: "https://target.example.com/api/manifest",
   isActive: true,
   type: AppTypeEnum.THIRDPARTY,
   appUrl: "https://target.example.com/app",

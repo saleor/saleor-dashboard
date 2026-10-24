@@ -15,6 +15,8 @@ export const listSettingsStorageKey = "listConfig";
 export const voucherCodesPageSizeMigrationKey = "listConfig.migrations.voucherCodesDefault10";
 /** One-shot: migrate voucher list columns from date/min-spent defaults to status/offer/scope. */
 export const voucherListColumnsMigrationKey = "listConfig.migrations.voucherListColumnsStatusOffer";
+/** One-shot: add the Delivery column for users still on a previous orders-list default. */
+export const orderListDeliveryColumnMigrationKey = "listConfig.migrations.orderListDeliveryColumn";
 
 const LEGACY_VOUCHER_LIST_COLUMNS = [
   "code",
@@ -23,6 +25,11 @@ const LEGACY_VOUCHER_LIST_COLUMNS = [
   "end-date",
   "value",
   "limit",
+];
+
+const LEGACY_ORDER_LIST_COLUMNS = [
+  ["number", "date", "customer", "payment", "status", "net", "total", "channel"],
+  ["number", "date", "customer", "payment", "delivery", "status", "net", "total", "channel"],
 ];
 
 export interface UseListSettings<TColumns extends string = string> {
@@ -50,7 +57,7 @@ const mergeCustomizer = (objValue: unknown, srcValue: unknown) => {
 const columnsMatch = (left: string[] | undefined, right: string[]): boolean =>
   !!left && left.length === right.length && left.every((column, index) => column === right[index]);
 
-const migrateVoucherListSettings = (settings: AppListViewSettings): AppListViewSettings => {
+const migrateStoredListSettings = (settings: AppListViewSettings): AppListViewSettings => {
   try {
     if (typeof localStorage === "undefined") {
       return settings;
@@ -91,6 +98,26 @@ const migrateVoucherListSettings = (settings: AppListViewSettings): AppListViewS
       localStorage.setItem(voucherListColumnsMigrationKey, "1");
     }
 
+    if (localStorage.getItem(orderListDeliveryColumnMigrationKey) !== "1") {
+      const storedColumns = nextSettings[ListViews.ORDER_LIST]?.columns;
+      const defaultColumns = defaultListSettings[ListViews.ORDER_LIST].columns ?? [];
+      const isLegacyDefault = LEGACY_ORDER_LIST_COLUMNS.some(columns =>
+        columnsMatch(storedColumns, columns),
+      );
+
+      if (isLegacyDefault) {
+        nextSettings = {
+          ...nextSettings,
+          [ListViews.ORDER_LIST]: {
+            ...nextSettings[ListViews.ORDER_LIST],
+            columns: defaultColumns,
+          },
+        };
+      }
+
+      localStorage.setItem(orderListDeliveryColumnMigrationKey, "1");
+    }
+
     return nextSettings;
   } catch {
     return settings;
@@ -105,12 +132,12 @@ export default function useListSettings<TColumns extends string = string>(
     storedListSettings => {
       // `typeof null === "object"` — treat null/non-objects as a fresh install.
       if (!storedListSettings || typeof storedListSettings !== "object") {
-        return migrateVoucherListSettings(defaultListSettings);
+        return migrateStoredListSettings(defaultListSettings);
       }
 
       const merged = mergeWith({}, defaultListSettings, storedListSettings, mergeCustomizer);
 
-      return migrateVoucherListSettings(merged);
+      return migrateStoredListSettings(merged);
     },
   );
   const updateListSettings = <T extends keyof ListSettings>(key: T, value: ListSettings[T]) =>

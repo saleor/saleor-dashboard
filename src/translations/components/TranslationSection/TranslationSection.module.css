@@ -9,8 +9,6 @@
 .fieldRows {
   display: flex;
   flex-direction: column;
-  /* Room for Editor.js inline toolbar / conversion dropdown on the last row */
-  padding-bottom: 72px;
 }
 
 @media (max-width: 768px) {

@@ -19,6 +19,7 @@ describe("InstallSectionData", () => {
     name: "Test Extension",
     permissions: [],
     dataPrivacyUrl: "https://example.com/privacy",
+    deprecationReason: null,
     brand: {
       __typename: "AppManifestBrand",
       logo: {
@@ -38,6 +39,8 @@ describe("InstallSectionData", () => {
         manifest={undefined}
         lastFetchedManifestUrl={undefined}
         control={mockControl}
+        deprecationAcknowledged={true}
+        onDeprecationAcknowledgedChange={jest.fn()}
       />,
     );
 
@@ -59,13 +62,15 @@ describe("InstallSectionData", () => {
         manifest={mockManifest}
         lastFetchedManifestUrl={manifestUrl}
         control={mockControl}
+        deprecationAcknowledged={true}
+        onDeprecationAcknowledgedChange={jest.fn()}
       />,
     );
 
     // Assert
     expect(screen.getByText("Mock Manifest Data")).toBeInTheDocument();
     expect(InstallExtensionManifestData).toHaveBeenCalledWith(
-      { manifest: mockManifest },
+      expect.objectContaining({ manifest: mockManifest, deprecationAcknowledged: true }),
       expect.anything(),
     );
   });
@@ -80,6 +85,8 @@ describe("InstallSectionData", () => {
         manifest={mockManifest}
         lastFetchedManifestUrl="https://different-url.com/manifest.json"
         control={mockControl}
+        deprecationAcknowledged={true}
+        onDeprecationAcknowledgedChange={jest.fn()}
       />,
     );
 
@@ -97,6 +104,8 @@ describe("InstallSectionData", () => {
         manifest={undefined}
         lastFetchedManifestUrl={undefined}
         control={mockControl}
+        deprecationAcknowledged={true}
+        onDeprecationAcknowledgedChange={jest.fn()}
       />,
     );
 

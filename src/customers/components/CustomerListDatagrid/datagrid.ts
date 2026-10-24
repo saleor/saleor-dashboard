@@ -1,7 +1,8 @@
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type Customers } from "@dashboard/customers/types";
+import { type Customer, type Customers } from "@dashboard/customers/types";
 import { type CustomerListUrlSortField } from "@dashboard/customers/urls";
+import { canBeSorted } from "@dashboard/customers/views/CustomerList/sort";
 import { getUserName } from "@dashboard/misc";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -26,6 +27,16 @@ export const customerListStaticColumnsAdapter = (
       title: intl.formatMessage(columnsMessages.email),
       width: 450,
     },
+    {
+      id: "companyName",
+      title: intl.formatMessage(columnsMessages.companyName),
+      width: 250,
+    },
+    {
+      id: "externalReference",
+      title: intl.formatMessage(columnsMessages.externalReference),
+      width: 250,
+    },
     ...(includeOrders
       ? [
           {
@@ -37,7 +48,7 @@ export const customerListStaticColumnsAdapter = (
       : []),
   ].map(column => ({
     ...column,
-    icon: getColumnSortDirectionIcon(sort, column.id),
+    icon: canBeSorted(column.id) ? getColumnSortDirectionIcon(sort, column.id) : undefined,
   }));
 
 export const createGetCellContent =
@@ -50,14 +61,13 @@ export const createGetCellContent =
       return readonlyTextCell("");
     }
 
-    switch (columnId) {
-      case "name":
-        return readonlyTextCell(getUserName(rowData) ?? "");
-      case "email":
-        return readonlyTextCell(rowData?.email ?? "");
-      case "orders":
-        return readonlyTextCell(rowData?.orders?.totalCount?.toString() ?? "");
-      default:
-        return readonlyTextCell("");
-    }
+    return readonlyTextCell(cellValueByColumnId[columnId]?.(rowData) ?? "");
   };
+
+const cellValueByColumnId: Record<string, (customer: Customer) => string | undefined | null> = {
+  name: customer => getUserName(customer),
+  email: customer => customer.email,
+  companyName: customer => customer.defaultBillingAddress?.companyName,
+  externalReference: customer => customer.externalReference,
+  orders: customer => customer.orders?.totalCount?.toString(),
+};

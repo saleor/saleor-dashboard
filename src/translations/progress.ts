@@ -28,7 +28,51 @@ export function isFieldTranslationComplete(
     }
   }
 
-  return translation.trim().length > 0;
+  return !isBlankTextTranslation(translation);
+}
+
+export function isBlankTextTranslation(value: string): boolean {
+  return value.trim().length === 0;
+}
+
+export function isEmptyRichTextDocument(value: string): boolean {
+  let parsed: unknown;
+
+  try {
+    parsed = JSON.parse(value);
+  } catch {
+    return false;
+  }
+
+  return (
+    typeof parsed === "object" &&
+    parsed !== null &&
+    "blocks" in parsed &&
+    Array.isArray(parsed.blocks) &&
+    parsed.blocks.length === 0
+  );
+}
+
+/**
+ * A translation stored as a blank (`""` or an empty rich-text document) instead of `null`, which
+ * storefronts show as a blank instead of the original. Saving it unchanged resets the field, so
+ * it only counts when the field accepts `null`, the original has content, and no app draft
+ * (`editInitial`) would be saved instead.
+ */
+export function isResettableBlankTranslation(
+  field: Pick<TranslationField, "editInitial" | "nullable" | "translation" | "type" | "value">,
+): boolean {
+  if (field.nullable !== true || field.translation === null || field.editInitial != null) {
+    return false;
+  }
+
+  if (!isFieldTranslationComplete(field.value, field.type)) {
+    return false;
+  }
+
+  return field.type === TranslationFieldType.RICH
+    ? isEmptyRichTextDocument(field.translation)
+    : isBlankTextTranslation(field.translation);
 }
 
 export function getTranslationCompletion(fields: TranslationFieldInput[]): TranslationProgress {

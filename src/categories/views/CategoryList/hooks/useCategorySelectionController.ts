@@ -54,7 +54,7 @@ export const useCategorySelectionController = ({
     );
 
     if (!isEqual(nextSelectedIds, selectedRowIds)) {
-      // eslint-disable-next-line react-you-might-not-need-an-effect/no-pass-data-to-parent
+      // oxlint-disable-next-line react-you-might-not-need-an-effect/no-pass-data-to-parent
       setSelectedRowIds(nextSelectedIds);
     }
   }, [getCachedChildrenByParentId, selectedRowIds, setSelectedRowIds]);

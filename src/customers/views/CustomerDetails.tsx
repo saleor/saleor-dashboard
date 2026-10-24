@@ -6,6 +6,7 @@ import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttrib
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "@dashboard/components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useFileUploadMutation,
@@ -51,6 +52,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { trackEvent } = useAnalytics();
 
   const customerDetails = useCustomerDetails();
   const user = customerDetails?.customer?.user;
@@ -183,8 +185,15 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
         },
       },
     });
+    const updateSucceeded = result.data?.customerUpdate.errors.length === 0;
 
-    if (result.data?.customerUpdate.errors.length === 0) {
+    if (typeChanged) {
+      trackEvent("customer_type_assigned_to_customer", {
+        result: updateSucceeded ? "success" : "error",
+      });
+    }
+
+    if (updateSucceeded) {
       if (typeChanged) {
         await customerDetails.refetch();
         setAttributeFormRevision(revision => revision + 1);

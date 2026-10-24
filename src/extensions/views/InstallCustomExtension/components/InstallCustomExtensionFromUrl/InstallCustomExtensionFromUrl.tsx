@@ -16,6 +16,7 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { previousPagePath } from "../../consts";
+import { useDeprecationAcknowledgement } from "../../hooks/useDeprecationAcknowledgement";
 import { useFetchManifest } from "../../hooks/useFetchManifest";
 import { useInstallApp } from "../../hooks/useInstallApp";
 import { useLoadQueryParamsToForm } from "../../hooks/useLoadQueryParamsToForm";
@@ -79,7 +80,8 @@ export const InstallCustomExtensionFromUrl = ({
    * Prevent installation if validation fails. In the future we can change errors to warnings, but first we need to add special handling
    * to Dashboard, e.g. render "warning" near widget that widget is broken.
    */
-  const canInstall = !issues && manifest;
+  const deprecation = useDeprecationAcknowledgement(manifest);
+  const canInstall = !issues && manifest && deprecation.acknowledged;
 
   return (
     <>
@@ -94,6 +96,8 @@ export const InstallCustomExtensionFromUrl = ({
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
           issues={issues}
+          deprecationAcknowledged={deprecation.acknowledged}
+          onDeprecationAcknowledgedChange={deprecation.setAcknowledged}
         />
         <ManifestErrorMessage
           error={alreadyInstalledApp ? undefined : errors.manifestUrl}

@@ -218,6 +218,14 @@ const useStyles = makeStyles(
       rootErrorFocus: {
         border: "1px solid transparent !important",
       },
+      // The clamp draws the field border. This has to beat root/rootActive
+      // (both set a 1px border, the latter with !important) or the two strokes
+      // stack into a border twice as thick as an input.
+      rootFramed: {
+        "&&": {
+          border: "0 !important",
+        },
+      },
       labelDisabled: {
         color: `${vars.colors.text.defaultDisabled} !important`,
       },

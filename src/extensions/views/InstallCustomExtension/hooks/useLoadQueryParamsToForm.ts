@@ -18,6 +18,6 @@ export const useLoadQueryParamsToForm = ({
       })();
     }
     // Run this only once on initial render
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };

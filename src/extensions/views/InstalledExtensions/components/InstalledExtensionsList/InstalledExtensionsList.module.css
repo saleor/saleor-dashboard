@@ -1,3 +1,36 @@
+.nameLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.deprecatedName {
+  display: inline-flex;
+  color: var(--mu-colors-text-default2);
+  border-radius: 4px;
+}
+
+.deprecatedName .nameLink {
+  color: inherit;
+}
+
+.deprecatedName:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}
+
+.tooltipReason {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* Under the app name: 20px row padding + 40px avatar + 8px gap. */
+.deprecationReason {
+  padding: 0 20px 10px 68px;
+}
+
 /* Subtle accent sweeps in from the left, rests as a wide left-to-right fade, then
    disappears. Points the user at a freshly installed extension that alphabetical
    sorting pushed into the middle of the table. */

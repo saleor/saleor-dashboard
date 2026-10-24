@@ -68,7 +68,7 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
     stagedUpdateVariants?: ProductDetailsVariantFragment[];
     /** Index-based updates aligned with `stagedUpdateVariants`. */
     stagedUpdateChanges?: DatagridChangeOpts;
-    /** Generator creates waiting for Save (API-ready bulk create inputs). */
+    /** Generator and bulk-edit creates waiting for Save (API-ready bulk create inputs). */
     stagedCreates?: ProductVariantBulkCreateInput[];
   };
 }
@@ -92,11 +92,15 @@ export interface ProductUpdateHandlers
     attributeErrors: Array<{ attributeId: string; code: string; message: string | null }>;
     otherErrors: Array<{ message: string | null }>;
   };
-  /** Remove staged generator creates by index (draft list). */
+  /** Stage one empty variant for the user to fill in the unsaved section. */
+  addStagedVariantCreate: () => void;
+  /** Move bulk-edit datagrid `added` rows into the unsaved section (fullscreen close). */
+  promoteDatagridAddedRows: () => void;
+  /** Remove staged creates by index (unsaved section). */
   removeStagedVariantCreates: (indexes: number[]) => void;
-  /** Drop all staged generator creates. */
+  /** Drop all staged creates. */
   clearStagedVariantCreates: () => void;
-  /** Replace staged generator creates after draft datagrid edits. */
+  /** Replace staged creates after unsaved-section edits. */
   replaceStagedVariantCreates: (creates: ProductVariantBulkCreateInput[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -111,7 +115,7 @@ export interface UseProductUpdateFormOutput
   touchedChannels: string[];
   /** Staged variant deletes waiting for Save (cross-page). */
   pendingVariantDeleteCount: number;
-  /** Generator creates waiting for Save (for duplicate detection in the modal). */
+  /** Generator and manually added creates waiting for Save. */
   stagedVariantCreates: ProductVariantBulkCreateInput[];
   /** What the Savebar will persist on the next Save. */
   saveComposition: ProductSaveComposition;

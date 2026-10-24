@@ -13,6 +13,9 @@ jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: jest.fn(() => ({ enabled: true })),
 }));
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: jest.fn().mockReturnValue({ trackEvent: jest.fn() }),
+}));
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ children }) => children),
 }));
