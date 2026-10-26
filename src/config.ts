@@ -40,6 +40,9 @@ export const IS_CLOUD_INSTANCE = window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === 
 export const getSaleorCloudAppDomain = (): string | null =>
   window?.__SALEOR_CONFIG__?.SALEOR_CLOUD_APP_DOMAIN || null;
 
+/** @public Used by the Saleor Cloud extensions. */
+export const getCloudApiUrl = (): string | null => window?.__SALEOR_CONFIG__?.CLOUD_API_URL || null;
+
 export const getExtensionsConfig = () => ({
   extensionsApiUri: window.__SALEOR_CONFIG__.EXTENSIONS_API_URL,
 });

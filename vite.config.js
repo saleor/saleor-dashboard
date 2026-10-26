@@ -25,6 +25,37 @@ const copyOgImage = () => ({
   },
 });
 
+/*
+  Cloud builds copy private Saleor Cloud code into src/cloud before building. Cloud Dashboards
+  serve their sourcemaps, so that source text is dropped from them. The line mappings stay for
+  Sentry.
+*/
+const stripCloudSourcesFromSourcemaps = () => {
+  const cloudDir = path.resolve(__dirname, "src", "cloud") + path.sep;
+
+  return {
+    name: "strip-cloud-sources-from-sourcemaps",
+    apply: "build",
+    generateBundle: ({ dir: outDir }, bundle) => {
+      for (const file of Object.values(bundle)) {
+        if (file.type !== "asset" || !file.fileName.endsWith(".map")) {
+          continue;
+        }
+
+        const map = JSON.parse(file.source);
+        const mapDir = path.dirname(path.resolve(outDir, file.fileName));
+
+        map.sourcesContent = map.sources.map((source, index) =>
+          path.resolve(mapDir, source).startsWith(cloudDir)
+            ? null
+            : (map.sourcesContent?.[index] ?? null),
+        );
+        file.source = JSON.stringify(map);
+      }
+    },
+  };
+};
+
 /** @type {import('vite').UserConfig} */
 
 export default defineConfig(({ command, mode }) => {
@@ -44,6 +75,7 @@ export default defineConfig(({ command, mode }) => {
     ENVIRONMENT,
     STATIC_URL,
     EXTENSIONS_API_URL,
+    CLOUD_API_URL,
     SALEOR_CLOUD_APP_DOMAIN,
     SKIP_SOURCEMAPS,
     CUSTOM_VERSION,
@@ -89,6 +121,7 @@ export default defineConfig(({ command, mode }) => {
           APP_MOUNT_URI,
           STATIC_URL,
           EXTENSIONS_API_URL: EXTENSIONS_API_URL ?? "",
+          CLOUD_API_URL: CLOUD_API_URL ?? "",
           SALEOR_CLOUD_APP_DOMAIN: SALEOR_CLOUD_APP_DOMAIN ?? "",
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
@@ -102,6 +135,7 @@ export default defineConfig(({ command, mode }) => {
     }),
     copyOgImage(),
     copyNoopSW(),
+    stripCloudSourcesFromSourcemaps(),
   ];
 
   if (!isDev && SENTRY_AUTH_TOKEN) {

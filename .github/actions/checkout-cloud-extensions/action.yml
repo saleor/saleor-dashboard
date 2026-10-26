@@ -1,0 +1,40 @@
+name: Check out Saleor Cloud extensions
+description: >
+  Checks out the private Saleor Cloud features at the cloud-console commit pinned in
+  .github/cloud-extensions.ref and copies them over src/cloud.
+inputs:
+  vault-url:
+    description: URL of the Vault that issues Saleor's GitHub tokens
+    required: true
+  vault-jwt:
+    description: JWT for that Vault
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Read pinned commit
+      id: ref
+      shell: bash
+      run: echo "sha=$(< .github/cloud-extensions.ref)" >> "$GITHUB_OUTPUT"
+
+    - name: Get token
+      id: token
+      uses: saleor/saleor-internal-actions/request-vault-token@6a0fa7c073b3857a11d414f25a149065fe5a0fcf # v1.4.0
+      with:
+        vault-url: ${{ inputs.vault-url }}
+        vault-jwt: ${{ inputs.vault-jwt }}
+
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        repository: saleor/cloud-console
+        ref: ${{ steps.ref.outputs.sha }}
+        token: ${{ steps.token.outputs.token }}
+        path: .cloud-extensions
+        sparse-checkout: dashboard-extensions
+        persist-credentials: false
+
+    - name: Copy the extensions into src/cloud
+      shell: bash
+      run: |
+        rm -rf src/cloud
+        cp -R .cloud-extensions/dashboard-extensions src/cloud
