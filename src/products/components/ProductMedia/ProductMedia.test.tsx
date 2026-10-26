@@ -201,9 +201,8 @@ describe("ProductMedia", () => {
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
           onImagesDelete={onImagesDelete}
-          onImageUpload={jest.fn(
-            (): Promise<FetchResult<ProductMediaCreateMutation>> =>
-              Promise.resolve(uploadSuccessResult("unused")),
+          onImageUpload={jest.fn((): Promise<FetchResult<ProductMediaCreateMutation>> =>
+            Promise.resolve(uploadSuccessResult("unused")),
           )}
           openMediaUrlModal={() => undefined}
         />
@@ -224,8 +223,8 @@ describe("ProductMedia", () => {
 
   it("removes the pending tile when upload fails", async () => {
     // Arrange
-    const onImageUpload = jest.fn(
-      (): Promise<FetchResult<ProductMediaCreateMutation>> => Promise.reject(new Error("network")),
+    const onImageUpload = jest.fn((): Promise<FetchResult<ProductMediaCreateMutation>> =>
+      Promise.reject(new Error("network")),
     );
     const onImagesUploadComplete = jest.fn();
 

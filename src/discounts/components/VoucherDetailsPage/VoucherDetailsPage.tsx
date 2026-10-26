@@ -85,7 +85,8 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
 export type VoucherDetailsPageVoucher = VoucherDetailsFragment & Partial<VoucherCatalogueFragment>;
 
 interface VoucherDetailsPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
+  extends
+    Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar" | "variantListToolbar"
     >,

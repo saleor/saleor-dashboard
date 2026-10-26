@@ -50,9 +50,9 @@ export const OrderCardTitle = ({
     status === FulfillmentStatus.CANCELED ? "shippedFrom" : "fulfilledFrom";
   const hasEyebrow = Boolean(
     createdDate ||
-      (warehouseName && warehouseId) ||
-      (restockWarehouseName && restockWarehouseId) ||
-      trackingNumber,
+    (warehouseName && warehouseId) ||
+    (restockWarehouseName && restockWarehouseId) ||
+    trackingNumber,
   );
 
   return (

@@ -12,9 +12,7 @@ type AssignedAttributeFilterQueryPart = { attributes?: AssignedAttributeWhereInp
  * Maps attribute filters to `AssignedAttributeWhereInput` (`{ slug, value }`).
  * Product list/export use the same `value` shape via `AttributeQueryVarsBuilder`.
  */
-export class AssignedAttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<AssignedAttributeFilterQueryPart>
-{
+export class AssignedAttributeQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<AssignedAttributeFilterQueryPart> {
   private readonly optionFetcher = new AttributeQueryVarsBuilder();
 
   canHandle(element: FilterElement): boolean {

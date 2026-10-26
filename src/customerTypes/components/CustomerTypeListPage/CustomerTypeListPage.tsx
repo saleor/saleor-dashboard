@@ -21,7 +21,8 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface CustomerTypeListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     SearchPageProps,
     SortPage<CustomerTypeListUrlSortField>,
     Omit<TabPageProps, "onTabDelete"> {

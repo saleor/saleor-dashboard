@@ -154,7 +154,7 @@ the ternary-style form work.
 ## Checklist before handing back
 
 - [ ] `actionlint` clean on every file touched
-- [ ] `pnpm exec prettier --write` on the YAML
+- [ ] `pnpm exec oxfmt --write` on the YAML
 - [ ] No `${{ }}` inside any `run:` block
 - [ ] Every shell expansion quoted; optional arguments built as an array
 - [ ] Actions pinned by SHA, on the current release, version in a comment

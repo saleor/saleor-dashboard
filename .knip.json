@@ -37,7 +37,6 @@
   "dotenv": true,
   "storybook": true,
   "typescript": true,
-  "prettier": true,
   "ignore": [
     "e2e/**",
     "e2e-legacy/**",

@@ -36,9 +36,7 @@ import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagr
 import { type CustomerTypeTabCount, CustomerTypeTabs } from "../CustomerTypeTabs/CustomerTypeTabs";
 
 interface CustomerListPageProps
-  extends PageListProps,
-    SearchPageProps,
-    SortPage<CustomerListUrlSortField> {
+  extends PageListProps, SearchPageProps, SortPage<CustomerListUrlSortField> {
   customers: Customers | undefined;
   selectedCustomerIds: string[];
   loading: boolean;

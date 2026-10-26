@@ -35,8 +35,7 @@ import {
 import { messages } from "./messages";
 
 interface CategoryListDatagridProps
-  extends PageListProps,
-    Partial<SortPage<CategoryListUrlSortField>> {
+  extends PageListProps, Partial<SortPage<CategoryListUrlSortField>> {
   rows: CategoryListRow[];
   selectedCategoriesIds?: string[];
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;

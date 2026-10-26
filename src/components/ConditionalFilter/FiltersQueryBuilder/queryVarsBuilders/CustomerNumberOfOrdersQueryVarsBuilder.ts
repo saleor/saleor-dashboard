@@ -13,12 +13,9 @@ type LegacyRange = { gte?: string; lte?: string };
  * `IntFilterInput` (`eq` / `oneOf` / `range`), the deprecated `CustomerFilterInput`
  * takes an `IntRangeInput` (`gte` / `lte`).
  */
-export class CustomerNumberOfOrdersQueryVarsBuilder
-  implements
-    BothApiQueryVarsBuilder<{
-      numberOfOrders?: IntFilterInput | LegacyRange;
-    }>
-{
+export class CustomerNumberOfOrdersQueryVarsBuilder implements BothApiQueryVarsBuilder<{
+  numberOfOrders?: IntFilterInput | LegacyRange;
+}> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "numberOfOrders";
   }

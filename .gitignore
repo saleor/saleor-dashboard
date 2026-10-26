@@ -15,8 +15,7 @@
 !.gitignore
 !.node-version
 !.plop
-!.prettierignore
-!.prettierrc
+!.oxfmtrc.json
 !.pylintrc
 !.travis*
 !.tx

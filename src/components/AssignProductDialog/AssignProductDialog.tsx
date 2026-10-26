@@ -13,7 +13,8 @@ import { type Products, type SelectedChannel } from "./types";
 import { type UseAssignProductPickerProps } from "./useAssignProductPicker";
 
 export interface AssignProductDialogProps
-  extends FetchMoreProps,
+  extends
+    FetchMoreProps,
     DialogProps,
     Pick<
       UseAssignProductPickerProps,

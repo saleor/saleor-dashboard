@@ -31,11 +31,10 @@ import { messages } from "./messages";
 
 type AttributeCreateFormStep = 1 | 2;
 
-interface AttributeCreateFormContentProps
-  extends Pick<
-    UseFormResult<AttributePageFormData>,
-    "change" | "clearErrors" | "data" | "errors" | "set" | "setError" | "triggerChange"
-  > {
+interface AttributeCreateFormContentProps extends Pick<
+  UseFormResult<AttributePageFormData>,
+  "change" | "clearErrors" | "data" | "errors" | "set" | "setError" | "triggerChange"
+> {
   apiErrors: AttributeErrorFragment[];
   disabled: boolean;
   inputType: AttributeInputTypeEnum;

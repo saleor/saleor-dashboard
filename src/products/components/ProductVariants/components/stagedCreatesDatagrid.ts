@@ -25,24 +25,20 @@ export const buildStagedCreatesColumns = ({
   warehouses: WarehouseFragment[];
 }): AvailableColumn[] => [
   ...variantsStaticColumnsAdapter(intl),
-  ...channels.map(
-    (channel): AvailableColumn => ({
-      id: `channel:${channel.id}`,
-      group: channel.name,
-      metaGroup: intl.formatMessage(messages.channel),
-      title: intl.formatMessage(messages.price),
-      width: 150,
-    }),
-  ),
-  ...warehouses.map(
-    (warehouse): AvailableColumn => ({
-      id: `warehouse:${warehouse.id}`,
-      group: intl.formatMessage(messages.warehouses),
-      metaGroup: intl.formatMessage(messages.warehouses),
-      title: warehouse.name,
-      width: 150,
-    }),
-  ),
+  ...channels.map((channel): AvailableColumn => ({
+    id: `channel:${channel.id}`,
+    group: channel.name,
+    metaGroup: intl.formatMessage(messages.channel),
+    title: intl.formatMessage(messages.price),
+    width: 150,
+  })),
+  ...warehouses.map((warehouse): AvailableColumn => ({
+    id: `warehouse:${warehouse.id}`,
+    group: intl.formatMessage(messages.warehouses),
+    metaGroup: intl.formatMessage(messages.warehouses),
+    title: warehouse.name,
+    width: 150,
+  })),
 ];
 
 export const getStagedCreateCellContent = ({

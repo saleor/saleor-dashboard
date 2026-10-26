@@ -54,7 +54,8 @@ import { messages } from "./messages";
 import { usePriceClick } from "./usePriceClick";
 
 interface ProductListDatagridProps
-  extends ListProps<ProductListColumns>,
+  extends
+    ListProps<ProductListColumns>,
     PageListProps<ProductListColumns>,
     SortPage<ProductListUrlSortField>,
     ChannelProps {

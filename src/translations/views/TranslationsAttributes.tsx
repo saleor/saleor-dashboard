@@ -27,8 +27,7 @@ import { type TranslationField } from "../types";
 type HandleSubmitData = string | OutputData;
 
 export interface TranslationsAttributesQueryParams
-  extends Pagination,
-    TranslationDetailQueryParams {}
+  extends Pagination, TranslationDetailQueryParams {}
 
 interface TranslationsAttributesProps {
   id: string;
