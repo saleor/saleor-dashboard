@@ -24,6 +24,18 @@ const translationsSection = "/translations/";
 export const languageListPath = translationsSection;
 export const languageListUrl = translationsSection;
 
+/** Opens the translation for a language, or the language list when none is known. */
+export function translationTargetUrl(
+  languageCode: string | null,
+  toLanguageUrl: (languageCode: string) => string,
+): string {
+  if (!languageCode) {
+    return languageListUrl;
+  }
+
+  return toLanguageUrl(languageCode);
+}
+
 export const languageEntitiesPath = (code: string) => urlJoin(translationsSection, code);
 export type LanguageEntitiesUrlQueryParams = Pagination &
   Partial<{

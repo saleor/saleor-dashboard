@@ -21,7 +21,7 @@ import { rippleProductMediaMetadata } from "@dashboard/products/ripples/productM
 import { productUrl } from "@dashboard/products/urls";
 import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { productMediaUrl } from "@dashboard/translations/urls";
+import { productMediaUrl, translationTargetUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text, Textarea, vars } from "@saleor/macaw-ui-next";
@@ -228,7 +228,11 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
               <TranslationsButton
                 onClick={() => {
                   trackEvent("product_media_translation_opened", { source: "media_editor" });
-                  navigate(productMediaUrl(lastUsedLocaleOrFallback, productId, mediaObj.id));
+                  navigate(
+                    translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                      productMediaUrl(languageCode, productId, mediaObj.id),
+                    ),
+                  );
                 }}
               />
             )}

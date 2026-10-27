@@ -16,6 +16,7 @@ import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { StaffInviteProvider } from "@dashboard/staff/components/StaffInviteProvider/StaffInviteProvider";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme/provider";
+import { TranslationLocalesProvider } from "@dashboard/translations/useCachedLocales";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
@@ -140,22 +141,24 @@ const App = (): React.ReactNode => (
                   <AuthProvider>
                     <ProductAnalytics>
                       <ShopProvider>
-                        <AppChannelProvider>
-                          <ExitFormDialogProvider>
-                            <DevModeProvider>
-                              <NavigatorSearchProvider>
-                                <SavebarRefProvider>
-                                  <FeatureFlagsProviderWithUser>
-                                    <OnboardingProvider>
-                                      <Routes />
-                                    </OnboardingProvider>
-                                  </FeatureFlagsProviderWithUser>
-                                  <NotificationsToaster />
-                                </SavebarRefProvider>
-                              </NavigatorSearchProvider>
-                            </DevModeProvider>
-                          </ExitFormDialogProvider>
-                        </AppChannelProvider>
+                        <TranslationLocalesProvider>
+                          <AppChannelProvider>
+                            <ExitFormDialogProvider>
+                              <DevModeProvider>
+                                <NavigatorSearchProvider>
+                                  <SavebarRefProvider>
+                                    <FeatureFlagsProviderWithUser>
+                                      <OnboardingProvider>
+                                        <Routes />
+                                      </OnboardingProvider>
+                                    </FeatureFlagsProviderWithUser>
+                                    <NotificationsToaster />
+                                  </SavebarRefProvider>
+                                </NavigatorSearchProvider>
+                              </DevModeProvider>
+                            </ExitFormDialogProvider>
+                          </AppChannelProvider>
+                        </TranslationLocalesProvider>
                       </ShopProvider>
                     </ProductAnalytics>
                   </AuthProvider>

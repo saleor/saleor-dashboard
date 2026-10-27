@@ -49,7 +49,7 @@ import { getSelectedMedia } from "@dashboard/products/utils/data";
 import { expandRequiredAttributeErrors } from "@dashboard/products/utils/validation";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { productVariantUrl } from "@dashboard/translations/urls";
+import { productVariantUrl, translationTargetUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -267,7 +267,11 @@ export const ProductVariantPage = ({
         {canTranslate && (
           <TranslationsButton
             onClick={() =>
-              navigate(productVariantUrl(lastUsedLocaleOrFallback, productId, variant?.id))
+              navigate(
+                translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                  productVariantUrl(languageCode, productId, variant?.id),
+                ),
+              )
             }
           />
         )}

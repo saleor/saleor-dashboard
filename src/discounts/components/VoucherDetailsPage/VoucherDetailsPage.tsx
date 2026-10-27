@@ -29,7 +29,11 @@ import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
-import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import {
+  languageEntityUrl,
+  TranslatableEntities,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { ListChecks, Trash2 } from "lucide-react";
@@ -382,10 +386,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
             canTranslate={!!canTranslate}
             onTranslate={() =>
               navigate(
-                languageEntityUrl(
-                  lastUsedLocaleOrFallback,
-                  TranslatableEntities.vouchers,
-                  voucher?.id,
+                translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                  languageEntityUrl(languageCode, TranslatableEntities.vouchers, voucher?.id),
                 ),
               )
             }

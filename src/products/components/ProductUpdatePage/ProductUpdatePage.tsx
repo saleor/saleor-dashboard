@@ -71,7 +71,10 @@ import { type ProductSaveStepResult } from "@dashboard/products/views/ProductUpd
 import { type UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
+import {
+  productUrl as createTranslateProductUrl,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
@@ -653,7 +656,11 @@ const ProductUpdatePage = ({
                 {canTranslate && (
                   <TranslationsButton
                     onClick={() =>
-                      navigate(createTranslateProductUrl(lastUsedLocaleOrFallback, productId))
+                      navigate(
+                        translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                          createTranslateProductUrl(languageCode, productId),
+                        ),
+                      )
                     }
                   />
                 )}

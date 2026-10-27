@@ -51,7 +51,11 @@ import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import {
+  languageEntityUrl,
+  TranslatableEntities,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type ListActions, type ListSettings, type ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -355,10 +359,12 @@ const AttributePage = ({
                   <TranslationsButton
                     onClick={() =>
                       navigate(
-                        languageEntityUrl(
-                          lastUsedLocaleOrFallback,
-                          TranslatableEntities.attributes,
-                          attribute?.id ?? "",
+                        translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                          languageEntityUrl(
+                            languageCode,
+                            TranslatableEntities.attributes,
+                            attribute?.id ?? "",
+                          ),
                         ),
                       )
                     }

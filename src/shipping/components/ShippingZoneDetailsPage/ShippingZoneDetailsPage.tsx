@@ -32,7 +32,11 @@ import {
 } from "@dashboard/shipping/hooks/useZoneWarehouseEligibility";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import { warehousesKeptByForm } from "@dashboard/shipping/warehouseEligibility";
-import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import {
+  languageEntityUrl,
+  TranslatableEntities,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { cappedListItems } from "@dashboard/utils/cappedList/cappedList";
 import { useLegacyStockAvailability } from "@dashboard/warehouses/hooks/useLegacyStockAvailability";
@@ -112,7 +116,9 @@ export const ShippingZoneDetailsPage = ({
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const getRateTranslationHref = canTranslate
     ? (rateId: string) =>
-        languageEntityUrl(lastUsedLocaleOrFallback, TranslatableEntities.shippingMethods, rateId)
+        translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+          languageEntityUrl(languageCode, TranslatableEntities.shippingMethods, rateId),
+        )
     : undefined;
   const initialForm = useMemo(() => getInitialFormData(shippingZone), [shippingZone]);
   const { change, data, formId, setIsSubmitDisabled, submit } = useForm(initialForm, onSubmit, {
