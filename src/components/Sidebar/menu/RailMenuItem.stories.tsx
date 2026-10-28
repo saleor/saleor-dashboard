@@ -16,8 +16,13 @@ import { Avatar, Box, List, Text } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Search } from "lucide-react";
 import { MemoryRouter } from "react-router-dom";
+import { within } from "storybook/test";
 
 import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
+import {
+  DeprecationBannerContent,
+  DeprecationBannerIcon,
+} from "../DeprecationBanner/DeprecationBannerContent";
 import { type Shortcut } from "../shortcuts/useShortcuts";
 import { ShortcutsItems } from "../ShotcutsItems";
 import { SidebarCollapseButton, SidebarExpandButton } from "../SidebarCollapseToggle";
@@ -143,10 +148,29 @@ const shortcuts: Shortcut[] = [
 interface SidebarRailPreviewProps {
   collapsed: boolean;
   initialPath: string;
+  /** Shows the deprecation banner under the header, as for an outdated Saleor version. */
+  deprecationUpgradeDate?: Date;
 }
 
+const DeprecationPreview = ({
+  collapsed,
+  upgradeDate,
+}: {
+  collapsed: boolean;
+  upgradeDate: Date;
+}) =>
+  collapsed ? (
+    <DeprecationBannerIcon upgradeDate={upgradeDate} />
+  ) : (
+    <DeprecationBannerContent upgradeDate={upgradeDate} />
+  );
+
 /** The sidebar columns without data-bound header and footer, to compare both states. */
-const SidebarRailPreview = ({ collapsed, initialPath }: SidebarRailPreviewProps) => (
+const SidebarRailPreview = ({
+  collapsed,
+  initialPath,
+  deprecationUpgradeDate,
+}: SidebarRailPreviewProps) => (
   <MemoryRouter initialEntries={[initialPath]}>
     <SidebarProvider>
       <Box
@@ -159,25 +183,30 @@ const SidebarRailPreview = ({ collapsed, initialPath }: SidebarRailPreviewProps)
         display="grid"
         __gridTemplateRows="auto 1fr"
       >
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent={collapsed ? "center" : undefined}
-          gap={3}
-          __paddingLeft={collapsed ? undefined : "18px"}
-          paddingRight={collapsed ? 0 : 4}
-          __height="64px"
-        >
-          {collapsed ? (
-            <SidebarExpandButton logo={sideBarDefaultLogo} />
-          ) : (
-            <>
-              <Avatar.Store src={sideBarDefaultLogo} scheme="accent1" size="small" />
-              <Text size={3} fontWeight="bold" __flex="1">
-                Saleor Dashboard
-              </Text>
-              <SidebarCollapseButton />
-            </>
+        <Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent={collapsed ? "center" : undefined}
+            gap={3}
+            __paddingLeft={collapsed ? undefined : "18px"}
+            paddingRight={collapsed ? 0 : 4}
+            __height="64px"
+          >
+            {collapsed ? (
+              <SidebarExpandButton logo={sideBarDefaultLogo} />
+            ) : (
+              <>
+                <Avatar.Store src={sideBarDefaultLogo} scheme="accent1" size="small" />
+                <Text size={3} fontWeight="bold" __flex="1">
+                  Saleor Dashboard
+                </Text>
+                <SidebarCollapseButton />
+              </>
+            )}
+          </Box>
+          {deprecationUpgradeDate && (
+            <DeprecationPreview collapsed={collapsed} upgradeDate={deprecationUpgradeDate} />
           )}
         </Box>
         <RailTooltipGroup>
@@ -240,5 +269,36 @@ export const GroupWithOwnPage: Story = {
 export const Expanded: Story = {
   args: {
     collapsed: false,
+  },
+};
+
+export const ExpandedWithDeprecationBanner: Story = {
+  args: {
+    collapsed: false,
+    deprecationUpgradeDate: new Date("2026-09-01"),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Shown under the header while the connected Saleor version is deprecated.",
+      },
+    },
+  },
+};
+
+export const CollapsedWithDeprecationBanner: Story = {
+  args: {
+    deprecationUpgradeDate: new Date("2026-09-01"),
+  },
+  // Focus opens the tooltip at once, so the full message is visible without hovering.
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    within(canvasElement).getByTestId("deprecation-banner").focus();
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "In the rail the banner becomes a warning icon; its tooltip carries the message.",
+      },
+    },
   },
 };
