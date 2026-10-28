@@ -101,7 +101,6 @@ export const SidebarCollapseButton = () => {
             className={styles.collapseButton}
             aria-label={label}
             onClick={onClick}
-            {...tooltip.triggerProps}
             data-test-id="sidebar-collapse-button"
           >
             <PanelLeftClose {...iconProps} aria-hidden />
@@ -145,7 +144,6 @@ export const SidebarExpandButton = ({ logo }: { logo: string }) => {
           className={styles.expandButton}
           aria-label={label}
           onClick={onClick}
-          {...tooltip.triggerProps}
           data-test-id="sidebar-expand-button"
         >
           <ExpandButtonFace logo={logo} />
@@ -173,7 +171,7 @@ export const SidebarDrawerOpenButton = ({ logo }: { logo: string }) => {
     <Tooltip {...tooltip.rootProps} delayDuration={150}>
       {/* Macaw triggers only forward children, so each needs its own element to attach to. */}
       <Tooltip.Trigger>
-        <span className={styles.triggerAnchor} {...tooltip.triggerProps}>
+        <span className={styles.triggerAnchor}>
           <Drawer.Trigger>
             <button
               type="button"

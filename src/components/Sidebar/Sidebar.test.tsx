@@ -340,6 +340,35 @@ describe("Sidebar collapse", () => {
     expect(screen.getByRole("tooltip")).toHaveTextContent("Collapse navigation");
   });
 
+  it("waits again when the pointer comes back to the toggle", async () => {
+    // Arrange
+    jest.useFakeTimers();
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    const toggle = screen.getByRole("button", { name: "Collapse navigation" });
+
+    await user.hover(toggle);
+    act(() => jest.advanceTimersByTime(800));
+    await user.unhover(toggle);
+    act(() => jest.advanceTimersByTime(1000));
+
+    // Act
+    await user.hover(toggle);
+    act(() => jest.advanceTimersByTime(400));
+
+    // Assert
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+
+    // Act
+    act(() => jest.advanceTimersByTime(400));
+
+    // Assert
+    expect(screen.getByRole("tooltip")).toHaveTextContent("Collapse navigation");
+  });
+
   it("stops showing the toggle tooltip once the shortcut has been used", async () => {
     // Arrange
     jest.useFakeTimers();

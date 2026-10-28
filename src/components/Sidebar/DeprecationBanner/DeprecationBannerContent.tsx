@@ -55,7 +55,6 @@ export const DeprecationBannerIcon = ({ upgradeDate }: DeprecationBannerContentP
             role="img"
             aria-label={message}
             tabIndex={0}
-            {...tooltip.triggerProps}
             display="flex"
             alignItems="center"
             justifyContent="center"

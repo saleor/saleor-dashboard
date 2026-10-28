@@ -7,14 +7,18 @@ interface LabelTooltipOptions {
 }
 
 interface LabelTooltip {
-  rootProps: { open: boolean; onOpenChange: (open: boolean) => void };
-  triggerProps: { onPointerLeave: () => void };
+  rootProps: {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    disableHoverableContent: true;
+  };
 }
 
 /**
- * For tooltips that are only a label. Radix keeps tooltip content hoverable and closes it on a
- * later pointer move outside, which never arrives when the pointer leaves over an app iframe.
- * Closing on leaving the trigger avoids the stuck tooltip.
+ * For tooltips that are only a label. By default Radix keeps tooltip content hoverable and closes
+ * it on a later pointer move outside, which never arrives when the pointer leaves over an app
+ * iframe. Without hoverable content Radix closes as soon as the pointer leaves the trigger, and
+ * since Radix does the closing it also restores the open delay for the next hover.
  */
 export const useLabelTooltip = ({
   hidden = false,
@@ -32,7 +36,7 @@ export const useLabelTooltip = ({
   };
 
   return {
-    rootProps: { open: open && !hidden, onOpenChange: changeOpen },
-    triggerProps: { onPointerLeave: () => changeOpen(false) },
+    // Macaw's Tooltip forwards props it does not declare to the Radix root.
+    rootProps: { open: open && !hidden, onOpenChange: changeOpen, disableHoverableContent: true },
   };
 };

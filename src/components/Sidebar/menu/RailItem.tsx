@@ -60,9 +60,7 @@ export const RailItem = ({
     >
       <Tooltip {...tooltip.rootProps} delayDuration={tooltipGroup.delayDuration}>
         <Tooltip.Trigger>
-          <span className={styles.control} {...tooltip.triggerProps}>
-            {children(content)}
-          </span>
+          <span className={styles.control}>{children(content)}</span>
         </Tooltip.Trigger>
         <Tooltip.Content side="right" sideOffset={RAIL_OVERLAY_OFFSET} className={styles.tooltip}>
           <Box display="flex" alignItems="center" gap={2} __whiteSpace="nowrap">
