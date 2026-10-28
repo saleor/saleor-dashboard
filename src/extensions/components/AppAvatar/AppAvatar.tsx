@@ -4,7 +4,7 @@ import { Box, type BoxProps } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
 
 type Logo = AppLogo | undefined;
-type Size = 4 | 6 | 8 | 12;
+type Size = 4 | 5 | 6 | 8 | 12;
 
 export const AppAvatar = ({
   logo,

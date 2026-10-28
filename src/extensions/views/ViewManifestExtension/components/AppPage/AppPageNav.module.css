@@ -1,0 +1,11 @@
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+  min-width: 0;
+}
+
+/* 20px mark plus the title gap, so the author lines up under the name. */
+.author {
+  padding-left: calc(var(--mu-spacing-5) + var(--mu-spacing-2));
+}

@@ -14,6 +14,7 @@ import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import styles from "./AppPageNav.module.css";
 import { messages } from "./message";
 
 type Logo = AppLogo | undefined;
@@ -83,18 +84,18 @@ export const AppPageNav = ({
               title={intl.formatMessage(topNavDestinationMessages.extensions)}
             />
           )}
-          <Box display="flex" gap={4} alignItems="center">
-            <AppAvatar size={8} logo={logo} />
-            <Box display="flex" flexDirection="column">
+          <Box display="flex" flexDirection="column" justifyContent="center" __minWidth="0">
+            <Box className={styles.title}>
+              <AppAvatar size={5} logo={logo} flexShrink="0" />
               <Text size={5} fontWeight="bold">
                 {name}
               </Text>
-              <Text size={2} color="default2" textTransform="uppercase">
-                {author && (
-                  <FormattedMessage defaultMessage="by {author}" id="6SL46U" values={{ author }} />
-                )}
-              </Text>
             </Box>
+            {author ? (
+              <Text size={2} color="default2" textTransform="uppercase" className={styles.author}>
+                <FormattedMessage defaultMessage="by {author}" id="6SL46U" values={{ author }} />
+              </Text>
+            ) : null}
           </Box>
         </Box>
         {deprecationReason && (
