@@ -22,12 +22,15 @@ const DeprecationMessage = ({ upgradeDate }: DeprecationBannerContentProps) => (
 export const DeprecationBannerContent = ({ upgradeDate }: DeprecationBannerContentProps) => (
   <Box
     display="flex"
-    // Puts the 16px icon on the rail's icon axis (30px), where the collapsed rail centers it,
-    // and starts the text where the menu labels start.
-    __paddingLeft="22px"
+    // Insets match the menu item highlights. The padding puts the 16px icon on the rail's icon
+    // axis (30px), where the collapsed rail centers it, and starts the text where the labels start.
+    marginX={3}
+    marginBottom={2}
+    __paddingLeft="10px"
     __gap="14px"
     paddingRight={3}
     paddingY={3}
+    borderRadius={3}
     backgroundColor="critical1"
     alignItems="flex-start"
     data-test-id="deprecation-banner"
