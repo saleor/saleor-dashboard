@@ -106,6 +106,13 @@ export interface AnalyticsEventMap {
   setup_checklist_reopened: {
     entity_type: "channel" | "product" | "warehouse";
   };
+  sidebar_collapse_toggled: {
+    source: "button" | "shortcut";
+    state: "collapsed" | "expanded";
+  };
+  sidebar_drawer_opened: {
+    layout: "drawer" | "rail";
+  };
   warehouse_channels_changed: {
     action: "assign" | "remove";
     channel_count: number;

@@ -1,0 +1,27 @@
+.layout {
+  --app-bar-height: 0px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.navigation {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+/* Matches the drawer layout in useSidebarLayout: the navigation becomes an app bar above the page. */
+@media (max-width: 767px) {
+  .layout {
+    --app-bar-height: 57px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .navigation {
+    position: static;
+    height: auto;
+    border-right: 0;
+  }
+}

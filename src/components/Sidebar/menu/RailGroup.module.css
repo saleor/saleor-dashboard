@@ -1,0 +1,46 @@
+/* smooth-shadow-ring-md: the hairline is the last shadow layer — never add a border here. */
+.flyout {
+  --smooth-ring-color: rgba(0, 0, 0, 0.06);
+  min-width: 208px;
+  max-width: 280px;
+  max-height: min(
+    calc(var(--radix-popover-content-available-height, 100vh) - var(--mu-spacing-4)),
+    560px
+  );
+  overflow-y: auto;
+  padding: var(--mu-spacing-2);
+  border: none;
+  border-radius: var(--mu-border-radius-4);
+  background-color: var(--mu-colors-background-default1);
+  box-shadow:
+    0 24px 56px -12px rgba(0, 0, 0, 0.12),
+    0 10px 22px -6px rgba(0, 0, 0, 0.06),
+    0 3px 8px 0 rgba(0, 0, 0, 0.04),
+    0 1px 2px 0 rgba(0, 0, 0, 0.03),
+    0 0 0 1px var(--smooth-ring-color);
+  transform-origin: var(--radix-popover-content-transform-origin);
+  animation: railFlyoutIn 140ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* The ring paints on the page behind the flyout — white hairline in dark. */
+.flyoutDark {
+  --smooth-ring-color: rgba(255, 255, 255, 0.14);
+}
+
+@keyframes railFlyoutIn {
+  from {
+    opacity: 0;
+    transform: translateX(-4px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flyout {
+    animation: none;
+  }
+}

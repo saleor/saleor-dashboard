@@ -10202,6 +10202,10 @@
     "context": "dialog title",
     "string": "Delete collections"
   },
+  "YmHxaH": {
+    "context": "button and tooltip, restores the full main nav from the icon rail",
+    "string": "Expand navigation"
+  },
   "YmZVN0": {
     "context": "voucher catalogue section intro",
     "string": "Discount applies to checkout lines matching any assigned category, collection, product, or variant. Products must be available in the voucher's channels."
@@ -12645,6 +12649,10 @@
     "context": "warehouse shipping zones intro in direct stock mode",
     "string": "Doesn't affect which stock is available in your store."
   },
+  "hlsvPO": {
+    "context": "aria-label, avatar button opening the account menu in the collapsed main nav",
+    "string": "Account menu"
+  },
   "hnBvH7": {
     "context": "copied to clipboard alert title",
     "string": "Copied to clipboard"
@@ -14440,6 +14448,10 @@
     "context": "label, input for amount to refund in transaction",
     "string": "Refund amount"
   },
+  "ng7bVJ": {
+    "context": "button and tooltip, shrinks the main nav to an icon rail",
+    "string": "Collapse navigation"
+  },
   "ngAgBy": {
     "context": "tax class rates list label when no countries are assigned",
     "string": "There are no countries using this tax class yet, use {tab} tab to assign tax rates."
@@ -15652,6 +15664,10 @@
   "rTBpeo": {
     "context": "expand refunded line sub-rows",
     "string": "Show all {count} lines"
+  },
+  "rU/Mqz": {
+    "context": "aria-label, button closing the main nav drawer",
+    "string": "Close navigation"
   },
   "rU2b3o": {
     "context": "orders list column: net product value (excludes tax and shipping)",

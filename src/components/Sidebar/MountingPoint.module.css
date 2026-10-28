@@ -1,0 +1,11 @@
+/* Same height in both states so the menu below does not jump when the sidebar collapses. */
+.header {
+  height: 64px;
+  flex-shrink: 0;
+}
+
+/* Centers the 24px logo on the menu icon axis, where the collapsed rail centers it. */
+.expandedHeader {
+  padding-left: calc(var(--sidebar-icon-axis, 30px) - 12px);
+  padding-right: var(--mu-spacing-4);
+}

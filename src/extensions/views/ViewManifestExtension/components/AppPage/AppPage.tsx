@@ -45,7 +45,7 @@ export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
           // It removes extra space between iframe and container
           __lineHeight={0}
           height="100%"
-          __minHeight={`calc(100vh - ${borderHeight} - ${topBarHeight})`}
+          __minHeight={`calc(100vh - var(--app-bar-height, 0px) - ${borderHeight} - ${topBarHeight})`}
         >
           {url && data?.id && data?.accessToken && (
             <AppFrame

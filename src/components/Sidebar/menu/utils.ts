@@ -136,6 +136,40 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   });
 }
 
+const toComparablePath = (url: string): string => url.split("?")[0].replace(/\/$/, "");
+
+const isSamePath = (first: string | undefined, second: string | undefined): boolean =>
+  Boolean(first && second && toComparablePath(first) === toComparablePath(second));
+
+/**
+ * In the collapsed rail a group opens a flyout instead of navigating. Its own page needs a
+ * link there unless a child already goes to it (Catalog → Products, Fulfillment → Orders).
+ */
+export const shouldLinkGroupInFlyout = (group: SidebarMenuItem): boolean =>
+  Boolean(group.url) && !(group.children ?? []).some(child => isSamePath(child.url, group.url));
+
+/**
+ * Children as listed in the rail flyout. Row adornments are dropped: the unpin action confirms
+ * in a dialog, and opening it would dismiss the flyout under it. The group's own click handler
+ * (e.g. clearing the extensions alert) moves to the child that opens the group's page.
+ */
+export const getRailFlyoutChildren = (group: SidebarMenuItem): SidebarMenuItem[] =>
+  (group.children ?? []).map(child => {
+    const flyoutChild: SidebarMenuItem = { ...child, endAdornment: undefined };
+
+    if (!group.onClick || !isSamePath(child.url, group.url)) {
+      return flyoutChild;
+    }
+
+    return {
+      ...flyoutChild,
+      onClick: () => {
+        child.onClick?.();
+        group.onClick?.();
+      },
+    };
+  });
+
 const getPureUrl = (url: string) => {
   if (url.includes("/dashboard")) {
     return url.split("/dashboard")[1];

@@ -1,21 +1,30 @@
-.fullSidebarWide {
+/*
+ * Rail width keeps every icon at the same x as in the full sidebar
+ * (12px menu padding + 8px row padding), so only the labels move while it animates.
+ */
+.column {
+  /* Center of a menu icon: 12px menu padding + 8px row padding + half of the 20px slot.
+     The header logo and the account avatar center on it, so neither jumps when collapsing. */
+  --sidebar-icon-axis: 30px;
+  --sidebar-width: 260px;
+  width: var(--sidebar-width);
   height: 100%;
-  display: none;
+  overflow: hidden;
+  transition: width 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.drawerWide {
-  height: 100%;
-  display: block;
+.column[data-collapsed="true"] {
+  --sidebar-width: 60px;
 }
 
-/** This is used when we want to show smaller sidebar sooner than the default 1024px
-* in order to show more page content */
-@media (min-width: 1200px) {
-  .fullSidebarWide {
-    display: block;
-  }
+/* Fixed width while the column animates, so labels are clipped instead of re-wrapping. */
+.columnContent {
+  width: var(--sidebar-width);
+  height: 100%;
+}
 
-  .drawerWide {
-    display: none;
+@media (prefers-reduced-motion: reduce) {
+  .column {
+    transition: none;
   }
 }
