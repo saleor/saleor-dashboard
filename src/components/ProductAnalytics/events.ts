@@ -111,7 +111,7 @@ export interface AnalyticsEventMap {
     state: "collapsed" | "expanded";
   };
   sidebar_drawer_opened: {
-    layout: "rail";
+    layout: "drawer" | "rail";
   };
   warehouse_channels_changed: {
     action: "assign" | "remove";

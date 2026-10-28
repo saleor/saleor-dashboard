@@ -15649,6 +15649,10 @@
     "context": "expand refunded line sub-rows",
     "string": "Show all {count} lines"
   },
+  "rU/Mqz": {
+    "context": "aria-label, button closing the main nav drawer",
+    "string": "Close navigation"
+  },
   "rU2b3o": {
     "context": "orders list column: net product value (excludes tax and shipping)",
     "string": "Net"

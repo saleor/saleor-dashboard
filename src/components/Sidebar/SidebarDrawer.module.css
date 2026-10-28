@@ -1,0 +1,62 @@
+/* The attribute outranks Macaw's fade-only animation class on the same element. */
+.panel[data-macaw-ui-component="Drawer.Content"] {
+  width: 260px;
+  max-width: calc(100vw - 56px);
+  animation: panel-in 240ms cubic-bezier(0.2, 0, 0, 1);
+  /* Vertical scrolling stays native; horizontal movement is the swipe to close. */
+  touch-action: pan-y;
+}
+
+.panel * {
+  touch-action: pan-y;
+}
+
+/* Macaw's close button, centred on the 64px header row instead of the panel corner. */
+.panel > div + button[data-macaw-ui-component="Button"] {
+  top: 20px;
+  right: var(--mu-spacing-3);
+}
+
+.panel[data-macaw-ui-component="Drawer.Content"][data-state="closed"] {
+  animation: panel-out 160ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* The overlay is portalled right before the panel and has no hook of its own. */
+div[data-state="closed"]:has(+ .panel) {
+  animation: overlay-out 160ms ease-in;
+}
+
+/* Rows are sized for a pointer; a finger needs at least 44px, on the link itself. */
+@media (pointer: coarse) {
+  .panel :global(:is(.sidebar-single-item, .sidebar-item-group-trigger)) a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel[data-macaw-ui-component="Drawer.Content"],
+  .panel[data-macaw-ui-component="Drawer.Content"][data-state="closed"],
+  div[data-state="closed"]:has(+ .panel) {
+    animation: none;
+  }
+}
+
+@keyframes panel-in {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes panel-out {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes overlay-out {
+  to {
+    opacity: 0;
+  }
+}

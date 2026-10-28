@@ -10,6 +10,7 @@ import NavigatorSearch from "../NavigatorSearch/NavigatorSearch";
 import { useSavebarRef } from "../Savebar/SavebarRefContext";
 import { Sidebar } from "../Sidebar/Sidebar";
 import { SidebarProvider } from "../Sidebar/SidebarContext";
+import styles from "./AppLayout.module.css";
 import { borderHeight, savebarHeight } from "./consts";
 import { useStyles } from "./styles";
 
@@ -28,22 +29,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       <DevModePanel />
       <NavigatorSearch />
 
-      <Box display="grid" __gridTemplateColumns="auto 1fr">
+      <div className={styles.layout}>
         {appState.loading && <LinearProgress className={classes.appLoader} color="primary" />}
-        <Box
-          height="100vh"
-          borderColor="default1"
-          borderRightWidth={1}
-          backgroundColor="default2"
-          borderStyle="solid"
-          position="sticky"
-          top={0}
-          borderLeftWidth={0}
-          borderTopWidth={0}
-          borderBottomWidth={0}
-        >
+        <div className={styles.navigation}>
           <Sidebar />
-        </Box>
+        </div>
         <Box height="100%" width="100%" overflow="hidden">
           <AnnouncementsContainer margin={4} />
           <Box as="main" width="100%" height="100%">
@@ -67,7 +57,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             overflow="hidden"
           />
         </Box>
-      </Box>
+      </div>
       {/* Fixed to the viewport bottom-left (nav corner); keep out of SidebarContent to avoid double-mount in drawer layouts. */}
       <CornerRipplesHost />
     </SidebarProvider>

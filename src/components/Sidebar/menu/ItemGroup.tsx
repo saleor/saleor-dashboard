@@ -42,6 +42,7 @@ export const ItemGroup = ({ menuItem }: Props) => {
       >
         <Link
           replace={isActive}
+          aria-current={isActive ? "page" : undefined}
           to={menuItem?.url ?? ""}
           className={sprinkles({
             width: "100%",

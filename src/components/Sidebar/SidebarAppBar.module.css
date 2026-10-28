@@ -1,0 +1,42 @@
+.appBar {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding-inline: 0;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+.brand {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+  min-width: 0;
+}
+
+.iconButton {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: var(--mu-border-radius-3);
+  background: none;
+  color: var(--mu-colors-text-default1);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.iconButton:active {
+  background-color: var(--mu-colors-background-default1-hovered);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: -2px;
+}

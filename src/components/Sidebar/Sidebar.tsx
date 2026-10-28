@@ -1,14 +1,18 @@
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { AllRipplesModal } from "@dashboard/ripples/components/AllRipplesModal";
 import { useAllRipplesModalState } from "@dashboard/ripples/state";
+import { useCanSearch } from "@dashboard/search/useCanSearch";
 import { Drawer } from "@saleor/macaw-ui-next";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { SidebarContent } from "./Content";
 import classes from "./Sidebar.module.css";
+import { SidebarAppBar } from "./SidebarAppBar";
 import { useSidebarBreakpointContext, useSidebarCollapse } from "./SidebarContext";
-import { SidebarDrawerTrigger } from "./SidebarDrawerTrigger";
+import { SidebarDrawerContent, useDrawerRemount } from "./SidebarDrawer";
 import { useSidebarCollapseToggle } from "./useSidebarCollapseToggle";
 import { type SidebarLayout, useSidebarLayout } from "./useSidebarLayout";
+import { useSidebarLogo } from "./useSidebarLogo";
 
 const PersistentSidebar = () => {
   const { isCollapsed } = useSidebarCollapse();
@@ -28,37 +32,43 @@ const PersistentSidebar = () => {
   );
 };
 
-const SidebarDrawerContent = () => (
-  <Drawer.Content
-    backgroundColor="default2"
-    data-test-id="sidebar-drawer-content"
-    paddingTop={0}
-    __width="260px"
-  >
-    <SidebarContent />
-  </Drawer.Content>
-);
-
 /** The logo in the rail is the drawer trigger, so the full navigation opens over the page. */
-const RailSidebar = () => (
-  <Drawer>
-    <div className={classes.column} data-collapsed data-test-id="sidebar-rail">
-      <div className={classes.columnContent}>
-        <SidebarContent variant="rail" />
-      </div>
-    </div>
-    <SidebarDrawerContent />
-  </Drawer>
-);
+const RailSidebar = () => {
+  const drawer = useDrawerRemount();
 
-const DrawerSidebar = () => (
-  <Drawer>
-    <Drawer.Trigger>
-      <SidebarDrawerTrigger />
-    </Drawer.Trigger>
-    <SidebarDrawerContent />
-  </Drawer>
-);
+  return (
+    <Drawer key={drawer.key}>
+      <div className={classes.column} data-collapsed data-test-id="sidebar-rail">
+        <div className={classes.columnContent}>
+          <SidebarContent variant="rail" />
+        </div>
+      </div>
+      <SidebarDrawerContent onClose={drawer.close}>
+        <SidebarContent />
+      </SidebarDrawerContent>
+    </Drawer>
+  );
+};
+
+const DrawerSidebar = () => {
+  const drawer = useDrawerRemount();
+  const logo = useSidebarLogo();
+  const canSearch = useCanSearch();
+  const { trackEvent } = useAnalytics();
+
+  return (
+    <Drawer key={drawer.key}>
+      <SidebarAppBar
+        logo={logo}
+        canSearch={canSearch}
+        onMenuOpen={() => trackEvent("sidebar_drawer_opened", { layout: "drawer" })}
+      />
+      <SidebarDrawerContent onClose={drawer.close}>
+        <SidebarContent />
+      </SidebarDrawerContent>
+    </Drawer>
+  );
+};
 
 const SidebarForLayout = ({ layout }: { layout: SidebarLayout }) => {
   switch (layout) {

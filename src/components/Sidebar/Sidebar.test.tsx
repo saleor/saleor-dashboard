@@ -2,9 +2,10 @@ import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
+import { useCanSearch } from "@dashboard/search/useCanSearch";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { act, render, screen, within } from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -27,6 +28,9 @@ jest.mock("./user/useFeedbackSurvey", () => ({
 
 jest.mock("./menu/hooks/useMenuStructure", () => ({
   useMenuStructure: jest.fn(() => []),
+}));
+jest.mock("@dashboard/search/useCanSearch", () => ({
+  useCanSearch: jest.fn(() => false),
 }));
 jest.mock("@dashboard/featureFlags/useFlagsInfo", () => ({
   useFlagsInfo: jest.fn(() => []),
@@ -246,6 +250,7 @@ describe("Sidebar collapse", () => {
   afterEach(() => {
     (useMenuStructure as jest.Mock).mockReturnValue([]);
     Reflect.deleteProperty(window, "matchMedia");
+    Reflect.deleteProperty(Element.prototype, "scrollIntoView");
     jest.restoreAllMocks();
   });
 
@@ -363,6 +368,88 @@ describe("Sidebar collapse", () => {
     expect(within(drawer).getByText("Saleor Dashboard")).toBeInTheDocument();
     expect(within(drawer).getByRole("link", { name: "Categories" })).toBeInTheDocument();
     expect(localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY)).toBeNull();
+  });
+
+  it.each([
+    ["phones", 500],
+    ["tablets", 900],
+  ])("closes the navigation drawer after navigating on %s", async (_, width) => {
+    // Arrange
+    setViewportWidth(width);
+    render(<Sidebar />, { wrapper: Wrapper });
+    await userEvent.click(screen.getByRole("button", { name: "Open navigation" }));
+
+    // Act
+    await userEvent.click(
+      within(screen.getByTestId("sidebar-drawer-content")).getByRole("link", {
+        name: "Configuration",
+      }),
+    );
+
+    // Assert
+    await waitFor(() => {
+      expect(screen.queryByTestId("sidebar-drawer-content")).not.toBeInTheDocument();
+    });
+  });
+
+  it("replaces the navigation column with an app bar on phones", async () => {
+    // Arrange
+    const trackEvent = jest.fn();
+
+    (useAnalytics as jest.Mock).mockReturnValue({ initialize: jest.fn(), trackEvent });
+    (useCanSearch as jest.Mock).mockReturnValue(true);
+    setViewportWidth(500);
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    const appBar = screen.getByTestId("sidebar-app-bar");
+
+    // Assert
+    expect(within(appBar).getByText("Saleor Dashboard")).toBeInTheDocument();
+    expect(within(appBar).getByRole("link", { name: "Search" })).toHaveAttribute(
+      "href",
+      expect.stringMatching(/^\/search/),
+    );
+
+    // Act
+    await userEvent.click(within(appBar).getByRole("button", { name: "Open navigation" }));
+
+    // Assert
+    expect(screen.getByTestId("sidebar-drawer-content")).toBeInTheDocument();
+    expect(trackEvent).toHaveBeenCalledWith("sidebar_drawer_opened", { layout: "drawer" });
+  });
+
+  it("leaves search out of the app bar without search permissions", () => {
+    // Arrange
+    (useCanSearch as jest.Mock).mockReturnValue(false);
+    setViewportWidth(500);
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(
+      within(screen.getByTestId("sidebar-app-bar")).queryByRole("link", { name: "Search" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("reveals the current page and names the close button when the drawer opens", async () => {
+    // Arrange
+    const scrollIntoView = jest.fn();
+
+    Element.prototype.scrollIntoView = scrollIntoView;
+    setViewportWidth(500);
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Open navigation" }));
+
+    // Assert
+    const drawer = screen.getByTestId("sidebar-drawer-content");
+    const currentPage = within(drawer).getByRole("link", { name: "Categories" });
+
+    expect(currentPage).toHaveAttribute("aria-current", "page");
+    expect(scrollIntoView.mock.instances).toContain(currentPage);
+    expect(within(drawer).getByRole("button", { name: "Close navigation" })).toBeInTheDocument();
   });
 
   it("switches wide pages to the rail below 1200px", () => {

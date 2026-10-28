@@ -31,6 +31,7 @@ export const SingleItem = ({ menuItem }: Props) => {
       <Link
         to={menuItem.url || ""}
         replace={active}
+        aria-current={active ? "page" : undefined}
         className={sprinkles({
           display: "block",
           width: "100%",
