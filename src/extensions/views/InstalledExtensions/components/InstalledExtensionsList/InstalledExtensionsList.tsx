@@ -13,6 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProblemsBadge } from "../AppProblems/ProblemsBadge/ProblemsBadge";
 import { ProblemsList } from "../AppProblems/ProblemsList/ProblemsList";
+import { CircuitBreakerBadge } from "../CircuitBreakerBadge/CircuitBreakerBadge";
 import { NewExtensionBadge } from "../NewExtensionBadge/NewExtensionBadge";
 import styles from "./InstalledExtensionsList.module.css";
 import { useExtensionProblems } from "./useExtensionProblems";
@@ -161,6 +162,12 @@ const ExtensionRow = ({
                 </Text>
               </ExtensionName>
               {extension.isNew && <NewExtensionBadge />}
+              {extension.breakerState && (
+                <CircuitBreakerBadge
+                  state={extension.breakerState}
+                  lastStateChange={extension.breakerLastStateChange}
+                />
+              )}
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}

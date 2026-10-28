@@ -1,6 +1,6 @@
 import { type InstalledExtension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { AppTypeEnum } from "@dashboard/graphql";
+import { AppTypeEnum, CircuitBreakerStateEnum } from "@dashboard/graphql";
 import { CUSTOMER_EMAILS_MANIFEST_URL } from "@dashboard/notificationsSettings/constants";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { Mail } from "lucide-react";
@@ -57,6 +57,24 @@ const installedExtensions: InstalledExtension[] = [
   },
 ];
 
+const circuitBreakerExtensions: InstalledExtension[] = [
+  { ...baseExtension, id: "app-1", name: "Customer Emails" },
+  {
+    ...baseExtension,
+    id: "app-6",
+    name: "Stripe",
+    breakerState: CircuitBreakerStateEnum.OPEN,
+    breakerLastStateChange: "2026-10-28T09:15:00Z",
+  },
+  {
+    ...baseExtension,
+    id: "app-7",
+    name: "Klaviyo",
+    breakerState: CircuitBreakerStateEnum.HALF_OPEN,
+    breakerLastStateChange: "2026-10-28T10:40:00Z",
+  },
+];
+
 const meta: Meta<typeof InstalledExtensionsList> = {
   title: "Extensions/InstalledExtensionsList",
   component: InstalledExtensionsList,
@@ -82,3 +100,7 @@ export default meta;
 type Story = StoryObj<typeof InstalledExtensionsList>;
 
 export const WithDeprecatedApps: Story = {};
+
+export const WithCircuitBreakerStates: Story = {
+  args: { installedExtensions: circuitBreakerExtensions },
+};
