@@ -13,7 +13,11 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { pageUrl } from "@dashboard/modeling/urls";
-import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import {
+  languageEntityUrl,
+  TranslatableEntities,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -188,10 +192,8 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
           canTranslate
             ? itemId =>
                 navigate(
-                  languageEntityUrl(
-                    lastUsedLocaleOrFallback,
-                    TranslatableEntities.menuItems,
-                    itemId,
+                  translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                    languageEntityUrl(languageCode, TranslatableEntities.menuItems, itemId),
                   ),
                 )
             : undefined

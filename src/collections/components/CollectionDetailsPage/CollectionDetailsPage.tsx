@@ -32,7 +32,11 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import {
+  languageEntityUrl,
+  TranslatableEntities,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Divider } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
@@ -170,10 +174,12 @@ const CollectionDetailsPage = ({
                 <TranslationsButton
                   onClick={() =>
                     navigate(
-                      languageEntityUrl(
-                        lastUsedLocaleOrFallback,
-                        TranslatableEntities.collections,
-                        collection.id,
+                      translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                        languageEntityUrl(
+                          languageCode,
+                          TranslatableEntities.collections,
+                          collection.id,
+                        ),
                       ),
                     )
                   }

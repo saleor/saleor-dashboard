@@ -51,7 +51,11 @@ import { rippleModelMetadata } from "@dashboard/modeling/ripples/modelMetadata";
 import { modelingSection } from "@dashboard/modeling/urls";
 import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import {
+  languageEntityUrl,
+  TranslatableEntities,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
@@ -250,10 +254,8 @@ const PageDetailsPage = ({
                 <TranslationsButton
                   onClick={() =>
                     navigate(
-                      languageEntityUrl(
-                        lastUsedLocaleOrFallback,
-                        TranslatableEntities.pages,
-                        page?.id,
+                      translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                        languageEntityUrl(languageCode, TranslatableEntities.pages, page?.id),
                       ),
                     )
                   }

@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
+import { useRememberLastTranslationLocale } from "./hooks/useRememberLastTranslationLocale";
 import { parseTranslationDetailQueryParams } from "./translationQueryParams";
 import {
   languageEntitiesPath,
@@ -254,6 +255,8 @@ const TranslationsMenuItem = ({ location, match }: TranslationsEntityRouteProps)
 };
 const TranslationsRouter = () => {
   const intl = useIntl();
+
+  useRememberLastTranslationLocale();
 
   return (
     <>

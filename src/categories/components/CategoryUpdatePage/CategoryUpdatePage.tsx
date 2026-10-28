@@ -33,7 +33,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { PaginatorContext, type PaginatorContextValues } from "@dashboard/hooks/usePaginator";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import {
+  languageEntityUrl,
+  TranslatableEntities,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -211,10 +215,8 @@ export const CategoryUpdatePage = ({
               <TranslationsButton
                 onClick={() =>
                   navigate(
-                    languageEntityUrl(
-                      lastUsedLocaleOrFallback,
-                      TranslatableEntities.categories,
-                      categoryId,
+                    translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                      languageEntityUrl(languageCode, TranslatableEntities.categories, categoryId),
                     ),
                   )
                 }

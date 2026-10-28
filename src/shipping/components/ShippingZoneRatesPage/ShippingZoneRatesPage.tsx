@@ -40,7 +40,11 @@ import { useShippingRateChannels } from "@dashboard/shipping/hooks/useShippingRa
 import { useShippingRateEditChanges } from "@dashboard/shipping/hooks/useShippingRateEditChanges";
 import { shippingMethodGraphiQLQuery } from "@dashboard/shipping/queries";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import {
+  languageEntityUrl,
+  TranslatableEntities,
+  translationTargetUrl,
+} from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type FetchMoreProps, type ListActions, type ListProps } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -280,10 +284,12 @@ const ShippingZoneRatesPage = ({
               <TranslationsButton
                 onClick={() =>
                   navigate(
-                    languageEntityUrl(
-                      lastUsedLocaleOrFallback,
-                      TranslatableEntities.shippingMethods,
-                      rate.id,
+                    translationTargetUrl(lastUsedLocaleOrFallback, languageCode =>
+                      languageEntityUrl(
+                        languageCode,
+                        TranslatableEntities.shippingMethods,
+                        rate.id,
+                      ),
                     ),
                   )
                 }
