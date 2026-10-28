@@ -9,8 +9,9 @@ import { UserInfo } from "./user/Info";
 /**
  * - `full`: always expanded (the drawer).
  * - `collapsible`: the column, following the viewer's collapse preference.
+ * - `rail`: always collapsed, where the full sidebar does not fit beside the page.
  */
-export type SidebarContentVariant = "full" | "collapsible";
+export type SidebarContentVariant = "full" | "collapsible" | "rail";
 
 interface SidebarContentProps {
   variant?: SidebarContentVariant;
@@ -18,7 +19,7 @@ interface SidebarContentProps {
 
 export const SidebarContent = ({ variant = "full" }: SidebarContentProps) => {
   const { isCollapsed } = useSidebarCollapse();
-  const collapsed = variant === "collapsible" && isCollapsed;
+  const collapsed = variant === "rail" || (variant === "collapsible" && isCollapsed);
 
   return (
     <Box

@@ -3,11 +3,13 @@ import { useCallback, useSyncExternalStore } from "react";
 import { type SidebarBreakpoint } from "./SidebarContext";
 
 /**
- * - `drawer`: the navigation opens over the page from a menu button.
+ * - `drawer`: phones; the navigation opens over the page from a menu button.
+ * - `rail`: tablets and pages that ask for room; icons only, the full navigation opens over the page.
  * - `column`: the full sidebar, which the viewer can collapse to the rail.
  */
-export type SidebarLayout = "drawer" | "column";
+export type SidebarLayout = "drawer" | "rail" | "column";
 
+const RAIL_QUERY = "(min-width: 768px)";
 const COLUMN_QUERY: Record<SidebarBreakpoint, string> = {
   default: "(min-width: 1024px)",
   // Pages with wide content (e.g. refunds) give up the full sidebar sooner.
@@ -21,7 +23,11 @@ const getLayout = (breakpoint: SidebarBreakpoint): SidebarLayout => {
     return "column";
   }
 
-  return window.matchMedia(COLUMN_QUERY[breakpoint]).matches ? "column" : "drawer";
+  if (!window.matchMedia(RAIL_QUERY).matches) {
+    return "drawer";
+  }
+
+  return window.matchMedia(COLUMN_QUERY[breakpoint]).matches ? "column" : "rail";
 };
 
 /** Rendering one layout (instead of hiding the others with CSS) mounts the menu, and its hotkeys, once. */
@@ -32,11 +38,11 @@ export const useSidebarLayout = (breakpoint: SidebarBreakpoint): SidebarLayout =
         return () => {};
       }
 
-      const query = window.matchMedia(COLUMN_QUERY[breakpoint]);
+      const queries = [RAIL_QUERY, COLUMN_QUERY[breakpoint]].map(query => window.matchMedia(query));
 
-      query.addEventListener("change", onChange);
+      queries.forEach(query => query.addEventListener("change", onChange));
 
-      return (): void => query.removeEventListener("change", onChange);
+      return (): void => queries.forEach(query => query.removeEventListener("change", onChange));
     },
     [breakpoint],
   );

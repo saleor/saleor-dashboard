@@ -39,6 +39,10 @@
   line-height: 0;
 }
 
+.triggerAnchor {
+  display: flex;
+}
+
 .expandButton {
   position: relative;
   width: 36px;

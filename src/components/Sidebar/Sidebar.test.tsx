@@ -336,6 +336,7 @@ describe("Sidebar collapse", () => {
     const drawer = screen.getByTestId("sidebar-drawer-content");
 
     expect(screen.queryByTestId("sidebar-column")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("sidebar-rail")).not.toBeInTheDocument();
     expect(within(drawer).getByText("Saleor Dashboard")).toBeInTheDocument();
     expect(within(drawer).getByText("Products")).toBeInTheDocument();
     expect(
@@ -343,7 +344,28 @@ describe("Sidebar collapse", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("switches wide pages to the drawer below 1200px", () => {
+  it("shows the rail on tablets and opens the full navigation over the page", async () => {
+    // Arrange
+    setViewportWidth(900);
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.getByTestId("sidebar-rail")).toHaveAttribute("data-collapsed", "true");
+    expect(screen.queryByTestId("sidebar-column")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Catalog" })).toBeInTheDocument();
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Open navigation" }));
+
+    // Assert
+    const drawer = screen.getByTestId("sidebar-drawer-content");
+
+    expect(within(drawer).getByText("Saleor Dashboard")).toBeInTheDocument();
+    expect(within(drawer).getByRole("link", { name: "Categories" })).toBeInTheDocument();
+    expect(localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY)).toBeNull();
+  });
+
+  it("switches wide pages to the rail below 1200px", () => {
     // Arrange
     setViewportWidth(1100);
 
@@ -362,8 +384,7 @@ describe("Sidebar collapse", () => {
     );
 
     // Assert
-    expect(screen.queryByTestId("sidebar-column")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Open navigation" })).toBeInTheDocument();
+    expect(screen.getByTestId("sidebar-rail")).toBeInTheDocument();
   });
 
   it("toggles with the keyboard shortcut while the column is shown", () => {

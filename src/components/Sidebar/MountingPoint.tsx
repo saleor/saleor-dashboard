@@ -3,7 +3,11 @@ import clsx from "clsx";
 
 import { type SidebarContentVariant } from "./Content";
 import styles from "./MountingPoint.module.css";
-import { SidebarCollapseButton, SidebarExpandButton } from "./SidebarCollapseToggle";
+import {
+  SidebarCollapseButton,
+  SidebarDrawerOpenButton,
+  SidebarExpandButton,
+} from "./SidebarCollapseToggle";
 import { useSidebarLogo } from "./useSidebarLogo";
 
 interface MountingPointProps {
@@ -17,7 +21,11 @@ export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
   if (collapsed) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" className={styles.header}>
-        <SidebarExpandButton logo={logo} />
+        {variant === "rail" ? (
+          <SidebarDrawerOpenButton logo={logo} />
+        ) : (
+          <SidebarExpandButton logo={logo} />
+        )}
       </Box>
     );
   }

@@ -1,17 +1,20 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Avatar, Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Avatar, Box, Drawer, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { type MouseEvent, type RefObject, useLayoutEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { RAIL_OVERLAY_OFFSET } from "./menu/RailItem";
 import { useLabelTooltip } from "./menu/useLabelTooltip";
+import { useTooltipSuppression } from "./menu/useTooltipSuppression";
 import { rippleSidebarCollapse } from "./ripples/sidebarCollapse";
 import { ShortcutItem } from "./shortcuts/ShortcutItem";
 import { getShortcutLeadingKey } from "./shortcuts/utils";
 import { sidebarCollapseMessages as messages } from "./sidebarCollapseMessages";
 import styles from "./SidebarCollapseToggle.module.css";
+import { sidebarDrawerTriggerMessages } from "./sidebarDrawerTriggerMessages";
 import { useSidebarCollapseToggle } from "./useSidebarCollapseToggle";
 
 const iconProps = { size: iconSize.small, strokeWidth: iconStrokeWidthBySize.small } as const;
@@ -137,6 +140,48 @@ export const SidebarExpandButton = ({ logo }: { logo: string }) => {
       </Tooltip.Trigger>
       <Tooltip.Content side="right" sideOffset={RAIL_OVERLAY_OFFSET}>
         <ToggleTooltipContent label={label} />
+      </Tooltip.Content>
+    </Tooltip>
+  );
+};
+
+/**
+ * Where the full sidebar does not fit beside the page, the rail is fixed and the logo opens the
+ * full navigation over the page instead. Must render inside a `Drawer`.
+ */
+export const SidebarDrawerOpenButton = ({ logo }: { logo: string }) => {
+  const intl = useIntl();
+  const suppression = useTooltipSuppression();
+  const tooltip = useLabelTooltip({ hidden: suppression.isSuppressed });
+  const { trackEvent } = useAnalytics();
+  const label = intl.formatMessage(sidebarDrawerTriggerMessages.openNavigation);
+
+  return (
+    <Tooltip {...tooltip.rootProps} delayDuration={150}>
+      {/* Macaw triggers only forward children, so each needs its own element to attach to. */}
+      <Tooltip.Trigger>
+        <span className={styles.triggerAnchor} {...tooltip.triggerProps}>
+          <Drawer.Trigger>
+            <button
+              type="button"
+              className={styles.expandButton}
+              aria-label={label}
+              onClick={() => {
+                suppression.suppress();
+                trackEvent("sidebar_drawer_opened", { layout: "rail" });
+              }}
+              {...suppression.triggerProps}
+              data-test-id="sidebar-drawer-open"
+            >
+              <ExpandButtonFace logo={logo} />
+            </button>
+          </Drawer.Trigger>
+        </span>
+      </Tooltip.Trigger>
+      <Tooltip.Content side="right" sideOffset={RAIL_OVERLAY_OFFSET}>
+        <Text size={2} fontWeight="medium" __whiteSpace="nowrap">
+          {label}
+        </Text>
       </Tooltip.Content>
     </Tooltip>
   );

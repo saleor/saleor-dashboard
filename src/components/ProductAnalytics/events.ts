@@ -110,6 +110,9 @@ export interface AnalyticsEventMap {
     source: "button" | "shortcut";
     state: "collapsed" | "expanded";
   };
+  sidebar_drawer_opened: {
+    layout: "rail";
+  };
   warehouse_channels_changed: {
     action: "assign" | "remove";
     channel_count: number;
