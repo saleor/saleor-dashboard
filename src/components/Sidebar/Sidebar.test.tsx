@@ -16,7 +16,6 @@ import { type SidebarMenuItem } from "./menu/types";
 import { Sidebar } from "./Sidebar";
 import {
   SIDEBAR_COLLAPSED_STORAGE_KEY,
-  SIDEBAR_SHORTCUT_KNOWN_STORAGE_KEY,
   SidebarProvider,
   useCustomSidebarBreakpoint,
 } from "./SidebarContext";
@@ -369,7 +368,7 @@ describe("Sidebar collapse", () => {
     expect(screen.getByRole("tooltip")).toHaveTextContent("Collapse navigation");
   });
 
-  it("stops showing the toggle tooltip once the shortcut has been used", async () => {
+  it("still shows the toggle tooltip after the shortcut has been used", async () => {
     // Arrange
     jest.useFakeTimers();
 
@@ -381,22 +380,10 @@ describe("Sidebar collapse", () => {
     // Act
     act(() => getCollapseShortcutHandler()(event));
     await user.hover(screen.getByRole("button", { name: "Expand navigation" }));
-    act(() => jest.advanceTimersByTime(1000));
+    act(() => jest.advanceTimersByTime(800));
 
     // Assert
-    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
-    expect(localStorage.getItem(SIDEBAR_SHORTCUT_KNOWN_STORAGE_KEY)).toBe("true");
-  });
-
-  it("keeps teaching the shortcut to viewers who toggle with the button", async () => {
-    // Arrange
-    render(<Sidebar />, { wrapper: Wrapper });
-
-    // Act
-    await userEvent.click(screen.getByRole("button", { name: "Collapse navigation" }));
-
-    // Assert
-    expect(localStorage.getItem(SIDEBAR_SHORTCUT_KNOWN_STORAGE_KEY)).toBeNull();
+    expect(screen.getByRole("tooltip")).toHaveTextContent("Expand navigation");
   });
 
   it("ignores a malformed stored preference", () => {

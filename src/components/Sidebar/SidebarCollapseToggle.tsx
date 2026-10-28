@@ -14,7 +14,6 @@ import { ShortcutItem } from "./shortcuts/ShortcutItem";
 import { getShortcutLeadingKey } from "./shortcuts/utils";
 import { sidebarCollapseMessages as messages } from "./sidebarCollapseMessages";
 import styles from "./SidebarCollapseToggle.module.css";
-import { useSidebarCollapse } from "./SidebarContext";
 import { sidebarDrawerTriggerMessages } from "./sidebarDrawerTriggerMessages";
 import { useSidebarCollapseToggle } from "./useSidebarCollapseToggle";
 
@@ -22,15 +21,9 @@ const iconProps = { size: iconSize.small, strokeWidth: iconStrokeWidthBySize.sma
 
 /**
  * The toggle icons show what they do, so the tooltip mostly teaches the shortcut. It waits for a
- * deliberate hover and goes quiet once the viewer has used the shortcut.
+ * deliberate hover, so viewers who already know the shortcut don't see it on every pass.
  */
 const TOGGLE_TOOLTIP_DELAY_MS = 700;
-
-const useToggleTooltip = (): ReturnType<typeof useLabelTooltip> => {
-  const { knowsCollapseShortcut } = useSidebarCollapse();
-
-  return useLabelTooltip({ hidden: knowsCollapseShortcut });
-};
 
 /**
  * Each state renders its own toggle, so toggling unmounts the focused one. Focus follows to the
@@ -88,7 +81,7 @@ const ToggleTooltipContent = ({ label }: { label: string }) => (
 export const SidebarCollapseButton = () => {
   const intl = useIntl();
   const { ref, onClick } = useToggleButton();
-  const tooltip = useToggleTooltip();
+  const tooltip = useLabelTooltip();
   const label = intl.formatMessage(messages.collapseNavigation);
 
   return (
@@ -132,7 +125,7 @@ const ExpandButtonFace = ({ logo }: { logo: string }) => (
 export const SidebarExpandButton = ({ logo }: { logo: string }) => {
   const intl = useIntl();
   const { ref, onClick } = useToggleButton();
-  const tooltip = useToggleTooltip();
+  const tooltip = useLabelTooltip();
   const label = intl.formatMessage(messages.expandNavigation);
 
   return (
