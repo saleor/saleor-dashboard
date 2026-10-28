@@ -1,18 +1,39 @@
-import sideBarDefaultLogoDarkMode from "@assets/images/sidebar-deafult-logo-darkMode.png";
-import sideBarDefaultLogo from "@assets/images/sidebar-default-logo.png";
-import { useLegacyThemeHandler } from "@dashboard/components/Sidebar/user/Controls";
 import { Avatar, Box, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 
-export const MountingPoint = () => {
-  const { theme } = useLegacyThemeHandler();
-  const logo = theme === "defaultLight" ? sideBarDefaultLogo : sideBarDefaultLogoDarkMode;
+import { type SidebarContentVariant } from "./Content";
+import styles from "./MountingPoint.module.css";
+import { SidebarCollapseButton, SidebarExpandButton } from "./SidebarCollapseToggle";
+import { useSidebarLogo } from "./useSidebarLogo";
+
+interface MountingPointProps {
+  variant: SidebarContentVariant;
+  collapsed: boolean;
+}
+
+export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
+  const logo = useSidebarLogo();
+
+  if (collapsed) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" className={styles.header}>
+        <SidebarExpandButton logo={logo} />
+      </Box>
+    );
+  }
 
   return (
-    <Box display="flex" gap={3} paddingX={4} paddingY={5} alignItems="center">
+    <Box
+      display="flex"
+      gap={3}
+      alignItems="center"
+      className={clsx(styles.header, styles.expandedHeader)}
+    >
       <Avatar.Store src={logo} scheme="accent1" size="small" />
-      <Text size={3} fontWeight="bold" __flex="1">
+      <Text size={3} fontWeight="bold" __flex="1" className="ellipsis">
         Saleor Dashboard
       </Text>
+      {variant === "collapsible" && <SidebarCollapseButton />}
     </Box>
   );
 };

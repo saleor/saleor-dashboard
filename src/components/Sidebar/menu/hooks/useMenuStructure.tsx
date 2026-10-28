@@ -44,7 +44,8 @@ import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { SearchShortcut } from "@dashboard/search/SearchShortcut";
+import { SearchShortcut, useSearchHotkey } from "@dashboard/search/SearchShortcut";
+import { searchPermissions, useCanSearch } from "@dashboard/search/useCanSearch";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -90,6 +91,8 @@ export function useMenuStructure() {
     },
   }));
   const customerTypeMenuItems = useCustomerTypeMenuItems();
+
+  useSearchHotkey({ enabled: useCanSearch() });
 
   const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
@@ -162,12 +165,7 @@ export function useMenuStructure() {
       ),
       id: "search",
       url: "/search",
-      permissions: [
-        PermissionEnum.MANAGE_PRODUCTS,
-        PermissionEnum.MANAGE_PAGES,
-        PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-        PermissionEnum.MANAGE_ORDERS,
-      ],
+      permissions: searchPermissions,
       type: "item",
     },
     {

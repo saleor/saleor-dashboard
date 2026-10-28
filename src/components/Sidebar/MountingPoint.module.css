@@ -1,0 +1,12 @@
+/* Same height in both states so the menu below does not jump when the sidebar collapses. */
+.header {
+  height: 64px;
+  flex-shrink: 0;
+}
+
+/* Puts the 24px logo on the menu icon axis (30px), where the collapsed rail centers it,
+   so the logo stays put when the sidebar collapses or expands. */
+.expandedHeader {
+  padding-left: 18px;
+  padding-right: var(--mu-spacing-4);
+}

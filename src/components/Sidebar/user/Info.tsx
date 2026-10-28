@@ -6,7 +6,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 
 import { UserControls } from "./Controls";
 
-export const UserInfo = () => {
+export const UserInfo = ({ collapsed = false }: { collapsed?: boolean }) => {
   const { user } = useUser();
 
   return (
@@ -18,21 +18,23 @@ export const UserInfo = () => {
       borderTopWidth={1}
       borderColor="default1"
       borderTopStyle="solid"
-      justifyContent="space-between"
+      justifyContent={collapsed ? "center" : "space-between"}
       // Match savebarHeight so this hairline meets the save bar across the sidebar edge.
       __height={savebarHeight}
     >
-      <Box display="flex" gap={3} alignItems="center" minWidth={0} flexGrow="1">
-        <Box flexShrink="0">
-          <UserAvatar initials={getUserInitials(user!)} url={user?.avatar?.url} />
+      {!collapsed && (
+        <Box display="flex" gap={3} alignItems="center" minWidth={0} flexGrow="1">
+          <Box flexShrink="0">
+            <UserAvatar initials={getUserInitials(user!)} url={user?.avatar?.url} />
+          </Box>
+          <Box minWidth={0} className="ellipsis">
+            <Text size={3} fontWeight="bold">
+              {getUserName(user!, true)}
+            </Text>
+          </Box>
         </Box>
-        <Box minWidth={0} className="ellipsis">
-          <Text size={3} fontWeight="bold">
-            {getUserName(user!, true)}
-          </Text>
-        </Box>
-      </Box>
-      <UserControls />
+      )}
+      <UserControls collapsed={collapsed} />
     </Box>
   );
 };

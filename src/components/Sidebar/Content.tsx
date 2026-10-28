@@ -1,14 +1,24 @@
-import { AllRipplesModal } from "@dashboard/ripples/components/AllRipplesModal";
-import { useAllRipplesModalState } from "@dashboard/ripples/state";
 import { Box } from "@saleor/macaw-ui-next";
 
 import { DeprecationBanner } from "./DeprecationBanner/DeprecationBanner";
 import { Menu } from "./menu/Menu";
 import { MountingPoint } from "./MountingPoint";
+import { useSidebarCollapse } from "./SidebarContext";
 import { UserInfo } from "./user/Info";
 
-export const SidebarContent = () => {
-  const { isModalOpen, setModalState } = useAllRipplesModalState();
+/**
+ * - `full`: always expanded (the drawer).
+ * - `collapsible`: the column, following the viewer's collapse preference.
+ */
+export type SidebarContentVariant = "full" | "collapsible";
+
+interface SidebarContentProps {
+  variant?: SidebarContentVariant;
+}
+
+export const SidebarContent = ({ variant = "full" }: SidebarContentProps) => {
+  const { isCollapsed } = useSidebarCollapse();
+  const collapsed = variant === "collapsible" && isCollapsed;
 
   return (
     <Box
@@ -20,17 +30,11 @@ export const SidebarContent = () => {
       __gridTemplateRows="auto 1fr auto"
     >
       <Box>
-        <MountingPoint />
-        <DeprecationBanner />
+        <MountingPoint variant={variant} collapsed={collapsed} />
+        <DeprecationBanner compact={collapsed} />
       </Box>
-      <Menu />
-      <UserInfo />
-      <AllRipplesModal
-        open={isModalOpen}
-        onChange={open => {
-          setModalState(open);
-        }}
-      />
+      <Menu collapsed={collapsed} />
+      <UserInfo collapsed={collapsed} />
     </Box>
   );
 };

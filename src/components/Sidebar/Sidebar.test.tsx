@@ -1,15 +1,23 @@
 import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
+import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { MemoryRouter } from "react-router-dom";
 
+import { useMenuStructure } from "./menu/hooks/useMenuStructure";
+import { type SidebarMenuItem } from "./menu/types";
 import { Sidebar } from "./Sidebar";
-import { SidebarProvider } from "./SidebarContext";
+import {
+  SIDEBAR_COLLAPSED_STORAGE_KEY,
+  SidebarProvider,
+  useCustomSidebarBreakpoint,
+} from "./SidebarContext";
 
 const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true }));
 
@@ -62,7 +70,7 @@ jest.mock("@dashboard/ripples/state", () => ({
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
-    <MemoryRouter>
+    <MemoryRouter initialEntries={["/categories/"]}>
       {/* @ts-expect-error - legacy types */}
       <LegacyThemeProvider>
         <ThemeProvider>
@@ -104,11 +112,15 @@ describe("Sidebar", () => {
     );
   });
 
-  it("offers the Saleor Cloud link in the user menu when is cloud instance", async () => {
+  it.each([
+    { state: "expanded", collapsed: "false" },
+    { state: "collapsed", collapsed: "true" },
+  ])("offers the Saleor Cloud link in the user menu when $state", async ({ collapsed }) => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({
       isAuthenticatedViaCloud: true,
     }));
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, collapsed);
     render(<Sidebar />, { wrapper: Wrapper });
 
     // Act
@@ -170,5 +182,295 @@ describe("Sidebar", () => {
     await userEvent.click(screen.getByText("Command menu"));
     // Assert
     expect(actionCallback).toHaveBeenCalledWith(true);
+  });
+});
+
+const catalogGroup: SidebarMenuItem = {
+  id: "products",
+  label: "Catalog",
+  url: "/products/",
+  type: "itemGroup",
+  icon: <span />,
+  children: [
+    { id: "products", label: "Products", url: "/products/", type: "item" },
+    { id: "categories", label: "Categories", url: "/categories/", type: "item" },
+  ],
+};
+
+const configurationItem: SidebarMenuItem = {
+  id: "configure",
+  label: "Configuration",
+  url: "/configuration/",
+  type: "item",
+  icon: <span />,
+};
+
+const getCollapseShortcutHandler = (): ((event: KeyboardEvent) => void) => {
+  const call = (useHotkeys as jest.Mock).mock.calls.findLast(([keys]) => keys === "mod+b");
+
+  return call[1];
+};
+
+/** jsdom has no `matchMedia`; without one the sidebar assumes the desktop column. */
+const setViewportWidth = (width: number): void => {
+  const matchMedia = (query: string): MediaQueryList => {
+    const minWidth = /min-width:\s*(\d+)px/.exec(query)?.[1];
+
+    return {
+      matches: minWidth !== undefined && width >= Number(minWidth),
+      media: query,
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    };
+  };
+
+  Object.defineProperty(window, "matchMedia", { configurable: true, value: matchMedia });
+};
+
+const WidePage = () => {
+  useCustomSidebarBreakpoint("wide");
+
+  return null;
+};
+
+describe("Sidebar collapse", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    (useMenuStructure as jest.Mock).mockReturnValue([catalogGroup, configurationItem]);
+  });
+
+  afterEach(() => {
+    (useMenuStructure as jest.Mock).mockReturnValue([]);
+    Reflect.deleteProperty(window, "matchMedia");
+    jest.restoreAllMocks();
+  });
+
+  it("collapses to the icon rail and remembers the choice", async () => {
+    // Arrange
+    const trackEvent = jest.fn();
+
+    (useAnalytics as jest.Mock).mockReturnValue({ initialize: jest.fn(), trackEvent });
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Collapse navigation" }));
+
+    // Assert
+    expect(screen.getByTestId("sidebar-column")).toHaveAttribute("data-collapsed", "true");
+    expect(screen.getByRole("button", { name: "Expand navigation" })).toBeInTheDocument();
+    expect(screen.queryByText("Saleor Dashboard")).not.toBeInTheDocument();
+    expect(localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY)).toBe("true");
+    expect(trackEvent).toHaveBeenCalledWith("sidebar_collapse_toggled", {
+      source: "button",
+      state: "collapsed",
+    });
+  });
+
+  it("starts collapsed when the preference is stored and expands back", async () => {
+    // Arrange
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Expand navigation" }));
+
+    // Assert
+    expect(screen.getByText("Saleor Dashboard")).toBeInTheDocument();
+    expect(localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY)).toBe("false");
+  });
+
+  it("keeps keyboard focus on the toggle across both states", async () => {
+    // Arrange
+    render(<Sidebar />, { wrapper: Wrapper });
+    screen.getByRole("button", { name: "Collapse navigation" }).focus();
+
+    // Act
+    await userEvent.keyboard("{Enter}");
+
+    // Assert
+    expect(screen.getByRole("button", { name: "Expand navigation" })).toHaveFocus();
+
+    // Act
+    await userEvent.keyboard("{Enter}");
+
+    // Assert
+    expect(screen.getByRole("button", { name: "Collapse navigation" })).toHaveFocus();
+  });
+
+  it("leaves focus alone after a mouse click on the toggle", async () => {
+    // Arrange
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Collapse navigation" }));
+
+    // Assert
+    expect(screen.getByRole("button", { name: "Expand navigation" })).not.toHaveFocus();
+  });
+
+  it("ignores a malformed stored preference", () => {
+    // Arrange
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "yes");
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.getByTestId("sidebar-column")).toHaveAttribute("data-collapsed", "false");
+  });
+
+  it("keeps the drawer navigation expanded on phones", async () => {
+    // Arrange
+    setViewportWidth(500);
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Open navigation" }));
+
+    // Assert
+    const drawer = screen.getByTestId("sidebar-drawer-content");
+
+    expect(screen.queryByTestId("sidebar-column")).not.toBeInTheDocument();
+    expect(within(drawer).getByText("Saleor Dashboard")).toBeInTheDocument();
+    expect(within(drawer).getByText("Products")).toBeInTheDocument();
+    expect(
+      within(drawer).queryByRole("button", { name: "Collapse navigation" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("switches wide pages to the drawer below 1200px", () => {
+    // Arrange
+    setViewportWidth(1100);
+
+    // Act
+    const { rerender } = render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.getByTestId("sidebar-column")).toBeInTheDocument();
+
+    // Act
+    rerender(
+      <>
+        <WidePage />
+        <Sidebar />
+      </>,
+    );
+
+    // Assert
+    expect(screen.queryByTestId("sidebar-column")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Open navigation" })).toBeInTheDocument();
+  });
+
+  it("toggles with the keyboard shortcut while the column is shown", () => {
+    // Arrange
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    const event = new KeyboardEvent("keydown", { key: "b", metaKey: true, cancelable: true });
+
+    // Act
+    act(() => getCollapseShortcutHandler()(event));
+
+    // Assert
+    expect(screen.getByTestId("sidebar-column")).toHaveAttribute("data-collapsed", "true");
+    expect(event.defaultPrevented).toBe(true);
+  });
+
+  it.each([
+    ["phones", 500],
+    ["tablets", 900],
+  ])("leaves the shortcut to the browser on %s", (_, width) => {
+    // Arrange
+    setViewportWidth(width);
+    (useHotkeys as jest.Mock).mockClear();
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect((useHotkeys as jest.Mock).mock.calls.some(([keys]) => keys === "mod+b")).toBe(false);
+  });
+
+  it("names rail items and marks the section of the current page", () => {
+    // Arrange
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.getByRole("link", { name: "Configuration" })).toHaveAttribute(
+      "href",
+      "/configuration/",
+    );
+    expect(screen.getByRole("button", { name: "Catalog" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
+    expect(screen.getByTestId("menu-item-label-products")).toHaveAttribute("data-active", "true");
+  });
+
+  it("opens a section's pages beside the rail and closes after navigating", async () => {
+    // Arrange
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Catalog" }));
+
+    const flyout = await screen.findByTestId("menu-rail-flyout-products");
+
+    // Assert
+    expect(within(flyout).getByText("Catalog")).toBeInTheDocument();
+    expect(within(flyout).queryByRole("link", { name: "Catalog" })).not.toBeInTheDocument();
+    expect(within(flyout).getByRole("link", { name: "Categories" })).toBeInTheDocument();
+
+    // Act
+    await userEvent.click(within(flyout).getByRole("link", { name: "Products" }));
+
+    // Assert
+    expect(screen.queryByTestId("menu-rail-flyout-products")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Catalog" })).toHaveFocus();
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
+
+  it("closes a rail tooltip as soon as the pointer leaves the icon", async () => {
+    // Arrange
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    const configuration = screen.getByRole("link", { name: "Configuration" });
+
+    await userEvent.hover(configuration);
+    expect(await screen.findByRole("tooltip")).toHaveTextContent("Configuration");
+
+    // Act
+    await userEvent.unhover(configuration);
+
+    // Assert
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
+
+  it("moves feedback into the rail and the account menu onto the avatar", () => {
+    // Arrange
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.getAllByTestId("feedback-button")).toHaveLength(1);
+    expect(screen.getByTestId("feedback-button")).toHaveAttribute(
+      "data-posthog-feedback-trigger",
+      "true",
+    );
+    expect(screen.getByRole("button", { name: "Account menu" })).toHaveAttribute(
+      "data-test-id",
+      "userMenu",
+    );
   });
 });

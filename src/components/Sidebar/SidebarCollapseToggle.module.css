@@ -1,0 +1,89 @@
+.collapseButton,
+.expandButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--mu-colors-text-default2);
+  transition:
+    color 120ms ease,
+    background-color 120ms ease;
+}
+
+.collapseButton:focus-visible,
+.expandButton:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 1px;
+}
+
+/* Fits inside the logo row so adding it does not change the header height. */
+.collapseButton {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--mu-border-radius-2);
+}
+
+.collapseButton:hover {
+  color: var(--mu-colors-text-default1);
+  background-color: var(--mu-colors-background-default1);
+}
+
+.ripple {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  line-height: 0;
+}
+
+.expandButton {
+  position: relative;
+  width: 36px;
+  height: 32px;
+  border-radius: var(--mu-border-radius-3);
+}
+
+.logo,
+.expandIcon {
+  display: flex;
+  transition:
+    opacity 120ms ease,
+    transform 160ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.expandIcon {
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(-2px);
+}
+
+.expandButton:hover,
+.expandButton:focus-visible {
+  color: var(--mu-colors-text-default1);
+  background-color: var(--mu-colors-background-default1);
+}
+
+.expandButton:hover .logo,
+.expandButton:focus-visible .logo {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.expandButton:hover .expandIcon,
+.expandButton:focus-visible .expandIcon {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .expandIcon {
+    transition: none;
+  }
+}

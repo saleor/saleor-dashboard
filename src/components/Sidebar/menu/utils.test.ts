@@ -4,7 +4,13 @@ import { type PermissionEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 
 import { type SidebarMenuItem } from "./types";
-import { getMenuItemExtension, isMenuActive, mapToExtensionsItems } from "./utils";
+import {
+  getMenuItemExtension,
+  getRailFlyoutChildren,
+  isMenuActive,
+  mapToExtensionsItems,
+  shouldLinkGroupInFlyout,
+} from "./utils";
 
 jest.mock("@dashboard/extensions/urls", () => ({
   ExtensionsUrls: {
@@ -607,5 +613,116 @@ describe("isMenuActive for the Favorites group header", () => {
   it("is not active when a different pinned type is selected", () => {
     // Act & Assert
     expect(isMenuActive("/models/?pageTypes%5B0%5D=type-b", favorites)).toBe(false);
+  });
+});
+
+describe("shouldLinkGroupInFlyout", () => {
+  it("does not link the group when a child already opens its page", () => {
+    // Arrange
+    const catalog: SidebarMenuItem = {
+      id: "products",
+      label: "Catalog",
+      url: "/products/",
+      type: "itemGroup",
+      children: [
+        { id: "products", label: "Products", url: "/products", type: "item" },
+        { id: "categories", label: "Categories", url: "/categories/", type: "item" },
+      ],
+    };
+
+    // Act & Assert
+    expect(shouldLinkGroupInFlyout(catalog)).toBe(false);
+  });
+
+  it("ignores the query string when matching a child to the group page", () => {
+    // Arrange
+    const customers: SidebarMenuItem = {
+      id: "customers",
+      label: "Customers",
+      url: "/customers/",
+      type: "itemGroup",
+      children: [{ id: "all", label: "All", url: "/customers/?customerTypes=", type: "item" }],
+    };
+
+    // Act & Assert
+    expect(shouldLinkGroupInFlyout(customers)).toBe(false);
+  });
+
+  it("links the group when no child opens its page", () => {
+    // Arrange
+    const home: SidebarMenuItem = {
+      id: "home",
+      label: "Home",
+      url: "/home",
+      type: "itemGroup",
+      children: [{ id: "home-widget-1", label: "Pulse", url: "/home/widgets/1", type: "item" }],
+    };
+
+    // Act & Assert
+    expect(shouldLinkGroupInFlyout(home)).toBe(true);
+  });
+
+  it("does not link a group without a page", () => {
+    // Arrange
+    const group: SidebarMenuItem = { id: "group", label: "Group", type: "itemGroup", children: [] };
+
+    // Act & Assert
+    expect(shouldLinkGroupInFlyout(group)).toBe(false);
+  });
+});
+
+describe("getRailFlyoutChildren", () => {
+  it("drops row adornments", () => {
+    // Arrange
+    const group: SidebarMenuItem = {
+      id: "modeling",
+      label: "Modeling",
+      url: "/models/",
+      type: "itemGroup",
+      children: [
+        { id: "pin", label: "Blog", url: "/models/?pageTypes=1", type: "item", endAdornment: "x" },
+      ],
+    };
+
+    // Act
+    const children = getRailFlyoutChildren(group);
+
+    // Assert
+    expect(children[0].endAdornment).toBeUndefined();
+    expect(children[0].label).toBe("Blog");
+  });
+
+  it("runs the group click handler from the child that opens the group page", () => {
+    // Arrange
+    const groupClick = jest.fn();
+    const childClick = jest.fn();
+    const group: SidebarMenuItem = {
+      id: "installed-extensions",
+      label: "Extensions",
+      url: "/extensions/",
+      type: "itemGroup",
+      onClick: groupClick,
+      children: [
+        {
+          id: "installed-extensions",
+          label: "Installed",
+          url: "/extensions/",
+          type: "item",
+          onClick: childClick,
+        },
+        { id: "explore-extensions", label: "Explore", url: "/extensions/explore", type: "item" },
+      ],
+    };
+
+    // Act
+    const [installed, explore] = getRailFlyoutChildren(group);
+
+    installed.onClick?.();
+    explore.onClick?.();
+
+    // Assert
+    expect(childClick).toHaveBeenCalledTimes(1);
+    expect(groupClick).toHaveBeenCalledTimes(1);
+    expect(explore.onClick).toBeUndefined();
   });
 });

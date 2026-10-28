@@ -7,6 +7,7 @@ import { channelCreateSetupFlow } from "@dashboard/channels/ripples/channelCreat
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { rippleGlobalFeedback } from "@dashboard/components/Sidebar/ripples/globalFeedback";
+import { rippleSidebarCollapse } from "@dashboard/components/Sidebar/ripples/sidebarCollapse";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
@@ -121,6 +122,7 @@ export const allRipples: Ripple[] = [
   rippleCloudEnvLink,
   rippleNavigationPins,
   rippleGlobalFeedback,
+  rippleSidebarCollapse,
 ];
 
 /**
