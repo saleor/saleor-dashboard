@@ -14,10 +14,23 @@ import { ShortcutItem } from "./shortcuts/ShortcutItem";
 import { getShortcutLeadingKey } from "./shortcuts/utils";
 import { sidebarCollapseMessages as messages } from "./sidebarCollapseMessages";
 import styles from "./SidebarCollapseToggle.module.css";
+import { useSidebarCollapse } from "./SidebarContext";
 import { sidebarDrawerTriggerMessages } from "./sidebarDrawerTriggerMessages";
 import { useSidebarCollapseToggle } from "./useSidebarCollapseToggle";
 
 const iconProps = { size: iconSize.small, strokeWidth: iconStrokeWidthBySize.small } as const;
+
+/**
+ * The toggle icons show what they do, so the tooltip mostly teaches the shortcut. It waits for a
+ * deliberate hover and goes quiet once the viewer has used the shortcut.
+ */
+const TOGGLE_TOOLTIP_DELAY_MS = 700;
+
+const useToggleTooltip = (): ReturnType<typeof useLabelTooltip> => {
+  const { knowsCollapseShortcut } = useSidebarCollapse();
+
+  return useLabelTooltip({ hidden: knowsCollapseShortcut });
+};
 
 /**
  * Each state renders its own toggle, so toggling unmounts the focused one. Focus follows to the
@@ -75,12 +88,12 @@ const ToggleTooltipContent = ({ label }: { label: string }) => (
 export const SidebarCollapseButton = () => {
   const intl = useIntl();
   const { ref, onClick } = useToggleButton();
-  const tooltip = useLabelTooltip();
+  const tooltip = useToggleTooltip();
   const label = intl.formatMessage(messages.collapseNavigation);
 
   return (
     <Box position="relative" display="flex">
-      <Tooltip {...tooltip.rootProps} delayDuration={300}>
+      <Tooltip {...tooltip.rootProps} delayDuration={TOGGLE_TOOLTIP_DELAY_MS}>
         <Tooltip.Trigger>
           <button
             ref={ref}
@@ -120,11 +133,11 @@ const ExpandButtonFace = ({ logo }: { logo: string }) => (
 export const SidebarExpandButton = ({ logo }: { logo: string }) => {
   const intl = useIntl();
   const { ref, onClick } = useToggleButton();
-  const tooltip = useLabelTooltip();
+  const tooltip = useToggleTooltip();
   const label = intl.formatMessage(messages.expandNavigation);
 
   return (
-    <Tooltip {...tooltip.rootProps} delayDuration={150}>
+    <Tooltip {...tooltip.rootProps} delayDuration={TOGGLE_TOOLTIP_DELAY_MS}>
       <Tooltip.Trigger>
         <button
           ref={ref}

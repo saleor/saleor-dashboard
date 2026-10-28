@@ -16,6 +16,7 @@ import { type SidebarMenuItem } from "./menu/types";
 import { Sidebar } from "./Sidebar";
 import {
   SIDEBAR_COLLAPSED_STORAGE_KEY,
+  SIDEBAR_SHORTCUT_KNOWN_STORAGE_KEY,
   SidebarProvider,
   useCustomSidebarBreakpoint,
 } from "./SidebarContext";
@@ -250,6 +251,7 @@ describe("Sidebar collapse", () => {
   afterEach(() => {
     (useMenuStructure as jest.Mock).mockReturnValue([]);
     Reflect.deleteProperty(window, "matchMedia");
+    jest.useRealTimers();
     jest.restoreAllMocks();
   });
 
@@ -314,6 +316,58 @@ describe("Sidebar collapse", () => {
 
     // Assert
     expect(screen.getByRole("button", { name: "Expand navigation" })).not.toHaveFocus();
+  });
+
+  it("waits for a deliberate hover before showing the toggle tooltip", async () => {
+    // Arrange
+    jest.useFakeTimers();
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await user.hover(screen.getByRole("button", { name: "Collapse navigation" }));
+    act(() => jest.advanceTimersByTime(400));
+
+    // Assert
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+
+    // Act
+    act(() => jest.advanceTimersByTime(400));
+
+    // Assert
+    expect(screen.getByRole("tooltip")).toHaveTextContent("Collapse navigation");
+  });
+
+  it("stops showing the toggle tooltip once the shortcut has been used", async () => {
+    // Arrange
+    jest.useFakeTimers();
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    const event = new KeyboardEvent("keydown", { key: "b", metaKey: true, cancelable: true });
+
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    act(() => getCollapseShortcutHandler()(event));
+    await user.hover(screen.getByRole("button", { name: "Expand navigation" }));
+    act(() => jest.advanceTimersByTime(1000));
+
+    // Assert
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    expect(localStorage.getItem(SIDEBAR_SHORTCUT_KNOWN_STORAGE_KEY)).toBe("true");
+  });
+
+  it("keeps teaching the shortcut to viewers who toggle with the button", async () => {
+    // Arrange
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Collapse navigation" }));
+
+    // Assert
+    expect(localStorage.getItem(SIDEBAR_SHORTCUT_KNOWN_STORAGE_KEY)).toBeNull();
   });
 
   it("ignores a malformed stored preference", () => {
