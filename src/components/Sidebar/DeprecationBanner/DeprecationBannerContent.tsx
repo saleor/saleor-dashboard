@@ -22,8 +22,11 @@ const DeprecationMessage = ({ upgradeDate }: DeprecationBannerContentProps) => (
 export const DeprecationBannerContent = ({ upgradeDate }: DeprecationBannerContentProps) => (
   <Box
     display="flex"
-    gap={2}
-    paddingX={4}
+    // Puts the 16px icon on the rail's icon axis (30px), where the collapsed rail centers it,
+    // and starts the text where the menu labels start.
+    __paddingLeft="22px"
+    __gap="14px"
+    paddingRight={3}
     paddingY={3}
     backgroundColor="critical1"
     alignItems="flex-start"
