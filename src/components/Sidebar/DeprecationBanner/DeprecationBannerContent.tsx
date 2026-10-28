@@ -1,9 +1,11 @@
+import { navigationLucideIconProps } from "@dashboard/components/icons";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { TriangleAlert } from "lucide-react";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 
 import { RAIL_OVERLAY_OFFSET } from "../menu/RailItem";
 import { useLabelTooltip } from "../menu/useLabelTooltip";
+import { SidebarIconSlot } from "../SidebarIconSlot";
 import { deprecationBannerMessages } from "./messages";
 
 interface DeprecationBannerContentProps {
@@ -22,22 +24,23 @@ const DeprecationMessage = ({ upgradeDate }: DeprecationBannerContentProps) => (
 export const DeprecationBannerContent = ({ upgradeDate }: DeprecationBannerContentProps) => (
   <Box
     display="flex"
-    // Insets match the menu item highlights. The padding puts the 16px icon on the rail's icon
-    // axis (30px), where the collapsed rail centers it, and starts the text where the labels start.
+    alignItems="flex-start"
+    // The menu's own padding, row padding, icon slot, and gap, so the warning stays on the
+    // icon axis when the sidebar collapses and the text starts where the labels start.
     marginX={3}
     marginBottom={2}
-    __paddingLeft="10px"
-    __gap="14px"
-    paddingRight={3}
+    paddingX={2}
     paddingY={3}
+    gap={3}
     borderRadius={3}
     backgroundColor="critical1"
-    alignItems="flex-start"
     data-test-id="deprecation-banner"
   >
-    <Box display="flex" alignItems="center" color="critical2" __paddingTop="2px">
-      <TriangleAlert size={16} />
-    </Box>
+    <SidebarIconSlot>
+      <Box display="flex" color="critical2">
+        <TriangleAlert {...navigationLucideIconProps} />
+      </Box>
+    </SidebarIconSlot>
     <Text size={2} color="critical2">
       <DeprecationMessage upgradeDate={upgradeDate} />
     </Text>
@@ -71,7 +74,7 @@ export const DeprecationBannerIcon = ({ upgradeDate }: DeprecationBannerContentP
             color="critical2"
             data-test-id="deprecation-banner"
           >
-            <TriangleAlert size={16} aria-hidden />
+            <TriangleAlert {...navigationLucideIconProps} aria-hidden />
           </Box>
         </Tooltip.Trigger>
         <Tooltip.Content side="right" sideOffset={RAIL_OVERLAY_OFFSET}>

@@ -14,8 +14,8 @@ export const UserInfo = ({ collapsed = false }: { collapsed?: boolean }) => {
       display="flex"
       gap={3}
       paddingX={3}
-      // Puts the 32px avatar on the rail's icon axis (30px), where the collapsed rail centers it.
-      __paddingLeft={collapsed ? undefined : "14px"}
+      // Centers the 32px avatar on the menu icon axis, where the collapsed rail centers it.
+      __paddingLeft={collapsed ? undefined : "calc(var(--sidebar-icon-axis, 30px) - 16px)"}
       alignItems="center"
       borderTopWidth={1}
       borderColor="default1"

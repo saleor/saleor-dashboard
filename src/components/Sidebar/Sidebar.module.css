@@ -3,6 +3,9 @@
  * (12px menu padding + 8px row padding), so only the labels move while it animates.
  */
 .column {
+  /* Center of a menu icon: 12px menu padding + 8px row padding + half of the 20px slot.
+     The header logo and the account avatar center on it, so neither jumps when collapsing. */
+  --sidebar-icon-axis: 30px;
   --sidebar-width: 260px;
   width: var(--sidebar-width);
   height: 100%;

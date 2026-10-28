@@ -23,6 +23,7 @@ import {
   DeprecationBannerContent,
   DeprecationBannerIcon,
 } from "../DeprecationBanner/DeprecationBannerContent";
+import headerStyles from "../MountingPoint.module.css";
 import { type Shortcut } from "../shortcuts/useShortcuts";
 import { ShortcutsItems } from "../ShotcutsItems";
 import { SidebarCollapseButton, SidebarExpandButton } from "../SidebarCollapseToggle";
@@ -189,9 +190,11 @@ const SidebarRailPreview = ({
             alignItems="center"
             justifyContent={collapsed ? "center" : undefined}
             gap={3}
-            __paddingLeft={collapsed ? undefined : "18px"}
-            paddingRight={collapsed ? 0 : 4}
-            __height="64px"
+            className={
+              collapsed
+                ? headerStyles.header
+                : `${headerStyles.header} ${headerStyles.expandedHeader}`
+            }
           >
             {collapsed ? (
               <SidebarExpandButton logo={sideBarDefaultLogo} />
