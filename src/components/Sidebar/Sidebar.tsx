@@ -2,6 +2,7 @@ import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytic
 import { AllRipplesModal } from "@dashboard/ripples/components/AllRipplesModal";
 import { useAllRipplesModalState } from "@dashboard/ripples/state";
 import { useCanSearch } from "@dashboard/search/useCanSearch";
+import { useSearchHotkey } from "@dashboard/search/useSearchHotkey";
 import { Drawer } from "@saleor/macaw-ui-next";
 import { useHotkeys } from "react-hotkeys-hook";
 
@@ -90,6 +91,8 @@ export const Sidebar = () => {
   const { breakpoint } = useSidebarBreakpointContext();
   const layout = useSidebarLayout(breakpoint);
   const { isModalOpen, setModalState } = useAllRipplesModalState();
+
+  useSearchHotkey({ enabled: useCanSearch() });
 
   return (
     <>

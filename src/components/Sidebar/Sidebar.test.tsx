@@ -250,7 +250,6 @@ describe("Sidebar collapse", () => {
   afterEach(() => {
     (useMenuStructure as jest.Mock).mockReturnValue([]);
     Reflect.deleteProperty(window, "matchMedia");
-    Reflect.deleteProperty(Element.prototype, "scrollIntoView");
     jest.restoreAllMocks();
   });
 
@@ -434,9 +433,8 @@ describe("Sidebar collapse", () => {
 
   it("reveals the current page and names the close button when the drawer opens", async () => {
     // Arrange
-    const scrollIntoView = jest.fn();
+    const scrollIntoView = jest.spyOn(Element.prototype, "scrollIntoView");
 
-    Element.prototype.scrollIntoView = scrollIntoView;
     setViewportWidth(500);
     render(<Sidebar />, { wrapper: Wrapper });
 
@@ -501,6 +499,27 @@ describe("Sidebar collapse", () => {
 
     // Assert
     expect((useHotkeys as jest.Mock).mock.calls.some(([keys]) => keys === "mod+b")).toBe(false);
+  });
+
+  it.each([
+    ["phones", 500],
+    ["tablets", 900],
+    ["desktops", 1300],
+  ])("keeps the search shortcut on %s while the navigation is closed", (_, width) => {
+    // Arrange
+    (useCanSearch as jest.Mock).mockReturnValue(true);
+    setViewportWidth(width);
+    (useHotkeys as jest.Mock).mockClear();
+
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    // Assert
+    expect(
+      (useHotkeys as jest.Mock).mock.calls.some(
+        ([keys, , options]) => keys === "/" && options.enabled === true,
+      ),
+    ).toBe(true);
   });
 
   it("names rail items and marks the section of the current page", () => {

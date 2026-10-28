@@ -30,7 +30,7 @@ const getLayout = (breakpoint: SidebarBreakpoint): SidebarLayout => {
   return window.matchMedia(COLUMN_QUERY[breakpoint]).matches ? "column" : "rail";
 };
 
-/** Rendering one layout (instead of hiding the others with CSS) mounts the menu, and its hotkeys, once. */
+/** Rendering one layout instead of hiding the others with CSS keeps the collapse shortcut to the column. */
 export const useSidebarLayout = (breakpoint: SidebarBreakpoint): SidebarLayout => {
   const subscribe = useCallback(
     (onChange: () => void): (() => void) => {
