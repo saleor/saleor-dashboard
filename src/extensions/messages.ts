@@ -729,3 +729,33 @@ export const deprecationMessages = defineMessages({
     description: "checkbox required before installing a deprecated app",
   },
 });
+
+export const circuitBreakerMessages = defineMessages({
+  halfOpenLabel: {
+    defaultMessage: "Webhooks recovering",
+    id: "p262rG",
+    description: "badge on an installed app whose circuit breaker is half-open",
+  },
+  halfOpenDescription: {
+    defaultMessage:
+      "After repeated failures, Saleor is checking whether this app's synchronous webhooks work again. More failures will pause them.",
+    id: "9bNJUY",
+    description: "tooltip for the half-open circuit breaker badge",
+  },
+  openLabel: {
+    defaultMessage: "Webhooks paused",
+    id: "dMG6Mr",
+    description: "badge on an installed app whose circuit breaker is open",
+  },
+  openDescription: {
+    defaultMessage:
+      "Saleor stopped sending synchronous webhooks to this app after repeated failures. It will try again automatically after a cooldown.",
+    id: "yXjxLU",
+    description: "tooltip for the open circuit breaker badge",
+  },
+  since: {
+    defaultMessage: "Since {date}",
+    id: "7l66zA",
+    description: "when the app circuit breaker entered its current state",
+  },
+});

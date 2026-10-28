@@ -2639,6 +2639,10 @@
     "context": "Installed extensions column name",
     "string": "Extension Name"
   },
+  "7l66zA": {
+    "context": "when the app circuit breaker entered its current state",
+    "string": "Since {date}"
+  },
   "7qsOwa": {
     "context": "action",
     "string": "Include postal codes"
@@ -3158,6 +3162,10 @@
   "9agEIc": {
     "context": "empty translation placeholder",
     "string": "No translation yet"
+  },
+  "9bNJUY": {
+    "context": "tooltip for the half-open circuit breaker badge",
+    "string": "After repeated failures, Saleor is checking whether this app's synchronous webhooks work again. More failures will pause them."
   },
   "9d24PR": {
     "string": "Create rule"
@@ -11543,6 +11551,10 @@
   "dM86a2": {
     "string": "No categories found"
   },
+  "dMG6Mr": {
+    "context": "badge on an installed app whose circuit breaker is open",
+    "string": "Webhooks paused"
+  },
   "dOQB9o": {
     "context": "payment status",
     "string": "Cancelled"
@@ -14819,6 +14831,10 @@
     "context": "transaction refund tiles disabled transaction",
     "string": "This transaction is non-refundable."
   },
+  "p262rG": {
+    "context": "badge on an installed app whose circuit breaker is half-open",
+    "string": "Webhooks recovering"
+  },
   "p2EAP0": {
     "string": "Promotion removed"
   },
@@ -17726,6 +17742,10 @@
   },
   "yT5zvU": {
     "string": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
+  },
+  "yXjxLU": {
+    "context": "tooltip for the open circuit breaker badge",
+    "string": "Saleor stopped sending synchronous webhooks to this app after repeated failures. It will try again automatically after a cooldown."
   },
   "yYLFG8": {
     "context": "warehouse mention in shipping setup dialog",

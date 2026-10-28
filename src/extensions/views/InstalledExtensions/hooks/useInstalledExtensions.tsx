@@ -141,6 +141,8 @@ export const useInstalledExtensions = () => {
           appUrl,
           created,
           deprecationReason,
+          breakerState,
+          breakerLastStateChange,
         }) => {
           const appEvents = eventDeliveriesMap.get(id);
           const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
@@ -176,6 +178,8 @@ export const useInstalledExtensions = () => {
             deprecated: isLegacySmtpApp(identifier) || !!deprecationReason,
             deprecationReason,
             migrateUrl: hasManagedAppsPermission ? getReplacementAppInstallUrl(identifier) : null,
+            breakerState,
+            breakerLastStateChange,
           };
         },
       ),
