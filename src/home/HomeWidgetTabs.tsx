@@ -1,9 +1,9 @@
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Tab } from "@dashboard/components/Tab/Tab";
 import { TabContainer } from "@dashboard/components/Tab/TabContainer";
+import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
 import { InlineExtensionPreferenceControls } from "@dashboard/extensions/preferences/InlineExtensionPreferenceControls";
 import { type Extension } from "@dashboard/extensions/types";
-import { SaleorLogo } from "@dashboard/extensions/views/InstallCustomExtension/components/InstallSectionData/InstallExtensionManifestData/SaleorLogo";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -50,43 +50,45 @@ export const HomeWidgetTabs = ({
   return (
     <TabContainer className={clsx(sprinkles({ paddingX: 6, paddingTop: 3 }), styles.container)}>
       <Box className={styles.tabs}>
-        {fullscreenExtensions.map(extension => (
-          <HomeTab
-            key={extension.id}
-            isActive={activeTab.kind === "extension" && activeTab.id === extension.id}
-            changeTab={() => {
-              trackEvent("home_widget_opened", {
-                extension_origin: extension.isSaleorOfficial ? "saleor" : "third_party",
-                source: "home_tab",
-                widget_kind: "fullscreen",
-              });
-              navigate(homeWidgetUrl(extension.id));
-            }}
-            testId={`home-widget-tab-${extension.id}`}
-            className={styles.tab}
-          >
-            <Box display="inline-flex" alignItems="center" gap={2}>
-              <Box
-                __width={extension.isSaleorOfficial ? 20 : 0}
-                __height={20}
-                display="inline-flex"
-                alignItems="center"
-                justifyContent="center"
-                data-test-id={
-                  extension.isSaleorOfficial ? `saleor-app-badge-${extension.id}` : undefined
-                }
-              >
-                {extension.isSaleorOfficial && <SaleorLogo />}
-              </Box>
+        {fullscreenExtensions.map(extension => {
+          const isActive = activeTab.kind === "extension" && activeTab.id === extension.id;
+          const logoSource = extension.app.brand?.logo.default;
+
+          return (
+            <HomeTab
+              key={extension.id}
+              isActive={isActive}
+              changeTab={() => {
+                trackEvent("home_widget_opened", {
+                  extension_origin: extension.isSaleorOfficial ? "saleor" : "third_party",
+                  source: "home_tab",
+                  widget_kind: "fullscreen",
+                });
+                navigate(homeWidgetUrl(extension.id));
+              }}
+              testId={`home-widget-tab-${extension.id}`}
+              className={clsx(styles.tab, isActive && styles.active)}
+            >
               <Box display="inline-flex" flexDirection="column">
-                <span>{extension.label}</span>
-                <Text size={1} color="default2">
+                <Box display="inline-flex" alignItems="center" gap={2}>
+                  {logoSource ? (
+                    <AppAvatar
+                      logo={{ source: logoSource }}
+                      size={5}
+                      flexShrink="0"
+                      className={styles.mark}
+                      data-test-id={`home-widget-tab-icon-${extension.id}`}
+                    />
+                  ) : null}
+                  <span>{extension.label}</span>
+                </Box>
+                <Text size={1} color="default2" className={logoSource ? styles.appName : undefined}>
                   {extension.app.name}
                 </Text>
               </Box>
-            </Box>
-          </HomeTab>
-        ))}
+            </HomeTab>
+          );
+        })}
         {showWidgetsTab && (
           <HomeTab
             isActive={activeTab.kind === "widgets"}

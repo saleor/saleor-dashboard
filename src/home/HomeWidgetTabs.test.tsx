@@ -21,9 +21,11 @@ jest.mock("@dashboard/extensions/preferences/InlineExtensionPreferenceControls",
 const buildExtension = ({
   id,
   isSaleorOfficial,
+  logo,
 }: {
   id: string;
   isSaleorOfficial: boolean;
+  logo?: string;
 }): Extension => ({
   id,
   app: {
@@ -32,7 +34,9 @@ const buildExtension = ({
     identifier: null,
     appUrl: "https://app.example.com",
     name: `${id} app`,
-    brand: null,
+    brand: logo
+      ? { __typename: "AppBrand", logo: { __typename: "AppBrandLogo", default: logo } }
+      : null,
   },
   accessToken: "token",
   permissions: [],
@@ -92,5 +96,36 @@ describe("HomeWidgetTabs", () => {
     expect(mockNavigate).toHaveBeenNthCalledWith(2, "/home/widget/third-party");
     expect(mockNavigate).toHaveBeenNthCalledWith(3, "/home/widgets");
     expect(screen.getByTestId("preference-controls")).toHaveTextContent("home");
+  });
+
+  it("shows the app logo when the app has one, and no icon otherwise", () => {
+    // Arrange
+    const logo = "https://cdn.example/pulse.webp";
+    const withLogo = buildExtension({
+      id: "with-logo",
+      isSaleorOfficial: true,
+      logo,
+    });
+    const withoutLogo = buildExtension({
+      id: "without-logo",
+      isSaleorOfficial: true,
+    });
+
+    render(
+      <HomeWidgetTabs
+        fullscreenExtensions={[withLogo, withoutLogo]}
+        showWidgetsTab={false}
+        activeTab={{ kind: "extension", id: withLogo.id }}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Act
+    const icon = screen.getByTestId("home-widget-tab-icon-with-logo");
+
+    // Assert
+    expect(icon.querySelector("img")).toHaveAttribute("src", logo);
+    expect(screen.queryByTestId("home-widget-tab-icon-without-logo")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("saleor-app-badge-with-logo")).not.toBeInTheDocument();
   });
 });

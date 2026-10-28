@@ -3,6 +3,15 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { HomeWidgetTabs } from "./HomeWidgetTabs";
 
+const appLogo = `data:image/svg+xml,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#111"/><path d="M7 21 17 8h7L14 21z" fill="#fff"/></svg>`,
+)}`;
+
+const brandLogo = {
+  __typename: "AppBrand" as const,
+  logo: { __typename: "AppBrandLogo" as const, default: appLogo },
+};
+
 const buildExtension = (overrides: Partial<Extension>): Extension => ({
   id: "ext-1",
   app: {
@@ -36,7 +45,7 @@ const officialExtension = buildExtension({
     identifier: null,
     appUrl: "https://insights.saleor.app",
     name: "Saleor Insights",
-    brand: null,
+    brand: brandLogo,
   },
   url: "https://insights.saleor.app/widget",
   isSaleorOfficial: true,
@@ -51,7 +60,7 @@ const externalExtension = buildExtension({
     identifier: null,
     appUrl: "https://third-party.example.com",
     name: "Acme Analytics",
-    brand: null,
+    brand: brandLogo,
   },
   url: "https://third-party.example.com/widget",
   isSaleorOfficial: false,
