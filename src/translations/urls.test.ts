@@ -8,6 +8,7 @@ import {
   productUrl,
   productVariantUrl,
   TranslatableEntities,
+  translationTargetUrl,
 } from "./urls";
 
 describe("translations/urls", () => {
@@ -16,6 +17,31 @@ describe("translations/urls", () => {
 
     it("should return translations section path", () => {
       expect(languageListUrl).toBe("/translations/");
+    });
+  });
+
+  describe("translationTargetUrl", () => {
+    it("opens the language list when no language is known", () => {
+      // Arrange
+      const toLanguageUrl = jest.fn((languageCode: string) => `/translations/${languageCode}`);
+
+      // Act
+      const result = translationTargetUrl(null, toLanguageUrl);
+
+      // Assert
+      expect(result).toBe("/translations/");
+      expect(toLanguageUrl).not.toHaveBeenCalled();
+    });
+
+    it("opens the translation for a known language", () => {
+      // Arrange
+      const toLanguageUrl = (languageCode: string) => `/translations/${languageCode}/products/1`;
+
+      // Act
+      const result = translationTargetUrl("DE", toLanguageUrl);
+
+      // Assert
+      expect(result).toBe("/translations/DE/products/1");
     });
   });
 

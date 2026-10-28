@@ -3,6 +3,7 @@ import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/ap
 import { type ExtensionCategory, type ExtensionData } from "@dashboard/extensions/schema";
 import {
   type AppTypeEnum,
+  type CircuitBreakerStateEnum,
   type ExtensionListQuery,
   type InstalledAppDetailsFragment,
   type PermissionEnum,
@@ -78,6 +79,9 @@ export type InstalledExtension = {
   deprecationReason?: string | null;
   /** Install URL of the app that replaces this deprecated one. Renders a Migrate button. */
   migrateUrl?: string | null;
+  /** Saleor's circuit breaker for the app's sync webhooks. Renders a badge unless CLOSED. */
+  breakerState?: CircuitBreakerStateEnum;
+  breakerLastStateChange?: string | null;
 };
 
 export interface Extension {

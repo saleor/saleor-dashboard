@@ -1,0 +1,29 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.badge:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}
+
+.halfOpen {
+  composes: badge;
+  background-color: var(--mu-colors-background-warning1);
+  color: var(--mu-colors-text-warning1);
+}
+
+.open {
+  composes: badge;
+  background-color: var(--mu-colors-background-critical2);
+  color: #fff;
+}

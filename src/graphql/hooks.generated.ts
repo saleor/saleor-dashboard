@@ -216,6 +216,8 @@ export const InstalledAppDetailsFragmentDoc = gql`
   appUrl
   created
   deprecationReason
+  breakerState
+  breakerLastStateChange
   problems {
     __typename
     key

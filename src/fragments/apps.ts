@@ -209,6 +209,8 @@ export const InstalledAppDetails = gql`
     appUrl
     created
     deprecationReason
+    breakerState
+    breakerLastStateChange
     problems {
       __typename
       key

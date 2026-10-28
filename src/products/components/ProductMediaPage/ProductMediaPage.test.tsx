@@ -1,7 +1,7 @@
 import { hasPermission } from "@dashboard/auth/misc";
 import { ProductMediaType } from "@dashboard/graphql";
 import { isMainSchema } from "@dashboard/graphql/schemaVersion";
-import { productMediaUrl } from "@dashboard/translations/urls";
+import { languageListUrl, productMediaUrl } from "@dashboard/translations/urls";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -12,6 +12,7 @@ import ProductMediaPage from "./ProductMediaPage";
 
 const mockNavigate = jest.fn();
 const mockTrackEvent = jest.fn();
+const mockLastUsedLocale: { current: string | null } = { current: "DE" };
 
 jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
   useAnalytics: (): { trackEvent: typeof mockTrackEvent } => ({ trackEvent: mockTrackEvent }),
@@ -32,7 +33,9 @@ jest.mock("@dashboard/hooks/useNavigator", () => ({
   default: () => mockNavigate,
 }));
 jest.mock("@dashboard/translations/useCachedLocales", () => ({
-  useCachedLocales: () => ({ lastUsedLocaleOrFallback: "DE" }),
+  useCachedLocales: (): { lastUsedLocaleOrFallback: string | null } => ({
+    lastUsedLocaleOrFallback: mockLastUsedLocale.current,
+  }),
 }));
 
 const mockHasPermission = hasPermission as jest.MockedFunction<typeof hasPermission>;
@@ -82,6 +85,7 @@ describe("ProductMediaPage translations action", () => {
     mockIsMainSchema.mockReset();
     mockHasPermission.mockReturnValue(true);
     mockIsMainSchema.mockReturnValue(true);
+    mockLastUsedLocale.current = "DE";
   });
 
   it("opens translation for the current media in the last used locale", async () => {
@@ -100,6 +104,20 @@ describe("ProductMediaPage translations action", () => {
     expect(mockTrackEvent).toHaveBeenCalledWith("product_media_translation_opened", {
       source: "media_editor",
     });
+  });
+
+  it("opens the language list when no translation language is known yet", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    mockLastUsedLocale.current = null;
+    renderPage();
+
+    // Act
+    await user.click(screen.getByTitle("Open translations"));
+
+    // Assert
+    expect(mockNavigate).toHaveBeenCalledWith(languageListUrl);
   });
 
   it("hides the translations action without translation permission", () => {
