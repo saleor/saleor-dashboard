@@ -104,24 +104,32 @@ describe("Sidebar", () => {
     );
   });
 
-  it("should render cloud environment link when is cloud instance", () => {
+  it("offers the Saleor Cloud link in the user menu when is cloud instance", async () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({
       isAuthenticatedViaCloud: true,
     }));
-    // Act
     render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByTestId("userMenu"));
+
     // Assert
-    expect(screen.getByTestId("cloud-environment-link")).toBeInTheDocument();
+    expect(await screen.findByRole("menuitem", { name: "Go to Saleor Cloud" })).toBeVisible();
+    expect(screen.getAllByTestId("cloud-environment-link")).toHaveLength(1);
   });
-  it("should not render cloud environment link when is not cloud instance", () => {
+  it("should not render cloud environment link when is not cloud instance", async () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({
       isAuthenticatedViaCloud: false,
     }));
-    // Act
     render(<Sidebar />, { wrapper: Wrapper });
+
+    // Act
+    await userEvent.click(screen.getByTestId("userMenu"));
+
     // Assert
+    expect(await screen.findByTestId("log-out-button")).toBeInTheDocument();
     expect(screen.queryByTestId("cloud-environment-link")).not.toBeInTheDocument();
   });
   it("should render keyboard shortcuts", () => {

@@ -1,15 +1,21 @@
+import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { useUser } from "@dashboard/auth/useUser";
-import { navigationLucideIconProps } from "@dashboard/components/icons";
+import {
+  iconSize,
+  iconStrokeWidthBySize,
+  navigationLucideIconProps,
+} from "@dashboard/components/icons";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme/hook";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
 import { Box, Button, Dropdown, List, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { EllipsisVertical, MessageSquareText } from "lucide-react";
+import { CloudIcon, EllipsisVertical, MessageSquareText } from "lucide-react";
 import { useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { useEnvLink } from "../menu/hooks/useEnvLink";
 import { rippleGlobalFeedback } from "../ripples/globalFeedback";
 import { FeatureFlagsModal } from "./FeatureFlagsModal";
 import { ThemeSwitcher } from "./ThemeSwitcher";
@@ -41,6 +47,11 @@ export const useLegacyThemeHandler = () => {
 
   return { changeTheme, theme };
 };
+
+const goToSaleorCloudMessage = defineMessage({
+  id: "EXqb2l",
+  defaultMessage: "Go to Saleor Cloud",
+});
 
 const FeedbackButton = () => {
   const intl = useIntl();
@@ -85,8 +96,11 @@ const FeedbackButton = () => {
 };
 
 export const UserControls = () => {
+  const intl = useIntl();
   const { user, logout } = useUser();
   const { changeTheme, theme } = useLegacyThemeHandler();
+  const { isAuthenticatedViaCloud } = useCloud();
+  const envLink = useEnvLink();
   const [open, setOpen] = useState(false);
   const [flagsModalOpen, setFlagsModalOpen] = useState(false);
 
@@ -148,6 +162,24 @@ export const UserControls = () => {
                     </Text>
                   </List.Item>
                 </Dropdown.Item>
+                {isAuthenticatedViaCloud && (
+                  <Dropdown.Item>
+                    <List.Item
+                      as="a"
+                      href={envLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-test-id="cloud-environment-link"
+                      display="flex"
+                      alignItems="center"
+                      gap={1.5}
+                      {...listItemStyles}
+                    >
+                      <CloudIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                      <Text>{intl.formatMessage(goToSaleorCloudMessage)}</Text>
+                    </List.Item>
+                  </Dropdown.Item>
+                )}
                 <Dropdown.Item>
                   <List.Item onClick={logout} {...listItemStyles} data-test-id="log-out-button">
                     <Text>
