@@ -3,6 +3,22 @@
   padding: 12px 8px 10px;
 }
 
+/* Inactive tab labels are already washed out. Image logos do not inherit that color. */
+.mark {
+  opacity: 0.6;
+  transition: opacity 150ms ease;
+}
+
+.tab:hover .mark,
+.active .mark {
+  opacity: 1;
+}
+
+/* 20px mark plus the gap, so the app name lines up under the tab label. */
+.appName {
+  padding-left: calc(var(--mu-spacing-5) + var(--mu-spacing-2));
+}
+
 .container {
   display: flex;
   align-items: center;
