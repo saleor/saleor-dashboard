@@ -9,8 +9,17 @@ export const navigatorSearch = gql`
           number
           status
           updatedAt
-          paymentStatus
           chargeStatus
+          authorizeStatus
+          totalCharged {
+            amount
+          }
+          totalChargePending {
+            amount
+          }
+          totalRefunded {
+            amount
+          }
           total {
             gross {
               amount

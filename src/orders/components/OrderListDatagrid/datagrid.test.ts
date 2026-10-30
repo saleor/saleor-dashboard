@@ -2,10 +2,10 @@ import { type PillCell } from "@dashboard/components/Datagrid/customCells/PillCe
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import {
-  type OrderChargeStatusEnum,
+  OrderAuthorizeStatusEnum,
+  OrderChargeStatusEnum,
   type OrderListQuery,
   type OrderStatus,
-  type PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { getStatusColor } from "@dashboard/misc";
 import { type RelayToFlat } from "@dashboard/types";
@@ -95,7 +95,11 @@ describe("useGetCellContent", () => {
       number: "1",
       created: "2023-01-01T00:00:00Z",
       userEmail: "john@example.com",
-      paymentStatus: "PAID" as PaymentChargeStatusEnum,
+      chargeStatus: OrderChargeStatusEnum.FULL,
+      authorizeStatus: OrderAuthorizeStatusEnum.FULL,
+      totalCharged: { __typename: "Money", amount: 100 },
+      totalChargePending: { __typename: "Money", amount: 0 },
+      totalRefunded: { __typename: "Money", amount: 0 },
       status: "FULFILLED" as OrderStatus,
       deliveryMethod: { __typename: "ShippingMethod" },
       billingAddress: null,
@@ -144,12 +148,12 @@ describe("useGetCellContent", () => {
     });
     expect(getCellContent([3, 0], contentOpts)).toEqual({
       allowOverlay: true,
-      copyData: "PAID",
+      copyData: "Fully paid",
       cursor: "pointer",
       data: {
-        color: getStatusColor({ status: "error", currentTheme: "defaultLight" }),
+        color: getStatusColor({ status: "success", currentTheme: "defaultLight" }),
         kind: "auto-tags-cell",
-        value: "PAID",
+        value: "Fully paid",
       },
       kind: "custom",
       readonly: false,
@@ -223,31 +227,107 @@ describe("useGetCellContent", () => {
 type RowDataType = RelayToFlat<NonNullable<OrderListQuery["orders"]>>[number];
 
 describe("getPaymentCellContent", () => {
-  it("should return Fully Paid when payment status is PAID", () => {
-    // Arrange
-    const data = {
-      paymentStatus: "PAID" as PaymentChargeStatusEnum,
-    } as RowDataType;
+  const money = (amount: number) => ({ __typename: "Money" as const, amount });
 
-    // Act
-    const result = getPaymentCellContent(testIntlInstance, "defaultLight", data);
+  it.each<{
+    expected: string;
+    chargeStatus: OrderChargeStatusEnum;
+    authorizeStatus?: OrderAuthorizeStatusEnum;
+    charged: number;
+    pending: number;
+    refunded: number;
+  }>([
+    {
+      expected: "Unpaid",
+      chargeStatus: OrderChargeStatusEnum.NONE,
+      charged: 0,
+      pending: 0,
+      refunded: 0,
+    },
+    {
+      expected: "Partially paid",
+      chargeStatus: OrderChargeStatusEnum.PARTIAL,
+      charged: 40,
+      pending: 0,
+      refunded: 0,
+    },
+    {
+      expected: "Fully paid",
+      chargeStatus: OrderChargeStatusEnum.FULL,
+      charged: 100,
+      pending: 0,
+      refunded: 0,
+    },
+    {
+      expected: "Overcharged",
+      chargeStatus: OrderChargeStatusEnum.OVERCHARGED,
+      charged: 120,
+      pending: 0,
+      refunded: 0,
+    },
+    {
+      expected: "Pending",
+      chargeStatus: OrderChargeStatusEnum.NONE,
+      charged: 0,
+      pending: 100,
+      refunded: 0,
+    },
+    {
+      expected: "Partially refunded",
+      chargeStatus: OrderChargeStatusEnum.PARTIAL,
+      charged: 60,
+      pending: 0,
+      refunded: 40,
+    },
+    {
+      expected: "Authorised",
+      chargeStatus: OrderChargeStatusEnum.NONE,
+      authorizeStatus: OrderAuthorizeStatusEnum.FULL,
+      charged: 0,
+      pending: 0,
+      refunded: 0,
+    },
+    {
+      expected: "Partially authorised",
+      chargeStatus: OrderChargeStatusEnum.NONE,
+      authorizeStatus: OrderAuthorizeStatusEnum.PARTIAL,
+      charged: 0,
+      pending: 0,
+      refunded: 0,
+    },
+    {
+      expected: "Fully refunded",
+      chargeStatus: OrderChargeStatusEnum.NONE,
+      charged: 0,
+      pending: 0,
+      refunded: 100,
+    },
+  ])(
+    "should return $expected",
+    ({
+      expected,
+      chargeStatus,
+      authorizeStatus = OrderAuthorizeStatusEnum.NONE,
+      charged,
+      pending,
+      refunded,
+    }) => {
+      // Arrange
+      const data = {
+        chargeStatus,
+        authorizeStatus,
+        totalCharged: money(charged),
+        totalChargePending: money(pending),
+        totalRefunded: money(refunded),
+      } as RowDataType;
 
-    // Assert
-    expect((result.data as PillCell["data"]).value).toEqual("PAID");
-  });
+      // Act
+      const result = getPaymentCellContent(testIntlInstance, "defaultLight", data);
 
-  it("should return Overcharged when charge status is OVERCHARGED", () => {
-    // Arrange
-    const data = {
-      chargeStatus: "OVERCHARGED" as OrderChargeStatusEnum,
-    } as RowDataType;
-
-    // Act
-    const result = getPaymentCellContent(testIntlInstance, "defaultLight", data);
-
-    // Assert
-    expect((result.data as PillCell["data"]).value).toEqual("Overcharged");
-  });
+      // Assert
+      expect((result.data as PillCell["data"]).value).toEqual(expected);
+    },
+  );
 });
 
 describe("getDeliveryCellContent", () => {

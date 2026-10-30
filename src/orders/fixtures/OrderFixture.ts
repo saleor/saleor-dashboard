@@ -11,7 +11,6 @@ import {
   type OrderDetailsFragment,
   OrderGrantedRefundStatusEnum,
   OrderStatus,
-  PaymentChargeStatusEnum,
   TransactionActionEnum,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
@@ -35,7 +34,6 @@ export class OrderFixture {
     isShippingRequired: true,
     customerNote: "",
     isPaid: true,
-    paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     shippingMethodName: "DB Schenker",
     collectionPointName: null,
     actions: [],
@@ -591,7 +589,6 @@ export class OrderFixture {
       id: "unconfirmed-order-id",
       status: OrderStatus.UNCONFIRMED,
       isPaid: false,
-      paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
       chargeStatus: OrderChargeStatusEnum.NONE,
       fulfillments: [],
       billingAddress: OrderFixture.address,

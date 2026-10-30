@@ -430,7 +430,6 @@ export const fragmentOrderDetails = gql`
     }
     number
     isPaid
-    paymentStatus
     shippingAddress {
       ...Address
     }

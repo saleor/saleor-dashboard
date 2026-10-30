@@ -2667,7 +2667,6 @@ export const OrderDetailsFragmentDoc = gql`
   }
   number
   isPaid
-  paymentStatus
   shippingAddress {
     ...Address
   }
@@ -8612,8 +8611,17 @@ export const NavigatorSearchDocument = gql`
         number
         status
         updatedAt
-        paymentStatus
         chargeStatus
+        authorizeStatus
+        totalCharged {
+          amount
+        }
+        totalChargePending {
+          amount
+        }
+        totalRefunded {
+          amount
+        }
         total {
           gross {
             amount
@@ -16134,7 +16142,6 @@ export const OrderListDocument = gql`
         created
         id
         number
-        paymentStatus
         status
         subtotal {
           __typename
@@ -16157,6 +16164,16 @@ export const OrderListDocument = gql`
           __typename
         }
         chargeStatus
+        authorizeStatus
+        totalCharged {
+          amount
+        }
+        totalChargePending {
+          amount
+        }
+        totalRefunded {
+          amount
+        }
       }
     }
     pageInfo {
@@ -16225,7 +16242,6 @@ export const OrderDraftListDocument = gql`
         }
         id
         number
-        paymentStatus
         status
         total {
           __typename
@@ -16827,7 +16843,7 @@ export const OrderDetailsGraphiQlDocument = gql`
     canFinalize
     created
     customerNote
-    paymentStatus
+    chargeStatus
     userEmail
     isPaid
   }
@@ -16873,7 +16889,7 @@ export const DevModeRunDocument = gql`
         canFinalize
         created
         customerNote
-        paymentStatus
+        chargeStatus
         userEmail
         isPaid
       }
@@ -19614,8 +19630,17 @@ export const GlobalSearchDocument = gql`
         number
         status
         updatedAt
-        paymentStatus
         chargeStatus
+        authorizeStatus
+        totalCharged {
+          amount
+        }
+        totalChargePending {
+          amount
+        }
+        totalRefunded {
+          amount
+        }
         total {
           gross {
             amount

@@ -20,7 +20,6 @@ import {
   type OrderListQuery,
   type OrderPaymentFragment,
   OrderStatus,
-  PaymentChargeStatusEnum,
   type PaymentGatewayFragment,
   type SearchCustomersQuery,
   type SearchWarehousesQuery,
@@ -36,9 +35,6 @@ import { type OrderSearchProduct } from "@dashboard/searches/mapSearchOrderVaria
 import { staffMember } from "@dashboard/staff/fixtures";
 import { type RelayToFlat } from "@dashboard/types";
 import { warehouseForPickup, warehouseList } from "@dashboard/warehouses/fixtures";
-import { type MessageDescriptor } from "react-intl";
-
-import { transformOrderStatus, transformPaymentStatus } from "../misc";
 
 export const MOCK_PAYMENT_GATEWAY_ID = "saleor.dummy.payment";
 
@@ -251,8 +247,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:30.376876+00:00",
     id: "T3JkZXI6MjA=",
     number: "20",
-    paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.FULL,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -302,8 +301,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:30.124154+00:00",
     id: "T3JkZXI6MTk=",
     number: "19",
-    paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.FULL,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -335,8 +337,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:30.019749+00:00",
     id: "T3JkZXI6MTg=",
     number: "18",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.DRAFT,
     subtotal: {
       __typename: "TaxedMoney",
@@ -386,8 +391,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:29.864391+00:00",
     id: "T3JkZXI6MTc=",
     number: "17",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -437,8 +445,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:29.610339+00:00",
     id: "T3JkZXI6MTY=",
     number: "16",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -488,8 +499,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:29.336209+00:00",
     id: "T3JkZXI6MTU=",
     number: "15",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -539,8 +553,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:29.103651+00:00",
     id: "T3JkZXI6MTQ=",
     number: "14",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -590,8 +607,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:28.921956+00:00",
     id: "T3JkZXI6MTM=",
     number: "13",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -641,8 +661,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:28.750718+00:00",
     id: "T3JkZXI6MTI=",
     number: "12",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -692,8 +715,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:28.598246+00:00",
     id: "T3JkZXI6MTE=",
     number: "11",
-    paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.FULL,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.UNFULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -743,8 +769,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:28.409836+00:00",
     id: "T3JkZXI6MTA=",
     number: "10",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -794,8 +823,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:28.185874+00:00",
     id: "T3JkZXI6OQ==",
     number: "9",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -845,8 +877,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:27.953588+00:00",
     id: "T3JkZXI6OA==",
     number: "8",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -896,8 +931,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:27.828033+00:00",
     id: "T3JkZXI6Nw==",
     number: "7",
-    paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.FULL,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -947,8 +985,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:27.636741+00:00",
     id: "T3JkZXI6Ng==",
     number: "6",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -998,8 +1039,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:27.420590+00:00",
     id: "T3JkZXI6NQ==",
     number: "5",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -1049,8 +1093,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:27.230990+00:00",
     id: "T3JkZXI6NA==",
     number: "4",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -1100,8 +1147,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:26.972507+00:00",
     id: "T3JkZXI6Mw==",
     number: "3",
-    paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.NONE,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -1151,8 +1201,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:26.751359+00:00",
     id: "T3JkZXI6Mg==",
     number: "2",
-    paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.FULL,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -1202,8 +1255,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     created: "2018-09-11T09:37:26.314968+00:00",
     id: "T3JkZXI6MQ==",
     number: "1",
-    paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    totalCharged: { __typename: "Money", amount: 0 },
+    totalChargePending: { __typename: "Money", amount: 0 },
+    totalRefunded: { __typename: "Money", amount: 0 },
     chargeStatus: OrderChargeStatusEnum.FULL,
+    authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     subtotal: {
       __typename: "TaxedMoney",
@@ -2223,7 +2279,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
   ],
   number: "9",
-  paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
   chargeStatus: OrderChargeStatusEnum.NONE,
   authorizeStatus: OrderAuthorizeStatusEnum.NONE,
   shippingAddress: {
@@ -2684,7 +2739,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
     },
   ],
   number: "24",
-  paymentStatus: null,
   shippingAddress: null,
   shippingMethod: null,
   shippingMethodName: null,
@@ -2769,16 +2823,6 @@ export const draftOrderWithTransactions: OrderDetailsFragment = {
   totalCanceled: prepareMoney(0),
   totalCancelPending: prepareMoney(0),
 };
-
-export const flatOrders = orders.map(order => ({
-  ...order,
-  orderStatus: transformOrderStatus(order.status, {
-    formatMessage: (message: MessageDescriptor) => message.defaultMessage,
-  } as any),
-  paymentStatus: transformPaymentStatus(order.paymentStatus, {
-    formatMessage: (message: MessageDescriptor) => message.defaultMessage,
-  } as any),
-}));
 
 export const fulfillOrderLine = (placeholderImage: string): OrderFulfillLineFragment => ({
   __typename: "OrderLine",

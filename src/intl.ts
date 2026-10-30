@@ -781,10 +781,20 @@ export const paymentStatusMessages = defineMessages({
     defaultMessage: "Pending",
     description: "payment status",
   },
-  refused: {
-    id: "nwnwJ0",
-    defaultMessage: "Refused",
+  authorized: {
+    id: "SJhFLU",
+    defaultMessage: "Authorised",
     description: "payment status",
+  },
+  partiallyAuthorized: {
+    id: "IIlJDr",
+    defaultMessage: "Partially authorised",
+    description: "payment status",
+  },
+  overcharged: {
+    id: "4VLj3S",
+    defaultMessage: "Overcharged",
+    description: "overcharged order status",
   },
 });
 

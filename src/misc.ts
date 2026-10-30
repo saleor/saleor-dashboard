@@ -2,10 +2,10 @@ import { type FetchResult, type MutationFunction, type MutationResult } from "@a
 import {
   type AddressInput,
   CountryCode,
+  OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
   OrderStatus,
   OrderStatusFilter,
-  PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import {
   type MutationResultAdditionalProps,
@@ -63,74 +63,78 @@ export function weight(value: string) {
   return value === "" ? null : parseFloat(value);
 }
 
+interface OrderPaymentSummary {
+  chargeStatus: OrderChargeStatusEnum;
+  authorizeStatus: OrderAuthorizeStatusEnum;
+  totalCharged: { amount: number };
+  totalChargePending: { amount: number };
+  totalRefunded: { amount: number };
+}
+
 export const transformPaymentStatus = (
-  status: string,
+  {
+    chargeStatus,
+    authorizeStatus,
+    totalCharged,
+    totalChargePending,
+    totalRefunded,
+  }: OrderPaymentSummary,
   intl: IntlShape,
 ): { localized: string; status: StatusType } => {
-  switch (status) {
-    case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
-      return {
-        localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
-        status: StatusType.INFO,
-      };
-    case PaymentChargeStatusEnum.FULLY_CHARGED:
+  if (chargeStatus === OrderChargeStatusEnum.OVERCHARGED) {
+    return {
+      localized: intl.formatMessage(paymentStatusMessages.overcharged),
+      status: StatusType.WARNING,
+    };
+  }
+
+  if (totalChargePending.amount > 0) {
+    return {
+      localized: intl.formatMessage(paymentStatusMessages.pending),
+      status: StatusType.WARNING,
+    };
+  }
+
+  if (totalRefunded.amount > 0) {
+    return totalCharged.amount > 0
+      ? {
+          localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
+          status: StatusType.ATTENTION,
+        }
+      : {
+          localized: intl.formatMessage(paymentStatusMessages.refunded),
+          status: StatusType.NEUTRAL,
+        };
+  }
+
+  switch (chargeStatus) {
+    case OrderChargeStatusEnum.FULL:
       return {
         localized: intl.formatMessage(paymentStatusMessages.paid),
         status: StatusType.SUCCESS,
       };
-    case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
+    case OrderChargeStatusEnum.PARTIAL:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: StatusType.ATTENTION,
-      };
-    case PaymentChargeStatusEnum.FULLY_REFUNDED:
-      return {
-        localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: StatusType.NEUTRAL,
-      };
-    case PaymentChargeStatusEnum.PENDING:
-      return {
-        localized: intl.formatMessage(paymentStatusMessages.pending),
-        status: StatusType.WARNING,
-      };
-    case PaymentChargeStatusEnum.REFUSED:
-      return {
-        localized: intl.formatMessage(paymentStatusMessages.refused),
-        status: StatusType.ERROR,
-      };
-    case PaymentChargeStatusEnum.CANCELLED:
-      return {
-        localized: intl.formatMessage(commonStatusMessages.cancelled),
-        status: StatusType.ERROR,
-      };
-    case PaymentChargeStatusEnum.NOT_CHARGED:
-      return {
-        localized: intl.formatMessage(paymentStatusMessages.unpaid),
-        status: StatusType.NEUTRAL,
+        localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
+        status: StatusType.INFO,
       };
   }
 
-  return {
-    localized: status,
-    status: StatusType.ERROR,
-  };
-};
-
-export const transformChargedStatus = (status: OrderChargeStatusEnum, intl: IntlShape) => {
-  switch (status) {
-    case OrderChargeStatusEnum.OVERCHARGED:
+  switch (authorizeStatus) {
+    case OrderAuthorizeStatusEnum.FULL:
       return {
-        localized: intl.formatMessage({
-          defaultMessage: "Overcharged",
-          id: "4VLj3S",
-          description: "overcharged order status",
-        }),
-        status: StatusType.WARNING,
+        localized: intl.formatMessage(paymentStatusMessages.authorized),
+        status: StatusType.INFO,
+      };
+    case OrderAuthorizeStatusEnum.PARTIAL:
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.partiallyAuthorized),
+        status: StatusType.ATTENTION,
       };
     default:
       return {
-        localized: status,
-        status: StatusType.ERROR,
+        localized: intl.formatMessage(paymentStatusMessages.unpaid),
+        status: StatusType.NEUTRAL,
       };
   }
 };

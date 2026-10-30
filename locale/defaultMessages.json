@@ -5638,6 +5638,10 @@
     "context": "staff notification description",
     "string": "Sent when a staff member requests a password reset."
   },
+  "IIlJDr": {
+    "context": "payment status",
+    "string": "Partially authorised"
+  },
   "IKvOK+": {
     "context": "Amount error message",
     "string": "Amount must be bigger than 0"
@@ -8315,6 +8319,10 @@
   "SJSWi7": {
     "context": "default flat rate name",
     "string": "Standard shipping"
+  },
+  "SJhFLU": {
+    "context": "payment status",
+    "string": "Authorised"
   },
   "SKFr04": {
     "string": "Attribute not found."
@@ -14525,10 +14533,6 @@
   "nwSh4z": {
     "context": "TopNav destination link tooltip to product types list",
     "string": "All product types"
-  },
-  "nwnwJ0": {
-    "context": "payment status",
-    "string": "Refused"
   },
   "nwvQPg": {
     "context": "section header",
