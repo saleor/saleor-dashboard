@@ -32,7 +32,6 @@ export const orderListQuery = gql`
           created
           id
           number
-          paymentStatus
           status
           subtotal {
             __typename
@@ -55,6 +54,16 @@ export const orderListQuery = gql`
             __typename
           }
           chargeStatus
+          authorizeStatus
+          totalCharged {
+            amount
+          }
+          totalChargePending {
+            amount
+          }
+          totalRefunded {
+            amount
+          }
         }
       }
       pageInfo {
@@ -96,7 +105,6 @@ export const orderDraftListQuery = gql`
           }
           id
           number
-          paymentStatus
           status
           total {
             __typename
@@ -313,7 +321,7 @@ export const defaultGraphiQLQuery = /* GraphQL */ `
       canFinalize
       created
       customerNote
-      paymentStatus
+      chargeStatus
       userEmail
       isPaid
     }
@@ -332,7 +340,7 @@ export const DevModeQuery = /* GraphQL */ `
           canFinalize
           created
           customerNote
-          paymentStatus
+          chargeStatus
           userEmail
           isPaid
         }

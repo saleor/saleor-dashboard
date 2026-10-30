@@ -21,7 +21,7 @@ export const OrderItem = ({
   const intl = useIntl();
   const { theme } = useTheme();
 
-  const { color, localized } = getPaymentLabel(intl, theme, node.chargeStatus, node.paymentStatus);
+  const { color, localized } = getPaymentLabel(intl, theme, node);
   const orderHref = orderDetailsUrl(node.id, undefined, node.status);
 
   return (

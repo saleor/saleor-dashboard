@@ -8,7 +8,6 @@ import {
   type OrderLineFragment,
   type OrderRefundDataQuery,
   OrderStatus,
-  PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
@@ -64,7 +63,6 @@ const orderBase: OrderDetailsFragment = {
   created: "2018-09-11T09:37:30.124154+00:00",
   id: "T3JkZXI6MTk=",
   number: "19",
-  paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
   status: OrderStatus.FULFILLED,
   // @ts-expect-error error
   total: {

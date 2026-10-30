@@ -8,13 +8,8 @@ import {
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { OrderChargeStatusEnum, type OrderListQuery } from "@dashboard/graphql";
-import {
-  getStatusColor,
-  transformChargedStatus,
-  transformOrderStatus,
-  transformPaymentStatus,
-} from "@dashboard/misc";
+import { type OrderListQuery } from "@dashboard/graphql";
+import { getStatusColor, transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
 import { type OrderListUrlSortField } from "@dashboard/orders/urls";
 import { getDeliveryMethodInfo } from "@dashboard/orders/utils/deliveryMethod";
 import { type RelayToFlat, type Sort } from "@dashboard/types";
@@ -171,36 +166,14 @@ function getStatusCellContent(
   return readonlyTextCell("-");
 }
 
-const higherPriorityChargeStatuses = [OrderChargeStatusEnum.OVERCHARGED];
-
 export function getPaymentCellContent(
   intl: IntlShape,
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  if (higherPriorityChargeStatuses.includes(rowData.chargeStatus)) {
-    const { localized, status } = transformChargedStatus(rowData.chargeStatus, intl);
+  const { localized, status } = transformPaymentStatus(rowData, intl);
 
-    const color = getStatusColor({
-      status,
-      currentTheme,
-    });
-
-    return pillCell(localized, color, COMMON_CELL_PROPS);
-  }
-
-  const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
-
-  if (paymentStatus) {
-    const color = getStatusColor({
-      status: paymentStatus.status,
-      currentTheme,
-    });
-
-    return pillCell(paymentStatus.localized, color, COMMON_CELL_PROPS);
-  }
-
-  return readonlyTextCell("-");
+  return pillCell(localized, getStatusColor({ status, currentTheme }), COMMON_CELL_PROPS);
 }
 
 const colorAtOpacity = (color: string, opacity: number): string => {

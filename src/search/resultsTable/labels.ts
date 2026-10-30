@@ -1,41 +1,15 @@
-import {
-  type GlobalSearchQuery,
-  OrderChargeStatusEnum,
-  type PaymentChargeStatusEnum,
-} from "@dashboard/graphql";
-import { getStatusColor, transformChargedStatus, transformPaymentStatus } from "@dashboard/misc";
+import { type GlobalSearchQuery } from "@dashboard/graphql";
+import { getStatusColor, transformPaymentStatus } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { type DefaultTheme } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
 
-export const getPaymentLabel = (
-  intl: IntlShape,
-  currentTheme: DefaultTheme,
-  chargeStatus: OrderChargeStatusEnum,
-  paymentStatus: PaymentChargeStatusEnum,
-) => {
-  if (chargeStatus === OrderChargeStatusEnum.OVERCHARGED) {
-    const { localized, status } = transformChargedStatus(chargeStatus, intl);
+type OrderNode = NonNullable<GlobalSearchQuery["orders"]>["edges"][number]["node"];
 
-    const color = getStatusColor({
-      status,
-      currentTheme,
-    });
+export const getPaymentLabel = (intl: IntlShape, currentTheme: DefaultTheme, order: OrderNode) => {
+  const { localized, status } = transformPaymentStatus(order, intl);
 
-    return { color, localized };
-  }
-
-  const transformedPaymentStatus = transformPaymentStatus(paymentStatus, intl);
-
-  const color = getStatusColor({
-    status: transformedPaymentStatus.status,
-    currentTheme,
-  });
-
-  return {
-    color,
-    localized: transformedPaymentStatus.localized,
-  };
+  return { color: getStatusColor({ status, currentTheme }), localized };
 };
 
 type CategoryNode = NonNullable<GlobalSearchQuery["categories"]>["edges"][number]["node"];
