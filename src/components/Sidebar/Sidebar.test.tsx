@@ -9,6 +9,7 @@ import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useLocation } from "react-router";
 import { MemoryRouter } from "react-router-dom";
 
 import { useMenuStructure } from "./menu/hooks/useMenuStructure";
@@ -233,6 +234,12 @@ const setViewportWidth = (width: number): void => {
   };
 
   Object.defineProperty(window, "matchMedia", { configurable: true, value: matchMedia });
+};
+
+const LocationProbe = () => {
+  const { pathname } = useLocation();
+
+  return <div data-test-id="location">{pathname}</div>;
 };
 
 const WidePage = () => {
@@ -614,7 +621,20 @@ describe("Sidebar collapse", () => {
   it("opens a section's pages beside the rail and closes after navigating", async () => {
     // Arrange
     localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
-    render(<Sidebar />, { wrapper: Wrapper });
+    render(
+      <>
+        <Sidebar />
+        <LocationProbe />
+      </>,
+      { wrapper: Wrapper },
+    );
+
+    let documentLoad = false;
+    const noteDocumentLoad = (event: MouseEvent): void => {
+      documentLoad = !event.defaultPrevented;
+    };
+
+    document.addEventListener("click", noteDocumentLoad);
 
     // Act
     await userEvent.click(screen.getByRole("button", { name: "Catalog" }));
@@ -630,9 +650,36 @@ describe("Sidebar collapse", () => {
     await userEvent.click(within(flyout).getByRole("link", { name: "Products" }));
 
     // Assert
+    expect(documentLoad).toBe(false);
+    expect(screen.getByTestId("location")).toHaveTextContent("/products/");
     expect(screen.queryByTestId("menu-rail-flyout-products")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Catalog" })).toHaveFocus();
+    // A pointer choice must not focus the icon: that scrolls the window to the sidebar.
+    expect(screen.getByRole("button", { name: "Catalog" })).not.toHaveFocus();
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    document.removeEventListener("click", noteDocumentLoad);
+  });
+
+  it("returns focus to the rail icon after a keyboard choice without scrolling", async () => {
+    // Arrange
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
+
+    const focus = jest.spyOn(HTMLElement.prototype, "focus");
+
+    render(<Sidebar />, { wrapper: Wrapper });
+
+    const catalog = screen.getByRole("button", { name: "Catalog" });
+
+    catalog.focus();
+    focus.mockClear();
+
+    // Act
+    await userEvent.keyboard("{Enter}");
+    await screen.findByTestId("menu-rail-flyout-products");
+    await userEvent.keyboard("{Tab}{Enter}");
+
+    // Assert
+    expect(catalog).toHaveFocus();
+    expect(focus).toHaveBeenCalledWith({ preventScroll: true });
   });
 
   it("closes a rail tooltip as soon as the pointer leaves the icon", async () => {

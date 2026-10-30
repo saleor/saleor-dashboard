@@ -1,7 +1,9 @@
 import { Box, Drawer } from "@saleor/macaw-ui-next";
 import { type ReactNode, useCallback, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
+import { useHistory } from "react-router";
 
+import { followSidebarLink } from "./followSidebarLink";
 import styles from "./SidebarDrawer.module.css";
 import { useDrawerSwipe } from "./useDrawerSwipe";
 
@@ -29,6 +31,7 @@ interface SidebarDrawerContentProps {
 
 export const SidebarDrawerContent = ({ onClose, children }: SidebarDrawerContentProps) => {
   const intl = useIntl();
+  const history = useHistory();
   const { swipeHandlers, dismiss } = useDrawerSwipe({ onDismiss: onClose });
   const closeLabel = intl.formatMessage(messages.closeNavigation);
 
@@ -61,6 +64,7 @@ export const SidebarDrawerContent = ({ onClose, children }: SidebarDrawerContent
       // The drawer covers the page, so it gets out of the way once a link is followed.
       onClickCapture={event => {
         if (event.target instanceof Element && event.target.closest("a")) {
+          followSidebarLink(event, history);
           dismiss(event.currentTarget);
         }
       }}
