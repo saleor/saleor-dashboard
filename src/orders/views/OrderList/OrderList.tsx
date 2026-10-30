@@ -8,6 +8,7 @@ import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDial
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { useOrderDraftCreateMutation, useOrderListQuery } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -26,6 +27,7 @@ import { getSortParams } from "@dashboard/utils/sort";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 import { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
@@ -45,6 +47,7 @@ interface OrderListProps {
 
 const OrderList = ({ params }: OrderListProps) => {
   const navigate = useNavigator();
+  const location = useLocation();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LIST);
   const { valueProvider } = useConditionalFilterContext();
@@ -141,7 +144,7 @@ const OrderList = ({ params }: OrderListProps) => {
       <OrderListPage
         // @ts-expect-error - due to strict-ignores, this prop is not typed properly but it is passed.
         onRowClick={item => {
-          navigate(orderUrl(item));
+          navigate(orderUrl(item), { state: getPrevLocationState(location) });
         }}
         settings={settings}
         currentTab={selectedPreset}
