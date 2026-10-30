@@ -11,6 +11,12 @@ import type { ReactNode } from "react";
 
 import { CreateAttributeDialog } from "./CreateAttributeDialog";
 
+const mockTrackEvent = jest.fn();
+
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: (): { trackEvent: jest.Mock } => ({ trackEvent: mockTrackEvent }),
+}));
+
 jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
   useIntl: () => ({
