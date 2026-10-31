@@ -20,6 +20,7 @@ import { useIntl } from "react-intl";
 import { messages } from "./messages";
 import styles from "./OrderFulfillLine.module.css";
 import { OrderFulfillProductCellContent } from "./OrderFulfillProductCellContent";
+import { OrderFulfillSkuCell } from "./OrderFulfillSkuCell";
 import { useStyles } from "./styles";
 
 interface OrderFulfillLineProps {
@@ -45,19 +46,19 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
   if (!line) {
     return (
       <TableRowLink key={lineIndex}>
-        <TableCellAvatar className={classes.colName}>
+        <TableCellAvatar className={styles.colName} avatarClassName={styles.productCell}>
           <Skeleton />
         </TableCellAvatar>
-        <TableCell className={classes.colSku}>
+        <TableCell className={styles.colSku}>
           <Skeleton />
         </TableCell>
-        <TableCell className={classes.colQuantity}>
+        <TableCell className={styles.colQuantity}>
           <Skeleton />
         </TableCell>
-        <TableCell className={classes.colStock}>
+        <TableCell className={styles.colStock}>
           <Skeleton />
         </TableCell>
-        <TableCell className={clsx(classes.colWarehouse, styles.warehouseCell)}>
+        <TableCell className={clsx(styles.colWarehouse, styles.warehouseCell)}>
           <Skeleton />
         </TableCell>
       </TableRowLink>
@@ -67,7 +68,8 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
   return (
     <TableRowLink key={line.id}>
       <TableCellAvatar
-        className={classes.colName}
+        className={styles.colName}
+        avatarClassName={styles.productCell}
         thumbnail={line?.thumbnail?.url}
         badge={
           !line?.variant ? (
@@ -90,9 +92,11 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
           attributesCaption={getAttributesCaption(line.variant?.attributes)}
         />
       </TableCellAvatar>
-      <TableCell className={classes.colSku}>{line.variant?.sku}</TableCell>
+      <TableCell className={styles.colSku}>
+        <OrderFulfillSkuCell sku={line.variant?.sku} />
+      </TableCell>
       <TableCell
-        className={classes.colQuantity}
+        className={styles.colQuantity}
         key={warehouseStock?.id ?? "deletedVariant" + lineIndex}
       >
         <QuantityInput
@@ -111,10 +115,10 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
           }}
         />
       </TableCell>
-      <TableCell className={classes.colStock} key="total">
+      <TableCell className={styles.colStock} key="total">
         {lineFormWarehouse ? (isDeletedVariant ? undefined : availableQuantity) : "-"}
       </TableCell>
-      <TableCell className={clsx(classes.colWarehouse, styles.warehouseCell)}>
+      <TableCell className={clsx(styles.colWarehouse, styles.warehouseCell)}>
         <Box
           role="button"
           tabIndex={isFulfillingLine ? 0 : -1}

@@ -2,29 +2,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    colQuantityHeader: {
-      textAlign: "right",
-    },
-    colStock: {
-      textAlign: "right",
-      width: 180,
-    },
-    colName: {
-      width: 220,
-    },
-    colQuantity: {
-      textAlign: "right",
-      width: 210,
-    },
-    colSku: {
-      textAlign: "right",
-      textOverflow: "ellipsis",
-      width: 100,
-    },
-    colWarehouse: {
-      textAlign: "right",
-      width: 200,
-    },
     table: {
       "&&": {
         tableLayout: "fixed",
