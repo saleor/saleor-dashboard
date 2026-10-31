@@ -74,6 +74,47 @@ export const NothingToFulfill: Story = {
   args: { order: { ...order, lines: [line("line-1", "Hoodie", 0)] } },
 };
 
+/** Long product name, variant caption, and SKU stay inside their columns. */
+export const LongProductAndSku: Story = {
+  args: {
+    order: {
+      ...order,
+      number: "4367",
+      lines: [
+        {
+          ...line("line-long", "a product to be deleted via bulk 2/3", 1),
+          variant: {
+            ...fulfillOrderLine(placeholderImage).variant,
+            sku: "329874893278387y28467378",
+            attributes: [
+              {
+                __typename: "SelectedAttribute" as const,
+                values: [
+                  {
+                    __typename: "AttributeValue" as const,
+                    id: "attr-bool",
+                    name: "variant boolean: Yes",
+                  },
+                  {
+                    __typename: "AttributeValue" as const,
+                    id: "attr-date",
+                    name: "2023-11-26",
+                  },
+                  {
+                    __typename: "AttributeValue" as const,
+                    id: "attr-datetime",
+                    name: "2023-11-26 00:06:00+01:00",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+};
+
 export const Saving: Story = {
   args: { saveButtonBar: "loading" },
 };
