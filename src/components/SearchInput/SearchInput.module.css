@@ -1,3 +1,7 @@
+.root {
+  width: 100%;
+}
+
 .input {
   flex: 1;
   border: none;
