@@ -31,6 +31,8 @@ Read documentation when its subject is relevant to the task:
 - `docs/multi-schema.md` for GraphQL operations, generation, or schema selection.
 - `docs/configuration.md` and `.env.template` when configuring or running the app.
 - `docs/running-tests.md` when running Playwright tests.
+- `.claude/skills/saleor-dashboard-cloud-extensions/SKILL.md` when touching
+  `src/cloud-extensions` or the submodule pointer.
 
 Read current commands, dependencies, and runtime requirements from `package.json`,
 including `packageManager` and `engines`; read aliases from `tsconfig.json`.

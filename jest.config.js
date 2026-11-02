@@ -29,6 +29,7 @@ const config = {
     "@assets(.*)$": "<rootDir>/assets/$1",
     "@locale(.*)$": "<rootDir>/locale/$1",
     "@dashboard/misc/getBaseUrl": "<rootDir>/testUtils/__mocks__/getBaseUrl.ts",
+    "^@dashboard/cloud-extensions$": "<rootDir>/testUtils/__mocks__/cloudExtensions.ts",
     "@dashboard(.*)$": "<rootDir>/src/$1",
     "@test/(.*)$": "<rootDir>/testUtils/$1",
     "^@material-ui/core$": "<rootDir>/node_modules/@material-ui/core",
@@ -38,7 +39,7 @@ const config = {
   },
   coverageDirectory: "<rootDir>/coverage/units",
   collectCoverageFrom: ["<rootDir>/src/**/*.{ts,tsx}"],
-  coveragePathIgnorePatterns: ["<rootDir>/src/index\\.tsx"],
+  coveragePathIgnorePatterns: ["<rootDir>/src/index\\.tsx", "<rootDir>/src/cloud-extensions/src/"],
 };
 
 // oxlint-disable-next-line no-undef

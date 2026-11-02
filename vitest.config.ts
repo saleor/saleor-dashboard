@@ -12,6 +12,8 @@ export default defineConfig({
   test: {
     coverage: {
       reportsDirectory: path.join(dirname, "coverage", "storybook"),
+      // Coverage is uploaded to Codecov, which is public; the private submodule stays out of it.
+      exclude: ["src/cloud-extensions/src/**"],
     },
     onConsoleLog(log) {
       if (

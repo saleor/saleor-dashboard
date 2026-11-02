@@ -52,6 +52,10 @@ export interface AnalyticsEventMap {
   customer_type_set_as_default: {
     result: "error" | "success";
   };
+  environment_switched: {
+    domain: string;
+  };
+  environment_switcher_opened: undefined;
   extension_installation_completed: {
     result: "error" | "success";
   };

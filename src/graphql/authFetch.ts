@@ -57,6 +57,24 @@ const runTokenRefresh = (owner: string) => {
   return pending;
 };
 
+/**
+ * Forces a session refresh through the same single-flight path GraphQL requests use, for callers
+ * that need claims from a fresh access token outside Apollo (e.g. the Saleor Cloud API token).
+ *
+ * @public Used by the Saleor Cloud extensions.
+ */
+export const refreshAccessToken = async (): Promise<string | null> => {
+  const token = storage.getAccessToken();
+
+  if (!authClient || !token) {
+    return null;
+  }
+
+  await runTokenRefresh(jwtDecode<JWTToken>(token).owner);
+
+  return storage.getAccessToken();
+};
+
 type FetchConfig = Partial<{
   /**
    * Enable auto token refreshing. Default to `true`.

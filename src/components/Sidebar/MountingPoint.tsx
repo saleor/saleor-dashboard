@@ -1,5 +1,10 @@
+import { useCloud } from "@dashboard/auth/hooks/useCloud";
+import { EnvironmentSwitcher } from "@dashboard/cloud-extensions";
+import { errorTracker } from "@dashboard/services/errorTracking";
 import { Avatar, Box, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { type SidebarContentVariant } from "./Content";
 import styles from "./MountingPoint.module.css";
@@ -17,6 +22,7 @@ interface MountingPointProps {
 
 export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
   const logo = useSidebarLogo();
+  const { isCloudInstance, isAuthenticatedViaCloud } = useCloud();
 
   if (collapsed) {
     return (
@@ -41,6 +47,13 @@ export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
       <Text size={3} fontWeight="bold" __flex="1" className="ellipsis">
         Saleor Dashboard
       </Text>
+      {isCloudInstance && isAuthenticatedViaCloud && (
+        <ErrorBoundary fallbackRender={() => null} onError={errorTracker.captureException}>
+          <Suspense fallback={null}>
+            <EnvironmentSwitcher />
+          </Suspense>
+        </ErrorBoundary>
+      )}
       {variant === "collapsible" && <SidebarCollapseButton />}
     </Box>
   );

@@ -23,6 +23,7 @@ replace_env_var() {
 replace_env_var "API_URL"
 replace_env_var "APP_MOUNT_URI"
 replace_env_var "EXTENSIONS_API_URL"
+replace_env_var "CLOUD_API_URL"
 replace_env_var "IS_CLOUD_INSTANCE"
 replace_env_var "LOCALE_CODE"
 
