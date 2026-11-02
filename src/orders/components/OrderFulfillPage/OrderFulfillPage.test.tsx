@@ -4,6 +4,7 @@ import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
+import lineStyles from "../OrderFulfillLine/OrderFulfillLine.module.css";
 import { orderToFulfill } from "./fixtures";
 import OrderFulfillPage from "./OrderFulfillPage";
 
@@ -92,5 +93,42 @@ describe("OrderFulfillPage", () => {
       }),
     );
     expect(defaultProps.openModal.mock.calls[0][1]).not.toHaveProperty("lineId");
+  });
+
+  it("renders a long sku inside the sku column", () => {
+    // Arrange
+    const longSku = "329874893278387y28467378";
+    const [firstLine, ...otherLines] = orderToFulfill.lines;
+    const order = {
+      ...orderToFulfill,
+      lines: [
+        {
+          ...firstLine,
+          productName: "a product to be deleted via bulk 2/3",
+          variant: firstLine.variant
+            ? {
+                ...firstLine.variant,
+                sku: longSku,
+              }
+            : firstLine.variant,
+        },
+        ...otherLines,
+      ],
+    };
+
+    // Act
+    render(
+      <MemoryRouter>
+        <Wrapper>
+          <SavebarRefProvider>
+            <OrderFulfillPage {...defaultProps} order={order} params={{}} />
+          </SavebarRefProvider>
+        </Wrapper>
+      </MemoryRouter>,
+    );
+
+    // Assert
+    expect(screen.getByText(longSku).closest("td")).toHaveClass(lineStyles.colSku);
+    expect(screen.getByText("a product to be deleted via bulk 2/3")).toBeInTheDocument();
   });
 });

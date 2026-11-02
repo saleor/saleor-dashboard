@@ -224,22 +224,23 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
                     <ResponsiveTable className={classes.table}>
                       <TableHead>
                         <TableRowLink>
-                          <TableCell className={classes.colName}>
+                          <TableCell className={fulfillLineStyles.colName}>
                             <FormattedMessage {...messages.productName} />
                           </TableCell>
-                          <TableCell className={classes.colSku}>
+                          <TableCell className={fulfillLineStyles.colSku}>
                             <FormattedMessage {...messages.sku} />
                           </TableCell>
-                          <TableCell
-                            className={clsx(classes.colQuantity, classes.colQuantityHeader)}
-                          >
+                          <TableCell className={fulfillLineStyles.colQuantity}>
                             <FormattedMessage {...messages.quantity} />
                           </TableCell>
-                          <TableCell className={classes.colStock}>
+                          <TableCell className={fulfillLineStyles.colStock}>
                             <FormattedMessage {...messages.stock} />
                           </TableCell>
                           <TableCell
-                            className={clsx(classes.colWarehouse, fulfillLineStyles.warehouseCell)}
+                            className={clsx(
+                              fulfillLineStyles.colWarehouse,
+                              fulfillLineStyles.warehouseCell,
+                            )}
                           >
                             <Box padding={2}>
                               <FormattedMessage {...messages.warehouse} />

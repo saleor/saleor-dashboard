@@ -1,6 +1,6 @@
 import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 
 import styles from "./OrderFulfillProductCellContent.module.css";
 
@@ -19,12 +19,18 @@ export const OrderFulfillProductCellContent = ({
     useOverflowDetection<HTMLDivElement>();
   const { elementRef: attributesRef, isOverflowing: isAttributesOverflowing } =
     useOverflowDetection<HTMLDivElement>();
-  const showTooltip = Boolean(
-    isProductNameOverflowing() || (attributesCaption && isAttributesOverflowing()),
-  );
+  // Measure on hover. The refs are empty during render, so deciding then locks the tooltip shut.
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const contentOverflows = (): boolean =>
+    Boolean(isProductNameOverflowing() || (attributesCaption && isAttributesOverflowing()));
 
   return (
-    <Tooltip open={showTooltip ? undefined : false}>
+    <Tooltip
+      open={tooltipOpen}
+      onOpenChange={nextOpen => {
+        setTooltipOpen(nextOpen && contentOverflows());
+      }}
+    >
       <Tooltip.Trigger>
         <Box className={styles.content} overflow="hidden" minWidth={0} width="100%">
           <Box

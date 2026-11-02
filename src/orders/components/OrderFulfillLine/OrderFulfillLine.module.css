@@ -2,6 +2,51 @@
   padding: 0 !important;
 }
 
+/* Product name takes the leftover width. Control columns stay fixed so a long
+ * name or SKU cannot paint into the quantity field. */
+td.colName,
+th.colName {
+  width: auto;
+  min-width: 160px;
+  overflow: hidden;
+}
+
+.colSku {
+  width: 160px;
+  overflow: hidden;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.colQuantity {
+  width: 148px;
+  text-align: right;
+}
+
+.colStock {
+  width: 88px;
+  overflow: hidden;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.colWarehouse {
+  width: 200px;
+  text-align: right;
+}
+
+/* TableCellAvatar lays the thumbnail and text in a row. The text wrapper must
+ * be allowed to shrink or the variant caption escapes the column. */
+.productCell {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.productCell > :last-child {
+  min-width: 0;
+  overflow: hidden;
+}
+
 .warehouseInput {
   cursor: pointer;
 }
