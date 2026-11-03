@@ -124,7 +124,7 @@ jobs:
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
   build:
-    needs: [prepare-build, prepare-release, prepare-release]
+    needs: [prepare-build, prepare-release]
     if: always()
     runs-on: ubuntu-22.04
 
@@ -238,7 +238,7 @@ jobs:
             echo "::add-mask::$DISTRIBUTION"
 
             success=
-            for i in {1..3}; do
+            for _ in {1..3}; do
               if aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*"; then
                 success=1
                 break
@@ -277,7 +277,7 @@ jobs:
             }
           }')
 
-          gh api /repos/saleor/saleor-cloud-deployments/dispatches --input - <<< $payload
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches --input - <<< "$payload"
 
   finish-release:
     if: always()

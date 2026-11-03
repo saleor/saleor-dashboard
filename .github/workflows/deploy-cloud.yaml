@@ -21,10 +21,10 @@ jobs:
           MAJOR=$(echo "$VERSION" | cut -d. -f1)
           MINOR=$(echo "$VERSION" | cut -d. -f2)
 
-          if [ "$MAJOR" -gt 3 ] || ([ "$MAJOR" -eq 3 ] && [ "$MINOR" -ge 22 ]); then
-            echo "use-pnpm=true" >> $GITHUB_OUTPUT
+          if [ "$MAJOR" -gt 3 ] || { [ "$MAJOR" -eq 3 ] && [ "$MINOR" -ge 22 ]; }; then
+            echo "use-pnpm=true" >> "$GITHUB_OUTPUT"
           else
-            echo "use-pnpm=false" >> $GITHUB_OUTPUT
+            echo "use-pnpm=false" >> "$GITHUB_OUTPUT"
           fi
 
   build:
@@ -81,7 +81,7 @@ jobs:
           HASH=$(git rev-parse --short HEAD)
           CURRENT_VERSION=$(jq -r .version package.json)
           RELEASE="${CURRENT_VERSION}-${HASH}"
-          echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
+          echo "SENTRY_RELEASE=${RELEASE}" >> "$GITHUB_ENV"
 
       - name: Package
         timeout-minutes: 15
@@ -154,7 +154,7 @@ jobs:
           for DISTRIBUTION in "${DISTRIBUTIONS_ARRAY[@]}"; do
             echo "::add-mask::$DISTRIBUTION"
             success=
-            for i in {1..3}; do
+            for _ in {1..3}; do
               if aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*"; then
                 success=1
                 break
@@ -186,7 +186,7 @@ jobs:
           for DISTRIBUTION in "${DISTRIBUTIONS_ARRAY[@]}"; do
             echo "::add-mask::$DISTRIBUTION"
             success=
-            for i in {1..3}; do
+            for _ in {1..3}; do
               if aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*"; then
                 success=1
                 break

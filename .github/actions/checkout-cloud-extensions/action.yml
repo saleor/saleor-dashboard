@@ -16,6 +16,12 @@ outputs:
 runs:
   using: composite
   steps:
+    # request-vault-token needs jq, which the Playwright container image lacks
+    - name: Install jq
+      if: inputs.vault-jwt != ''
+      shell: bash
+      run: command -v jq > /dev/null || { apt-get update -qq && apt-get install -y -qq --no-install-recommends jq; }
+
     - name: Get token
       id: token
       if: inputs.vault-jwt != ''
@@ -26,7 +32,8 @@ runs:
 
     # The token is passed through environment config for this step only, so it is never written
     # to git config where later steps (and their dependencies) could read it. The empty first
-    # value drops any header actions/checkout persisted.
+    # value drops any header actions/checkout persisted. safe.directory covers job containers,
+    # whose user differs from the owner of the checked-out workspace.
     - name: Check out the submodule
       id: checkout
       if: steps.token.outcome == 'success'
@@ -34,10 +41,12 @@ runs:
       env:
         TOKEN: ${{ steps.token.outputs.token }}
       run: |
-        GIT_CONFIG_COUNT=2 \
+        GIT_CONFIG_COUNT=3 \
         GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
         GIT_CONFIG_VALUE_0="" \
         GIT_CONFIG_KEY_1="http.https://github.com/.extraheader" \
         GIT_CONFIG_VALUE_1="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)" \
+        GIT_CONFIG_KEY_2="safe.directory" \
+        GIT_CONFIG_VALUE_2="$PWD" \
           git submodule update --init src/cloud-extensions/src
         echo "checked-out=true" >> "$GITHUB_OUTPUT"
