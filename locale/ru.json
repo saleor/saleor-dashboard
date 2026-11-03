@@ -258,7 +258,7 @@
   },
   "lG/MDw": {
     "context": "dialog content",
-    "string": "{counter,plural,one {Вы уверены, что хотите удалить этот атрибут?} few {Вы уверены, что хотите удалить {displayQuantity} атрибута?} many {Вы уверены, что хотите удалить {displayQuantity} атрибутов?} other {Вы уверены, что хотите удалить {displayQuantity} атрибутов?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите удалить этот атрибут?} few {Вы уверены, что хотите удалить {displayQuantity} атрибутов?} many {Вы уверены, что хотите удалить {displayQuantity} атрибутов?} other {Вы уверены, что хотите удалить {displayQuantity} атрибутов?}}"
   },
   "rKf4LU": {
     "context": "dialog title",
@@ -609,7 +609,7 @@
     "string": "Категория создана"
   },
   "Pp/7T7": {
-    "string": "{counter,plural,one {Вы уверены, что хотите удалить эту категорию?} few {Вы уверены, что хотите удалить {displayQuantity} категории?} many {Вы уверены, что хотите удалить {displayQuantity} категорий?} other {Вы уверены, что хотите удалить {displayQuantity} категорий?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите удалить эту категорию?} few {Вы уверены, что хотите удалить {displayQuantity} категорий?} many {Вы уверены, что хотите удалить {displayQuantity} категорий?} other {Вы уверены, что хотите удалить {displayQuantity} категорий?}}"
   },
   "HvJPcU": {
     "string": "Категория удалена"
@@ -775,7 +775,7 @@
     "string": "Вы уверены, что хотите удалить изображение коллекции?"
   },
   "AulH/n": {
-    "string": "{counter,plural,one {Вы уверены, что хотите отменить назначение этого товара?} few {Вы уверены, что хотите отменить назначение {displayQuantity} товара?} many {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?} other {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите отменить назначение этого товара?} few {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?} many {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?} other {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?}}"
   },
   "WW+Ruy": {
     "string": "Удаленный товар из коллекции"
@@ -808,7 +808,7 @@
     "string": "Удалить изображение"
   },
   "yT5zvU": {
-    "string": "{counter,plural,one {Вы уверены, что хотите удалить эту коллекцию?} few {Вы уверены, что хотите удалить {displayQuantity} коллекции?} many {Вы уверены, что хотите удалить {displayQuantity} коллекций?} other {Вы уверены, что хотите удалить {displayQuantity} коллекций?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите удалить эту коллекцию?} few {Вы уверены, что хотите удалить {displayQuantity} коллекций?} many {Вы уверены, что хотите удалить {displayQuantity} коллекций?} other {Вы уверены, что хотите удалить {displayQuantity} коллекций?}}"
   },
   "Ykw8k5": {
     "context": "dialog title",
@@ -946,7 +946,7 @@
   },
   "XwrKOi": {
     "context": "unassign multiple attributes from item",
-    "string": "{counter, plural, one {Удалить назначение этого атрибута для {itemTypeName}?} few {Удалить назначение {attributeQuantity} атрибута для {itemTypeName}?} many {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?} other {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?}}"
+    "string": "{counter, plural, one {Удалить назначение этого атрибута для {itemTypeName}?} few {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?} many {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?} other {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?}}"
   },
   "UjsI4o": {
     "context": "date",
@@ -1331,7 +1331,7 @@
     "string": "Клиент создан"
   },
   "N2SbNc": {
-    "string": "{counter,plural,one {Вы уверены, что хотите удалить этого клиента?} few {Вы уверены, что хотите удалить {displayQuantity} клиента?} many {Вы уверены, что хотите удалить {displayQuantity} клиентов?} other {Вы уверены, что хотите удалить {displayQuantity} клиентов?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите удалить этого клиента?} few {Вы уверены, что хотите удалить {displayQuantity} клиентов?} many {Вы уверены, что хотите удалить {displayQuantity} клиентов?} other {Вы уверены, что хотите удалить {displayQuantity} клиентов?}}"
   },
   "q8ep2I": {
     "context": "dialog header",
@@ -1598,19 +1598,19 @@
   },
   "GiJm1v": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этой категории?} few{Вы уверены, что хотите снять назначение с {displayQuantity} категории?} many{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?} other{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?}}"
+    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этой категории?} few{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?} many{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?} other{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?}}"
   },
   "UjoSZB": {
     "context": "dialog content",
-    "string": "{counter, plural, one {Снять назначение этой коллекции?} few {Снять назначение {displayQuantity} коллекции?} many {Снять назначение {displayQuantity} коллекций?} other {Снять назначение {displayQuantity} коллекций?}}"
+    "string": "{counter, plural, one {Снять назначение этой коллекции?} few {Снять назначение {displayQuantity} коллекций?} many {Снять назначение {displayQuantity} коллекций?} other {Снять назначение {displayQuantity} коллекций?}}"
   },
   "AHK0K9": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этого товара?} few{Вы уверены, что хотите снять назначение {displayQuantity} товара?} many{Вы уверены, что хотите снять назначение {displayQuantity} товаров?} other{Вы уверены, что хотите снять назначение {displayQuantity} товара?}}"
+    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этого товара?} few{Вы уверены, что хотите снять назначение {displayQuantity} товаров?} many{Вы уверены, что хотите снять назначение {displayQuantity} товаров?} other{Вы уверены, что хотите снять назначение {displayQuantity} товара?}}"
   },
   "iWyoZn": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этого варианта?} few{Вы уверены, что хотите снять назначение {displayQuantity} варианта?} many{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?} other{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?}}"
+    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этого варианта?} few{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?} many{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?} other{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?}}"
   },
   "Eau5AV": {
     "context": "",
@@ -2784,7 +2784,7 @@
   },
   "Q6VRrE": {
     "context": "dialog content",
-    "string": "{counter,plural,one {Вы уверены, что хотите удалить этот черновик заказа?} few {Вы уверены, что хотите удалить {displayQuantity} черновика заказа?} many {Вы уверены, что хотите удалить {displayQuantity} черновиков заказов?} other {Вы уверены, что хотите удалить {displayQuantity} черновиков заказов?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите удалить этот черновик заказа?} few {Вы уверены, что хотите удалить {displayQuantity} черновиков заказов?} many {Вы уверены, что хотите удалить {displayQuantity} черновиков заказов?} other {Вы уверены, что хотите удалить {displayQuantity} черновиков заказов?}}"
   },
   "2MKBk2": {
     "context": "window title",
@@ -3358,7 +3358,7 @@
   },
   "yDkmX7": {
     "context": "dialog content",
-    "string": "{counter,plural,one {Вы уверены, что хотите удалить этот товар?} few {Вы уверены, что хотите удалить {displayQuantity} товара?} many {Вы уверены, что хотите удалить {displayQuantity} товаров?} other {Вы уверены, что хотите удалить {displayQuantity} товаров?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите удалить этот товар?} few {Вы уверены, что хотите удалить {displayQuantity} товаров?} many {Вы уверены, что хотите удалить {displayQuantity} товаров?} other {Вы уверены, что хотите удалить {displayQuantity} товаров?}}"
   },
   "5QKsu+": {
     "context": "waiting for export to end, header",
@@ -3661,7 +3661,7 @@
   },
   "C9pcQx": {
     "context": "dialog content",
-    "string": "{counter,plural,one {Вы уверены, что хотите удалить эту зону доставки?} few {Вы действительно хотите удалить {displayQuantity} зоны доставки?} many {Вы действительно хотите удалить {displayQuantity} зон доставки?} other {Вы действительно хотите удалить {displayQuantity} зон доставки?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите удалить эту зону доставки?} few {Вы действительно хотите удалить {displayQuantity} зон доставки?} many {Вы действительно хотите удалить {displayQuantity} зон доставки?} other {Вы действительно хотите удалить {displayQuantity} зон доставки?}}"
   },
   "YdeHZX": {
     "context": "unassign products from shipping method, button",
@@ -4564,7 +4564,7 @@
   },
   "/NkQFN": {
     "context": "bulk publish review warning when one price replaces varied variant prices",
-    "string": "Перезаписывает {count, plural, one {# цену варианта} few {# цены варианта} many {# цен вариантов} other {# цены вариантов}}"
+    "string": "Перезаписывает {count, plural, one {# цену варианта} few {# цены вариантов} many {# цен вариантов} other {# цены вариантов}}"
   },
   "/PSoVZ": {
     "context": "warehouse and zone pairs a channel save would unlink",
@@ -5028,7 +5028,7 @@
   },
   "1PClWl": {
     "context": "search field in a product variant reference list",
-    "string": "Фильтр: {count, plural, one {# вариант товара} few {# варианта товара} many {# вариантов товаров} other {# варианта товаров}}"
+    "string": "Фильтр: {count, plural, one {# вариант товара} few {# варианта товаров} many {# вариантов товаров} other {# варианта товаров}}"
   },
   "1S7Gqs": {
     "context": "warehouse pickup toggle when on",
@@ -7700,7 +7700,7 @@
   },
   "DAdjTt": {
     "context": "warehouse delete dialog when the channel count is known and above zero",
-    "string": "Он будет удалён из {count, plural, one {# канала} few {# канала} many {# каналов} other {# канала}}."
+    "string": "Он будет удалён из {count, plural, one {# канала} few {# каналов} many {# каналов} other {# канала}}."
   },
   "DBuWYc": {
     "context": "voucher list status after end date",
@@ -13548,7 +13548,7 @@
   },
   "doQvFl": {
     "context": "customer overview, subtitle scoping recent money stats to the selected channel window",
-    "string": "{count} из последних {windowSize, plural, one {# заказа} few {# заказа} many {# заказов} other {# заказа}} в канале {channelName}"
+    "string": "{count} из последних {windowSize, plural, one {# заказа} few {# заказов} many {# заказов} other {# заказа}} в канале {channelName}"
   },
   "dpXfQL": {
     "context": "channel link title and a11y label",
@@ -16460,7 +16460,7 @@
   },
   "q+SBuc": {
     "context": "",
-    "string": "Удаление этого типа клиента переназначит {count, plural, one {клиента} few {клиента} many {клиентов} other {клиента}} на тип клиента по умолчанию."
+    "string": "Удаление этого типа клиента переназначит {count, plural, one {клиента} few {клиентов} many {клиентов} other {клиента}} на тип клиента по умолчанию."
   },
   "q/FMPM": {
     "context": "dialog header",
@@ -17336,7 +17336,7 @@
   },
   "tqV6rg": {
     "context": "usage summary when attribute is only on variant types",
-    "string": "{count, plural, one {# тип варианта} few {# типа варианта} many {# типов вариантов} other {# типа вариантов}}"
+    "string": "{count, plural, one {# тип варианта} few {# типа вариантов} many {# типов вариантов} other {# типа вариантов}}"
   },
   "tqcnG1": {
     "context": "unassign attribute from customer type, button",
@@ -17896,7 +17896,7 @@
   },
   "vmLY5S": {
     "context": "bulk publish confirm partial cost prices",
-    "string": "Себестоимость задана для {count, plural, one {# товара} few {# товара} many {# товаров} other {# товара}}"
+    "string": "Себестоимость задана для {count, plural, one {# товара} few {# товаров} many {# товаров} other {# товара}}"
   },
   "vmX9L4": {
     "context": "loading state label on the load more variants button",
@@ -18420,7 +18420,7 @@
   },
   "xsd8Wt": {
     "context": "bulk publish review missing category warning",
-    "string": "У {count, plural, one {# товара} few {# товара} many {# товаров} other {# товара}} нет категории, и их нельзя опубликовать: {productNames}. Назначьте категорию товару или отключите публикацию в настройках по умолчанию."
+    "string": "У {count, plural, one {# товара} few {# товаров} many {# товаров} other {# товара}} нет категории, и их нельзя опубликовать: {productNames}. Назначьте категорию товару или отключите публикацию в настройках по умолчанию."
   },
   "xvKNkf": {
     "context": "Info message when user sets a past publication date",
