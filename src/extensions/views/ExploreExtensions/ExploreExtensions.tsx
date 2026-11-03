@@ -72,13 +72,11 @@ export const ExploreExtensions = () => {
             </Text>
           </Box>
         )}
-        <Box __width="370px">
-          <SearchInput
-            initialSearch={query}
-            placeholder={intl.formatMessage(messages.searchPlaceholder)}
-            onSearchChange={handleQueryChange}
-          />
-        </Box>
+        <SearchInput
+          initialSearch={query}
+          placeholder={intl.formatMessage(messages.searchPlaceholder)}
+          onSearchChange={handleQueryChange}
+        />
 
         <ExtensionsList
           extensions={filteredExtensions}

@@ -75,14 +75,8 @@ const ShippingZonesListPage = ({
           </Button>
         </Box>
       </TopNav>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        paddingX={6}
-        marginY={2}
-      >
-        <Box __width="320px">
+      <Box display="flex" alignItems="center" flexWrap="wrap" gap={4} paddingX={6} marginY={2}>
+        <Box flexGrow="1">
           <SearchInput
             initialSearch={initialSearch}
             placeholder={intl.formatMessage(messages.searchShippingZones)}
@@ -90,9 +84,11 @@ const ShippingZonesListPage = ({
           />
         </Box>
         {selectedShippingZonesIds.length > 0 && (
-          <BulkDeleteButton count={selectedShippingZonesIds.length} onClick={onRemove}>
-            <FormattedMessage {...messages.bulkDelete} />
-          </BulkDeleteButton>
+          <Box flexShrink="0">
+            <BulkDeleteButton count={selectedShippingZonesIds.length} onClick={onRemove}>
+              <FormattedMessage {...messages.bulkDelete} />
+            </BulkDeleteButton>
+          </Box>
         )}
       </Box>
       <ShippingZoneListDatagrid disabled={disabled} {...listProps} />
