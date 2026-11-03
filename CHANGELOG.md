@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.23.42
+
+### Patch Changes
+
+- [#7042](https://github.com/saleor/saleor-dashboard/pull/7042) [`3de9319`](https://github.com/saleor/saleor-dashboard/commit/3de931965ebb71403de1ab0184c1532ab97c52b1) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The installed extensions list now shows when Saleor's circuit breaker has stopped or is limiting an app's synchronous webhooks. Apps with paused webhooks get a red "Webhooks paused" badge, and apps being checked after failures get an orange "Webhooks recovering" badge. Hover or focus a badge to see what it means and when the state started. Healthy apps show no badge.
+
+- [#7043](https://github.com/saleor/saleor-dashboard/pull/7043) [`76a8bb4`](https://github.com/saleor/saleor-dashboard/commit/76a8bb4d9e7c387ccb4a29f161db2d32a8ff8521) Thanks [@mirekm](https://github.com/mirekm)! - Home widget tabs show the app's own logo beside the tab name when the app has one, at the name's height and with the usual small-icon rounding. Tabs for apps without a logo have no icon. The logo fades on inactive tabs, matching the label.
+
+- [#7041](https://github.com/saleor/saleor-dashboard/pull/7041) [`858bb7b`](https://github.com/saleor/saleor-dashboard/commit/858bb7be43cd29d0b05b762d0de149b07d59ee51) Thanks [@mirekm](https://github.com/mirekm)! - The main navigation adapts to the screen width. On desktop, you can collapse the sidebar to an icon rail with the button next to the logo or with Cmd/Ctrl+B, and the dashboard remembers your choice. In the rail, every icon has a tooltip, and sections open their pages in a flyout. On tablets, the rail is always shown so pages keep their width, and the logo opens the full navigation over the page. On phones, an app bar with the menu button, logo, and search replaces the narrow column that held only the menu button. The navigation drawer slides in, can be swiped closed, closes after you follow a link, and has larger touch targets. "Go to Saleor Cloud" moved from a hover-only icon in the sidebar header to the account menu.
+
+- [#7047](https://github.com/saleor/saleor-dashboard/pull/7047) [`9dc500a`](https://github.com/saleor/saleor-dashboard/commit/9dc500a81983ab0d5718c79ba7d7c84caf08acf1) Thanks [@mirekm](https://github.com/mirekm)! - Keep long product names and SKUs inside their columns on the fulfill order page, and show the full value in a tooltip when it is clipped.
+
+- [#7045](https://github.com/saleor/saleor-dashboard/pull/7045) [`7f6e9b0`](https://github.com/saleor/saleor-dashboard/commit/7f6e9b06e69b78febc9cc6f39ceaff481215959e) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The payment pill in the order list and in search results now reflects the order's charges and refunds. Previously, orders paid through the Transactions API only showed "Unpaid", "Partially paid", or "Fully paid", even when a charge was pending or money had been refunded. They now also show "Pending", "Authorised", "Partially authorised", "Partially refunded", and "Fully refunded". The dashboard no longer queries the deprecated `Order.paymentStatus` field.
+
+- [#7022](https://github.com/saleor/saleor-dashboard/pull/7022) [`453a8fa`](https://github.com/saleor/saleor-dashboard/commit/453a8fae0ae25a2660ab8ca38e2a288a78a65613) Thanks [@offx366](https://github.com/offx366)! - Keep the current order list page and filters when returning from an order with the Dashboard back arrow.
+
+- [#7040](https://github.com/saleor/saleor-dashboard/pull/7040) [`cf6004e`](https://github.com/saleor/saleor-dashboard/commit/cf6004e34cc67b15bee2b92d1b7134d85f398665) Thanks [@mirekm](https://github.com/mirekm)! - Fix remembering the language you were translating into when you open another object's translations, including after you log out and back in. If no language has been chosen yet, Translate opens the language list.
+
 ## 3.23.41
 
 ### Patch Changes
