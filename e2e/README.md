@@ -223,10 +223,12 @@ Real shortcuts, taken knowingly, with what would undo them:
   failed nightly run posts its failed tests to Slack; a manual run does not.
   Putting it on pull requests is a one-line change once the suite is broad enough to be
   worth the minutes.
-- **Few specs so far.** `tests/login.spec.ts` and the order flows in `tests/orders/`. A
-  single-permission spec is still worth porting early — it is the part of the actor model
-  most likely to be subtly wrong, and the first place a `populatedb` difference between
-  `3.23` and `unstable-main` would show.
+- **Few specs so far.** `tests/login.spec.ts`, the order flows in `tests/orders/`, and
+  `tests/permissions.spec.ts`: every single-permission actor walks the pages its permission
+  opens, and some save a change, failing on any GraphQL error (`graphqlErrors` fixture).
+- **The permission walks run serially.** They only read and could be tagged `parallel()`,
+  but a failing parallel group skips every project after it, and the walks are red until
+  the leaks they report are fixed. Tag them once they pass.
 - **No multi-actor test helper.** One actor per test. Two actors in one test needs a second
   `browser.newContext({ storageState })`; four lines, written when a spec needs it.
 - **Product images are skipped** (`populatedb --withoutimages`) — minutes off the build and
