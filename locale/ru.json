@@ -13,7 +13,7 @@
   },
   "ZFfG4L": {
     "context": "ProductTypeDeleteWarningDialog single assigned items description",
-    "string": "Вы собираетесь удалить тип товара <b>{typeName}</b>. Он назначен {assignedItemsCount} {assignedItemsCount, plural, one {product} few {products} many {products} other {products}}. Удаление этого типа товара также удалит эти товары. Вы уверены?"
+    "string": "Вы собираетесь удалить тип товара <b>{typeName}</b>. Он назначен {assignedItemsCount} {assignedItemsCount, plural, one {товару} few {товарам} many {товарам} other {товарам}}. Удаление этого типа товара также удалит эти товары. Вы уверены?"
   },
   "bk9KUX": {
     "context": "ProductTypeDeleteWarningDialog single consent label",
@@ -13684,7 +13684,7 @@
   },
   "eUXgTE": {
     "context": "order add product picker, after channel-listed variant ids are known; shown counts priced variants, available counts every variant listed in the channel",
-    "string": "{shown} из {available} вариантов канала {available, plural, one {variant has} few {variants have} many {variants have} other {variants have}} цену"
+    "string": "{shown} из {available} вариантов канала {available, plural, one {имеет} few {имеют} many {имеют} other {имеют}} цену"
   },
   "eUcaVH": {
     "context": "gift card resend dialog notification section title",
