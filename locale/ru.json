@@ -926,7 +926,7 @@
   },
   "+HuipK": {
     "context": "variant sku",
-    "string": "Артикул (SKU): {sku}"
+    "string": "SKU {sku}"
   },
   "QZVD+5": {
     "context": "button, unassign attribute from object",
@@ -1132,7 +1132,7 @@
   },
   "5x6yT9": {
     "context": "weight",
-    "string": "от {fromValue} {fromUnit} до {toValue} {toUnit}"
+    "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
   "LICZeR": {
     "context": "weight",
@@ -1140,7 +1140,7 @@
   },
   "NtFVFS": {
     "context": "weight",
-    "string": "Вес {value} {unit}"
+    "string": "{value} {unit}"
   },
   "xfGZsi": {
     "context": "configuration section name",
@@ -2317,7 +2317,7 @@
   },
   "fw+VAN": {
     "context": "product's sku",
-    "string": "Единица складского учёта"
+    "string": "SKU"
   },
   "BLX9dz": {
     "context": "fulfill order, button",
@@ -2580,7 +2580,7 @@
   },
   "8J81ri": {
     "context": "ordered product sku",
-    "string": "Единица складского учёта"
+    "string": "SKU"
   },
   "qT6YYk": {
     "context": "order line total price",
@@ -3281,7 +3281,7 @@
     "string": "Сохранить вариант"
   },
   "k4brJy": {
-    "string": "Единица складского учёта"
+    "string": "SKU"
   },
   "rbkmfG": {
     "context": "button",
@@ -4964,7 +4964,7 @@
   },
   "14t8+g": {
     "context": "external media dialog url input label",
-    "string": "URL-адрес"
+    "string": "URL"
   },
   "15w4sp": {
     "context": "channel deactivate confirmation dialog title",
@@ -6324,7 +6324,7 @@
   },
   "7UOtno": {
     "context": "eyebrow label for Pulse homepage promotion",
-    "string": "Saleor Pulse — промо"
+    "string": "Saleor Pulse"
   },
   "7X0w8O": {
     "context": "model",
@@ -6888,7 +6888,7 @@
   },
   "9wjl6Q": {
     "context": "bulk action button label with selected count",
-    "string": "{action} ({count}) — выбрано"
+    "string": "{action} ({count})"
   },
   "A+g/VP": {
     "context": "",
@@ -7604,7 +7604,7 @@
   },
   "Cn6l5R": {
     "context": "playground shortcut",
-    "string": "Песочница"
+    "string": "Playground"
   },
   "CnDveJ": {
     "context": "Save composition segment for product type name and kind",
@@ -8388,7 +8388,7 @@
   },
   "GXxpRA": {
     "context": "channel detail title secondary meta after status pill",
-    "string": "Страна: {country} · Валюта: {currency}"
+    "string": "{country} · {currency}"
   },
   "GY93MP": {
     "context": "order line return/refund reason",
@@ -8444,7 +8444,7 @@
   },
   "GoSeIN": {
     "context": "voucher type pill combining discount scope and amount type",
-    "string": "Тип: {scope} · {amount}"
+    "string": "{scope} · {amount}"
   },
   "GoZ/jJ": {
     "context": "bulk publish confirm visibility all enabled detail",
@@ -8512,7 +8512,7 @@
   },
   "H1L1cc": {
     "context": "url",
-    "string": "URL-адрес"
+    "string": "URL"
   },
   "H31h5O": {
     "context": "bulk publish price format validation",
@@ -8604,7 +8604,7 @@
   },
   "HO81c6": {
     "context": "warehouse list place, city then country",
-    "string": "Город: {city}, Страна: {country}"
+    "string": "{city}, {country}"
   },
   "HQxM32": {
     "context": "button",
@@ -11112,7 +11112,7 @@
   },
   "TOA3CD": {
     "context": "foldable SEO settings section title",
-    "string": "SEO-настройки"
+    "string": "SEO"
   },
   "TPJeJF": {
     "context": "extensions list has not been installed",
@@ -11480,7 +11480,7 @@
   },
   "V21v8h": {
     "context": "",
-    "string": "Сумма {totalAmount} {currency}"
+    "string": "{currency} {totalAmount}"
   },
   "V22724": {
     "context": "",
@@ -16656,7 +16656,7 @@
   },
   "qa/dDe": {
     "context": "GraphiQL Playground in the dev mode panel",
-    "string": "Песочница"
+    "string": "Playground"
   },
   "qank7+": {
     "context": "",
