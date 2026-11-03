@@ -775,7 +775,7 @@
     "string": "Вы уверены, что хотите удалить изображение коллекции?"
   },
   "AulH/n": {
-    "string": "{counter,plural,one {Вы уверены, что хотите отменить назначение этого товара?} few {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?} many {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?} other {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?}}"
+    "string": "{counter,plural,one {Вы уверены, что хотите отменить назначение этого товара?} few {Вы уверены, что хотите отменить назначение {displayQuantity} товара?} many {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?} other {Вы уверены, что хотите отменить назначение {displayQuantity} товаров?}}"
   },
   "WW+Ruy": {
     "string": "Удаленный товар из коллекции"
@@ -946,7 +946,7 @@
   },
   "XwrKOi": {
     "context": "unassign multiple attributes from item",
-    "string": "{counter, plural, one {Удалить назначение этого атрибута для {itemTypeName}?} few {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?} many {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?} other {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?}}"
+    "string": "{counter, plural, one {Удалить назначение этого атрибута для {itemTypeName}?} few {Удалить назначение {attributeQuantity} атрибута для {itemTypeName}?} many {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?} other {Удалить назначение {attributeQuantity} атрибутов для {itemTypeName}?}}"
   },
   "UjsI4o": {
     "context": "date",
@@ -1598,19 +1598,19 @@
   },
   "GiJm1v": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этой категории?} few{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?} many{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?} other{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?}}"
+    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этой категории?} few{Вы уверены, что хотите снять назначение с {displayQuantity} категории?} many{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?} other{Вы уверены, что хотите снять назначение с {displayQuantity} категорий?}}"
   },
   "UjoSZB": {
     "context": "dialog content",
-    "string": "{counter, plural, one {Снять назначение этой коллекции?} few {Снять назначение {displayQuantity} коллекций?} many {Снять назначение {displayQuantity} коллекций?} other {Снять назначение {displayQuantity} коллекций?}}"
+    "string": "{counter, plural, one {Снять назначение этой коллекции?} few {Снять назначение {displayQuantity} коллекции?} many {Снять назначение {displayQuantity} коллекций?} other {Снять назначение {displayQuantity} коллекций?}}"
   },
   "AHK0K9": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этого товара?} few{Вы уверены, что хотите снять назначение {displayQuantity} товаров?} many{Вы уверены, что хотите снять назначение {displayQuantity} товаров?} other{Вы уверены, что хотите снять назначение {displayQuantity} товара?}}"
+    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этого товара?} few{Вы уверены, что хотите снять назначение {displayQuantity} товара?} many{Вы уверены, что хотите снять назначение {displayQuantity} товаров?} other{Вы уверены, что хотите снять назначение {displayQuantity} товара?}}"
   },
   "iWyoZn": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этого варианта?} few{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?} many{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?} other{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?}}"
+    "string": "{counter,plural,one{Вы уверены, что хотите снять назначение этого варианта?} few{Вы уверены, что хотите снять назначение {displayQuantity} варианта?} many{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?} other{Вы уверены, что хотите снять назначение {displayQuantity} вариантов?}}"
   },
   "Eau5AV": {
     "context": "",
