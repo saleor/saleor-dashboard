@@ -9168,7 +9168,7 @@
   },
   "K8Q9Ho": {
     "context": "deprecated SMTP app row title inside the customer emails card",
-    "string": "SMTP-протокол"
+    "string": "SMTP"
   },
   "KAhzcY": {
     "context": "product export dialog step two intro",
