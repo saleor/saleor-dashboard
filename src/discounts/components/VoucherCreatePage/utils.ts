@@ -1,5 +1,12 @@
+import {
+  type CategoryWithTotalProductsFragment,
+  type CollectionWithTotalProductsFragment,
+  type SearchProductFragment,
+  type VoucherCatalogueFragment,
+} from "@dashboard/graphql";
+
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
-import { type FormData } from "./types";
+import { type FormData, VoucherCreatePageTab, type VoucherCreateProductVariant } from "./types";
 
 export const generateDraftVoucherCode = (code: string) => {
   return {
@@ -44,3 +51,46 @@ export const mapLocalVariantsToSavedVariants = (variants: FormData["variants"]) 
     })),
   };
 };
+
+type CreateCatalogueItem =
+  | CategoryWithTotalProductsFragment
+  | CollectionWithTotalProductsFragment
+  | SearchProductFragment
+  | VoucherCreateProductVariant;
+
+interface CreateCatalogueLists {
+  categories: CategoryWithTotalProductsFragment[];
+  collections: CollectionWithTotalProductsFragment[];
+  products: SearchProductFragment[];
+  variants: VoucherCatalogueFragment["variants"];
+}
+
+/**
+ * The create page paginates only the open catalogue group, so `pageItems` holds that group's
+ * items. Only that group gets them; the collapsed groups get nothing, so items are never read
+ * as another type (mapping a category as a variant crashed the page).
+ */
+export const getCreateCatalogueLists = ({
+  activeTab,
+  pageItems,
+}: {
+  activeTab: VoucherCreatePageTab;
+  pageItems: CreateCatalogueItem[];
+}): CreateCatalogueLists => ({
+  categories:
+    activeTab === VoucherCreatePageTab.categories
+      ? (pageItems as CategoryWithTotalProductsFragment[])
+      : [],
+  collections:
+    activeTab === VoucherCreatePageTab.collections
+      ? (pageItems as CollectionWithTotalProductsFragment[])
+      : [],
+  products:
+    activeTab === VoucherCreatePageTab.products ? (pageItems as SearchProductFragment[]) : [],
+  variants:
+    activeTab === VoucherCreatePageTab.variants
+      ? (mapLocalVariantsToSavedVariants(
+          pageItems as VoucherCreateProductVariant[],
+        ) as unknown as VoucherCatalogueFragment["variants"])
+      : null,
+});

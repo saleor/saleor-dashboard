@@ -2,10 +2,16 @@ import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
   getAssignedVariantIdsFromForm,
+  getCreateCatalogueLists,
   mapLocalVariantsToSavedVariants,
 } from "@dashboard/discounts/components/VoucherCreatePage/utils";
+import {
+  type CategoryWithTotalProductsFragment,
+  type CollectionWithTotalProductsFragment,
+  type SearchProductFragment,
+} from "@dashboard/graphql";
 
-import { type FormData } from "./types";
+import { type FormData, VoucherCreatePageTab, type VoucherCreateProductVariant } from "./types";
 
 describe("generateDraftVoucherCode", () => {
   it("should return draft voucher code", () => {
@@ -190,5 +196,92 @@ describe("getAssignedVariantIdsFromForm", () => {
 
     // Assert
     expect(result).toEqual([]);
+  });
+});
+
+describe("getCreateCatalogueLists", () => {
+  const category: CategoryWithTotalProductsFragment = {
+    __typename: "Category",
+    id: "category-1",
+    name: "Accessories",
+    products: { __typename: "ProductCountableConnection", totalCount: 4 },
+  };
+  const collection: CollectionWithTotalProductsFragment = {
+    __typename: "Collection",
+    id: "collection-1",
+    name: "Summer Picks",
+    products: { __typename: "ProductCountableConnection", totalCount: 2 },
+  };
+  const product: SearchProductFragment = {
+    __typename: "Product",
+    id: "product-1",
+    name: "Monospace Tee",
+    productType: { __typename: "ProductType", id: "type-1", name: "Clothing" },
+    thumbnail: null,
+    channelListings: [],
+    collections: [],
+    category: null,
+  };
+  const variant: VoucherCreateProductVariant = {
+    __typename: "ProductVariant",
+    id: "variant-1",
+    name: "Size M",
+    sku: "sku-1",
+    channelListings: [],
+    product: {
+      __typename: "Product",
+      id: "product-1",
+      name: "Monospace Tee",
+      thumbnail: null,
+      productType: { __typename: "ProductType", id: "type-1", name: "Clothing" },
+    },
+  };
+
+  it.each([
+    {
+      activeTab: VoucherCreatePageTab.categories,
+      expected: { categories: [category] },
+      item: category,
+    },
+    {
+      activeTab: VoucherCreatePageTab.collections,
+      expected: { collections: [collection] },
+      item: collection,
+    },
+    { activeTab: VoucherCreatePageTab.products, expected: { products: [product] }, item: product },
+  ])(
+    "gives $activeTab only to the $activeTab list, without reading them as variants",
+    ({ activeTab, expected, item }) => {
+      // Arrange
+      const pageItems = [item];
+
+      // Act
+      const result = getCreateCatalogueLists({ activeTab, pageItems });
+
+      // Assert
+      expect(result).toEqual({
+        categories: [],
+        collections: [],
+        products: [],
+        variants: null,
+        ...expected,
+      });
+    },
+  );
+
+  it("maps variants into a connection on the variants tab", () => {
+    // Arrange
+    const pageItems = [variant];
+
+    // Act
+    const result = getCreateCatalogueLists({ activeTab: VoucherCreatePageTab.variants, pageItems });
+
+    // Assert
+    expect(result).toEqual({
+      categories: [],
+      collections: [],
+      products: [],
+      variants: mapLocalVariantsToSavedVariants([variant]),
+    });
   });
 });

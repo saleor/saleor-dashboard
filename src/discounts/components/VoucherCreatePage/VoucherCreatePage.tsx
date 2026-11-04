@@ -55,7 +55,6 @@ import {
   type SearchProductsQuery,
   type SearchProductsQueryVariables,
   type SearchProductVariantFragment,
-  type VoucherCatalogueFragment,
 } from "@dashboard/graphql";
 import { type UseSearchResult } from "@dashboard/hooks/makeSearch";
 import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -80,12 +79,12 @@ import { initialForm } from "./const";
 import { useActiveTab } from "./hooks/useActiveTab";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
-import { type FormData, VoucherCreatePageTab, type VoucherCreateProductVariant } from "./types";
+import { type FormData, VoucherCreatePageTab } from "./types";
 import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
   getAssignedVariantIdsFromForm,
-  mapLocalVariantsToSavedVariants,
+  getCreateCatalogueLists,
   voucherCodeExists,
 } from "./utils";
 
@@ -378,6 +377,10 @@ const VoucherCreatePage = ({
     products: data.products.length,
     variants: data.variants.length,
   };
+  const catalogueLists = getCreateCatalogueLists({
+    activeTab,
+    pageItems: paginatedSpecificItems,
+  });
   const setupReadiness = getVoucherSetupReadiness({
     voucher: null,
     formData: data,
@@ -455,14 +458,10 @@ const VoucherCreatePage = ({
                     disabled={disabled}
                     errors={errors}
                     onTabClick={tab => onTabClick(tab as unknown as VoucherCreatePageTab)}
-                    categories={paginatedSpecificItems as CategoryWithTotalProductsFragment[]}
-                    collections={paginatedSpecificItems as CollectionWithTotalProductsFragment[]}
-                    products={paginatedSpecificItems as SearchProductFragment[]}
-                    variants={
-                      mapLocalVariantsToSavedVariants(
-                        paginatedSpecificItems as VoucherCreateProductVariant[],
-                      ) as unknown as VoucherCatalogueFragment["variants"]
-                    }
+                    categories={catalogueLists.categories}
+                    collections={catalogueLists.collections}
+                    products={catalogueLists.products}
+                    variants={catalogueLists.variants}
                     onCategoryAssign={() => openModal("assign-category")}
                     onCategoryUnassign={id => unassignItem(id, VoucherCreatePageTab.categories)}
                     onCollectionAssign={() => openModal("assign-collection")}
