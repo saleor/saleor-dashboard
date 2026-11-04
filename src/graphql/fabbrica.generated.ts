@@ -28822,6 +28822,12 @@ export type OptionalProductVariantWhereInput = {
  * Added in Saleor 3.22.
  */
   attributes?: Maybe<OptionalAssignedAttributeWhereInput[]> | undefined;
+  /**
+ * Filter by external reference.
+ *
+ * Added in Saleor 3.23.
+ */
+  externalReference?: Maybe<OptionalStringFilterInput> | undefined;
   ids?: ProductVariantWhereInput['ids'] | undefined;
   metadata?: Maybe<OptionalMetadataFilter[]> | undefined;
   /** Filter by product SKU. */
