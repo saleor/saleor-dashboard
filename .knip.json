@@ -18,6 +18,7 @@
   },
   "entry": [
     "src/index.tsx!",
+    "src/cloud-extensions/src/index.ts!",
     "assets/**!",
     "src/**/queries*.ts",
     "src/**/mutations*.ts",

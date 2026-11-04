@@ -5,7 +5,7 @@ import { rippleTypePageCreateAttribute } from "@dashboard/attributes/ripples/typ
 import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { channelCreateSetupFlow } from "@dashboard/channels/ripples/channelCreateSetupFlow";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
-import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
+import { rippleCloudEnvironmentSwitcher } from "@dashboard/components/Sidebar/ripples/cloudEnvironmentSwitcher";
 import { rippleGlobalFeedback } from "@dashboard/components/Sidebar/ripples/globalFeedback";
 import { rippleSidebarCollapse } from "@dashboard/components/Sidebar/ripples/sidebarCollapse";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
@@ -119,7 +119,7 @@ export const allRipples: Ripple[] = [
   rippleTranslationDetailRefresh,
 
   // Sidebar
-  rippleCloudEnvLink,
+  rippleCloudEnvironmentSwitcher,
   rippleNavigationPins,
   rippleGlobalFeedback,
   rippleSidebarCollapse,

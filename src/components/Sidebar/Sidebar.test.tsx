@@ -7,7 +7,7 @@ import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { type ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useLocation } from "react-router";
 import { MemoryRouter } from "react-router-dom";
@@ -22,6 +22,18 @@ import {
 } from "./SidebarContext";
 
 const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true }));
+const renderEnvironmentSwitcherStub = (): ReactElement => (
+  <div data-test-id="cloud-environment-switcher" />
+);
+const mockEnvironmentSwitcher = jest.fn(renderEnvironmentSwitcherStub);
+const mockCaptureException = jest.fn();
+
+jest.mock("@dashboard/cloud-extensions", () => ({
+  EnvironmentSwitcher: () => mockEnvironmentSwitcher(),
+}));
+jest.mock("@dashboard/services/errorTracking", () => ({
+  errorTracker: { captureException: (error: Error) => mockCaptureException(error) },
+}));
 
 jest.mock("./user/useFeedbackSurvey", () => ({
   useFeedbackSurvey: () => mockFeedbackSurvey(),
@@ -148,6 +160,55 @@ describe("Sidebar", () => {
     // Assert
     expect(await screen.findByTestId("log-out-button")).toBeInTheDocument();
     expect(screen.queryByTestId("cloud-environment-link")).not.toBeInTheDocument();
+  });
+  it("should render the Saleor Cloud environment switcher when signed in via Saleor Cloud", async () => {
+    // Arrange
+    (useCloud as jest.Mock).mockImplementation(() => ({
+      isCloudInstance: true,
+      isAuthenticatedViaCloud: true,
+    }));
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "false");
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+    // Assert
+    expect(await screen.findByTestId("cloud-environment-switcher")).toBeInTheDocument();
+  });
+  it("should not load the Saleor Cloud environment switcher when not signed in via Saleor Cloud", async () => {
+    // Arrange
+    (useCloud as jest.Mock).mockImplementation(() => ({
+      isCloudInstance: true,
+      isAuthenticatedViaCloud: false,
+    }));
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "false");
+    mockEnvironmentSwitcher.mockClear();
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+    // Assert
+    expect(screen.queryByTestId("cloud-environment-switcher")).not.toBeInTheDocument();
+    expect(mockEnvironmentSwitcher).not.toHaveBeenCalled();
+  });
+  it("should keep the sidebar and report the error when the environment switcher fails", async () => {
+    // Arrange
+    const error = new Error("cloud extension crashed");
+
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => undefined);
+
+    mockEnvironmentSwitcher.mockImplementation(() => {
+      throw error;
+    });
+    (useCloud as jest.Mock).mockImplementation(() => ({
+      isCloudInstance: true,
+      isAuthenticatedViaCloud: true,
+    }));
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "false");
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+    // Assert
+    await screen.findByText("Saleor Dashboard");
+    expect(mockCaptureException).toHaveBeenCalledWith(error);
+    expect(screen.getByText("Saleor Dashboard")).toBeInTheDocument();
+    consoleError.mockRestore();
+    mockEnvironmentSwitcher.mockImplementation(renderEnvironmentSwitcherStub);
   });
   it("should render keyboard shortcuts", () => {
     // Arrange & Act

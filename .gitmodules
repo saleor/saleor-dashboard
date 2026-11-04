@@ -1,0 +1,4 @@
+[submodule "cloud-extensions"]
+	path = src/cloud-extensions/src
+	url = https://github.com/saleor/dashboard-cloud-extensions.git
+	branch = main

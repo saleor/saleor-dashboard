@@ -19,6 +19,14 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+
+      - name: Check out Saleor Cloud extensions
+        id: cloud
+        uses: ./.github/actions/checkout-cloud-extensions
+        with:
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
+
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -27,6 +35,14 @@ jobs:
 
       - name: Install deps
         run: pnpm install
+
+      - name: Check the Cloud extensions commit is on the private main
+        if: github.event_name == 'pull_request' && steps.cloud.outputs.checked-out == 'true'
+        run: |
+          if ! git -C src/cloud-extensions/src merge-base --is-ancestor HEAD origin/main; then
+            echo "::error::src/cloud-extensions/src pins a commit that is not on the private main. Merge the linked private PR (with a merge commit) and rerun this job."
+            exit 1
+          fi
 
       - name: Run tsc
         run: pnpm run check-types
@@ -46,6 +62,14 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+
+      - name: Check out Saleor Cloud extensions
+        id: cloud
+        uses: ./.github/actions/checkout-cloud-extensions
+        with:
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
+
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -72,6 +96,14 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+
+      - name: Check out Saleor Cloud extensions
+        id: cloud
+        uses: ./.github/actions/checkout-cloud-extensions
+        with:
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
+
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -86,6 +118,13 @@ jobs:
           pnpm run extract-messages
           git diff --exit-code ./locale
 
+      - name: Check Cloud extensions message extraction
+        if: steps.cloud.outputs.checked-out == 'true'
+        run: |
+          pnpm run extract-messages:cloud
+          git -C src/cloud-extensions/src status --porcelain locale
+          test -z "$(git -C src/cloud-extensions/src status --porcelain locale)"
+
   storybook-tests:
     runs-on: ubuntu-22.04
     permissions:
@@ -99,6 +138,13 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+
+      - name: Check out Saleor Cloud extensions
+        id: cloud
+        uses: ./.github/actions/checkout-cloud-extensions
+        with:
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
 

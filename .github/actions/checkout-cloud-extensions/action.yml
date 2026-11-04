@@ -1,0 +1,52 @@
+name: Check out Saleor Cloud extensions
+description: >
+  Checks out the private src/cloud-extensions/src submodule at its pinned commit. Without a Vault
+  JWT (fork and Dependabot pull requests) it does nothing, and the extensions render nothing.
+inputs:
+  vault-url:
+    description: URL of the Vault that issues Saleor's GitHub tokens
+    required: true
+  vault-jwt:
+    description: JWT for that Vault
+    required: true
+outputs:
+  checked-out:
+    description: "'true' when the submodule was checked out"
+    value: ${{ steps.checkout.outputs.checked-out }}
+runs:
+  using: composite
+  steps:
+    # request-vault-token needs jq, which the Playwright container image lacks
+    - name: Install jq
+      if: inputs.vault-jwt != ''
+      shell: bash
+      run: command -v jq > /dev/null || { apt-get update -qq && apt-get install -y -qq --no-install-recommends jq; }
+
+    - name: Get token
+      id: token
+      if: inputs.vault-jwt != ''
+      uses: saleor/saleor-internal-actions/request-vault-token@6a0fa7c073b3857a11d414f25a149065fe5a0fcf # v1.4.0
+      with:
+        vault-url: ${{ inputs.vault-url }}
+        vault-jwt: ${{ inputs.vault-jwt }}
+
+    # The token is passed through environment config for this step only, so it is never written
+    # to git config where later steps (and their dependencies) could read it. The empty first
+    # value drops any header actions/checkout persisted. safe.directory covers job containers,
+    # whose user differs from the owner of the checked-out workspace.
+    - name: Check out the submodule
+      id: checkout
+      if: steps.token.outcome == 'success'
+      shell: bash
+      env:
+        TOKEN: ${{ steps.token.outputs.token }}
+      run: |
+        GIT_CONFIG_COUNT=3 \
+        GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
+        GIT_CONFIG_VALUE_0="" \
+        GIT_CONFIG_KEY_1="http.https://github.com/.extraheader" \
+        GIT_CONFIG_VALUE_1="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)" \
+        GIT_CONFIG_KEY_2="safe.directory" \
+        GIT_CONFIG_VALUE_2="$PWD" \
+          git submodule update --init src/cloud-extensions/src
+        echo "checked-out=true" >> "$GITHUB_OUTPUT"
