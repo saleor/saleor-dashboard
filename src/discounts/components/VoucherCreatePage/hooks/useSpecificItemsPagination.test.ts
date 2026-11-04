@@ -1,6 +1,6 @@
 import { type SpecificItemsData } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssign";
 import { VoucherCreatePageTab } from "@dashboard/discounts/components/VoucherCreatePage/types";
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 
 import { useSpecificItemsPagination } from "./useSpecificItemsPagination";
 
@@ -37,10 +37,7 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
     );
 
     // Assert
-    expect(result.current.paginatedSpecificItems).toEqual([
-      { id: "1", name: "category 1" },
-      { id: "2", name: "category 2" },
-    ]);
+    expect(result.current.pageRange).toEqual({ start: 0, end: 2 });
     expect(result.current.specificItemsPagination).toEqual(
       expect.objectContaining({
         paginatorType: "click",
@@ -64,10 +61,7 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
     );
 
     // Assert
-    expect(result.current.paginatedSpecificItems).toEqual([
-      { id: "1", name: "collection 1" },
-      { id: "2", name: "collection 2" },
-    ]);
+    expect(result.current.pageRange).toEqual({ start: 0, end: 2 });
     expect(result.current.specificItemsPagination).toEqual(
       expect.objectContaining({
         paginatorType: "click",
@@ -91,10 +85,7 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
     );
 
     // Assert
-    expect(result.current.paginatedSpecificItems).toEqual([
-      { id: "1", name: "product 1" },
-      { id: "2", name: "product 2" },
-    ]);
+    expect(result.current.pageRange).toEqual({ start: 0, end: 2 });
     expect(result.current.specificItemsPagination).toEqual(
       expect.objectContaining({
         paginatorType: "click",
@@ -106,5 +97,23 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
         },
       }),
     );
+  });
+
+  it("ends the last page's range at the end of the open list", () => {
+    // Arrange
+    const { result } = renderHook(() =>
+      useSpecificItemsPagination({
+        type: VoucherCreatePageTab.categories,
+        data,
+      }),
+    );
+
+    // Act
+    act(() => {
+      result.current.specificItemsPagination.loadNextPage();
+    });
+
+    // Assert
+    expect(result.current.pageRange).toEqual({ start: 2, end: 3 });
   });
 });

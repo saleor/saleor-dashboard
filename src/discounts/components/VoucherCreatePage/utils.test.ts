@@ -237,51 +237,82 @@ describe("getCreateCatalogueLists", () => {
     },
   };
 
+  const assignments: Pick<FormData, "categories" | "collections" | "products" | "variants"> = {
+    categories: [category],
+    collections: [collection],
+    products: [product],
+    variants: [variant],
+  };
+  const firstPage = { start: 0, end: 10 };
+
   it.each([
-    {
-      activeTab: VoucherCreatePageTab.categories,
-      expected: { categories: [category] },
-      item: category,
-    },
-    {
-      activeTab: VoucherCreatePageTab.collections,
-      expected: { collections: [collection] },
-      item: collection,
-    },
-    { activeTab: VoucherCreatePageTab.products, expected: { products: [product] }, item: product },
-  ])(
-    "gives $activeTab only to the $activeTab list, without reading them as variants",
-    ({ activeTab, expected, item }) => {
-      // Arrange
-      const pageItems = [item];
-
-      // Act
-      const result = getCreateCatalogueLists({ activeTab, pageItems });
-
-      // Assert
-      expect(result).toEqual({
-        categories: [],
-        collections: [],
-        products: [],
-        variants: null,
-        ...expected,
-      });
-    },
-  );
-
-  it("maps variants into a connection on the variants tab", () => {
-    // Arrange
-    const pageItems = [variant];
-
-    // Act
-    const result = getCreateCatalogueLists({ activeTab: VoucherCreatePageTab.variants, pageItems });
+    { activeTab: VoucherCreatePageTab.categories, expected: { categories: [category] } },
+    { activeTab: VoucherCreatePageTab.collections, expected: { collections: [collection] } },
+    { activeTab: VoucherCreatePageTab.products, expected: { products: [product] } },
+  ])("fills only the $activeTab list when that group is open", ({ activeTab, expected }) => {
+    // Arrange & Act
+    const result = getCreateCatalogueLists({ activeTab, assignments, pageRange: firstPage });
 
     // Assert
     expect(result).toEqual({
       categories: [],
       collections: [],
       products: [],
-      variants: mapLocalVariantsToSavedVariants([variant]),
+      variants: null,
+      ...expected,
     });
+  });
+
+  it("maps the open variants page into a voucher catalogue connection", () => {
+    // Arrange & Act
+    const result = getCreateCatalogueLists({
+      activeTab: VoucherCreatePageTab.variants,
+      assignments,
+      pageRange: firstPage,
+    });
+
+    // Assert
+    expect(result).toEqual({
+      categories: [],
+      collections: [],
+      products: [],
+      variants: {
+        __typename: "ProductVariantCountableConnection",
+        edges: [
+          {
+            node: {
+              __typename: "ProductVariant",
+              id: "variant-1",
+              name: "Size M",
+              product: {
+                __typename: "Product",
+                id: "product-1",
+                name: "Monospace Tee",
+                thumbnail: null,
+                productType: { __typename: "ProductType", id: "type-1", name: "Clothing" },
+              },
+            },
+          },
+        ],
+      },
+    });
+  });
+
+  it("returns only the current page of the open group", () => {
+    // Arrange
+    const categories: CategoryWithTotalProductsFragment[] = ["a", "b", "c"].map(suffix => ({
+      ...category,
+      id: `category-${suffix}`,
+    }));
+
+    // Act
+    const result = getCreateCatalogueLists({
+      activeTab: VoucherCreatePageTab.categories,
+      assignments: { ...assignments, categories },
+      pageRange: { start: 2, end: 3 },
+    });
+
+    // Assert
+    expect(result.categories).toEqual([categories[2]]);
   });
 });

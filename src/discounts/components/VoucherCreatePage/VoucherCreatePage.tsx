@@ -299,7 +299,7 @@ const VoucherCreatePage = ({
       setCatalogueNumberOfRows(value);
     }
   };
-  const { paginatedSpecificItems, specificItemsPagination, resetSpecificItemsPagination } =
+  const { pageRange, specificItemsPagination, resetSpecificItemsPagination } =
     useSpecificItemsPagination({
       type: activeTab,
       paginateBy: catalogueNumberOfRows,
@@ -379,7 +379,8 @@ const VoucherCreatePage = ({
   };
   const catalogueLists = getCreateCatalogueLists({
     activeTab,
-    pageItems: paginatedSpecificItems,
+    assignments: data,
+    pageRange,
   });
   const setupReadiness = getVoucherSetupReadiness({
     voucher: null,

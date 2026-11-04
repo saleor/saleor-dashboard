@@ -6,7 +6,7 @@ import {
 } from "@dashboard/graphql";
 
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
-import { type FormData, VoucherCreatePageTab, type VoucherCreateProductVariant } from "./types";
+import { type FormData, VoucherCreatePageTab } from "./types";
 
 export const generateDraftVoucherCode = (code: string) => {
   return {
@@ -52,11 +52,10 @@ export const mapLocalVariantsToSavedVariants = (variants: FormData["variants"]) 
   };
 };
 
-type CreateCatalogueItem =
-  | CategoryWithTotalProductsFragment
-  | CollectionWithTotalProductsFragment
-  | SearchProductFragment
-  | VoucherCreateProductVariant;
+type CreateCatalogueAssignments = Pick<
+  FormData,
+  "categories" | "collections" | "products" | "variants"
+>;
 
 interface CreateCatalogueLists {
   categories: CategoryWithTotalProductsFragment[];
@@ -66,31 +65,35 @@ interface CreateCatalogueLists {
 }
 
 /**
- * The create page paginates only the open catalogue group, so `pageItems` holds that group's
- * items. Only that group gets them; the collapsed groups get nothing, so items are never read
- * as another type (mapping a category as a variant crashed the page).
+ * The create page paginates only the open catalogue group. Slice that group's own typed list to
+ * the current page and give the collapsed groups nothing, so an item is never read as another
+ * type (mapping a category as a variant crashed the page).
  */
 export const getCreateCatalogueLists = ({
   activeTab,
-  pageItems,
+  assignments,
+  pageRange,
 }: {
   activeTab: VoucherCreatePageTab;
-  pageItems: CreateCatalogueItem[];
-}): CreateCatalogueLists => ({
-  categories:
-    activeTab === VoucherCreatePageTab.categories
-      ? (pageItems as CategoryWithTotalProductsFragment[])
+  assignments: CreateCatalogueAssignments;
+  /** Current page as `slice` bounds: `start` inclusive, `end` exclusive. */
+  pageRange: { start: number; end: number };
+}): CreateCatalogueLists => {
+  const isOpen = (tab: VoucherCreatePageTab): boolean => activeTab === tab;
+  const currentPage = <T>(items: T[]): T[] => items.slice(pageRange.start, pageRange.end);
+
+  return {
+    categories: isOpen(VoucherCreatePageTab.categories) ? currentPage(assignments.categories) : [],
+    collections: isOpen(VoucherCreatePageTab.collections)
+      ? currentPage(assignments.collections)
       : [],
-  collections:
-    activeTab === VoucherCreatePageTab.collections
-      ? (pageItems as CollectionWithTotalProductsFragment[])
-      : [],
-  products:
-    activeTab === VoucherCreatePageTab.products ? (pageItems as SearchProductFragment[]) : [],
-  variants:
-    activeTab === VoucherCreatePageTab.variants
+    products: isOpen(VoucherCreatePageTab.products) ? currentPage(assignments.products) : [],
+    // The list component reads a voucher catalogue connection; local variants only fill the
+    // fields it renders, so this cast stays until DiscountVariants accepts plain rows.
+    variants: isOpen(VoucherCreatePageTab.variants)
       ? (mapLocalVariantsToSavedVariants(
-          pageItems as VoucherCreateProductVariant[],
+          currentPage(assignments.variants),
         ) as unknown as VoucherCatalogueFragment["variants"])
       : null,
-});
+  };
+};

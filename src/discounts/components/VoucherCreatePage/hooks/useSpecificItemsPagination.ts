@@ -25,7 +25,7 @@ export const useSpecificItemsPagination = ({
   };
   paginateBy?: number;
 }) => {
-  const { pageInfo, pageValues, resetPage, loadNextPage, loadPreviousPage } = useLocalPageInfo<
+  const { pageInfo, resetPage, loadNextPage, loadPreviousPage } = useLocalPageInfo<
     | CategoryWithTotalProductsFragment
     | CollectionWithTotalProductsFragment
     | SearchProductFragment
@@ -33,7 +33,8 @@ export const useSpecificItemsPagination = ({
   >(data[type], paginateBy);
 
   return {
-    paginatedSpecificItems: pageValues,
+    // `slice` bounds of the current page; callers cut their own typed list with them.
+    pageRange: { start: pageInfo.startCursor, end: pageInfo.endCursor + 1 },
     resetSpecificItemsPagination: resetPage,
     specificItemsPagination: {
       loadNextPage,
