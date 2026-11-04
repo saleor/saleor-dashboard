@@ -101,11 +101,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     setCategorySearchVariables,
     collectionSearchVariables,
     setCollectionSearchVariables,
-  } = useVoucherPickerSearches(
-    ["assign-category", "assign-collection", "assign-product", "assign-variant"].includes(
-      params.action,
-    ),
-  );
+  } = useVoucherPickerSearches(params.action);
   // Assign-picker searches only feed their dialog, so keep them off until it opens.
   // SearchProducts pulls Product/ProductVariant.channelListings, which Core gates behind
   // MANAGE_PRODUCTS — running it on mount buried MANAGE_DISCOUNTS-only staff in permission

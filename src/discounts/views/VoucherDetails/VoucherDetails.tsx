@@ -138,9 +138,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     setCategorySearchVariables,
     collectionSearchVariables,
     setCollectionSearchVariables,
-  } = useVoucherPickerSearches(
-    isCategoryPickerOpen || isCollectionPickerOpen || isProductPickerOpen || isVariantPickerOpen,
-  );
+  } = useVoucherPickerSearches(params.action);
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,

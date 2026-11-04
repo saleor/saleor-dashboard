@@ -484,12 +484,6 @@ describe("useModalFilters", () => {
       // Arrange
       const wrapper = createWrapper("/discounts/vouchers/v-1?action=assign-product&0=filter");
       const config = createMockConfig();
-      const { useFilterWindow } = jest.requireMock("../ConditionalFilter/useFilterWindow") as {
-        useFilterWindow: jest.Mock;
-      };
-
-      useFilterWindow.mockReturnValue({ isOpen: false, setOpen: jest.fn() });
-
       const { unmount } = renderHook(() => useModalFilters(config), { wrapper });
       const clearCallsWhileMounted = (mockValueProvider.clear as jest.Mock).mock.calls.length;
 

@@ -53,25 +53,39 @@ interface VoucherPickerSearches {
   >;
 }
 
+const PICKER_ACTIONS = [
+  "assign-category",
+  "assign-collection",
+  "assign-product",
+  "assign-variant",
+] as const;
+
+type PickerAction = (typeof PICKER_ACTIONS)[number];
+
+const toOpenPicker = (action: string | undefined): PickerAction | null =>
+  PICKER_ACTIONS.find(pickerAction => pickerAction === action) ?? null;
+
 /**
- * Search variables for the voucher assign pickers. The pickers mount only while open, so each one
- * reopens with an empty search box. The searches reset as soon as no picker is open, however it
- * was closed (including browser Back), so the first request on reopen matches that empty box.
+ * Search variables for the voucher assign pickers, keyed off the page's `action` URL param. The
+ * pickers mount only while open, so each one opens with an empty search box. The searches reset
+ * whenever the open picker changes, however it was closed (including browser Back) or replaced,
+ * so the first request of the next picker matches that empty box.
  */
-export const useVoucherPickerSearches = (isAnyPickerOpen: boolean): VoucherPickerSearches => {
+export const useVoucherPickerSearches = (action: string | undefined): VoucherPickerSearches => {
   const [productSearchVariables, setProductSearchVariables] = useState(productPickerSearch);
   const [variantSearchVariables, setVariantSearchVariables] = useState(variantPickerSearch);
   const [categorySearchVariables, setCategorySearchVariables] = useState(categoryPickerSearch);
   const [collectionSearchVariables, setCollectionSearchVariables] =
     useState(collectionPickerSearch);
-  const [wasAnyPickerOpen, setWasAnyPickerOpen] = useState(isAnyPickerOpen);
+  const openPicker = toOpenPicker(action);
+  const [previousPicker, setPreviousPicker] = useState(openPicker);
 
   // Adjust state while rendering rather than in an effect, so the reset lands in the same render
-  // that closes the picker.
-  if (wasAnyPickerOpen !== isAnyPickerOpen) {
-    setWasAnyPickerOpen(isAnyPickerOpen);
+  // that closes or replaces the picker.
+  if (previousPicker !== openPicker) {
+    setPreviousPicker(openPicker);
 
-    if (!isAnyPickerOpen) {
+    if (previousPicker !== null) {
       setProductSearchVariables(productPickerSearch);
       setVariantSearchVariables(variantPickerSearch);
       setCategorySearchVariables(categoryPickerSearch);
