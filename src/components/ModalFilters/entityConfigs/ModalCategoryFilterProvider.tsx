@@ -3,6 +3,7 @@ import { createContext, type FC, type ReactNode, useContext, useMemo } from "rea
 
 import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
 import { type ModalFilterResult } from "../types";
+import { useClearModalFiltersOnUnmount } from "../useClearModalFiltersOnUnmount";
 import { useModalFilters } from "../useModalFilters";
 import { categoryFilterConfig } from "./categoryFilterConfig";
 
@@ -25,6 +26,8 @@ export const ModalCategoryFilterProvider: FC<ModalCategoryFilterProviderProps> =
 }) => {
   const { filterContext, filterVariables, filterChannel, clearFilters, hasActiveFilters } =
     useModalFilters(categoryFilterConfig, { excludedFilters });
+
+  useClearModalFiltersOnUnmount(clearFilters);
 
   const combinedFilters = useMemo(
     () => ({

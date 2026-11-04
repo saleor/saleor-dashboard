@@ -666,30 +666,40 @@ const VoucherCreatePage = ({
             confirmBtn: intl.formatMessage(buttonMessages.assign),
           }}
         />
-        <AssignProductDialog
-          selectedChannels={channelListings}
-          productUnavailableText={intl.formatMessage({
-            id: "XOkUxQ",
-            defaultMessage: "Product unavailable in voucher channels",
-          })}
-          confirmButtonState="default"
-          hasMore={productsSearch?.result.data?.search?.pageInfo?.hasNextPage ?? false}
-          onFetchMore={productsSearch.loadMore}
-          loading={productsSearch.result.loading}
-          open={action === "assign-product"}
-          onClose={closeModal}
-          onFilterChange={handleProductFilterChange}
-          onSubmit={data =>
-            assignItem(data as SearchProductFragment[], VoucherCreatePageTab.products, onModalClose)
-          }
-          products={mapEdgesToItems(productsSearch.result?.data?.search) ?? []}
-          excludeProduct={isProductAssigned}
-          backfillResetKey={String(searchGeneration)}
-          selectAllMode="when-scoped"
-          labels={{
-            confirmBtn: intl.formatMessage(buttonMessages.assign),
-          }}
-        />
+        {/*
+          Like the pickers above, mount only while open. A closed picker still reads the shared
+          URL filter keys and would crash on another picker's filters.
+        */}
+        {action === "assign-product" && (
+          <AssignProductDialog
+            selectedChannels={channelListings}
+            productUnavailableText={intl.formatMessage({
+              id: "XOkUxQ",
+              defaultMessage: "Product unavailable in voucher channels",
+            })}
+            confirmButtonState="default"
+            hasMore={productsSearch?.result.data?.search?.pageInfo?.hasNextPage ?? false}
+            onFetchMore={productsSearch.loadMore}
+            loading={productsSearch.result.loading}
+            open={action === "assign-product"}
+            onClose={closeModal}
+            onFilterChange={handleProductFilterChange}
+            onSubmit={data =>
+              assignItem(
+                data as SearchProductFragment[],
+                VoucherCreatePageTab.products,
+                onModalClose,
+              )
+            }
+            products={mapEdgesToItems(productsSearch.result?.data?.search) ?? []}
+            excludeProduct={isProductAssigned}
+            backfillResetKey={String(searchGeneration)}
+            selectAllMode="when-scoped"
+            labels={{
+              confirmBtn: intl.formatMessage(buttonMessages.assign),
+            }}
+          />
+        )}
       </form>
     </PaginatorContext.Provider>
   );

@@ -1,17 +1,10 @@
 import { type ProductWhereInput } from "@dashboard/graphql";
-import {
-  createContext,
-  type FC,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
+import { createContext, type FC, type ReactNode, useContext, useMemo } from "react";
 
 import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
 import { createOperandValueExclusions } from "../operandExclusions";
 import { type LockedFilter, type ModalFilterResult } from "../types";
+import { useClearModalFiltersOnUnmount } from "../useClearModalFiltersOnUnmount";
 import { useModalFilters } from "../useModalFilters";
 import { productFilterConfig } from "./productFilterConfig";
 
@@ -81,15 +74,7 @@ export const ModalProductFilterProvider: FC<ModalProductFilterProviderProps> = (
     [filterVariables, filterChannel],
   );
 
-  const clearFiltersRef = useRef(clearFilters);
-
-  clearFiltersRef.current = clearFilters;
-
-  useEffect(() => {
-    return () => {
-      clearFiltersRef.current();
-    };
-  }, []);
+  useClearModalFiltersOnUnmount(clearFilters);
 
   return (
     <ConditionalFilterContext.Provider value={filterContext}>

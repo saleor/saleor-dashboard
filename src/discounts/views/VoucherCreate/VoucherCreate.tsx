@@ -117,6 +117,15 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
   const [collectionSearchVariables, setCollectionSearchVariables] =
     useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
+  // Pickers mount only while open, so they reopen with an empty search. Reset the searches that
+  // feed them too, or the first request on reopen would still use the previous query and filters.
+  const closeModalAndResetSearches = (): void => {
+    setProductSearchVariables(assignProductSearchVariables);
+    setVariantSearchVariables(assignVariantSearchVariables);
+    setCategorySearchVariables(categorySearchInitialVariables);
+    setCollectionSearchVariables(collectionSearchInitialVariables);
+    closeModal();
+  };
   // Assign-picker searches only feed their dialog, so keep them off until it opens.
   // SearchProducts pulls Product/ProductVariant.channelListings, which Core gates behind
   // MANAGE_PRODUCTS — running it on mount buried MANAGE_DISCOUNTS-only staff in permission
@@ -318,7 +327,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         onCategoryFilterChange={handleCategoryFilterChange}
         onCollectionFilterChange={handleCollectionFilterChange}
         openModal={openModal}
-        closeModal={closeModal}
+        closeModal={closeModalAndResetSearches}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
         disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
