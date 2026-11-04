@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.23.43
+
+### Patch Changes
+
+- [#7039](https://github.com/saleor/saleor-dashboard/pull/7039) [`746a120`](https://github.com/saleor/saleor-dashboard/commit/746a120048f57bf7d1fb1d54c7152a2a10af269b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - If you signed in with "Continue with Saleor Cloud", the expanded sidebar now has an environment switcher next to the Saleor logo. It opens on the environments of your current project. Use the back arrow to pick another project, and again to pick another organization; levels with only one option are skipped. Click an environment to open its Dashboard, or Cmd/Ctrl-click to open it in a new tab. The switcher also links to your environment in Saleor Cloud. Users who sign in any other way see no change.
+
 ## 3.23.42
 
 ### Patch Changes
