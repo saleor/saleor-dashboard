@@ -24,6 +24,7 @@ import {
   type ModalFilterContext,
   type ModalFilterResult,
 } from "./types";
+import { useClearModalFiltersOnUnmount } from "./useClearModalFiltersOnUnmount";
 import { useModalUrlValueProvider } from "./useModalUrlValueProvider";
 
 export interface UseModalFiltersOptions {
@@ -123,6 +124,9 @@ export const useModalFilters = <
     containerState.resetToProvider();
     filterWindow.setOpen(false);
   }, [wrappedValueProvider, containerState, filterWindow]);
+
+  // Every picker reads the same URL filter keys, so a picker must not leave its filters behind.
+  useClearModalFiltersOnUnmount(clearFilters);
 
   const hasActiveFilters = wrappedValueProvider.count > 0;
 

@@ -12,7 +12,6 @@ import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/Assig
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  DEFAULT_INITIAL_SEARCH_DATA,
   PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
   VOUCHER_CATALOGUE_PAGINATE_BY,
 } from "@dashboard/config";
@@ -50,9 +49,6 @@ import {
   DiscountValueTypeEnum,
   PermissionEnum,
   type ProductWhereInput,
-  type SearchCategoriesWithTotalProductsQueryVariables,
-  type SearchCollectionsWithTotalProductsQueryVariables,
-  type SearchProductsQueryVariables,
   useVoucherCatalogueQuery,
   useVoucherCataloguesAddMutation,
   useVoucherCataloguesRemoveMutation,
@@ -85,6 +81,13 @@ import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
+import {
+  categoryPickerSearch,
+  collectionPickerSearch,
+  productPickerSearch,
+  useVoucherPickerSearches,
+  variantPickerSearch,
+} from "../voucherPickerSearches";
 import { createUpdateHandler } from "./handlers";
 import { useVoucherAssignedIds } from "./hooks/useVoucherAssignedIds";
 import { useVoucherCodes } from "./hooks/useVoucherCodes";
@@ -118,43 +121,6 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     setCountryCodes,
     unassignCountryCode,
   } = useVoucherCatalogueDraft();
-  // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
-  // on a large catalog. Ask for more per request so the picker stays useful without leaning on
-  // backfill for every page.
-  const assignProductSearchVariables: SearchProductsQueryVariables = {
-    ...DEFAULT_INITIAL_SEARCH_DATA,
-    first: 100,
-    includeVariants: false,
-  };
-  const assignVariantSearchVariables: SearchProductsQueryVariables = {
-    ...DEFAULT_INITIAL_SEARCH_DATA,
-    includeVariants: true,
-  };
-  const categorySearchInitialVariables: SearchCategoriesWithTotalProductsQueryVariables = {
-    after: DEFAULT_INITIAL_SEARCH_DATA.after,
-    first: DEFAULT_INITIAL_SEARCH_DATA.first,
-  };
-  const collectionSearchInitialVariables: SearchCollectionsWithTotalProductsQueryVariables = {
-    after: DEFAULT_INITIAL_SEARCH_DATA.after,
-    first: DEFAULT_INITIAL_SEARCH_DATA.first,
-  };
-  const [productSearchVariables, setProductSearchVariables] =
-    useState<SearchProductsQueryVariables>(assignProductSearchVariables);
-  const [variantSearchVariables, setVariantSearchVariables] =
-    useState<SearchProductsQueryVariables>(assignVariantSearchVariables);
-  const [categorySearchVariables, setCategorySearchVariables] =
-    useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
-  const [collectionSearchVariables, setCollectionSearchVariables] =
-    useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
-  // Pickers mount only while open, so they reopen with an empty search. Reset the searches that
-  // feed them too, or the first request on reopen would still use the previous query and filters.
-  const closePicker = (): void => {
-    setProductSearchVariables(assignProductSearchVariables);
-    setVariantSearchVariables(assignVariantSearchVariables);
-    setCategorySearchVariables(categorySearchInitialVariables);
-    setCollectionSearchVariables(collectionSearchInitialVariables);
-    closeModal();
-  };
   // Assign-picker searches only feed their dialog, so keep them off until it opens.
   // SearchProducts pulls Product/ProductVariant.channelListings, which Core gates behind
   // MANAGE_PRODUCTS — running it on mount buried MANAGE_DISCOUNTS-only staff in permission
@@ -163,6 +129,18 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const isCollectionPickerOpen = params.action === "assign-collection";
   const isProductPickerOpen = params.action === "assign-product";
   const isVariantPickerOpen = params.action === "assign-variant";
+  const {
+    productSearchVariables,
+    setProductSearchVariables,
+    variantSearchVariables,
+    setVariantSearchVariables,
+    categorySearchVariables,
+    setCategorySearchVariables,
+    collectionSearchVariables,
+    setCollectionSearchVariables,
+  } = useVoucherPickerSearches(
+    isCategoryPickerOpen || isCollectionPickerOpen || isProductPickerOpen || isVariantPickerOpen,
+  );
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -199,7 +177,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   ) => {
     startNewSearch();
     setProductSearchVariables({
-      ...assignProductSearchVariables,
+      ...productPickerSearch,
       where: filterVariables,
       channel,
       query,
@@ -213,7 +191,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   ) => {
     startNewSearch();
     setVariantSearchVariables({
-      ...assignVariantSearchVariables,
+      ...variantPickerSearch,
       where: filterVariables,
       channel,
       query,
@@ -223,7 +201,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
     startNewSearch();
     setCategorySearchVariables({
-      ...categorySearchInitialVariables,
+      ...categoryPickerSearch,
       filter: {
         ...filterVariables,
         search: query,
@@ -238,7 +216,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   ) => {
     startNewSearch();
     setCollectionSearchVariables({
-      ...collectionSearchInitialVariables,
+      ...collectionPickerSearch,
       filter: {
         ...filterVariables,
         search: query,
@@ -852,10 +830,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           onFilterChange={handleCategoryFilterChange}
           onFetchMore={loadMoreCategories}
           loading={searchCategoriesOpts.loading}
-          onClose={closePicker}
+          onClose={closeModal}
           onSubmit={categories => {
             assignCatalogueItems("categories", categories);
-            closePicker();
+            closeModal();
           }}
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.assign),
@@ -874,10 +852,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           onFetchMore={loadMoreCollections}
           onFilterChange={handleCollectionFilterChange}
           loading={searchCollectionsOpts.loading}
-          onClose={closePicker}
+          onClose={closeModal}
           onSubmit={collections => {
             assignCatalogueItems("collections", collections);
-            closePicker();
+            closeModal();
           }}
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.assign),
@@ -911,10 +889,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           onFilterChange={handleVariantFilterChange}
           onFetchMore={loadMoreVariants}
           loading={searchVariantsOpts.loading}
-          onClose={closePicker}
+          onClose={closeModal}
           onSubmit={variants => {
             assignCatalogueItems("variants", variants);
-            closePicker();
+            closeModal();
           }}
           products={mapEdgesToItems(searchVariantsOpts?.data?.search)}
           selectedIds={stagedVariantIds}
@@ -935,10 +913,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           open
           onFetchMore={loadMoreProducts}
           loading={searchProductsOpts.loading}
-          onClose={closePicker}
+          onClose={closeModal}
           onSubmit={products => {
             assignCatalogueItems("products", products);
-            closePicker();
+            closeModal();
           }}
           products={mapEdgesToItems(searchProductsOpts?.data?.search) ?? []}
           excludeProduct={isProductAssigned}

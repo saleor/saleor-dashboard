@@ -4,7 +4,6 @@ import { createContext, type FC, type ReactNode, useContext, useMemo } from "rea
 import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
 import { createOperandValueExclusions } from "../operandExclusions";
 import { type LockedFilter, type ModalFilterResult } from "../types";
-import { useClearModalFiltersOnUnmount } from "../useClearModalFiltersOnUnmount";
 import { useModalFilters } from "../useModalFilters";
 import { productFilterConfig } from "./productFilterConfig";
 
@@ -73,8 +72,6 @@ export const ModalProductFilterProvider: FC<ModalProductFilterProviderProps> = (
     }),
     [filterVariables, filterChannel],
   );
-
-  useClearModalFiltersOnUnmount(clearFilters);
 
   return (
     <ConditionalFilterContext.Provider value={filterContext}>

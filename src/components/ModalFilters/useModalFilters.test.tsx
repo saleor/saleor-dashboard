@@ -479,6 +479,27 @@ describe("useModalFilters", () => {
       expect(mockContainerState.resetToProvider).toHaveBeenCalled();
       expect(setOpen).toHaveBeenCalledWith(false);
     });
+
+    it("should clear the picker's URL filters when the picker unmounts", () => {
+      // Arrange
+      const wrapper = createWrapper("/discounts/vouchers/v-1?action=assign-product&0=filter");
+      const config = createMockConfig();
+      const { useFilterWindow } = jest.requireMock("../ConditionalFilter/useFilterWindow") as {
+        useFilterWindow: jest.Mock;
+      };
+
+      useFilterWindow.mockReturnValue({ isOpen: false, setOpen: jest.fn() });
+
+      const { unmount } = renderHook(() => useModalFilters(config), { wrapper });
+      const clearCallsWhileMounted = (mockValueProvider.clear as jest.Mock).mock.calls.length;
+
+      // Act
+      unmount();
+
+      // Assert
+      expect(clearCallsWhileMounted).toBe(0);
+      expect(mockValueProvider.clear).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe("excludedFilters option", () => {

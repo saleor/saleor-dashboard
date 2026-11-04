@@ -587,7 +587,7 @@ const VoucherCreatePage = ({
             backfillResetKey={String(searchGeneration)}
             confirmButtonState="default"
             hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
-            open={action === "assign-category"}
+            open
             onFetch={categoriesSearch.search}
             onFilterChange={handleCategoryFilterChange}
             onFetchMore={categoriesSearch.loadMore}
@@ -613,7 +613,7 @@ const VoucherCreatePage = ({
             backfillResetKey={String(searchGeneration)}
             confirmButtonState="default"
             hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
-            open={action === "assign-collection"}
+            open
             onFetch={collectionsSearch.search}
             onFilterChange={handleCollectionFilterChange}
             onFetchMore={collectionsSearch.loadMore}
@@ -636,7 +636,7 @@ const VoucherCreatePage = ({
           <AssignVariantDialog
             confirmButtonState="default"
             hasMore={variantsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
-            open={action === "assign-variant"}
+            open
             onFilterChange={onVariantFilterChange}
             onFetchMore={variantsSearch.loadMore}
             loading={variantsSearch.result.loading}
@@ -681,7 +681,7 @@ const VoucherCreatePage = ({
             hasMore={productsSearch?.result.data?.search?.pageInfo?.hasNextPage ?? false}
             onFetchMore={productsSearch.loadMore}
             loading={productsSearch.result.loading}
-            open={action === "assign-product"}
+            open
             onClose={closeModal}
             onFilterChange={handleProductFilterChange}
             onSubmit={data =>

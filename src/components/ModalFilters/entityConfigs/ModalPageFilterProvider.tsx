@@ -3,7 +3,6 @@ import { createContext, type FC, type ReactNode, useContext, useMemo } from "rea
 
 import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
 import { type LockedFilter, type ModalFilterResult } from "../types";
-import { useClearModalFiltersOnUnmount } from "../useClearModalFiltersOnUnmount";
 import { useModalFilters } from "../useModalFilters";
 import { pageFilterConfig } from "./pageFilterConfig";
 
@@ -51,8 +50,6 @@ export const ModalPageFilterProvider: FC<ModalPageFilterProviderProps> = ({
       excludedFilters,
       lockedFilter,
     });
-
-  useClearModalFiltersOnUnmount(clearFilters);
 
   const combinedFilters = useMemo(
     () => ({

@@ -23,6 +23,7 @@ export const useClearModalFiltersOnUnmount = (clearFilters: () => void): void =>
   const history = useHistory();
   const clearFiltersRef = useRef(clearFilters);
 
+  // Refs can't be written during render (React Compiler rule), so keep the latest in an effect.
   useEffect(
     function keepLatestClearFilters() {
       clearFiltersRef.current = clearFilters;
