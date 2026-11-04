@@ -111,7 +111,7 @@ describe("ModalFilters", () => {
 
     // Assert
     expect(screen.queryByTestId("modal-filters-button")).not.toBeInTheDocument();
-    expect(container).toHaveTextContent("");
+    expect(container.querySelector("#macaw-ui-root")).toBeEmptyDOMElement();
   });
 
   it("renders a passive restriction hint instead of the trigger when only a locked constraint exists", () => {
