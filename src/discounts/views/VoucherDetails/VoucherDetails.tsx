@@ -12,7 +12,6 @@ import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/Assig
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  DEFAULT_INITIAL_SEARCH_DATA,
   PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
   VOUCHER_CATALOGUE_PAGINATE_BY,
 } from "@dashboard/config";
@@ -50,9 +49,6 @@ import {
   DiscountValueTypeEnum,
   PermissionEnum,
   type ProductWhereInput,
-  type SearchCategoriesWithTotalProductsQueryVariables,
-  type SearchCollectionsWithTotalProductsQueryVariables,
-  type SearchProductsQueryVariables,
   useVoucherCatalogueQuery,
   useVoucherCataloguesAddMutation,
   useVoucherCataloguesRemoveMutation,
@@ -85,6 +81,13 @@ import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
+import {
+  categoryPickerSearch,
+  collectionPickerSearch,
+  productPickerSearch,
+  useVoucherPickerSearches,
+  variantPickerSearch,
+} from "../voucherPickerSearches";
 import { createUpdateHandler } from "./handlers";
 import { useVoucherAssignedIds } from "./hooks/useVoucherAssignedIds";
 import { useVoucherCodes } from "./hooks/useVoucherCodes";
@@ -118,34 +121,6 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     setCountryCodes,
     unassignCountryCode,
   } = useVoucherCatalogueDraft();
-  // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
-  // on a large catalog. Ask for more per request so the picker stays useful without leaning on
-  // backfill for every page.
-  const assignProductSearchVariables: SearchProductsQueryVariables = {
-    ...DEFAULT_INITIAL_SEARCH_DATA,
-    first: 100,
-    includeVariants: false,
-  };
-  const assignVariantSearchVariables: SearchProductsQueryVariables = {
-    ...DEFAULT_INITIAL_SEARCH_DATA,
-    includeVariants: true,
-  };
-  const categorySearchInitialVariables: SearchCategoriesWithTotalProductsQueryVariables = {
-    after: DEFAULT_INITIAL_SEARCH_DATA.after,
-    first: DEFAULT_INITIAL_SEARCH_DATA.first,
-  };
-  const collectionSearchInitialVariables: SearchCollectionsWithTotalProductsQueryVariables = {
-    after: DEFAULT_INITIAL_SEARCH_DATA.after,
-    first: DEFAULT_INITIAL_SEARCH_DATA.first,
-  };
-  const [productSearchVariables, setProductSearchVariables] =
-    useState<SearchProductsQueryVariables>(assignProductSearchVariables);
-  const [variantSearchVariables, setVariantSearchVariables] =
-    useState<SearchProductsQueryVariables>(assignVariantSearchVariables);
-  const [categorySearchVariables, setCategorySearchVariables] =
-    useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
-  const [collectionSearchVariables, setCollectionSearchVariables] =
-    useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
   // Assign-picker searches only feed their dialog, so keep them off until it opens.
   // SearchProducts pulls Product/ProductVariant.channelListings, which Core gates behind
   // MANAGE_PRODUCTS — running it on mount buried MANAGE_DISCOUNTS-only staff in permission
@@ -154,6 +129,16 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const isCollectionPickerOpen = params.action === "assign-collection";
   const isProductPickerOpen = params.action === "assign-product";
   const isVariantPickerOpen = params.action === "assign-variant";
+  const {
+    productSearchVariables,
+    setProductSearchVariables,
+    variantSearchVariables,
+    setVariantSearchVariables,
+    categorySearchVariables,
+    setCategorySearchVariables,
+    collectionSearchVariables,
+    setCollectionSearchVariables,
+  } = useVoucherPickerSearches(params.action);
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -190,7 +175,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   ) => {
     startNewSearch();
     setProductSearchVariables({
-      ...assignProductSearchVariables,
+      ...productPickerSearch,
       where: filterVariables,
       channel,
       query,
@@ -204,7 +189,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   ) => {
     startNewSearch();
     setVariantSearchVariables({
-      ...assignVariantSearchVariables,
+      ...variantPickerSearch,
       where: filterVariables,
       channel,
       query,
@@ -214,7 +199,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
     startNewSearch();
     setCategorySearchVariables({
-      ...categorySearchInitialVariables,
+      ...categoryPickerSearch,
       filter: {
         ...filterVariables,
         search: query,
@@ -229,7 +214,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   ) => {
     startNewSearch();
     setCollectionSearchVariables({
-      ...collectionSearchInitialVariables,
+      ...collectionPickerSearch,
       filter: {
         ...filterVariables,
         search: query,
@@ -827,46 +812,54 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         toggle={toggle}
         toggleAll={toggleAll}
       />
-      <AssignCategoriesDialog
-        categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)}
-        excludeContainer={isCategoryAssigned}
-        backfillResetKey={String(searchGeneration)}
-        confirmButtonState="default"
-        hasMore={searchCategoriesOpts.data?.search.pageInfo.hasNextPage}
-        open={params.action === "assign-category"}
-        onFetch={searchCategories}
-        onFilterChange={handleCategoryFilterChange}
-        onFetchMore={loadMoreCategories}
-        loading={searchCategoriesOpts.loading}
-        onClose={closeModal}
-        onSubmit={categories => {
-          assignCatalogueItems("categories", categories);
-          closeModal();
-        }}
-        labels={{
-          confirmBtn: intl.formatMessage(buttonMessages.assign),
-        }}
-      />
-      <AssignCollectionDialog
-        collections={mapEdgesToItems(searchCollectionsOpts?.data?.search)}
-        excludeContainer={isCollectionAssigned}
-        backfillResetKey={String(searchGeneration)}
-        confirmButtonState="default"
-        hasMore={searchCollectionsOpts.data?.search.pageInfo.hasNextPage}
-        open={params.action === "assign-collection"}
-        onFetch={searchCollections}
-        onFetchMore={loadMoreCollections}
-        onFilterChange={handleCollectionFilterChange}
-        loading={searchCollectionsOpts.loading}
-        onClose={closeModal}
-        onSubmit={collections => {
-          assignCatalogueItems("collections", collections);
-          closeModal();
-        }}
-        labels={{
-          confirmBtn: intl.formatMessage(buttonMessages.assign),
-        }}
-      />
+      {/*
+        Mount each picker only while it is open. All pickers keep their filters in the same URL
+        keys, so a closed picker would parse another picker's filters and crash the page.
+      */}
+      {isCategoryPickerOpen && (
+        <AssignCategoriesDialog
+          categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)}
+          excludeContainer={isCategoryAssigned}
+          backfillResetKey={String(searchGeneration)}
+          confirmButtonState="default"
+          hasMore={searchCategoriesOpts.data?.search?.pageInfo.hasNextPage}
+          open
+          onFetch={searchCategories}
+          onFilterChange={handleCategoryFilterChange}
+          onFetchMore={loadMoreCategories}
+          loading={searchCategoriesOpts.loading}
+          onClose={closeModal}
+          onSubmit={categories => {
+            assignCatalogueItems("categories", categories);
+            closeModal();
+          }}
+          labels={{
+            confirmBtn: intl.formatMessage(buttonMessages.assign),
+          }}
+        />
+      )}
+      {isCollectionPickerOpen && (
+        <AssignCollectionDialog
+          collections={mapEdgesToItems(searchCollectionsOpts?.data?.search)}
+          excludeContainer={isCollectionAssigned}
+          backfillResetKey={String(searchGeneration)}
+          confirmButtonState="default"
+          hasMore={searchCollectionsOpts.data?.search?.pageInfo.hasNextPage}
+          open
+          onFetch={searchCollections}
+          onFetchMore={loadMoreCollections}
+          onFilterChange={handleCollectionFilterChange}
+          loading={searchCollectionsOpts.loading}
+          onClose={closeModal}
+          onSubmit={collections => {
+            assignCatalogueItems("collections", collections);
+            closeModal();
+          }}
+          labels={{
+            confirmBtn: intl.formatMessage(buttonMessages.assign),
+          }}
+        />
+      )}
       <DiscountCountrySelectDialog
         confirmButtonState="default"
         countries={maybe(() => shop.countries, [])}
@@ -886,49 +879,53 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           confirmBtn: intl.formatMessage(buttonMessages.assign),
         }}
       />
-      <AssignVariantDialog
-        confirmButtonState="default"
-        hasMore={searchVariantsOpts.data?.search.pageInfo.hasNextPage}
-        open={params.action === "assign-variant"}
-        onFilterChange={handleVariantFilterChange}
-        onFetchMore={loadMoreVariants}
-        loading={searchVariantsOpts.loading}
-        onClose={closeModal}
-        onSubmit={variants => {
-          assignCatalogueItems("variants", variants);
-          closeModal();
-        }}
-        products={mapEdgesToItems(searchVariantsOpts?.data?.search)}
-        selectedIds={stagedVariantIds}
-        labels={{
-          confirmBtn: intl.formatMessage(buttonMessages.assign),
-        }}
-      />
-      <AssignProductDialog
-        selectedChannels={currentChannels}
-        productUnavailableText={intl.formatMessage({
-          id: "XOkUxQ",
-          defaultMessage: "Product unavailable in voucher channels",
-        })}
-        confirmButtonState="default"
-        hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage ?? false}
-        open={params.action === "assign-product"}
-        onFetchMore={loadMoreProducts}
-        loading={searchProductsOpts.loading}
-        onClose={closeModal}
-        onSubmit={products => {
-          assignCatalogueItems("products", products);
-          closeModal();
-        }}
-        products={mapEdgesToItems(searchProductsOpts?.data?.search) ?? []}
-        excludeProduct={isProductAssigned}
-        backfillResetKey={String(searchGeneration)}
-        selectAllMode="when-scoped"
-        onFilterChange={handleProductFilterChange}
-        labels={{
-          confirmBtn: intl.formatMessage(buttonMessages.assign),
-        }}
-      />
+      {isVariantPickerOpen && (
+        <AssignVariantDialog
+          confirmButtonState="default"
+          hasMore={searchVariantsOpts.data?.search?.pageInfo.hasNextPage}
+          open
+          onFilterChange={handleVariantFilterChange}
+          onFetchMore={loadMoreVariants}
+          loading={searchVariantsOpts.loading}
+          onClose={closeModal}
+          onSubmit={variants => {
+            assignCatalogueItems("variants", variants);
+            closeModal();
+          }}
+          products={mapEdgesToItems(searchVariantsOpts?.data?.search)}
+          selectedIds={stagedVariantIds}
+          labels={{
+            confirmBtn: intl.formatMessage(buttonMessages.assign),
+          }}
+        />
+      )}
+      {isProductPickerOpen && (
+        <AssignProductDialog
+          selectedChannels={currentChannels}
+          productUnavailableText={intl.formatMessage({
+            id: "XOkUxQ",
+            defaultMessage: "Product unavailable in voucher channels",
+          })}
+          confirmButtonState="default"
+          hasMore={searchProductsOpts.data?.search?.pageInfo.hasNextPage ?? false}
+          open
+          onFetchMore={loadMoreProducts}
+          loading={searchProductsOpts.loading}
+          onClose={closeModal}
+          onSubmit={products => {
+            assignCatalogueItems("products", products);
+            closeModal();
+          }}
+          products={mapEdgesToItems(searchProductsOpts?.data?.search) ?? []}
+          excludeProduct={isProductAssigned}
+          backfillResetKey={String(searchGeneration)}
+          selectAllMode="when-scoped"
+          onFilterChange={handleProductFilterChange}
+          labels={{
+            confirmBtn: intl.formatMessage(buttonMessages.assign),
+          }}
+        />
+      )}
       {unassignCatalogueType !== null && (
         <VoucherCatalogueUnassignDialog
           catalogueType={unassignCatalogueType}

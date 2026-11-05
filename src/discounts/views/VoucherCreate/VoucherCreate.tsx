@@ -3,10 +3,7 @@ import { type ChannelVoucherData, createSortedVoucherData } from "@dashboard/cha
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  DEFAULT_INITIAL_SEARCH_DATA,
-  PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
-} from "@dashboard/config";
+import { PAIRED_ERROR_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
 import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
 import { isVoucherCountriesError } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
@@ -19,9 +16,6 @@ import {
   type CategoryFilterInput,
   type CollectionFilterInput,
   type ProductWhereInput,
-  type SearchCategoriesWithTotalProductsQueryVariables,
-  type SearchCollectionsWithTotalProductsQueryVariables,
-  type SearchProductsQueryVariables,
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation,
 } from "@dashboard/graphql";
@@ -35,7 +29,6 @@ import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCateg
 import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import VoucherCreatePage from "../../components/VoucherCreatePage/VoucherCreatePage";
@@ -45,6 +38,13 @@ import {
   voucherUrl,
   type VoucherUrlDialog,
 } from "../../urls";
+import {
+  categoryPickerSearch,
+  collectionPickerSearch,
+  productPickerSearch,
+  useVoucherPickerSearches,
+  variantPickerSearch,
+} from "../voucherPickerSearches";
 import { createHandler } from "./handlers";
 import { VOUCHER_CREATE_FORM_ID } from "./types";
 
@@ -92,31 +92,16 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     disableErrorHandling: true,
   });
 
-  const assignProductSearchVariables: SearchProductsQueryVariables = {
-    ...DEFAULT_INITIAL_SEARCH_DATA,
-    first: 100,
-    includeVariants: false,
-  };
-  const assignVariantSearchVariables: SearchProductsQueryVariables = {
-    ...DEFAULT_INITIAL_SEARCH_DATA,
-    includeVariants: true,
-  };
-  const categorySearchInitialVariables: SearchCategoriesWithTotalProductsQueryVariables = {
-    after: DEFAULT_INITIAL_SEARCH_DATA.after,
-    first: DEFAULT_INITIAL_SEARCH_DATA.first,
-  };
-  const collectionSearchInitialVariables: SearchCollectionsWithTotalProductsQueryVariables = {
-    after: DEFAULT_INITIAL_SEARCH_DATA.after,
-    first: DEFAULT_INITIAL_SEARCH_DATA.first,
-  };
-  const [productSearchVariables, setProductSearchVariables] =
-    useState<SearchProductsQueryVariables>(assignProductSearchVariables);
-  const [variantSearchVariables, setVariantSearchVariables] =
-    useState<SearchProductsQueryVariables>(assignVariantSearchVariables);
-  const [categorySearchVariables, setCategorySearchVariables] =
-    useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
-  const [collectionSearchVariables, setCollectionSearchVariables] =
-    useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
+  const {
+    productSearchVariables,
+    setProductSearchVariables,
+    variantSearchVariables,
+    setVariantSearchVariables,
+    categorySearchVariables,
+    setCategorySearchVariables,
+    collectionSearchVariables,
+    setCollectionSearchVariables,
+  } = useVoucherPickerSearches(params.action);
   // Assign-picker searches only feed their dialog, so keep them off until it opens.
   // SearchProducts pulls Product/ProductVariant.channelListings, which Core gates behind
   // MANAGE_PRODUCTS — running it on mount buried MANAGE_DISCOUNTS-only staff in permission
@@ -129,9 +114,6 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     skip: params.action !== "assign-collection",
     variables: collectionSearchVariables,
   });
-  // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
-  // on a large catalog. Ask for more per request so the picker stays useful without leaning on
-  // backfill for every page.
   const productsSearch = useProductSearch({
     skip: params.action !== "assign-product",
     variables: productSearchVariables,
@@ -147,7 +129,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     query: string,
   ) => {
     setProductSearchVariables({
-      ...assignProductSearchVariables,
+      ...productPickerSearch,
       where: filterVariables,
       channel,
       query,
@@ -160,7 +142,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     query: string,
   ) => {
     setVariantSearchVariables({
-      ...assignVariantSearchVariables,
+      ...variantPickerSearch,
       where: filterVariables,
       channel,
       query,
@@ -169,7 +151,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
 
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
     setCategorySearchVariables({
-      ...categorySearchInitialVariables,
+      ...categoryPickerSearch,
       filter: {
         ...filterVariables,
         search: query,
@@ -183,7 +165,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     query: string,
   ) => {
     setCollectionSearchVariables({
-      ...collectionSearchInitialVariables,
+      ...collectionPickerSearch,
       filter: {
         ...filterVariables,
         search: query,
