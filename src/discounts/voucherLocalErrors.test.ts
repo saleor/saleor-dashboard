@@ -29,6 +29,25 @@ describe("validateChannelListing", () => {
     expect(result.invalidChannels).toHaveLength(0);
   });
 
+  it("checks the minimum order value of a shipping voucher", () => {
+    // Arrange
+    const channelListings = [
+      { id: "1", discountValue: "", percentageDiscountValue: "", minSpent: "-5" },
+      { id: "2", discountValue: "", percentageDiscountValue: "", minSpent: "10" },
+    ] as ChannelVoucherData[];
+
+    // Act
+    const result = validateChannelListing(
+      channelListings,
+      DiscountTypeEnum.SHIPPING,
+      RequirementsPicker.ORDER,
+    );
+
+    // Assert
+    expect(result.invalidDiscountValueChannels).toEqual([]);
+    expect(result.minSpentIssues).toEqual({ "1": "negative" });
+  });
+
   it("returns valid as true when there are no invalid channels", () => {
     // Arrange
     const channelListings = [

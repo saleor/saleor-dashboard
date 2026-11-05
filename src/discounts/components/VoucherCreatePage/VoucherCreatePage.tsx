@@ -42,7 +42,7 @@ import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { type VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import { getVoucherLocalErrors } from "@dashboard/discounts/voucherLocalErrors";
-import { getWholeNumberIssue } from "@dashboard/discounts/voucherValueValidation";
+import { getMinSpentIssue, getWholeNumberIssue } from "@dashboard/discounts/voucherValueValidation";
 import {
   type CategoryFilterInput,
   type CategoryWithTotalProductsFragment,
@@ -65,7 +65,6 @@ import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
-import { validatePrice } from "@dashboard/products/utils/validation";
 import { type useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { type ListActionsWithoutToolbar } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -216,7 +215,7 @@ const VoucherCreatePage = ({
 
     const hasInvalidMinSpent =
       data.requirementsPicker === RequirementsPicker.ORDER &&
-      data.channelListings.some(channel => validatePrice(channel.minSpent));
+      data.channelListings.some(channel => getMinSpentIssue(channel.minSpent) !== null);
 
     const hasInvalidMinQuantity =
       data.requirementsPicker === RequirementsPicker.ITEM &&

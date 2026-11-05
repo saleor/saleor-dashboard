@@ -104,7 +104,8 @@ interface VoucherDetailsPageFormContentProps extends ChannelProps {
   setupCardDisplayReady?: boolean;
   onDismissSetupCard?: () => void;
   onCancel: () => void;
-  onSubmit: (data: VoucherDetailsPageFormData) => void;
+  /** Submits the form's own data, after the page checks it. */
+  onSubmit: () => void;
   onTabClick: (tab: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
@@ -220,11 +221,6 @@ export const VoucherDetailsPageFormContent = ({
   );
   const hasUnsavedChanges = hasVoucherSaveComposition(saveComposition);
   const isSaveDisabled = !!disabled || !hasUnsavedChanges;
-  const submitData: VoucherDetailsPageFormData = {
-    ...data,
-    channelListings,
-    codes: addedVoucherCodes,
-  };
 
   setIsSubmitDisabled(isSaveDisabled);
 
@@ -490,7 +486,7 @@ export const VoucherDetailsPageFormContent = ({
         <Savebar.CancelButton onClick={onCancel} />
         <Savebar.ConfirmButton
           transitionState={saveButtonBarState}
-          onClick={() => onSubmit(submitData)}
+          onClick={onSubmit}
           disabled={isSaveDisabled}
         />
       </Savebar>

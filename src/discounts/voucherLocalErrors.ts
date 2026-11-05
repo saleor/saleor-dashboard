@@ -55,10 +55,10 @@ export const validateChannelListing = (
   discountType: DiscountTypeEnum,
   requirementsPicker: RequirementsPicker,
 ): ChannelListingValidationResult => {
-  // Shipping has no amount per channel, and with no channels assigned there is nothing to check
-  // yet, so unrelated saves (e.g. renaming) are not blocked.
-  const hasChannelAmounts =
-    discountType !== DiscountTypeEnum.SHIPPING && channelListings.length > 0;
+  // With no channels assigned there is nothing to check yet, so unrelated saves (e.g. renaming)
+  // are not blocked. Shipping has no discount amount per channel, but can have a minimum order.
+  const hasChannels = channelListings.length > 0;
+  const hasChannelAmounts = discountType !== DiscountTypeEnum.SHIPPING && hasChannels;
   const discountValueIssues = hasChannelAmounts
     ? collectChannelIssues(channelListings, channel =>
         getDiscountValueIssue(
@@ -70,7 +70,7 @@ export const validateChannelListing = (
       )
     : {};
   const minSpentIssues =
-    hasChannelAmounts && requirementsPicker === RequirementsPicker.ORDER
+    hasChannels && requirementsPicker === RequirementsPicker.ORDER
       ? collectChannelIssues(channelListings, channel => getMinSpentIssue(channel.minSpent))
       : {};
   const invalidDiscountValueChannels = Object.keys(discountValueIssues);

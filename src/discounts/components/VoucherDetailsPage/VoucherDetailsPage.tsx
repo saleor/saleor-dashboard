@@ -33,6 +33,7 @@ import {
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -137,7 +138,7 @@ interface VoucherDetailsPageProps
   catalogueNumberOfRows: number;
   onCatalogueListSettingsUpdate: (key: "rowNumber", value: number) => void;
   onRemove: () => void;
-  onSubmit: (data: VoucherDetailsPageFormData) => void;
+  onSubmit: (data: VoucherDetailsPageFormData) => SubmitPromise<unknown[]>;
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
@@ -228,9 +229,11 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const notify = useNotifier();
   // Empty required fields only count as errors after a save attempt; other invalid values show
   // as soon as they are typed. Errors are recomputed from the form, so fixing a value clears it.
-  const [showRequiredErrors, setShowRequiredErrors] = React.useState(false);
+  // Kept per voucher, since opening another voucher reuses this page.
+  const [requiredErrorsVoucherId, setRequiredErrorsVoucherId] = React.useState<string | null>(null);
+  const showRequiredErrors = !!voucher && requiredErrorsVoucherId === voucher.id;
   const handleInvalidValues = (invalidValueErrors: DiscountErrorFragment[]): void => {
-    setShowRequiredErrors(true);
+    setRequiredErrorsVoucherId(voucher?.id ?? null);
 
     const section = getFirstVoucherSectionWithError(invalidValueErrors);
 
@@ -245,6 +248,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
     });
   };
+  // Runs as the form's submit handler, so it checks exactly the data the form sends:
+  // `form.submit()` always sends the form's own state.
+  const handleValidatedSubmit = createVoucherUpdateHandler(onSubmit, handleInvalidValues, intl);
   // Keep the layout shell until the first codes fetch settles so we don't flash
   // half-loaded UI. Keyed by voucher id so refetches after reveal stay on the form.
   const [revealedForVoucherId, setRevealedForVoucherId] = React.useState<string | null>(null);
@@ -380,11 +386,10 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       confirmLeave
       formId={VOUCHER_UPDATE_FORM_ID}
       initial={initialForm}
-      onSubmit={onSubmit}
+      onSubmit={handleValidatedSubmit}
       disabled={disabled}
     >
       {form => {
-        const handleSubmit = createVoucherUpdateHandler(form.submit, handleInvalidValues, intl);
         const localErrors = getVoucherLocalErrors(
           clearInactiveVoucherDiscountDrafts(form.data),
           intl,
@@ -431,7 +436,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
             setupCardDisplayReady={setupCardDisplayReady}
             onDismissSetupCard={onDismissSetupCard}
             onCancel={() => navigate(voucherListBackLink)}
-            onSubmit={data => handleSubmit(data)}
+            onSubmit={() => form.submit()}
             onTabClick={onTabClick}
             onChannelsChange={onChannelsChange}
             openChannelsModal={openChannelsModal}

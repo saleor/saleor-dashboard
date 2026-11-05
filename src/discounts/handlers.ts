@@ -119,7 +119,7 @@ export const getChannelsVariables = (
 };
 
 export function createVoucherUpdateHandler(
-  submit: (data: VoucherDetailsPageFormData) => SubmitPromise<any[]>,
+  submit: (data: VoucherDetailsPageFormData) => SubmitPromise<unknown[]>,
   onInvalid: (errors: DiscountErrorFragment[]) => void,
   intl: IntlShape,
 ) {
