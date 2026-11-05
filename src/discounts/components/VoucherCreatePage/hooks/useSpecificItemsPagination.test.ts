@@ -1,6 +1,6 @@
 import { type SpecificItemsData } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssign";
 import { VoucherCreatePageTab } from "@dashboard/discounts/components/VoucherCreatePage/types";
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 
 import { useSpecificItemsPagination } from "./useSpecificItemsPagination";
 
@@ -46,15 +46,11 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
       { id: "1", name: "category 1" },
       { id: "2", name: "category 2" },
     ]);
-    expect(result.current.specificItemsPagination).toEqual(
+    expect(result.current.specificItemsPaginator).toEqual(
       expect.objectContaining({
         paginatorType: "click",
-        pageInfo: {
-          endCursor: "1",
-          hasNextPage: true,
-          hasPreviousPage: false,
-          startCursor: "0",
-        },
+        hasNextPage: true,
+        hasPreviousPage: false,
       }),
     );
   });
@@ -73,15 +69,11 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
       { id: "1", name: "collection 1" },
       { id: "2", name: "collection 2" },
     ]);
-    expect(result.current.specificItemsPagination).toEqual(
+    expect(result.current.specificItemsPaginator).toEqual(
       expect.objectContaining({
         paginatorType: "click",
-        pageInfo: {
-          endCursor: "1",
-          hasNextPage: true,
-          hasPreviousPage: false,
-          startCursor: "0",
-        },
+        hasNextPage: true,
+        hasPreviousPage: false,
       }),
     );
   });
@@ -100,15 +92,11 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
       { id: "1", name: "product 1" },
       { id: "2", name: "product 2" },
     ]);
-    expect(result.current.specificItemsPagination).toEqual(
+    expect(result.current.specificItemsPaginator).toEqual(
       expect.objectContaining({
         paginatorType: "click",
-        pageInfo: {
-          endCursor: "1",
-          hasNextPage: true,
-          hasPreviousPage: false,
-          startCursor: "0",
-        },
+        hasNextPage: true,
+        hasPreviousPage: false,
       }),
     );
   });
@@ -127,5 +115,71 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
       { id: "1", name: "variant 1" },
       { id: "2", name: "variant 2" },
     ]);
+  });
+
+  it("gives PaginatorContext the page flags at its top level", () => {
+    // Arrange & Act
+    const { result } = renderHook(() =>
+      useSpecificItemsPagination({
+        type: VoucherCreatePageTab.categories,
+        data,
+      }),
+    );
+
+    // Assert
+    expect(result.current.specificItemsPaginator).not.toHaveProperty("pageInfo");
+    expect(result.current.specificItemsPaginator.hasNextPage).toBe(true);
+  });
+
+  it("goes back a page when unassigning empties the last one", () => {
+    // Arrange
+    const { result, rerender } = renderHook(
+      ({ items }: { items: SpecificItemsData }) =>
+        useSpecificItemsPagination({
+          type: VoucherCreatePageTab.categories,
+          data: items,
+        }),
+      { initialProps: { items: data } },
+    );
+
+    act(() => {
+      result.current.specificItemsPaginator.loadNextPage();
+    });
+
+    // Act
+    rerender({ items: { ...data, categories: data.categories.slice(0, 2) } });
+
+    // Assert
+    expect(result.current.pageStart).toBe(0);
+    expect(result.current.specificItemsPaginator.hasPreviousPage).toBe(false);
+  });
+
+  it("shows the page where newly assigned items start", () => {
+    // Arrange
+    const { result, rerender } = renderHook(
+      ({ items }: { items: SpecificItemsData }) =>
+        useSpecificItemsPagination({
+          type: VoucherCreatePageTab.categories,
+          data: items,
+        }),
+      { initialProps: { items: data } },
+    );
+    const assigned = {
+      ...data,
+      categories: [
+        ...data.categories,
+        ...data.categories.map(category => ({ ...category, id: `new-${category.id}` })),
+      ],
+    };
+
+    // Act: the page asks for that page in the same update that adds the items.
+    act(() => {
+      result.current.showPageWithItemAt(data.categories.length);
+      rerender({ items: assigned });
+    });
+
+    // Assert
+    expect(result.current.pageStart).toBe(2);
+    expect(result.current.specificItemsPaginator.hasPreviousPage).toBe(true);
   });
 });

@@ -62,7 +62,7 @@ import {
 import { type UseSearchResult } from "@dashboard/hooks/makeSearch";
 import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { type ClickPaginatorContextValues, PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
 import { type useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { type ListActionsWithoutToolbar } from "@dashboard/types";
@@ -79,6 +79,7 @@ import VoucherLimits from "../VoucherLimits/VoucherLimits";
 import { VoucherRequirements } from "../VoucherRequirements/VoucherRequirements";
 import { initialForm } from "./const";
 import { useActiveTab } from "./hooks/useActiveTab";
+import { useClearSelectionOnPageChange } from "./hooks/useClearSelectionOnPageChange";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
 import { type FormData, VoucherCreatePageTab } from "./types";
@@ -251,6 +252,20 @@ const VoucherCreatePage = ({
 
   const { clearRowSelection, setSelectedVoucherCodesIds, selectedRowIds } =
     useVoucherCodesSelection();
+  const {
+    pagination,
+    paginatedCodes,
+    settings,
+    onSettingsChange,
+    resetPage: resetCodesPage,
+  } = useVoucherCodesPagination(data.codes, { clampToLastPage: true });
+
+  useClearSelectionOnPageChange(Number(pagination.pageInfo?.startCursor ?? 0), clearRowSelection);
+
+  const handleCodesSettingsChange: typeof onSettingsChange = (key, value) => {
+    clearRowSelection();
+    onSettingsChange(key, value);
+  };
 
   const handleChannelsChange = (channels: ChannelVoucherData[]) => {
     set({ channelListings: channels });
@@ -278,6 +293,8 @@ const VoucherCreatePage = ({
     set({
       codes: [...generateMultipleVoucherCodes(quantity, prefix), ...data.codes],
     });
+    // New codes go first, so show the first page.
+    resetCodesPage();
   };
 
   const handleDeleteVoucherCodes = async (): Promise<boolean> => {
@@ -298,29 +315,41 @@ const VoucherCreatePage = ({
     set({
       codes: [generateDraftVoucherCode(code), ...data.codes],
     });
+    resetCodesPage();
   };
 
-  const { pagination, paginatedCodes, settings, onSettingsChange } = useVoucherCodesPagination(
-    data.codes,
-  );
-
   const [catalogueNumberOfRows, setCatalogueNumberOfRows] = useState(VOUCHER_CATALOGUE_PAGINATE_BY);
+  // Row selection only covers the visible page, so a new page size starts a new selection too
+  // (page changes are handled by useClearSelectionOnPageChange below).
   const handleCatalogueListSettingsUpdate = (key: "rowNumber", value: number) => {
     if (key === "rowNumber") {
+      resetSelected();
       setCatalogueNumberOfRows(value);
     }
   };
-  const { paginatedSpecificItems, specificItemsPagination, resetSpecificItemsPagination } =
-    useSpecificItemsPagination({
-      type: activeTab,
-      paginateBy: catalogueNumberOfRows,
-      data: {
-        categories: data.categories,
-        collections: data.collections,
-        products: data.products,
-        variants: data.variants,
-      },
-    });
+  const {
+    paginatedSpecificItems,
+    pageStart,
+    specificItemsPaginator,
+    resetSpecificItemsPagination,
+    showPageWithItemAt,
+  } = useSpecificItemsPagination({
+    type: activeTab,
+    paginateBy: catalogueNumberOfRows,
+    data: {
+      categories: data.categories,
+      collections: data.collections,
+      products: data.products,
+      variants: data.variants,
+    },
+  });
+
+  useClearSelectionOnPageChange(pageStart, resetSelected);
+
+  // Paging is locked with the rest of the form while the voucher is being saved.
+  const cataloguePaginator: ClickPaginatorContextValues = disabled
+    ? { ...specificItemsPaginator, hasNextPage: false, hasPreviousPage: false }
+    : specificItemsPaginator;
 
   const { bulkUnassign, unassignItem, assignItem } = useSpecificItemsAssign({
     data: {
@@ -343,6 +372,17 @@ const VoucherCreatePage = ({
   const onModalClose = () => {
     closeModal();
     resetSelected();
+  };
+
+  // Assigned items are added at the end of their list, so show the page where they start.
+  const assignToCatalogue = (
+    items: Parameters<typeof assignItem>[0],
+    type: VoucherCreatePageTab,
+  ): void => {
+    const firstNewItemIndex = data[type].length;
+
+    assignItem(items, type, onModalClose);
+    showPageWithItemAt(firstNewItemIndex);
   };
 
   // The picked items live in form state, so this exclusion set is complete and grows as the
@@ -398,7 +438,7 @@ const VoucherCreatePage = ({
   const showSetupCard = !setupReadiness.coreReady;
 
   return (
-    <PaginatorContext.Provider value={{ ...specificItemsPagination, paginatorType: "click" }}>
+    <PaginatorContext.Provider value={cataloguePaginator}>
       <form onSubmit={submit}>
         <DetailPageLayout>
           <TopNav
@@ -439,7 +479,7 @@ const VoucherCreatePage = ({
                   deleteCodesTransitionState="default"
                   onMultiCodesGenerate={handleGenerateMultipleCodes}
                   onSelectedCodesChange={setSelectedVoucherCodesIds}
-                  onSettingsChange={onSettingsChange}
+                  onSettingsChange={handleCodesSettingsChange}
                   onCustomCodeGenerate={handleGenerateCustomCode}
                   selectedCodesIds={selectedRowIds}
                   settings={settings}
@@ -600,10 +640,9 @@ const VoucherCreatePage = ({
             loading={categoriesSearch.result?.loading}
             onClose={closeModal}
             onSubmit={data =>
-              assignItem(
+              assignToCatalogue(
                 data as CategoryWithTotalProductsFragment[],
                 VoucherCreatePageTab.categories,
-                onModalClose,
               )
             }
             labels={{
@@ -626,10 +665,9 @@ const VoucherCreatePage = ({
             loading={collectionsSearch.result.loading}
             onClose={closeModal}
             onSubmit={data =>
-              assignItem(
+              assignToCatalogue(
                 data as CollectionWithTotalProductsFragment[],
                 VoucherCreatePageTab.collections,
-                onModalClose,
               )
             }
             labels={{
@@ -648,10 +686,9 @@ const VoucherCreatePage = ({
             loading={variantsSearch.result.loading}
             onClose={closeModal}
             onSubmit={(variants: unknown) => {
-              assignItem(
+              assignToCatalogue(
                 variants as SearchProductVariantFragment[],
                 VoucherCreatePageTab.variants,
-                onModalClose,
               );
             }}
             products={mapEdgesToItems(variantsSearch.result?.data?.search) ?? []}
@@ -691,11 +728,7 @@ const VoucherCreatePage = ({
             onClose={closeModal}
             onFilterChange={handleProductFilterChange}
             onSubmit={data =>
-              assignItem(
-                data as SearchProductFragment[],
-                VoucherCreatePageTab.products,
-                onModalClose,
-              )
+              assignToCatalogue(data as SearchProductFragment[], VoucherCreatePageTab.products)
             }
             products={mapEdgesToItems(productsSearch.result?.data?.search) ?? []}
             excludeProduct={isProductAssigned}
