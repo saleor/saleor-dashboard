@@ -218,7 +218,8 @@ export const orderFulfillData = gql`
 export const orderFulfillSettingsQuery = gql`
   query OrderFulfillSettings {
     shop {
-      ...ShopOrderSettings
+      fulfillmentAutoApprove
+      fulfillmentAllowUnpaid
     }
   }
 `;

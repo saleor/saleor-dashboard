@@ -13,6 +13,7 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { pageUrl } from "@dashboard/modeling/urls";
+import { useProductVisibilityChannel } from "@dashboard/products/hooks/useProductVisibilityChannel";
 import {
   languageEntityUrl,
   TranslatableEntities,
@@ -62,8 +63,10 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const intl = useIntl();
+  const visibilityChannel = useProductVisibilityChannel();
   const { data, loading, refetch } = useMenuDetailsQuery({
-    variables: { id },
+    variables: { id, channel: visibilityChannel.channel },
+    skip: visibilityChannel.loading,
   });
 
   useRegisterEntityRefresh(refetch);

@@ -68,12 +68,23 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
   // staff details can replace `userPermissions` and empty the sidebar (only
   // Home / Extensions have no permission gate). Skip when we do not need the
   // extra staff fields; otherwise keep the result out of the cache.
-  const { data, loading, refetch } = useStaffMemberDetailsQuery({
+  const skipStaffMemberDetails = isUserSameAsViewer && !hasManageStaffPermission;
+  const {
+    data,
+    loading,
+    refetch: refetchStaffMemberDetails,
+  } = useStaffMemberDetailsQuery({
     displayLoader: true,
     variables: { id },
-    skip: isUserSameAsViewer && !hasManageStaffPermission,
+    skip: skipStaffMemberDetails,
     fetchPolicy: isUserSameAsViewer ? "no-cache" : "cache-first",
   });
+  // Apollo runs `refetch` even for a skipped query; `user(id:)` may be forbidden then.
+  const refetch = async () => {
+    if (!skipStaffMemberDetails) {
+      await refetchStaffMemberDetails();
+    }
+  };
   const { deleteResult, deleteStaffMember, updateStaffMember, updateStaffMemberOpts } =
     useStaffUserOperations({ isOwnAccount: isUserSameAsViewer });
   // Separate from form save so Activate/Deactivate does not drive the Savebar

@@ -158,15 +158,15 @@ export const customerDetailsFragment = gql`
     defaultBillingAddress {
       ...Address
     }
-    note
+    note @include(if: $PERMISSION_MANAGE_USERS)
     isActive
     isConfirmed
     isStaff
     externalReference
-    customerType {
+    customerType @include(if: $PERMISSION_MANAGE_USERS) {
       ...CustomerTypeOnCustomer
     }
-    assignedAttributes(limit: 100) {
+    assignedAttributes(limit: 100) @include(if: $PERMISSION_MANAGE_USERS) {
       ...CustomerAssignedAttribute
     }
   }

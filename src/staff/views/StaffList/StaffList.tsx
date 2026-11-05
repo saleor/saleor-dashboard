@@ -3,7 +3,7 @@ import { createStaffMembersQueryVariables } from "@dashboard/components/Conditio
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
-import { useStaffListQuery } from "@dashboard/graphql";
+import { PermissionEnum, useStaffListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -12,6 +12,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -63,6 +64,8 @@ const StaffList = ({ params }: StaffListProps) => {
   }, [settings.columns, updateListSettings]);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
+  // `User.orders` requires MANAGE_ORDERS (or being the owner).
+  const canViewOrders = useHasPermission()(PermissionEnum.MANAGE_ORDERS);
 
   const newQueryVariables = useMemo(
     () => ({
@@ -71,10 +74,10 @@ const StaffList = ({ params }: StaffListProps) => {
         ...filters,
         search: params.query,
       },
-      includeCustomerData: effectiveColumns?.includes("customer") ?? false,
+      includeCustomerData: canViewOrders && (effectiveColumns?.includes("customer") ?? false),
       sort: getSortQueryVariables(params),
     }),
-    [effectiveColumns, params, settings.rowNumber, valueProvider.value],
+    [canViewOrders, effectiveColumns, params, settings.rowNumber, valueProvider.value],
   );
   const { data: staffQueryData, loading } = useStaffListQuery({
     displayLoader: true,

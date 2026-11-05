@@ -19,6 +19,7 @@ import {
   AttributeErrorCode,
   type AttributeErrorFragment,
   AttributeTypeEnum,
+  PermissionEnum,
   ProductAttributeType,
   type ProductTypeAttributeReorderMutation,
   type ProductTypeDeleteMutation,
@@ -39,6 +40,7 @@ import { getStringOrPlaceholder, maybe } from "@dashboard/misc";
 import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete/useProductTypeDelete";
 import useProductTypeOperations from "@dashboard/productTypes/hooks/useProductTypeOperations";
 import { useProductTypeVariantSelection } from "@dashboard/productTypes/hooks/useProductTypeVariantSelection";
+import { useHasPermission } from "@dashboard/search/useHasPermission";
 import useAvailableProductAttributeSearch from "@dashboard/searches/useAvailableProductAttributeSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type ReorderEvent } from "@dashboard/types";
@@ -82,11 +84,15 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   const variantAttributeListActions = useBulkActions();
   const assignAttributesActions = useListSelectedItems<string>();
   const intl = useIntl();
+  const hasPermission = useHasPermission();
+  // `ProductType.availableAttributes` requires MANAGE_PRODUCTS.
+  const canSearchAttributes = hasPermission(PermissionEnum.MANAGE_PRODUCTS);
   const { loadMore, search, result } = useAvailableProductAttributeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       id,
     },
+    skip: !canSearchAttributes,
   });
   const [errors, setErrors] = useState({
     addAttributeErrors: [],
@@ -503,7 +509,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           onSubmit={handleAssignAttribute}
           onFetch={search}
           onFetchMore={loadMore}
-          onOpen={result.refetch}
+          onOpen={() => canSearchAttributes && result.refetch()}
           hasMore={maybe(
             () => result.data.productType.availableAttributes.pageInfo.hasNextPage,
             false,

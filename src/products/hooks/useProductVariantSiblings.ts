@@ -7,6 +7,8 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useMemo, useRef, useState } from "react";
 
+import { useProductVisibilityChannel } from "./useProductVisibilityChannel";
+
 export type ProductVariantSibling = ProductVariantSiblingFragment;
 
 interface UseProductVariantSiblingsProps {
@@ -82,13 +84,15 @@ export const useProductVariantSiblings = ({
     [debounceSearch],
   );
 
+  const visibilityChannel = useProductVisibilityChannel();
   const { data, previousData, loading, fetchMore, refetch } = useProductVariantSiblingsQuery({
     displayLoader: false,
-    skip: skip || !queryProductId,
+    skip: skip || !queryProductId || visibilityChannel.loading,
     variables: {
       id: queryProductId,
       first: pageSize,
       search: debouncedSearch || undefined,
+      channel: visibilityChannel.channel,
     },
   });
 

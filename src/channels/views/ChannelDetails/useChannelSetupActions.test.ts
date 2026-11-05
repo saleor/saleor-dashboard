@@ -96,6 +96,7 @@ const renderActions = (): RenderHookResult<Actions, ActionsProps> =>
     ({ createWarehouseOpen }) =>
       useChannelSetupActions({
         channelId: "channel-1",
+        canLoadShippingZones: true,
         createWarehouseOpen,
         warehouseIds: [],
         onWarehouseCreated: jest.fn(),

@@ -94,6 +94,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     useState<SearchProductsQueryVariables>(DEFAULT_INITIAL_SEARCH_DATA);
   const { loadMore, result: productsSearchOpts } = useProductSearch({
     variables: productSearchVariables,
+    skip: params.action !== "assign-product",
   });
   const handleProductFilterChange = useCallback(
     (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {

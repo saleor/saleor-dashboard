@@ -18,8 +18,8 @@ import {
   OrderErrorCode,
   type OrderFulfillDataQuery,
   type OrderFulfillLineFragment,
+  type OrderFulfillSettingsQuery,
   type OrderFulfillStockInput,
-  type ShopOrderSettingsFragment,
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useFormset, { type FormsetData } from "@dashboard/hooks/useFormset";
@@ -65,7 +65,7 @@ interface OrderFulfillPageProps {
   errors: FulfillOrderMutation["orderFulfill"]["errors"];
   order: OrderFulfillDataQuery["order"];
   saveButtonBar: ConfirmButtonTransitionState;
-  shopSettings?: ShopOrderSettingsFragment;
+  shopSettings?: OrderFulfillSettingsQuery["shop"];
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
   openModal: (action: OrderFulfillUrlDialog, params?: OrderFulfillUrlQueryParams) => void;
   closeModal: () => void;

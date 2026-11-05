@@ -11,7 +11,7 @@ import { BulkUnassignButton } from "@dashboard/components/BulkUnassignButton/Bul
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { type AttributeFragment, type AttributeTypeEnum } from "@dashboard/graphql";
+import { type AttributeListItemFragment, type AttributeTypeEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
@@ -34,7 +34,7 @@ interface AttributeListPageProps
     PageListProps,
     FilterPagePropsWithPresets<AttributeFilterKeys, AttributeListFilterOpts>,
     SortPage<AttributeListUrlSortField> {
-  attributes: AttributeFragment[];
+  attributes: AttributeListItemFragment[];
   selectedAttributesIds: string[];
   builtInFilterPresets?: string[];
   defaultAttributeType?: AttributeTypeEnum;

@@ -22,8 +22,8 @@ export const menuList = gql`
 `;
 
 export const menuDetails = gql`
-  query MenuDetails($id: ID!) {
-    menu(id: $id) {
+  query MenuDetails($id: ID!, $channel: String) {
+    menu(id: $id, channel: $channel) {
       ...MenuDetails
     }
   }

@@ -1,5 +1,6 @@
 import { useAssignedTypeAttributes } from "@dashboard/attributes/hooks/useAssignedTypeAttributes";
 import { useAttributeGroupByType } from "@dashboard/attributes/hooks/useAttributeGroupByType";
+import { canReadAttributeStorefrontSettings } from "@dashboard/attributes/utils/canReadAttributeStorefrontSettings";
 import {
   computePageTypeTabCounts,
   computeProductTypeTabCounts,
@@ -46,6 +47,7 @@ import {
   type ModelTypeTabCount,
 } from "@dashboard/modeling/components/ModelTypeTabs/ModelTypeTabs";
 import { useModelTypeTabGrouping } from "@dashboard/modeling/components/ModelTypeTabs/useModelTypeTabGrouping";
+import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { ListViews, type Sort } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -145,10 +147,16 @@ const AttributeList = ({ params }: AttributeListProps) => {
   const canUnassignFromType = isTypeScoped && selectedTypeIds.length === 1;
   const activeTypeId = canUnassignFromType ? selectedTypeIds[0] : undefined;
 
+  const hasPermission = useHasPermission();
+  const includeStorefrontSettings = canReadAttributeStorefrontSettings({
+    // The type filter actually sent, not the preset tab: it applies a render later.
+    type: filters.type,
+    hasPermission,
+  });
   const { data, loading, refetch } = useAttributeListQuery({
     displayLoader: !isTypeScoped,
     skip: isTypeScoped,
-    variables: newQueryVariables,
+    variables: { ...newQueryVariables, includeStorefrontSettings },
   });
 
   const {
