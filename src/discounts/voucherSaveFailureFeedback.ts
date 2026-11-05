@@ -15,11 +15,20 @@ interface VoucherSaveFailureFeedback {
   section: VoucherSectionId | null;
   /** The toast's recovery line. */
   recovery: MessageDescriptor;
+  /**
+   * Whether the page shows the errors next to a field. If not, the toast is the only place the
+   * failure is reported, so it stays until dismissed.
+   */
+  shownOnPage: boolean;
 }
 
 const FIELD_SECTIONS: ReadonlyArray<{ fields: readonly string[]; section: VoucherSectionId }> = [
   { fields: ["discountValue"], section: voucherSectionIds.discount },
-  { fields: ["minSpent", "minCheckoutItemsQuantity"], section: voucherSectionIds.requirements },
+  // The API reports a rejected minimum order value as `minAmountSpent`.
+  {
+    fields: ["minSpent", "minAmountSpent", "minCheckoutItemsQuantity"],
+    section: voucherSectionIds.requirements,
+  },
   { fields: ["usageLimit"], section: voucherSectionIds.limits },
 ];
 
@@ -34,6 +43,7 @@ export const getVoucherSaveFailureFeedback = (
     return {
       section: voucherSectionIds.codes,
       recovery: voucherFeedbackMessages.fixCodesAndTryAgain,
+      shownOnPage: true,
     };
   }
 
@@ -41,6 +51,7 @@ export const getVoucherSaveFailureFeedback = (
     return {
       section: voucherSectionIds.catalogue,
       recovery: voucherFeedbackMessages.fixCatalogueAndTryAgain,
+      shownOnPage: true,
     };
   }
 
@@ -48,12 +59,13 @@ export const getVoucherSaveFailureFeedback = (
     return {
       section: voucherSectionIds.countries,
       recovery: voucherFeedbackMessages.fixCountriesAndTryAgain,
+      shownOnPage: true,
     };
   }
 
   // No error belongs to a field when the request failed as a whole.
   if (errors.every(error => error.field === null)) {
-    return { section: null, recovery: voucherFeedbackMessages.tryAgain };
+    return { section: null, recovery: voucherFeedbackMessages.tryAgain, shownOnPage: false };
   }
 
   return {
@@ -62,5 +74,6 @@ export const getVoucherSaveFailureFeedback = (
         errors.some(error => error.field !== null && fields.includes(error.field)),
       )?.section ?? null,
     recovery: voucherFeedbackMessages.checkHighlightedFields,
+    shownOnPage: true,
   };
 };

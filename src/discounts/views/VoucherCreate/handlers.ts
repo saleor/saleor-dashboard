@@ -9,6 +9,7 @@ import {
   type VoucherSaveError,
 } from "@dashboard/discounts/voucherSaveRequestErrors";
 import {
+  DiscountErrorCode,
   DiscountValueTypeEnum,
   type VoucherChannelListingUpdateMutation,
   type VoucherChannelListingUpdateMutationVariables,
@@ -75,10 +76,13 @@ export function createHandler({
 
   const removeVoucher = async (id: string): Promise<VoucherSaveError[]> => {
     try {
-      return getVoucherSaveRequestErrors(
+      const errors = getVoucherSaveRequestErrors(
         await deleteVoucher(id),
         payload => payload.voucherDelete?.errors,
       );
+
+      // Not found means the voucher is already gone, which is what the delete is for.
+      return errors.every(error => error.code === DiscountErrorCode.NOT_FOUND) ? [] : errors;
     } catch (error) {
       return toRequestError(error);
     }

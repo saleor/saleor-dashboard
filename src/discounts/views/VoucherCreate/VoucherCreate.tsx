@@ -10,11 +10,11 @@ import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
 import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
-import { getVoucherSaveFailureFeedback } from "@dashboard/discounts/voucherSaveFailureFeedback";
 import {
   getFirstVoucherSectionWithError,
   getVoucherLocalErrors,
 } from "@dashboard/discounts/voucherLocalErrors";
+import { getVoucherSaveFailureFeedback } from "@dashboard/discounts/voucherSaveFailureFeedback";
 import {
   type CategoryFilterInput,
   type CollectionFilterInput,
@@ -240,7 +240,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
 
     return true;
   };
-  const createVoucher = createHandler({
+  const saveNewVoucher = createHandler({
     createVoucher: variables => voucherCreate({ variables }),
     updateChannels,
     deleteVoucher: id => voucherDelete({ variables: { id } }),
@@ -250,7 +250,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     // Channel errors only belong to an attempt that got as far as saving channel values.
     setShowChannelErrors(false);
 
-    const result = await createVoucher(data);
+    const result = await saveNewVoucher(data);
 
     if ("validationFailed" in result) {
       // Toast + scroll/modal already handled in handleFormValidate.
@@ -285,7 +285,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
 
     setShowChannelErrors(result.failedStep === "channels");
 
-    const { section, recovery } = getVoucherSaveFailureFeedback(result.errors);
+    const { section, recovery, shownOnPage } = getVoucherSaveFailureFeedback(result.errors);
 
     if (section) {
       scrollToVoucherSection(section);
@@ -295,7 +295,8 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
       status: "error",
       title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
       text: intl.formatMessage(recovery),
-      autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+      // Errors shown next to a field own the recovery; otherwise the toast stays.
+      ...(shownOnPage ? { autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME } : {}),
     });
 
     return result.errors;

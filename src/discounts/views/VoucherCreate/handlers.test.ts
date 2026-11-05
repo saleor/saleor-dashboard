@@ -217,7 +217,38 @@ describe("createHandler", () => {
     });
   });
 
-  it("also keeps the voucher id when the delete is rejected by the API", async () => {
+  it("also keeps the voucher id when the delete is refused by the API", async () => {
+    // Arrange
+    const { handler } = setup({
+      channelsResult: channelsRejected,
+      deleteResult: {
+        data: {
+          __typename: "Mutation",
+          voucherDelete: {
+            __typename: "VoucherDelete",
+            errors: [
+              {
+                __typename: "DiscountError",
+                code: DiscountErrorCode.INVALID,
+                field: "id",
+                channels: null,
+                message: "Can't delete this voucher.",
+                voucherCodes: null,
+              },
+            ],
+          },
+        },
+      },
+    });
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(result).toEqual(expect.objectContaining({ createdWithoutChannelsId: "voucher-1" }));
+  });
+
+  it("treats a voucher the delete can't find as already removed", async () => {
     // Arrange
     const { handler } = setup({
       channelsResult: channelsRejected,
@@ -245,7 +276,10 @@ describe("createHandler", () => {
     const result = await handler(formData);
 
     // Assert
-    expect(result).toEqual(expect.objectContaining({ createdWithoutChannelsId: "voucher-1" }));
+    expect(result).toEqual({
+      errors: [expect.objectContaining({ field: "discountValue" })],
+      failedStep: "channels",
+    });
   });
 
   it("deletes the new voucher when saving its channel values fails as a request", async () => {

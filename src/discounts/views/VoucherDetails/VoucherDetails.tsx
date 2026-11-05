@@ -384,7 +384,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     saveErrors: VoucherSaveError[],
     { partlySaved }: { partlySaved: boolean },
   ) => {
-    const { section, recovery } = getVoucherSaveFailureFeedback(saveErrors);
+    const { section, recovery, shownOnPage } = getVoucherSaveFailureFeedback(saveErrors);
 
     if (section) {
       scrollToVoucherSection(section);
@@ -399,8 +399,8 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           : voucherFeedbackMessages.couldNotSaveVoucher,
       ),
       text: intl.formatMessage(recovery),
-      // Inline/section errors own the recovery; toast is a short ack.
-      autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+      // Errors shown next to a field own the recovery; otherwise the toast stays.
+      ...(shownOnPage ? { autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME } : {}),
     });
   };
   const [voucherUpdate, voucherUpdateOpts] = useVoucherUpdateMutation({

@@ -15,18 +15,20 @@ describe("getVoucherSaveFailureFeedback", () => {
     expect(feedback).toEqual({
       section: voucherSectionIds.codes,
       recovery: voucherFeedbackMessages.fixCodesAndTryAgain,
+      shownOnPage: true,
     });
   });
 
   it("scrolls to the section of a rejected channel value", () => {
     // Arrange & Act
     const discount = getVoucherSaveFailureFeedback([error("discountValue")]);
-    const requirements = getVoucherSaveFailureFeedback([error("minSpent")]);
+    const requirements = getVoucherSaveFailureFeedback([error("minAmountSpent")]);
 
     // Assert
     expect(discount).toEqual({
       section: voucherSectionIds.discount,
       recovery: voucherFeedbackMessages.checkHighlightedFields,
+      shownOnPage: true,
     });
     expect(requirements.section).toBe(voucherSectionIds.requirements);
   });
@@ -36,6 +38,10 @@ describe("getVoucherSaveFailureFeedback", () => {
     const feedback = getVoucherSaveFailureFeedback([error(null)]);
 
     // Assert
-    expect(feedback).toEqual({ section: null, recovery: voucherFeedbackMessages.tryAgain });
+    expect(feedback).toEqual({
+      section: null,
+      recovery: voucherFeedbackMessages.tryAgain,
+      shownOnPage: false,
+    });
   });
 });
