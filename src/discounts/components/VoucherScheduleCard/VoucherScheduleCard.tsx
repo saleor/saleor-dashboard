@@ -1,3 +1,4 @@
+import { type ScheduleDateField } from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
 import { DiscountScheduleCard } from "@dashboard/discounts/components/DiscountScheduleCard/DiscountScheduleCard";
 import { type VoucherScheduleDateData } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
 import { type DiscountErrorFragment } from "@dashboard/graphql";
@@ -11,6 +12,8 @@ interface VoucherScheduleCardProps {
   errors: DiscountErrorFragment[];
   disabled?: boolean;
   loading?: boolean;
+  incompleteFields?: readonly ScheduleDateField[];
+  onIncompleteFieldsChange?: (fields: ScheduleDateField[]) => void;
   onChange: (event: ChangeEvent<any>) => void;
 }
 
@@ -20,6 +23,8 @@ export const VoucherScheduleCard = ({
   errors,
   disabled,
   loading = false,
+  incompleteFields,
+  onIncompleteFieldsChange,
   onChange,
 }: VoucherScheduleCardProps): React.ReactNode => (
   <DiscountScheduleCard
@@ -27,6 +32,8 @@ export const VoucherScheduleCard = ({
     errors={errors}
     disabled={disabled}
     loading={loading}
+    incompleteFields={incompleteFields}
+    onIncompleteFieldsChange={onIncompleteFieldsChange}
     onChange={onChange}
     data-test-id="voucher-schedule-card"
     statusTestId="voucher-schedule-status"

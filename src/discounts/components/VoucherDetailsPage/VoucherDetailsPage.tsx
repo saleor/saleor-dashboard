@@ -9,6 +9,7 @@ import Form from "@dashboard/components/Form/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { PAIRED_ERROR_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
+import { type ScheduleDateField } from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
 import { clearInactiveVoucherDiscountDrafts } from "@dashboard/discounts/data";
 import { createVoucherUpdateHandler } from "@dashboard/discounts/handlers";
@@ -83,6 +84,11 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
+  /**
+   * Schedule inputs that are only partly filled in. They report an empty value, which would save
+   * as no end date, the current time or midnight, so saving is blocked until they are completed.
+   */
+  incompleteScheduleFields?: ScheduleDateField[];
   hasUsageLimit: boolean;
   minCheckoutItemsQuantity: string;
   requirementsPicker: RequirementsPicker;
@@ -307,6 +313,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       endDate: splitDateTime(voucher?.endDate ?? "").date,
       endTime: splitDateTime(voucher?.endDate ?? "").time,
       hasEndDate: !!voucher?.endDate,
+      incompleteScheduleFields: [],
       hasUsageLimit: !!voucher?.usageLimit,
       minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
       requirementsPicker: requirementsPickerInitValue,

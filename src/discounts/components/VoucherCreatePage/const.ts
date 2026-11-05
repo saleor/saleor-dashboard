@@ -14,6 +14,7 @@ export const initialForm: FormData = {
   endDate: "",
   endTime: "",
   hasEndDate: false,
+  incompleteScheduleFields: [],
   hasUsageLimit: false,
   minCheckoutItemsQuantity: "0",
   requirementsPicker: RequirementsPicker.NONE,

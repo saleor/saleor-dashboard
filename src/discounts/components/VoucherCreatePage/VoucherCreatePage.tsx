@@ -556,6 +556,10 @@ const VoucherCreatePage = ({
                 }}
                 errors={allErrors}
                 disabled={disabled}
+                incompleteFields={data.incompleteScheduleFields}
+                onIncompleteFieldsChange={incompleteScheduleFields =>
+                  set({ incompleteScheduleFields })
+                }
                 onChange={change}
               />
               <VoucherChannelAvailabilityCard

@@ -1,13 +1,19 @@
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
+import {
+  END_SCHEDULE_DATE_FIELDS,
+  type ScheduleDateField,
+} from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import {
   type VoucherSectionId,
   voucherSectionIds,
 } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
 import { DiscountErrorCode, type DiscountErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
 import { type IntlShape } from "react-intl";
 
 import { DiscountTypeEnum, RequirementsPicker } from "./types";
+import { voucherFeedbackMessages } from "./voucherFeedbackMessages";
 import {
   type DiscountValueIssue,
   getDiscountValueIssue,
@@ -163,8 +169,50 @@ const getLimitErrors = (
 };
 
 /**
- * Values the API would reject after a partial save, or silently change (rounding, truncation),
- * as field errors. Checked before any mutation runs, on both Create voucher and a saved voucher.
+ * A partly entered date or time reports an empty value, which would save as no end date, the
+ * current time or midnight. An empty end date with "Set end date" on would remove the end date.
+ */
+const getScheduleErrors = (
+  data: Pick<
+    VoucherDetailsPageFormData,
+    ScheduleDateField | "hasEndDate" | "incompleteScheduleFields"
+  >,
+  intl: IntlShape,
+): DiscountErrorFragment[] => {
+  // A partly filled input always reports an empty value, so a field the form has since given a
+  // value is complete. End fields don't count while the end date is off.
+  const incompleteFields = (data.incompleteScheduleFields ?? []).filter(
+    field => !data[field] && (data.hasEndDate || !END_SCHEDULE_DATE_FIELDS.includes(field)),
+  );
+  const errors = incompleteFields.map(field =>
+    toLocalError({
+      field,
+      required: false,
+      message: intl.formatMessage(
+        field === "startDate" || field === "endDate"
+          ? voucherFeedbackMessages.incompleteDate
+          : voucherFeedbackMessages.incompleteTime,
+      ),
+    }),
+  );
+
+  if (data.hasEndDate && !data.endDate && !incompleteFields.includes("endDate")) {
+    errors.push(
+      toLocalError({
+        field: "endDate",
+        required: true,
+        message: intl.formatMessage(commonMessages.requiredField),
+      }),
+    );
+  }
+
+  return errors;
+};
+
+/**
+ * Values the API would reject after a partial save, or silently change (rounding, truncation,
+ * partly entered dates), as field errors. Checked before any mutation runs, on both Create voucher
+ * and a saved voucher.
  * With `includeRequired: false` empty fields are left out, for showing errors live while the
  * merchant types before their first save attempt.
  */
@@ -186,6 +234,7 @@ export const getVoucherLocalErrors = (
       getMinSpentIssueMessage(issue, intl),
     ),
     ...getLimitErrors(data, intl),
+    ...getScheduleErrors(data, intl),
   ];
 
   return includeRequired

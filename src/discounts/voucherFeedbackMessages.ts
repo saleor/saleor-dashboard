@@ -102,4 +102,14 @@ export const voucherFeedbackMessages = defineMessages({
     id: "SYQTSp",
     description: "helper text when a voucher minimum order value is negative",
   },
+  incompleteDate: {
+    id: "T2NCbZ",
+    defaultMessage: "Enter a complete date.",
+    description: "helper text when a voucher schedule date input is only partly filled in",
+  },
+  incompleteTime: {
+    id: "KdIY/l",
+    defaultMessage: "Enter a complete time.",
+    description: "helper text when a voucher schedule time input is only partly filled in",
+  },
 });

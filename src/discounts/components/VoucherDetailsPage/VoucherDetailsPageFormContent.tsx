@@ -454,8 +454,10 @@ export const VoucherDetailsPageFormContent = ({
               endDate: data.endDate,
               endTime: data.endTime,
             }}
-            errors={errors}
+            errors={allErrors}
             disabled={disabled}
+            incompleteFields={data.incompleteScheduleFields}
+            onIncompleteFieldsChange={incompleteScheduleFields => set({ incompleteScheduleFields })}
             onChange={change}
           />
           <VoucherChannelAvailabilityCard
