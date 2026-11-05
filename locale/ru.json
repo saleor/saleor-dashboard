@@ -18917,5 +18917,53 @@
   "zyWNgK": {
     "context": "link to an already installed extension settings page from the install page",
     "string": "Открыть настройки"
+  },
+  "+t3Jo2": {
+    "context": "helper text when a voucher channel discount is zero or negative",
+    "string": "Введите число больше 0."
+  },
+  "0VqtEk": {
+    "context": "toast title when a voucher save went through only in part",
+    "string": "Некоторые изменения не сохранены"
+  },
+  "5q7CTy": {
+    "context": "helper text when a voucher limit or quantity is above the largest allowed number",
+    "string": "Введите {max} или меньше."
+  },
+  "EIDiWC": {
+    "context": "helper text when a voucher channel percentage is above 100",
+    "string": "Введите 100 или меньше."
+  },
+  "F7/C6J": {
+    "context": "toast description when a voucher was created but its channel discount values were rejected",
+    "string": "Ваучер создан без каналов. Добавьте их и укажите значения скидки."
+  },
+  "IsuaVj": {
+    "context": "toast description when a voucher save request failed without field errors",
+    "string": "Попробуйте ещё раз."
+  },
+  "KdIY/l": {
+    "context": "helper text when a voucher schedule time input is only partly filled in",
+    "string": "Введите полное время."
+  },
+  "SYQTSp": {
+    "context": "helper text when a voucher minimum order value is negative",
+    "string": "Введите 0 или больше."
+  },
+  "T2NCbZ": {
+    "context": "helper text when a voucher schedule date input is only partly filled in",
+    "string": "Введите полную дату."
+  },
+  "UQ+Qf7": {
+    "context": "helper text when a voucher limit or quantity has a fractional part",
+    "string": "Введите целое число."
+  },
+  "Zc1ydW": {
+    "context": "toast title when a voucher was created but its channel discount values were rejected",
+    "string": "Значения скидки не сохранены"
+  },
+  "oIT4ev": {
+    "context": "helper text when a voucher channel percentage has more than 3 decimal places",
+    "string": "Используйте не более 3 знаков после запятой."
   }
 }
