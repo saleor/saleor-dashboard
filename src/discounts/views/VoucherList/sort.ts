@@ -23,8 +23,10 @@ export function canBeSorted(sort: VoucherListUrlSortField, isChannelSelected: bo
 
 function getSortQueryField(sort: VoucherListUrlSortField): VoucherSortField {
   switch (sort) {
+    // The Name column keeps the "code" key so saved column settings and links still work,
+    // but it shows voucher names, so it sorts by name.
     case VoucherListUrlSortField.code:
-      return VoucherSortField.CODE;
+      return VoucherSortField.NAME;
     case VoucherListUrlSortField.endDate:
       return VoucherSortField.END_DATE;
     case VoucherListUrlSortField.minSpent:
