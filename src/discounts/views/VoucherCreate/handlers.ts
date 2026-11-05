@@ -1,29 +1,47 @@
-import { type FetchResult } from "@apollo/client";
 import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { clearInactiveVoucherDiscountDrafts } from "@dashboard/discounts/data";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import {
+  getVoucherSaveRequestErrors,
+  type MutationOutcome,
+  type VoucherSaveError,
+} from "@dashboard/discounts/voucherSaveRequestErrors";
+import {
   DiscountValueTypeEnum,
   type VoucherChannelListingUpdateMutation,
   type VoucherChannelListingUpdateMutationVariables,
   type VoucherCreateMutation,
   type VoucherCreateMutationVariables,
+  type VoucherDeleteMutation,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
-import { extractMutationErrors, getMutationErrors, joinDateTime } from "@dashboard/misc";
+import { joinDateTime } from "@dashboard/misc";
 
+type VoucherCreateOutcome =
+  | { validationFailed: true }
+  | { id: string }
+  | { errors: VoucherSaveError[] }
+  /** Created, but its channel values were rejected and it couldn't be removed again. */
+  | { errors: VoucherSaveError[]; createdWithoutChannelsId: string };
+
+/**
+ * Creates the voucher, then saves its channel values. The API can't take both in one request,
+ * so when the channel values are rejected the new voucher is deleted again. Otherwise it would
+ * stay live with no discount, and creating it again would fail because its codes are taken.
+ */
 export function createHandler(
   voucherCreate: (
     variables: VoucherCreateMutationVariables,
-  ) => Promise<FetchResult<VoucherCreateMutation>>,
+  ) => Promise<MutationOutcome<VoucherCreateMutation>>,
   updateChannels: (options: {
     variables: VoucherChannelListingUpdateMutationVariables;
-  }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>,
+  }) => Promise<MutationOutcome<VoucherChannelListingUpdateMutation>>,
+  deleteVoucher: (id: string) => Promise<MutationOutcome<VoucherDeleteMutation>>,
   validateFn: (data: VoucherDetailsPageFormData) => boolean,
 ) {
-  return async (formData: FormData) => {
+  return async (formData: FormData): Promise<VoucherCreateOutcome> => {
     const data = clearInactiveVoucherDiscountDrafts(formData);
 
     if (!validateFn(data)) {
@@ -60,32 +78,39 @@ export function createHandler(
         variants: data.variants.map(variant => variant.id),
       },
     });
-    const errors = getMutationErrors(response);
+    const createErrors = getVoucherSaveRequestErrors(
+      response,
+      payload => payload.voucherCreate?.errors,
+    );
+    const id = response.data?.voucherCreate?.voucher?.id;
 
-    if (errors.length > 0) {
-      return { errors };
-    }
-
-    if (!response?.data?.voucherCreate?.voucher) {
+    if (createErrors.length > 0 || !id) {
       return {
-        errors: ["Could not update channels"],
+        errors:
+          createErrors.length > 0
+            ? createErrors
+            : getVoucherSaveRequestErrors(response, () => null),
       };
     }
 
-    const channelsUpdateErrors = await extractMutationErrors(
-      updateChannels({
-        variables: getChannelsVariables(
-          response.data.voucherCreate.voucher.id,
-          data,
-          data.channelListings,
-        ),
+    const channelErrors = getVoucherSaveRequestErrors(
+      await updateChannels({
+        variables: getChannelsVariables(id, data, data.channelListings),
       }),
+      payload => payload.voucherChannelListingUpdate?.errors,
     );
 
-    if (channelsUpdateErrors.length > 0) {
-      return { errors: channelsUpdateErrors };
+    if (channelErrors.length === 0) {
+      return { id };
     }
 
-    return { id: response.data.voucherCreate.voucher.id };
+    const deleteErrors = getVoucherSaveRequestErrors(
+      await deleteVoucher(id),
+      payload => payload.voucherDelete?.errors,
+    );
+
+    return deleteErrors.length === 0
+      ? { errors: channelErrors }
+      : { errors: channelErrors, createdWithoutChannelsId: id };
   };
 }

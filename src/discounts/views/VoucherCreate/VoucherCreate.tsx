@@ -2,6 +2,7 @@
 import { type ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { PAIRED_ERROR_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
@@ -22,6 +23,7 @@ import {
   type ProductWhereInput,
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation,
+  useVoucherDeleteMutation,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
@@ -98,6 +100,14 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   });
   // Empty required fields only count as errors after a create attempt.
   const [showRequiredValueErrors, setShowRequiredValueErrors] = useState(false);
+  // Removes a voucher whose channel values were rejected right after it was created.
+  const [voucherDelete, voucherDeleteOpts] = useVoucherDeleteMutation({
+    disableErrorHandling: true,
+  });
+  const isSaving =
+    voucherCreateOpts.loading || updateChannelsOpts.loading || voucherDeleteOpts.loading;
+  // Set from the whole save: voucherCreate alone can succeed while its channel values fail.
+  const [saveBarState, setSaveBarState] = useState<ConfirmButtonTransitionState>("default");
 
   const {
     productSearchVariables,
@@ -234,10 +244,28 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   const createVoucher = createHandler(
     variables => voucherCreate({ variables }),
     updateChannels,
+    id => voucherDelete({ variables: { id } }),
     handleFormValidate,
   );
   const handleSubmit = async (data: FormData) => {
     const result = await createVoucher(data);
+
+    if (!("validationFailed" in result)) {
+      setSaveBarState("errors" in result ? "error" : "success");
+    }
+
+    if ("createdWithoutChannelsId" in result) {
+      // The voucher exists and couldn't be removed again, so continue on it rather than
+      // creating it a second time, which would fail because its codes are taken.
+      notify({
+        status: "error",
+        title: intl.formatMessage(voucherFeedbackMessages.discountValuesNotSaved),
+        text: intl.formatMessage(voucherFeedbackMessages.setDiscountValuesAndSave),
+      });
+      navigate(voucherUrl(result.createdWithoutChannelsId), { replace: true });
+
+      return [];
+    }
 
     if (result && "validationFailed" in result && result.validationFailed) {
       // Toast + scroll/modal already handled in handleFormValidate.
@@ -275,7 +303,9 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
           ? voucherFeedbackMessages.fixCatalogueAndTryAgain
           : hasCountriesError
             ? voucherFeedbackMessages.fixCountriesAndTryAgain
-            : voucherFeedbackMessages.checkHighlightedFields;
+            : saveErrors.every(error => error.field === null)
+              ? voucherFeedbackMessages.tryAgain
+              : voucherFeedbackMessages.checkHighlightedFields;
 
       notify({
         status: "error",
@@ -333,14 +363,14 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         closeModal={closeModal}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
-        disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
+        disabled={isSaving}
         errors={[
           ...(voucherCreateOpts.data?.voucherCreate.errors || []),
           ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || []),
         ]}
         onSubmit={handleSubmit}
         showRequiredValueErrors={showRequiredValueErrors}
-        saveButtonBarState={voucherCreateOpts.status}
+        saveButtonBarState={isSaving ? "loading" : saveBarState}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         isChecked={isSelected}

@@ -840,6 +840,10 @@
     "context": "Dry run no objects found",
     "string": "No objects found in the provided query"
   },
+  "0vNygf": {
+    "context": "toast description when a voucher was created but its channel discount values were rejected",
+    "string": "The voucher was created. Set its discount values and save."
+  },
   "0whAeC": {
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
@@ -10475,6 +10479,10 @@
   "ZayvsI": {
     "context": "metric unit system",
     "string": "Metric"
+  },
+  "Zc1ydW": {
+    "context": "toast title when a voucher was created but its channel discount values were rejected",
+    "string": "Discount values weren't saved"
   },
   "ZclWIw": {
     "context": "setup task description when no codes",
