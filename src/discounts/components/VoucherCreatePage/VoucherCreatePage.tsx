@@ -42,6 +42,7 @@ import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { type VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import { getVoucherLocalErrors } from "@dashboard/discounts/voucherLocalErrors";
+import { isVoucherUsageLimitReached } from "@dashboard/discounts/voucherStatus";
 import { getMinSpentIssue, getWholeNumberIssue } from "@dashboard/discounts/voucherValueValidation";
 import {
   type CategoryFilterInput,
@@ -240,6 +241,12 @@ const VoucherCreatePage = ({
     }),
     ...errors,
   ];
+
+  // A new voucher has no uses, so only a limit of 0 is used up.
+  const usageLimitReached = isVoucherUsageLimitReached({
+    usageLimit: data.hasUsageLimit ? data.usageLimit : null,
+    used: 0,
+  });
 
   // Keep form channel drafts aligned with the view after channel-modal confirm
   // (modal writes parent state only; price/paste already dual-write).
@@ -560,11 +567,13 @@ const VoucherCreatePage = ({
                 onIncompleteFieldsChange={incompleteScheduleFields =>
                   set({ incompleteScheduleFields })
                 }
+                usageLimitReached={usageLimitReached}
                 onChange={change}
               />
               <VoucherChannelAvailabilityCard
                 channels={data.channelListings}
                 totalChannelsCount={allChannelsCount}
+                usageLimitReached={usageLimitReached}
                 disabled={disabled}
                 managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                 onManageClick={openChannelsModal}

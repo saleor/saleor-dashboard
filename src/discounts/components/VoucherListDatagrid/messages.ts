@@ -63,11 +63,6 @@ export const messages = defineMessages({
     defaultMessage: "Ended",
     description: "voucher list status after end date",
   },
-  statusUsedUp: {
-    id: "602wGq",
-    defaultMessage: "Used up",
-    description: "voucher list status when its usage limit is used up",
-  },
   scopeOrder: {
     id: "9O1Wok",
     defaultMessage: "Entire order",

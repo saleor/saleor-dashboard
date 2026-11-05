@@ -9,8 +9,12 @@ import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type Locale } from "@dashboard/components/Locale/Locale";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { type VoucherListUrlSortField } from "@dashboard/discounts/urls";
-import { getRelativePromotionTimeParts } from "@dashboard/discounts/utils";
-import { getVoucherStatus, type VoucherStatus } from "@dashboard/discounts/voucherStatus";
+import {
+  getVoucherStatus,
+  getVoucherStatusTimeParts,
+  type VoucherStatus,
+} from "@dashboard/discounts/voucherStatus";
+import { voucherStatusMessages } from "@dashboard/discounts/voucherStatusMessages";
 import { DiscountValueTypeEnum, type VoucherFragment, VoucherTypeEnum } from "@dashboard/graphql";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -111,19 +115,15 @@ export const getVoucherListStatusLabel = ({
       : voucherStatus === "finished"
         ? messages.statusEnded
         : voucherStatus === "usedUp"
-          ? messages.statusUsedUp
+          ? voucherStatusMessages.usedUp
           : messages.statusActive,
   );
-  // A used-up voucher stays unusable whatever its dates, so no "ends in" or "starts in" hint.
-  const timeParts =
-    voucherStatus === "usedUp"
-      ? null
-      : getRelativePromotionTimeParts({
-          status: voucherStatus,
-          startDate: voucher.startDate,
-          endDate: voucher.endDate,
-          now,
-        });
+  const timeParts = getVoucherStatusTimeParts({
+    status: voucherStatus,
+    startDate: voucher.startDate,
+    endDate: voucher.endDate,
+    now,
+  });
   const timeHint = timeParts
     ? new Intl.RelativeTimeFormat(intl.locale, { numeric: "auto", style: "long" }).format(
         timeParts.value,

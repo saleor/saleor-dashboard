@@ -1,9 +1,9 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { type VoucherScheduleDateData } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
 import {
-  getVoucherSchedulePhase,
-  type VoucherScheduleDateData,
-} from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
-import { isVoucherUsageLimitReached } from "@dashboard/discounts/voucherStatus";
+  getVoucherFormStatus,
+  isVoucherUsageLimitReached,
+} from "@dashboard/discounts/voucherStatus";
 import useDateLocalize, { type LocalizeDate } from "@dashboard/hooks/useDateLocalize";
 import { joinDateTime } from "@dashboard/misc";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -35,27 +35,26 @@ const formatScheduleStatus = ({
   localizeDate: LocalizeDate;
   intl: IntlShape;
 }): string => {
-  const phase = getVoucherSchedulePhase(scheduleData);
+  const status = getVoucherFormStatus({ scheduleData, usageLimitReached });
   const startIso = joinDateTime(scheduleData.startDate, scheduleData.startTime);
   const endIso = scheduleData.hasEndDate
     ? joinDateTime(scheduleData.endDate, scheduleData.endTime)
     : null;
 
-  // Matches the voucher status: a used-up limit wins over the schedule until it has ended.
-  if (usageLimitReached && phase !== "ended") {
-    return intl.formatMessage(messages.usageLimitReached);
-  }
-
-  if (phase === "scheduled") {
+  if (status === "scheduled") {
     return intl.formatMessage(messages.redeemableFrom, {
       date: startIso ? localizeDate(startIso, "ll") : "—",
     });
   }
 
-  if (phase === "ended") {
+  if (status === "finished") {
     return intl.formatMessage(messages.redemptionEnded, {
       date: endIso ? localizeDate(endIso, "ll") : "—",
     });
+  }
+
+  if (status === "usedUp") {
+    return intl.formatMessage(messages.usageLimitReached);
   }
 
   if (endIso) {

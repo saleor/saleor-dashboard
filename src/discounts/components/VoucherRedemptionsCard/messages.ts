@@ -48,8 +48,8 @@ export const voucherRedemptionsMessages = defineMessages({
     description: "voucher redemptions schedule status when active with end date",
   },
   usageLimitReached: {
-    id: "l+JhIG",
-    defaultMessage: "Usage limit reached. Raise it to accept more redemptions.",
+    id: "BNCw3g",
+    defaultMessage: "Usage limit reached, so it can't be redeemed.",
     description: "voucher redemptions status when its usage limit is used up",
   },
   redeemableNow: {

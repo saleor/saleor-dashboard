@@ -198,6 +198,10 @@ export const VoucherDetailsPageFormContent = ({
   const intl = useIntl();
   const { data, change, set, triggerChange, changedData, setIsSubmitDisabled } = form;
   const allErrors = [...localErrors, ...errors];
+  const usageLimitReached = isVoucherUsageLimitReached({
+    usageLimit: data.hasUsageLimit ? data.usageLimit : null,
+    used: data.used,
+  });
   const countriesErrorMessage = formatVoucherCountriesErrorMessage(allErrors, intl);
   // Form mounts only after voucher exists — keep type-dependent sections gated on data.
   const visibility = resolveVoucherSectionVisibility(data);
@@ -459,6 +463,7 @@ export const VoucherDetailsPageFormContent = ({
             disabled={disabled}
             incompleteFields={data.incompleteScheduleFields}
             onIncompleteFieldsChange={incompleteScheduleFields => set({ incompleteScheduleFields })}
+            usageLimitReached={usageLimitReached}
             onChange={change}
           />
           <VoucherChannelAvailabilityCard
@@ -467,10 +472,7 @@ export const VoucherDetailsPageFormContent = ({
             disabled={disabled}
             managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
             onManageClick={openChannelsModal}
-            usageLimitReached={isVoucherUsageLimitReached({
-              usageLimit: data.hasUsageLimit ? data.usageLimit : null,
-              used: data.used,
-            })}
+            usageLimitReached={usageLimitReached}
             scheduleData={{
               startDate: data.startDate,
               startTime: data.startTime,

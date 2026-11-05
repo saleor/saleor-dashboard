@@ -2114,10 +2114,6 @@
     "context": "intro under gift card settings page title",
     "string": "Configure shop-wide defaults for gift cards. Per-card expiration can still be set on each gift card."
   },
-  "602wGq": {
-    "context": "voucher list status when its usage limit is used up",
-    "string": "Used up"
-  },
   "61AaRN": {
     "context": "setup task when product has no channel listings",
     "string": "Choose where this product is sold, then finish that channel’s setup."
@@ -3653,6 +3649,10 @@
   "BM1JiJ": {
     "context": "error message",
     "string": "This order cannot be cancelled"
+  },
+  "BNCw3g": {
+    "context": "voucher redemptions status when its usage limit is used up",
+    "string": "Usage limit reached, so it can't be redeemed."
   },
   "BNK0E1": {
     "string": "Are you sure you want to delete {counter, plural, one {this value} other {{displayQuantity} values}}? If you delete them you won’t be able to assign them to any of the products with \"{attributeName}\" attribute."
@@ -13719,10 +13719,6 @@
     "context": "warehouse pickup toggle when off",
     "string": "Customers can't collect orders here."
   },
-  "l+JhIG": {
-    "context": "voucher redemptions status when its usage limit is used up",
-    "string": "Usage limit reached. Raise it to accept more redemptions."
-  },
   "l0a2tU": {
     "context": "onboarding step description",
     "string": "Go to all products from where you can create a new product and view it in all product list. View the product in GraphQL"
@@ -17810,10 +17806,6 @@
   },
   "yT5zvU": {
     "string": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
-  },
-  "yXAxEb": {
-    "context": "voucher channel status when its usage limit is used up",
-    "string": "Used up"
   },
   "yXjxLU": {
     "context": "tooltip for the open circuit breaker badge",

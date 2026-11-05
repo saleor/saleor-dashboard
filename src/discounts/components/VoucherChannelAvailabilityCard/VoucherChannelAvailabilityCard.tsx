@@ -4,13 +4,15 @@ import {
   type ChannelAvailabilityStatus,
   type ChannelAvailabilitySummary,
 } from "@dashboard/components/ChannelAvailability/types";
+import { getVoucherFormStatus } from "@dashboard/discounts/voucherStatus";
+import { voucherStatusMessages } from "@dashboard/discounts/voucherStatusMessages";
 import { type PermissionEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { joinDateTime } from "@dashboard/misc";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { getVoucherSchedulePhase, type VoucherScheduleDateData } from "./getVoucherSchedulePhase";
+import { type VoucherScheduleDateData } from "./getVoucherSchedulePhase";
 import { voucherChannelAvailabilityMessages as messages } from "./messages";
 
 interface VoucherChannelAvailabilityCardProps {
@@ -23,7 +25,7 @@ interface VoucherChannelAvailabilityCardProps {
   /** Used only to derive per-channel Active / Scheduled / Ended status. */
   scheduleData: VoucherScheduleDateData;
   /** Every use the usage limit allows is taken, so no channel can redeem the voucher. */
-  usageLimitReached?: boolean;
+  usageLimitReached: boolean;
 }
 
 const toChannelSummary = (channel: ChannelVoucherData): ChannelAvailabilitySummary => ({
@@ -39,7 +41,7 @@ export const VoucherChannelAvailabilityCard = ({
   managePermissions,
   onManageClick,
   scheduleData,
-  usageLimitReached = false,
+  usageLimitReached,
 }: VoucherChannelAvailabilityCardProps): React.ReactNode => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -48,46 +50,43 @@ export const VoucherChannelAvailabilityCard = ({
     [channels],
   );
   const channelSummaries = sortedChannels.map(toChannelSummary);
-  const schedulePhase = getVoucherSchedulePhase(scheduleData);
+  const status = getVoucherFormStatus({ scheduleData, usageLimitReached });
   const startIso = joinDateTime(scheduleData.startDate, scheduleData.startTime);
   const endIso = scheduleData.hasEndDate
     ? joinDateTime(scheduleData.endDate, scheduleData.endTime)
     : null;
 
   const getChannelStatus = (_channel: ChannelAvailabilitySummary): ChannelAvailabilityStatus => {
-    if (schedulePhase === "ended") {
-      return {
-        type: "hidden",
-        label: intl.formatMessage(messages.statusEnded),
-        description: intl.formatMessage(messages.statusEndedDescription, {
-          date: endIso ? localizeDate(endIso, "lll") : "—",
-        }),
-      };
+    switch (status) {
+      case "scheduled":
+        return {
+          type: "scheduled",
+          label: intl.formatMessage(messages.statusScheduled),
+          description: intl.formatMessage(messages.statusScheduledDescription, {
+            date: startIso ? localizeDate(startIso, "lll") : "—",
+          }),
+        };
+      case "finished":
+        return {
+          type: "hidden",
+          label: intl.formatMessage(messages.statusEnded),
+          description: intl.formatMessage(messages.statusEndedDescription, {
+            date: endIso ? localizeDate(endIso, "lll") : "—",
+          }),
+        };
+      case "usedUp":
+        return {
+          type: "hidden",
+          label: intl.formatMessage(voucherStatusMessages.usedUp),
+          description: intl.formatMessage(messages.statusUsedUpDescription),
+        };
+      case "active":
+        return {
+          type: "success",
+          label: intl.formatMessage(messages.statusActive),
+          description: intl.formatMessage(messages.statusActiveDescription),
+        };
     }
-
-    if (usageLimitReached) {
-      return {
-        type: "hidden",
-        label: intl.formatMessage(messages.statusUsedUp),
-        description: intl.formatMessage(messages.statusUsedUpDescription),
-      };
-    }
-
-    if (schedulePhase === "scheduled") {
-      return {
-        type: "scheduled",
-        label: intl.formatMessage(messages.statusScheduled),
-        description: intl.formatMessage(messages.statusScheduledDescription, {
-          date: startIso ? localizeDate(startIso, "lll") : "—",
-        }),
-      };
-    }
-
-    return {
-      type: "success",
-      label: intl.formatMessage(messages.statusActive),
-      description: intl.formatMessage(messages.statusActiveDescription),
-    };
   };
 
   return (

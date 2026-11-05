@@ -1,8 +1,8 @@
 import { ProductAvailabilityStatusLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductAvailabilityStatusLabel";
 import { Pill } from "@dashboard/components/Pill/Pill";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
-import { getRelativePromotionTimeParts } from "@dashboard/discounts/utils";
-import { getVoucherStatus } from "@dashboard/discounts/voucherStatus";
+import { getVoucherStatus, getVoucherStatusTimeParts } from "@dashboard/discounts/voucherStatus";
+import { voucherStatusMessages } from "@dashboard/discounts/voucherStatusMessages";
 import { type VoucherDetailsFragment } from "@dashboard/graphql";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -53,7 +53,7 @@ export const VoucherDetailsTitle = ({ voucher, name }: VoucherDetailsTitleProps)
       : voucherStatus === "finished"
         ? messages.statusInactive
         : voucherStatus === "usedUp"
-          ? messages.statusUsedUp
+          ? voucherStatusMessages.usedUp
           : messages.statusActive,
   );
   const statusDot: DotStatus =
@@ -63,15 +63,11 @@ export const VoucherDetailsTitle = ({ voucher, name }: VoucherDetailsTitleProps)
         ? "scheduled"
         : "neutral";
   const typeLabel = getVoucherTypePillLabel(voucher, intl);
-  // A used-up voucher stays unusable whatever its dates, so no "ends in" or "starts in" hint.
-  const timeParts =
-    voucherStatus === "usedUp"
-      ? null
-      : getRelativePromotionTimeParts({
-          status: voucherStatus,
-          startDate: voucher.startDate,
-          endDate: voucher.endDate,
-        });
+  const timeParts = getVoucherStatusTimeParts({
+    status: voucherStatus,
+    startDate: voucher.startDate,
+    endDate: voucher.endDate,
+  });
   const timeHint = timeParts
     ? intl.formatRelativeTime(timeParts.value, timeParts.unit, { numeric: "auto", style: "long" })
     : null;

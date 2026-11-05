@@ -315,7 +315,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       hasEndDate: !!voucher?.endDate,
       incompleteScheduleFields: [],
       // A limit of 0 is still a limit: the voucher can't be redeemed at all.
-      hasUsageLimit: voucher?.usageLimit !== null && voucher?.usageLimit !== undefined,
+      hasUsageLimit: voucher?.usageLimit != null,
       minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
       requirementsPicker: requirementsPickerInitValue,
       startDate: splitDateTime(voucher?.startDate ?? "").date,
