@@ -45,6 +45,11 @@ interface AssignableListPaginationProps {
   paddingLeft?: number | string;
   /** Optional action immediately before the pagination arrows (e.g. bulk delete). */
   beforePagination?: ReactNode;
+  /**
+   * Whether the current page shows any rows. An empty page keeps the pager while there are other
+   * pages, e.g. after its last items were removed, so the merchant can get back to them.
+   */
+  hasRows?: boolean;
 }
 
 const getPaddingLeftProps = (
@@ -63,6 +68,7 @@ export const AssignableListPagination = ({
   inset = "card",
   paddingLeft,
   beforePagination,
+  hasRows = true,
 }: AssignableListPaginationProps): React.ReactNode => {
   const { hasNextPage, hasPreviousPage, loadNextPage, loadPreviousPage } = usePaginatorContext();
   const currentRowNumber = String(numberOfRows);
@@ -74,6 +80,10 @@ export const AssignableListPagination = ({
   const handleRowNumberChange = ({ value }: { value: string; label: string }): void => {
     onUpdateListSettings("rowNumber", parseInt(value, 10));
   };
+
+  if (!hasRows && !hasNextPage && !hasPreviousPage) {
+    return null;
+  }
 
   return (
     <Box

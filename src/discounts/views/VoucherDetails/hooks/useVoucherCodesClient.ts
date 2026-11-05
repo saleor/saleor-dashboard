@@ -22,6 +22,7 @@ interface UseVoucherCodesClient {
   handleAddVoucherCode: (code: string) => void;
   handleClearAddedVoucherCodes: () => void;
   handleGenerateMultipleCodes: ({ quantity, prefix }: GenerateMultipleVoucherCodeFormData) => void;
+  resetClientPage: () => void;
 }
 
 export const useVoucherCodesClient = (
@@ -75,5 +76,6 @@ export const useVoucherCodesClient = (
     handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
     handleClearAddedVoucherCodes,
+    resetClientPage: resetPage,
   };
 };

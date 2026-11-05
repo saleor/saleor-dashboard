@@ -4,7 +4,7 @@ import useListSettings from "@dashboard/hooks/useListSettings";
 import { type ListSettings, ListViews } from "@dashboard/types";
 import { useMemo, useState } from "react";
 
-import { getVoucherCodesToDisplay } from "../utils";
+import { getVoucherCodesToDisplay, isCodesPageEmptiedBySave } from "../utils";
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
 import { useVoucherCodesRowSelection } from "./useVoucherCodesRowSelection";
 import { useVoucherCodesServer } from "./useVoucherCodesServer";
@@ -28,6 +28,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
     handleClearAddedVoucherCodes,
+    resetClientPage,
     hasClientPaginationNextPage,
     hasClientPaginationPrevPage,
     onSettingsChange,
@@ -45,6 +46,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     voucherCodesLoading,
     voucherCodesRefetch,
     restartServerPagination,
+    dropCachedCodePages,
   } = useVoucherCodesServer({
     id,
     settings: voucherCodesSettings,
@@ -86,8 +88,29 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   };
 
   const handleClearStagedVoucherCodes = () => {
+    const removedIds = pendingRemovedCodeIds;
+    const emptiesCurrentPage = isCodesPageEmptiedBySave({
+      pageCodes: serverVoucherCodes,
+      removedIds,
+      hasPreviousPage: hasServerPaginationPrevPage,
+    });
+
     handleClearAddedVoucherCodes();
     handleClearPendingRemovedVoucherCodes();
+
+    // Cached pages still list the codes the save removed, so load every page fresh.
+    if (removedIds.length > 0) {
+      dropCachedCodePages();
+    }
+
+    // An emptied page would leave the server and draft page counters disagreeing on where
+    // Previous leads, so start again from the first page.
+    if (emptiesCurrentPage) {
+      clearRowSelection();
+      setIsServerPagination(true);
+      resetClientPage();
+      restartServerPagination();
+    }
   };
 
   const handleAddVoucherCode = (code: string) => {

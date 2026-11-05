@@ -82,8 +82,9 @@ export const DiscountCategories = ({
           </>
         )}
       />
-      {categories?.length && onUpdateListSettings ? (
+      {onUpdateListSettings ? (
         <AssignableListPagination
+          hasRows={!!categories?.length}
           inset="nested"
           numberOfRows={numberOfRows}
           onUpdateListSettings={onUpdateListSettings}

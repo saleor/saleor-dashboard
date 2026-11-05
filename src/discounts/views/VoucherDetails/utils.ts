@@ -36,3 +36,20 @@ export const getVoucherCodesToDisplay = ({
       : []),
   ];
 };
+
+/**
+ * Whether saving the staged removals leaves the current page of saved codes empty. Only a page
+ * after the first counts, since the first page has nowhere earlier to go.
+ */
+export const isCodesPageEmptiedBySave = ({
+  pageCodes,
+  removedIds,
+  hasPreviousPage,
+}: {
+  pageCodes: VoucherCode[];
+  removedIds: string[];
+  hasPreviousPage: boolean;
+}): boolean =>
+  hasPreviousPage &&
+  pageCodes.length > 0 &&
+  pageCodes.every(code => !!code.id && removedIds.includes(code.id));

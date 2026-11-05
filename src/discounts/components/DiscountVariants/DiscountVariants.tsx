@@ -134,8 +134,9 @@ export const DiscountVariants = ({
           );
         }}
       />
-      {variants?.length && onUpdateListSettings ? (
+      {onUpdateListSettings ? (
         <AssignableListPagination
+          hasRows={!!variants?.length}
           inset="nested"
           numberOfRows={numberOfRows}
           onUpdateListSettings={onUpdateListSettings}
