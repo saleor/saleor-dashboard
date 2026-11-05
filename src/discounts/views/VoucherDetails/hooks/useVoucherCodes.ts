@@ -4,7 +4,7 @@ import useListSettings from "@dashboard/hooks/useListSettings";
 import { type ListSettings, ListViews } from "@dashboard/types";
 import { useMemo, useState } from "react";
 
-import { getVoucherCodesToDisplay } from "../utils";
+import { getVoucherCodesToDisplay, isCodesPageEmptiedBySave } from "../utils";
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
 import { useVoucherCodesRowSelection } from "./useVoucherCodesRowSelection";
 import { useVoucherCodesServer } from "./useVoucherCodesServer";
@@ -46,6 +46,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     voucherCodesLoading,
     voucherCodesRefetch,
     restartServerPagination,
+    dropCachedCodePages,
   } = useVoucherCodesServer({
     id,
     settings: voucherCodesSettings,
@@ -87,14 +88,24 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   };
 
   const handleClearStagedVoucherCodes = () => {
-    const hadRemovedCodes = pendingRemovedCodes.length > 0;
+    const removedIds = pendingRemovedCodeIds;
+    const emptiesCurrentPage = isCodesPageEmptiedBySave({
+      pageCodes: serverVoucherCodes,
+      removedIds,
+      hasPreviousPage: hasServerPaginationPrevPage,
+    });
 
     handleClearAddedVoucherCodes();
     handleClearPendingRemovedVoucherCodes();
 
-    // Once removals are saved, the page being viewed can come back empty, and the server and
-    // draft page counters would disagree on where Previous leads. Start from the first page.
-    if (hadRemovedCodes) {
+    // Cached pages still list the codes the save removed, so load every page fresh.
+    if (removedIds.length > 0) {
+      dropCachedCodePages();
+    }
+
+    // An emptied page would leave the server and draft page counters disagreeing on where
+    // Previous leads, so start again from the first page.
+    if (emptiesCurrentPage) {
       clearRowSelection();
       setIsServerPagination(true);
       resetClientPage();

@@ -48,6 +48,31 @@ describe("AssignableListPagination", () => {
     expect(screen.getByTestId("assignable-list-pagination")).toBeInTheDocument();
   });
 
+  it("stays on an emptied last page so Previous can be reached", () => {
+    // Arrange
+    const lastPage: PaginatorContextValues = {
+      ...paginatorValue,
+      hasNextPage: false,
+      hasPreviousPage: true,
+    };
+
+    // Act
+    render(
+      <Wrapper>
+        <PaginatorContext.Provider value={lastPage}>
+          <AssignableListPagination
+            hasRows={false}
+            numberOfRows={10}
+            onUpdateListSettings={jest.fn()}
+          />
+        </PaginatorContext.Provider>
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("button-pagination-back")).not.toBeDisabled();
+  });
+
   it("hides on an empty list with no other pages", () => {
     // Arrange
     const singlePage: PaginatorContextValues = {

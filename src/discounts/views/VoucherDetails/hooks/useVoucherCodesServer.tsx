@@ -25,6 +25,8 @@ interface VoucherCodesServer {
   freeSlotsInServerPagianationPage: number;
   serverVoucherCodes: VoucherCode[];
   restartServerPagination: () => void;
+  /** Drops the cached pages of codes, so every page loads fresh after a save removed codes. */
+  dropCachedCodePages: () => void;
 }
 
 export const useVoucherCodesServer = ({
@@ -44,6 +46,7 @@ export const useVoucherCodesServer = ({
     data: voucherCodesData,
     loading: voucherCodesLoading,
     refetch: voucherCodesRefetch,
+    client,
   } = useVoucherCodesQuery({
     skip: skipFetch,
     variables: {
@@ -61,6 +64,16 @@ export const useVoucherCodesServer = ({
   const serverVoucherCodes = (mapEdgesToItems(voucherCodesData?.voucher?.codes) ??
     []) as VoucherCode[];
   const freeSlotsInServerPagianationPage = settings.rowNumber - serverVoucherCodes.length;
+  const dropCachedCodePages = (): void => {
+    client.cache.modify({
+      id: client.cache.identify({ __typename: "Voucher", id }),
+      fields: {
+        // The field without arguments only holds the total count shown elsewhere on the page.
+        codes: (existing, { storeFieldName, DELETE }) =>
+          storeFieldName === "codes" ? existing : DELETE,
+      },
+    });
+  };
 
   return {
     voucherCodesLoading,
@@ -71,5 +84,6 @@ export const useVoucherCodesServer = ({
     hasServerPaginationPrevPage,
     restartServerPagination,
     freeSlotsInServerPagianationPage,
+    dropCachedCodePages,
   };
 };
