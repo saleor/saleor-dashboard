@@ -696,6 +696,10 @@
     "context": "add country dialog header",
     "string": "Choose country you want to add"
   },
+  "0VqtEk": {
+    "context": "toast title when a voucher save went through only in part",
+    "string": "Some changes weren't saved"
+  },
   "0WJNP/": {
     "string": "Return"
   },
@@ -5817,6 +5821,10 @@
   "IsKEVf": {
     "context": "assign shipping zone dialog search label",
     "string": "Search shipping zones"
+  },
+  "IsuaVj": {
+    "context": "toast description when a voucher save request failed without field errors",
+    "string": "Try again."
   },
   "IzECoP": {
     "string": "Search draft orders..."
