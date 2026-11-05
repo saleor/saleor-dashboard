@@ -39,7 +39,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { resolveActiveTabCountKey } from "@dashboard/modeling/components/ModelTypeTabs/groupModelTypeTabs";
 import {
   ALL_MODELS_TAB_ID,
@@ -441,6 +444,11 @@ const AttributeList = ({ params }: AttributeListProps) => {
   const listAttributes = isTypeScoped
     ? typeScopedAttributes
     : (mapEdgesToItems(data?.attributes) ?? []);
+
+  useClearRowSelectionOnRowsChange({
+    rows: isTypeScoped ? typeScopedAttributes : mapEdgesToItems(data?.attributes),
+    clearRowSelection,
+  });
 
   const handleTypeTabChange = useCallback(
     (ids: string[]) => {

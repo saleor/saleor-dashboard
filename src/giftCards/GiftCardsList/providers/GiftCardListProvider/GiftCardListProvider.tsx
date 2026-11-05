@@ -23,7 +23,11 @@ import {
   type PageInfo,
   type PaginationState,
 } from "@dashboard/hooks/usePaginator";
-import { type UseRowSelection, useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  type UseRowSelection,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { ListViews, type SortPage } from "@dashboard/types";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -143,6 +147,12 @@ export const GiftCardsListProvider = ({ children, params }: GiftCardsListProvide
     mapEdgesToItems(data?.giftCards)
       ?.map(getExtendedGiftCard)
       .filter((g): g is NonNullable<typeof g> => g !== undefined) ?? [];
+
+  useClearRowSelectionOnRowsChange({
+    rows: mapEdgesToItems(data?.giftCards),
+    clearRowSelection,
+  });
+
   const providerValues: GiftCardsListConsumerProps = {
     onSort: handleSort,
     sort: getSortParams(params),
