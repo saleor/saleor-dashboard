@@ -10,7 +10,19 @@ export interface UseRowSelection {
   setClearDatagridRowSelectionCallback: (callback: () => void) => void;
 }
 
-export const useRowSelection = (paginationParams?: Pagination): UseRowSelection => {
+export const useRowSelection = (
+  paginationParams?: Pagination,
+  {
+    resetKey,
+  }: {
+    /**
+     * Clears the selection whenever it changes. Pass something that changes with the rows shown,
+     * such as their ids: the datagrid keeps its selection by row position, so without a reset it
+     * would move to whichever rows end up in those positions.
+     */
+    resetKey?: string;
+  } = {},
+): UseRowSelection => {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   // Keep reference to clear datagrid selection function
   const clearDatagridRowSelectionCallback = useRef<(() => void) | null>(null);
@@ -34,10 +46,13 @@ export const useRowSelection = (paginationParams?: Pagination): UseRowSelection 
     clearDatagridRowSelectionCallback.current = callback;
   };
 
-  // Whenever pagination change we need to clear datagrid selection
-  useEffect(() => {
-    clearRowSelection();
-  }, [paginationParams?.after, paginationParams?.before]);
+  // Whenever pagination or the rows shown change we need to clear datagrid selection
+  useEffect(
+    function clearSelectionOnPageOrQueryChange() {
+      clearRowSelection();
+    },
+    [paginationParams?.after, paginationParams?.before, resetKey],
+  );
 
   return {
     selectedRowIds,

@@ -83,12 +83,18 @@ const VoucherList = ({ params }: VoucherListProps) => {
     displayLoader: true,
     variables: newFiltersQueryVariables,
   });
+  // The grid keeps its selection by row position. Clear it whenever the vouchers in those rows
+  // change: another filter, search, sort or page, or a refresh that reorders them.
+  const shownVoucherIds = useMemo(
+    () => (data?.vouchers?.edges ?? []).map(({ node }) => node.id).join(","),
+    [data?.vouchers],
+  );
   const {
     clearRowSelection,
     selectedRowIds,
     setSelectedRowIds,
     setClearDatagridRowSelectionCallback,
-  } = useRowSelection(params);
+  } = useRowSelection(params, { resetKey: shownVoucherIds });
   const {
     hasPresetsChanged,
     onPresetChange,
