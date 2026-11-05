@@ -53,4 +53,43 @@ describe("useRowSelection", () => {
     expect(clearCallback).toHaveBeenCalledTimes(1);
     expect(result.current.selectedRowIds).toEqual([]);
   });
+
+  it("clears the selection when the reset key changes", () => {
+    // Arrange
+    const clearCallback = jest.fn();
+    const { result, rerender } = renderHook(
+      ({ resetKey }: { resetKey: string }) => useRowSelection(undefined, { resetKey }),
+      { initialProps: { resetKey: "voucher-1,voucher-2" } },
+    );
+
+    act(() => {
+      result.current.setSelectedRows(["voucher-1"]);
+      result.current.setClearDatagridRowSelectionCallback(clearCallback);
+    });
+
+    // Act
+    rerender({ resetKey: "voucher-3,voucher-1" });
+
+    // Assert
+    expect(clearCallback).toHaveBeenCalledTimes(1);
+    expect(result.current.selectedRowIds).toEqual([]);
+  });
+
+  it("keeps the selection while the reset key stays the same", () => {
+    // Arrange
+    const { result, rerender } = renderHook(
+      ({ resetKey }: { resetKey: string }) => useRowSelection(undefined, { resetKey }),
+      { initialProps: { resetKey: "voucher-1,voucher-2" } },
+    );
+
+    act(() => {
+      result.current.setSelectedRows(["voucher-1"]);
+    });
+
+    // Act
+    rerender({ resetKey: "voucher-1,voucher-2" });
+
+    // Assert
+    expect(result.current.selectedRowIds).toEqual(["voucher-1"]);
+  });
 });
