@@ -8,11 +8,19 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
+import { PAIRED_ERROR_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
+import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
+import { clearInactiveVoucherDiscountDrafts } from "@dashboard/discounts/data";
 import { createVoucherUpdateHandler } from "@dashboard/discounts/handlers";
 import { voucherGraphiQLQuery } from "@dashboard/discounts/queries";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { voucherListPath } from "@dashboard/discounts/urls";
 import { VOUCHER_UPDATE_FORM_ID } from "@dashboard/discounts/views/VoucherDetails/types";
+import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
+import {
+  getFirstVoucherSectionWithError,
+  getVoucherLocalErrors,
+} from "@dashboard/discounts/voucherLocalErrors";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForVoucherDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -28,6 +36,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import {
   languageEntityUrl,
@@ -216,7 +225,26 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
-  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+  const notify = useNotifier();
+  // Empty required fields only count as errors after a save attempt; other invalid values show
+  // as soon as they are typed. Errors are recomputed from the form, so fixing a value clears it.
+  const [showRequiredErrors, setShowRequiredErrors] = React.useState(false);
+  const handleInvalidValues = (invalidValueErrors: DiscountErrorFragment[]): void => {
+    setShowRequiredErrors(true);
+
+    const section = getFirstVoucherSectionWithError(invalidValueErrors);
+
+    if (section) {
+      scrollToVoucherSection(section);
+    }
+
+    notify({
+      status: "error",
+      title: intl.formatMessage(voucherFeedbackMessages.couldNotSaveVoucher),
+      text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
+      autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+    });
+  };
   // Keep the layout shell until the first codes fetch settles so we don't flash
   // half-loaded UI. Keyed by voucher id so refetches after reveal stay on the form.
   const [revealedForVoucherId, setRevealedForVoucherId] = React.useState<string | null>(null);
@@ -356,7 +384,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       disabled={disabled}
     >
       {form => {
-        const handleSubmit = createVoucherUpdateHandler(form.submit, setLocalErrors);
+        const handleSubmit = createVoucherUpdateHandler(form.submit, handleInvalidValues, intl);
+        const localErrors = getVoucherLocalErrors(
+          clearInactiveVoucherDiscountDrafts(form.data),
+          intl,
+          { includeRequired: showRequiredErrors },
+        );
 
         return (
           <VoucherDetailsPageFormContent

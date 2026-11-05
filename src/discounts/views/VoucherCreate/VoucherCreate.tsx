@@ -16,6 +16,10 @@ import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherS
 import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import {
+  getFirstVoucherSectionWithError,
+  getVoucherLocalErrors,
+} from "@dashboard/discounts/voucherLocalErrors";
+import {
   type CategoryFilterInput,
   type CollectionFilterInput,
   type ProductWhereInput,
@@ -91,6 +95,8 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({
     disableErrorHandling: true,
   });
+  // Empty required fields only count as errors after a create attempt.
+  const [showRequiredValueErrors, setShowRequiredValueErrors] = useState(false);
 
   const assignProductSearchVariables: SearchProductsQueryVariables = {
     ...DEFAULT_INITIAL_SEARCH_DATA,
@@ -217,6 +223,29 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
       return false;
     }
 
+    // Checked before voucherCreate: once it succeeds, a rejected channel step would leave a
+    // voucher without an offer behind.
+    const valueErrors = getVoucherLocalErrors(data, intl);
+
+    if (valueErrors.length > 0) {
+      setShowRequiredValueErrors(true);
+
+      const section = getFirstVoucherSectionWithError(valueErrors);
+
+      if (section) {
+        scrollToVoucherSection(section);
+      }
+
+      notify({
+        status: "error",
+        title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+        text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
+        autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+      });
+
+      return false;
+    }
+
     return true;
   };
   const createVoucher = createHandler(
@@ -327,6 +356,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
           ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || []),
         ]}
         onSubmit={handleSubmit}
+        showRequiredValueErrors={showRequiredValueErrors}
         saveButtonBarState={voucherCreateOpts.status}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}

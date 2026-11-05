@@ -3,7 +3,6 @@ import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
 import { type DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
-import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { applySpreadsheetColumnPaste } from "@dashboard/utils/spreadsheetPaste/applySpreadsheetColumnPaste";
 import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -52,7 +51,6 @@ export const VoucherFixedAmountChannelList = ({
   onChannelsChange,
 }: VoucherFixedAmountChannelListProps): React.ReactNode => {
   const intl = useIntl();
-  const formErrors = getFormErrors(["discountValue"], errors);
   const isPercentage = amountKind === "percentage";
 
   const handlePaste = useCallback(
@@ -101,7 +99,12 @@ export const VoucherFixedAmountChannelList = ({
         />
       </Text>
       {renderCollection(channelListings, (listing, index) => {
-        const channelError = formErrors.discountValue?.channels?.find(id => id === listing?.id);
+        // Each error lists the channels it applies to; several can apply to different channels.
+        const channelError = listing
+          ? errors.find(
+              error => error.field === "discountValue" && error.channels?.includes(listing.id),
+            )
+          : undefined;
 
         return (
           <Box
@@ -122,11 +125,9 @@ export const VoucherFixedAmountChannelList = ({
                     className={styles.amountInput}
                     data-test-id="discount-value-input"
                     disabled={disabled}
-                    error={!!channelError?.length}
+                    error={!!channelError}
                     endAdornment={<Text size={2}>%</Text>}
-                    helperText={
-                      channelError ? getDiscountErrorMessage(formErrors.discountValue, intl) : ""
-                    }
+                    helperText={channelError ? getDiscountErrorMessage(channelError, intl) : ""}
                     aria-label={intl.formatMessage(
                       {
                         id: "MKTuIa",
@@ -150,10 +151,8 @@ export const VoucherFixedAmountChannelList = ({
                     className={styles.amountInput}
                     data-test-id="discount-value-input"
                     disabled={disabled}
-                    error={!!channelError?.length}
-                    helperText={
-                      channelError ? getDiscountErrorMessage(formErrors.discountValue, intl) : ""
-                    }
+                    error={!!channelError}
+                    helperText={channelError ? getDiscountErrorMessage(channelError, intl) : ""}
                     currencySymbol={listing.currency}
                     aria-label={intl.formatMessage(
                       {
