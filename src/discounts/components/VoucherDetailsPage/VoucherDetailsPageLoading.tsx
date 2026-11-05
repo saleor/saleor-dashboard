@@ -343,6 +343,7 @@ export const VoucherDetailsPageLoading = ({
           <VoucherScheduleCard
             data={emptyScheduleData}
             errors={[]}
+            usageLimitReached={false}
             disabled
             loading
             onChange={noop}
@@ -350,6 +351,7 @@ export const VoucherDetailsPageLoading = ({
           <VoucherChannelAvailabilityCard
             channels={[]}
             totalChannelsCount={0}
+            usageLimitReached={false}
             disabled
             loading
             managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}

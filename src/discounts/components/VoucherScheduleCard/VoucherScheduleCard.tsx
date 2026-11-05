@@ -14,6 +14,8 @@ interface VoucherScheduleCardProps {
   loading?: boolean;
   incompleteFields?: readonly ScheduleDateField[];
   onIncompleteFieldsChange?: (fields: ScheduleDateField[]) => void;
+  /** Every use the usage limit allows is taken. */
+  usageLimitReached: boolean;
   onChange: (event: ChangeEvent<any>) => void;
 }
 
@@ -25,6 +27,7 @@ export const VoucherScheduleCard = ({
   loading = false,
   incompleteFields,
   onIncompleteFieldsChange,
+  usageLimitReached,
   onChange,
 }: VoucherScheduleCardProps): React.ReactNode => (
   <DiscountScheduleCard
@@ -34,6 +37,7 @@ export const VoucherScheduleCard = ({
     loading={loading}
     incompleteFields={incompleteFields}
     onIncompleteFieldsChange={onIncompleteFieldsChange}
+    usageLimitReached={usageLimitReached}
     onChange={onChange}
     data-test-id="voucher-schedule-card"
     statusTestId="voucher-schedule-status"

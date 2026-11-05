@@ -1,9 +1,8 @@
 import { DiscountDates } from "@dashboard/discounts/components/DiscountDates/DiscountDates";
 import { type ScheduleDateField } from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
-import {
-  getVoucherSchedulePhase,
-  type VoucherScheduleDateData,
-} from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
+import { type VoucherScheduleDateData } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
+import { getVoucherFormStatus } from "@dashboard/discounts/voucherStatus";
+import { voucherStatusMessages } from "@dashboard/discounts/voucherStatusMessages";
 import { type CommonError } from "@dashboard/utils/errors/common";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type ChangeEvent, type FocusEvent, type ReactNode } from "react";
@@ -25,6 +24,8 @@ interface DiscountScheduleCardProps<ErrorCode> {
   };
   incompleteFields?: readonly ScheduleDateField[];
   onIncompleteFieldsChange?: (fields: ScheduleDateField[]) => void;
+  /** Vouchers only: every use the usage limit allows is taken. */
+  usageLimitReached?: boolean;
   onChange: (event: ChangeEvent<any>) => void;
   onBlur?: (event: FocusEvent<any>) => void;
   "data-test-id"?: string;
@@ -46,6 +47,7 @@ export const DiscountScheduleCard = <ErrorCode,>({
   formErrors,
   incompleteFields,
   onIncompleteFieldsChange,
+  usageLimitReached = false,
   onChange,
   onBlur,
   "data-test-id": dataTestId = "discount-schedule-card",
@@ -54,13 +56,15 @@ export const DiscountScheduleCard = <ErrorCode,>({
   skeletonTestId,
 }: DiscountScheduleCardProps<ErrorCode>): React.ReactNode => {
   const intl = useIntl();
-  const phase = getVoucherSchedulePhase(data);
+  const status = getVoucherFormStatus({ scheduleData: data, usageLimitReached });
   const statusMessage =
-    phase === "scheduled"
+    status === "scheduled"
       ? messages.statusScheduled
-      : phase === "ended"
+      : status === "finished"
         ? messages.statusEnded
-        : messages.statusActive;
+        : status === "usedUp"
+          ? voucherStatusMessages.usedUp
+          : messages.statusActive;
   const resolvedStatusTestId = statusTestId ?? `${dataTestId}-status`;
   const resolvedFieldsTestId = fieldsTestId ?? `${dataTestId}-fields`;
   const resolvedSkeletonTestId = skeletonTestId ?? `${dataTestId}-skeleton`;

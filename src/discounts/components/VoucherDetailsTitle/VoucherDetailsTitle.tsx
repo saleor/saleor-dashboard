@@ -1,7 +1,8 @@
 import { ProductAvailabilityStatusLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductAvailabilityStatusLabel";
 import { Pill } from "@dashboard/components/Pill/Pill";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
-import { getPromotionStatus, getRelativePromotionTimeParts } from "@dashboard/discounts/utils";
+import { getVoucherStatus, getVoucherStatusTimeParts } from "@dashboard/discounts/voucherStatus";
+import { voucherStatusMessages } from "@dashboard/discounts/voucherStatusMessages";
 import { type VoucherDetailsFragment } from "@dashboard/graphql";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -40,26 +41,30 @@ export const VoucherDetailsTitle = ({ voucher, name }: VoucherDetailsTitleProps)
   }
 
   const displayName = name ?? voucher.name ?? "";
-  const promotionStatus = getPromotionStatus({
+  const voucherStatus = getVoucherStatus({
     startDate: voucher.startDate,
     endDate: voucher.endDate,
+    usageLimit: voucher.usageLimit,
+    used: voucher.used,
   });
   const statusLabel = intl.formatMessage(
-    promotionStatus === "scheduled"
+    voucherStatus === "scheduled"
       ? messages.statusScheduled
-      : promotionStatus === "finished"
+      : voucherStatus === "finished"
         ? messages.statusInactive
-        : messages.statusActive,
+        : voucherStatus === "usedUp"
+          ? voucherStatusMessages.usedUp
+          : messages.statusActive,
   );
   const statusDot: DotStatus =
-    promotionStatus === "active"
+    voucherStatus === "active"
       ? "success"
-      : promotionStatus === "scheduled"
+      : voucherStatus === "scheduled"
         ? "scheduled"
         : "neutral";
   const typeLabel = getVoucherTypePillLabel(voucher, intl);
-  const timeParts = getRelativePromotionTimeParts({
-    status: promotionStatus,
+  const timeParts = getVoucherStatusTimeParts({
+    status: voucherStatus,
     startDate: voucher.startDate,
     endDate: voucher.endDate,
   });

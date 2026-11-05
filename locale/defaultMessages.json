@@ -3654,6 +3654,10 @@
     "context": "error message",
     "string": "This order cannot be cancelled"
   },
+  "BNCw3g": {
+    "context": "voucher redemptions status when its usage limit is used up",
+    "string": "Usage limit reached, so it can't be redeemed."
+  },
   "BNK0E1": {
     "string": "Are you sure you want to delete {counter, plural, one {this value} other {{displayQuantity} values}}? If you delete them you won’t be able to assign them to any of the products with \"{attributeName}\" attribute."
   },
@@ -5510,6 +5514,10 @@
   },
   "HqRNN8": {
     "string": "Support"
+  },
+  "Hrnc+j": {
+    "context": "voucher channel status description when its usage limit is used up",
+    "string": "Its usage limit is used up, so it can't be redeemed."
   },
   "HupwkE": {
     "context": "channel inventory allocation description with warehouses",
@@ -17768,6 +17776,10 @@
   "yJynYK": {
     "context": "discount value",
     "string": "discount"
+  },
+  "yL6LN/": {
+    "context": "voucher status when its usage limit is used up",
+    "string": "Used up"
   },
   "yMjwop": {
     "context": "granted refund amount in line expanded panel",

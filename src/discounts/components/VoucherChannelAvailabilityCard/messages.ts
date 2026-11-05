@@ -37,4 +37,9 @@ export const voucherChannelAvailabilityMessages = defineMessages({
     defaultMessage: "Voucher redeem window ended on {date}",
     description: "voucher channel status description when ended",
   },
+  statusUsedUpDescription: {
+    id: "Hrnc+j",
+    defaultMessage: "Its usage limit is used up, so it can't be redeemed.",
+    description: "voucher channel status description when its usage limit is used up",
+  },
 });
