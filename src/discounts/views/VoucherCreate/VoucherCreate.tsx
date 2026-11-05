@@ -33,6 +33,7 @@ import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCateg
 import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import VoucherCreatePage from "../../components/VoucherCreatePage/VoucherCreatePage";
