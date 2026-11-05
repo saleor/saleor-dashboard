@@ -1,5 +1,5 @@
 import isEqual from "lodash/isEqual";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { type FormData } from "./types";
 
@@ -21,9 +21,9 @@ export const useChangedData = <T extends FormData>(formData: T, initialData: T) 
     });
   };
 
-  const clean = () => {
+  const clean = useCallback(() => {
     setDirtyFields([]);
-  };
+  }, []);
 
   const data = Object.entries(formData)
     .filter(([key]) => dirtyFields.includes(key))

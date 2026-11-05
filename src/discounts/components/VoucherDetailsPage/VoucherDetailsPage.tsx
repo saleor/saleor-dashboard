@@ -117,6 +117,8 @@ interface VoucherDetailsPageProps
   saveButtonBarState: ConfirmButtonTransitionState;
   /** Undefined/null until the details query resolves — page shows a loading shell. */
   voucher: VoucherDetailsPageVoucher | null | undefined;
+  /** Changes once a successful save has been reloaded; the form then starts from `voucher`. */
+  formResetKey?: number;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   savedChannelListings: ChannelVoucherData[];
@@ -170,6 +172,7 @@ interface VoucherDetailsPageProps
 
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
+  formResetKey,
   tabItemsCount = {},
   allChannelsCount,
   channelListings = [],
@@ -393,6 +396,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       confirmLeave
       formId={VOUCHER_UPDATE_FORM_ID}
       initial={initialForm}
+      resetKey={formResetKey}
       onSubmit={handleValidatedSubmit}
       disabled={disabled}
     >

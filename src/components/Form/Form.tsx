@@ -20,6 +20,8 @@ interface FormProps<TData, TErrors> extends Omit<
   mergeData?: boolean;
   /** Override default deep merge when `mergeData` is true. */
   mergeFunc?: (prevData: TData, prevState: TData, data: TData) => TData;
+  /** Change it to reset the form to `initial` and clear its changes. */
+  resetKey?: string | number;
 }
 
 /** @deprecated Use react-hook-form instead */
@@ -34,6 +36,7 @@ function Form<TData, Terrors>({
   disabled,
   mergeData,
   mergeFunc,
+  resetKey,
   ...rest
 }: FormProps<TData, Terrors>) {
   const renderProps = useForm(initial, onSubmit, {
@@ -43,6 +46,7 @@ function Form<TData, Terrors>({
     disabled,
     mergeData,
     mergeFunc,
+    resetKey,
   });
 
   function handleSubmit(event?: React.FormEvent<HTMLFormElement>, cb?: () => void) {
