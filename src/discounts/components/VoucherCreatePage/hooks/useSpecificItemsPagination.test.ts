@@ -25,6 +25,11 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
       { id: "2", name: "product 2" },
       { id: "3", name: "product 3" },
     ],
+    variants: [
+      { id: "1", name: "variant 1" },
+      { id: "2", name: "variant 2" },
+      { id: "3", name: "variant 3" },
+    ],
   } as unknown as SpecificItemsData;
 
   it("should paginate categories", () => {
@@ -37,7 +42,7 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
     );
 
     // Assert
-    expect(result.current.paginatedSpecificItems).toEqual([
+    expect(result.current.paginatedSpecificItems.categories).toEqual([
       { id: "1", name: "category 1" },
       { id: "2", name: "category 2" },
     ]);
@@ -64,7 +69,7 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
     );
 
     // Assert
-    expect(result.current.paginatedSpecificItems).toEqual([
+    expect(result.current.paginatedSpecificItems.collections).toEqual([
       { id: "1", name: "collection 1" },
       { id: "2", name: "collection 2" },
     ]);
@@ -81,7 +86,7 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
     );
   });
 
-  it("should paginate categories", () => {
+  it("should paginate products", () => {
     // Arrange & Act
     const { result } = renderHook(() =>
       useSpecificItemsPagination({
@@ -91,7 +96,7 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
     );
 
     // Assert
-    expect(result.current.paginatedSpecificItems).toEqual([
+    expect(result.current.paginatedSpecificItems.products).toEqual([
       { id: "1", name: "product 1" },
       { id: "2", name: "product 2" },
     ]);
@@ -106,5 +111,21 @@ describe("VoucherCreatePage / hooks / useSpecificItemsPagination", () => {
         },
       }),
     );
+  });
+
+  it("should keep each list to its own items when another tab is active", () => {
+    // Arrange & Act
+    const { result } = renderHook(() =>
+      useSpecificItemsPagination({
+        type: VoucherCreatePageTab.categories,
+        data,
+      }),
+    );
+
+    // Assert
+    expect(result.current.paginatedSpecificItems.variants).toEqual([
+      { id: "1", name: "variant 1" },
+      { id: "2", name: "variant 2" },
+    ]);
   });
 });

@@ -7,7 +7,6 @@ import {
 import { DashboardCard } from "@dashboard/components/Card";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { PAGINATE_BY } from "@dashboard/config";
-import { type SaleDetailsFragment, type VoucherCatalogueFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { productVariantEditPath } from "@dashboard/products/urls";
 import { type ListActions, type ListProps } from "@dashboard/types";
@@ -18,7 +17,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { messages } from "./messages";
 
 interface SaleVariantsProps extends Omit<ListProps, "onUpdateListSettings">, ListActions {
-  variants: SaleDetailsFragment["variants"] | VoucherCatalogueFragment["variants"];
+  variants: { edges: Array<{ node: DiscountVariantRow }> } | null | undefined;
   onVariantAssign: () => void;
   onVariantUnassign: (id: string) => void;
   numberOfRows?: number;
@@ -52,7 +51,7 @@ export const DiscountVariants = ({
   embedded = false,
 }: SaleVariantsProps): React.ReactNode => {
   const intl = useIntl();
-  const variants = getLoadableList(discountVariants) as DiscountVariantRow[] | undefined;
+  const variants = getLoadableList(discountVariants);
 
   const body = (
     <>
