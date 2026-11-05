@@ -696,6 +696,10 @@
     "context": "add country dialog header",
     "string": "Choose country you want to add"
   },
+  "0VqtEk": {
+    "context": "toast title when a voucher save went through only in part",
+    "string": "Some changes weren't saved"
+  },
   "0WJNP/": {
     "string": "Return"
   },
@@ -4674,6 +4678,10 @@
     "context": "settings search alias",
     "string": "gift card expiration period"
   },
+  "F7/C6J": {
+    "context": "toast description when a voucher was created but its channel discount values were rejected",
+    "string": "The voucher was created without channels. Add them and set its discount values."
+  },
   "F7DxHw": {
     "string": "Subcategories"
   },
@@ -5825,6 +5833,10 @@
   "IsKEVf": {
     "context": "assign shipping zone dialog search label",
     "string": "Search shipping zones"
+  },
+  "IsuaVj": {
+    "context": "toast description when a voucher save request failed without field errors",
+    "string": "Try again."
   },
   "IzECoP": {
     "string": "Search draft orders..."
@@ -10475,6 +10487,10 @@
   "ZayvsI": {
     "context": "metric unit system",
     "string": "Metric"
+  },
+  "Zc1ydW": {
+    "context": "toast title when a voucher was created but its channel discount values were rejected",
+    "string": "Discount values weren't saved"
   },
   "ZclWIw": {
     "context": "setup task description when no codes",

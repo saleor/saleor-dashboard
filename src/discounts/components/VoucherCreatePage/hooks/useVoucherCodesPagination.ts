@@ -16,12 +16,22 @@ interface UseVoucherCodesPagination {
 
 export const useVoucherCodesPagination = (
   voucherCodes: VoucherCode[],
+  {
+    clampToLastPage = false,
+  }: {
+    /**
+     * On Create voucher every code is local, so deleting the last page's codes should go back a
+     * page. A saved voucher's draft codes continue into server pages, so it leaves this off.
+     */
+    clampToLastPage?: boolean;
+  } = {},
 ): UseVoucherCodesPagination => {
   const { settings, updateListSettings } = useListSettings(ListViews.VOUCHER_CODES);
   const pageSize = settings.rowNumber || VOUCHER_CODES_PAGINATE_BY;
   const { loadNextPage, loadPreviousPage, pageInfo, pageValues, resetPage } = useLocalPageInfo(
     voucherCodes,
     pageSize,
+    { clampToLastPage },
   );
 
   return {

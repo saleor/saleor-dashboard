@@ -9,7 +9,9 @@ import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/A
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog/AssignCollectionDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
 import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/AssignVariantDialog";
+import { withVariantOwnNames } from "@dashboard/components/AssignVariantDialog/utils";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
@@ -17,10 +19,7 @@ import {
 } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog";
 import { getPreferredVoucherCatalogueTab } from "@dashboard/discounts/components/VoucherCatalogueSection/getPreferredVoucherCatalogueTab";
-import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
 import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/VoucherCatalogueUnassignDialog/VoucherCatalogueUnassignDialog";
-import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
-import { isVoucherCountriesError } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
 import { VoucherDeleteDialog } from "@dashboard/discounts/components/VoucherDeleteDialog/VoucherDeleteDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
@@ -29,7 +28,6 @@ import VoucherDetailsPage, {
 } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { VoucherMetadataDialog } from "@dashboard/discounts/components/VoucherMetadataDialog/VoucherMetadataDialog";
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
-import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
 import { getVoucherSetupReadiness } from "@dashboard/discounts/components/VoucherSetupCard/getVoucherSetupReadiness";
 import { useVoucherSetupCardDismiss } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDismiss";
 import { useVoucherSetupCardDisplayReady } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDisplayReady";
@@ -42,6 +40,8 @@ import {
 } from "@dashboard/discounts/urls";
 import { getAssignedVariantIds } from "@dashboard/discounts/utils";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
+import { getVoucherSaveFailureFeedback } from "@dashboard/discounts/voucherSaveFailureFeedback";
+import { type VoucherSaveError } from "@dashboard/discounts/voucherSaveRequestErrors";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type CategoryFilterInput,
@@ -116,6 +116,8 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const {
     draft: catalogueDraft,
     resetDraft: resetCatalogueDraft,
+    resetCatalogueItems,
+    resetCountryCodes,
     assignItems: assignCatalogueItems,
     unassignIds: unassignCatalogueIds,
     setCountryCodes,
@@ -332,6 +334,8 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
     handleClearStagedVoucherCodes,
+    handleClearAddedVoucherCodes,
+    handleClearPendingRemovedVoucherCodes,
   } = useVoucherCodes({ id });
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherUrlDialog,
@@ -377,41 +381,34 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       status: "success",
       title: intl.formatMessage(voucherFeedbackMessages.voucherUpdated),
     });
-  const notifySaveFailed = (saveErrors: Array<{ field?: string | null }> = []) => {
-    const hasCodesError = saveErrors.some(isVoucherCodesError);
-    const hasCatalogueError = saveErrors.some(isVoucherCatalogueError);
-    const hasCountriesError = saveErrors.some(isVoucherCountriesError);
+  const notifySaveFailed = (
+    saveErrors: VoucherSaveError[],
+    { partlySaved }: { partlySaved: boolean },
+  ) => {
+    const { section, recovery, shownOnPage } = getVoucherSaveFailureFeedback(saveErrors);
 
-    // Prefer the section that owns recovery; codes first (highest-friction identity).
-    if (hasCodesError) {
-      scrollToVoucherSection(voucherSectionIds.codes);
-    } else if (hasCatalogueError) {
-      scrollToVoucherSection(voucherSectionIds.catalogue);
-    } else if (hasCountriesError) {
-      scrollToVoucherSection(voucherSectionIds.countries);
+    if (section) {
+      scrollToVoucherSection(section);
     }
-
-    const recoveryMessage = hasCodesError
-      ? voucherFeedbackMessages.fixCodesAndTryAgain
-      : hasCatalogueError
-        ? voucherFeedbackMessages.fixCatalogueAndTryAgain
-        : hasCountriesError
-          ? voucherFeedbackMessages.fixCountriesAndTryAgain
-          : voucherFeedbackMessages.checkHighlightedFields;
 
     notify({
       status: "error",
-      title: intl.formatMessage(voucherFeedbackMessages.couldNotSaveVoucher),
-      text: intl.formatMessage(recoveryMessage),
-      // Inline/section errors own the recovery; toast is a short ack.
-      autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+      // The parts that went through no longer show as unsaved in the Savebar.
+      title: intl.formatMessage(
+        partlySaved
+          ? voucherFeedbackMessages.someChangesNotSaved
+          : voucherFeedbackMessages.couldNotSaveVoucher,
+      ),
+      text: intl.formatMessage(recovery),
+      // Errors shown next to a field own the recovery; otherwise the toast stays.
+      ...(shownOnPage ? { autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME } : {}),
     });
   };
   const [voucherUpdate, voucherUpdateOpts] = useVoucherUpdateMutation({
     disableErrorHandling: true,
     onCompleted: data => {
-      // Only patch the voucher cache here. Success toast / clearing draft codes must wait
-      // until channel + catalogue mutations in createUpdateHandler also succeed.
+      // Only patch the voucher cache here. Toasts and clearing staged changes happen in
+      // handleSubmit, once createUpdateHandler reports which parts of the save went through.
       if (data.voucherUpdate.errors.length === 0 && data.voucherUpdate.voucher) {
         updateQuery(prev => ({
           ...prev,
@@ -448,9 +445,18 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const [voucherCataloguesAdd, voucherCataloguesAddOpts] = useVoucherCataloguesAddMutation({
     disableErrorHandling: true,
   });
-  const [voucherCodeBulkDelete] = useVoucherCodeBulkDeleteMutation({
+  const [voucherCodeBulkDelete, voucherCodeBulkDeleteOpts] = useVoucherCodeBulkDeleteMutation({
     disableErrorHandling: true,
   });
+  // The save runs in steps, so the page stays disabled until every step has finished.
+  const isSaving =
+    voucherUpdateOpts.loading ||
+    updateChannelsOpts.loading ||
+    voucherCodeBulkDeleteOpts.loading ||
+    voucherCataloguesAddOpts.loading ||
+    voucherCataloguesRemoveOpts.loading;
+  // Set from the whole save: voucherUpdate alone can succeed while a later step fails.
+  const [saveBarState, setSaveBarState] = useState<ConfirmButtonTransitionState>("default");
   const selectedUnassignIds = params.ids ?? [];
   const selectedUnassignIdsCount = selectedUnassignIds.length;
   const canOpenBulkActionDialog = selectedUnassignIdsCount > 0;
@@ -476,9 +482,11 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     },
   );
   const handleSubmit = async formData => {
-    const errors = await updateHandler(formData);
+    const { errors, saved, savedChanges } = await updateHandler(formData);
 
-    if (!errors?.length) {
+    setSaveBarState(errors.length ? "error" : "success");
+
+    if (!errors.length) {
       notifySaved();
       handleClearStagedVoucherCodes();
       voucherCodesRefetch();
@@ -487,7 +495,32 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       refetch();
       refetchCatalogue();
     } else {
-      notifySaveFailed(errors);
+      // Drop staged changes that were saved, so saving again doesn't send them twice
+      // (re-adding a saved code would fail as a duplicate), and show what is now saved.
+      if (saved.details) {
+        handleClearAddedVoucherCodes();
+        resetCountryCodes();
+        // The voucherUpdate response leaves out some settings, such as single use.
+        refetch();
+      }
+
+      if (saved.codeRemovals) {
+        handleClearPendingRemovedVoucherCodes();
+      }
+
+      if (saved.details || saved.codeRemovals) {
+        voucherCodesRefetch();
+      }
+
+      if (saved.catalogueAdds || saved.catalogueRemoves) {
+        resetCatalogueItems({
+          additions: saved.catalogueAdds,
+          removals: saved.catalogueRemoves,
+        });
+        refetchCatalogue();
+      }
+
+      notifySaveFailed(errors, { partlySaved: savedChanges });
     }
 
     return errors;
@@ -677,12 +710,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
         savedChannelListings={voucherChannelsChoices}
-        disabled={
-          (loading && !data?.voucher) ||
-          voucherCataloguesRemoveOpts.loading ||
-          voucherCataloguesAddOpts.loading ||
-          updateChannelsOpts.loading
-        }
+        disabled={(loading && !data?.voucher) || isSaving}
         errors={[
           ...(voucherUpdateOpts.data?.voucherUpdate.errors || []),
           ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || []),
@@ -751,14 +779,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         onRemove={() => openModal("remove")}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        saveButtonBarState={
-          voucherUpdateOpts.loading ||
-          updateChannelsOpts.loading ||
-          voucherCataloguesAddOpts.loading ||
-          voucherCataloguesRemoveOpts.loading
-            ? "loading"
-            : voucherUpdateOpts.status
-        }
+        saveButtonBarState={isSaving ? "loading" : saveBarState}
         categoryListToolbar={
           <Button
             variant="secondary"
@@ -889,7 +910,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           loading={searchVariantsOpts.loading}
           onClose={closeModal}
           onSubmit={variants => {
-            assignCatalogueItems("variants", variants);
+            assignCatalogueItems("variants", withVariantOwnNames(variants));
             closeModal();
           }}
           products={mapEdgesToItems(searchVariantsOpts?.data?.search)}

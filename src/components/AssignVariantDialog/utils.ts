@@ -6,7 +6,7 @@ import {
   isVariantsListTruncated,
   mapSearchProductsForVariantAssign,
 } from "@dashboard/searches/mapSearchProductsForVariantAssign";
-import { type RelayToFlat } from "@dashboard/types";
+import { type Container, type RelayToFlat } from "@dashboard/types";
 
 export { isVariantsListTruncated };
 
@@ -98,12 +98,27 @@ export function hasAllVariantsSelected(
 export const getCompositeLabel = (variant: VariantWithProductLabel): string =>
   formatVariantReferenceLabel(variant.productName || variant.product?.name || "", variant.name);
 
-/** Submit payload for the assign dialog. `name` must win over `...variant.name`. */
+/**
+ * Submit payload for the assign dialog. `name` is the "Product: Variant" label most callers show
+ * and must win over `...variant.name`; `variantName` keeps the variant's own name.
+ */
 export const toAssignedVariantContainers = (
   variants: VariantWithProductLabel[],
-): Array<VariantWithProductLabel & { name: string }> =>
+): Array<VariantWithProductLabel & { name: string; variantName: string }> =>
   variants.map(variant => ({
     ...variant,
     id: variant.id,
     name: getCompositeLabel(variant),
+    variantName: variant.name,
   }));
+
+/**
+ * The submitted variants with their own names, for lists that show the product and the variant
+ * in separate columns. Items without a `variantName` are kept as they are.
+ */
+export const withVariantOwnNames = <T extends Container>(containers: T[]): T[] =>
+  containers.map(container =>
+    "variantName" in container && typeof container.variantName === "string"
+      ? { ...container, name: container.variantName }
+      : container,
+  );

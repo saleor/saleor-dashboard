@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 
 import {
+  type CatalogueMembershipBucket,
   createEmptyVoucherCatalogueDraft,
   stageCatalogueAdd,
   stageCatalogueRemove,
@@ -13,6 +14,36 @@ export const useVoucherCatalogueDraft = () => {
 
   const resetDraft = useCallback(() => {
     setDraft(createEmptyVoucherCatalogueDraft());
+  }, []);
+
+  /**
+   * Drops staged catalogue additions, removals or both, once they are saved. Countries are saved
+   * separately and are kept.
+   */
+  const resetCatalogueItems = useCallback(
+    ({ additions, removals }: { additions: boolean; removals: boolean }) => {
+      const resetBucket = (bucket: CatalogueMembershipBucket): CatalogueMembershipBucket => ({
+        idsToAdd: additions ? [] : bucket.idsToAdd,
+        idsToRemove: removals ? [] : bucket.idsToRemove,
+        toDisplay: additions ? [] : bucket.toDisplay,
+      });
+
+      setDraft(current => ({
+        categories: resetBucket(current.categories),
+        collections: resetBucket(current.collections),
+        products: resetBucket(current.products),
+        variants: resetBucket(current.variants),
+        countryCodes: current.countryCodes,
+      }));
+    },
+    [],
+  );
+
+  const resetCountryCodes = useCallback(() => {
+    setDraft(current => ({
+      ...current,
+      countryCodes: null,
+    }));
   }, []);
 
   const assignItems = useCallback(
@@ -53,6 +84,8 @@ export const useVoucherCatalogueDraft = () => {
   return {
     draft,
     resetDraft,
+    resetCatalogueItems,
+    resetCountryCodes,
     assignItems,
     unassignIds,
     setCountryCodes,
