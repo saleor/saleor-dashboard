@@ -1,9 +1,13 @@
-import { type ApolloError, type FetchResult } from "@apollo/client";
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { clearInactiveVoucherDiscountDrafts } from "@dashboard/discounts/data";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
+import {
+  getVoucherSaveRequestErrors,
+  type MutationOutcome,
+  type VoucherSaveError,
+} from "@dashboard/discounts/voucherSaveRequestErrors";
 import {
   DiscountValueTypeEnum,
   type VoucherCataloguesAddMutation,
@@ -22,19 +26,12 @@ import {
   type VoucherUpdateMutationVariables,
 } from "@dashboard/graphql";
 import { joinDateTime } from "@dashboard/misc";
-import { CommonErrorCode } from "@dashboard/utils/errors/common";
 
 import {
   getCatalogueAddInput,
   getCatalogueRemoveInput,
   type VoucherCatalogueDraft,
 } from "./voucherCatalogueDraft";
-
-export interface VoucherSaveError {
-  field: string | null;
-  code: string;
-  message?: string | null;
-}
 
 /**
  * Which requests went through, so their staged changes can be cleared when another part of the
@@ -73,53 +70,6 @@ interface CreateUpdateHandlerOptions {
   getPendingRemovedCodeIds: () => string[];
   catalogueQueryVariables: Omit<VoucherCataloguesAddMutationVariables, "id" | "input">;
 }
-
-/**
- * What a mutation resolves with. Mutation hooks with an `onError` handler, which all dashboard
- * mutations have, resolve a failed request with the ApolloError in `errors`.
- */
-type MutationOutcome<TData> = FetchResult<TData> | { data?: null; errors: ApolloError };
-
-const getRequestErrorMessages = (
-  errors: MutationOutcome<unknown>["errors"],
-): Array<string | null> => {
-  if (!errors) {
-    return [null];
-  }
-
-  if ("graphQLErrors" in errors) {
-    return errors.graphQLErrors.length > 0
-      ? errors.graphQLErrors.map(error => error.message)
-      : [errors.message];
-  }
-
-  return errors.length > 0 ? errors.map(error => error.message) : [null];
-};
-
-/**
- * The errors of one voucher save request. A request that fails as a whole (rejected input, a
- * server or network error) has no payload; it counts as failed rather than as a save without
- * errors.
- */
-export const getVoucherSaveRequestErrors = <TData>(
-  result: MutationOutcome<TData>,
-  getPayloadErrors: (data: TData) => VoucherSaveError[] | null | undefined,
-): VoucherSaveError[] => {
-  const payloadErrors = result.data ? getPayloadErrors(result.data) : null;
-  // An ApolloError always means a failed request; an errors array only when it isn't empty.
-  const hasRequestErrors =
-    !!result.errors && ("graphQLErrors" in result.errors || result.errors.length > 0);
-
-  if (!hasRequestErrors && payloadErrors) {
-    return payloadErrors;
-  }
-
-  return getRequestErrorMessages(result.errors).map(message => ({
-    field: null,
-    code: CommonErrorCode.GRAPHQL_ERROR,
-    message,
-  }));
-};
 
 const getCountryCodes = (voucher: Pick<VoucherFragment, "countries">): string[] =>
   (voucher.countries ?? []).map(country => country.code).sort();

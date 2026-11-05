@@ -22,6 +22,19 @@ export const voucherFeedbackMessages = defineMessages({
     defaultMessage: "Couldn't save voucher",
     description: "toast title when voucher save fails",
   },
+  discountValuesNotSaved: {
+    id: "Zc1ydW",
+    defaultMessage: "Discount values weren't saved",
+    description:
+      "toast title when a voucher was created but its channel discount values were rejected",
+  },
+  addChannelsAndDiscountValues: {
+    id: "F7/C6J",
+    defaultMessage:
+      "The voucher was created without channels. Add them and set its discount values.",
+    description:
+      "toast description when a voucher was created but its channel discount values were rejected",
+  },
   someChangesNotSaved: {
     id: "0VqtEk",
     defaultMessage: "Some changes weren't saved",
