@@ -28,6 +28,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
     handleClearAddedVoucherCodes,
+    resetClientPage,
     hasClientPaginationNextPage,
     hasClientPaginationPrevPage,
     onSettingsChange,
@@ -86,8 +87,19 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   };
 
   const handleClearStagedVoucherCodes = () => {
+    const hadRemovedCodes = pendingRemovedCodes.length > 0;
+
     handleClearAddedVoucherCodes();
     handleClearPendingRemovedVoucherCodes();
+
+    // Once removals are saved, the page being viewed can come back empty, and the server and
+    // draft page counters would disagree on where Previous leads. Start from the first page.
+    if (hadRemovedCodes) {
+      clearRowSelection();
+      setIsServerPagination(true);
+      resetClientPage();
+      restartServerPagination();
+    }
   };
 
   const handleAddVoucherCode = (code: string) => {

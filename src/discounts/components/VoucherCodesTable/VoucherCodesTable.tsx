@@ -196,20 +196,19 @@ export const VoucherCodesTable = ({
           </>
         )}
       />
-      {codes.length > 0 ? (
-        <AssignableListPagination
-          inset="card"
-          numberOfRows={settings?.rowNumber ?? VOUCHER_CODES_PAGINATE_BY}
-          onUpdateListSettings={onSettingsChange}
-          beforePagination={
-            selectedCodesIds.length > 0 ? (
-              <BulkDeleteButton count={selectedCodesIds.length} onClick={onBulkDelete} size="small">
-                <FormattedMessage defaultMessage="Delete codes" id="UJ97Lb" />
-              </BulkDeleteButton>
-            ) : null
-          }
-        />
-      ) : null}
+      <AssignableListPagination
+        hasRows={codes.length > 0}
+        inset="card"
+        numberOfRows={settings?.rowNumber ?? VOUCHER_CODES_PAGINATE_BY}
+        onUpdateListSettings={onSettingsChange}
+        beforePagination={
+          selectedCodesIds.length > 0 ? (
+            <BulkDeleteButton count={selectedCodesIds.length} onClick={onBulkDelete} size="small">
+              <FormattedMessage defaultMessage="Delete codes" id="UJ97Lb" />
+            </BulkDeleteButton>
+          ) : null
+        }
+      />
     </>
   );
 };
