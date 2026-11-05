@@ -113,6 +113,11 @@ export type PaginatorContextValues = PaginatorContextValuesCommon &
       }
   );
 
+export type ClickPaginatorContextValues = Extract<
+  PaginatorContextValues,
+  { paginatorType: "click" }
+>;
+
 export const PaginatorContext = createContext<PaginatorContextValues | null>(null);
 
 export const usePaginatorContext = () => {
