@@ -43,6 +43,7 @@ import {
 } from "@dashboard/discounts/urls";
 import { getAssignedVariantIds } from "@dashboard/discounts/utils";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
+import { type VoucherSaveError } from "@dashboard/discounts/voucherSaveRequestErrors";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type CategoryFilterInput,
@@ -89,7 +90,7 @@ import {
   useVoucherPickerSearches,
   variantPickerSearch,
 } from "../voucherPickerSearches";
-import { createUpdateHandler, type VoucherSaveError } from "./handlers";
+import { createUpdateHandler } from "./handlers";
 import { useVoucherAssignedIds } from "./hooks/useVoucherAssignedIds";
 import { useVoucherCodes } from "./hooks/useVoucherCodes";
 import { VOUCHER_UPDATE_FORM_ID } from "./types";

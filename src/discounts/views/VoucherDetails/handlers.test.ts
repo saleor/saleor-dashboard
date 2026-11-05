@@ -18,11 +18,7 @@ import {
 } from "@dashboard/graphql";
 import { GraphQLError } from "graphql";
 
-import {
-  createUpdateHandler,
-  getVoucherSaveRequestErrors,
-  hasSavedVoucherDetailsChanges,
-} from "./handlers";
+import { createUpdateHandler, hasSavedVoucherDetailsChanges } from "./handlers";
 import {
   createEmptyVoucherCatalogueDraft,
   type VoucherCatalogueDraft,
@@ -425,66 +421,5 @@ describe("hasSavedVoucherDetailsChanges", () => {
         after: voucherDetails,
       }),
     ).toBe(true);
-  });
-});
-
-describe("getVoucherSaveRequestErrors", () => {
-  it("returns the payload errors of a completed request", () => {
-    // Arrange
-    const result: FetchResult<VoucherChannelListingUpdateMutation> = channelsRejected;
-
-    // Act
-    const errors = getVoucherSaveRequestErrors(
-      result,
-      data => data.voucherChannelListingUpdate?.errors,
-    );
-
-    // Assert
-    expect(errors).toEqual([expect.objectContaining({ field: "discountValue" })]);
-  });
-
-  it("counts a network failure without GraphQL errors as failed", () => {
-    // Arrange
-    const result = { errors: new ApolloError({ errorMessage: "Failed to fetch" }) };
-
-    // Act
-    const errors = getVoucherSaveRequestErrors(
-      result,
-      (data: VoucherChannelListingUpdateMutation) => data.voucherChannelListingUpdate?.errors,
-    );
-
-    // Assert
-    expect(errors).toEqual([{ field: null, code: "GRAPHQL_ERROR", message: "Failed to fetch" }]);
-  });
-
-  it("reads an empty errors array as no request error", () => {
-    // Arrange
-    const result: FetchResult<VoucherChannelListingUpdateMutation> = {
-      ...channelsOk,
-      errors: [],
-    };
-
-    // Act
-    const errors = getVoucherSaveRequestErrors(
-      result,
-      data => data.voucherChannelListingUpdate?.errors,
-    );
-
-    // Assert
-    expect(errors).toEqual([]);
-  });
-
-  it("counts a request without a payload as failed", () => {
-    // Arrange
-    const result: FetchResult<VoucherChannelListingUpdateMutation> = { data: null };
-
-    // Act
-    const errors = getVoucherSaveRequestErrors(
-      result,
-      data => data.voucherChannelListingUpdate?.errors,
-    );
-
-    // Assert
-    expect(errors).toEqual([{ field: null, code: "GRAPHQL_ERROR", message: null }]);
   });
 });
