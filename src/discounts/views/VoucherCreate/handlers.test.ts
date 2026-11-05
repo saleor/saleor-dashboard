@@ -120,7 +120,12 @@ const setup = ({
   const voucherCreate = jest.fn(async () => createResult);
   const updateChannels = jest.fn(async () => channelsResult);
   const deleteVoucher = jest.fn(async () => deleteResult);
-  const handler = createHandler(voucherCreate, updateChannels, deleteVoucher, () => valid);
+  const handler = createHandler({
+    createVoucher: voucherCreate,
+    updateChannels,
+    deleteVoucher,
+    validate: () => valid,
+  });
 
   return { handler, voucherCreate, updateChannels, deleteVoucher };
 };
@@ -150,6 +155,7 @@ describe("createHandler", () => {
     // Assert
     expect(result).toEqual({
       errors: [{ field: null, code: "GRAPHQL_ERROR", message: "Failed to fetch" }],
+      failedStep: "create",
     });
     expect(updateChannels).not.toHaveBeenCalled();
   });
@@ -162,7 +168,10 @@ describe("createHandler", () => {
     const result = await handler(formData);
 
     // Assert
-    expect(result).toEqual({ errors: [expect.objectContaining({ code: "GRAPHQL_ERROR" })] });
+    expect(result).toEqual({
+      errors: [expect.objectContaining({ code: "GRAPHQL_ERROR" })],
+      failedStep: "create",
+    });
     expect(updateChannels).not.toHaveBeenCalled();
   });
 
@@ -187,7 +196,10 @@ describe("createHandler", () => {
 
     // Assert
     expect(deleteVoucher).toHaveBeenCalledWith("voucher-1");
-    expect(result).toEqual({ errors: [expect.objectContaining({ field: "discountValue" })] });
+    expect(result).toEqual({
+      errors: [expect.objectContaining({ field: "discountValue" })],
+      failedStep: "channels",
+    });
   });
 
   it("returns the voucher that couldn't be deleted again", async () => {
@@ -200,7 +212,76 @@ describe("createHandler", () => {
     // Assert
     expect(result).toEqual({
       errors: [expect.objectContaining({ field: "discountValue" })],
+      failedStep: "channels",
       createdWithoutChannelsId: "voucher-1",
+    });
+  });
+
+  it("also keeps the voucher id when the delete is rejected by the API", async () => {
+    // Arrange
+    const { handler } = setup({
+      channelsResult: channelsRejected,
+      deleteResult: {
+        data: {
+          __typename: "Mutation",
+          voucherDelete: {
+            __typename: "VoucherDelete",
+            errors: [
+              {
+                __typename: "DiscountError",
+                code: DiscountErrorCode.NOT_FOUND,
+                field: "id",
+                channels: null,
+                message: "Couldn't resolve to a node.",
+                voucherCodes: null,
+              },
+            ],
+          },
+        },
+      },
+    });
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(result).toEqual(expect.objectContaining({ createdWithoutChannelsId: "voucher-1" }));
+  });
+
+  it("deletes the new voucher when saving its channel values fails as a request", async () => {
+    // Arrange
+    const { handler, deleteVoucher } = setup({
+      channelsResult: { errors: new ApolloError({ errorMessage: "Failed to fetch" }) },
+    });
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(deleteVoucher).toHaveBeenCalledWith("voucher-1");
+    expect(result).toEqual(expect.objectContaining({ failedStep: "channels" }));
+  });
+
+  it("deletes the new voucher when saving its channel values throws", async () => {
+    // Arrange
+    const deleteVoucher = jest.fn(async () => deleted);
+    const handler = createHandler({
+      createVoucher: async () => createdWithId("voucher-1"),
+      updateChannels: async () => {
+        throw new Error("Unexpected channel data");
+      },
+      deleteVoucher,
+      validate: () => true,
+    });
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(deleteVoucher).toHaveBeenCalledWith("voucher-1");
+    expect(result).toEqual({
+      errors: [{ field: null, code: "GRAPHQL_ERROR", message: "Unexpected channel data" }],
+      failedStep: "channels",
     });
   });
 });

@@ -840,10 +840,6 @@
     "context": "Dry run no objects found",
     "string": "No objects found in the provided query"
   },
-  "0vNygf": {
-    "context": "toast description when a voucher was created but its channel discount values were rejected",
-    "string": "The voucher was created. Set its discount values and save."
-  },
   "0whAeC": {
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
@@ -4677,6 +4673,10 @@
   "F6U+Fj": {
     "context": "settings search alias",
     "string": "gift card expiration period"
+  },
+  "F7/C6J": {
+    "context": "toast description when a voucher was created but its channel discount values were rejected",
+    "string": "The voucher was created without channels. Add them and set its discount values."
   },
   "F7DxHw": {
     "string": "Subcategories"

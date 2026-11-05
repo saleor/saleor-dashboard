@@ -18,10 +18,7 @@ import {
 } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog";
 import { getPreferredVoucherCatalogueTab } from "@dashboard/discounts/components/VoucherCatalogueSection/getPreferredVoucherCatalogueTab";
-import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
 import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/VoucherCatalogueUnassignDialog/VoucherCatalogueUnassignDialog";
-import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
-import { isVoucherCountriesError } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
 import { VoucherDeleteDialog } from "@dashboard/discounts/components/VoucherDeleteDialog/VoucherDeleteDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
@@ -30,7 +27,6 @@ import VoucherDetailsPage, {
 } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { VoucherMetadataDialog } from "@dashboard/discounts/components/VoucherMetadataDialog/VoucherMetadataDialog";
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
-import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
 import { getVoucherSetupReadiness } from "@dashboard/discounts/components/VoucherSetupCard/getVoucherSetupReadiness";
 import { useVoucherSetupCardDismiss } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDismiss";
 import { useVoucherSetupCardDisplayReady } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDisplayReady";
@@ -43,6 +39,7 @@ import {
 } from "@dashboard/discounts/urls";
 import { getAssignedVariantIds } from "@dashboard/discounts/utils";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
+import { getVoucherSaveFailureFeedback } from "@dashboard/discounts/voucherSaveFailureFeedback";
 import { type VoucherSaveError } from "@dashboard/discounts/voucherSaveRequestErrors";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
@@ -387,28 +384,11 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     saveErrors: VoucherSaveError[],
     { partlySaved }: { partlySaved: boolean },
   ) => {
-    const hasCodesError = saveErrors.some(isVoucherCodesError);
-    const hasCatalogueError = saveErrors.some(isVoucherCatalogueError);
-    const hasCountriesError = saveErrors.some(isVoucherCountriesError);
+    const { section, recovery } = getVoucherSaveFailureFeedback(saveErrors);
 
-    // Prefer the section that owns recovery; codes first (highest-friction identity).
-    if (hasCodesError) {
-      scrollToVoucherSection(voucherSectionIds.codes);
-    } else if (hasCatalogueError) {
-      scrollToVoucherSection(voucherSectionIds.catalogue);
-    } else if (hasCountriesError) {
-      scrollToVoucherSection(voucherSectionIds.countries);
+    if (section) {
+      scrollToVoucherSection(section);
     }
-
-    const recoveryMessage = hasCodesError
-      ? voucherFeedbackMessages.fixCodesAndTryAgain
-      : hasCatalogueError
-        ? voucherFeedbackMessages.fixCatalogueAndTryAgain
-        : hasCountriesError
-          ? voucherFeedbackMessages.fixCountriesAndTryAgain
-          : saveErrors.every(error => error.field === null)
-            ? voucherFeedbackMessages.tryAgain
-            : voucherFeedbackMessages.checkHighlightedFields;
 
     notify({
       status: "error",
@@ -418,7 +398,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           ? voucherFeedbackMessages.someChangesNotSaved
           : voucherFeedbackMessages.couldNotSaveVoucher,
       ),
-      text: intl.formatMessage(recoveryMessage),
+      text: intl.formatMessage(recovery),
       // Inline/section errors own the recovery; toast is a short ack.
       autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
     });

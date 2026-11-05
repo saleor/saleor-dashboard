@@ -5,14 +5,12 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { PAIRED_ERROR_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
-import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
-import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
-import { isVoucherCountriesError } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
 import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
 import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
+import { getVoucherSaveFailureFeedback } from "@dashboard/discounts/voucherSaveFailureFeedback";
 import {
   getFirstVoucherSectionWithError,
   getVoucherLocalErrors,
@@ -108,6 +106,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     voucherCreateOpts.loading || updateChannelsOpts.loading || voucherDeleteOpts.loading;
   // Set from the whole save: voucherCreate alone can succeed while its channel values fail.
   const [saveBarState, setSaveBarState] = useState<ConfirmButtonTransitionState>("default");
+  const [showChannelErrors, setShowChannelErrors] = useState(false);
 
   const {
     productSearchVariables,
@@ -241,39 +240,27 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
 
     return true;
   };
-  const createVoucher = createHandler(
-    variables => voucherCreate({ variables }),
+  const createVoucher = createHandler({
+    createVoucher: variables => voucherCreate({ variables }),
     updateChannels,
-    id => voucherDelete({ variables: { id } }),
-    handleFormValidate,
-  );
+    deleteVoucher: id => voucherDelete({ variables: { id } }),
+    validate: handleFormValidate,
+  });
   const handleSubmit = async (data: FormData) => {
+    // Channel errors only belong to an attempt that got as far as saving channel values.
+    setShowChannelErrors(false);
+
     const result = await createVoucher(data);
 
-    if (!("validationFailed" in result)) {
-      setSaveBarState("errors" in result ? "error" : "success");
-    }
-
-    if ("createdWithoutChannelsId" in result) {
-      // The voucher exists and couldn't be removed again, so continue on it rather than
-      // creating it a second time, which would fail because its codes are taken.
-      notify({
-        status: "error",
-        title: intl.formatMessage(voucherFeedbackMessages.discountValuesNotSaved),
-        text: intl.formatMessage(voucherFeedbackMessages.setDiscountValuesAndSave),
-      });
-      navigate(voucherUrl(result.createdWithoutChannelsId), { replace: true });
-
-      return [];
-    }
-
-    if (result && "validationFailed" in result && result.validationFailed) {
+    if ("validationFailed" in result) {
       // Toast + scroll/modal already handled in handleFormValidate.
       // Return a non-empty error list so the form does not treat submit as success.
       return ["Invalid data"];
     }
 
-    if (result && "id" in result && result.id) {
+    setSaveBarState("errors" in result ? "error" : "success");
+
+    if ("id" in result) {
       notify({
         status: "success",
         title: intl.formatMessage(voucherFeedbackMessages.voucherCreated),
@@ -283,48 +270,35 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
       return [];
     }
 
-    if (result && "errors" in result) {
-      const saveErrors = result.errors;
-      const hasCodesError = saveErrors.some(isVoucherCodesError);
-      const hasCatalogueError = saveErrors.some(isVoucherCatalogueError);
-      const hasCountriesError = saveErrors.some(isVoucherCountriesError);
-
-      if (hasCodesError) {
-        scrollToVoucherSection(voucherSectionIds.codes);
-      } else if (hasCatalogueError) {
-        scrollToVoucherSection(voucherSectionIds.catalogue);
-      } else if (hasCountriesError) {
-        scrollToVoucherSection(voucherSectionIds.countries);
-      }
-
-      const recoveryMessage = hasCodesError
-        ? voucherFeedbackMessages.fixCodesAndTryAgain
-        : hasCatalogueError
-          ? voucherFeedbackMessages.fixCatalogueAndTryAgain
-          : hasCountriesError
-            ? voucherFeedbackMessages.fixCountriesAndTryAgain
-            : saveErrors.every(error => error.field === null)
-              ? voucherFeedbackMessages.tryAgain
-              : voucherFeedbackMessages.checkHighlightedFields;
-
+    if (result.createdWithoutChannelsId) {
+      // The voucher exists and couldn't be removed again, so continue on it rather than
+      // creating it a second time, which would fail because its codes are taken.
       notify({
         status: "error",
-        title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
-        text: intl.formatMessage(recoveryMessage),
-        autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+        title: intl.formatMessage(voucherFeedbackMessages.discountValuesNotSaved),
+        text: intl.formatMessage(voucherFeedbackMessages.addChannelsAndDiscountValues),
       });
+      navigate(voucherUrl(result.createdWithoutChannelsId), { replace: true });
 
-      return result.errors;
+      return [];
+    }
+
+    setShowChannelErrors(result.failedStep === "channels");
+
+    const { section, recovery } = getVoucherSaveFailureFeedback(result.errors);
+
+    if (section) {
+      scrollToVoucherSection(section);
     }
 
     notify({
       status: "error",
       title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
-      text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
+      text: intl.formatMessage(recovery),
       autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
     });
 
-    return ["Could not create voucher"];
+    return result.errors;
   };
 
   return (
@@ -366,7 +340,8 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         disabled={isSaving}
         errors={[
           ...(voucherCreateOpts.data?.voucherCreate.errors || []),
-          ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || []),
+          ...((showChannelErrors && updateChannelsOpts.data?.voucherChannelListingUpdate.errors) ||
+            []),
         ]}
         onSubmit={handleSubmit}
         showRequiredValueErrors={showRequiredValueErrors}

@@ -18,37 +18,80 @@ import {
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 import { joinDateTime } from "@dashboard/misc";
+import { CommonErrorCode } from "@dashboard/utils/errors/common";
 
 type VoucherCreateOutcome =
   | { validationFailed: true }
   | { id: string }
-  | { errors: VoucherSaveError[] }
-  /** Created, but its channel values were rejected and it couldn't be removed again. */
-  | { errors: VoucherSaveError[]; createdWithoutChannelsId: string };
+  | {
+      errors: VoucherSaveError[];
+      /** The request that failed, so the page shows only that attempt's errors. */
+      failedStep: "create" | "channels";
+      /** Set when the voucher was created, its channel values were rejected, and it couldn't be deleted again. */
+      createdWithoutChannelsId?: string;
+    };
+
+const toRequestError = (error: unknown): VoucherSaveError[] => [
+  {
+    field: null,
+    code: CommonErrorCode.GRAPHQL_ERROR,
+    message: error instanceof Error ? error.message : null,
+  },
+];
 
 /**
  * Creates the voucher, then saves its channel values. The API can't take both in one request,
  * so when the channel values are rejected the new voucher is deleted again. Otherwise it would
  * stay live with no discount, and creating it again would fail because its codes are taken.
  */
-export function createHandler(
-  voucherCreate: (
+export function createHandler({
+  createVoucher,
+  updateChannels,
+  deleteVoucher,
+  validate,
+}: {
+  createVoucher: (
     variables: VoucherCreateMutationVariables,
-  ) => Promise<MutationOutcome<VoucherCreateMutation>>,
+  ) => Promise<MutationOutcome<VoucherCreateMutation>>;
   updateChannels: (options: {
     variables: VoucherChannelListingUpdateMutationVariables;
-  }) => Promise<MutationOutcome<VoucherChannelListingUpdateMutation>>,
-  deleteVoucher: (id: string) => Promise<MutationOutcome<VoucherDeleteMutation>>,
-  validateFn: (data: VoucherDetailsPageFormData) => boolean,
-) {
+  }) => Promise<MutationOutcome<VoucherChannelListingUpdateMutation>>;
+  deleteVoucher: (id: string) => Promise<MutationOutcome<VoucherDeleteMutation>>;
+  validate: (data: VoucherDetailsPageFormData) => boolean;
+}) {
+  const saveChannels = async (id: string, data: FormData): Promise<VoucherSaveError[]> => {
+    try {
+      return getVoucherSaveRequestErrors(
+        await updateChannels({
+          variables: getChannelsVariables(id, data, data.channelListings),
+        }),
+        payload => payload.voucherChannelListingUpdate?.errors,
+      );
+    } catch (error) {
+      // Still counts as rejected, so the new voucher is deleted again.
+      return toRequestError(error);
+    }
+  };
+
+  const removeVoucher = async (id: string): Promise<VoucherSaveError[]> => {
+    try {
+      return getVoucherSaveRequestErrors(
+        await deleteVoucher(id),
+        payload => payload.voucherDelete?.errors,
+      );
+    } catch (error) {
+      return toRequestError(error);
+    }
+  };
+
   return async (formData: FormData): Promise<VoucherCreateOutcome> => {
     const data = clearInactiveVoucherDiscountDrafts(formData);
 
-    if (!validateFn(data)) {
+    if (!validate(data)) {
       return { validationFailed: true as const };
     }
 
-    const response = await voucherCreate({
+    const response = await createVoucher({
       input: {
         name: data.name,
         applyOncePerCustomer: data.applyOncePerCustomer,
@@ -82,35 +125,30 @@ export function createHandler(
       response,
       payload => payload.voucherCreate?.errors,
     );
-    const id = response.data?.voucherCreate?.voucher?.id;
 
-    if (createErrors.length > 0 || !id) {
-      return {
-        errors:
-          createErrors.length > 0
-            ? createErrors
-            : getVoucherSaveRequestErrors(response, () => null),
-      };
+    if (createErrors.length > 0) {
+      return { errors: createErrors, failedStep: "create" };
     }
 
-    const channelErrors = getVoucherSaveRequestErrors(
-      await updateChannels({
-        variables: getChannelsVariables(id, data, data.channelListings),
-      }),
-      payload => payload.voucherChannelListingUpdate?.errors,
-    );
+    const id = response.data?.voucherCreate?.voucher?.id;
+
+    if (!id) {
+      // No voucher and no errors: treat it like a failed request.
+      return { errors: toRequestError(null), failedStep: "create" };
+    }
+
+    const channelErrors = await saveChannels(id, data);
 
     if (channelErrors.length === 0) {
       return { id };
     }
 
-    const deleteErrors = getVoucherSaveRequestErrors(
-      await deleteVoucher(id),
-      payload => payload.voucherDelete?.errors,
-    );
+    const deleteErrors = await removeVoucher(id);
 
-    return deleteErrors.length === 0
-      ? { errors: channelErrors }
-      : { errors: channelErrors, createdWithoutChannelsId: id };
+    return {
+      errors: channelErrors,
+      failedStep: "channels",
+      ...(deleteErrors.length > 0 ? { createdWithoutChannelsId: id } : {}),
+    };
   };
 }
