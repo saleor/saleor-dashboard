@@ -500,7 +500,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     },
   );
   const handleSubmit = async formData => {
-    const { errors, saved, savedDetailsChanges } = await updateHandler(formData);
+    const { errors, saved, savedChanges } = await updateHandler(formData);
 
     setSaveBarState(errors.length ? "error" : "success");
 
@@ -538,7 +538,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         refetchCatalogue();
       }
 
-      notifySaveFailed(errors, { partlySaved: savedDetailsChanges });
+      notifySaveFailed(errors, { partlySaved: savedChanges });
     }
 
     return errors;

@@ -2,8 +2,10 @@ import { ApolloError, type FetchResult } from "@apollo/client";
 import { initialForm } from "@dashboard/discounts/components/VoucherCreatePage/const";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { voucherDetails } from "@dashboard/discounts/fixtures";
+import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import {
   DiscountErrorCode,
+  DiscountValueTypeEnum,
   type VoucherCataloguesAddMutation,
   type VoucherCataloguesRemoveMutation,
   type VoucherChannelListingUpdateMutation,
@@ -12,6 +14,7 @@ import {
   type VoucherFragment,
   type VoucherInput,
   type VoucherUpdateMutation,
+  type VoucherUpdateMutationVariables,
 } from "@dashboard/graphql";
 import { GraphQLError } from "graphql";
 
@@ -101,10 +104,16 @@ const setup = ({
   channelsResult?: FetchResult<VoucherChannelListingUpdateMutation>;
   pendingRemovedCodeIds?: string[];
   catalogueDraft?: VoucherCatalogueDraft;
-}): { handler: ReturnType<typeof createUpdateHandler>; calls: string[] } => {
+}): {
+  handler: ReturnType<typeof createUpdateHandler>;
+  calls: string[];
+  updateInputs: VoucherInput[];
+} => {
   const calls: string[] = [];
-  const updateVoucher = jest.fn(async () => {
+  const updateInputs: VoucherInput[] = [];
+  const updateVoucher = jest.fn(async ({ input }: VoucherUpdateMutationVariables) => {
     calls.push("voucherUpdate");
+    updateInputs.push(input);
 
     return voucherUpdateResult;
   });
@@ -159,7 +168,7 @@ const setup = ({
     },
   });
 
-  return { handler, calls };
+  return { handler, calls, updateInputs };
 };
 
 describe("createUpdateHandler", () => {
@@ -183,7 +192,7 @@ describe("createUpdateHandler", () => {
       catalogueAdds: false,
       catalogueRemoves: false,
     });
-    expect(outcome.savedDetailsChanges).toBe(false);
+    expect(outcome.savedChanges).toBe(false);
   });
 
   it("treats a failed voucher update request as a failed save", async () => {
@@ -254,7 +263,7 @@ describe("createUpdateHandler", () => {
       catalogueAdds: false,
       catalogueRemoves: false,
     });
-    expect(outcome.savedDetailsChanges).toBe(true);
+    expect(outcome.savedChanges).toBe(true);
   });
 
   it("doesn't report a partial save when the voucher update changed nothing", async () => {
@@ -281,7 +290,78 @@ describe("createUpdateHandler", () => {
 
     // Assert
     expect(outcome.saved.details).toBe(true);
-    expect(outcome.savedDetailsChanges).toBe(false);
+    expect(outcome.savedChanges).toBe(false);
+  });
+});
+
+describe("createUpdateHandler partial saves", () => {
+  const updatedVoucher: FetchResult<VoucherUpdateMutation> = {
+    data: {
+      __typename: "Mutation",
+      voucherUpdate: { __typename: "VoucherUpdate", errors: [], voucher: voucherDetails },
+    },
+  };
+  const unchangedForm: VoucherDetailsPageFormData = {
+    ...initialForm,
+    name: voucherDetails.name ?? "",
+    discountType: DiscountTypeEnum.VALUE_FIXED,
+    applyOncePerCustomer: voucherDetails.applyOncePerCustomer,
+    applyOncePerOrder: voucherDetails.applyOncePerOrder,
+    onlyForStaff: voucherDetails.onlyForStaff,
+    singleUse: voucherDetails.singleUse,
+  };
+
+  it("puts the saved discount type back when the channel values for the new one are rejected", async () => {
+    // Arrange
+    const { handler, updateInputs } = setup({
+      voucherUpdateResult: updatedVoucher,
+      channelsResult: channelsRejected,
+    });
+
+    // Act
+    const outcome = await handler({
+      ...unchangedForm,
+      discountType: DiscountTypeEnum.VALUE_PERCENTAGE,
+    });
+
+    // Assert
+    expect(updateInputs).toHaveLength(2);
+    expect(updateInputs[0].discountValueType).toBe(DiscountValueTypeEnum.PERCENTAGE);
+    expect(updateInputs[1]).toEqual({
+      discountValueType: voucherDetails.discountValueType,
+      type: voucherDetails.type,
+    });
+    expect(outcome.savedChanges).toBe(false);
+  });
+
+  it("keeps the discount type when it didn't change", async () => {
+    // Arrange
+    const { handler, updateInputs } = setup({
+      voucherUpdateResult: updatedVoucher,
+      channelsResult: channelsRejected,
+    });
+
+    // Act
+    await handler(unchangedForm);
+
+    // Assert
+    expect(updateInputs).toHaveLength(1);
+  });
+
+  it("counts removed codes as a partial save when the channel values are rejected", async () => {
+    // Arrange
+    const { handler } = setup({
+      voucherUpdateResult: updatedVoucher,
+      channelsResult: channelsRejected,
+      pendingRemovedCodeIds: ["code-1"],
+    });
+
+    // Act
+    const outcome = await handler(unchangedForm);
+
+    // Assert
+    expect(outcome.saved.codeRemovals).toBe(true);
+    expect(outcome.savedChanges).toBe(true);
   });
 });
 
@@ -308,7 +388,7 @@ describe("hasSavedVoucherDetailsChanges", () => {
     };
 
     // Act
-    const changed = hasSavedVoucherDetailsChanges(before, unchangedInput, after);
+    const changed = hasSavedVoucherDetailsChanges({ before, input: unchangedInput, after });
 
     // Assert
     expect(changed).toBe(false);
@@ -324,11 +404,27 @@ describe("hasSavedVoucherDetailsChanges", () => {
     };
 
     // Act & Assert
-    expect(hasSavedVoucherDetailsChanges(voucherDetails, unchangedInput, renamed)).toBe(true);
-    expect(hasSavedVoucherDetailsChanges(voucherDetails, unchangedInput, moved)).toBe(true);
-    expect(hasSavedVoucherDetailsChanges(voucherDetails, singleUseInput, voucherDetails)).toBe(
-      true,
-    );
+    expect(
+      hasSavedVoucherDetailsChanges({
+        before: voucherDetails,
+        input: unchangedInput,
+        after: renamed,
+      }),
+    ).toBe(true);
+    expect(
+      hasSavedVoucherDetailsChanges({
+        before: voucherDetails,
+        input: unchangedInput,
+        after: moved,
+      }),
+    ).toBe(true);
+    expect(
+      hasSavedVoucherDetailsChanges({
+        before: voucherDetails,
+        input: singleUseInput,
+        after: voucherDetails,
+      }),
+    ).toBe(true);
   });
 });
 
@@ -359,6 +455,23 @@ describe("getVoucherSaveRequestErrors", () => {
 
     // Assert
     expect(errors).toEqual([{ field: null, code: "GRAPHQL_ERROR", message: "Failed to fetch" }]);
+  });
+
+  it("reads an empty errors array as no request error", () => {
+    // Arrange
+    const result: FetchResult<VoucherChannelListingUpdateMutation> = {
+      ...channelsOk,
+      errors: [],
+    };
+
+    // Act
+    const errors = getVoucherSaveRequestErrors(
+      result,
+      data => data.voucherChannelListingUpdate?.errors,
+    );
+
+    // Assert
+    expect(errors).toEqual([]);
   });
 
   it("counts a request without a payload as failed", () => {

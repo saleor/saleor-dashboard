@@ -51,8 +51,12 @@ interface VoucherSavedParts {
 interface VoucherSaveOutcome {
   errors: VoucherSaveError[];
   saved: VoucherSavedParts;
-  /** `voucherUpdate` went through and changed the voucher, so a failure later is a partial save. */
-  savedDetailsChanges: boolean;
+  /**
+   * Some of the save changed the voucher, so a failure elsewhere is a partial save. Code
+   * removals and catalogue changes count only when they were sent. Channel values don't count,
+   * since every save sends them.
+   */
+  savedChanges: boolean;
 }
 
 interface CreateUpdateHandlerOptions {
@@ -102,8 +106,11 @@ export const getVoucherSaveRequestErrors = <TData>(
   getPayloadErrors: (data: TData) => VoucherSaveError[] | null | undefined,
 ): VoucherSaveError[] => {
   const payloadErrors = result.data ? getPayloadErrors(result.data) : null;
+  // An ApolloError always means a failed request; an errors array only when it isn't empty.
+  const hasRequestErrors =
+    !!result.errors && ("graphQLErrors" in result.errors || result.errors.length > 0);
 
-  if (!result.errors && payloadErrors) {
+  if (!hasRequestErrors && payloadErrors) {
     return payloadErrors;
   }
 
@@ -139,11 +146,15 @@ const getComparableDetails = (
  * Whether `voucherUpdate` changed the voucher. Every save sends all details, so a save that only
  * changed channel values must not be reported as partly saved when the channel step fails.
  */
-export const hasSavedVoucherDetailsChanges = (
-  before: VoucherDetailsFragment,
-  input: VoucherInput,
-  after: VoucherFragment | null | undefined,
-): boolean => {
+export const hasSavedVoucherDetailsChanges = ({
+  before,
+  input,
+  after,
+}: {
+  before: VoucherDetailsFragment;
+  input: VoucherInput;
+  after: VoucherFragment | null | undefined;
+}): boolean => {
   if (!after || (input.addCodes?.length ?? 0) > 0) {
     return true;
   }
@@ -161,6 +172,65 @@ export const hasSavedVoucherDetailsChanges = (
     getComparableDetails(before).some((value, index) => value !== afterDetails[index]) ||
     sentOnlyFields.some(field => input[field] !== before[field])
   );
+};
+
+const getVoucherUpdateInput = (
+  data: VoucherDetailsPageFormData,
+  countryCodes: string[] | null,
+): VoucherInput => ({
+  name: data.name,
+  applyOncePerCustomer: data.applyOncePerCustomer,
+  applyOncePerOrder: data.applyOncePerOrder,
+  onlyForStaff: data.onlyForStaff,
+  discountValueType:
+    data.discountType === DiscountTypeEnum.VALUE_FIXED
+      ? DiscountValueTypeEnum.FIXED
+      : DiscountValueTypeEnum.PERCENTAGE,
+  endDate: data.hasEndDate ? joinDateTime(data.endDate, data.endTime) : null,
+  minCheckoutItemsQuantity:
+    data.requirementsPicker !== RequirementsPicker.ITEM
+      ? 0
+      : parseFloat(data.minCheckoutItemsQuantity),
+  startDate: joinDateTime(data.startDate, data.startTime),
+  type: data.discountType === DiscountTypeEnum.SHIPPING ? VoucherTypeEnum.SHIPPING : data.type,
+  usageLimit: data.hasUsageLimit ? data.usageLimit : null,
+  singleUse: data.singleUse,
+  addCodes: data.codes.map(({ code }) => code),
+  ...(countryCodes !== null ? { countries: countryCodes } : {}),
+});
+
+const hasDiscountTypeChanged = (voucher: VoucherDetailsFragment, input: VoucherInput): boolean =>
+  input.discountValueType !== voucher.discountValueType || input.type !== voucher.type;
+
+const revertDiscountType = async ({
+  voucher,
+  input,
+  updateVoucher,
+}: {
+  voucher: VoucherDetailsFragment;
+  input: VoucherInput;
+  updateVoucher: (
+    variables: VoucherUpdateMutationVariables,
+  ) => Promise<MutationOutcome<VoucherUpdateMutation>>;
+}): Promise<{
+  errors: VoucherSaveError[];
+  savedInput: VoucherInput;
+  savedVoucher: VoucherFragment | null | undefined;
+}> => {
+  const revertInput: VoucherInput = {
+    discountValueType: voucher.discountValueType,
+    type: voucher.type,
+  };
+  const result = await updateVoucher({ id: voucher.id, input: revertInput });
+  const errors = getVoucherSaveRequestErrors(result, response => response.voucherUpdate?.errors);
+
+  return errors.length === 0
+    ? {
+        errors,
+        savedInput: { ...input, ...revertInput },
+        savedVoucher: result.data?.voucherUpdate?.voucher,
+      }
+    : { errors, savedInput: input, savedVoucher: undefined };
 };
 
 /**
@@ -186,7 +256,6 @@ export function createUpdateHandler(
     const draft = options.getCatalogueDraft();
     const addInput = getCatalogueAddInput(draft);
     const removeInput = getCatalogueRemoveInput(draft);
-    const countryCodes = draft.countryCodes;
     const pendingRemovedCodeIds = options.getPendingRemovedCodeIds();
     const saved: VoucherSavedParts = {
       details: false,
@@ -194,29 +263,7 @@ export function createUpdateHandler(
       catalogueAdds: false,
       catalogueRemoves: false,
     };
-    const input: VoucherInput = {
-      name: data.name,
-      applyOncePerCustomer: data.applyOncePerCustomer,
-      applyOncePerOrder: data.applyOncePerOrder,
-      onlyForStaff: data.onlyForStaff,
-      discountValueType:
-        data.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
-          ? DiscountValueTypeEnum.PERCENTAGE
-          : data.discountType === DiscountTypeEnum.VALUE_FIXED
-            ? DiscountValueTypeEnum.FIXED
-            : DiscountValueTypeEnum.PERCENTAGE,
-      endDate: data.hasEndDate ? joinDateTime(data.endDate, data.endTime) : null,
-      minCheckoutItemsQuantity:
-        data.requirementsPicker !== RequirementsPicker.ITEM
-          ? 0
-          : parseFloat(data.minCheckoutItemsQuantity),
-      startDate: joinDateTime(data.startDate, data.startTime),
-      type: data.discountType === DiscountTypeEnum.SHIPPING ? VoucherTypeEnum.SHIPPING : data.type,
-      usageLimit: data.hasUsageLimit ? data.usageLimit : null,
-      singleUse: data.singleUse,
-      addCodes: data.codes.map(({ code }) => code),
-      ...(countryCodes !== null ? { countries: countryCodes } : {}),
-    };
+    const input = getVoucherUpdateInput(data, draft.countryCodes);
 
     const detailsResult = await updateVoucher({ id, input });
     const detailsErrors = getVoucherSaveRequestErrors(
@@ -225,7 +272,7 @@ export function createUpdateHandler(
     );
 
     if (detailsErrors.length > 0) {
-      return { errors: detailsErrors, saved, savedDetailsChanges: false };
+      return { errors: detailsErrors, saved, savedChanges: false };
     }
 
     saved.details = true;
@@ -285,19 +332,33 @@ export function createUpdateHandler(
     saved.catalogueAdds = catalogueAddErrors?.length === 0;
     saved.catalogueRemoves = catalogueRemoveErrors?.length === 0;
 
+    // The channel values for a new discount type were rejected, so the saved amounts would now
+    // apply under it ($50 off becoming 50% off). Put the saved type back.
+    const revert =
+      channelErrors.length > 0 && hasDiscountTypeChanged(voucher, input)
+        ? await revertDiscountType({ voucher, input, updateVoucher })
+        : null;
+    const savedInput = revert?.savedInput ?? input;
+    const savedVoucher = revert ? revert.savedVoucher : detailsResult.data?.voucherUpdate?.voucher;
+
     return {
       errors: [
         ...channelErrors,
         ...(codeRemovalErrors ?? []),
         ...(catalogueAddErrors ?? []),
         ...(catalogueRemoveErrors ?? []),
+        ...(revert?.errors ?? []),
       ],
       saved,
-      savedDetailsChanges: hasSavedVoucherDetailsChanges(
-        voucher,
-        input,
-        detailsResult.data?.voucherUpdate?.voucher,
-      ),
+      savedChanges:
+        hasSavedVoucherDetailsChanges({
+          before: voucher,
+          input: savedInput,
+          after: savedVoucher,
+        }) ||
+        saved.codeRemovals ||
+        saved.catalogueAdds ||
+        saved.catalogueRemoves,
     };
   };
 }
