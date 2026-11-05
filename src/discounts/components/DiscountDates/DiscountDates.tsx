@@ -3,12 +3,18 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
-import { type ChangeEvent, type ReactNode } from "react";
+import { type ChangeEvent, type FocusEvent, type ReactNode } from "react";
 import { type FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./DiscountDates.module.css";
 import { getDefaultEndDateAfterStart } from "./getDefaultEndDateAfterStart";
+import {
+  END_SCHEDULE_DATE_FIELDS,
+  getNextIncompleteScheduleFields,
+  SCHEDULE_DATE_FIELDS,
+  type ScheduleDateField,
+} from "./incompleteScheduleFields";
 
 interface DiscountDatesProps<ErrorCode> {
   data: {
@@ -26,6 +32,10 @@ interface DiscountDatesProps<ErrorCode> {
     startDate?: FieldError;
   };
   errors: Array<CommonError<ErrorCode>>;
+  /** Date and time inputs that are only partly filled in, which report an empty value. */
+  incompleteFields?: readonly ScheduleDateField[];
+  /** Pass to track partly filled inputs, e.g. to block saving them as empty. */
+  onIncompleteFieldsChange?: (fields: ScheduleDateField[]) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   onBlur?: (event: React.FocusEvent<any>) => void;
 }
@@ -36,11 +46,43 @@ const DiscountDatesFields = <ErrorCode,>({
   stacked = false,
   errors,
   formErrors,
+  incompleteFields = [],
+  onIncompleteFieldsChange,
   onChange,
   onBlur,
 }: Omit<DiscountDatesProps<ErrorCode>, "unwrapped">): React.ReactNode => {
   const intl = useIntl();
-  const apiErrors = getFormErrors(["startDate", "endDate"], errors);
+  const apiErrors = getFormErrors([...SCHEDULE_DATE_FIELDS], errors);
+  // A partly filled input always reports an empty value, so one with a value is complete.
+  const isStartDateIncomplete = incompleteFields.includes("startDate") && !data.startDate;
+  // The start hour also shows start date errors, since the API saves both as one value, but not
+  // a partly entered start date, which only the date input can fix.
+  const startHourError =
+    apiErrors.startTime ?? (isStartDateIncomplete ? undefined : apiErrors.startDate);
+
+  const trackIncompleteInput = (target: HTMLInputElement): void => {
+    if (!onIncompleteFieldsChange) {
+      return;
+    }
+
+    const nextIncompleteFields = getNextIncompleteScheduleFields(incompleteFields, target);
+
+    if (nextIncompleteFields) {
+      onIncompleteFieldsChange(nextIncompleteFields);
+    }
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    onChange(event);
+    trackIncompleteInput(event.currentTarget);
+  };
+
+  // Typing into an empty input fires no change event until the value is complete, so
+  // a partly filled input is also caught when it loses focus.
+  const handleInputBlur = (event: FocusEvent<HTMLInputElement>): void => {
+    onBlur?.(event);
+    trackIncompleteInput(event.currentTarget);
+  };
 
   const dateRowClassName = stacked ? styles.dateRowStacked : styles.dateRow;
 
@@ -53,6 +95,13 @@ const DiscountDatesFields = <ErrorCode,>({
         value: enabling,
       },
     } as ChangeEvent<any>);
+
+    // End inputs unmount when turned off and remount empty or seeded when turned back on.
+    if (incompleteFields.some(field => END_SCHEDULE_DATE_FIELDS.includes(field))) {
+      onIncompleteFieldsChange?.(
+        incompleteFields.filter(field => !END_SCHEDULE_DATE_FIELDS.includes(field)),
+      );
+    }
 
     if (!enabling) {
       return;
@@ -97,8 +146,8 @@ const DiscountDatesFields = <ErrorCode,>({
               formErrors?.startDate?.message
             }
             name="startDate"
-            onChange={onChange}
-            onBlur={onBlur}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
             label={intl.formatMessage(commonMessages.startDate)}
             value={data.startDate}
             type="date"
@@ -109,11 +158,11 @@ const DiscountDatesFields = <ErrorCode,>({
           <Input
             data-test-id="start-hour-input"
             disabled={disabled}
-            error={!!apiErrors.startDate}
-            helperText={getCommonFormFieldErrorMessage(apiErrors.startDate, intl)}
+            error={!!startHourError}
+            helperText={getCommonFormFieldErrorMessage(startHourError, intl)}
             name="startTime"
-            onChange={onChange}
-            onBlur={onBlur}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
             label={intl.formatMessage(commonMessages.startHour)}
             value={data.startTime}
             type="time"
@@ -147,8 +196,8 @@ const DiscountDatesFields = <ErrorCode,>({
               error={!!apiErrors.endDate}
               helperText={getCommonFormFieldErrorMessage(apiErrors.endDate, intl)}
               name="endDate"
-              onChange={onChange}
-              onBlur={onBlur}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
               label={intl.formatMessage(commonMessages.endDate)}
               value={data.endDate}
               type="date"
@@ -162,9 +211,11 @@ const DiscountDatesFields = <ErrorCode,>({
               disabled={disabled}
               // API has a single endDate DateTime; empty time defaults to 00:00 in joinDateTime.
               // Do not paint endDate validation onto the hour field — it reads as "hour required".
+              error={!!apiErrors.endTime}
+              helperText={getCommonFormFieldErrorMessage(apiErrors.endTime, intl)}
               name="endTime"
-              onChange={onChange}
-              onBlur={onBlur}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
               label={intl.formatMessage(commonMessages.endHour)}
               value={data.endTime}
               type="time"

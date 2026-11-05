@@ -1,4 +1,5 @@
 import { DiscountDates } from "@dashboard/discounts/components/DiscountDates/DiscountDates";
+import { type ScheduleDateField } from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
 import {
   getVoucherSchedulePhase,
   type VoucherScheduleDateData,
@@ -22,6 +23,8 @@ interface DiscountScheduleCardProps<ErrorCode> {
   formErrors?: {
     startDate?: FieldError;
   };
+  incompleteFields?: readonly ScheduleDateField[];
+  onIncompleteFieldsChange?: (fields: ScheduleDateField[]) => void;
   onChange: (event: ChangeEvent<any>) => void;
   onBlur?: (event: FocusEvent<any>) => void;
   "data-test-id"?: string;
@@ -41,6 +44,8 @@ export const DiscountScheduleCard = <ErrorCode,>({
   disabled,
   loading = false,
   formErrors,
+  incompleteFields,
+  onIncompleteFieldsChange,
   onChange,
   onBlur,
   "data-test-id": dataTestId = "discount-schedule-card",
@@ -98,6 +103,8 @@ export const DiscountScheduleCard = <ErrorCode,>({
             disabled={!!disabled}
             errors={errors}
             formErrors={formErrors}
+            incompleteFields={incompleteFields}
+            onIncompleteFieldsChange={onIncompleteFieldsChange}
             onChange={onChange}
             onBlur={onBlur}
             unwrapped

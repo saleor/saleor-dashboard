@@ -6240,6 +6240,10 @@
     "context": "error with activatation alert message",
     "string": "Error activating gift {count,plural,one{card} other{cards}}"
   },
+  "KdIY/l": {
+    "context": "helper text when a voucher schedule time input is only partly filled in",
+    "string": "Enter a complete time."
+  },
   "KeO51o": {
     "string": "Channel"
   },
@@ -8516,6 +8520,10 @@
   "T1yaeM": {
     "context": "Dialog title when voiding transaction authorization",
     "string": "Void transaction"
+  },
+  "T2NCbZ": {
+    "context": "helper text when a voucher schedule date input is only partly filled in",
+    "string": "Enter a complete date."
   },
   "T3cLGs": {
     "context": "alert link message",

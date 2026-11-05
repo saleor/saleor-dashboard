@@ -334,6 +334,87 @@ describe("getVoucherLocalErrors", () => {
       }),
     ]);
   });
+  it("rejects partly entered schedule dates and times", () => {
+    // Arrange
+    const form: VoucherDetailsPageFormData = {
+      ...validForm,
+      hasEndDate: true,
+      endDate: "",
+      incompleteScheduleFields: ["startTime", "endDate"],
+    };
+
+    // Act
+    const liveErrors = getVoucherLocalErrors(form, intl, { includeRequired: false });
+
+    // Assert
+    expect(liveErrors).toEqual([
+      expect.objectContaining({
+        field: "startTime",
+        code: "INVALID",
+        message: "Enter a complete time.",
+      }),
+      expect.objectContaining({
+        field: "endDate",
+        code: "INVALID",
+        message: "Enter a complete date.",
+      }),
+    ]);
+  });
+
+  it("ignores a partly entered flag on a field that has a value again", () => {
+    // Arrange
+    const form: VoucherDetailsPageFormData = {
+      ...validForm,
+      startDate: "2030-12-31",
+      incompleteScheduleFields: ["startDate"],
+    };
+
+    // Act
+    const errors = getVoucherLocalErrors(form, intl);
+
+    // Assert
+    expect(errors).toEqual([]);
+  });
+
+  it("ignores partly entered end fields while the end date is off", () => {
+    // Arrange
+    const form: VoucherDetailsPageFormData = {
+      ...validForm,
+      hasEndDate: false,
+      endDate: "",
+      incompleteScheduleFields: ["endDate", "endTime"],
+    };
+
+    // Act
+    const errors = getVoucherLocalErrors(form, intl);
+
+    // Assert
+    expect(errors).toEqual([]);
+  });
+
+  it("requires an end date while the end date is on, after the first save attempt", () => {
+    // Arrange
+    const form: VoucherDetailsPageFormData = {
+      ...validForm,
+      hasEndDate: true,
+      endDate: "",
+      endTime: "10:00",
+    };
+
+    // Act
+    const liveErrors = getVoucherLocalErrors(form, intl, { includeRequired: false });
+    const submitErrors = getVoucherLocalErrors(form, intl);
+
+    // Assert
+    expect(liveErrors).toEqual([]);
+    expect(submitErrors).toEqual([
+      expect.objectContaining({
+        field: "endDate",
+        code: "REQUIRED",
+        message: "This field is required",
+      }),
+    ]);
+  });
 });
 
 describe("getFirstVoucherSectionWithError", () => {
