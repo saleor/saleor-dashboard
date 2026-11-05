@@ -175,6 +175,23 @@ describe("voucher list cell helpers", () => {
   });
 });
 
+describe("getVoucherListStatusLabel used-up vouchers", () => {
+  it("marks a running voucher with its usage limit used up", () => {
+    // Arrange
+    const now = new Date("2024-06-01T00:00:00Z");
+
+    // Act
+    const result = getVoucherListStatusLabel({
+      voucher: createVoucher({ usageLimit: 12, used: 12 }),
+      intl,
+      now,
+    });
+
+    // Assert
+    expect(result).toEqual({ status: "neutral", label: "Used up" });
+  });
+});
+
 describe("VoucherListDatagrid createGetCellContent", () => {
   it("renders name with primary/secondary text cell", () => {
     // Arrange

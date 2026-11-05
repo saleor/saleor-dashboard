@@ -13,6 +13,7 @@ import { FormDirtyStateSync } from "@dashboard/components/Form/FormDirtyStateSyn
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
+import { isVoucherUsageLimitReached } from "@dashboard/discounts/voucherStatus";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { type ExtensionWithParams } from "@dashboard/extensions/types";
 import { type DiscountErrorFragment, PermissionEnum } from "@dashboard/graphql";
@@ -466,6 +467,10 @@ export const VoucherDetailsPageFormContent = ({
             disabled={disabled}
             managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
             onManageClick={openChannelsModal}
+            usageLimitReached={isVoucherUsageLimitReached({
+              usageLimit: data.hasUsageLimit ? data.usageLimit : null,
+              used: data.used,
+            })}
             scheduleData={{
               startDate: data.startDate,
               startTime: data.startTime,

@@ -43,4 +43,9 @@ export const voucherDetailsTitleMessages = defineMessages({
     defaultMessage: "Active",
     id: "3a5wL8",
   },
+  statusUsedUp: {
+    defaultMessage: "Used up",
+    description: "voucher status when its usage limit is used up",
+    id: "yL6LN/",
+  },
 });

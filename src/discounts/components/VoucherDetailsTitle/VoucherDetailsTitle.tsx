@@ -1,7 +1,8 @@
 import { ProductAvailabilityStatusLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductAvailabilityStatusLabel";
 import { Pill } from "@dashboard/components/Pill/Pill";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
-import { getPromotionStatus, getRelativePromotionTimeParts } from "@dashboard/discounts/utils";
+import { getRelativePromotionTimeParts } from "@dashboard/discounts/utils";
+import { getVoucherStatus } from "@dashboard/discounts/voucherStatus";
 import { type VoucherDetailsFragment } from "@dashboard/graphql";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -40,29 +41,37 @@ export const VoucherDetailsTitle = ({ voucher, name }: VoucherDetailsTitleProps)
   }
 
   const displayName = name ?? voucher.name ?? "";
-  const promotionStatus = getPromotionStatus({
+  const voucherStatus = getVoucherStatus({
     startDate: voucher.startDate,
     endDate: voucher.endDate,
+    usageLimit: voucher.usageLimit,
+    used: voucher.used,
   });
   const statusLabel = intl.formatMessage(
-    promotionStatus === "scheduled"
+    voucherStatus === "scheduled"
       ? messages.statusScheduled
-      : promotionStatus === "finished"
+      : voucherStatus === "finished"
         ? messages.statusInactive
-        : messages.statusActive,
+        : voucherStatus === "usedUp"
+          ? messages.statusUsedUp
+          : messages.statusActive,
   );
   const statusDot: DotStatus =
-    promotionStatus === "active"
+    voucherStatus === "active"
       ? "success"
-      : promotionStatus === "scheduled"
+      : voucherStatus === "scheduled"
         ? "scheduled"
         : "neutral";
   const typeLabel = getVoucherTypePillLabel(voucher, intl);
-  const timeParts = getRelativePromotionTimeParts({
-    status: promotionStatus,
-    startDate: voucher.startDate,
-    endDate: voucher.endDate,
-  });
+  // A used-up voucher stays unusable whatever its dates, so no "ends in" or "starts in" hint.
+  const timeParts =
+    voucherStatus === "usedUp"
+      ? null
+      : getRelativePromotionTimeParts({
+          status: voucherStatus,
+          startDate: voucher.startDate,
+          endDate: voucher.endDate,
+        });
   const timeHint = timeParts
     ? intl.formatRelativeTime(timeParts.value, timeParts.unit, { numeric: "auto", style: "long" })
     : null;

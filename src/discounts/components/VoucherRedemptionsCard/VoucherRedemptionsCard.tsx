@@ -3,6 +3,7 @@ import {
   getVoucherSchedulePhase,
   type VoucherScheduleDateData,
 } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
+import { isVoucherUsageLimitReached } from "@dashboard/discounts/voucherStatus";
 import useDateLocalize, { type LocalizeDate } from "@dashboard/hooks/useDateLocalize";
 import { joinDateTime } from "@dashboard/misc";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -25,10 +26,12 @@ interface VoucherRedemptionsCardProps {
 
 const formatScheduleStatus = ({
   scheduleData,
+  usageLimitReached,
   localizeDate,
   intl,
 }: {
   scheduleData: VoucherScheduleDateData;
+  usageLimitReached: boolean;
   localizeDate: LocalizeDate;
   intl: IntlShape;
 }): string => {
@@ -37,6 +40,11 @@ const formatScheduleStatus = ({
   const endIso = scheduleData.hasEndDate
     ? joinDateTime(scheduleData.endDate, scheduleData.endTime)
     : null;
+
+  // Matches the voucher status: a used-up limit wins over the schedule until it has ended.
+  if (usageLimitReached && phase !== "ended") {
+    return intl.formatMessage(messages.usageLimitReached);
+  }
 
   if (phase === "scheduled") {
     return intl.formatMessage(messages.redeemableFrom, {
@@ -79,7 +87,12 @@ export const VoucherRedemptionsCard = ({
 
   const resolvedCodesCount = codesCount ?? 0;
   const progress = getVoucherRedemptionsProgress({ used, usageLimit });
-  const scheduleStatus = formatScheduleStatus({ scheduleData, localizeDate, intl });
+  const scheduleStatus = formatScheduleStatus({
+    scheduleData,
+    usageLimitReached: isVoucherUsageLimitReached({ usageLimit, used }),
+    localizeDate,
+    intl,
+  });
 
   return (
     <Box className={styles.card} data-test-id="voucher-redemptions-card">

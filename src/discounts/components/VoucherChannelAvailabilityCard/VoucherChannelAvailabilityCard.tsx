@@ -22,6 +22,8 @@ interface VoucherChannelAvailabilityCardProps {
   onManageClick: () => void;
   /** Used only to derive per-channel Active / Scheduled / Ended status. */
   scheduleData: VoucherScheduleDateData;
+  /** Every use the usage limit allows is taken, so no channel can redeem the voucher. */
+  usageLimitReached?: boolean;
 }
 
 const toChannelSummary = (channel: ChannelVoucherData): ChannelAvailabilitySummary => ({
@@ -37,6 +39,7 @@ export const VoucherChannelAvailabilityCard = ({
   managePermissions,
   onManageClick,
   scheduleData,
+  usageLimitReached = false,
 }: VoucherChannelAvailabilityCardProps): React.ReactNode => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -52,22 +55,30 @@ export const VoucherChannelAvailabilityCard = ({
     : null;
 
   const getChannelStatus = (_channel: ChannelAvailabilitySummary): ChannelAvailabilityStatus => {
-    if (schedulePhase === "scheduled") {
-      return {
-        type: "scheduled",
-        label: intl.formatMessage(messages.statusScheduled),
-        description: intl.formatMessage(messages.statusScheduledDescription, {
-          date: startIso ? localizeDate(startIso, "lll") : "—",
-        }),
-      };
-    }
-
     if (schedulePhase === "ended") {
       return {
         type: "hidden",
         label: intl.formatMessage(messages.statusEnded),
         description: intl.formatMessage(messages.statusEndedDescription, {
           date: endIso ? localizeDate(endIso, "lll") : "—",
+        }),
+      };
+    }
+
+    if (usageLimitReached) {
+      return {
+        type: "hidden",
+        label: intl.formatMessage(messages.statusUsedUp),
+        description: intl.formatMessage(messages.statusUsedUpDescription),
+      };
+    }
+
+    if (schedulePhase === "scheduled") {
+      return {
+        type: "scheduled",
+        label: intl.formatMessage(messages.statusScheduled),
+        description: intl.formatMessage(messages.statusScheduledDescription, {
+          date: startIso ? localizeDate(startIso, "lll") : "—",
         }),
       };
     }
