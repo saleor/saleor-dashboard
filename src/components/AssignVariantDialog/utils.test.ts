@@ -1,5 +1,6 @@
 import { type SearchProductVariantFragment } from "@dashboard/graphql";
 import { type AssignableSearchProduct } from "@dashboard/searches/mapSearchProductsForVariantAssign";
+import { type Container } from "@dashboard/types";
 
 import {
   getCompositeLabel,
@@ -8,6 +9,7 @@ import {
   hasAllVariantsSelected,
   toAssignedVariantContainers,
   type VariantWithProductLabel,
+  withVariantOwnNames,
 } from "./utils";
 
 const createVariant = (id: string): SearchProductVariantFragment => ({
@@ -138,6 +140,37 @@ describe("toAssignedVariantContainers", () => {
 
     // Assert
     expect(container.name).toBe("White Plimsolls: Default");
+    expect(container.variantName).toBe("Default");
     expect(container.id).toBe("Default");
+  });
+});
+
+describe("withVariantOwnNames", () => {
+  it("puts the variant's own name back for lists with a separate product column", () => {
+    // Arrange
+    const variant: VariantWithProductLabel = {
+      ...createVariant("variant-1"),
+      name: "Size M",
+      productName: "Monospace Tee",
+    };
+    const assigned = toAssignedVariantContainers([variant]);
+
+    // Act
+    const [listed] = withVariantOwnNames(assigned);
+
+    // Assert
+    expect(listed.name).toBe("Size M");
+    expect(listed.id).toBe("variant-1");
+  });
+
+  it("keeps items without a variant name as they are", () => {
+    // Arrange
+    const container: Container = { id: "variant-2", name: "Monospace Tee: Size L" };
+
+    // Act
+    const [listed] = withVariantOwnNames([container]);
+
+    // Assert
+    expect(listed).toEqual(container);
   });
 });

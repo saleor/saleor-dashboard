@@ -8,6 +8,7 @@ import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/A
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog/AssignCollectionDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
 import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/AssignVariantDialog";
+import { withVariantOwnNames } from "@dashboard/components/AssignVariantDialog/utils";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { CountryList } from "@dashboard/components/CountryList/CountryList";
 import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
@@ -691,7 +692,7 @@ const VoucherCreatePage = ({
             onClose={closeModal}
             onSubmit={(variants: unknown) => {
               assignToCatalogue(
-                variants as SearchProductVariantFragment[],
+                withVariantOwnNames(variants as SearchProductVariantFragment[]),
                 VoucherCreatePageTab.variants,
               );
             }}

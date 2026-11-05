@@ -9,6 +9,7 @@ import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/A
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog/AssignCollectionDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
 import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/AssignVariantDialog";
+import { withVariantOwnNames } from "@dashboard/components/AssignVariantDialog/utils";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -909,7 +910,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           loading={searchVariantsOpts.loading}
           onClose={closeModal}
           onSubmit={variants => {
-            assignCatalogueItems("variants", variants);
+            assignCatalogueItems("variants", withVariantOwnNames(variants));
             closeModal();
           }}
           products={mapEdgesToItems(searchVariantsOpts?.data?.search)}
