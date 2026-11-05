@@ -25,6 +25,7 @@ export const attributeList = gql`
     $first: Int
     $last: Int
     $sort: AttributeSortingInput
+    $includeStorefrontSettings: Boolean = false
   ) {
     attributes(
       filter: $filter
@@ -36,7 +37,7 @@ export const attributeList = gql`
     ) {
       edges {
         node {
-          ...Attribute
+          ...AttributeListItem
         }
       }
       pageInfo {

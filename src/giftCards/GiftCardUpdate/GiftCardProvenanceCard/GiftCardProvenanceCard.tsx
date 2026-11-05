@@ -1,4 +1,4 @@
-import { useChannelsQuery } from "@dashboard/graphql";
+import { useBaseChannelsQuery } from "@dashboard/graphql";
 import { useMemo } from "react";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
@@ -6,7 +6,7 @@ import { GiftCardProvenanceCardView } from "./GiftCardProvenanceCardView";
 
 export const GiftCardProvenanceCard = (): React.ReactNode => {
   const { giftCard, loading } = useGiftCardDetails();
-  const { data: channelsData } = useChannelsQuery({
+  const { data: channelsData } = useBaseChannelsQuery({
     skip: !giftCard?.boughtInChannel,
   });
 

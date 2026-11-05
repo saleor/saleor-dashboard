@@ -55,7 +55,11 @@ const SiteSettings = () => {
   ] as ShopErrorFragment[];
   const loading = siteSettings.loading || updateOpts.loading;
   const handleUpdateShopSettings = async (data: SiteSettingsPageFormData) => {
-    const addressInput = areAddressInputFieldsModified(data)
+    const isAddressFilled = areAddressInputFieldsModified(data);
+    // Saving an empty form must not create an address: the API rejects one without a country.
+    const updateAddress =
+      isAddressFilled || !!data.companyName || !!siteSettings.data?.shop?.companyAddress;
+    const addressInput = isAddressFilled
       ? {
           city: data.city,
           companyName: data.companyName,
@@ -83,7 +87,7 @@ const SiteSettings = () => {
 
     return extractMutationErrors(
       updateShopSettings({
-        variables: { addressInput, shopSettingsInput },
+        variables: { addressInput, shopSettingsInput, updateAddress },
       }),
     );
   };

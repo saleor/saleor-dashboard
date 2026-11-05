@@ -276,7 +276,7 @@ export const stockVisibilityModeQuery = gql`
  * avoid loading it on every authenticated session.
  */
 export const channelDiagnosticsQuery = gql`
-  query ChannelDiagnostics {
+  query ChannelDiagnostics($includeShippingZones: Boolean!) {
     shop {
       id
       useLegacyShippingZoneStockAvailability
@@ -292,7 +292,7 @@ export const channelDiagnosticsQuery = gql`
         name
       }
     }
-    shippingZones(first: 100) {
+    shippingZones(first: 100) @include(if: $includeShippingZones) {
       edges {
         node {
           id
@@ -386,8 +386,14 @@ export const productDoctorVariantsQuery = gql`
 `;
 
 export const productVariantSiblingsQuery = gql`
-  query ProductVariantSiblings($id: ID!, $first: Int!, $after: String, $search: String) {
-    product(id: $id) {
+  query ProductVariantSiblings(
+    $id: ID!
+    $first: Int!
+    $after: String
+    $search: String
+    $channel: String
+  ) {
+    product(id: $id, channel: $channel) {
       id
       productVariants(first: $first, after: $after, filter: { search: $search }) {
         totalCount

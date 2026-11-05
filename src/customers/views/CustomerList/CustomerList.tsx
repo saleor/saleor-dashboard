@@ -39,6 +39,7 @@ import {
   ALL_CUSTOMERS_TAB_ID,
   type CustomerTypeTabCount,
 } from "../../components/CustomerTypeTabs/CustomerTypeTabs";
+import { useCanListCustomers } from "../../hooks/useCanListCustomers";
 import {
   customerListUrl,
   type CustomerListUrlDialog,
@@ -137,11 +138,13 @@ const CustomerList = ({ params }: CustomerListProps) => {
     [params, settings.rowNumber, where],
   );
 
+  const canListCustomers = useCanListCustomers();
   const { data, refetch } = useListCustomersQuery({
     displayLoader: true,
     variables: newQueryVariables,
+    skip: !canListCustomers,
   });
-  const customers = mapEdgesToItems(data?.customers);
+  const customers = canListCustomers ? mapEdgesToItems(data?.customers) : [];
   const { data: customerTypesData, loading: customerTypesLoading } = useCustomerTypeListQuery({
     fetchPolicy: "cache-and-network",
     variables: {

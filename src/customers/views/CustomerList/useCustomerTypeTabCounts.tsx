@@ -8,6 +8,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { type CustomerTypeTabCount } from "../../components/CustomerTypeTabs/CustomerTypeTabs";
+import { useCanListCustomers } from "../../hooks/useCanListCustomers";
 
 const DEFAULT_TAB_SORT: UserSortingInput = {
   field: UserSortField.LAST_NAME,
@@ -38,7 +39,9 @@ const TabCountFetcher = ({
   onCount,
   tabId,
 }: TabCountFetcherProps): null => {
+  const canListCustomers = useCanListCustomers();
   const { data } = useListCustomersQuery({
+    skip: !canListCustomers,
     fetchPolicy: "cache-first",
     variables: {
       first: pageSize,

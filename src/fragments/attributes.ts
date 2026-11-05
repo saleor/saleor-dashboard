@@ -41,6 +41,22 @@ export const attributeFragment = gql`
   }
 `;
 
+// `visibleInStorefront` and `filterableInStorefront` need the permission that manages the attribute's type, so the
+// list asks for it only when the user can read it for every type it shows.
+export const attributeListItemFragment = gql`
+  fragment AttributeListItem on Attribute {
+    id
+    name
+    slug
+    type
+    visibleInStorefront @include(if: $includeStorefrontSettings)
+    # See the Attribute fragment.
+    filterableInStorefront @lockSchema(schema: "main") @include(if: $includeStorefrontSettings)
+    unit
+    inputType
+  }
+`;
+
 export const attributeAssignedListFragment = gql`
   fragment AttributeAssignedList on Attribute {
     ...Attribute

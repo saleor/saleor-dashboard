@@ -263,7 +263,9 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         },
         // Shipping zones are a separate query — without this, Activate stays
         // disabled after Save even though assigns persisted.
-        refetchQueries: getChannelDetailsRefetchQueries(id),
+        refetchQueries: getChannelDetailsRefetchQueries(id, {
+          includeShippingZones: canLoadShippingZones,
+        }),
         awaitRefetchQueries: true,
       });
 
@@ -493,6 +495,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     createShippingConfirmState,
   } = useChannelSetupActions({
     channelId: id,
+    canLoadShippingZones,
     createWarehouseOpen: params.action === "create-warehouse",
     warehouseIds: channelWarehouses.map(warehouse => warehouse.id),
     onWarehouseCreated: closeModal,

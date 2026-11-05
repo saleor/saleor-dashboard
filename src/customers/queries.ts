@@ -48,6 +48,7 @@ export const customerDetails = gql`
     $id: ID!
     $PERMISSION_MANAGE_ORDERS: Boolean!
     $PERMISSION_MANAGE_STAFF: Boolean!
+    $PERMISSION_MANAGE_USERS: Boolean!
     $kpiChannelId: ID!
     $includeKpiOrderCount: Boolean!
   ) {

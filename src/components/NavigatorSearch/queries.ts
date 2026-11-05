@@ -1,8 +1,17 @@
 import { gql } from "@apollo/client";
 
 export const navigatorSearch = gql`
-  query NavigatorSearch($query: String!) {
-    orders(first: 2, filter: { search: $query }) {
+  query NavigatorSearch(
+    $query: String!
+    $includeOrders: Boolean!
+    $includeCategories: Boolean!
+    $includeCollections: Boolean!
+    $includeProducts: Boolean!
+    $includeVariants: Boolean!
+    $includeModels: Boolean!
+    $includeModelTypes: Boolean!
+  ) {
+    orders(first: 2, filter: { search: $query }) @include(if: $includeOrders) {
       edges {
         node {
           id
@@ -30,7 +39,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    categories(first: 2, filter: { search: $query }) {
+    categories(first: 2, filter: { search: $query }) @include(if: $includeCategories) {
       edges {
         node {
           id
@@ -60,7 +69,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    collections(first: 2, filter: { search: $query }) {
+    collections(first: 2, filter: { search: $query }) @include(if: $includeCollections) {
       edges {
         node {
           id
@@ -76,7 +85,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    products(first: 2, filter: { search: $query }) {
+    products(first: 2, filter: { search: $query }) @include(if: $includeProducts) {
       edges {
         node {
           id
@@ -93,7 +102,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    productVariants(first: 2, filter: { search: $query }) {
+    productVariants(first: 2, filter: { search: $query }) @include(if: $includeVariants) {
       edges {
         node {
           id
@@ -115,7 +124,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    models: pages(first: 2, filter: { search: $query }) {
+    models: pages(first: 2, filter: { search: $query }) @include(if: $includeModels) {
       edges {
         node {
           id
@@ -128,7 +137,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    modelTypes: pageTypes(first: 2, filter: { search: $query }) {
+    modelTypes: pageTypes(first: 2, filter: { search: $query }) @include(if: $includeModelTypes) {
       edges {
         node {
           id

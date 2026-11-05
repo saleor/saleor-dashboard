@@ -1,7 +1,12 @@
 import { gql } from "@apollo/client";
 
 export const updateCustomer = gql`
-  mutation UpdateCustomer($id: ID!, $input: CustomerInput!) {
+  # customerUpdate requires MANAGE_USERS, which CustomerDetails gates its fields on.
+  mutation UpdateCustomer(
+    $id: ID!
+    $input: CustomerInput!
+    $PERMISSION_MANAGE_USERS: Boolean = true
+  ) {
     customerUpdate(id: $id, input: $input) {
       errors {
         ...AccountError

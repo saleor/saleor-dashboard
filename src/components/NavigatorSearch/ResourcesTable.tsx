@@ -3,6 +3,7 @@ import { ListSkeleton } from "@dashboard/search/resultsTable/ListSkeleton";
 import { prepareResults } from "@dashboard/search/resultsTable/prepareResults";
 import { ResultsAsListboxOptionsContext } from "@dashboard/search/resultsTable/ResultsAsListboxOptionsContext";
 import { ResultsTable } from "@dashboard/search/resultsTable/ResultsTable";
+import { useInclusionVariables } from "@dashboard/search/useInclusionVariables";
 
 export const ResourcesTable = ({
   query,
@@ -13,9 +14,11 @@ export const ResourcesTable = ({
   onResourceClick: () => void;
   onResourcesLoaded: () => void;
 }) => {
+  const inclusionVariables = useInclusionVariables("all");
   const { data, loading } = useNavigatorSearchQuery({
     variables: {
       query,
+      ...inclusionVariables,
     },
     onCompleted: onResourcesLoaded,
   });

@@ -45,10 +45,10 @@ export const staffList = gql`
 `;
 
 export const staffMemberDetails = gql`
-  query StaffMemberDetails($id: ID!) {
+  query StaffMemberDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
     user(id: $id) {
       ...StaffMemberDetails
-      orders(first: 1) {
+      orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
         edges {
           node {
             id

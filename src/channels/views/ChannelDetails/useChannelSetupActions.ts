@@ -27,6 +27,8 @@ import { getChannelDetailsRefetchQueries } from "./channelRefetchQueries";
 
 interface UseChannelSetupActionsArgs {
   channelId: string;
+  /** MANAGE_SHIPPING: whether channel shipping zones can be refetched after a change. */
+  canLoadShippingZones: boolean;
   /** The create-warehouse dialog starts with an empty form, so it also starts a new warehouse. */
   createWarehouseOpen: boolean;
   warehouseIds: string[];
@@ -37,6 +39,7 @@ interface UseChannelSetupActionsArgs {
 
 export const useChannelSetupActions = ({
   channelId,
+  canLoadShippingZones,
   createWarehouseOpen,
   warehouseIds,
   onWarehouseCreated,
@@ -118,7 +121,9 @@ export const useChannelSetupActions = ({
               addWarehouses: [warehouseId],
             },
           },
-          refetchQueries: getChannelDetailsRefetchQueries(channelId),
+          refetchQueries: getChannelDetailsRefetchQueries(channelId, {
+            includeShippingZones: canLoadShippingZones,
+          }),
         }),
       );
 
@@ -221,7 +226,9 @@ export const useChannelSetupActions = ({
             ],
           },
         },
-        refetchQueries: getChannelDetailsRefetchQueries(channelId),
+        refetchQueries: getChannelDetailsRefetchQueries(channelId, {
+          includeShippingZones: canLoadShippingZones,
+        }),
       });
       const listingErrors = listingResult.data?.shippingMethodChannelListingUpdate?.errors ?? [];
 
@@ -269,7 +276,9 @@ export const useChannelSetupActions = ({
             addWarehouses: warehouseIdsToAdd,
           },
         },
-        refetchQueries: getChannelDetailsRefetchQueries(channelId),
+        refetchQueries: getChannelDetailsRefetchQueries(channelId, {
+          includeShippingZones: canLoadShippingZones,
+        }),
       }),
     ).catch(() => {
       notifyUnexpectedError();
@@ -321,7 +330,9 @@ export const useChannelSetupActions = ({
             addShippingZones: shippingZoneIdsToAdd,
           },
         },
-        refetchQueries: getChannelDetailsRefetchQueries(channelId),
+        refetchQueries: getChannelDetailsRefetchQueries(channelId, {
+          includeShippingZones: canLoadShippingZones,
+        }),
       }),
     ).catch(() => {
       notifyUnexpectedError();

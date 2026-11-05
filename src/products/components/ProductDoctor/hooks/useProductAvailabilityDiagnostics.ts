@@ -1,6 +1,11 @@
 import { useQuery } from "@apollo/client";
-import { type ChannelDiagnosticsQuery } from "@dashboard/graphql";
+import {
+  type ChannelDiagnosticsQuery,
+  type ChannelDiagnosticsQueryVariables,
+  PermissionEnum,
+} from "@dashboard/graphql";
 import { channelDiagnosticsQuery } from "@dashboard/products/queries";
+import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -31,6 +36,8 @@ export function useProductAvailabilityDiagnostics({
   enabled = true,
 }: UseProductAvailabilityDiagnosticsProps): DiagnosticsResult {
   const intl = useIntl();
+  const hasPermission = useHasPermission();
+  const canManageShipping = hasPermission(PermissionEnum.MANAGE_SHIPPING);
 
   // Get channel IDs where product has any listing (including hidden)
   const channelIds = useMemo(() => {
@@ -47,8 +54,9 @@ export function useProductAvailabilityDiagnostics({
     data: channelData,
     loading,
     error,
-  } = useQuery<ChannelDiagnosticsQuery>(channelDiagnosticsQuery, {
+  } = useQuery<ChannelDiagnosticsQuery, ChannelDiagnosticsQueryVariables>(channelDiagnosticsQuery, {
     skip: !enabled || channelIds.length === 0,
+    variables: { includeShippingZones: canManageShipping },
   });
 
   // Use state to persist permission errors - Apollo may clear the error on subsequent renders
@@ -85,7 +93,7 @@ export function useProductAvailabilityDiagnostics({
     if (!loading && channelData) {
       const canViewChannelWarehouses =
         channelData.channels?.some(c => c.warehouses !== null) ?? false;
-      const canViewShippingZones = channelData.shippingZones !== null;
+      const canViewShippingZones = canManageShipping && channelData.shippingZones !== null;
 
       return {
         canViewChannelWarehouses,
@@ -97,9 +105,9 @@ export function useProductAvailabilityDiagnostics({
     // Return true to avoid showing "Limited" message prematurely
     return {
       canViewChannelWarehouses: true,
-      canViewShippingZones: true,
+      canViewShippingZones: canManageShipping,
     };
-  }, [channelData, loading, detectedPermissionError]);
+  }, [channelData, loading, detectedPermissionError, canManageShipping]);
 
   // Compute issues and summaries
   const result = useMemo((): DiagnosticsResult => {

@@ -18,6 +18,10 @@ jest.mock("../utils/availabilityChecks", () => ({
   runAvailabilityChecks: jest.fn(() => []),
 }));
 
+jest.mock("@dashboard/search/useHasPermission", () => ({
+  useHasPermission: () => () => true,
+}));
+
 const mockUseQuery = useQuery as jest.Mock;
 const mockRunAvailabilityChecks = runAvailabilityChecks as jest.Mock;
 

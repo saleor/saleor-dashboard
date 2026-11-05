@@ -239,6 +239,18 @@ export const InstalledAppDetailsFragmentDoc = gql`
   }
 }
     `;
+export const AttributeListItemFragmentDoc = gql`
+    fragment AttributeListItem on Attribute {
+  id
+  name
+  slug
+  type
+  visibleInStorefront @include(if: $includeStorefrontSettings)
+  filterableInStorefront @lockSchema(schema: "main") @include(if: $includeStorefrontSettings)
+  unit
+  inputType
+}
+    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -817,15 +829,15 @@ export const CustomerDetailsFragmentDoc = gql`
   defaultBillingAddress {
     ...Address
   }
-  note
+  note @include(if: $PERMISSION_MANAGE_USERS)
   isActive
   isConfirmed
   isStaff
   externalReference
-  customerType {
+  customerType @include(if: $PERMISSION_MANAGE_USERS) {
     ...CustomerTypeOnCustomer
   }
-  assignedAttributes(limit: 100) {
+  assignedAttributes(limit: 100) @include(if: $PERMISSION_MANAGE_USERS) {
     ...CustomerAssignedAttribute
   }
 }
@@ -4797,7 +4809,7 @@ export type AttributeDetailsQueryHookResult = ReturnType<typeof useAttributeDeta
 export type AttributeDetailsLazyQueryHookResult = ReturnType<typeof useAttributeDetailsLazyQuery>;
 export type AttributeDetailsQueryResult = Apollo.QueryResult<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>;
 export const AttributeListDocument = gql`
-    query AttributeList($filter: AttributeFilterInput, $before: String, $after: String, $first: Int, $last: Int, $sort: AttributeSortingInput) {
+    query AttributeList($filter: AttributeFilterInput, $before: String, $after: String, $first: Int, $last: Int, $sort: AttributeSortingInput, $includeStorefrontSettings: Boolean = false) {
   attributes(
     filter: $filter
     before: $before
@@ -4808,7 +4820,7 @@ export const AttributeListDocument = gql`
   ) {
     edges {
       node {
-        ...Attribute
+        ...AttributeListItem
       }
     }
     pageInfo {
@@ -4816,7 +4828,7 @@ export const AttributeListDocument = gql`
     }
   }
 }
-    ${AttributeFragmentDoc}
+    ${AttributeListItemFragmentDoc}
 ${PageInfoFragmentDoc}`;
 
 /**
@@ -4837,6 +4849,7 @@ ${PageInfoFragmentDoc}`;
  *      first: // value for 'first'
  *      last: // value for 'last'
  *      sort: // value for 'sort'
+ *      includeStorefrontSettings: // value for 'includeStorefrontSettings'
  *   },
  * });
  */
@@ -8603,8 +8616,8 @@ export type ChannelListQueryHookResult = ReturnType<typeof useChannelListQuery>;
 export type ChannelListLazyQueryHookResult = ReturnType<typeof useChannelListLazyQuery>;
 export type ChannelListQueryResult = Apollo.QueryResult<Types.ChannelListQuery, Types.ChannelListQueryVariables>;
 export const NavigatorSearchDocument = gql`
-    query NavigatorSearch($query: String!) {
-  orders(first: 2, filter: {search: $query}) {
+    query NavigatorSearch($query: String!, $includeOrders: Boolean!, $includeCategories: Boolean!, $includeCollections: Boolean!, $includeProducts: Boolean!, $includeVariants: Boolean!, $includeModels: Boolean!, $includeModelTypes: Boolean!) {
+  orders(first: 2, filter: {search: $query}) @include(if: $includeOrders) {
     edges {
       node {
         id
@@ -8631,7 +8644,7 @@ export const NavigatorSearchDocument = gql`
       }
     }
   }
-  categories(first: 2, filter: {search: $query}) {
+  categories(first: 2, filter: {search: $query}) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -8660,7 +8673,7 @@ export const NavigatorSearchDocument = gql`
       }
     }
   }
-  collections(first: 2, filter: {search: $query}) {
+  collections(first: 2, filter: {search: $query}) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -8675,7 +8688,7 @@ export const NavigatorSearchDocument = gql`
       }
     }
   }
-  products(first: 2, filter: {search: $query}) {
+  products(first: 2, filter: {search: $query}) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -8691,7 +8704,7 @@ export const NavigatorSearchDocument = gql`
       }
     }
   }
-  productVariants(first: 2, filter: {search: $query}) {
+  productVariants(first: 2, filter: {search: $query}) @include(if: $includeVariants) {
     edges {
       node {
         id
@@ -8712,7 +8725,7 @@ export const NavigatorSearchDocument = gql`
       }
     }
   }
-  models: pages(first: 2, filter: {search: $query}) {
+  models: pages(first: 2, filter: {search: $query}) @include(if: $includeModels) {
     edges {
       node {
         id
@@ -8724,7 +8737,7 @@ export const NavigatorSearchDocument = gql`
       }
     }
   }
-  modelTypes: pageTypes(first: 2, filter: {search: $query}) {
+  modelTypes: pageTypes(first: 2, filter: {search: $query}) @include(if: $includeModelTypes) {
     edges {
       node {
         id
@@ -8748,6 +8761,13 @@ export const NavigatorSearchDocument = gql`
  * const { data, loading, error } = useNavigatorSearchQuery({
  *   variables: {
  *      query: // value for 'query'
+ *      includeOrders: // value for 'includeOrders'
+ *      includeCategories: // value for 'includeCategories'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeModels: // value for 'includeModels'
+ *      includeModelTypes: // value for 'includeModelTypes'
  *   },
  * });
  */
@@ -9336,7 +9356,7 @@ export type CustomerTypeAssignedCustomersCountQueryHookResult = ReturnType<typeo
 export type CustomerTypeAssignedCustomersCountLazyQueryHookResult = ReturnType<typeof useCustomerTypeAssignedCustomersCountLazyQuery>;
 export type CustomerTypeAssignedCustomersCountQueryResult = Apollo.QueryResult<Types.CustomerTypeAssignedCustomersCountQuery, Types.CustomerTypeAssignedCustomersCountQueryVariables>;
 export const UpdateCustomerDocument = gql`
-    mutation UpdateCustomer($id: ID!, $input: CustomerInput!) {
+    mutation UpdateCustomer($id: ID!, $input: CustomerInput!, $PERMISSION_MANAGE_USERS: Boolean = true) {
   customerUpdate(id: $id, input: $input) {
     errors {
       ...AccountError
@@ -9365,6 +9385,7 @@ export type UpdateCustomerMutationFn = Apollo.MutationFunction<Types.UpdateCusto
  *   variables: {
  *      id: // value for 'id'
  *      input: // value for 'input'
+ *      PERMISSION_MANAGE_USERS: // value for 'PERMISSION_MANAGE_USERS'
  *   },
  * });
  */
@@ -9716,7 +9737,7 @@ export type ListCustomersQueryHookResult = ReturnType<typeof useListCustomersQue
 export type ListCustomersLazyQueryHookResult = ReturnType<typeof useListCustomersLazyQuery>;
 export type ListCustomersQueryResult = Apollo.QueryResult<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>;
 export const CustomerDetailsDocument = gql`
-    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!, $kpiChannelId: ID!, $includeKpiOrderCount: Boolean!) {
+    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!, $PERMISSION_MANAGE_USERS: Boolean!, $kpiChannelId: ID!, $includeKpiOrderCount: Boolean!) {
   user(id: $id) {
     ...CustomerDetails
     metadata {
@@ -9823,6 +9844,7 @@ ${MetadataItemFragmentDoc}`;
  *      id: // value for 'id'
  *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
  *      PERMISSION_MANAGE_STAFF: // value for 'PERMISSION_MANAGE_STAFF'
+ *      PERMISSION_MANAGE_USERS: // value for 'PERMISSION_MANAGE_USERS'
  *      kpiChannelId: // value for 'kpiChannelId'
  *      includeKpiOrderCount: // value for 'includeKpiOrderCount'
  *   },
@@ -16578,10 +16600,11 @@ export type OrderFulfillDataQueryResult = Apollo.QueryResult<Types.OrderFulfillD
 export const OrderFulfillSettingsDocument = gql`
     query OrderFulfillSettings {
   shop {
-    ...ShopOrderSettings
+    fulfillmentAutoApprove
+    fulfillmentAllowUnpaid
   }
 }
-    ${ShopOrderSettingsFragmentDoc}`;
+    `;
 
 /**
  * __useOrderFulfillSettingsQuery__
@@ -19038,7 +19061,7 @@ export type StockVisibilityModeQueryHookResult = ReturnType<typeof useStockVisib
 export type StockVisibilityModeLazyQueryHookResult = ReturnType<typeof useStockVisibilityModeLazyQuery>;
 export type StockVisibilityModeQueryResult = Apollo.QueryResult<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>;
 export const ChannelDiagnosticsDocument = gql`
-    query ChannelDiagnostics {
+    query ChannelDiagnostics($includeShippingZones: Boolean!) {
   shop {
     id
     useLegacyShippingZoneStockAvailability
@@ -19054,7 +19077,7 @@ export const ChannelDiagnosticsDocument = gql`
       name
     }
   }
-  shippingZones(first: 100) {
+  shippingZones(first: 100) @include(if: $includeShippingZones) {
     edges {
       node {
         id
@@ -19088,10 +19111,11 @@ export const ChannelDiagnosticsDocument = gql`
  * @example
  * const { data, loading, error } = useChannelDiagnosticsQuery({
  *   variables: {
+ *      includeShippingZones: // value for 'includeShippingZones'
  *   },
  * });
  */
-export function useChannelDiagnosticsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>) {
+export function useChannelDiagnosticsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>(ChannelDiagnosticsDocument, options);
       }
@@ -19227,8 +19251,8 @@ export type ProductDoctorVariantsQueryHookResult = ReturnType<typeof useProductD
 export type ProductDoctorVariantsLazyQueryHookResult = ReturnType<typeof useProductDoctorVariantsLazyQuery>;
 export type ProductDoctorVariantsQueryResult = Apollo.QueryResult<Types.ProductDoctorVariantsQuery, Types.ProductDoctorVariantsQueryVariables>;
 export const ProductVariantSiblingsDocument = gql`
-    query ProductVariantSiblings($id: ID!, $first: Int!, $after: String, $search: String) {
-  product(id: $id) {
+    query ProductVariantSiblings($id: ID!, $first: Int!, $after: String, $search: String, $channel: String) {
+  product(id: $id, channel: $channel) {
     id
     productVariants(first: $first, after: $after, filter: {search: $search}) {
       totalCount
@@ -19263,6 +19287,7 @@ export const ProductVariantSiblingsDocument = gql`
  *      first: // value for 'first'
  *      after: // value for 'after'
  *      search: // value for 'search'
+ *      channel: // value for 'channel'
  *   },
  * });
  */
@@ -21883,7 +21908,7 @@ export type ShippingZonesCountQueryHookResult = ReturnType<typeof useShippingZon
 export type ShippingZonesCountLazyQueryHookResult = ReturnType<typeof useShippingZonesCountLazyQuery>;
 export type ShippingZonesCountQueryResult = Apollo.QueryResult<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>;
 export const ShopSettingsUpdateDocument = gql`
-    mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput) {
+    mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput, $updateAddress: Boolean!) {
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
       ...ShopError
@@ -21892,7 +21917,7 @@ export const ShopSettingsUpdateDocument = gql`
       ...Shop
     }
   }
-  shopAddressUpdate(input: $addressInput) {
+  shopAddressUpdate(input: $addressInput) @include(if: $updateAddress) {
     errors {
       ...ShopError
     }
@@ -21923,6 +21948,7 @@ export type ShopSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ShopSet
  *   variables: {
  *      shopSettingsInput: // value for 'shopSettingsInput'
  *      addressInput: // value for 'addressInput'
+ *      updateAddress: // value for 'updateAddress'
  *   },
  * });
  */
@@ -22309,10 +22335,10 @@ export type StaffListQueryHookResult = ReturnType<typeof useStaffListQuery>;
 export type StaffListLazyQueryHookResult = ReturnType<typeof useStaffListLazyQuery>;
 export type StaffListQueryResult = Apollo.QueryResult<Types.StaffListQuery, Types.StaffListQueryVariables>;
 export const StaffMemberDetailsDocument = gql`
-    query StaffMemberDetails($id: ID!) {
+    query StaffMemberDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
   user(id: $id) {
     ...StaffMemberDetails
-    orders(first: 1) {
+    orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
           id
@@ -22336,6 +22362,7 @@ export const StaffMemberDetailsDocument = gql`
  * const { data, loading, error } = useStaffMemberDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
  *   },
  * });
  */
@@ -22638,8 +22665,8 @@ export type MenuListQueryHookResult = ReturnType<typeof useMenuListQuery>;
 export type MenuListLazyQueryHookResult = ReturnType<typeof useMenuListLazyQuery>;
 export type MenuListQueryResult = Apollo.QueryResult<Types.MenuListQuery, Types.MenuListQueryVariables>;
 export const MenuDetailsDocument = gql`
-    query MenuDetails($id: ID!) {
-  menu(id: $id) {
+    query MenuDetails($id: ID!, $channel: String) {
+  menu(id: $id, channel: $channel) {
     ...MenuDetails
   }
 }
@@ -22658,6 +22685,7 @@ export const MenuDetailsDocument = gql`
  * const { data, loading, error } = useMenuDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      channel: // value for 'channel'
  *   },
  * });
  */
