@@ -16,7 +16,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { getMutationErrors } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -124,6 +127,12 @@ const CategoryList = ({ params }: CategoryListProps): React.ReactNode => {
     variables: queryVariables,
   });
   const categories = mapEdgesToItems(data?.categories) ?? [];
+
+  useClearRowSelectionOnRowsChange({
+    rows: mapEdgesToItems(data?.categories),
+    clearRowSelection,
+  });
+
   const paginationValues = usePaginator({
     pageInfo: data?.categories?.pageInfo,
     paginationState,

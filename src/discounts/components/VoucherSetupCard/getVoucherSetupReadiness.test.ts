@@ -1,3 +1,10 @@
+import { type VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
+import { generateDraftVoucherCode } from "@dashboard/discounts/components/VoucherCreatePage/utils";
+import {
+  type VoucherDetailsPageFormData,
+  type VoucherDetailsPageVoucher,
+} from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
+import { voucherDetails } from "@dashboard/discounts/fixtures";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { VoucherTypeEnum } from "@dashboard/graphql";
 
@@ -165,5 +172,67 @@ describe("getVoucherSetupReadiness", () => {
     // Assert
     expect(readiness.hasDiscountValue).toBe(false);
     expect(readiness.coreReady).toBe(false);
+  });
+
+  describe("codes count", () => {
+    const draftCode: VoucherCode = generateDraftVoucherCode("SUMMER10");
+    const formWithDraft: Pick<
+      VoucherDetailsPageFormData,
+      "discountType" | "type" | "percentageDiscountValue" | "channelListings" | "codes"
+    > = { ...baseForm, codes: [draftCode] };
+    const voucherWithoutCodes: VoucherDetailsPageVoucher = {
+      ...voucherDetails,
+      codesCount: { __typename: "VoucherCodeCountableConnection", totalCount: 0 },
+    };
+
+    it("counts a code added on Create voucher once", () => {
+      // Arrange
+      // Create voucher lists the same draft codes it keeps in the form.
+      const listedCodes = formWithDraft.codes;
+
+      // Act
+      const readiness = getVoucherSetupReadiness({
+        voucher: null,
+        formData: formWithDraft,
+        voucherCodes: listedCodes,
+        tabItemsCount: {},
+      });
+
+      // Assert
+      expect(readiness.codesCount).toBe(1);
+    });
+
+    it("counts a draft code once on a saved voucher without codes", () => {
+      // Arrange
+      const listedCodes: VoucherCode[] = [draftCode];
+
+      // Act
+      const readiness = getVoucherSetupReadiness({
+        voucher: voucherWithoutCodes,
+        formData: formWithDraft,
+        voucherCodes: listedCodes,
+        tabItemsCount: {},
+      });
+
+      // Assert
+      expect(readiness.codesCount).toBe(1);
+    });
+
+    it("adds listed saved codes to the drafts when the saved total isn't updated yet", () => {
+      // Arrange
+      const savedCode: VoucherCode = { id: "code-1", code: "SPRING5", used: 0 };
+      const listedCodes: VoucherCode[] = [draftCode, savedCode];
+
+      // Act
+      const readiness = getVoucherSetupReadiness({
+        voucher: voucherWithoutCodes,
+        formData: formWithDraft,
+        voucherCodes: listedCodes,
+        tabItemsCount: {},
+      });
+
+      // Assert
+      expect(readiness.codesCount).toBe(2);
+    });
   });
 });

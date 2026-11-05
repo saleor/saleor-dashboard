@@ -76,14 +76,16 @@ export const getVoucherSetupReadiness = ({
   countriesCount: countriesCountInput,
 }: VoucherSetupReadinessInput): VoucherSetupReadiness => {
   const savedCodesCount = voucher?.codesCount?.totalCount ?? 0;
-  const listedCodesCount = voucherCodes.length;
+  // Listed codes include the drafts, which `formData.codes` already counts, so take only
+  // the saved ones from the list.
+  const listedSavedCodesCount = voucherCodes.filter(code => code.id).length;
   const draftCodesCount = formData.codes.length;
-  // Prefer the server total when present; otherwise fall back to listed / draft codes.
+  // Prefer the server total when present; otherwise fall back to the listed saved codes.
   // Pending removals are already excluded from `voucherCodes` but not from the server total.
   const codesCount =
     savedCodesCount > 0
       ? Math.max(0, savedCodesCount - pendingRemovedCodesCount) + draftCodesCount
-      : listedCodesCount + draftCodesCount;
+      : listedSavedCodesCount + draftCodesCount;
   const hasCodes = codesCount > 0 || draftCodesCount > 0;
 
   const channelListings = formData.channelListings;

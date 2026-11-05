@@ -42,7 +42,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { commonMessages } from "@dashboard/intl";
 import { CreateProductDialog } from "@dashboard/products/components/CreateProductDialog/CreateProductDialog";
 import { messages as createProductMessages } from "@dashboard/products/components/CreateProductDialog/messages";
@@ -262,6 +265,9 @@ const ProductList = ({ params }: ProductListProps) => {
     skip: valueProvider.loading,
   });
   const products = mapEdgesToItems(data?.products);
+
+  useClearRowSelectionOnRowsChange({ rows: products, clearRowSelection });
+
   const handleSetSelectedProductIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!products) {

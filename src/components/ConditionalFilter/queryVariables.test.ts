@@ -478,7 +478,7 @@ describe("ConditionalFilter / queryVariables / createVoucherQueryVariables", () 
     const expectedChannel = "channel-1";
     const expectedOutput = {
       discountType: ["discount-1", "discount-2"],
-      started: { lte: "2025-02-15T16:24", gte: "2025-01-31T16:24" },
+      started: { lte: "2025-02-15T16:24:00.000Z", gte: "2025-01-31T16:24:00.000Z" },
       timesUsed: { gte: 10, lte: 10 },
       status: ["status-1"],
     };
@@ -489,6 +489,68 @@ describe("ConditionalFilter / queryVariables / createVoucherQueryVariables", () 
     expect(result).toEqual({
       filters: expectedOutput,
       channel: expectedChannel,
+    });
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createVoucherQueryVariables / started", () => {
+  const createStartedFilter = (
+    value: string | [string, string],
+    label: "lower" | "greater" | "between",
+  ): FilterContainer => [
+    new FilterElement(
+      new ExpressionValue("started", "Started", "started"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("started"),
+        new ConditionSelected(
+          value,
+          {
+            type: label === "between" ? "datetime.range" : "datetime",
+            label,
+            value: "input-1",
+          },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    ),
+  ];
+
+  // Jest runs in UTC, so the local times below read the same as their UTC values.
+  it("sends a Started time as an absolute time instead of a bare local one", () => {
+    // Arrange
+    const filters = createStartedFilter("2025-01-31T16:24", "greater");
+
+    // Act
+    const { filters: variables } = createVoucherQueryVariables(filters);
+
+    // Assert
+    expect(variables).toEqual({ started: { gte: "2025-01-31T16:24:00.000Z" } });
+  });
+
+  it("filters by the set bound when a Started range is half filled", () => {
+    // Arrange
+    const filters = createStartedFilter(["2025-01-31T16:24", ""], "between");
+
+    // Act
+    const { filters: variables } = createVoucherQueryVariables(filters);
+
+    // Assert
+    expect(variables).toEqual({ started: { gte: "2025-01-31T16:24:00.000Z" } });
+  });
+
+  it("filters by both bounds when a Started range is complete", () => {
+    // Arrange
+    const filters = createStartedFilter(["2025-01-31T16:24", "2025-02-15T08:00"], "between");
+
+    // Act
+    const { filters: variables } = createVoucherQueryVariables(filters);
+
+    // Assert
+    expect(variables).toEqual({
+      started: { gte: "2025-01-31T16:24:00.000Z", lte: "2025-02-15T08:00:00.000Z" },
     });
   });
 });

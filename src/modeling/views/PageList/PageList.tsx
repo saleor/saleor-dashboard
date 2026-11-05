@@ -20,7 +20,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerDialog/PageTypePickerDialog";
 import { CreateModelTypeDialog } from "@dashboard/modelTypes/components/CreateModelTypeDialog/CreateModelTypeDialog";
 import { useCreateModelType } from "@dashboard/modelTypes/hooks/useCreateModelType";
@@ -158,6 +161,8 @@ const PageList = ({ params }: PageListProps) => {
     variables: activeQueryVariables,
   });
   const pages = mapEdgesToItems(data?.pages);
+
+  useClearRowSelectionOnRowsChange({ rows: pages, clearRowSelection });
 
   const { data: pageTypesData, loading: pageTypesLoading } = usePageTypeListQuery({
     fetchPolicy: "cache-and-network",

@@ -20,7 +20,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { sectionNames } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
@@ -142,6 +145,9 @@ const CustomerList = ({ params }: CustomerListProps) => {
     variables: newQueryVariables,
   });
   const customers = mapEdgesToItems(data?.customers);
+
+  useClearRowSelectionOnRowsChange({ rows: customers, clearRowSelection });
+
   const { data: customerTypesData, loading: customerTypesLoading } = useCustomerTypeListQuery({
     fetchPolicy: "cache-and-network",
     variables: {

@@ -22,6 +22,8 @@ interface UseChannelsOpts extends WithFormId {
    * Use for page forms that compute dirty state from a diff against saved data.
    */
   deferDirtyOnConfirm?: boolean;
+  /** Change it to replace the current channels with `channels`, dropping unsaved drafts. */
+  resetKey?: string | number;
 }
 
 function useChannels<T extends Channel, A>(
@@ -30,12 +32,14 @@ function useChannels<T extends Channel, A>(
   { closeModal, openModal }: Modal,
   opts: UseChannelsOpts,
 ) {
-  const { formId, deferDirtyOnConfirm = false } = opts;
+  const { formId, deferDirtyOnConfirm = false, resetKey } = opts;
   const { setIsDirty } = useExitFormDialog({
     formId,
   });
   const normalizedChannels = channels ?? [];
-  const [currentChannels, setCurrentChannels] = useStateFromProps(normalizedChannels);
+  const [currentChannels, setCurrentChannels] = useStateFromProps(normalizedChannels, {
+    resetKey,
+  });
   const {
     isSelected: isChannelSelected,
     listElements: channelListElements,

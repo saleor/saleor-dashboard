@@ -1,3 +1,4 @@
+import { STATIC_VOUCHER_OPTIONS } from "../constants";
 import { type LeftOperand } from "../LeftOperandsProvider";
 import { Condition } from "./Condition";
 import { ExpressionValue, type FilterContainer, FilterElement } from "./FilterElement";
@@ -183,4 +184,29 @@ describe("OccurrenceLimiter", () => {
       expect(collectionResult).toEqual([collectionMetadata]);
     });
   });
+});
+
+describe("voucher filter fields", () => {
+  const makeRow = (field: string): FilterElement =>
+    new FilterElement(new ExpressionValue(field, field, field), Condition.createEmpty(), false);
+
+  // The voucher filter API takes one value per field, so a second row would silently
+  // replace the first one.
+  it.each(STATIC_VOUCHER_OPTIONS.map(({ value }) => value))(
+    "stops offering %s once the filter has a row for it",
+    field => {
+      // Arrange
+      const container: FilterContainer = [makeRow(field)];
+
+      // Act
+      const offered = OccurrenceLimiter.filterAvailableOperands(
+        STATIC_VOUCHER_OPTIONS,
+        container,
+      ).map(({ value }) => value);
+
+      // Assert
+      expect(offered).not.toContain(field);
+      expect(offered).toHaveLength(STATIC_VOUCHER_OPTIONS.length - 1);
+    },
+  );
 });

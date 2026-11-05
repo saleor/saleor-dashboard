@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 
-import { useRowSelection } from "./useRowSelection";
+import { useClearRowSelectionOnRowsChange, useRowSelection } from "./useRowSelection";
 
 describe("useRowSelection", () => {
   it("should set selected rows with setSelectedRows", () => {
@@ -53,43 +53,88 @@ describe("useRowSelection", () => {
     expect(clearCallback).toHaveBeenCalledTimes(1);
     expect(result.current.selectedRowIds).toEqual([]);
   });
+});
 
-  it("clears the selection when the reset key changes", () => {
-    // Arrange
-    const clearCallback = jest.fn();
-    const { result, rerender } = renderHook(
-      ({ resetKey }: { resetKey: string }) => useRowSelection(undefined, { resetKey }),
-      { initialProps: { resetKey: "voucher-1,voucher-2" } },
+describe("useClearRowSelectionOnRowsChange", () => {
+  type Row = { id: string };
+  type Rows = Row[] | undefined;
+
+  const renderListSelection = (initialRows: Rows) =>
+    renderHook(
+      ({ rows }: { rows: Rows }) => {
+        const selection = useRowSelection();
+
+        useClearRowSelectionOnRowsChange({ rows, clearRowSelection: selection.clearRowSelection });
+
+        return selection;
+      },
+      { initialProps: { rows: initialRows } },
     );
+  const shownRows: Row[] = [{ id: "product-1" }, { id: "product-2" }];
+
+  it("clears the selection when the rows shown are reordered", () => {
+    // Arrange
+    const { result, rerender } = renderListSelection(shownRows);
+    const clearDatagridSelection = jest.fn();
 
     act(() => {
-      result.current.setSelectedRows(["voucher-1"]);
-      result.current.setClearDatagridRowSelectionCallback(clearCallback);
+      result.current.setSelectedRows(["product-1"]);
+      result.current.setClearDatagridRowSelectionCallback(clearDatagridSelection);
     });
 
     // Act
-    rerender({ resetKey: "voucher-3,voucher-1" });
+    rerender({ rows: [{ id: "product-2" }, { id: "product-1" }] });
 
     // Assert
-    expect(clearCallback).toHaveBeenCalledTimes(1);
     expect(result.current.selectedRowIds).toEqual([]);
+    expect(clearDatagridSelection).toHaveBeenCalledTimes(1);
   });
 
-  it("keeps the selection while the reset key stays the same", () => {
+  it("keeps the selection when a refetch returns the same rows", () => {
     // Arrange
-    const { result, rerender } = renderHook(
-      ({ resetKey }: { resetKey: string }) => useRowSelection(undefined, { resetKey }),
-      { initialProps: { resetKey: "voucher-1,voucher-2" } },
-    );
+    const { result, rerender } = renderListSelection(shownRows);
 
     act(() => {
-      result.current.setSelectedRows(["voucher-1"]);
+      result.current.setSelectedRows(["product-1"]);
     });
 
     // Act
-    rerender({ resetKey: "voucher-1,voucher-2" });
+    rerender({ rows: [{ id: "product-1" }, { id: "product-2" }] });
 
     // Assert
-    expect(result.current.selectedRowIds).toEqual(["voucher-1"]);
+    expect(result.current.selectedRowIds).toEqual(["product-1"]);
+  });
+
+  it("keeps the selection while the query has no data and the same rows come back", () => {
+    // Arrange
+    const { result, rerender } = renderListSelection(shownRows);
+
+    act(() => {
+      result.current.setSelectedRows(["product-1"]);
+    });
+
+    // Act
+    // e.g. the list query is skipped while a dialog reloads the filters
+    rerender({ rows: undefined });
+    rerender({ rows: [{ id: "product-1" }, { id: "product-2" }] });
+
+    // Assert
+    expect(result.current.selectedRowIds).toEqual(["product-1"]);
+  });
+
+  it("clears the selection when other rows come back after a gap without data", () => {
+    // Arrange
+    const { result, rerender } = renderListSelection(shownRows);
+
+    act(() => {
+      result.current.setSelectedRows(["product-1"]);
+    });
+
+    // Act
+    rerender({ rows: undefined });
+    rerender({ rows: [{ id: "product-3" }] });
+
+    // Assert
+    expect(result.current.selectedRowIds).toEqual([]);
   });
 });

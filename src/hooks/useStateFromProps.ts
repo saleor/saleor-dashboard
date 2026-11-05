@@ -3,6 +3,11 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
 interface UseStateFromPropsOpts<T> {
   mergeFunc?: (prevData: T, state: T, newData: T) => T;
+  /**
+   * Change it to replace the state with `data` as is, even when `data` didn't change,
+   * e.g. after a save, to drop drafts the server didn't keep.
+   */
+  resetKey?: string | number;
 }
 /**
  * useState, but resets state whenever `data` changes by *value*.
@@ -19,18 +24,32 @@ function useStateFromProps<T>(
 ): [T, Dispatch<SetStateAction<T>>] {
   const [state, setState] = useState(data);
   const [prevData, setPrevData] = useState(data);
-  const { mergeFunc } = opts;
+  const { mergeFunc, resetKey } = opts;
+  const [prevResetKey, setPrevResetKey] = useState(resetKey);
 
-  useEffect(() => {
-    const shouldUpdate = !isEqual(prevData, data);
+  // One effect for both cases, so a reset and a data change in the same render can't
+  // overwrite each other.
+  useEffect(
+    function syncStateWithProps() {
+      if (resetKey !== prevResetKey) {
+        setState(data);
+        setPrevData(data);
+        setPrevResetKey(resetKey);
 
-    if (shouldUpdate) {
-      const newData = typeof mergeFunc === "function" ? mergeFunc(prevData, state, data) : data;
+        return;
+      }
 
-      setState(newData);
-      setPrevData(data);
-    }
-  }, [data]);
+      const shouldUpdate = !isEqual(prevData, data);
+
+      if (shouldUpdate) {
+        const newData = typeof mergeFunc === "function" ? mergeFunc(prevData, state, data) : data;
+
+        setState(newData);
+        setPrevData(data);
+      }
+    },
+    [data, resetKey],
+  );
 
   return [state, setState];
 }

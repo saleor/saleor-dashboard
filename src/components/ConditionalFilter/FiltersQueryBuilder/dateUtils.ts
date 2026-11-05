@@ -73,12 +73,16 @@ const buildDateFilter = (selectedValue: ConditionValue, label: string) => {
   }
 
   if (isTuple(selectedValue) && label === "between") {
-    const [gte, lte] = selectedValue;
+    const gte = formatDateTime(String(selectedValue[0]));
+    const lte = formatDateTime(String(selectedValue[1]));
 
-    return {
-      gte: formatDateTime(String(gte)),
-      lte: formatDateTime(String(lte)),
-    };
+    if (!gte && !lte) {
+      return undefined;
+    }
+
+    // A half-filled range filters by the bound that is set. Sending the empty bound
+    // would make the API reject the whole list query.
+    return { ...(gte && { gte }), ...(lte && { lte }) };
   }
 
   /** Handle incorrect usage of dates in UI:

@@ -18,7 +18,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { maybe } from "@dashboard/misc";
 import { OrderDraftBulkDeleteDialog } from "@dashboard/orders/components/OrderDraftBulkDeleteDialog/OrderDraftBulkDeleteDialog";
 import { ListViews } from "@dashboard/types";
@@ -134,6 +137,9 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
     variables: newFiltersQueryVariables,
   });
   const orderDrafts = mapEdgesToItems(data?.draftOrders);
+
+  useClearRowSelectionOnRowsChange({ rows: orderDrafts, clearRowSelection });
+
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.draftOrders.pageInfo),
     paginationState,

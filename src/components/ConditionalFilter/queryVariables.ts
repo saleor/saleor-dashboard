@@ -158,6 +158,8 @@ export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInp
 const voucherFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
   // VoucherPage expects channel to be a slug, not id
   new SlugChannelQueryVarsBuilder(),
+  // `started` uses DateTimeRangeInput; send the time picked in the browser's zone as UTC
+  new DateTimeRangeQueryVarsBuilder(),
   ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
 ]);
 
