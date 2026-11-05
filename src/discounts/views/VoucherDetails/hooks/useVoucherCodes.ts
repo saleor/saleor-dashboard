@@ -256,5 +256,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
     handleClearStagedVoucherCodes,
+    handleClearAddedVoucherCodes,
+    handleClearPendingRemovedVoucherCodes,
   };
 };

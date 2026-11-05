@@ -22,6 +22,16 @@ export const voucherFeedbackMessages = defineMessages({
     defaultMessage: "Couldn't save voucher",
     description: "toast title when voucher save fails",
   },
+  someChangesNotSaved: {
+    id: "0VqtEk",
+    defaultMessage: "Some changes weren't saved",
+    description: "toast title when a voucher save went through only in part",
+  },
+  tryAgain: {
+    id: "IsuaVj",
+    defaultMessage: "Try again.",
+    description: "toast description when a voucher save request failed without field errors",
+  },
   couldNotCreateVoucher: {
     id: "NwA0hL",
     defaultMessage: "Couldn't create voucher",
