@@ -9,6 +9,10 @@ import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
 import { type ChannelInput } from "@dashboard/discounts/handlers";
 import { RequirementsPicker } from "@dashboard/discounts/types";
+import {
+  getWholeNumberIssue,
+  getWholeNumberIssueMessage,
+} from "@dashboard/discounts/voucherValueValidation";
 import { type DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -52,18 +56,15 @@ export const VoucherRequirements = ({
     defaultMessage: "Minimum quantity of items",
     description: "voucher requirement",
   });
-  const minQuantityValue = Number(data.minCheckoutItemsQuantity);
-  const hasInvalidMinQuantity =
-    data.requirementsPicker === RequirementsPicker.ITEM &&
-    (!Number.isFinite(minQuantityValue) || minQuantityValue < 1);
+  const minQuantityIssue =
+    data.requirementsPicker === RequirementsPicker.ITEM
+      ? getWholeNumberIssue(data.minCheckoutItemsQuantity)
+      : null;
+  const hasInvalidMinQuantity = minQuantityIssue !== null;
   const minQuantityHelperText = formErrors.minCheckoutItemsQuantity
     ? getDiscountErrorMessage(formErrors.minCheckoutItemsQuantity, intl)
-    : hasInvalidMinQuantity
-      ? intl.formatMessage({
-          id: "Flraxf",
-          defaultMessage: "Enter at least 1 item.",
-          description: "voucher minimum quantity validation error",
-        })
+    : minQuantityIssue
+      ? getWholeNumberIssueMessage(minQuantityIssue, "minCheckoutItemsQuantity", intl)
       : intl.formatMessage({
           id: "S0ntb5",
           defaultMessage: "Must be 1 or more. Zero has no effect — turn this setting off instead.",
@@ -256,7 +257,7 @@ export const VoucherRequirements = ({
               if (pressed) {
                 setRequirementsPicker(RequirementsPicker.ITEM);
 
-                if (!Number.isFinite(minQuantityValue) || minQuantityValue < 1) {
+                if (getWholeNumberIssue(data.minCheckoutItemsQuantity) !== null) {
                   setMinCheckoutItemsQuantity("1");
                 }
               } else if (data.requirementsPicker === RequirementsPicker.ITEM) {

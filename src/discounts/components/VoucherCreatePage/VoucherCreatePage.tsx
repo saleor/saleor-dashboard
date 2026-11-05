@@ -37,9 +37,12 @@ import {
 } from "@dashboard/discounts/components/VoucherSectionNav/VoucherSectionNav";
 import { getVoucherSetupReadiness } from "@dashboard/discounts/components/VoucherSetupCard/getVoucherSetupReadiness";
 import { VoucherSetupCard } from "@dashboard/discounts/components/VoucherSetupCard/VoucherSetupCard";
+import { clearInactiveVoucherDiscountDrafts } from "@dashboard/discounts/data";
 import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { type VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
+import { getVoucherLocalErrors } from "@dashboard/discounts/voucherLocalErrors";
+import { getMinSpentIssue, getWholeNumberIssue } from "@dashboard/discounts/voucherValueValidation";
 import {
   type CategoryFilterInput,
   type CategoryWithTotalProductsFragment,
@@ -61,7 +64,6 @@ import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
-import { validatePrice } from "@dashboard/products/utils/validation";
 import { type useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { type ListActionsWithoutToolbar } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -126,6 +128,8 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
   variantsSearch: UseSearchResult<SearchProductsQuery, SearchProductsQueryVariables>;
   selected: string[];
   resetSelected: () => void;
+  /** Show empty required values as errors too; set after a failed create attempt. */
+  showRequiredValueErrors?: boolean;
 }
 
 const VoucherCreatePage = ({
@@ -154,6 +158,7 @@ const VoucherCreatePage = ({
   onCollectionFilterChange,
   countries,
   resetSelected,
+  showRequiredValueErrors = false,
 }: VoucherCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -209,12 +214,11 @@ const VoucherCreatePage = ({
 
     const hasInvalidMinSpent =
       data.requirementsPicker === RequirementsPicker.ORDER &&
-      data.channelListings.some(channel => validatePrice(channel.minSpent));
+      data.channelListings.some(channel => getMinSpentIssue(channel.minSpent) !== null);
 
-    const minQuantity = Number(data.minCheckoutItemsQuantity);
     const hasInvalidMinQuantity =
       data.requirementsPicker === RequirementsPicker.ITEM &&
-      (!Number.isFinite(minQuantity) || minQuantity < 1);
+      getWholeNumberIssue(data.minCheckoutItemsQuantity) !== null;
 
     return !!(hasInvalidMinSpent || hasInvalidMinQuantity);
   };
@@ -229,6 +233,13 @@ const VoucherCreatePage = ({
       disabled,
     },
   );
+  // Recomputed from the form, so fixing a value clears its error.
+  const allErrors = [
+    ...getVoucherLocalErrors(clearInactiveVoucherDiscountDrafts(data), intl, {
+      includeRequired: showRequiredValueErrors,
+    }),
+    ...errors,
+  ];
 
   // Keep form channel drafts aligned with the view after channel-modal confirm
   // (modal writes parent state only; price/paste already dual-write).
@@ -419,7 +430,7 @@ const VoucherCreatePage = ({
               }
             >
               <VoucherSection id={voucherSectionIds.details}>
-                <VoucherInfo data={data} errors={errors} disabled={disabled} onChange={change} />
+                <VoucherInfo data={data} errors={allErrors} disabled={disabled} onChange={change} />
               </VoucherSection>
               <VoucherSection id={voucherSectionIds.codes}>
                 <VoucherCodesCard
@@ -433,14 +444,14 @@ const VoucherCreatePage = ({
                   selectedCodesIds={selectedRowIds}
                   settings={settings}
                   voucherCodesPagination={pagination}
-                  errors={errors}
+                  errors={allErrors}
                 />
               </VoucherSection>
               <VoucherSection id={voucherSectionIds.discount}>
                 <VoucherDiscountSection
                   data={data}
                   disabled={disabled}
-                  errors={errors}
+                  errors={allErrors}
                   onChange={change}
                   onChannelChange={handleChannelChange}
                   onChannelsChange={handleChannelsChange}
@@ -452,7 +463,7 @@ const VoucherCreatePage = ({
                     activeTab={mapCreateTabToDetailsTab(activeTab)}
                     tabItemsCount={tabItemsCount}
                     disabled={disabled}
-                    errors={errors}
+                    errors={allErrors}
                     onTabClick={tab => onTabClick(tab as unknown as VoucherCreatePageTab)}
                     categories={paginatedSpecificItems.categories}
                     collections={paginatedSpecificItems.collections}
@@ -514,7 +525,7 @@ const VoucherCreatePage = ({
                 <VoucherRequirements
                   data={data}
                   disabled={disabled}
-                  errors={errors}
+                  errors={allErrors}
                   onChannelChange={handleChannelChange}
                   onChannelsChange={handleChannelsChange}
                   onChange={change}
@@ -525,7 +536,7 @@ const VoucherCreatePage = ({
                   data={data}
                   initialUsageLimit={initialForm.usageLimit}
                   disabled={disabled}
-                  errors={errors}
+                  errors={allErrors}
                   onChange={change}
                   setData={set}
                   isNewVoucher
@@ -543,7 +554,7 @@ const VoucherCreatePage = ({
                   endDate: data.endDate,
                   endTime: data.endTime,
                 }}
-                errors={errors}
+                errors={allErrors}
                 disabled={disabled}
                 onChange={change}
               />

@@ -1,7 +1,7 @@
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
+import { getDiscountValueIssue } from "@dashboard/discounts/voucherValueValidation";
 import { VoucherTypeEnum } from "@dashboard/graphql";
-import { validatePrice } from "@dashboard/products/utils/validation";
 
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
 import {
@@ -56,14 +56,14 @@ const hasValidChannelDiscount = (
     return false;
   }
 
-  return !channelListings.some(channel =>
-    validatePrice(
-      String(
-        (discountType === DiscountTypeEnum.VALUE_PERCENTAGE
+  return channelListings.every(
+    channel =>
+      getDiscountValueIssue(
+        discountType === DiscountTypeEnum.VALUE_PERCENTAGE
           ? channel.percentageDiscountValue
-          : channel.discountValue) ?? "",
-      ),
-    ),
+          : channel.discountValue,
+        discountType,
+      ) === null,
   );
 };
 

@@ -246,6 +246,10 @@
     "context": "alert",
     "string": "Order limit reached"
   },
+  "+t3Jo2": {
+    "context": "helper text when a voucher channel discount is zero or negative",
+    "string": "Enter more than 0."
+  },
   "+vyg/Z": {
     "context": "canceled fulfillment, restock destination warehouse info",
     "string": "Restocked to {warehouseName}"
@@ -2066,6 +2070,10 @@
   "5p/P1C": {
     "context": "staff delivery mode section title",
     "string": "Staff email delivery"
+  },
+  "5q7CTy": {
+    "context": "helper text when a voucher limit or quantity is above the largest allowed number",
+    "string": "Enter {max} or less."
   },
   "5sVhf7": {
     "context": "setup task title",
@@ -4435,6 +4443,10 @@
   "EHRXv4": {
     "context": "product media detail page header",
     "string": "Edit Image"
+  },
+  "EIDiWC": {
+    "context": "helper text when a voucher channel percentage is above 100",
+    "string": "Enter 100 or less."
   },
   "EIULpW": {
     "string": "Manage how your store charges tax"
@@ -8401,6 +8413,10 @@
     "context": "setup task CTA",
     "string": "Create shipping"
   },
+  "SYQTSp": {
+    "context": "helper text when a voucher minimum order value is negative",
+    "string": "Enter 0 or more."
+  },
   "SZH0fw": {
     "context": "set variant as default, button",
     "string": "Set as default"
@@ -8910,6 +8926,10 @@
   "UPqrEf": {
     "context": "variant pricing channel status when channel is active",
     "string": "Active channel"
+  },
+  "UQ+Qf7": {
+    "context": "helper text when a voucher limit or quantity has a fractional part",
+    "string": "Enter a whole number."
   },
   "UQ4Kuh": {
     "context": "input label",
@@ -14633,6 +14653,10 @@
   "oIS3NK": {
     "context": "button",
     "string": "Show more"
+  },
+  "oIT4ev": {
+    "context": "helper text when a voucher channel percentage has more than 3 decimal places",
+    "string": "Use up to 3 decimal places."
   },
   "oIvtua": {
     "context": "attribute's editor component",

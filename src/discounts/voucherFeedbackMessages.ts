@@ -67,4 +67,39 @@ export const voucherFeedbackMessages = defineMessages({
     defaultMessage: "Enter a limit of at least 1.",
     description: "helper text when usage limit is zero or negative",
   },
+  minQuantityMin: {
+    id: "Flraxf",
+    defaultMessage: "Enter at least 1 item.",
+    description: "voucher minimum quantity validation error",
+  },
+  wholeNumber: {
+    id: "UQ+Qf7",
+    defaultMessage: "Enter a whole number.",
+    description: "helper text when a voucher limit or quantity has a fractional part",
+  },
+  discountValueNotPositive: {
+    id: "+t3Jo2",
+    defaultMessage: "Enter more than 0.",
+    description: "helper text when a voucher channel discount is zero or negative",
+  },
+  discountValueAboveHundredPercent: {
+    id: "EIDiWC",
+    defaultMessage: "Enter 100 or less.",
+    description: "helper text when a voucher channel percentage is above 100",
+  },
+  discountValueTooManyDecimals: {
+    id: "oIT4ev",
+    defaultMessage: "Use up to 3 decimal places.",
+    description: "helper text when a voucher channel percentage has more than 3 decimal places",
+  },
+  numberTooLarge: {
+    defaultMessage: "Enter {max} or less.",
+    id: "5q7CTy",
+    description: "helper text when a voucher limit or quantity is above the largest allowed number",
+  },
+  minSpentNegative: {
+    defaultMessage: "Enter 0 or more.",
+    id: "SYQTSp",
+    description: "helper text when a voucher minimum order value is negative",
+  },
 });
