@@ -1,15 +1,8 @@
 import { PAGINATE_BY } from "@dashboard/config";
-import {
-  type CategoryWithTotalProductsFragment,
-  type CollectionWithTotalProductsFragment,
-  type SearchProductFragment,
-  type SearchProductVariantFragment,
-} from "@dashboard/graphql";
 import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
 
 import { type VoucherCreatePageTab } from "../types";
-
-type ProductVariant = SearchProductVariantFragment;
+import { type SpecificItemsData } from "./useSpecificItemsAssign";
 
 export const useSpecificItemsPagination = ({
   type,
@@ -17,23 +10,24 @@ export const useSpecificItemsPagination = ({
   paginateBy = PAGINATE_BY,
 }: {
   type: VoucherCreatePageTab;
-  data: {
-    categories: CategoryWithTotalProductsFragment[];
-    collections: CollectionWithTotalProductsFragment[];
-    products: SearchProductFragment[];
-    variants: ProductVariant[];
-  };
+  data: Omit<SpecificItemsData, "countries">;
   paginateBy?: number;
 }) => {
-  const { pageInfo, pageValues, resetPage, loadNextPage, loadPreviousPage } = useLocalPageInfo<
-    | CategoryWithTotalProductsFragment
-    | CollectionWithTotalProductsFragment
-    | SearchProductFragment
-    | ProductVariant
-  >(data[type], paginateBy);
+  const { pageInfo, resetPage, loadNextPage, loadPreviousPage } = useLocalPageInfo<unknown>(
+    data[type],
+    paginateBy,
+  );
+  // Page bounds come from the active tab; only its panel renders, so slicing the others is harmless.
+  const slicePage = <T>(items: T[]): T[] =>
+    items.slice(pageInfo.startCursor, pageInfo.endCursor + 1);
 
   return {
-    paginatedSpecificItems: pageValues,
+    paginatedSpecificItems: {
+      categories: slicePage(data.categories),
+      collections: slicePage(data.collections),
+      products: slicePage(data.products),
+      variants: slicePage(data.variants),
+    },
     resetSpecificItemsPagination: resetPage,
     specificItemsPagination: {
       loadNextPage,

@@ -55,7 +55,6 @@ import {
   type SearchProductsQuery,
   type SearchProductsQueryVariables,
   type SearchProductVariantFragment,
-  type VoucherCatalogueFragment,
 } from "@dashboard/graphql";
 import { type UseSearchResult } from "@dashboard/hooks/makeSearch";
 import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -80,7 +79,7 @@ import { initialForm } from "./const";
 import { useActiveTab } from "./hooks/useActiveTab";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
-import { type FormData, VoucherCreatePageTab, type VoucherCreateProductVariant } from "./types";
+import { type FormData, VoucherCreatePageTab } from "./types";
 import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
@@ -455,14 +454,10 @@ const VoucherCreatePage = ({
                     disabled={disabled}
                     errors={errors}
                     onTabClick={tab => onTabClick(tab as unknown as VoucherCreatePageTab)}
-                    categories={paginatedSpecificItems as CategoryWithTotalProductsFragment[]}
-                    collections={paginatedSpecificItems as CollectionWithTotalProductsFragment[]}
-                    products={paginatedSpecificItems as SearchProductFragment[]}
-                    variants={
-                      mapLocalVariantsToSavedVariants(
-                        paginatedSpecificItems as VoucherCreateProductVariant[],
-                      ) as unknown as VoucherCatalogueFragment["variants"]
-                    }
+                    categories={paginatedSpecificItems.categories}
+                    collections={paginatedSpecificItems.collections}
+                    products={paginatedSpecificItems.products}
+                    variants={mapLocalVariantsToSavedVariants(paginatedSpecificItems.variants)}
                     onCategoryAssign={() => openModal("assign-category")}
                     onCategoryUnassign={id => unassignItem(id, VoucherCreatePageTab.categories)}
                     onCollectionAssign={() => openModal("assign-collection")}
