@@ -1980,6 +1980,10 @@
     "context": "acre-ft unit",
     "string": "acre-ft"
   },
+  "5XIqND": {
+    "context": "promotion schedule error when an end date is set without a start date",
+    "string": "Start date is required when end date is provided"
+  },
   "5ZYUn5": {
     "context": "Filter and element text",
     "string": "And"
@@ -3731,6 +3735,10 @@
   "BaxGjT": {
     "context": "variant stocks section subtitle",
     "string": "Assigning the stocks will be possible after the variant is saved."
+  },
+  "BbCiTr": {
+    "context": "promotion schedule error when the end is at or before the start",
+    "string": "End date must be after the start date."
   },
   "BbLOvI": {
     "context": "variant pricing channel status description when variant is not available for purchase",
