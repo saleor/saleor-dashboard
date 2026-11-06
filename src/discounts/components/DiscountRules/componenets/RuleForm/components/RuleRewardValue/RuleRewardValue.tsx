@@ -38,7 +38,8 @@ export const RuleRewardValue = ({ currencySymbol, error }: RuleRewardPriceProps)
         <div className={styles.divider} />
         <RuleInputWrapper width="100%">
           <Input
-            value={rewardValueType.value || ""}
+            // `??`, not `||`: a typed "0" must stay, or "0.05" loses its leading zeros and becomes 5.
+            value={rewardValueType.value ?? ""}
             onBlur={rewardValueType.onBlur}
             name={rewardValueType.name}
             ref={rewardValueType.ref}

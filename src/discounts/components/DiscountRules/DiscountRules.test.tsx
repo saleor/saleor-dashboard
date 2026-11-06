@@ -235,6 +235,77 @@ describe("DiscountRules", () => {
       null,
     );
   });
+  it.each(["0.05", "0.001", "12.05"])("keeps a typed reward value of %s as typed", async typed => {
+    // Arrange
+    render(
+      <DiscountRules
+        promotionId={null}
+        discountType={PromotionTypeEnum.CATALOGUE}
+        channels={channels}
+        rules={[]}
+        errors={[]}
+        onRuleSubmit={jest.fn()}
+        onRuleDelete={jest.fn()}
+        disabled={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
+      />,
+      { wrapper: Wrapper },
+    );
+    await act(async () => {
+      await userEvent.click(await screen.findByRole("button", { name: /add rule/i }));
+    });
+
+    const rewardValueInput = screen.getByRole("input", { name: "Reward value" });
+    const shownWhenOpened = (rewardValueInput as HTMLInputElement).value;
+
+    // Act
+    await userEvent.type(rewardValueInput, typed);
+
+    // Assert
+    expect(shownWhenOpened).toBe("");
+    expect(rewardValueInput).toHaveDisplayValue(typed);
+  });
+
+  it("saves a typed reward value below 1 without dropping digits", async () => {
+    // Arrange
+    const onRuleAdd = jest.fn();
+
+    render(
+      <DiscountRules
+        promotionId={null}
+        discountType={PromotionTypeEnum.CATALOGUE}
+        channels={channels}
+        rules={[]}
+        errors={[]}
+        onRuleSubmit={onRuleAdd}
+        onRuleDelete={jest.fn()}
+        disabled={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
+      />,
+      { wrapper: Wrapper },
+    );
+    await act(async () => {
+      await userEvent.click(await screen.findByRole("button", { name: /add rule/i }));
+    });
+    await userEvent.type(screen.getByRole("input", { name: "Name" }), "Small discount");
+    await userEvent.click(screen.getByTestId("channel-dropdown"));
+    expect(await screen.findByText(/test/i)).toBeInTheDocument();
+    await act(async () => {
+      await userEvent.click(screen.getAllByTestId("select-option")[0]);
+    });
+
+    // Act
+    await userEvent.type(screen.getByRole("input", { name: "Reward value" }), "0.05");
+    await userEvent.click(screen.getByRole("button", { name: /save/i }));
+
+    // Assert
+    await waitFor(() => {
+      expect(onRuleAdd).toHaveBeenCalledWith(expect.objectContaining({ rewardValue: 0.05 }), null);
+    });
+  });
+
   it("should allow to add new order rule", async () => {
     // Arrange
     const onRuleAdd = jest.fn();
