@@ -7067,6 +7067,10 @@
     "context": "gift card bulk create success dialog content",
     "string": "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below."
   },
+  "NaDOHw": {
+    "context": "promotion details error toast when an end date cleared before a failed save could not be restored",
+    "string": "The end date was removed and could not be put back. The promotion now has no end date."
+  },
   "NaEM7l": {
     "context": "section header",
     "string": "Customer attributes"
