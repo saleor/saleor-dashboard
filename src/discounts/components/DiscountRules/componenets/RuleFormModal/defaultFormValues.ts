@@ -8,7 +8,8 @@ const defaultFormValues: Rule = {
   channel: null,
   rewardType: null,
   rewardGifts: [],
-  rewardValue: 0,
+  // Empty, not 0: the reward input shows a 0 as typed text.
+  rewardValue: null,
   rewardValueType: RewardValueTypeEnum.FIXED,
   conditions: [],
 };
