@@ -13,6 +13,13 @@ export const messages = defineMessages({
     defaultMessage: "Add rule",
     id: "gzM1em",
   },
+  ruleOtherChannels: {
+    defaultMessage:
+      "This rule also applies in {channels}. You can edit the rule here, but not its channels.",
+    id: "KcQWVG",
+    description:
+      "promotion rule dialog helper under the channel when the rule also applies in other channels",
+  },
   catalog: {
     defaultMessage: "Catalog",
     id: "GOdq5V",
