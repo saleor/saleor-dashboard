@@ -1,5 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
@@ -235,6 +236,57 @@ describe("DiscountRules", () => {
       null,
     );
   });
+
+  const renderRuleAndEdit = async (rule: Rule): Promise<void> => {
+    render(
+      <DiscountRules
+        promotionId="promotion-1"
+        discountType={PromotionTypeEnum.CATALOGUE}
+        channels={channels}
+        rules={[rule]}
+        errors={[]}
+        onRuleSubmit={jest.fn()}
+        onRuleDelete={jest.fn()}
+        disabled={false}
+        deleteButtonState="default"
+        getRuleConfirmButtonState={jest.fn(() => "default")}
+      />,
+      { wrapper: Wrapper },
+    );
+    await act(async () => {
+      await userEvent.click((await screen.findAllByTestId("rule-edit-button"))[0]);
+    });
+  };
+  const otherChannelsNote =
+    "This rule also applies in Channel-PLN. You can edit the rule here, but not its channels.";
+
+  it("names a rule's other channels and locks its channel", async () => {
+    // Arrange
+    const rule: Rule = {
+      ...catalogRules[0],
+      otherChannels: [{ id: "channel-pln", name: "Channel-PLN", currencyCode: "PLN" }],
+    };
+
+    // Act
+    await renderRuleAndEdit(rule);
+
+    // Assert
+    expect(screen.getByTestId("channel-dropdown")).toBeDisabled();
+    expect(screen.getByText(otherChannelsNote)).toBeInTheDocument();
+  });
+
+  it("lets a rule on one channel change its channel", async () => {
+    // Arrange
+    const rule: Rule = { ...catalogRules[0], otherChannels: undefined };
+
+    // Act
+    await renderRuleAndEdit(rule);
+
+    // Assert
+    expect(screen.getByTestId("channel-dropdown")).toBeEnabled();
+    expect(screen.queryByText(otherChannelsNote)).not.toBeInTheDocument();
+  });
+
   it("should allow to add new order rule", async () => {
     // Arrange
     const onRuleAdd = jest.fn();
