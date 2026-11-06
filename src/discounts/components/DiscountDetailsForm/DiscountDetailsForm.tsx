@@ -74,7 +74,7 @@ export const DiscountDetailsForm = ({
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: baseline,
-    resolver: zodResolver(getValidationSchema(intl)),
+    resolver: zodResolver(getValidationSchema(intl, { savedDates: baseline.dates })),
   });
   const currentValues = useWatch({ control: methods.control });
   const discountType = (currentValues?.type ?? baseline.type) as PromotionTypeEnum;

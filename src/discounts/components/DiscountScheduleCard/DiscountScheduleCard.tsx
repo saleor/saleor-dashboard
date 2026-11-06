@@ -1,12 +1,15 @@
 import { DiscountDates } from "@dashboard/discounts/components/DiscountDates/DiscountDates";
-import { type ScheduleDateField } from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
+import {
+  getUnfinishedScheduleFields,
+  type ScheduleDateField,
+} from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
 import {
   getVoucherSchedulePhase,
   type VoucherScheduleDateData,
 } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
 import { type CommonError } from "@dashboard/utils/errors/common";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import { type ChangeEvent, type FocusEvent, type ReactNode } from "react";
+import { type ChangeEvent, type FocusEvent, type ReactNode, useState } from "react";
 import { type FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,9 +23,7 @@ interface DiscountScheduleCardProps<ErrorCode> {
   intro: ReactNode;
   disabled?: boolean;
   loading?: boolean;
-  formErrors?: {
-    startDate?: FieldError;
-  };
+  formErrors?: Partial<Record<ScheduleDateField, FieldError>>;
   incompleteFields?: readonly ScheduleDateField[];
   onIncompleteFieldsChange?: (fields: ScheduleDateField[]) => void;
   onChange: (event: ChangeEvent<any>) => void;
@@ -54,7 +55,17 @@ export const DiscountScheduleCard = <ErrorCode,>({
   skeletonTestId,
 }: DiscountScheduleCardProps<ErrorCode>): React.ReactNode => {
   const intl = useIntl();
-  const phase = getVoucherSchedulePhase(data);
+  const currentPhase = getVoucherSchedulePhase(data);
+  // A partly typed hour reports an empty value, which the status would read as midnight.
+  const isIncomplete = getUnfinishedScheduleFields(data, incompleteFields).length > 0;
+  // While a date or time is partly typed, keep the status from the last complete schedule.
+  const [lastCompletePhase, setLastCompletePhase] = useState(currentPhase);
+
+  if (!isIncomplete && currentPhase !== lastCompletePhase) {
+    setLastCompletePhase(currentPhase);
+  }
+
+  const phase = isIncomplete ? lastCompletePhase : currentPhase;
   const statusMessage =
     phase === "scheduled"
       ? messages.statusScheduled
