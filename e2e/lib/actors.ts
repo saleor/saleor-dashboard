@@ -7,23 +7,37 @@ import { ADMIN, STAFF_PASSWORD } from "../config.ts";
  * group holding that single permission, which is what makes them useful for asserting
  * what the dashboard hides.
  *
+ * `observability.manager` is left out: MANAGE_OBSERVABILITY is deprecated and gates nothing
+ * in the dashboard.
+ *
  * `admin` is the superuser `populatedb --createsuperuser` creates. `anonymous` carries
  * no stored session at all - for specs that sign in through the UI themselves.
  */
 export const PERMISSION_ACTORS = {
   app: "app.manager@example.com",
   channel: "channel.manager@example.com",
+  /* MANAGE_CHECKOUTS and HANDLE_CHECKOUTS both derive this address, so it holds both. */
+  checkout: "checkout.manager@example.com",
+  /* MANAGE_USERS and IMPERSONATE_USER both derive this address, so it holds both. */
   customer: "user.manager@example.com",
+  customerTypeAndAttribute: "customer.type.and.attribute.manager@example.com",
   discount: "discount.manager@example.com",
   giftCard: "gift.card.manager@example.com",
+  menu: "menu.manager@example.com",
   order: "order.manager@example.com",
+  orderImport: "order.import.manager@example.com",
   page: "page.manager@example.com",
+  pageTypeAndAttribute: "page.type.and.attribute.manager@example.com",
+  /* HANDLE_PAYMENTS - the verb is dropped from the address like every other one. */
+  payment: "payment.manager@example.com",
   plugin: "plugin.manager@example.com",
   product: "product.manager@example.com",
   productTypeAndAttribute: "product.type.and.attribute.manager@example.com",
   settings: "setting.manager@example.com",
   shipping: "shipping.manager@example.com",
   staff: "staff.manager@example.com",
+  /* MANAGE_TAXES and HANDLE_TAXES; the trailing "s" is cut as from every other plural. */
+  taxes: "taxe.manager@example.com",
   translations: "translation.manager@example.com",
 } as const;
 
