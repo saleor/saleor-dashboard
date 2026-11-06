@@ -1,13 +1,21 @@
 import { ApolloError } from "@apollo/client";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { type MutationOutcome } from "@dashboard/discounts/voucherSaveRequestErrors";
 import {
+  type PromotionDetailsFragment,
+  type PromotionRuleUpdateMutation,
   PromotionTypeEnum,
   PromotionUpdateErrorCode,
   type PromotionUpdateMutation,
+  RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
 import { type DiscoutFormData } from "../../types";
-import { createUpdateHandler, shouldClearPromotionEndDateFirst } from "./handlers";
+import {
+  createRuleUpdateHandler,
+  createUpdateHandler,
+  shouldClearPromotionEndDateFirst,
+} from "./handlers";
 
 describe("shouldClearPromotionEndDateFirst", () => {
   it("returns true when clearing end and moving start past the previous end", () => {
@@ -256,5 +264,112 @@ describe("createUpdateHandler", () => {
     // Assert
     await expect(result).rejects.toThrow();
     expect(update).not.toHaveBeenCalled();
+  });
+});
+
+describe("createRuleUpdateHandler", () => {
+  type RuleChannel = NonNullable<
+    NonNullable<PromotionDetailsFragment["rules"]>[number]["channels"]
+  >[number];
+
+  const usd: RuleChannel = {
+    __typename: "Channel",
+    id: "channel-usd",
+    isActive: true,
+    name: "Channel-USD",
+    slug: "default-channel",
+    currencyCode: "USD",
+    defaultCountry: { __typename: "CountryDisplay", code: "US", country: "United States" },
+  };
+  const pln: RuleChannel = {
+    ...usd,
+    id: "channel-pln",
+    name: "Channel-PLN",
+    slug: "channel-pln",
+    currencyCode: "PLN",
+    defaultCountry: { __typename: "CountryDisplay", code: "PL", country: "Poland" },
+  };
+  const promotion: PromotionDetailsFragment = {
+    __typename: "Promotion",
+    id: "promo-1",
+    name: "Summer",
+    type: PromotionTypeEnum.CATALOGUE,
+    description: null,
+    startDate: "2026-07-01T00:00:00.000Z",
+    endDate: null,
+    rules: [
+      {
+        __typename: "PromotionRule",
+        id: "rule-1",
+        name: "Two channels",
+        description: null,
+        giftIds: [],
+        rewardType: null,
+        rewardValueType: RewardValueTypeEnum.PERCENTAGE,
+        rewardValue: 5,
+        cataloguePredicate: {},
+        orderPredicate: null,
+        // Made through the API; the rule form shows only the first channel.
+        channels: [usd, pln],
+      },
+    ],
+  };
+  // What the rule form submits for that rule: the first channel, and the others it carries.
+  const formRule: Rule = {
+    id: "rule-1",
+    name: "Two channels",
+    description: null,
+    channel: { label: usd.name, value: usd.id },
+    rewardType: null,
+    rewardValue: 5,
+    rewardValueType: RewardValueTypeEnum.PERCENTAGE,
+    rewardGifts: [],
+    conditions: [],
+    otherChannels: [{ id: pln.id, name: pln.name, currencyCode: pln.currencyCode }],
+  };
+  const savedRule: { data: PromotionRuleUpdateMutation } = {
+    data: {
+      __typename: "Mutation",
+      promotionRuleUpdate: { __typename: "PromotionRuleUpdate", errors: [], promotionRule: null },
+    },
+  };
+
+  it("keeps the channels the form does not show when the rule is renamed", async () => {
+    // Arrange
+    const updateRule = jest.fn().mockResolvedValue(savedRule);
+    const handler = createRuleUpdateHandler(promotion, updateRule);
+
+    // Act
+    await handler({ ...formRule, name: "Two channels renamed" });
+
+    // Assert
+    expect(updateRule.mock.calls[0][0].input).toMatchObject({
+      name: "Two channels renamed",
+      addChannels: [],
+      removeChannels: [],
+    });
+  });
+
+  it("moves a rule on one channel to the channel the merchant picks", async () => {
+    // Arrange
+    const singleChannelPromotion: PromotionDetailsFragment = {
+      ...promotion,
+      rules: (promotion.rules ?? []).map(rule => ({ ...rule, channels: [usd] })),
+    };
+    const updateRule = jest.fn().mockResolvedValue(savedRule);
+    const handler = createRuleUpdateHandler(singleChannelPromotion, updateRule);
+
+    // Act
+    await handler({
+      ...formRule,
+      channel: { label: pln.name, value: pln.id },
+      otherChannels: undefined,
+    });
+
+    // Assert
+    expect(updateRule.mock.calls[0][0].input).toMatchObject({
+      addChannels: ["channel-pln"],
+      removeChannels: ["channel-usd"],
+    });
   });
 });

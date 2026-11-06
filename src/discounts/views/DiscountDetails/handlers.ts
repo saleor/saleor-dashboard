@@ -146,12 +146,16 @@ export const createRuleUpdateHandler = (
     const ruleChannels: string[] = ruleData?.channels?.map(channel => channel.id) ?? [];
     const ruleGifts: string[] = ruleData?.giftIds ?? [];
     const { channels, gifts, ...input } = toAPI(promotionData?.type)(data);
+    // The form edits one channel and carries the rule's other channels; keep those on the rule.
+    const nextChannels = [
+      ...new Set([...(channels ?? []), ...(data.otherChannels?.map(channel => channel.id) ?? [])]),
+    ];
     const response = await updateRule({
       id: data.id!,
       input: {
         ...input,
-        addChannels: difference(channels, ruleChannels),
-        removeChannels: difference(ruleChannels, channels ?? []),
+        addChannels: difference(nextChannels, ruleChannels),
+        removeChannels: difference(ruleChannels, nextChannels),
         addGifts: difference(gifts, ruleGifts),
         removeGifts: difference(ruleGifts, gifts ?? []),
       },

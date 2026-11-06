@@ -1,5 +1,5 @@
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
-import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
+import { type ChannelFragment, RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { defineMessages, type IntlShape } from "react-intl";
 import * as z from "zod";
 
@@ -24,6 +24,12 @@ const validationMessages = defineMessages({
     id: "GxsQuO",
     defaultMessage: "You must select at least one gift",
   },
+  fixedRewardMixesCurrencies: {
+    id: "dbuT2a",
+    defaultMessage:
+      "A fixed amount needs one currency, but this rule also applies in {channels}. Use a percentage instead.",
+    description: "promotion rule error when a fixed reward would mix channel currencies",
+  },
 });
 const option = z.object({ label: z.string(), value: z.string() });
 const rewardValueRequired = (intl: IntlShape) =>
@@ -47,6 +53,9 @@ const getDefaultSchema = (intl: IntlShape) =>
         invalid_type_error: intl.formatMessage(validationMessages.channelRequired),
       },
     ),
+    otherChannels: z
+      .array(z.object({ id: z.string(), name: z.string(), currencyCode: z.string() }))
+      .optional(),
     conditions: z.array(
       z.object({
         id: z.string().nullable(),
@@ -84,28 +93,59 @@ const getOrderRewardGiftsValidation = (intl: IntlShape) =>
     }),
   });
 
-export const getValidationSchema = (intl: IntlShape) => {
+/**
+ * Pass `channels` to check a fixed reward against the rule's other channels: Saleor rejects a
+ * fixed amount across channels in different currencies.
+ */
+export const getValidationSchema = (
+  intl: IntlShape,
+  { channels = [] }: { channels?: ChannelFragment[] } = {},
+) => {
   const schemaCond = z.discriminatedUnion("rewardType", [
     getCatalogRewardValidation(intl),
     getOrderRewardSubtotalValidation(intl),
     getOrderRewardGiftsValidation(intl),
   ]);
 
-  return z.intersection(schemaCond, getDefaultSchema(intl)).refine(
-    ({ rewardValue, rewardValueType, channel }) => {
+  return z
+    .intersection(schemaCond, getDefaultSchema(intl))
+    .refine(
+      ({ rewardValue, rewardValueType, channel }) => {
+        if (
+          channel &&
+          rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
+          Number(rewardValue) > 100
+        ) {
+          return false;
+        }
+
+        return true;
+      },
+      {
+        message: intl.formatMessage(validationMessages.rewardValueMustBeLessThan100),
+        path: ["rewardValue"],
+      },
+    )
+    .superRefine(({ rewardType, rewardValueType, channel, otherChannels }, ctx) => {
       if (
-        channel &&
-        rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
-        Number(rewardValue) > 100
+        rewardType === RewardTypeEnum.GIFT ||
+        rewardValueType !== RewardValueTypeEnum.FIXED ||
+        !otherChannels?.length
       ) {
-        return false;
+        return;
       }
 
-      return true;
-    },
-    {
-      message: intl.formatMessage(validationMessages.rewardValueMustBeLessThan100),
-      path: ["rewardValue"],
-    },
-  );
+      const currency = channels.find(({ id }) => id === channel?.value)?.currencyCode;
+      const otherCurrencies = otherChannels.filter(other => other.currencyCode !== currency);
+
+      if (otherCurrencies.length > 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["rewardValue"],
+          message: intl.formatMessage(validationMessages.fixedRewardMixesCurrencies, {
+            channels: intl.formatList(otherCurrencies.map(other => other.name)),
+          }),
+        });
+      }
+    });
 };
