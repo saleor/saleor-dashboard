@@ -1,7 +1,11 @@
 // @ts-strict-ignore
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import { savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
+import {
+  pageViewportHeight,
+  savebarHeight,
+  topBarHeight,
+} from "@dashboard/components/AppLayout/consts";
 import {
   TopNav,
   TopNavDestinationIcon,
@@ -67,7 +71,7 @@ const messages = defineMessages({
   },
 });
 // Fits below top nav + savebar, this card's header, and content padding.
-const previewStageHeight = `calc(100vh - ${topBarHeight} - ${savebarHeight} - 120px)`;
+const previewStageHeight = `calc(${pageViewportHeight} - ${topBarHeight} - ${savebarHeight} - 120px)`;
 
 const useStyles = makeStyles(
   theme => ({

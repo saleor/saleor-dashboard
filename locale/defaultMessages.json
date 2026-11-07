@@ -3017,6 +3017,10 @@
     "context": "button",
     "string": "Go back to dashboard"
   },
+  "96Dqyf": {
+    "context": "connection banner text shown briefly once Saleor answers again",
+    "string": "Connected again."
+  },
   "97JrRu": {
     "context": "setup task title",
     "string": "Make available to buy"
@@ -5718,6 +5722,10 @@
   "IOg+Hh": {
     "string": "Refund with manual amount"
   },
+  "IPcSvX": {
+    "context": "connection banner text when requests to the Saleor API get no answer",
+    "string": "You're still signed in, and unsaved changes stay on this page. Trying to reconnect…"
+  },
   "ISsHpV": {
     "context": "setup review row description when shop has no warehouses",
     "string": "Create a warehouse to set stock when adding products. You can still publish products and set prices."
@@ -7270,6 +7278,10 @@
     "context": "promotion details save success toast",
     "string": "Promotion updated"
   },
+  "OLE34z": {
+    "context": "toast text when data on the page couldn't be loaded because Saleor gave no answer",
+    "string": "Reload the page to try again."
+  },
   "OMD3t+": {
     "context": "PDP schematic legend for selectable variant attributes",
     "string": "Variant attributes with <em>Variant selection</em> on. Shoppers choose these; you set the values on each variant."
@@ -8006,6 +8018,10 @@
   "R5IYxa": {
     "context": "bulk publish picker helper about missing category filter",
     "string": "Products without a category are hidden because they cannot be published."
+  },
+  "R5JuCC": {
+    "context": "connection banner heading when the browser has no network connection",
+    "string": "You're offline."
   },
   "R5r0+F": {
     "context": "Badge label showing total number of app problems",
@@ -10065,6 +10081,10 @@
     "context": "voucher application, switch button",
     "string": "Apply only to a single cheapest eligible product"
   },
+  "Y5oSsQ": {
+    "context": "toast heading when data on the page couldn't be loaded because Saleor gave no answer",
+    "string": "Couldn't load some data"
+  },
   "Y6N9EL": {
     "context": "warehouse setup shipping zone task when a usable zone exists beyond the loaded list",
     "string": "Shipping zones linked."
@@ -11428,6 +11448,10 @@
   "cjaUrx": {
     "context": "attribute type column",
     "string": "Attribute type"
+  },
+  "ckIcOY": {
+    "context": "connection banner button that checks the connection to Saleor right away",
+    "string": "Try now"
   },
   "ckSjjv": {
     "string": "Too complex conditions to display, use playground to see details."
@@ -13015,6 +13039,10 @@
   "ig8i+W": {
     "context": "warehouse pickup option",
     "string": "From stock at any location"
+  },
+  "igPcAg": {
+    "context": "connection banner heading when requests to the Saleor API get no answer",
+    "string": "Can't reach Saleor."
   },
   "igoIjo": {
     "string": "Line matrix"
@@ -17904,6 +17932,10 @@
   "ypW4Mi": {
     "context": "button refreshing page",
     "string": "Refresh page"
+  },
+  "ypc1po": {
+    "context": "connection banner text when the browser has no network connection",
+    "string": "You're still signed in, and unsaved changes stay on this page. We'll reconnect when you're back online."
   },
   "ysIDsl": {
     "context": "message row status: only email body is customized",

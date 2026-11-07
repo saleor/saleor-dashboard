@@ -1,3 +1,4 @@
+import { connectionMonitor } from "@dashboard/connection/appConnectionMonitor";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { retryAutologin } from "../initAuth";
@@ -6,8 +7,9 @@ import { retryAutologin } from "../initAuth";
 const RECOVERY_INTERVAL_MS = 30_000;
 
 /**
- * Tries the stored session again when the merchant asks, when the browser comes back online and
- * every 30 seconds, while the "can't reach Saleor" screen is shown.
+ * Tries the stored session again when the merchant asks, as soon as the connection monitor sees
+ * Saleor answer, when the browser comes back online, and every 30 seconds in case the failure
+ * wasn't one the monitor follows (such as a 500), while the "can't reach Saleor" screen is shown.
  */
 export const useAutologinRecovery = (): { retrying: boolean; retry: () => void } => {
   const [retrying, setRetrying] = useState(false);
@@ -30,10 +32,17 @@ export const useAutologinRecovery = (): { retrying: boolean; retry: () => void }
     function retryWhileUnreachable() {
       const interval = setInterval(retry, RECOVERY_INTERVAL_MS);
 
+      const unsubscribe = connectionMonitor.subscribe(event => {
+        if (event.type === "recovered") {
+          retry();
+        }
+      });
+
       window.addEventListener("online", retry);
 
       return (): void => {
         clearInterval(interval);
+        unsubscribe();
         window.removeEventListener("online", retry);
       };
     },

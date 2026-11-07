@@ -364,6 +364,32 @@ describe("createFetch", () => {
       expect(mockRefreshToken).toHaveBeenCalledTimes(1);
     });
 
+    it("hands on a proxy's error page that isn't JSON, so its status reaches Apollo", async () => {
+      // Arrange
+      storage.getAccessToken.mockReturnValue("test-token");
+      jwtDecode.mockReturnValue({ exp: Math.floor(Date.now() / 1000) + 600, owner: "saleor" });
+
+      const proxyPage = {
+        ok: false,
+        status: 503,
+        clone: jest.fn().mockReturnValue({
+          json: jest.fn().mockRejectedValue(new SyntaxError("Unexpected token '<'")),
+        }),
+      };
+
+      mockFetch.mockResolvedValueOnce(proxyPage);
+
+      const fetchFn = createFetch({ autoTokenRefresh: true, refreshOnUnauthorized: true });
+
+      // Act
+      const result = await fetchFn("http://localhost:8000/graphql/", {});
+
+      // Assert
+      expect(result).toBe(proxyPage);
+      expect(mockRefreshToken).not.toHaveBeenCalled();
+      expect(mockLogout).not.toHaveBeenCalled();
+    });
+
     it("retries request on ExpiredSignatureError when refreshOnUnauthorized is enabled", async () => {
       // Arrange
       const futureTimestamp = Math.floor(Date.now() / 1000) + 600;

@@ -4,6 +4,21 @@
   grid-template-columns: auto 1fr;
 }
 
+/* The page column: the connection banner, then the page. No overflow clipping here, so the banner
+ * can stick to the top of the viewport while the document scrolls. */
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Takes the height the banner leaves. Its own content still sizes it (a zero basis would hide
+ * long pages from the grid row and clip them), and the column's definite height keeps the
+ * flexed height definite, so `main` can still be 100% of it. */
+.page {
+  flex: 1 0 auto;
+}
+
 .navigation {
   position: sticky;
   top: 0;
