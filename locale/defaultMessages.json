@@ -1038,6 +1038,10 @@
     "context": "Warning when no warehouses configured",
     "string": "No warehouses"
   },
+  "1ncnQ9": {
+    "context": "toast text when an action got no answer from Saleor, so it may or may not have been applied",
+    "string": "Check whether the change went through before trying again."
+  },
   "1oYjZc": {
     "context": "sum of all granted refunds for an order",
     "string": "Granted refund"
@@ -4174,6 +4178,10 @@
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
+  },
+  "Cz5tnE": {
+    "context": "toast heading when an action got no answer because Saleor could not be reached",
+    "string": "No answer from Saleor"
   },
   "D+Nw8P": {
     "context": "customer email verification status",

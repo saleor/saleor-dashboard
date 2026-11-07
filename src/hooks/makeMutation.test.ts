@@ -52,7 +52,7 @@ describe("useMutation error notifications", () => {
     expect(mockNotify).not.toHaveBeenCalled();
   });
 
-  it("still reports a request that failed on the network", () => {
+  it("reports an action that got no answer once, without the network text or a claim it failed", () => {
     // Arrange
     const failed = new ApolloError({ networkError: new TypeError("Failed to fetch") });
 
@@ -60,6 +60,33 @@ describe("useMutation error notifications", () => {
     captured.onError?.(failed);
 
     // Assert
-    expect(mockNotify).toHaveBeenCalled();
+    expect(mockNotify).toHaveBeenCalledTimes(1);
+    expect(mockNotify).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: "error",
+        title: "No answer from Saleor",
+        text: "Check whether the change went through before trying again.",
+      }),
+    );
+    expect(JSON.stringify(mockNotify.mock.calls)).not.toContain("Failed to fetch");
+  });
+
+  it("keeps reporting other server errors as before", () => {
+    // Arrange
+    const serverError = Object.assign(
+      new Error("Response not successful: Received status code 500"),
+      {
+        name: "ServerError",
+        statusCode: 500,
+      },
+    );
+
+    // Act
+    captured.onError?.(new ApolloError({ networkError: serverError }));
+
+    // Assert
+    expect(mockNotify).toHaveBeenCalledWith(
+      expect.objectContaining({ apiMessage: "Response not successful: Received status code 500" }),
+    );
   });
 });
