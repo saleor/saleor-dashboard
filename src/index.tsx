@@ -52,6 +52,7 @@ import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { GTM_ID } from "./config";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
+import { ConnectionRecovery } from "./connection/components/ConnectionRecovery/ConnectionRecovery";
 import AppStateProvider from "./containers/AppState/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks/BackgroundTasksProvider";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
@@ -155,6 +156,7 @@ const App = (): React.ReactNode => (
                                       </OnboardingProvider>
                                     </FeatureFlagsProviderWithUser>
                                     <NotificationsToaster />
+                                    <ConnectionRecovery />
                                   </SavebarRefProvider>
                                 </NavigatorSearchProvider>
                               </DevModeProvider>

@@ -1,0 +1,83 @@
+/*
+ * Page-level banner above the page header. Neutral surface like Callout: the status shows in the
+ * icon and the bottom edge, never in a filled background. Opens and closes by animating its grid
+ * row, so the page below moves with it instead of jumping. AppLayout keeps it outside the
+ * column's `overflow: hidden`, which would stop it sticking.
+ */
+.banner {
+  /* Stays in view on pages where the document scrolls, such as long lists. */
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: grid;
+  grid-template-rows: 0fr;
+  background-color: var(--mu-colors-background-default2);
+  transition: grid-template-rows 160ms ease-out;
+}
+
+/* Takes focus only when Try now goes away under the keyboard; show where focus went. */
+.banner:focus {
+  outline: none;
+}
+
+.banner:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: -2px;
+}
+
+.open {
+  grid-template-rows: 1fr;
+}
+
+.clip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mu-spacing-2) var(--mu-spacing-3);
+  min-height: 40px;
+  padding: var(--mu-spacing-2) var(--mu-spacing-4);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--mu-colors-border-warning1) 55%, var(--mu-colors-border-default1));
+}
+
+.restored .row {
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--mu-colors-border-success1) 45%,
+    var(--mu-colors-border-default1)
+  );
+}
+
+.message {
+  display: flex;
+  flex: 1 1 280px;
+  align-items: flex-start;
+  gap: var(--mu-spacing-2);
+  min-width: 0;
+}
+
+.icon {
+  flex-shrink: 0;
+  /* Optical align with the first text line */
+  margin-top: 2px;
+  color: var(--mu-colors-text-warning1);
+}
+
+.restored .icon {
+  color: var(--mu-colors-text-success1);
+}
+
+.text {
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner {
+    transition: none;
+  }
+}
