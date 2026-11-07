@@ -1,6 +1,7 @@
 import { type TransactionItemFragment } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { Text } from "@saleor/macaw-ui-next";
+import { useIntl } from "react-intl";
 
 import { CardPaymentMethod } from "./CardPaymentMethod";
 import { GiftCardPaymentMethod } from "./GiftCardPaymentMethod";
@@ -13,6 +14,8 @@ interface PaymentMethodDetailsProps {
 }
 
 export const PaymentMethodDetails = ({ paymentMethodDetails }: PaymentMethodDetailsProps) => {
+  const intl = useIntl();
+
   if (!paymentMethodDetails) {
     return null;
   }
@@ -33,7 +36,11 @@ export const PaymentMethodDetails = ({ paymentMethodDetails }: PaymentMethodDeta
 
       return (
         <Text size={2} color="default2">
-          {unknown.name ?? "Unknown payment method"}
+          {unknown.name ??
+            intl.formatMessage({
+              id: "rKg5l5",
+              defaultMessage: "Unknown payment method",
+            })}
         </Text>
       );
     }

@@ -10,7 +10,7 @@ import {
 } from "@saleor/macaw-ui-next";
 import { Columns3 } from "lucide-react";
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import useStyles, { cellHeight, singleActionWidth } from "../styles";
 import { type AvailableColumn } from "../types";
@@ -41,6 +41,8 @@ export const ColumnPicker = ({
   align,
   backgroundColor = "default1",
 }: ColumnPickerProps) => {
+  const intl = useIntl();
+
   const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles({});
@@ -67,7 +69,10 @@ export const ColumnPicker = ({
             data-test-id="open-column-picker-button"
             variant="ghost"
             className={classes.ghostIcon}
-            title="Pick columns"
+            title={intl.formatMessage({
+              id: "kB6oZD",
+              defaultMessage: "Pick columns",
+            })}
           >
             <Columns3 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
           </IconButton>

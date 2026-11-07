@@ -316,7 +316,9 @@ const OrderTransactionRefundPage = ({
             <Box>
               <DashboardCard>
                 <DashboardCard.Header>
-                  <DashboardCard.Title>Refund reason</DashboardCard.Title>
+                  <DashboardCard.Title>
+                    <FormattedMessage id="yUvR0h" defaultMessage="Refund reason" />
+                  </DashboardCard.Title>
                 </DashboardCard.Header>
                 <DashboardCard.Content>
                   {modelForRefundReasonRefId && (

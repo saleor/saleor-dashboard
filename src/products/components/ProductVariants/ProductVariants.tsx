@@ -524,13 +524,16 @@ export const ProductVariants = ({
 
       return [
         {
-          label: "Edit Variant",
+          label: intl.formatMessage({
+            id: "GuRBiI",
+            defaultMessage: "Edit Variant",
+          }),
           onSelect: () => onRowClick(variant.id),
           Icon: editVariantIcon,
         },
       ];
     },
-    [editVariantIcon, onRowClick, variants],
+    [editVariantIcon, intl, onRowClick, variants],
   );
 
   return (

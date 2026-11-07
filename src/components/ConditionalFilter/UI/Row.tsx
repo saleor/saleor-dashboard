@@ -7,7 +7,9 @@ import { Box, Button, DynamicCombobox, Select, Text } from "@saleor/macaw-ui-nex
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { useMemo } from "react";
+import { useIntl } from "react-intl";
 
+import { localizeFilterCondition } from "../displayMessages";
 import { getItemConstraint } from "./constrains";
 import { ConstraintReasonHint } from "./ConstraintReasonHint";
 import { type ErrorLookup } from "./errors";
@@ -45,6 +47,7 @@ export const RowComponent = ({
   error,
   layout = "popover",
 }: RowProps): React.ReactNode => {
+  const intl = useIntl();
   const constrain = getItemConstraint(item.constraint);
   const reasonLabels = getConstraintReasonLabels(item, rows);
   const isAttribute = item.isAttribute;
@@ -147,11 +150,17 @@ export const RowComponent = ({
         {...inlineControlProps}
         id={getFilterControlId("condition", index)}
         data-test-id={`condition-${index}`}
-        value={item.condition.selected.conditionValue}
-        options={item.condition.options}
+        value={
+          item.condition.selected.conditionValue
+            ? localizeFilterCondition(item.condition.selected.conditionValue, intl)
+            : null
+        }
+        options={item.condition.options.map(option => localizeFilterCondition(option, intl))}
         disabled={constrain.disableCondition}
         onChange={value => {
-          emitter.changeCondition(index, value);
+          const original = item.condition.options.find(option => option.value === value.value);
+
+          if (original) emitter.changeCondition(index, original);
         }}
         onFocus={() => {
           emitter.focusCondition(index);

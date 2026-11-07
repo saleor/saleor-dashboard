@@ -1,4 +1,5 @@
 import { Tooltip, UnStyledButton, type useDragResize, usePluginContext } from "@graphiql/react";
+import { useIntl } from "react-intl";
 
 import { useDashboardTheme } from "./styles";
 
@@ -12,12 +13,25 @@ export const PluginSidebarSection = ({
   pluginResize: ReturnType<typeof useDragResize>;
 }) => {
   const pluginContext = usePluginContext();
+  const intl = useIntl();
 
   return (
     <div className="graphiql-sidebar-section">
       {pluginContext?.plugins.map(plugin => {
         const isVisible = plugin === pluginContext.visiblePlugin;
-        const label = `${isVisible ? "Hide" : "Show"} ${plugin.title}`;
+        const pluginTitles: Record<string, string> = {
+          Docs: intl.formatMessage({ id: "/6/sPX", defaultMessage: "Docs" }),
+          History: intl.formatMessage({
+            id: "djJp6c",
+            defaultMessage: "History",
+          }),
+          Explorer: intl.formatMessage({
+            id: "mJN/zn",
+            defaultMessage: "Explorer",
+          }),
+        };
+        const pluginTitle = pluginTitles[plugin.title] ?? plugin.title;
+        const label = `${isVisible ? intl.formatMessage({ id: "VA/Z1S", defaultMessage: "Hide" }) : intl.formatMessage({ id: "K7AkdL", defaultMessage: "Show" })} ${pluginTitle}`;
         const Icon = plugin.icon;
 
         return (

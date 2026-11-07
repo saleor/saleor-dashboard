@@ -2,6 +2,7 @@ import { type Ripple } from "@dashboard/ripples/types";
 import { Text } from "@saleor/macaw-ui-next";
 import { Settings } from "lucide-react";
 import { type CSSProperties } from "react";
+import { FormattedMessage } from "react-intl";
 
 const settingsIconStyle: CSSProperties = {
   verticalAlign: "text-bottom",
@@ -9,10 +10,19 @@ const settingsIconStyle: CSSProperties = {
 
 const attributeListGroupByTypeContextual = (
   <Text color="default2">
-    Product and model attribute lists are grouped by type. Use the tabs to browse attributes per
-    type, or turn off <em>Group by type</em> in the view menu{" "}
-    <Settings size={16} aria-hidden style={settingsIconStyle} />. Your filters stay above the tabs,
-    and you can unassign attributes from a single type when one tab is selected.
+    <FormattedMessage
+      id="53HHG8"
+      defaultMessage="Product and model attribute lists are grouped by type. Use the tabs to browse attributes per type, or turn off "
+    />
+    <em>
+      <FormattedMessage id="wVrw7G" defaultMessage="Group by type" />
+    </em>
+    <FormattedMessage id="j7JZQv" defaultMessage=" in the view menu" />{" "}
+    <Settings size={16} aria-hidden style={settingsIconStyle} />
+    <FormattedMessage
+      id="jg5R+i"
+      defaultMessage=". Your filters stay above the tabs, and you can unassign attributes from a single type when one tab is selected."
+    />
   </Text>
 );
 

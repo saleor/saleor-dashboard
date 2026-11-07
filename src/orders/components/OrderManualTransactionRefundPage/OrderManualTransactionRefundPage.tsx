@@ -135,7 +135,9 @@ export const OrderManualTransactionRefundPage = ({
             <Box marginBottom={12}>
               <DashboardCard>
                 <DashboardCard.Header>
-                  <DashboardCard.Title>Refund reason</DashboardCard.Title>
+                  <DashboardCard.Title>
+                    <FormattedMessage id="yUvR0h" defaultMessage="Refund reason" />
+                  </DashboardCard.Title>
                 </DashboardCard.Header>
                 <DashboardCard.Content>
                   <ModelsPickerManualTransaction
