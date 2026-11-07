@@ -1,6 +1,10 @@
 import { type FetchResult } from "@apollo/client";
 import { type AuthSDK } from "@dashboard/auth/authSdk";
-import { getTransientRequestError, isTransientRequestError } from "@dashboard/auth/errors";
+import {
+  getTransientRequestError,
+  isTransientRequestError,
+  SessionEndedError,
+} from "@dashboard/auth/errors";
 import { isInternalToken, type JWTToken, storage } from "@dashboard/auth/tokenStorage";
 import jwtDecode from "jwt-decode";
 
@@ -20,9 +24,17 @@ let refreshPromise:
   | ReturnType<AuthSDK["refreshToken"]>
   | ReturnType<AuthSDK["refreshExternalToken"]>
   | null = null;
+/** The session the shared refresh belongs to; a new session never waits on an old refresh. */
+let refreshSessionId: number | null = null;
 const isTokenRefreshExternal = (
   result: RefreshTokenMutation | ExternalRefreshMutation,
 ): result is ExternalRefreshMutation => "externalRefresh" in result;
+const getRefreshedToken = (
+  result: RefreshTokenMutation | ExternalRefreshMutation | null | undefined,
+): string | null | undefined =>
+  result && isTokenRefreshExternal(result)
+    ? result.externalRefresh?.token
+    : (result as RefreshTokenMutation | undefined)?.tokenRefresh?.token;
 
 /**
  * Single-flight token refresh shared by every in-flight request.
@@ -35,7 +47,7 @@ const isTokenRefreshExternal = (
  * the request is still running.
  */
 const runTokenRefresh = (owner: string) => {
-  if (refreshPromise) {
+  if (refreshPromise && refreshSessionId === storage.getSessionId()) {
     return refreshPromise;
   }
 
@@ -44,6 +56,7 @@ const runTokenRefresh = (owner: string) => {
     : authClient!.refreshExternalToken();
 
   refreshPromise = pending;
+  refreshSessionId = storage.getSessionId();
 
   void pending
     .finally(() => {
@@ -71,9 +84,12 @@ export const refreshAccessToken = async (): Promise<string | null> => {
     return null;
   }
 
+  const sessionId = storage.getSessionId();
+
   await runTokenRefresh(jwtDecode<JWTToken>(token).owner);
 
-  return storage.getAccessToken();
+  // A logout or another login while waiting: the caller asked for the previous session's token.
+  return storage.getSessionId() === sessionId ? storage.getAccessToken() : null;
 };
 
 type FetchConfig = Partial<{
@@ -127,6 +143,12 @@ export const createFetch =
       // ignore
     }
 
+    const sessionId = storage.getSessionId();
+    // A logout or another login happened while this request waited for a token refresh. The
+    // request belongs to a session that is gone, so it must not be retried with, or answered for,
+    // the new one.
+    const hasSessionEnded = (): boolean => storage.getSessionId() !== sessionId;
+
     if (autoTokenRefresh && token) {
       // auto refresh token before provided time skew (in seconds) until it expires
       const decodedToken = jwtDecode<JWTToken>(token);
@@ -134,13 +156,17 @@ export const createFetch =
       const owner = decodedToken.owner;
 
       try {
-        if (refreshPromise) {
+        if (refreshPromise && refreshSessionId === sessionId) {
           await refreshPromise;
         } else if (Date.now() >= expirationTime) {
           await runTokenRefresh(owner);
         }
       } catch {
         // ignore
+      }
+
+      if (hasSessionEnded()) {
+        throw new SessionEndedError();
       }
 
       token = storage.getAccessToken();
@@ -172,6 +198,10 @@ export const createFetch =
         try {
           refreshTokenResponse = await runTokenRefresh(owner);
         } catch (error) {
+          if (hasSessionEnded()) {
+            throw new SessionEndedError();
+          }
+
           // The refresh request itself failed (offline, a timeout, a 502 or 503), so the session
           // may still be valid. Report that failure instead of the expired-token response, which
           // the query and mutation error handlers treat as a logout. The next request refreshes
@@ -183,11 +213,19 @@ export const createFetch =
           return response;
         }
 
-        if (
-          refreshTokenResponse.data && isTokenRefreshExternal(refreshTokenResponse.data)
-            ? refreshTokenResponse.data.externalRefresh?.token
-            : (refreshTokenResponse.data as RefreshTokenMutation | undefined)?.tokenRefresh?.token
-        ) {
+        const refreshed = !!getRefreshedToken(refreshTokenResponse.data);
+
+        if (hasSessionEnded()) {
+          // The refusal of this session's refresh token logged out (no session is stored now):
+          // return the expired response, so the error handlers say the session expired.
+          if (!refreshed && storage.getRefreshToken() === null) {
+            return response;
+          }
+
+          throw new SessionEndedError();
+        }
+
+        if (refreshed) {
           // check if mutation returns a valid token after refresh and retry the request
           return createFetch({
             autoTokenRefresh: false,

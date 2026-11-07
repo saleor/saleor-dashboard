@@ -8,6 +8,7 @@ import {
   type QueryResult,
   useQuery as useBaseQuery,
 } from "@apollo/client";
+import { isSessionEndedError } from "@dashboard/auth/errors";
 import { useUser } from "@dashboard/auth/useUser";
 import { handleQueryAuthError } from "@dashboard/auth/utils";
 import { type PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
@@ -100,6 +101,11 @@ export function useQuery<TData, TVariables>(
     errorPolicy: "all",
     fetchPolicy: fetchPolicy ?? "cache-and-network",
     onError: error => {
+      // Dropped because its session ended: nothing went wrong for the merchant.
+      if (isSessionEndedError(error)) {
+        return;
+      }
+
       if (handleError) {
         handleError(error);
       } else {

@@ -1,8 +1,9 @@
 import { ApolloError } from "@apollo/client";
 import { type AuthSDK } from "@dashboard/auth/authSdk";
+import { SessionEndedError } from "@dashboard/auth/errors";
 import { GraphQLError, type OperationDefinitionNode } from "graphql";
 
-import { createFetch, registerAuthClient } from "./authFetch";
+import { createFetch, refreshAccessToken, registerAuthClient } from "./authFetch";
 import {
   ExternalRefreshDocument,
   ExternalRefreshWithUserDocument,
@@ -23,6 +24,7 @@ jest.mock("@dashboard/auth/tokenStorage", () => ({
   storage: {
     getAccessToken: jest.fn(),
     getRefreshToken: jest.fn(),
+    getSessionId: jest.fn(() => 1),
     setAccessToken: jest.fn(),
     setTokens: jest.fn(),
     getAuthPluginId: jest.fn(),
@@ -455,6 +457,150 @@ describe("createFetch", () => {
 
         // Assert
         expect(result).toBe(expiredResponse);
+      });
+    });
+
+    describe("when the session ends while the request waits for a refresh", () => {
+      const expiredResponse = createMockResponse({
+        errors: [{ extensions: { exception: { code: "ExpiredSignatureError" } } }],
+      });
+      const runRequest = (): Promise<Response> =>
+        createFetch({ autoTokenRefresh: true, refreshOnUnauthorized: true })(
+          "http://localhost:8000/graphql/",
+          {},
+        );
+      // What a logout (no stored session) or another login (a new stored session) leaves behind.
+      const endSession = (nextRefreshToken: string | null): void => {
+        storage.getSessionId.mockReturnValue(2);
+        storage.getRefreshToken.mockReturnValue(nextRefreshToken);
+      };
+
+      beforeEach(() => {
+        storage.getAccessToken.mockReturnValue("test-token");
+        storage.getRefreshToken.mockReturnValue("refresh-token");
+        jwtDecode.mockReturnValue({ exp: Math.floor(Date.now() / 1000) + 600, owner: "saleor" });
+        mockFetch.mockResolvedValue(expiredResponse);
+      });
+
+      afterEach(() => {
+        storage.getSessionId.mockImplementation(() => 1);
+        mockRefreshToken.mockReset();
+        mockRefreshToken.mockResolvedValue({ data: { tokenRefresh: { token: "new-token" } } });
+      });
+
+      it("drops the request instead of retrying it for the next session", async () => {
+        // Arrange
+        mockRefreshToken.mockImplementationOnce(async () => {
+          endSession("next-session-refresh-token");
+
+          return { data: { tokenRefresh: { token: "old-session-token" } } };
+        });
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBeInstanceOf(SessionEndedError);
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(mockLogout).not.toHaveBeenCalled();
+      });
+
+      it("does not log out a newer session when an old refresh is refused", async () => {
+        // Arrange
+        mockRefreshToken.mockImplementationOnce(async () => {
+          endSession("next-session-refresh-token");
+
+          return { data: { tokenRefresh: { token: null } } };
+        });
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBeInstanceOf(SessionEndedError);
+        expect(mockLogout).not.toHaveBeenCalled();
+      });
+
+      it("returns the expired response when this session's own refusal logged out", async () => {
+        // Arrange
+        mockRefreshToken.mockImplementationOnce(async () => {
+          endSession(null);
+
+          return { data: { tokenRefresh: { token: null } } };
+        });
+
+        // Act
+        const result = await runRequest();
+
+        // Assert
+        expect(result).toBe(expiredResponse);
+        expect(mockLogout).not.toHaveBeenCalled();
+      });
+
+      it("leaves requests sent without a token alone", async () => {
+        // Arrange
+        const response = createMockResponse({ data: { shop: {} } });
+
+        storage.getAccessToken.mockReturnValue(null);
+        mockFetch.mockImplementationOnce(async () => {
+          endSession("next-session-refresh-token");
+
+          return response;
+        });
+
+        // Act
+        const result = await runRequest();
+
+        // Assert
+        expect(result).toBe(response);
+      });
+
+      it("starts a new refresh for the next session instead of waiting on the old one", async () => {
+        // Arrange
+        let finishOldRefresh: (value: unknown) => void = () => undefined;
+
+        mockRefreshToken
+          .mockImplementationOnce(() => new Promise(resolve => (finishOldRefresh = resolve)))
+          .mockResolvedValueOnce({ data: { tokenRefresh: { token: "next-session-token" } } });
+
+        const oldRequest = runRequest().catch(() => undefined);
+
+        for (let tick = 0; tick < 20 && mockRefreshToken.mock.calls.length === 0; tick++) {
+          await Promise.resolve();
+        }
+
+        endSession("next-session-refresh-token");
+
+        // Act
+        await runRequest().catch(() => undefined);
+
+        // Assert
+        expect(mockRefreshToken).toHaveBeenCalledTimes(2);
+
+        finishOldRefresh({ data: { tokenRefresh: { token: "old-session-token" } } });
+        await oldRequest;
+      });
+
+      it("gives no token to a caller whose session ended during the refresh", async () => {
+        // Arrange
+        mockRefreshToken
+          .mockImplementationOnce(async () => {
+            endSession("next-session-refresh-token");
+
+            return { data: { tokenRefresh: { token: "old-session-token" } } };
+          })
+          .mockResolvedValueOnce({ data: { tokenRefresh: { token: "fresh-token" } } });
+
+        // Act
+        const afterSessionEnded = await refreshAccessToken();
+
+        storage.getSessionId.mockImplementation(() => 1);
+
+        const sameSession = await refreshAccessToken();
+
+        // Assert
+        expect(afterSessionEnded).toBeNull();
+        expect(sameSession).toBe("test-token");
       });
     });
   });

@@ -4,8 +4,10 @@ import { GraphQLError } from "graphql";
 import {
   getTransientRequestError,
   isJwtError,
+  isSessionEndedError,
   isTokenExpired,
   isTransientRequestError,
+  SessionEndedError,
 } from "./errors";
 
 const cases: Array<{
@@ -99,5 +101,27 @@ describe("isTransientRequestError", () => {
 
     // Assert
     expect(reported).toBe(networkError);
+  });
+});
+
+describe("isSessionEndedError", () => {
+  it.each<[string, unknown, boolean]>([
+    [
+      "a dropped request as Apollo reports it",
+      new ApolloError({ networkError: new SessionEndedError() }),
+      true,
+    ],
+    ["the error itself", new SessionEndedError(), true],
+    [
+      "another network error",
+      new ApolloError({ networkError: new TypeError("Failed to fetch") }),
+      false,
+    ],
+  ])("recognises %s: %s", (_name, error, expected) => {
+    // Arrange & Act
+    const ended = isSessionEndedError(error);
+
+    // Assert
+    expect(ended).toBe(expected);
   });
 });
