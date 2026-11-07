@@ -34,3 +34,11 @@ export const resetAuthState = (): AuthState =>
   authStateVar({ authenticated: false, authenticating: false, isStaff: false });
 
 export const useAuthState = (): AuthState => useReactiveVar(authStateVar);
+
+/**
+ * The stored session couldn't be checked at startup because Saleor didn't answer (offline, a
+ * timeout, a 502 or 503). Kept apart from `authStateVar`: it describes the API, not the session.
+ */
+export const apiUnreachableVar = makeVar(false);
+
+export const useApiUnreachable = (): boolean => useReactiveVar(apiUnreachableVar);
