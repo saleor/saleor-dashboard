@@ -65,6 +65,23 @@ export function getTransientRequestError(error: unknown): unknown {
   return error instanceof ApolloError && error.networkError ? error.networkError : error;
 }
 
+/**
+ * A request dropped because the session it belonged to ended while it waited for a token refresh
+ * (a logout, or another login). Nothing went wrong for the merchant, so it is not reported.
+ */
+export class SessionEndedError extends Error {
+  constructor() {
+    super("The session ended while the request was waiting for a token refresh");
+    this.name = "SessionEndedError";
+  }
+}
+
+export function isSessionEndedError(error: unknown): boolean {
+  const cause = error instanceof ApolloError ? error.networkError : error;
+
+  return cause instanceof Error && cause.name === "SessionEndedError";
+}
+
 function getAuthErrorType(graphQLError: GraphQLError): UserContextError {
   switch ((graphQLError.extensions?.exception as ExceptionWithCode)?.code as AuthError) {
     case AuthError.PermissionDenied:

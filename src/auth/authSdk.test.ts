@@ -17,6 +17,8 @@ import { storage } from "./tokenStorage";
 jest.mock("./tokenStorage", () => ({
   storage: {
     setTokens: jest.fn(),
+    renewTokens: jest.fn(),
+    getSessionId: jest.fn(() => 1),
     setAccessToken: jest.fn(),
     setAuthPluginId: jest.fn(),
     getAccessToken: jest.fn(),
@@ -623,7 +625,7 @@ describe("auth", () => {
       await sdk.refreshExternalToken();
 
       // Assert
-      expect(mockedStorage.setTokens).toHaveBeenCalledWith({
+      expect(mockedStorage.renewTokens).toHaveBeenCalledWith({
         accessToken: "new-ext-access",
         refreshToken: "new-ext-refresh",
       });
@@ -672,11 +674,102 @@ describe("auth", () => {
       await sdk.refreshExternalToken(true);
 
       // Assert
-      expect(mockedStorage.setTokens).toHaveBeenCalledWith({
+      expect(mockedStorage.renewTokens).toHaveBeenCalledWith({
         accessToken: "new-access-with-user",
         refreshToken: "new-refresh-with-user",
       });
       expect(mockCache.writeQuery).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("refresh results from an ended session", () => {
+    // The refresh starts in session 1; a logout or another login moves storage to session 2.
+    const endSessionDuringRefresh = (): void => {
+      mockedStorage.getSessionId.mockReturnValueOnce(1).mockReturnValue(2);
+    };
+
+    afterEach(() => {
+      mockedStorage.getSessionId.mockImplementation(() => 1);
+    });
+
+    it.each([false, true])(
+      "ignores a new token once the session has ended (with user: %s)",
+      async includeUser => {
+        // Arrange
+        mockedStorage.getRefreshToken.mockReturnValue("old-refresh-token");
+        endSessionDuringRefresh();
+        client.mutate.mockImplementation(async (opts: any) => {
+          const data = { tokenRefresh: { token: "old-session-token", errors: [] } };
+
+          opts.update(mockCache, { data });
+
+          return { data };
+        });
+
+        // Act
+        await sdk.refreshToken(includeUser);
+
+        // Assert
+        expect(mockedStorage.setAccessToken).not.toHaveBeenCalled();
+        expect(authStateVar().authenticated).toBe(false);
+      },
+    );
+
+    it("does not log out a newer session when an old refresh is refused", async () => {
+      // Arrange
+      mockedStorage.getRefreshToken.mockReturnValue("old-refresh-token");
+      endSessionDuringRefresh();
+      client.mutate.mockImplementation(async (opts: any) => {
+        const data = { tokenRefresh: { token: null, errors: [{ message: "expired" }] } };
+
+        opts.update(mockCache, { data });
+
+        return { data };
+      });
+
+      // Act
+      await sdk.refreshToken();
+
+      // Assert
+      expect(mockedStorage.clear).not.toHaveBeenCalled();
+      expect(client.clearStore).not.toHaveBeenCalled();
+    });
+
+    it("does not store an old session's rotated SSO tokens", async () => {
+      // Arrange
+      mockedStorage.getRefreshToken.mockReturnValue("old-refresh-token");
+      mockedStorage.getAuthPluginId.mockReturnValue("plugin");
+      endSessionDuringRefresh();
+      client.mutate.mockImplementation(async (opts: any) => {
+        const data = {
+          externalRefresh: { token: "old-access", refreshToken: "old-rotated", errors: [] },
+        };
+
+        opts.update(mockCache, { data });
+
+        return { data };
+      });
+
+      // Act
+      await sdk.refreshExternalToken();
+
+      // Assert
+      expect(mockedStorage.renewTokens).not.toHaveBeenCalled();
+      expect(mockedStorage.setTokens).not.toHaveBeenCalled();
+    });
+
+    it("keeps refresh results out of the Apollo cache", async () => {
+      // Arrange
+      mockedStorage.getRefreshToken.mockReturnValue("refresh-token");
+      client.mutate.mockResolvedValue({ data: { tokenRefresh: { token: "t", errors: [] } } });
+
+      // Act
+      await sdk.refreshToken(true);
+
+      // Assert
+      expect(client.mutate).toHaveBeenCalledWith(
+        expect.objectContaining({ fetchPolicy: "no-cache" }),
+      );
     });
   });
 });

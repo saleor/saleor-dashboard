@@ -6,7 +6,7 @@ import {
   type MutationResult,
   useMutation as useBaseMutation,
 } from "@apollo/client";
-import { isJwtError } from "@dashboard/auth/errors";
+import { isJwtError, isSessionEndedError } from "@dashboard/auth/errors";
 import { useUser } from "@dashboard/auth/useUser";
 import { handleNestedMutationErrors, showAllErrors } from "@dashboard/auth/utils";
 import { commonMessages } from "@dashboard/intl";
@@ -52,7 +52,8 @@ export function useMutation<TData, TVariables>(
       }
     },
     onError: (err: ApolloError) => {
-      if (!disableErrorHandling) {
+      // Dropped because its session ended: nothing went wrong for the merchant.
+      if (!disableErrorHandling && !isSessionEndedError(err)) {
         if (err?.graphQLErrors?.length > 0) {
           if (hasError(err, GqlErrors.ReadOnlyException)) {
             notify({
