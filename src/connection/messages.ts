@@ -33,6 +33,17 @@ export const connectionMessages = defineMessages({
     defaultMessage: "Connected again.",
     description: "connection banner text shown briefly once Saleor answers again",
   },
+  actionFailedTitle: {
+    id: "Cz5tnE",
+    defaultMessage: "No answer from Saleor",
+    description: "toast heading when an action got no answer because Saleor could not be reached",
+  },
+  actionFailedDescription: {
+    id: "1ncnQ9",
+    defaultMessage: "Check whether the change went through before trying again.",
+    description:
+      "toast text when an action got no answer from Saleor, so it may or may not have been applied",
+  },
   loadFailedTitle: {
     id: "Y5oSsQ",
     defaultMessage: "Couldn't load some data",

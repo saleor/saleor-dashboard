@@ -11,6 +11,9 @@ import {
 import { isSessionEndedError, isSessionExpiredError } from "@dashboard/auth/errors";
 import { useUser } from "@dashboard/auth/useUser";
 import { handleQueryAuthError } from "@dashboard/auth/utils";
+import { connectionMonitor } from "@dashboard/connection/appConnectionMonitor";
+import { isConnectionError } from "@dashboard/connection/connectionErrors";
+import { connectionMessages } from "@dashboard/connection/messages";
 import { type PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
 import { PermissionEnum, type UserPermissionFragment } from "@dashboard/graphql/types.generated";
 import { commonMessages } from "@dashboard/intl";
@@ -116,9 +119,18 @@ export function useQuery<TData, TVariables>(
 
       if (handleError) {
         handleError(error);
-      } else {
+      } else if (!isConnectionError(error)) {
         handleQueryAuthError(error, notify, user.logout, intl);
+      } else if (!connectionMonitor.isBannerAttached()) {
+        // No connection banner on this screen (sign-in, startup) to explain the failure and
+        // reload the data, so say it here, without the network text.
+        notify({
+          status: "error",
+          title: intl.formatMessage(connectionMessages.loadFailedTitle),
+          text: intl.formatMessage(connectionMessages.loadFailedDescription),
+        });
       }
+      // Otherwise the banner covers the outage, and the query reloads once Saleor answers.
     },
     skip,
     variables: variablesWithPermissions,
