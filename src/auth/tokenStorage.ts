@@ -1,3 +1,5 @@
+import { advanceSession } from "./sessionRefresh";
+
 const LOCAL_STORAGE_EXISTS = typeof window !== "undefined" && !!window.localStorage;
 
 /**
@@ -35,6 +37,8 @@ export let storage: {
 };
 
 export const createStorage = (autologinEnabled: boolean): void => {
+  advanceSession();
+
   let authPluginId: string | null = LOCAL_STORAGE_EXISTS
     ? localStorage.getItem(SALEOR_AUTH_PLUGIN_ID)
     : null;
