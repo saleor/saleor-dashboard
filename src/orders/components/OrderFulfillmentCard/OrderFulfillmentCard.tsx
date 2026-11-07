@@ -112,7 +112,10 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                 onClick={onFulfillmentShowMetadata}
                 data-test-id="show-fulfillment-metadata"
                 icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-                title="Edit fulfillment group metadata"
+                title={intl.formatMessage({
+                  id: "2RR/hj",
+                  defaultMessage: "Edit fulfillment group metadata",
+                })}
               />
             )}
             <ActionButtons

@@ -1,13 +1,14 @@
 import { RippleAnimation } from "@dashboard/ripples/components/RippleAnimation";
+import { localizeRippleContent } from "@dashboard/ripples/contentMessages";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export const Ripple = (props: { model: RippleModel }) => {
-  const content = props.model.content.contextual;
-  const isPlainString = typeof content === "string";
   const intl = useIntl();
+  const content = localizeRippleContent(props.model, intl).contextual;
+  const isPlainString = typeof content === "string";
   const { setFirstSeenFlag, getShouldShow, setManuallyHidden } = useRippleStorage();
 
   if (!getShouldShow(props.model)) {
@@ -28,7 +29,9 @@ export const Ripple = (props: { model: RippleModel }) => {
       <Tooltip.Content align="start" side="bottom">
         <Tooltip.Arrow />
         <Box __maxWidth="320px">
-          <Tooltip.ContentHeading>Hint</Tooltip.ContentHeading>
+          <Tooltip.ContentHeading>
+            <FormattedMessage id="n6WpC1" defaultMessage="Hint" />
+          </Tooltip.ContentHeading>
           <Box marginBottom={4}>{isPlainString ? <Text>{content}</Text> : content}</Box>
           <Box display="flex" justifyContent="flex-end" gap={2}>
             {props.model.actions?.map((rippleAction, index) => {

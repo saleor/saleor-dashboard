@@ -10,6 +10,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Pencil } from "lucide-react";
 import { type KeyboardEvent, useState } from "react";
+import { useIntl } from "react-intl";
 
 import styles from "./CustomerAddressChoiceCard.module.css";
 
@@ -65,6 +66,8 @@ export const CustomerAddressChoiceCard = ({
   onSelect,
   onEditClick,
 }: CustomerAddressChoiceCardProps) => {
+  const intl = useIntl();
+
   const [isHoverState, setHoverState] = useState(false);
   const isSelectable = onSelect != null;
 
@@ -114,7 +117,10 @@ export const CustomerAddressChoiceCard = ({
             event.stopPropagation();
             onEditClick?.();
           }}
-          aria-label="Edit address"
+          aria-label={intl.formatMessage({
+            id: "ex+q9+",
+            defaultMessage: "Edit address",
+          })}
         >
           <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
         </button>

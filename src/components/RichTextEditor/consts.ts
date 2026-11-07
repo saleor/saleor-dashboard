@@ -9,6 +9,9 @@ import Paragraph from "@editorjs/paragraph";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
 import createGenericInlineTool from "editorjs-inline-tool";
+import { type IntlShape } from "react-intl";
+
+import { editorMessages } from "./i18n";
 
 const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
 
@@ -18,8 +21,7 @@ interface ImageToolInternals {
   uploadUrl(url: string): void;
 }
 
-// Editor.js renders its own UI in English (toolbox names, tunes, error toasts), so
-// these follow suit rather than being the only translated strings in the editor.
+// Native Editor.js dictionary keys remain in English; the instance API translates them.
 const ADD_BY_LINK_LABEL = "Add image by link";
 const ADD_BY_LINK_PROMPT = "Paste a link to an image";
 
@@ -29,6 +31,15 @@ const ADD_BY_LINK_PROMPT = "Paste a link to an image";
  * `<img>`), or entered through the toolbox. Existing image blocks still render.
  */
 class ExternalImage extends Image {
+  private readonly imageI18n?: ConstructorParameters<typeof Image>[0]["api"]["i18n"];
+
+  constructor(options: ConstructorParameters<typeof Image>[0]) {
+    super(options);
+    // ImageTool marks its own API private. Keep a UI-only reference rather than
+    // placing translated labels in image data or relying on private internals.
+    this.imageI18n = options.api.i18n;
+  }
+
   // Drop the drag-n-drop / clipboard file handlers - without an uploader they can
   // only fail. URL and <img> paste handling stays.
   static get pasteConfig(): PasteConfig {
@@ -42,7 +53,7 @@ class ExternalImage extends Image {
   // ponytail: window.prompt keeps this to a few lines while uploads are disabled;
   // replace it with a proper inline URL field if this outlives the missing API.
   askForUrl(): void {
-    const url = window.prompt(ADD_BY_LINK_PROMPT);
+    const url = window.prompt(this.imageI18n?.t(ADD_BY_LINK_PROMPT) ?? ADD_BY_LINK_PROMPT);
 
     if (url) {
       (this as unknown as ImageToolInternals).uploadUrl(url.trim());
@@ -120,12 +131,31 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
       },
     },
   },
-  strikethrough: createGenericInlineTool({
-    sanitize: {
-      s: {},
+  strikethrough: Object.assign(
+    createGenericInlineTool({
+      sanitize: {
+        s: {},
+      },
+      shortcut: "CMD+S",
+      tagName: "s",
+      toolboxIcon: StrikethroughIcon,
+    }),
+    { title: "Strikethrough" },
+  ),
+};
+
+/** Keep the exported English tools for existing consumers and tests. */
+export const getTools = (intl: IntlShape): typeof tools => {
+  const image = tools.image as ToolSettings;
+
+  return {
+    ...tools,
+    image: {
+      ...image,
+      config: {
+        ...image.config,
+        buttonContent: intl.formatMessage(editorMessages.imageByLink),
+      },
     },
-    shortcut: "CMD+S",
-    tagName: "s",
-    toolboxIcon: StrikethroughIcon,
-  }),
+  };
 };

@@ -3,7 +3,7 @@ import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Check, ChevronDown, Circle, Lock } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, type ReactNode, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./SetupChecklist.module.css";
 import { SetupChecklistReviewList } from "./SetupChecklistReviewList";
@@ -90,6 +90,7 @@ const SetupTaskList = ({
   initialExpandedId,
   afterSectionHeader = false,
 }: SetupTaskListProps) => {
+  const intl = useIntl();
   const [expandedId, setExpandedId] = useState<string | null>(initialExpandedId);
 
   const toggleTask = (taskId: string) => {
@@ -139,7 +140,17 @@ const SetupTaskList = ({
                     className={styles.chevronButton}
                     onClick={() => toggleTask(task.id)}
                     aria-expanded={isExpanded}
-                    aria-label={isExpanded ? "Collapse details" : "Expand details"}
+                    aria-label={
+                      isExpanded
+                        ? intl.formatMessage({
+                            id: "onvTQK",
+                            defaultMessage: "Collapse details",
+                          })
+                        : intl.formatMessage({
+                            id: "9GS7jq",
+                            defaultMessage: "Expand details",
+                          })
+                    }
                     data-test-id={`setup-checklist-task-expand-${task.id}`}
                   >
                     <Box
@@ -251,6 +262,7 @@ export const SetupChecklist = ({
   className,
   "data-test-id": dataTestId = "setup-checklist",
 }: SetupChecklistProps) => {
+  const intl = useIntl();
   const resolvedProgress = progress ?? getDefaultProgress(tasks);
   const defaultExpandedId = getDefaultExpandedId(tasks);
 
@@ -267,7 +279,14 @@ export const SetupChecklist = ({
             color="default2"
             className={styles.progressCount}
             data-test-id="setup-checklist-progress"
-            aria-label={`${resolvedProgress.done} of ${resolvedProgress.total}`}
+            aria-label={intl.formatMessage(
+              {
+                id: "RvRHDy",
+                defaultMessage: "{done} of {total}",
+                description: "setup checklist progress counter",
+              },
+              { done: resolvedProgress.done, total: resolvedProgress.total },
+            )}
           >
             <FormattedMessage
               id="RvRHDy"

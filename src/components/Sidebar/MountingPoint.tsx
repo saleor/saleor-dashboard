@@ -5,6 +5,7 @@ import { Avatar, Box, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { useIntl } from "react-intl";
 
 import { type SidebarContentVariant } from "./Content";
 import styles from "./MountingPoint.module.css";
@@ -13,6 +14,7 @@ import {
   SidebarDrawerOpenButton,
   SidebarExpandButton,
 } from "./SidebarCollapseToggle";
+import { sidebarStoreAvatarMessages } from "./sidebarStoreAvatarMessages";
 import { useSidebarLogo } from "./useSidebarLogo";
 
 interface MountingPointProps {
@@ -21,6 +23,7 @@ interface MountingPointProps {
 }
 
 export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
+  const intl = useIntl();
   const logo = useSidebarLogo();
   const { isCloudInstance, isAuthenticatedViaCloud } = useCloud();
 
@@ -43,7 +46,12 @@ export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
       alignItems="center"
       className={clsx(styles.header, styles.expandedHeader)}
     >
-      <Avatar.Store src={logo} scheme="accent1" size="small" />
+      <Avatar.Store
+        src={logo}
+        scheme="accent1"
+        size="small"
+        aria-label={intl.formatMessage(sidebarStoreAvatarMessages.storeAvatar)}
+      />
       <Text size={3} fontWeight="bold" __flex="1" className="ellipsis">
         Saleor Dashboard
       </Text>

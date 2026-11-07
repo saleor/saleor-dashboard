@@ -1,5 +1,6 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { DateTime } from "../Date/DateTime";
 import { type TimelineEntity, TimelineLink } from "./TimelineLink";
@@ -50,7 +51,7 @@ export const TimelineEventHeader = ({
 
   const attribution = actorName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
-      by{" "}
+      <FormattedMessage id="wTNySU" defaultMessage="by" />{" "}
       {actorLink ? (
         <TimelineLink href={actorLink} entity={actorEntity(actor)} color="default2">
           {actorName}
