@@ -1,6 +1,12 @@
+import { ApolloError } from "@apollo/client";
 import { GraphQLError } from "graphql";
 
-import { isJwtError, isTokenExpired } from "./errors";
+import {
+  getTransientRequestError,
+  isJwtError,
+  isTokenExpired,
+  isTransientRequestError,
+} from "./errors";
 
 const cases: Array<{
   name: string;
@@ -59,5 +65,39 @@ describe("JWT error classification", () => {
     // Assert
     expect(actualJwtError).toBe(jwtError);
     expect(actualExpired).toBe(expired);
+  });
+});
+
+describe("isTransientRequestError", () => {
+  it.each<[string, unknown, boolean]>([
+    [
+      "a request that failed on the network",
+      new ApolloError({ networkError: new TypeError("x") }),
+      true,
+    ],
+    ["fetch failing while offline", new TypeError("Failed to fetch"), true],
+    [
+      "an API error",
+      new ApolloError({ graphQLErrors: [new GraphQLError("Invalid token")] }),
+      false,
+    ],
+    ["another error", new Error("Unexpected"), false],
+  ])("treats %s as transient: %s", (_name, error, expected) => {
+    // Arrange & Act
+    const transient = isTransientRequestError(error);
+
+    // Assert
+    expect(transient).toBe(expected);
+  });
+
+  it("reports the network error behind a failed request", () => {
+    // Arrange
+    const networkError = new TypeError("Failed to fetch");
+
+    // Act
+    const reported = getTransientRequestError(new ApolloError({ networkError }));
+
+    // Assert
+    expect(reported).toBe(networkError);
   });
 });

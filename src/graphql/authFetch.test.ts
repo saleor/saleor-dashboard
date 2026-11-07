@@ -1,5 +1,6 @@
+import { ApolloError } from "@apollo/client";
 import { type AuthSDK } from "@dashboard/auth/authSdk";
-import { type OperationDefinitionNode } from "graphql";
+import { GraphQLError, type OperationDefinitionNode } from "graphql";
 
 import { createFetch, registerAuthClient } from "./authFetch";
 import {
@@ -400,6 +401,61 @@ describe("createFetch", () => {
       expect(mockRefreshToken).toHaveBeenCalled();
       expect(mockFetch).toHaveBeenCalledTimes(2);
       expect(result).toBe(successResponse);
+    });
+    describe("when the token expired and the refresh does not succeed", () => {
+      const expiredResponse = createMockResponse({
+        errors: [{ extensions: { exception: { code: "ExpiredSignatureError" } } }],
+      });
+      const runRequest = (): Promise<Response> =>
+        createFetch({ autoTokenRefresh: true, refreshOnUnauthorized: true })(
+          "http://localhost:8000/graphql/",
+          {},
+        );
+
+      beforeEach(() => {
+        storage.getAccessToken.mockReturnValue("test-token");
+        jwtDecode.mockReturnValue({ exp: Math.floor(Date.now() / 1000) + 600, owner: "saleor" });
+        mockFetch.mockResolvedValue(expiredResponse);
+      });
+
+      it("keeps the session and reports the failure when the refresh request fails", async () => {
+        // Arrange
+        const networkError = new TypeError("Failed to fetch");
+
+        mockRefreshToken.mockRejectedValueOnce(new ApolloError({ networkError }));
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBe(networkError);
+        expect(mockLogout).not.toHaveBeenCalled();
+      });
+
+      it("logs out and returns the expired response when the API refuses the refresh token", async () => {
+        // Arrange
+        mockRefreshToken.mockResolvedValueOnce({ data: { tokenRefresh: { token: null } } });
+
+        // Act
+        const result = await runRequest();
+
+        // Assert
+        expect(result).toBe(expiredResponse);
+        expect(mockLogout).toHaveBeenCalledTimes(1);
+      });
+
+      it("returns the expired response when the refresh fails with an API error", async () => {
+        // Arrange
+        mockRefreshToken.mockRejectedValueOnce(
+          new ApolloError({ graphQLErrors: [new GraphQLError("Invalid token")] }),
+        );
+
+        // Act
+        const result = await runRequest();
+
+        // Assert
+        expect(result).toBe(expiredResponse);
+      });
     });
   });
 });
