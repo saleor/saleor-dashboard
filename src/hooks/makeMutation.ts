@@ -9,6 +9,8 @@ import {
 import { isJwtError, isSessionEndedError } from "@dashboard/auth/errors";
 import { useUser } from "@dashboard/auth/useUser";
 import { handleNestedMutationErrors, showAllErrors } from "@dashboard/auth/utils";
+import { isConnectionError } from "@dashboard/connection/connectionErrors";
+import { connectionMessages } from "@dashboard/connection/messages";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationStatus } from "@dashboard/misc";
 import { type MutationResultAdditionalProps } from "@dashboard/types";
@@ -74,6 +76,15 @@ export function useMutation<TData, TVariables>(
               });
             });
           }
+        } else if (isConnectionError(err)) {
+          // Without the network or parser text. The request may still have reached Saleor (a
+          // 504, or a connection lost after sending), so it doesn't claim nothing was saved:
+          // retrying a create could make a duplicate. Stays until dismissed, like other errors.
+          notify({
+            status: "error",
+            title: intl.formatMessage(connectionMessages.actionFailedTitle),
+            text: intl.formatMessage(connectionMessages.actionFailedDescription),
+          });
         } else {
           showAllErrors({ notify, error: err });
         }

@@ -181,7 +181,13 @@ export const createFetch =
 
     if (refreshOnUnauthorized && token) {
       const response = await fetch(input, init);
-      const data: FetchResult = await response.clone().json();
+      // A proxy's error page (a 502 or 503 while Saleor is down) isn't JSON. It can't carry an
+      // expired-token error, so hand it on: Apollo reports it with its status, which tells a
+      // connection failure apart from an error Saleor returned.
+      const data: FetchResult | null = await response
+        .clone()
+        .json()
+        .catch(() => null);
       const isUnauthenticated = data?.errors?.some(
         error =>
           (error.extensions?.exception as Record<string, unknown>)?.code ===
