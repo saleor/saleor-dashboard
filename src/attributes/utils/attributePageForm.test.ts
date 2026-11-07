@@ -1,11 +1,17 @@
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
 import { AttributeInputTypeEnum, AttributeTypeEnum } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 
 import {
   getAttributePageInitialForm,
   getAttributeUpdateComparableData,
+  getDeprecatedAttributeInputEvents,
   isAttributeUpdateFormPristine,
 } from "./attributePageForm";
+
+jest.mock("@dashboard/graphql/schemaVersion", () => ({
+  isMainSchema: jest.fn(() => true),
+}));
 
 const baseFormData: AttributePageFormData = {
   availableInGrid: true,
@@ -126,5 +132,49 @@ describe("isAttributeUpdateFormPristine", () => {
 
     // Assert
     expect(pristine).toBe(true);
+  });
+});
+
+describe("getDeprecatedAttributeInputEvents", () => {
+  it("returns no events when deprecated fields are unchanged", () => {
+    // Arrange
+    const current: AttributePageFormData = { ...baseFormData, name: "Size" };
+
+    // Act
+    const events = getDeprecatedAttributeInputEvents(current, baseFormData);
+
+    // Assert
+    expect(events).toEqual([]);
+  });
+
+  it("returns an event for each changed deprecated field", () => {
+    // Arrange
+    const current: AttributePageFormData = {
+      ...baseFormData,
+      filterableInStorefront: false,
+      storefrontSearchPosition: "5",
+    };
+
+    // Act
+    const events = getDeprecatedAttributeInputEvents(current, baseFormData);
+
+    // Assert
+    expect(events).toEqual([
+      "attribute_filterable_in_storefront_submitted",
+      "attribute_storefront_search_position_submitted",
+    ]);
+  });
+
+  it("returns no events on the staging schema, which does not send these fields", () => {
+    // Arrange
+    (isMainSchema as jest.Mock).mockReturnValueOnce(false);
+
+    const current: AttributePageFormData = { ...baseFormData, filterableInStorefront: false };
+
+    // Act
+    const events = getDeprecatedAttributeInputEvents(current, baseFormData);
+
+    // Assert
+    expect(events).toEqual([]);
   });
 });
