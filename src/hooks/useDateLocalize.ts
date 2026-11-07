@@ -1,5 +1,6 @@
 import { LocaleContext } from "@dashboard/components/Locale/Locale";
 import { useContext } from "react";
+import { useIntl } from "react-intl";
 
 export type LocalizeDate = (date: string, format?: string) => string;
 
@@ -20,13 +21,17 @@ const FORMAT_OPTIONS: Record<string, Intl.DateTimeFormatOptions> = {
 };
 
 function useDateLocalize(): LocalizeDate {
+  const intl = useIntl();
   const { locale } = useContext(LocaleContext);
 
   return (date: string, format?: "ll" | "lll" | "llll" | string) => {
     const parsed = new Date(date);
 
     if (isNaN(parsed.getTime())) {
-      return "Invalid date";
+      return intl.formatMessage({
+        id: "t+3/Tz",
+        defaultMessage: "Invalid date",
+      });
     }
 
     const options = FORMAT_OPTIONS[format || "ll"] ?? FORMAT_OPTIONS.ll;

@@ -10,7 +10,7 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Combobox, Input, type Option } from "@saleor/macaw-ui-next";
 import { useMemo, useRef } from "react";
 import { useController, useFormContext } from "react-hook-form";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { useDiscountRulesContext } from "../../context/consumer";
 import { getCurencySymbol } from "../../utils";
@@ -143,7 +143,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
           <RuleDescription />
 
           <button type="submit" hidden>
-            Submit
+            <FormattedMessage id="wSZR47" defaultMessage="Submit" />
           </button>
         </Box>
       </Box>

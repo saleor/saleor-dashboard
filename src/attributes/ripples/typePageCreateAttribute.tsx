@@ -1,10 +1,17 @@
 import { type Ripple } from "@dashboard/ripples/types";
 import { Text } from "@saleor/macaw-ui-next";
+import { FormattedMessage } from "react-intl";
 
 const typePageCreateAttributeContextual = (
   <Text color="default2">
-    Choose <em>Create attribute</em> here to add one and assign it to this type without leaving the
-    page.
+    <FormattedMessage id="dsGto6" defaultMessage="Choose " />
+    <em>
+      <FormattedMessage id="gVvUAE" defaultMessage="Create attribute" />
+    </em>
+    <FormattedMessage
+      id="rlVejK"
+      defaultMessage=" here to add one and assign it to this type without leaving the page."
+    />
   </Text>
 );
 

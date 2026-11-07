@@ -12,6 +12,11 @@ export const messages = defineMessages({
     id: "VhAHLQ",
     description: "assign picker, client-side filter emptied the loaded pages",
   },
+  noObjectsFound: {
+    defaultMessage: "No objects found",
+    id: "iJkAkm",
+    description: "assign picker, empty list with no matching objects",
+  },
   loadMore: {
     defaultMessage: "Load more",
     id: "UQg+AQ",
