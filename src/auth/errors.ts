@@ -1,4 +1,4 @@
-import { type ApolloError } from "@apollo/client";
+import { ApolloError } from "@apollo/client";
 import { findValueInEnum } from "@dashboard/misc";
 import { type GraphQLError } from "graphql";
 
@@ -45,6 +45,24 @@ export function isTokenExpired(error: GraphQLError): boolean {
   } catch (e) {
     return false;
   }
+}
+
+/**
+ * A request that failed before the API answered it: no connection, a timeout, or an error status
+ * such as 502 or 503. Unlike a refused token, it says nothing about whether the session is valid.
+ */
+export function isTransientRequestError(error: unknown): boolean {
+  if (error instanceof ApolloError) {
+    return !!error.networkError;
+  }
+
+  // `fetch` rejects with a TypeError when the network is unreachable.
+  return error instanceof TypeError;
+}
+
+/** The network error behind a failed request, for reporting it as the request's own failure. */
+export function getTransientRequestError(error: unknown): unknown {
+  return error instanceof ApolloError && error.networkError ? error.networkError : error;
 }
 
 function getAuthErrorType(graphQLError: GraphQLError): UserContextError {

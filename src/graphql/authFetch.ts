@@ -1,5 +1,6 @@
 import { type FetchResult } from "@apollo/client";
 import { type AuthSDK } from "@dashboard/auth/authSdk";
+import { getTransientRequestError, isTransientRequestError } from "@dashboard/auth/errors";
 import { isInternalToken, type JWTToken, storage } from "@dashboard/auth/tokenStorage";
 import jwtDecode from "jwt-decode";
 
@@ -170,25 +171,32 @@ export const createFetch =
       if (isUnauthenticated) {
         try {
           refreshTokenResponse = await runTokenRefresh(owner);
-
-          if (
-            refreshTokenResponse.data && isTokenRefreshExternal(refreshTokenResponse.data)
-              ? refreshTokenResponse.data.externalRefresh?.token
-              : (refreshTokenResponse.data as RefreshTokenMutation | undefined)?.tokenRefresh?.token
-          ) {
-            // check if mutation returns a valid token after refresh and retry the request
-            return createFetch({
-              autoTokenRefresh: false,
-              refreshOnUnauthorized: false,
-            })(input, init);
-          } else {
-            // after Saleor returns ExpiredSignatureError status and token refresh fails
-            // we log out the user and return the failed response
-            authClient.logout();
+        } catch (error) {
+          // The refresh request itself failed (offline, a timeout, a 502 or 503), so the session
+          // may still be valid. Report that failure instead of the expired-token response, which
+          // the query and mutation error handlers treat as a logout. The next request refreshes
+          // again.
+          if (isTransientRequestError(error)) {
+            throw getTransientRequestError(error);
           }
-        } catch {
-          // ignore
+
+          return response;
         }
+
+        if (
+          refreshTokenResponse.data && isTokenRefreshExternal(refreshTokenResponse.data)
+            ? refreshTokenResponse.data.externalRefresh?.token
+            : (refreshTokenResponse.data as RefreshTokenMutation | undefined)?.tokenRefresh?.token
+        ) {
+          // check if mutation returns a valid token after refresh and retry the request
+          return createFetch({
+            autoTokenRefresh: false,
+            refreshOnUnauthorized: false,
+          })(input, init);
+        }
+
+        // The API refused the refresh token: log out and return the failed response.
+        authClient.logout();
       }
 
       return response;
