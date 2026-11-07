@@ -6,7 +6,7 @@ import {
   type MutationResult,
   useMutation as useBaseMutation,
 } from "@apollo/client";
-import { isJwtError } from "@dashboard/auth/errors";
+import { isJwtError, isSessionEndedError, isSessionExpiredError } from "@dashboard/auth/errors";
 import { useUser } from "@dashboard/auth/useUser";
 import { handleNestedMutationErrors, showAllErrors } from "@dashboard/auth/utils";
 import { commonMessages } from "@dashboard/intl";
@@ -52,7 +52,15 @@ export function useMutation<TData, TVariables>(
       }
     },
     onError: (err: ApolloError) => {
-      if (!disableErrorHandling) {
+      // Two ways a session ends while an action waits for a token refresh. The API refusing the
+      // refresh token logged out, so the session expired; a logout or another login means nothing
+      // went wrong for the merchant, so the action is dropped quietly.
+      if (!disableErrorHandling && isSessionExpiredError(err)) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.sessionExpired),
+        });
+      } else if (!disableErrorHandling && !isSessionEndedError(err)) {
         if (err?.graphQLErrors?.length > 0) {
           if (hasError(err, GqlErrors.ReadOnlyException)) {
             notify({

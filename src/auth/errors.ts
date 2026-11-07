@@ -104,6 +104,41 @@ export function getTransientRequestError(error: unknown): unknown {
   return copy;
 }
 
+/**
+ * A request dropped because the session it belonged to ended while it waited for a token refresh
+ * (a logout, or another login). Nothing went wrong for the merchant, so it is not reported.
+ */
+export class SessionEndedError extends Error {
+  constructor() {
+    super("The session ended while the request was waiting for a token refresh");
+    this.name = "SessionEndedError";
+  }
+}
+
+export function isSessionEndedError(error: unknown): boolean {
+  const cause = error instanceof ApolloError ? error.networkError : error;
+
+  return cause instanceof Error && cause.name === "SessionEndedError";
+}
+
+/**
+ * The API refused the session's refresh token while a request waited to renew it, and the SDK
+ * logged out. Reported as an expired session, like the expired-token response a request gets when
+ * its own refresh is refused.
+ */
+export class SessionExpiredError extends Error {
+  constructor() {
+    super("The session expired while the request was waiting for a token refresh");
+    this.name = "SessionExpiredError";
+  }
+}
+
+export function isSessionExpiredError(error: unknown): boolean {
+  const cause = error instanceof ApolloError ? error.networkError : error;
+
+  return cause instanceof Error && cause.name === "SessionExpiredError";
+}
+
 function getAuthErrorType(graphQLError: GraphQLError): UserContextError {
   switch ((graphQLError.extensions?.exception as ExceptionWithCode)?.code as AuthError) {
     case AuthError.PermissionDenied:
