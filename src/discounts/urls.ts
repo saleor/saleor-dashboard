@@ -13,7 +13,7 @@ import {
   type TabActionDialog,
 } from "../types";
 
-const discountSection = "/discounts/";
+export const discountSection = "/discounts/";
 
 const saleSection = urlJoin(discountSection, "sales");
 
