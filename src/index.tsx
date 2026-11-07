@@ -27,6 +27,8 @@ import { Redirect, Switch } from "react-router-dom";
 
 import { attributeSection } from "./attributes/urls";
 import AuthProvider from "./auth/AuthProvider";
+import { useApiUnreachable } from "./auth/authState";
+import { ApiUnreachableView } from "./auth/components/ApiUnreachablePage/ApiUnreachableView";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import { RootRoutes } from "./auth/components/RootRoutes";
 import SectionRoute from "./auth/components/SectionRoute";
@@ -175,6 +177,7 @@ const Routes = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();
+  const apiUnreachable = useApiUnreachable();
   const { channel } = useAppChannel(false);
   const channelLoaded = typeof channel !== "undefined";
   const homePageLoaded = channelLoaded && authenticated;
@@ -376,6 +379,8 @@ const Routes = () => {
               </AppLayout>
             </StaffInviteProvider>
           </AppExtensionPopupProvider>
+        ) : apiUnreachable ? (
+          <ApiUnreachableView />
         ) : homePageLoading ? (
           <LoginLoading />
         ) : (

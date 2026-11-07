@@ -1,13 +1,22 @@
 import { ApolloError } from "@apollo/client";
-import { useAuthState } from "@dashboard/auth/authState";
+import {
+  apiUnreachableVar,
+  useAnotherAccountChosen,
+  useApiUnreachable,
+  useAuthState,
+} from "@dashboard/auth/authState";
 import { AccountErrorCode } from "@dashboard/graphql";
-import { act, renderHook, waitFor } from "@testing-library/react";
+import { login as loginWithCredentialsManagementAPI } from "@dashboard/utils/credentialsManagement";
+import { act, renderHook } from "@testing-library/react";
 
 import { useAuthProvider } from "./useAuthProvider";
 
 // Mock dependencies
 jest.mock("@dashboard/auth/authState", () => ({
   useAuthState: jest.fn(),
+  useApiUnreachable: jest.fn(() => false),
+  useAnotherAccountChosen: jest.fn(() => false),
+  apiUnreachableVar: jest.fn(),
 }));
 
 const mockLogin = jest.fn();
@@ -30,6 +39,7 @@ const useAuthStateMock = {
 jest.mock("@dashboard/utils/credentialsManagement", () => ({
   login: jest.fn(),
   saveCredentials: jest.fn(),
+  checkIfCredentialsExist: jest.fn(() => Promise.resolve(false)),
   isSupported: true,
 }));
 
@@ -58,7 +68,69 @@ jest.mock("@dashboard/graphql", () => {
 });
 
 (useAuthState as jest.Mock).mockReturnValue(useAuthStateMock);
+
+const renderAuthProvider = (): void => {
+  renderHook(() =>
+    useAuthProvider({
+      intl: mockIntl as any,
+      notify: mockNotify,
+      apolloClient: mockApolloClient as any,
+    }),
+  );
+};
+
 describe("useAuthProvider", () => {
+  describe("while Saleor can't be reached at startup", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    afterEach(() => {
+      (useApiUnreachable as jest.Mock).mockReturnValue(false);
+      (useAuthState as jest.Mock).mockReturnValue(useAuthStateMock);
+    });
+
+    it("signs in with the browser's saved password only when Saleor can be reached", () => {
+      // Arrange
+      (useApiUnreachable as jest.Mock).mockReturnValue(true);
+      renderAuthProvider();
+
+      const whileUnreachable = (loginWithCredentialsManagementAPI as jest.Mock).mock.calls.length;
+
+      (useApiUnreachable as jest.Mock).mockReturnValue(false);
+
+      // Act
+      renderAuthProvider();
+
+      // Assert
+      expect(whileUnreachable).toBe(0);
+      expect(loginWithCredentialsManagementAPI).toHaveBeenCalledTimes(1);
+    });
+
+    it("doesn't sign in with the saved password after the merchant chose another account", () => {
+      // Arrange
+      (useAnotherAccountChosen as jest.Mock).mockReturnValue(true);
+
+      // Act
+      renderAuthProvider();
+
+      // Assert
+      expect(loginWithCredentialsManagementAPI).not.toHaveBeenCalled();
+      (useAnotherAccountChosen as jest.Mock).mockReturnValue(false);
+    });
+
+    it("leaves the can't-reach-Saleor state once signed in", () => {
+      // Arrange
+      (useAuthState as jest.Mock).mockReturnValue({ ...useAuthStateMock, authenticated: true });
+
+      // Act
+      renderAuthProvider();
+
+      // Assert
+      expect(apiUnreachableVar).toHaveBeenCalledWith(false);
+    });
+  });
+
   describe("handleLogin", () => {
     it("should handle successful login", async () => {
       // Arrange
@@ -89,13 +161,12 @@ describe("useAuthProvider", () => {
       });
 
       // Assert
-      waitFor(() => {
-        expect(mockLogin).toBeCalledtimes(1);
-        expect(mockLogin).toHaveBeenCalledWith({
-          email: "admin@example.com",
-          password: "password",
-        });
+      expect(mockLogin).toHaveBeenCalledTimes(1);
+      expect(mockLogin).toHaveBeenCalledWith({
+        email: "admin@example.com",
+        password: "password",
       });
+      expect(result.current.errors).toEqual([]);
     });
 
     it("should handle login with no permissions", async () => {
@@ -127,9 +198,7 @@ describe("useAuthProvider", () => {
       });
 
       // Assert
-      waitFor(() => {
-        expect(result.current.errors).toContain("noPermissionsError");
-      });
+      expect(result.current.errors).toContain("noPermissionsError");
     });
 
     it("should handle invalid credentials error", async () => {
@@ -157,9 +226,7 @@ describe("useAuthProvider", () => {
       });
 
       // Assert
-      waitFor(() => {
-        expect(result.current.errors).toContain("invalidCredentials");
-      });
+      expect(result.current.errors).toContain("invalidCredentials");
     });
 
     it("should handle login attempt delayed error", async () => {

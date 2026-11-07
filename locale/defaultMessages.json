@@ -4207,6 +4207,10 @@
     "context": "tooltip for a clickable voucher name in the line price breakdown that opens the voucher detail page",
     "string": "Open voucher"
   },
+  "D2gFbm": {
+    "context": "button that leaves the can't-reach-Saleor screen for the sign-in form",
+    "string": "Sign in with another account"
+  },
   "D2qihU": {
     "string": "Permission is invalid"
   },
@@ -8925,6 +8929,10 @@
     "context": "channel inventory card header when no warehouses",
     "string": "Required to sell"
   },
+  "UCvL1B": {
+    "context": "button that retries reaching the Saleor API",
+    "string": "Try again"
+  },
   "UE9zNR": {
     "string": "Recent Searches"
   },
@@ -12891,6 +12899,10 @@
     "context": "aria-label for the warning icon inside an availability issue callout",
     "string": "Warning"
   },
+  "iEb/sR": {
+    "context": "heading when the dashboard can't reach the Saleor API at startup",
+    "string": "Can't reach Saleor"
+  },
   "iEeIhY": {
     "context": "draft order",
     "string": "Customer"
@@ -13770,6 +13782,10 @@
   "l1pZJx": {
     "string": "Not fully authorised"
   },
+  "l23D+b": {
+    "context": "address of the Saleor API the dashboard is trying to reach",
+    "string": "Saleor API: {host}"
+  },
   "l2oVCF": {
     "context": "attributes section name",
     "string": "Attributes"
@@ -14292,6 +14308,10 @@
   "mnm882": {
     "context": "collapse the app's deprecation reason",
     "string": "Show less"
+  },
+  "mqJjbj": {
+    "context": "explanation when the dashboard can't reach the Saleor API at startup",
+    "string": "Your session is kept, and the dashboard keeps trying to connect."
   },
   "mqwLmD": {
     "string": "Menu updated"

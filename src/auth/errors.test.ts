@@ -68,6 +68,10 @@ describe("JWT error classification", () => {
   });
 });
 
+/** What Apollo's HTTP link rejects with for an error status. */
+const serverError = (statusCode: number): Error & { statusCode: number } =>
+  Object.assign(new Error("Response not successful"), { name: "ServerError", statusCode });
+
 describe("isTransientRequestError", () => {
   it.each<[string, unknown, boolean]>([
     [
@@ -82,6 +86,12 @@ describe("isTransientRequestError", () => {
       false,
     ],
     ["another error", new Error("Unexpected"), false],
+    ["a 500", new ApolloError({ networkError: serverError(500) }), true],
+    ["a 503 from a proxy", new ApolloError({ networkError: serverError(503) }), true],
+    ["a timeout status (408)", new ApolloError({ networkError: serverError(408) }), true],
+    ["a rate limit (429)", new ApolloError({ networkError: serverError(429) }), true],
+    ["a rejected request (400)", new ApolloError({ networkError: serverError(400) }), false],
+    ["a gateway refusing access (403)", new ApolloError({ networkError: serverError(403) }), false],
   ])("treats %s as transient: %s", (_name, error, expected) => {
     // Arrange & Act
     const transient = isTransientRequestError(error);
@@ -99,5 +109,21 @@ describe("isTransientRequestError", () => {
 
     // Assert
     expect(reported).toBe(networkError);
+  });
+
+  it("reports a refresh's error status without the refresh's own body", () => {
+    // Arrange
+    const networkError = Object.assign(serverError(500), {
+      result: { data: { tokenRefresh: null }, errors: [{ message: "Internal error" }] },
+    });
+
+    // Act
+    const reported = getTransientRequestError(new ApolloError({ networkError }));
+
+    // Assert
+    expect(reported).toBeInstanceOf(Error);
+    expect(reported).toMatchObject({ message: "Response not successful", statusCode: 500 });
+    expect(reported).not.toHaveProperty("result");
+    expect(networkError).toHaveProperty("result");
   });
 });
