@@ -56,4 +56,21 @@ export const connectionMessages = defineMessages({
     description:
       "toast text when data on the page couldn't be loaded because Saleor gave no answer",
   },
+  sectionLoadFailedTitle: {
+    id: "v15oA0",
+    defaultMessage: "Couldn't open this page",
+    description: "heading shown in place of a page whose code could not be downloaded",
+  },
+  sectionLoadWaiting: {
+    id: "7fDyD7",
+    defaultMessage: "It will open once the connection is back.",
+    description:
+      "text under the heading when a page could not be downloaded because the connection is lost",
+  },
+  reloadPage: {
+    id: "TwDaYs",
+    defaultMessage: "Reload page",
+    description:
+      "button that reloads the dashboard to open a page whose code could not be downloaded",
+  },
 });

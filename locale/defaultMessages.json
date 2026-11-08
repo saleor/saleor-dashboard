@@ -2648,6 +2648,10 @@
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
     "string": "Authorized"
   },
+  "7fDyD7": {
+    "context": "text under the heading when a page could not be downloaded because the connection is lost",
+    "string": "It will open once the connection is back."
+  },
   "7gXPhB": {
     "string": "Qty"
   },
@@ -8848,6 +8852,10 @@
   "Tv4WnJ": {
     "context": "default mode hint on self-hosted",
     "string": "Send staff mail with your store’s usual email settings."
+  },
+  "TwDaYs": {
+    "context": "button that reloads the dashboard to open a page whose code could not be downloaded",
+    "string": "Reload page"
   },
   "TxYWkD": {
     "context": "page header, edit view",
@@ -16839,6 +16847,10 @@
   },
   "v0fBOU": {
     "string": "Collapse all"
+  },
+  "v15oA0": {
+    "context": "heading shown in place of a page whose code could not be downloaded",
+    "string": "Couldn't open this page"
   },
   "v17EX7": {
     "context": "built-in attribute list filter preset",
