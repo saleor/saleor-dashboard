@@ -35,6 +35,7 @@ import { OrderInvoiceDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVar
 import { PriceFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceFilterQueryVarsBuilder";
 import { PriceRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceRangeQueryVarsBuilder";
 import { ProductExportFieldMapper } from "./FiltersQueryBuilder/queryVarsBuilders/ProductExportFieldMapper";
+import { PromotionDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PromotionDateQueryVarsBuilder";
 import { PromotionStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PromotionStatusQueryVarsBuilder";
 import { PromotionTypeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PromotionTypeQueryVarsBuilder";
 import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder";
@@ -110,6 +111,7 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
   const discountFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
     new PromotionStatusQueryVarsBuilder(),
     new PromotionTypeQueryVarsBuilder(),
+    new PromotionDateQueryVarsBuilder(),
     ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
   ]);
   const builder = new FiltersQueryBuilder<PromotionWhereInput>({

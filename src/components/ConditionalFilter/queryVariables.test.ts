@@ -7,7 +7,7 @@ import {
 } from "@dashboard/graphql";
 
 import { Condition } from "./FilterElement/Condition";
-import { ConditionOptions } from "./FilterElement/ConditionOptions";
+import { type ConditionItem, ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import {
   ExpressionValue,
@@ -1205,5 +1205,90 @@ describe("ConditionalFilter / queryVariables / createDiscountsQueryVariables", (
         },
       ],
     });
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createDiscountsQueryVariables / dates", () => {
+  const operators: Record<"lower" | "greater" | "between", ConditionItem> = {
+    lower: { type: "datetime", label: "lower", value: "input-1" },
+    greater: { type: "datetime", label: "greater", value: "input-2" },
+    between: { type: "datetime.range", label: "between", value: "input-3" },
+  };
+
+  const dateFilter = (
+    field: "startDate" | "endDate",
+    operator: keyof typeof operators,
+    value: string | [string, string],
+  ): FilterElement =>
+    new FilterElement(
+      new ExpressionValue(field, field, field),
+      new Condition(
+        ConditionOptions.fromName(field),
+        new ConditionSelected(value, operators[operator], [], false),
+        false,
+      ),
+      false,
+    );
+
+  // What the browser's time zone makes of a typed value. Jest runs in UTC (set in its global
+  // setup, which a test can't change), so these tests check that a full instant is sent, never the
+  // bare typed value. The New York offset was checked in a browser.
+  const instant = (local: string): string => new Date(local).toISOString();
+
+  it("sends a start date as a full instant, not the bare typed value", () => {
+    // Arrange
+    const filter = dateFilter("startDate", "greater", "2026-12-01T00:00");
+
+    // Act
+    const variables = createDiscountsQueryVariables([filter]);
+
+    // Assert
+    expect(variables).toEqual({
+      AND: [{ startDate: { range: { gte: instant("2026-12-01T00:00") } } }],
+    });
+  });
+
+  it("sends both bounds of an end date range", () => {
+    // Arrange
+    const filter = dateFilter("endDate", "between", ["2026-12-01T00:00", "2026-12-31T23:59"]);
+
+    // Act
+    const variables = createDiscountsQueryVariables([filter]);
+
+    // Assert
+    expect(variables).toEqual({
+      AND: [
+        {
+          endDate: {
+            range: { gte: instant("2026-12-01T00:00"), lte: instant("2026-12-31T23:59") },
+          },
+        },
+      ],
+    });
+  });
+
+  it.each<[string, [string, string], { gte?: string; lte?: string }]>([
+    ["only the first date", ["2026-12-01T00:00", ""], { gte: instant("2026-12-01T00:00") }],
+    ["only the second date", ["", "2026-12-31T23:59"], { lte: instant("2026-12-31T23:59") }],
+  ])("filters by the date that is set when a range has %s", (_case, value, range) => {
+    // Arrange
+    const filter = dateFilter("startDate", "between", value);
+
+    // Act
+    const variables = createDiscountsQueryVariables([filter]);
+
+    // Assert
+    expect(variables).toEqual({ AND: [{ startDate: { range } }] });
+  });
+
+  it("sends nothing for a date filter with no value yet", () => {
+    // Arrange
+    const filter = dateFilter("endDate", "lower", "");
+
+    // Act
+    const variables = createDiscountsQueryVariables([filter]);
+
+    // Assert
+    expect(variables).toEqual({});
   });
 });
