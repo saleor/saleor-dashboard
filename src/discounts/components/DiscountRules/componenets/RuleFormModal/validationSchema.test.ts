@@ -47,6 +47,20 @@ describe("getValidationSchema", () => {
     expect(error).toBeDefined();
   });
 
+  it("asks for more than 0 when the reward is 0, and for a value when it is empty", () => {
+    // Arrange
+    const zero = buildRule({ rewardValue: 0 });
+    const empty = buildRule({ rewardValue: null });
+
+    // Act
+    const zeroError = getRewardValueError(zero);
+    const emptyError = getRewardValueError(empty);
+
+    // Assert
+    expect(zeroError?.message).toBe("Enter more than 0.");
+    expect(emptyError?.message).toBe("Rule reward value is required");
+  });
+
   it("rejects a percentage reward value above 100", () => {
     // Arrange
     const rule = buildRule({

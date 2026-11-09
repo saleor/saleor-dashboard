@@ -1,3 +1,4 @@
+import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { defineMessages, type IntlShape } from "react-intl";
 import * as z from "zod";
@@ -31,7 +32,8 @@ const rewardValueRequired = (intl: IntlShape) =>
       required_error: intl.formatMessage(validationMessages.rewardValueRequired),
       invalid_type_error: intl.formatMessage(validationMessages.rewardValueRequired),
     })
-    .gt(0, intl.formatMessage(validationMessages.rewardValueRequired));
+    // A typed 0 stays in the field, so say what is wrong with it rather than "required".
+    .gt(0, intl.formatMessage(voucherFeedbackMessages.discountValueNotPositive));
 const getDefaultSchema = (intl: IntlShape) =>
   z.object({
     id: z.string().optional(),
