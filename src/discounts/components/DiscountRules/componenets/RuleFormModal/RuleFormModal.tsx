@@ -33,10 +33,10 @@ export const RuleFormModal = ({
 }: RuleFormModalProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
-  const { discountType } = useDiscountRulesContext();
+  const { discountType, channels } = useDiscountRulesContext();
   const methods = useForm<Rule>({
     mode: "onBlur",
-    resolver: zodResolver(getValidationSchema(intl)),
+    resolver: zodResolver(getValidationSchema(intl, { channels })),
     values: initialFormValues || getDefaultValue(discountType),
   });
   const isSubmitting = confirmButtonState === "loading";

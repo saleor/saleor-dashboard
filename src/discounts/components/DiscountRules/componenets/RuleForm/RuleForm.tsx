@@ -13,6 +13,7 @@ import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { useDiscountRulesContext } from "../../context/consumer";
+import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { RuleConditions } from "./components/RuleConditions/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription/RuleDescription";
@@ -37,6 +38,15 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
     name: "channel",
   });
   const selectedChannel = watch("channel");
+  // A rule made through the API can apply in more channels than this form edits. Name them, and
+  // don't offer to move the rule, since the form can't say what should happen to the others.
+  const otherChannels = watch("otherChannels") ?? [];
+  const otherChannelsNote =
+    otherChannels.length > 0
+      ? intl.formatMessage(messages.ruleOtherChannels, {
+          channels: intl.formatList(otherChannels.map(channel => channel.name)),
+        })
+      : undefined;
   const conditions = watch("conditions");
   const hasSelectedChannel = !!selectedChannel;
   const currencySymbol = getCurencySymbol(selectedChannel, channels);
@@ -109,8 +119,8 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
                   label={intl.formatMessage(commonMessages.channel)}
                   options={channelOptions}
                   error={!!formState.errors?.channel?.message}
-                  helperText={formState.errors?.channel?.message}
-                  disabled={disabled || channelfield.disabled}
+                  helperText={formState.errors?.channel?.message ?? otherChannelsNote}
+                  disabled={disabled || channelfield.disabled || otherChannels.length > 0}
                 />
               </RuleInputWrapper>
             </Box>

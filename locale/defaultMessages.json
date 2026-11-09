@@ -6264,6 +6264,10 @@
     "context": "channel payment gateways section title",
     "string": "Payment gateways"
   },
+  "KcQWVG": {
+    "context": "promotion rule dialog helper under the channel when the rule also applies in other channels",
+    "string": "This rule also applies in {channels}. You can edit the rule here, but not its channels."
+  },
   "KcsJKm": {
     "context": "error with activatation alert message",
     "string": "Error activating gift {count,plural,one{card} other{cards}}"
@@ -11681,6 +11685,10 @@
   "daJDoe": {
     "context": "validation when Custom template mode has empty body",
     "string": "Add an email body, or choose Saleor default or Don’t send. An empty custom body is not allowed."
+  },
+  "dbuT2a": {
+    "context": "promotion rule error when a fixed reward would mix channel currencies",
+    "string": "A fixed amount needs one currency, but this rule also applies in {channels}. Use a percentage instead."
   },
   "dc5KWn": {
     "context": "products export type label",
