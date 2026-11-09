@@ -31,7 +31,7 @@ interface DiscountDetailsFormRenderProps {
   rules: Rule[];
   discountType: PromotionTypeEnum;
   onSubmit: () => void;
-  onRuleSubmit: (rule: Rule, ruleEditIndex: number | null) => Promise<void>;
+  onRuleSubmit: (rule: Rule, ruleEditIndex: number | null) => Promise<boolean>;
   onDeleteRule: (ruleDeleteIndex: number) => Promise<boolean>;
   saveComposition: PromotionSaveComposition;
 }

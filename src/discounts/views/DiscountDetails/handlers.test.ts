@@ -327,12 +327,29 @@ describe("createRuleUpdateHandler", () => {
     conditions: [],
     otherChannels: [{ id: pln.id, name: pln.name, currencyCode: pln.currencyCode }],
   };
+  // What a mutation hook with `onError` resolves with when the whole request fails.
+  const offline = new ApolloError({ networkError: new TypeError("Failed to fetch") });
   const savedRule: { data: PromotionRuleUpdateMutation } = {
     data: {
       __typename: "Mutation",
       promotionRuleUpdate: { __typename: "PromotionRuleUpdate", errors: [], promotionRule: null },
     },
   };
+
+  it.each([
+    ["counts a request that failed as a whole as a failure", { errors: offline }, 1],
+    ["counts a saved rule as saved", savedRule, 0],
+  ])("%s", async (_case, outcome, errorCount) => {
+    // Arrange
+    const updateRule = jest.fn().mockResolvedValue(outcome);
+    const handler = createRuleUpdateHandler(promotion, updateRule);
+
+    // Act
+    const errors = await handler(formRule);
+
+    // Assert
+    expect(errors).toHaveLength(errorCount);
+  });
 
   it("keeps the channels the form does not show when the rule is renamed", async () => {
     // Arrange
