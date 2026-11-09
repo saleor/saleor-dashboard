@@ -249,12 +249,15 @@ describe("retryAutologin", () => {
     expect(apiUnreachableVar()).toBe(false);
   });
 
-  it("goes to the sign-in screen on request, without the saved password signing in by itself", () => {
+  it("goes to the sign-in screen on request, ending the stored session", () => {
     // Arrange & Act
     showSignIn();
 
     // Assert
     expect(apiUnreachableVar()).toBe(false);
+    // A new session id makes the SDK ignore the result of a retry still in flight.
+    expect(mockedStorage.clear).toHaveBeenCalledTimes(1);
+    // The browser's saved password doesn't sign the stored account back in.
     expect(anotherAccountChosenVar()).toBe(true);
   });
 });

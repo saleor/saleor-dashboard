@@ -131,9 +131,12 @@ export const retryAutologin = async (): Promise<void> => {
 
 /**
  * Leaves the "can't reach Saleor" state for the sign-in screen. The merchant chose another
- * account, so the browser's saved password doesn't sign the stored one back in by itself.
+ * account, so the stored session ends: a retry still waiting for an answer is then ignored and
+ * can't open the dashboard as the old account. The browser's saved password doesn't sign the
+ * stored account back in by itself either.
  */
 export const showSignIn = (): void => {
+  storage.clear();
   anotherAccountChosenVar(true);
   apiUnreachableVar(false);
 };
