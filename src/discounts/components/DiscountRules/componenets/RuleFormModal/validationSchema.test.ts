@@ -155,3 +155,67 @@ describe("getValidationSchema with the rule's other channels", () => {
     expect(error).toBeUndefined();
   });
 });
+
+describe("getValidationSchema decimal places Saleor can store", () => {
+  const channel = (id: string, currencyCode: string): ChannelFragment => ({
+    __typename: "Channel",
+    id,
+    isActive: true,
+    name: id,
+    slug: id,
+    currencyCode,
+    defaultCountry: { __typename: "CountryDisplay", code: "US", country: "United States" },
+    stockSettings: {
+      __typename: "StockSettings",
+      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
+    },
+  });
+  const channels: ChannelFragment[] = [
+    channel("channel-usd", "USD"),
+    channel("channel-jpy", "JPY"),
+  ];
+
+  const getRuleError = (overrides: Record<string, unknown>): string | undefined => {
+    const result = getValidationSchema(testIntlInstance, { channels }).safeParse(
+      buildRule(overrides),
+    );
+
+    return result.success
+      ? undefined
+      : result.error.issues.find(issue => issue.path.includes("rewardValue"))?.message;
+  };
+
+  it.each([
+    [0.0001, "Use up to 3 decimal places."],
+    [12.3456, "Use up to 3 decimal places."],
+    [0.001, undefined],
+    [12.345, undefined],
+  ])("checks a %p%% reward against the 3 decimals Saleor keeps", (rewardValue, expected) => {
+    // Arrange & Act
+    const error = getRuleError({ rewardValueType: RewardValueTypeEnum.PERCENTAGE, rewardValue });
+
+    // Assert
+    expect(error).toBe(expected);
+  });
+
+  it.each([
+    ["channel-usd", 10.999, "Use up to 2 decimal places for USD."],
+    ["channel-usd", 10.99, undefined],
+    ["channel-usd", 1234567.89, undefined],
+    ["channel-jpy", 100.5, "Enter a whole amount for JPY."],
+    ["channel-jpy", 100, undefined],
+  ])(
+    "checks a fixed reward in %s of %p against its currency",
+    (channelId, rewardValue, expected) => {
+      // Arrange & Act
+      const error = getRuleError({
+        channel: { label: channelId, value: channelId },
+        rewardValueType: RewardValueTypeEnum.FIXED,
+        rewardValue,
+      });
+
+      // Assert
+      expect(error).toBe(expected);
+    },
+  );
+});

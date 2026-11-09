@@ -1,3 +1,5 @@
+import { getCurrencyDecimalPoints } from "@dashboard/components/PriceFieldV2/utils";
+import { hasMoreDecimalPlacesThan } from "@dashboard/discounts/decimalPlaces";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import { type ChannelFragment, RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { defineMessages, type IntlShape } from "react-intl";
@@ -24,6 +26,24 @@ const validationMessages = defineMessages({
     id: "GxsQuO",
     defaultMessage: "You must select at least one gift",
   },
+  percentageRewardTooManyDecimals: {
+    id: "Cnf2FR",
+    defaultMessage: "Use up to 3 decimal places.",
+    description: "promotion rule error when a percentage reward has more than 3 decimal places",
+  },
+  fixedRewardTooManyDecimals: {
+    id: "z0nB21",
+    defaultMessage:
+      "Use up to {places, plural, one {# decimal place} other {# decimal places}} for {currency}.",
+    description:
+      "promotion rule error when a fixed reward has more decimals than the channel currency allows",
+  },
+  fixedRewardWholeAmount: {
+    id: "bmhwTj",
+    defaultMessage: "Enter a whole amount for {currency}.",
+    description:
+      "promotion rule error when a fixed reward has decimals but the channel currency has none",
+  },
   fixedRewardMixesCurrencies: {
     id: "dbuT2a",
     defaultMessage:
@@ -31,6 +51,9 @@ const validationMessages = defineMessages({
     description: "promotion rule error when a fixed reward would mix channel currencies",
   },
 });
+/** Saleor stores reward percentages with 3 decimal places and rounds anything finer, down to 0. */
+const PERCENTAGE_DECIMAL_PLACES = 3;
+
 const option = z.object({ label: z.string(), value: z.string() });
 const rewardValueRequired = (intl: IntlShape) =>
   z
@@ -107,45 +130,58 @@ export const getValidationSchema = (
     getOrderRewardGiftsValidation(intl),
   ]);
 
+  // One pass over the reward, so each case adds at most one issue and the order is clear.
   return z
     .intersection(schemaCond, getDefaultSchema(intl))
-    .refine(
-      ({ rewardValue, rewardValueType, channel }) => {
-        if (
-          channel &&
-          rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
-          Number(rewardValue) > 100
-        ) {
-          return false;
+    .superRefine(({ rewardType, rewardValue, rewardValueType, channel, otherChannels }, ctx) => {
+      if (rewardType === RewardTypeEnum.GIFT) {
+        return;
+      }
+
+      const addRewardIssue = (message: string): void => {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["rewardValue"], message });
+      };
+      const amount = typeof rewardValue === "number" && rewardValue > 0 ? rewardValue : null;
+
+      if (rewardValueType === RewardValueTypeEnum.PERCENTAGE) {
+        if (amount !== null && amount > 100) {
+          addRewardIssue(intl.formatMessage(validationMessages.rewardValueMustBeLessThan100));
+        } else if (amount !== null && hasMoreDecimalPlacesThan(amount, PERCENTAGE_DECIMAL_PLACES)) {
+          // Saleor rounds a percentage to 3 decimals without an error: 0.0001% is stored as 0%.
+          addRewardIssue(intl.formatMessage(validationMessages.percentageRewardTooManyDecimals));
         }
 
-        return true;
-      },
-      {
-        message: intl.formatMessage(validationMessages.rewardValueMustBeLessThan100),
-        path: ["rewardValue"],
-      },
-    )
-    .superRefine(({ rewardType, rewardValueType, channel, otherChannels }, ctx) => {
-      if (
-        rewardType === RewardTypeEnum.GIFT ||
-        rewardValueType !== RewardValueTypeEnum.FIXED ||
-        !otherChannels?.length
-      ) {
         return;
       }
 
       const currency = channels.find(({ id }) => id === channel?.value)?.currencyCode;
-      const otherCurrencies = otherChannels.filter(other => other.currencyCode !== currency);
+      const otherCurrencies = (otherChannels ?? []).filter(
+        other => other.currencyCode !== currency,
+      );
 
       if (otherCurrencies.length > 0) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["rewardValue"],
-          message: intl.formatMessage(validationMessages.fixedRewardMixesCurrencies, {
+        // Saleor rejects a fixed amount across channels in different currencies.
+        addRewardIssue(
+          intl.formatMessage(validationMessages.fixedRewardMixesCurrencies, {
             channels: intl.formatList(otherCurrencies.map(other => other.name)),
           }),
-        });
+        );
+
+        return;
+      }
+
+      const places = currency ? getCurrencyDecimalPoints(currency) : null;
+
+      // Saleor rejects a fixed amount its currency can't store (10.999 USD) once the rule is saved.
+      if (amount !== null && places !== null && hasMoreDecimalPlacesThan(amount, places)) {
+        addRewardIssue(
+          places === 0
+            ? intl.formatMessage(validationMessages.fixedRewardWholeAmount, { currency })
+            : intl.formatMessage(validationMessages.fixedRewardTooManyDecimals, {
+                places,
+                currency,
+              }),
+        );
       }
     });
 };
