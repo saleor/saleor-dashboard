@@ -52,6 +52,10 @@ import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { GTM_ID } from "./config";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
+import { ConnectionRecovery } from "./connection/components/ConnectionRecovery/ConnectionRecovery";
+import { SectionDownloadBoundary } from "./connection/components/SectionLoadErrorPage/SectionDownloadBoundary";
+import { SectionLoadErrorView } from "./connection/components/SectionLoadErrorPage/SectionLoadErrorView";
+import { isSectionDownloadFailure } from "./connection/sectionDownloadFailure";
 import AppStateProvider from "./containers/AppState/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks/BackgroundTasksProvider";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
@@ -151,10 +155,14 @@ const App = (): React.ReactNode => (
                                   <SavebarRefProvider>
                                     <FeatureFlagsProviderWithUser>
                                       <OnboardingProvider>
-                                        <Routes />
+                                        {/* Outside the app's layout, such as the sign-in screen. */}
+                                        <SectionDownloadBoundary>
+                                          <Routes />
+                                        </SectionDownloadBoundary>
                                       </OnboardingProvider>
                                     </FeatureFlagsProviderWithUser>
                                     <NotificationsToaster />
+                                    <ConnectionRecovery />
                                   </SavebarRefProvider>
                                 </NavigatorSearchProvider>
                               </DevModeProvider>
@@ -194,6 +202,11 @@ const Routes = () => {
               <AppLayout fullSize={isAppPath}>
                 <ErrorBoundary
                   onError={e => {
+                    // Not a bug: the connection dropped, or a new release replaced the code.
+                    if (isSectionDownloadFailure(e)) {
+                      return;
+                    }
+
                     const errorId = errorTracker.captureException(e);
 
                     dispatchAppState({
@@ -204,12 +217,16 @@ const Routes = () => {
                       type: "displayError",
                     });
                   }}
-                  fallbackRender={({ resetErrorBoundary }) => (
-                    <ErrorPage
-                      onBack={resetErrorBoundary}
-                      onRefresh={() => window.location.reload()}
-                    />
-                  )}
+                  fallbackRender={({ error, resetErrorBoundary }) =>
+                    isSectionDownloadFailure(error) ? (
+                      <SectionLoadErrorView onLeave={resetErrorBoundary} />
+                    ) : (
+                      <ErrorPage
+                        onBack={resetErrorBoundary}
+                        onRefresh={() => window.location.reload()}
+                      />
+                    )
+                  }
                 >
                   <Suspense fallback={<LoginLoading />}>
                     <Switch>

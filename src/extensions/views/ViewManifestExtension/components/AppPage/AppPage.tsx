@@ -1,4 +1,8 @@
-import { borderHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
+import {
+  borderHeight,
+  pageViewportHeight,
+  topBarHeight,
+} from "@dashboard/components/AppLayout/consts";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { APP_VERSION } from "@dashboard/config";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -45,7 +49,7 @@ export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
           // It removes extra space between iframe and container
           __lineHeight={0}
           height="100%"
-          __minHeight={`calc(100vh - var(--app-bar-height, 0px) - ${borderHeight} - ${topBarHeight})`}
+          __minHeight={`calc(${pageViewportHeight} - var(--app-bar-height, 0px) - ${borderHeight} - ${topBarHeight})`}
         >
           {url && data?.id && data?.accessToken && (
             <AppFrame

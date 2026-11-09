@@ -1,4 +1,8 @@
-import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
+import {
+  borderHeight,
+  pageViewportHeight,
+  savebarHeight,
+} from "@dashboard/components/AppLayout/consts";
 import { Box, type BoxProps, type Sprinkles } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useMemo } from "react";
@@ -10,8 +14,8 @@ interface DetailPageLayoutProps extends BoxProps {
   testId?: string;
 }
 
-const contentWithSidebarHeight = `calc(100vh - ${savebarHeight} - ${borderHeight} * 2)`;
-const contentWithoutSidebarHeight = `calc(100vh - ${borderHeight}`;
+const contentWithSidebarHeight = `calc(${pageViewportHeight} - ${savebarHeight} - ${borderHeight} * 2)`;
+const contentWithoutSidebarHeight = `calc(${pageViewportHeight} - ${borderHeight})`;
 
 export const RootLayout = ({
   children,

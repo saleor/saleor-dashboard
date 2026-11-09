@@ -1,4 +1,5 @@
 import notFoundImage from "@assets/images/not-found-404.svg";
+import { pageViewportHeight } from "@dashboard/components/AppLayout/consts";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import SVG from "react-inlinesvg";
@@ -42,7 +43,7 @@ const useStyles = makeStyles(
     root: {
       alignItems: "center",
       display: "flex",
-      height: "100vh",
+      height: pageViewportHeight,
     },
   }),
   { name: "NotFoundPage" },

@@ -1,4 +1,5 @@
 import { AnnouncementsContainer } from "@dashboard/announcements/components/AnnouncementsContainer/AnnouncementsContainer";
+import { ConnectionStatusBanner } from "@dashboard/connection/components/ConnectionBanner/ConnectionStatusBanner";
 import useAppState from "@dashboard/hooks/useAppState";
 import { CornerRipplesHost } from "@dashboard/ripples/components/CornerRipplesHost/CornerRipplesHost";
 import { LinearProgress } from "@material-ui/core";
@@ -34,29 +35,33 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         <div className={styles.navigation}>
           <Sidebar />
         </div>
-        <Box height="100%" width="100%" overflow="hidden">
-          <AnnouncementsContainer margin={4} />
-          <Box as="main" width="100%" height="100%">
-            {children}
+        <div className={styles.content}>
+          {/* Outside the clipped box below, so it can stick to the top while the page scrolls. */}
+          <ConnectionStatusBanner />
+          <Box width="100%" overflow="hidden" className={styles.page}>
+            <AnnouncementsContainer margin={4} />
+            <Box as="main" width="100%" height="100%">
+              {children}
+            </Box>
+            <Box
+              ref={setAnchor}
+              position="sticky"
+              bottom={0}
+              left={0}
+              right={0}
+              backgroundColor="default1"
+              borderTopWidth={isSavebarMounted ? 1 : 0}
+              borderTopStyle="solid"
+              borderColor="default1"
+              zIndex="2"
+              __height={isSavebarMounted ? savebarHeight : "0"}
+              // DetailPageLayout withholds 2× borderHeight (Safari overflow guard); the anchor
+              // only adds one border outside its box — overlap so the bar meets sidebar/grid lines.
+              __marginTop={isSavebarMounted ? `-${borderHeight}` : 0}
+              overflow="hidden"
+            />
           </Box>
-          <Box
-            ref={setAnchor}
-            position="sticky"
-            bottom={0}
-            left={0}
-            right={0}
-            backgroundColor="default1"
-            borderTopWidth={isSavebarMounted ? 1 : 0}
-            borderTopStyle="solid"
-            borderColor="default1"
-            zIndex="2"
-            __height={isSavebarMounted ? savebarHeight : "0"}
-            // DetailPageLayout withholds 2× borderHeight (Safari overflow guard); the anchor
-            // only adds one border outside its box — overlap so the bar meets sidebar/grid lines.
-            __marginTop={isSavebarMounted ? `-${borderHeight}` : 0}
-            overflow="hidden"
-          />
-        </Box>
+        </div>
       </div>
       {/* Fixed to the viewport bottom-left (nav corner); keep out of SidebarContent to avoid double-mount in drawer layouts. */}
       <CornerRipplesHost />
