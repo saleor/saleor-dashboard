@@ -3195,6 +3195,10 @@
     "context": "tooltip for the half-open circuit breaker badge",
     "string": "After repeated failures, Saleor is checking whether this app's synchronous webhooks work again. More failures will pause them."
   },
+  "9cQtjg": {
+    "context": "toast text when data could not be loaded because Saleor failed with a server error",
+    "string": "Saleor ran into a problem (error {status}). Reload the page to try again."
+  },
   "9d24PR": {
     "string": "Create rule"
   },
@@ -6062,6 +6066,10 @@
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
   },
+  "Jdpg/W": {
+    "context": "toast text when data could not be loaded because the server refused the request, such as a proxy or firewall",
+    "string": "The server refused the request (error {status}). Reload the page to try again."
+  },
   "Jf+f8h": {
     "context": "setup task title when product already has variants",
     "string": "Set a price"
@@ -6568,6 +6576,10 @@
   "LYeyWD": {
     "context": "voucher discount amount section title",
     "string": "Discount amount"
+  },
+  "LZ+epP": {
+    "context": "toast heading when an action was refused by the server before Saleor handled it, such as a proxy or firewall",
+    "string": "The server refused the request (error {status})"
   },
   "La3xKC": {
     "context": "Description of public API verification feature",
@@ -13226,6 +13238,10 @@
     "context": "hint when notification is turned off",
     "string": "This email will not be sent."
   },
+  "j7MPFs": {
+    "context": "toast text when an action was refused by the server before Saleor handled it",
+    "string": "The change wasn't saved."
+  },
   "j7XAly": {
     "context": "create warehouse for channel dialog description",
     "string": "Creates a warehouse and assigns it to this channel as the stock location."
@@ -15507,6 +15523,10 @@
   "qSCmIG": {
     "string": "lower than {value}"
   },
+  "qSE4jj": {
+    "context": "toast heading when an action failed because Saleor failed with a server error",
+    "string": "Saleor ran into a problem (error {status})"
+  },
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
@@ -15903,6 +15923,10 @@
   },
   "rpVzFU": {
     "string": "Could not assign shipping zone to this channel"
+  },
+  "rpz4BK": {
+    "context": "toast text when data could not be loaded because the answer was not readable, such as an error page",
+    "string": "The server sent an answer the dashboard can't read. Reload the page to try again."
   },
   "rqiCWU": {
     "string": "Saved changes"
@@ -16670,6 +16694,10 @@
   "uVscLr": {
     "context": "setup task CTA",
     "string": "Review countries"
+  },
+  "uW3+xR": {
+    "context": "toast heading when an action got an answer that was not readable, such as an error page",
+    "string": "Unexpected answer from the server"
   },
   "uWxoc+": {
     "context": "review row when the product type has attributes",

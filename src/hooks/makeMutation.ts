@@ -93,7 +93,7 @@ export function useMutation<TData, TVariables>(
             text: intl.formatMessage(connectionMessages.actionFailedDescription),
           });
         } else {
-          showAllErrors({ notify, error: err });
+          showAllErrors({ notify, error: err, intl, context: "action" });
         }
       }
 

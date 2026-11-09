@@ -4,6 +4,7 @@ import { SessionEndedError, SessionExpiredError } from "@dashboard/auth/errors";
 import { LoginDocument } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react";
 import type * as ReactIntl from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { useMutation } from "./makeMutation";
 
@@ -30,10 +31,22 @@ jest.mock("@dashboard/auth/useUser", () => ({
 }));
 jest.mock("react-intl", () => ({
   ...jest.requireActual<typeof ReactIntl>("react-intl"),
-  useIntl: (): { formatMessage: (message: { defaultMessage: string }) => string } => ({
-    formatMessage: message => message.defaultMessage,
-  }),
+  useIntl: (): IntlShape =>
+    jest.requireActual<{ testIntlInstance: IntlShape }>("@test/intl").testIntlInstance,
 }));
+
+/** What Apollo's HTTP link rejects with for a status the API answered with. */
+const serverError = (statusCode: number): Error =>
+  Object.assign(new Error(`Response not successful: Received status code ${statusCode}`), {
+    name: "ServerError",
+    statusCode,
+  });
+/** What it rejects with when the body isn't JSON, such as an HTML page. */
+const htmlAnswer = (statusCode: number): Error =>
+  Object.assign(new SyntaxError(`Unexpected token '<', "<!DOCTYPE "... is not valid JSON`), {
+    name: "ServerParseError",
+    statusCode,
+  });
 
 describe("useMutation error notifications", () => {
   beforeEach(() => {
@@ -88,22 +101,49 @@ describe("useMutation error notifications", () => {
     expect(JSON.stringify(mockNotify.mock.calls)).not.toContain("Failed to fetch");
   });
 
-  it("keeps reporting other server errors as before", () => {
+  const checkFirst = "Check whether the change went through before trying again.";
+
+  it.each([
+    ["a 500", serverError(500), "Saleor ran into a problem (error 500)", checkFirst],
+    [
+      "Saleor's HTML crash page",
+      htmlAnswer(500),
+      "Saleor ran into a problem (error 500)",
+      checkFirst,
+    ],
+    ["a captive portal's page", htmlAnswer(200), "Unexpected answer from the server", checkFirst],
+    [
+      "a proxy refusing a large upload",
+      htmlAnswer(413),
+      "The server refused the request (error 413)",
+      "The change wasn't saved.",
+    ],
+  ])(
+    "reports %s in plain words, without the raw error text",
+    (_case, networkError, title, text) => {
+      // Act
+      captured.onError?.(new ApolloError({ networkError }));
+
+      // Assert
+      expect(mockNotify).toHaveBeenCalledTimes(1);
+      expect(mockNotify).toHaveBeenCalledWith({ status: "error", title, text });
+    },
+  );
+
+  it("still passes on the message of an error Saleor answered with", () => {
     // Arrange
-    const serverError = Object.assign(
-      new Error("Response not successful: Received status code 500"),
-      {
-        name: "ServerError",
-        statusCode: 500,
-      },
-    );
+    const networkError = Object.assign(serverError(400), {
+      result: { errors: [{ message: 'Variable "$id" of required type "ID!" was not provided.' }] },
+    });
 
     // Act
-    captured.onError?.(new ApolloError({ networkError: serverError }));
+    captured.onError?.(new ApolloError({ networkError }));
 
     // Assert
     expect(mockNotify).toHaveBeenCalledWith(
-      expect.objectContaining({ apiMessage: "Response not successful: Received status code 500" }),
+      expect.objectContaining({
+        apiMessage: 'Variable "$id" of required type "ID!" was not provided.',
+      }),
     );
   });
 });
