@@ -6,12 +6,10 @@ import { type FilterElement } from "../../FilterElement/FilterElement";
 import { type WhereOnlyQueryVarsBuilder } from "./types";
 
 /**
- * PromotionWhereInput has no `status` field. Map DiscountStatusEnum choices to
- * start/end date ranges that approximate Active / Scheduled / Ended.
- *
- * Active open-ended promotions (null endDate) cannot be expressed with
- * DateTimeFilterInput (no isnull). Bounded actives (start ≤ now ≤ end) match;
- * open-ended live promotions are a known API gap until status lands on WHERE.
+ * PromotionWhereInput has no `status` field. Map DiscountStatusEnum choices to start and end
+ * dates the same way the list's Status column reads them (`getPromotionStatus`): Scheduled has
+ * not started, Ended has an end in the past, and Active has started and has no end or an end
+ * still ahead.
  */
 export class PromotionStatusQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<PromotionWhereInput> {
   canHandle(element: FilterElement): boolean {
@@ -65,10 +63,18 @@ function statusToWhereClause(status: DiscountStatusEnum, nowIso: string): Promot
     case DiscountStatusEnum.SCHEDULED:
       return { startDate: { range: { gte: nowIso } } };
     case DiscountStatusEnum.EXPIRED:
-      return { endDate: { range: { lte: nowIso } } };
+      // A promotion that hasn't started counts as Scheduled, even with an end date in the past.
+      return {
+        AND: [{ startDate: { range: { lte: nowIso } } }, { endDate: { range: { lte: nowIso } } }],
+      };
     case DiscountStatusEnum.ACTIVE:
       return {
-        AND: [{ startDate: { range: { lte: nowIso } } }, { endDate: { range: { gte: nowIso } } }],
+        AND: [
+          { startDate: { range: { lte: nowIso } } },
+          // `eq: null` matches promotions without an end date. Leaving the key out would match
+          // every promotion instead.
+          { OR: [{ endDate: { eq: null } }, { endDate: { range: { gte: nowIso } } }] },
+        ],
       };
   }
 }

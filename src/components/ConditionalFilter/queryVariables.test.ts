@@ -1,6 +1,7 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
+  DiscountStatusEnum,
   ProductTypeConfigurable,
   ProductTypeEnum,
 } from "@dashboard/graphql";
@@ -17,6 +18,7 @@ import {
   createAttributesQueryVariables,
   createCategoryQueryVariables,
   createCustomerWhereVariables,
+  createDiscountsQueryVariables,
   createDraftOrderQueryVariables,
   createGiftCardQueryVariables,
   createPageQueryVariables,
@@ -1158,5 +1160,50 @@ describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", 
 
     // Assert
     expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createDiscountsQueryVariables", () => {
+  const now = new Date("2026-11-09T12:00:00.000Z");
+
+  beforeEach(() => {
+    jest.useFakeTimers().setSystemTime(now);
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it("sends Active as started, with no end date or one still ahead", () => {
+    // Arrange
+    const activeStatus = new FilterElement(
+      new ExpressionValue("promotionStatus", "Status", "promotionStatus"),
+      new Condition(
+        ConditionOptions.fromName("promotionStatus"),
+        new ConditionSelected(
+          { label: "Active", slug: "ACTIVE", value: DiscountStatusEnum.ACTIVE },
+          { type: "combobox", label: "is", value: "input-1" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+
+    // Act
+    const variables = createDiscountsQueryVariables([activeStatus]);
+
+    // Assert
+    expect(variables).toEqual({
+      AND: [
+        {
+          AND: [
+            { startDate: { range: { lte: now.toISOString() } } },
+            { OR: [{ endDate: { eq: null } }, { endDate: { range: { gte: now.toISOString() } } }] },
+          ],
+        },
+      ],
+    });
   });
 });
