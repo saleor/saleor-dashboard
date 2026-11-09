@@ -1,4 +1,10 @@
-import { PromotionTypeEnum } from "@dashboard/graphql";
+import { ApolloError } from "@apollo/client";
+import { type MutationOutcome } from "@dashboard/discounts/voucherSaveRequestErrors";
+import {
+  PromotionTypeEnum,
+  PromotionUpdateErrorCode,
+  type PromotionUpdateMutation,
+} from "@dashboard/graphql";
 
 import { type DiscoutFormData } from "../../types";
 import { createUpdateHandler, shouldClearPromotionEndDateFirst } from "./handlers";
@@ -75,10 +81,39 @@ describe("createUpdateHandler", () => {
     },
   };
 
+  const savedUpdate: MutationOutcome<PromotionUpdateMutation> = {
+    data: {
+      __typename: "Mutation",
+      promotionUpdate: { __typename: "PromotionUpdate", errors: [], promotion: null },
+    },
+  };
+  const rejectedUpdate: MutationOutcome<PromotionUpdateMutation> = {
+    data: {
+      __typename: "Mutation",
+      promotionUpdate: {
+        __typename: "PromotionUpdate",
+        errors: [
+          {
+            __typename: "PromotionUpdateError",
+            field: "name",
+            code: PromotionUpdateErrorCode.INVALID,
+            message: "Ensure this value has at most 255 characters (it has 286).",
+          },
+        ],
+        promotion: null,
+      },
+    },
+  };
+  const failedRequest: MutationOutcome<PromotionUpdateMutation> = {
+    data: null,
+    errors: new ApolloError({ errorMessage: "Failed to fetch" }),
+  };
+
   it("clears end date before updating start when they would conflict", async () => {
     // Arrange
-    const update = jest.fn().mockResolvedValue({ data: { promotionUpdate: { errors: [] } } });
-    const handler = createUpdateHandler(promotion, update);
+    const update = jest.fn().mockResolvedValue(savedUpdate);
+    const restoreEndDate = jest.fn();
+    const handler = createUpdateHandler({ promotion, update, restoreEndDate });
 
     // Act
     await handler(formData);
@@ -96,12 +131,13 @@ describe("createUpdateHandler", () => {
     expect(update.mock.calls[1][0].input.endDate).toBeNull();
     expect(update.mock.calls[1][0].input.startDate).toBeTruthy();
     expect(update.mock.calls[1][1]).toBeUndefined();
+    expect(restoreEndDate).not.toHaveBeenCalled();
   });
 
   it("skips the clear step when end date stays enabled", async () => {
     // Arrange
-    const update = jest.fn().mockResolvedValue({ data: { promotionUpdate: { errors: [] } } });
-    const handler = createUpdateHandler(promotion, update);
+    const update = jest.fn().mockResolvedValue(savedUpdate);
+    const handler = createUpdateHandler({ promotion, update, restoreEndDate: jest.fn() });
 
     // Act
     await handler({
@@ -117,5 +153,108 @@ describe("createUpdateHandler", () => {
     // Assert
     expect(update).toHaveBeenCalledTimes(1);
     expect(update.mock.calls[0][0].input.endDate).toBeTruthy();
+  });
+
+  it("puts the end date back when the update after clearing it is rejected", async () => {
+    // Arrange
+    const update = jest
+      .fn()
+      .mockResolvedValueOnce(savedUpdate)
+      .mockResolvedValueOnce(rejectedUpdate);
+    const restoreEndDate = jest.fn().mockResolvedValue(true);
+    const handler = createUpdateHandler({ promotion, update, restoreEndDate });
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(restoreEndDate).toHaveBeenCalledWith("2026-08-01T00:00:00.000Z");
+    expect(result?.errors).toEqual([
+      {
+        __typename: "PromotionUpdateError",
+        field: "name",
+        code: PromotionUpdateErrorCode.INVALID,
+        message: "Ensure this value has at most 255 characters (it has 286).",
+      },
+    ]);
+  });
+
+  it("puts the end date back when the update after clearing it fails as a request", async () => {
+    // Arrange
+    const update = jest
+      .fn()
+      .mockResolvedValueOnce(savedUpdate)
+      .mockResolvedValueOnce(failedRequest);
+    const restoreEndDate = jest.fn().mockResolvedValue(true);
+    const handler = createUpdateHandler({ promotion, update, restoreEndDate });
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(restoreEndDate).toHaveBeenCalledWith("2026-08-01T00:00:00.000Z");
+    expect(result?.errors).toHaveLength(1);
+  });
+
+  it("does not send the update when clearing the end date fails", async () => {
+    // Arrange
+    const update = jest.fn().mockResolvedValueOnce(failedRequest);
+    const restoreEndDate = jest.fn();
+    const handler = createUpdateHandler({ promotion, update, restoreEndDate });
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(update).toHaveBeenCalledTimes(1);
+    expect(restoreEndDate).not.toHaveBeenCalled();
+    expect(result?.errors).toHaveLength(1);
+  });
+
+  it("leaves the end date alone when an update that did not clear it is rejected", async () => {
+    // Arrange
+    const update = jest.fn().mockResolvedValue(rejectedUpdate);
+    const restoreEndDate = jest.fn();
+    const handler = createUpdateHandler({ promotion, update, restoreEndDate });
+
+    // Act
+    await handler({
+      ...formData,
+      dates: { ...formData.dates, hasEndDate: true, endDate: "2026-09-01", endTime: "23:59" },
+    });
+
+    // Assert
+    expect(update).toHaveBeenCalledTimes(1);
+    expect(restoreEndDate).not.toHaveBeenCalled();
+  });
+
+  it("puts the end date back when the update after clearing it throws", async () => {
+    // Arrange
+    const update = jest
+      .fn()
+      .mockResolvedValueOnce(savedUpdate)
+      .mockRejectedValueOnce(new Error("Link failed"));
+    const restoreEndDate = jest.fn().mockResolvedValue(true);
+    const handler = createUpdateHandler({ promotion, update, restoreEndDate });
+
+    // Act
+    const result = handler(formData);
+
+    // Assert
+    await expect(result).rejects.toThrow("Link failed");
+    expect(restoreEndDate).toHaveBeenCalledWith("2026-08-01T00:00:00.000Z");
+  });
+
+  it("sends nothing when the update cannot be built", async () => {
+    // Arrange
+    const update = jest.fn().mockResolvedValue(savedUpdate);
+    const handler = createUpdateHandler({ promotion, update, restoreEndDate: jest.fn() });
+
+    // Act
+    const result = handler({ ...formData, description: "{not json" });
+
+    // Assert
+    await expect(result).rejects.toThrow();
+    expect(update).not.toHaveBeenCalled();
   });
 });
