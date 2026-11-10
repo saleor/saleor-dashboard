@@ -8048,6 +8048,10 @@
     "context": "Exit form dialog body on product update page",
     "string": "Media and metadata changes are already saved. Unsaved product details, attributes, availability, and variant edits will be lost."
   },
+  "R3aqyA": {
+    "context": "toast description when a voucher save got no answer or a server error, so it may or may not have been saved",
+    "string": "Saleor didn't confirm the save. Check whether it went through before trying again."
+  },
   "R4IIw1": {
     "context": "tracking number of the shipment",
     "string": "Tracking number"

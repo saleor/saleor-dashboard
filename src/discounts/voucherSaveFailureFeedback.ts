@@ -37,8 +37,17 @@ const FIELD_SECTIONS: ReadonlyArray<{ fields: readonly string[]; section: Vouche
  * Codes come first, since a taken code blocks the whole save.
  */
 export const getVoucherSaveFailureFeedback = (
-  errors: ReadonlyArray<Pick<VoucherSaveError, "field">>,
+  errors: ReadonlyArray<Pick<VoucherSaveError, "field" | "outcomeUnknown">>,
 ): VoucherSaveFailureFeedback => {
+  // Saleor may have saved it anyway, so "Try again" could save it twice.
+  if (errors.some(error => error.outcomeUnknown)) {
+    return {
+      section: null,
+      recovery: voucherFeedbackMessages.checkSavedBeforeRetrying,
+      shownOnPage: false,
+    };
+  }
+
   if (errors.some(isVoucherCodesError)) {
     return {
       section: voucherSectionIds.codes,
