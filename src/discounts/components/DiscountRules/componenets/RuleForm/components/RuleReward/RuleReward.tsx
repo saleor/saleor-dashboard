@@ -11,10 +11,9 @@ import { RuleRewardValue } from "../RuleRewardValue/RuleRewardValue";
 
 interface RuleRewardProps {
   currencySymbol: string | null;
-  error: string | undefined;
 }
 
-export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
+export const RuleReward = ({ currencySymbol }: RuleRewardProps) => {
   const { discountType } = useDiscountRulesContext();
   const { watch } = useFormContext<Rule>();
   const rewardType = watch("rewardType");
@@ -26,7 +25,7 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
           <RuleRewardTypeSelect />
           {rewardType === RewardTypeEnum.GIFT && <RuleRewardGifts />}
           {rewardType === RewardTypeEnum.SUBTOTAL_DISCOUNT && (
-            <RuleRewardValue currencySymbol={currencySymbol} error={error} />
+            <RuleRewardValue currencySymbol={currencySymbol} />
           )}
         </Box>
       </RuleRewardWrapper>
@@ -35,7 +34,7 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
 
   return (
     <RuleRewardWrapper>
-      <RuleRewardValue currencySymbol={currencySymbol} error={error} />
+      <RuleRewardValue currencySymbol={currencySymbol} />
     </RuleRewardWrapper>
   );
 };

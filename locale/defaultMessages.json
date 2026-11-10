@@ -4152,6 +4152,10 @@
     "context": "Save composition segment for product type name and kind",
     "string": "general"
   },
+  "Cnf2FR": {
+    "context": "promotion rule error when a percentage reward has more than 3 decimal places",
+    "string": "Use up to 3 decimal places."
+  },
   "CrY98m": {
     "context": "button, marks order as paid (legacy payments)",
     "string": "Mark order as paid"
@@ -11188,6 +11192,10 @@
     "context": "shipping method types help example row one cart",
     "string": "$150, 8 kg"
   },
+  "bmhwTj": {
+    "context": "promotion rule error when a fixed reward has decimals but the channel currency has none",
+    "string": "Enter a whole amount for {currency}."
+  },
   "bmi0JZ": {
     "string": "Customer type created"
   },
@@ -18026,6 +18034,10 @@
   "z0gGP+": {
     "context": "number of attributes",
     "string": "{number} Attributes"
+  },
+  "z0nB21": {
+    "context": "promotion rule error when a fixed reward has more decimals than the channel currency allows",
+    "string": "Use up to {places, plural, one {# decimal place} other {# decimal places}} for {currency}."
   },
   "z12p7o": {
     "context": "assign gift card customer dialog subtitle",

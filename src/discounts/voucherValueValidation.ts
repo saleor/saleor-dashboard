@@ -2,6 +2,7 @@ import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMes
 import { commonMessages } from "@dashboard/intl";
 import { type IntlShape } from "react-intl";
 
+import { hasMoreDecimalPlacesThan } from "./decimalPlaces";
 import { DiscountTypeEnum } from "./types";
 
 /** Saleor stores voucher discount values with 3 decimal places and rounds anything finer. */
@@ -22,15 +23,6 @@ const MAX_GRAPHQL_INT = 2_147_483_647;
 
 const toTrimmedText = (value: string | number | null | undefined): string =>
   value === null || value === undefined ? "" : String(value).trim();
-
-/** Whether a positive amount changes, or becomes 0, when rounded to `places` decimals. */
-const isChangedByRounding = (amount: number, places: number): boolean => {
-  const scaled = amount * 10 ** places;
-  const rounded = Math.round(scaled);
-
-  // Tolerate floating-point noise such as 0.123 * 1000 = 123.00000000000001.
-  return rounded === 0 || Math.abs(scaled - rounded) > 1e-9;
-};
 
 /**
  * What is wrong with a channel's discount value, if anything. The API only rejects a percentage
@@ -57,7 +49,7 @@ export const getDiscountValueIssue = (
       return "aboveHundredPercent";
     }
 
-    if (isChangedByRounding(amount, VOUCHER_VALUE_DECIMAL_PLACES)) {
+    if (hasMoreDecimalPlacesThan(amount, VOUCHER_VALUE_DECIMAL_PLACES)) {
       return "tooManyDecimals";
     }
   }

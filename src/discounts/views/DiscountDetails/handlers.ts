@@ -17,7 +17,7 @@ import {
   type PromotionUpdateMutation,
   type PromotionUpdateMutationVariables,
 } from "@dashboard/graphql";
-import { getMutationErrors, joinDateTime } from "@dashboard/misc";
+import { joinDateTime } from "@dashboard/misc";
 import { type CommonError } from "@dashboard/utils/errors/common";
 import difference from "lodash/difference";
 
@@ -160,7 +160,8 @@ export const createRuleUpdateHandler = (
         removeGifts: difference(ruleGifts, gifts ?? []),
       },
     });
-    const errors = getMutationErrors(response);
+    // A request that failed as a whole (offline, a 500) is a failure too, not an empty error list.
+    const errors = getVoucherSaveRequestErrors(response, data => data.promotionRuleUpdate?.errors);
 
     if (errors.length > 0) {
       return errors as Array<CommonError<PromotionRuleUpdateErrorFragment>>;
@@ -184,7 +185,7 @@ export const createRuleCreateHandler = (
         ...ruleData,
       },
     });
-    const errors = getMutationErrors(response);
+    const errors = getVoucherSaveRequestErrors(response, data => data.promotionRuleCreate?.errors);
 
     if (errors.length > 0) {
       return errors as Array<CommonError<PromotionRuleCreateErrorFragment>>;
