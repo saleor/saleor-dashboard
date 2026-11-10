@@ -61,7 +61,10 @@ export function getResponseConnectionFailure(
   };
 }
 
-const hasStatusCode = (error: object): error is { statusCode: number; response?: ResponseLike } =>
+/** Apollo's ServerError and ServerParseError keep the status of the response they came from. */
+export const hasStatusCode = (
+  error: object,
+): error is { statusCode: number; response?: ResponseLike } =>
   "statusCode" in error && typeof error.statusCode === "number";
 
 /**

@@ -73,4 +73,46 @@ export const connectionMessages = defineMessages({
     description:
       "button that reloads the dashboard to open a page whose code could not be downloaded",
   },
+  loadServerErrorDescription: {
+    id: "9cQtjg",
+    defaultMessage: "Saleor ran into a problem (error {status}). Reload the page to try again.",
+    description:
+      "toast text when data could not be loaded because Saleor failed with a server error",
+  },
+  loadUnreadableDescription: {
+    id: "rpz4BK",
+    defaultMessage:
+      "The server sent an answer the dashboard can't read. Reload the page to try again.",
+    description:
+      "toast text when data could not be loaded because the answer was not readable, such as an error page",
+  },
+  actionServerErrorTitle: {
+    id: "qSE4jj",
+    defaultMessage: "Saleor ran into a problem (error {status})",
+    description: "toast heading when an action failed because Saleor failed with a server error",
+  },
+  actionUnreadableTitle: {
+    id: "uW3+xR",
+    defaultMessage: "Unexpected answer from the server",
+    description:
+      "toast heading when an action got an answer that was not readable, such as an error page",
+  },
+  loadRefusedDescription: {
+    id: "Jdpg/W",
+    defaultMessage:
+      "The server refused the request (error {status}). Reload the page to try again.",
+    description:
+      "toast text when data could not be loaded because the server refused the request, such as a proxy or firewall",
+  },
+  actionRefusedTitle: {
+    id: "LZ+epP",
+    defaultMessage: "The server refused the request (error {status})",
+    description:
+      "toast heading when an action was refused by the server before Saleor handled it, such as a proxy or firewall",
+  },
+  actionRefusedDescription: {
+    id: "j7MPFs",
+    defaultMessage: "The change wasn't saved.",
+    description: "toast text when an action was refused by the server before Saleor handled it",
+  },
 });
