@@ -100,12 +100,14 @@ export const updateCategoryTranslations = gql`
         id
         name
         description
+        fullDescription
         seoDescription
         seoTitle
         slug
         translation(languageCode: $language) {
           id
           description
+          fullDescription
           language {
             language
           }
@@ -133,12 +135,14 @@ export const updateCollectionTranslations = gql`
         id
         name
         description
+        fullDescription
         seoDescription
         seoTitle
         slug
         translation(languageCode: $language) {
           id
           description
+          fullDescription
           language {
             language
           }

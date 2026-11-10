@@ -63,11 +63,14 @@ export const TranslationsCollectionsPage = ({
         intl,
         {
           description: data?.collection?.description,
+          fullDescription: data?.collection?.fullDescription,
           name: data?.collection?.name,
           translationDescription: data?.translation?.description,
+          translationFullDescription: data?.translation?.fullDescription,
           translationName: data?.translation?.name,
         },
         {
+          includeFullDescription: true,
           nameLabel: intl.formatMessage({
             id: "VZsE96",
             defaultMessage: "Collection Name",

@@ -5,6 +5,7 @@ import {
   type TranslationSectionConfig,
   TranslationSubmitScope,
 } from "@dashboard/translations/types";
+import { type OutputData } from "@editorjs/editorjs";
 
 import {
   submitBulkAttributeValueTranslations,
@@ -45,6 +46,37 @@ const attributeSection: TranslationSectionConfig = {
 };
 
 describe("submitBulkEntityTranslations", () => {
+  it("saves description and full description as independent rich text fields", async () => {
+    // Arrange
+    const description: OutputData = { blocks: [{ type: "paragraph", data: { text: "Summary" } }] };
+    const fullDescription: OutputData = {
+      blocks: [{ type: "paragraph", data: { text: "Details" } }],
+    };
+    const onSubmit = jest.fn().mockResolvedValue([]);
+    const values: BulkTranslationValue[] = [
+      {
+        field: { ...entityField, name: "description", type: TranslationFieldType.RICH },
+        section: entitySection,
+        data: description,
+      },
+      {
+        field: { ...entityField, name: "fullDescription", type: TranslationFieldType.RICH },
+        section: entitySection,
+        data: fullDescription,
+      },
+    ];
+
+    // Act
+    const result = await submitBulkEntityTranslations({ onSubmit, values });
+
+    // Assert
+    expect(onSubmit).toHaveBeenCalledWith({
+      description: JSON.stringify(description),
+      fullDescription: JSON.stringify(fullDescription),
+    });
+    expect(result.hasErrors).toBe(false);
+  });
+
   it("merges entity field values into a single mutation input", async () => {
     // Arrange
     const onSubmit = jest.fn().mockResolvedValue([]);

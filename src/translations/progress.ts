@@ -10,6 +10,73 @@ export interface TranslationFieldInput {
   type: TranslationFieldType;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function hasVisibleText(value: unknown): boolean {
+  if (!isNonEmptyString(value)) {
+    return false;
+  }
+
+  // The template decodes entities and ignores formatting without inserting HTML into the page.
+  const template = document.createElement("template");
+
+  template.innerHTML = value;
+
+  return (template.content.textContent ?? "").trim().length > 0;
+}
+
+function hasListContent(items: unknown): boolean {
+  return (
+    Array.isArray(items) &&
+    items.some((item: unknown) => {
+      if (typeof item === "string") {
+        return hasVisibleText(item);
+      }
+
+      return (
+        isRecord(item) &&
+        (hasVisibleText(item.content) || hasVisibleText(item.text) || hasListContent(item.items))
+      );
+    })
+  );
+}
+
+function hasRichTextBlockContent(block: unknown): boolean {
+  if (!isRecord(block) || !isRecord(block.data)) {
+    return false;
+  }
+
+  const { type, data } = block;
+
+  switch (type) {
+    case "paragraph":
+    case "header":
+    case "quote":
+      return hasVisibleText(data.text);
+    case "list":
+    case "checklist":
+      return hasListContent(data.items);
+    case "table":
+      return (
+        Array.isArray(data.content) &&
+        data.content.some((row: unknown) => Array.isArray(row) && row.some(hasVisibleText))
+      );
+    case "image":
+      return isRecord(data.file) && isNonEmptyString(data.file.url);
+    case "embed":
+      return isNonEmptyString(data.embed) || isNonEmptyString(data.source);
+    default:
+      // Preserve completion rules for custom tools outside the Dashboard toolset.
+      return "text" in data ? hasVisibleText(data.text) : true;
+  }
+}
+
 export function isFieldTranslationComplete(
   translation: string | null,
   type: TranslationFieldType,
@@ -20,9 +87,9 @@ export function isFieldTranslationComplete(
 
   if (type === TranslationFieldType.RICH) {
     try {
-      const parsed = JSON.parse(translation) as { blocks?: unknown[] };
+      const parsed: { blocks?: unknown[] } | null = JSON.parse(translation);
 
-      return Array.isArray(parsed.blocks) && parsed.blocks.length > 0;
+      return Array.isArray(parsed?.blocks) && parsed.blocks.some(hasRichTextBlockContent);
     } catch {
       return false;
     }

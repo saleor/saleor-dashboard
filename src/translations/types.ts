@@ -10,6 +10,7 @@ import { type OutputData } from "@editorjs/editorjs";
 export enum TranslationInputFieldName {
   alt = "alt",
   description = "description",
+  fullDescription = "fullDescription",
   name = "name",
   seoDescription = "seoDescription",
   seoTitle = "seoTitle",

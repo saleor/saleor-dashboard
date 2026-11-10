@@ -24,6 +24,10 @@ interface GeneralTranslationFields {
   slug?: string | null;
 }
 
+interface CategoryCollectionTranslationFields extends GeneralTranslationFields {
+  fullDescription?: string | null;
+}
+
 interface PageTranslationFields {
   content?: string | null;
   seoDescription?: string | null;
@@ -53,6 +57,20 @@ export function getGeneralEntityTranslationCompletion(
       { translation: translation?.seoDescription, type: TranslationFieldType.LONG },
     ]),
   );
+}
+
+export function getCategoryCollectionTranslationCompletion(
+  translation: CategoryCollectionTranslationFields | null | undefined,
+): ListCompletion {
+  const general = getGeneralEntityTranslationCompletion(translation);
+  const fullDescription = getTranslationCompletion([
+    { translation: translation?.fullDescription, type: TranslationFieldType.RICH },
+  ]);
+
+  return {
+    current: general.current + fullDescription.completed,
+    max: general.max + fullDescription.total,
+  };
 }
 
 export function getPageTranslationCompletion(

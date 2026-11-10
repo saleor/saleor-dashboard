@@ -175,6 +175,7 @@ export const collection: (
     },
   ],
   description: JSON.stringify(content),
+  fullDescription: null,
   id: "Q29sbGVjdGlvbjox",
   metadata: [
     {
