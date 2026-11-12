@@ -8,6 +8,11 @@ interface UsePinnedActiveVariantProps {
   currentVariant: ProductVariantSibling | null;
   variants: ProductVariantSibling[];
   scrollContainerRef: RefObject<HTMLDivElement>;
+  /**
+   * False while there is no list to compare the open variant against: its first page is
+   * still loading, or the list is folded away. Nothing is pinned then.
+   */
+  enabled: boolean;
 }
 
 interface UsePinnedActiveVariantResult {
@@ -24,14 +29,31 @@ interface ViewportVisibility {
 }
 
 /**
+ * Whether any part of the row shows inside the list's scroll area. Null when the list takes
+ * no space (hidden, or not laid out), where there is nothing to be in or out of view of.
+ */
+const measureRowVisibility = (container: HTMLElement, row: HTMLElement): boolean | null => {
+  const containerRect = container.getBoundingClientRect();
+
+  if (containerRect.height === 0) {
+    return null;
+  }
+
+  const rowRect = row.getBoundingClientRect();
+
+  return rowRect.bottom > containerRect.top && rowRect.top < containerRect.bottom;
+};
+
+/**
  * Pin the current variant above the scroll list when it is not visible —
- * either not loaded yet, or loaded but scrolled out of the viewport.
+ * either beyond the loaded pages, or loaded but scrolled out of the viewport.
  */
 export const usePinnedActiveVariant = ({
   currentId,
   currentVariant,
   variants,
   scrollContainerRef,
+  enabled,
 }: UsePinnedActiveVariantProps): UsePinnedActiveVariantResult => {
   const loadedActive = useMemo(
     () => (currentId ? (variants.find(variant => variant.id === currentId) ?? null) : null),
@@ -52,13 +74,12 @@ export const usePinnedActiveVariant = ({
   const isInViewport = visibility.forId === currentId ? visibility.inViewport : null;
 
   useLayoutEffect(
-    function observeActiveRowVisibility() {
-      if (!currentId || !loadedActive) {
-        const frame = requestAnimationFrame(() => {
-          setVisibility({ forId: currentId, inViewport: false });
-        });
-
-        return () => cancelAnimationFrame(frame);
+    function trackActiveRowVisibility() {
+      // Without a row there is nothing to measure: a variant beyond the loaded pages is
+      // pinned for that reason alone, and must not leave an "out of view" behind for
+      // the moment its row does appear.
+      if (!enabled || !currentId || !loadedActive) {
+        return;
       }
 
       const container = scrollContainerRef.current;
@@ -67,20 +88,28 @@ export const usePinnedActiveVariant = ({
       );
 
       if (!container || !row) {
-        const frame = requestAnimationFrame(() => {
-          setVisibility({ forId: currentId, inViewport: false });
-        });
-
-        return () => cancelAnimationFrame(frame);
+        return;
       }
+
+      const report = (inViewport: boolean | null): void => {
+        setVisibility(previous =>
+          previous.forId === currentId && previous.inViewport === inViewport
+            ? previous
+            : { forId: currentId, inViewport },
+        );
+      };
+
+      // Measure before the browser paints, so the list never shows a pin it is about to
+      // take back (or the reverse). The observer then follows scrolling.
+      report(measureRowVisibility(container, row));
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (!entry) {
-            return;
+          // A row taken out of the list reports "not intersecting" on its way out; that
+          // says nothing about the row that replaces it.
+          if (entry && row.isConnected) {
+            report(entry.isIntersecting);
           }
-
-          setVisibility({ forId: currentId, inViewport: entry.isIntersecting });
         },
         { root: container, threshold: 0 },
       );
@@ -89,7 +118,7 @@ export const usePinnedActiveVariant = ({
 
       return () => observer.disconnect();
     },
-    [currentId, loadedActive, scrollContainerRef, variants.length],
+    [enabled, currentId, loadedActive, scrollContainerRef, variants.length],
   );
 
   const pinnedVariant = loadedActive ?? currentVariant;
@@ -102,6 +131,7 @@ export const usePinnedActiveVariant = ({
   // Not loaded → always pin. Loaded → pin only after we know it is out of view
   // (never while measurement is still null — that caused the click flash).
   const shouldPin = Boolean(
+    enabled &&
     currentId &&
     pinnedVariant &&
     (pinReason === "not-loaded" || (pinReason === "out-of-viewport" && isInViewport === false)),
