@@ -3440,6 +3440,10 @@
     "context": "voucher redemptions card used of limit detail line",
     "string": "{used} of {limit} used"
   },
+  "AV90gj": {
+    "context": "number of variants the product has, shown in the variant switcher",
+    "string": "{count, plural, one {# variant} other {# variants}}"
+  },
   "AVF5T5": {
     "context": "voucher end date, switch button",
     "string": "Set end date"
@@ -5555,6 +5559,10 @@
     "context": "voucher channel status description when its usage limit is used up",
     "string": "Its usage limit is used up, so it can't be redeemed."
   },
+  "HtEe9i": {
+    "context": "button that closes the list of the product's variants",
+    "string": "Hide variant list"
+  },
   "HupwkE": {
     "context": "channel inventory allocation description with warehouses",
     "string": "How stock is drawn when an order can be filled from more than one warehouse."
@@ -6187,6 +6195,10 @@
   "K0Scar": {
     "context": "collection metadata dialog header",
     "string": "Collection Metadata"
+  },
+  "K0eCVE": {
+    "context": "button that opens the list of the product's variants",
+    "string": "Show all variants"
   },
   "K1ycaD": {
     "context": "input label",
@@ -7367,6 +7379,10 @@
   "OUX4LB": {
     "context": "input label",
     "string": "Model type"
+  },
+  "OW8fv1": {
+    "context": "shown in the variant list when a search finds nothing",
+    "string": "No variants match your search"
   },
   "OWF2HL": {
     "context": "parenthetical marker on legacy channel setting radio option",
@@ -11569,6 +11585,10 @@
     "context": "fulfillment status refunded",
     "string": "Refunded"
   },
+  "cy7gQI": {
+    "context": "button that opens the variant after the open one",
+    "string": "Next variant"
+  },
   "cy8sV7": {
     "context": "volume units types",
     "string": "Volume"
@@ -13002,6 +13022,10 @@
   "iMZEfi": {
     "context": "model detail page menu, opens model type configuration",
     "string": "Model type settings"
+  },
+  "iPQ7zY": {
+    "context": "button that empties the variant search and shows the whole list again",
+    "string": "Clear search"
   },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
@@ -15688,6 +15712,10 @@
     "context": "dialog title",
     "string": "Delete Token"
   },
+  "qvIlFa": {
+    "context": "button that opens the variant before the open one",
+    "string": "Previous variant"
+  },
   "qvaap2": {
     "context": "order detail page, top-bar metadata button tooltip",
     "string": "Edit order metadata"
@@ -17424,6 +17452,10 @@
   "wXFttp": {
     "context": "note on currency",
     "string": "Note: Only channels with matching currency are available."
+  },
+  "wXHLnB": {
+    "context": "place of the open variant among the product's variants, shown next to previous and next buttons, e.g. 3 of 24",
+    "string": "{position} of {total}"
   },
   "wXeUSb": {
     "context": "widget preference: visibility button when hidden",

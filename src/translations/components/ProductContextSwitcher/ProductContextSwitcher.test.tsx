@@ -154,7 +154,9 @@ describe("ProductContextSwitcher", () => {
       hasNextPage: true,
       loadMore: mockLoadMore,
       refetch: jest.fn(),
+      reorder: jest.fn(),
       canReorder: true,
+      filtered: false,
     });
   });
 
@@ -183,7 +185,9 @@ describe("ProductContextSwitcher", () => {
       hasNextPage: true,
       loadMore: mockLoadMore,
       refetch: jest.fn(),
+      reorder: jest.fn(),
       canReorder: true,
+      filtered: false,
     });
 
     // Act
@@ -207,7 +211,9 @@ describe("ProductContextSwitcher", () => {
       hasNextPage: true,
       loadMore: mockLoadMore,
       refetch: jest.fn(),
+      reorder: jest.fn(),
       canReorder: true,
+      filtered: false,
     });
     renderSwitcher();
 

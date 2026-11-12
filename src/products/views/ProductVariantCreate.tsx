@@ -112,7 +112,7 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const [updateChannels] = useProductVariantChannelListingUpdateMutation({});
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-  const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
+  const [reorderProductVariants] = useProductVariantReorderMutation({});
   const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
   const handleCreate = async (formData: ProductVariantCreateData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
@@ -254,11 +254,8 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   };
   const fetchMoreAttributeValues = getFetchMoreAttributeValues;
   const attributeValues = getAttributeValues;
-  const disableForm =
-    productLoading ||
-    uploadFileOpts.loading ||
-    variantCreateResult.loading ||
-    reorderProductVariantsOpts.loading;
+  // Reordering the list beside the form changes nothing in the form, so it doesn't lock it.
+  const disableForm = productLoading || uploadFileOpts.loading || variantCreateResult.loading;
 
   if (product === null) {
     return <NotFoundPage onBack={() => navigate(productListUrl())} />;
