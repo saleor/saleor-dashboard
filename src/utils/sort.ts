@@ -1,5 +1,5 @@
 import { OrderDirection } from "@dashboard/graphql";
-import { findValueInEnum, parseBoolean } from "@dashboard/misc";
+import { parseBoolean } from "@dashboard/misc";
 
 import { type TableCellHeaderArrowDirection } from "../components/TableCellHeader/TableCellHeader";
 import { type Sort } from "../types";
@@ -46,13 +46,23 @@ export function asSortParams<
 >(
   params: TParams,
   fields: TFields,
-  defaultField?: keyof TFields,
+  defaultField?: TFields[keyof TFields],
   defaultOrder?: boolean,
 ): TParams & Sort {
+  const defaultSort = defaultField ?? "name";
+  const defaultAsc = defaultOrder ?? true;
+
+  // A hand-edited or outdated URL can name a sort the list doesn't have. Open the list with its
+  // default sort instead of failing the whole page, and its default direction: the URL's direction
+  // was meant for the other sort.
+  if (params.sort && !Object.values(fields).includes(params.sort)) {
+    return { ...params, sort: defaultSort, asc: defaultAsc };
+  }
+
   return {
     ...params,
-    asc: parseBoolean(params.asc, defaultOrder === undefined ? true : defaultOrder),
-    sort: params.sort ? findValueInEnum(params.sort, fields) : defaultField?.toString() || "name",
+    asc: parseBoolean(params.asc, defaultAsc),
+    sort: params.sort || defaultSort,
   };
 }
 
