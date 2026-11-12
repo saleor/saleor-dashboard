@@ -6412,10 +6412,6 @@
     "context": "link to open an already installed extension app UI",
     "string": "Open {appName}"
   },
-  "KysW5s": {
-    "context": "voucher apply once per customer toggle description",
-    "string": "Each customer account can redeem this voucher only once, no matter which code they use."
-  },
   "KzgcFV": {
     "context": "category attribute entity type",
     "string": "Categories"
@@ -7684,6 +7680,10 @@
     "context": "Savebar hint listing which dirty areas will persist on Save",
     "string": "Unsaved changes: {segments}"
   },
+  "PgVXIr": {
+    "context": "voucher toggle title: one redemption per customer email address",
+    "string": "One use per email address"
+  },
   "PhXtJy": {
     "context": "factor label for line-level voucher discount",
     "string": "Voucher (line)"
@@ -7760,10 +7760,6 @@
   "PwJvsc": {
     "context": "address search input label in order address edit dialog",
     "string": "Search addresses"
-  },
-  "PwrYMn": {
-    "context": "setup review row description",
-    "string": "Cap total redemptions or limit use to once per customer."
   },
   "PxvG+u": {
     "context": "grant refund table, add reason button",
@@ -10382,6 +10378,10 @@
     "context": "bulk publish default stock per warehouse hint",
     "string": "{scope, select, single {Per variant.} other {Per variant, per warehouse.}}"
   },
+  "YstMl4": {
+    "context": "setup review row description",
+    "string": "Cap total redemptions or limit use to once per email address."
+  },
   "YtCaCm": {
     "context": "header",
     "string": "Extension Information"
@@ -10423,6 +10423,10 @@
   },
   "Z/jtCO": {
     "string": "Avatar deleted"
+  },
+  "Z2U8fc": {
+    "context": "voucher toggle description: the limit is per customer email address, not per person",
+    "string": "Each email address can redeem this voucher once, no matter which code is used. The same person can redeem again with a different address, so add a total limit or one-use codes to cap redemptions."
   },
   "Z3T6zR": {
     "context": "card title",
@@ -15041,10 +15045,6 @@
   "p73Q1f": {
     "context": "Product save pipeline step label",
     "string": "Product details"
-  },
-  "p7GaL2": {
-    "context": "voucher apply once per customer toggle title",
-    "string": "One use per customer"
   },
   "p8wPET": {
     "context": "shipping method assigned channel count when all have prices",
