@@ -4,7 +4,7 @@ import { type PromotionTypeEnum } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { FormProvider, type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -15,6 +15,7 @@ import {
   type PromotionSaveComposition,
 } from "../DiscountDetailsForm/promotionSaveComposition";
 import { useDiscountFormExit } from "../DiscountDetailsForm/useDiscountFormExit";
+import { DiscountTypeChangeDialog } from "../DiscountTypeChangeDialog/DiscountTypeChangeDialog";
 import { useRulesHandlers } from "./hooks/useRulesHandlers";
 import { initialFormValues } from "./initialFormValues";
 import { getValidationSchema } from "./validationSchema";
@@ -24,6 +25,8 @@ interface CreateFormRenderProps {
   discountType: PromotionTypeEnum;
   onDeleteRule: (ruleDeleteIndex: number) => void;
   onRuleSubmit: (data: Rule, ruleEditIndex: number | null) => void;
+  /** Changes the type, after asking first when the change would remove the rules added so far. */
+  onTypeChange: (type: PromotionTypeEnum) => void;
   submitHandler: () => void;
   saveComposition: PromotionSaveComposition;
   hasUnsavedChanges: boolean;
@@ -44,6 +47,9 @@ export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormPro
   const currentValues = useWatch({ control: methods.control });
   const discountType = (currentValues?.type ?? initialFormValues.type) as PromotionTypeEnum;
   const { rules, onDeleteRule, onRuleSubmit } = useRulesHandlers(discountType);
+  // Changing the type removes the rules (see useRulesHandlers), so it waits for the merchant to
+  // confirm while there are any.
+  const [pendingType, setPendingType] = useState<PromotionTypeEnum | null>(null);
   const saveComposition = useMemo(() => {
     if (!currentValues) {
       return EMPTY_PROMOTION_SAVE_COMPOSITION;
@@ -71,6 +77,29 @@ export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormPro
     });
   };
   const submitHandlerWithValidation = methods.handleSubmit(handleSubmit);
+  const changeType = (type: PromotionTypeEnum): void => {
+    methods.setValue("type", type, { shouldDirty: true });
+  };
+  const onTypeChange = (type: PromotionTypeEnum): void => {
+    if (type === discountType) {
+      return;
+    }
+
+    if (rules.length > 0) {
+      setPendingType(type);
+
+      return;
+    }
+
+    changeType(type);
+  };
+  const confirmTypeChange = (): void => {
+    if (pendingType !== null) {
+      changeType(pendingType);
+    }
+
+    setPendingType(null);
+  };
 
   return (
     <RichTextContext.Provider value={richText}>
@@ -79,6 +108,7 @@ export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormPro
           {children({
             onDeleteRule,
             onRuleSubmit,
+            onTypeChange,
             discountType,
             submitHandler: submitHandlerWithValidation,
             rules,
@@ -86,6 +116,13 @@ export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormPro
             hasUnsavedChanges,
           })}
         </form>
+        <DiscountTypeChangeDialog
+          open={pendingType !== null}
+          currentType={discountType}
+          ruleCount={rules.length}
+          onConfirm={confirmTypeChange}
+          onClose={() => setPendingType(null)}
+        />
       </FormProvider>
     </RichTextContext.Provider>
   );

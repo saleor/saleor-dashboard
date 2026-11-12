@@ -17,12 +17,18 @@ interface DiscountGeneralInfoProps {
   disabled?: boolean;
   typeDisabled?: boolean;
   error: string | undefined;
+  /**
+   * Called instead of changing the type, so the form can ask first when the change would remove
+   * something. Without it, picking a type changes it right away.
+   */
+  onTypeChange?: (type: PromotionTypeEnum) => void;
 }
 
 export const DiscountGeneralInfo = ({
   disabled,
   typeDisabled,
   error,
+  onTypeChange,
 }: DiscountGeneralInfoProps) => {
   const intl = useIntl();
   const { formState } = useFormContext<DiscoutFormData>();
@@ -65,6 +71,7 @@ export const DiscountGeneralInfo = ({
         <Box display="grid" __gridTemplateColumns="250px 1fr" gap={3}>
           <Select
             {...typeField}
+            onChange={onTypeChange ?? typeField.onChange}
             data-test-id="discount-type-select"
             size="medium"
             options={discountTypes}
