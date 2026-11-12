@@ -353,3 +353,42 @@ describe("isInternalToken", () => {
     expect(result).toBe(false);
   });
 });
+
+describe("session id", () => {
+  beforeEach(() => {
+    createStorage(true);
+  });
+
+  it("changes when a login stores a new session and when the session is cleared", () => {
+    // Arrange
+    const before = storage.getSessionId();
+
+    // Act
+    storage.setTokens({ accessToken: "access", refreshToken: "refresh" });
+
+    const afterLogin = storage.getSessionId();
+
+    storage.clear();
+
+    const afterLogout = storage.getSessionId();
+
+    // Assert
+    expect(afterLogin).not.toBe(before);
+    expect(afterLogout).not.toBe(afterLogin);
+  });
+
+  it("stays the same while a refresh renews the current session's tokens", () => {
+    // Arrange
+    storage.setTokens({ accessToken: "access", refreshToken: "refresh" });
+
+    const before = storage.getSessionId();
+
+    // Act
+    storage.setAccessToken("renewed-access");
+    storage.renewTokens({ accessToken: "renewed-access", refreshToken: "rotated-refresh" });
+
+    // Assert
+    expect(storage.getSessionId()).toBe(before);
+    expect(storage.getRefreshToken()).toBe("rotated-refresh");
+  });
+});

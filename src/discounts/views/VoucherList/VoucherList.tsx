@@ -16,7 +16,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { sectionNames } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -83,18 +86,12 @@ const VoucherList = ({ params }: VoucherListProps) => {
     displayLoader: true,
     variables: newFiltersQueryVariables,
   });
-  // The grid keeps its selection by row position. Clear it whenever the vouchers in those rows
-  // change: another filter, search, sort or page, or a refresh that reorders them.
-  const shownVoucherIds = useMemo(
-    () => (data?.vouchers?.edges ?? []).map(({ node }) => node.id).join(","),
-    [data?.vouchers],
-  );
   const {
     clearRowSelection,
     selectedRowIds,
     setSelectedRowIds,
     setClearDatagridRowSelectionCallback,
-  } = useRowSelection(params, { resetKey: shownVoucherIds });
+  } = useRowSelection(params);
   const {
     hasPresetsChanged,
     onPresetChange,
@@ -162,6 +159,12 @@ const VoucherList = ({ params }: VoucherListProps) => {
   };
   const handleSort = createSortHandler(navigate, voucherListUrl, params);
   const vouchers = mapEdgesToItems(data?.vouchers) ?? [];
+
+  useClearRowSelectionOnRowsChange({
+    rows: mapEdgesToItems(data?.vouchers),
+    clearRowSelection,
+  });
+
   const handleSelectVouchersIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!vouchers) {

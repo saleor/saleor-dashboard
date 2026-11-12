@@ -1,4 +1,9 @@
-import { borderHeight, savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
+import {
+  borderHeight,
+  pageViewportHeight,
+  savebarHeight,
+  topBarHeight,
+} from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
 import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -36,8 +41,8 @@ import styles from "./ProductVariantNavigation.module.css";
  * Using height (not only max-height) avoids empty white space under a short list.
  */
 const cardStyle: CSSProperties = {
-  height: `calc(100vh - ${topBarHeight} - ${savebarHeight} - ${borderHeight} * 2)`,
-  maxHeight: `calc(100vh - ${topBarHeight} - ${savebarHeight} - ${borderHeight} * 2)`,
+  height: `calc(${pageViewportHeight} - ${topBarHeight} - ${savebarHeight} - ${borderHeight} * 2)`,
+  maxHeight: `calc(${pageViewportHeight} - ${topBarHeight} - ${savebarHeight} - ${borderHeight} * 2)`,
   overflow: "hidden",
 };
 

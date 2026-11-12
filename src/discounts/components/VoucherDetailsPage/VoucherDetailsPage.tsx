@@ -117,6 +117,8 @@ interface VoucherDetailsPageProps
   saveButtonBarState: ConfirmButtonTransitionState;
   /** Undefined/null until the details query resolves — page shows a loading shell. */
   voucher: VoucherDetailsPageVoucher | null | undefined;
+  /** Changes once a successful save has been reloaded; the form then starts from `voucher`. */
+  formResetKey?: number;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   savedChannelListings: ChannelVoucherData[];
@@ -170,6 +172,7 @@ interface VoucherDetailsPageProps
 
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
+  formResetKey,
   tabItemsCount = {},
   allChannelsCount,
   channelListings = [],
@@ -314,7 +317,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       endTime: splitDateTime(voucher?.endDate ?? "").time,
       hasEndDate: !!voucher?.endDate,
       incompleteScheduleFields: [],
-      hasUsageLimit: !!voucher?.usageLimit,
+      // A limit of 0 is still a limit: the voucher can't be redeemed at all.
+      hasUsageLimit: voucher?.usageLimit != null,
       minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
       requirementsPicker: requirementsPickerInitValue,
       startDate: splitDateTime(voucher?.startDate ?? "").date,
@@ -393,6 +397,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       confirmLeave
       formId={VOUCHER_UPDATE_FORM_ID}
       initial={initialForm}
+      resetKey={formResetKey}
       onSubmit={handleValidatedSubmit}
       disabled={disabled}
     >

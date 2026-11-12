@@ -372,7 +372,7 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         });
       });
 
-      it("should skip between filter with invalid tuple", () => {
+      it("should leave out an invalid bound of a between filter", () => {
         // Arrange
         const element = createDateFilterElement(
           "createdAt",
@@ -385,10 +385,10 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         const result = builder.updateWhereQueryVariables(query, element);
 
         // Assert
+        // The API rejects an empty bound, so only the valid one is sent
         expect(result).toEqual({
           createdAt: {
             gte: "2023-01-01T00:00:00.000Z",
-            lte: "", // Invalid dates result in empty string
           },
         });
       });

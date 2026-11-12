@@ -361,6 +361,22 @@ describe("getVoucherLocalErrors", () => {
     ]);
   });
 
+  it("rejects a start date whose year is still being typed", () => {
+    // Arrange
+    const shortYear: VoucherDetailsPageFormData = { ...validForm, startDate: "0202-07-01" };
+    const fullYear: VoucherDetailsPageFormData = { ...validForm, startDate: "2026-07-01" };
+
+    // Act
+    const shortYearErrors = getVoucherLocalErrors(shortYear, intl);
+    const fullYearErrors = getVoucherLocalErrors(fullYear, intl);
+
+    // Assert
+    expect(shortYearErrors).toEqual([
+      expect.objectContaining({ field: "startDate", message: "Enter a complete date." }),
+    ]);
+    expect(fullYearErrors).toEqual([]);
+  });
+
   it("ignores a partly entered flag on a field that has a value again", () => {
     // Arrange
     const form: VoucherDetailsPageFormData = {

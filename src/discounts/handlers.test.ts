@@ -1,5 +1,7 @@
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { VoucherTypeEnum } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 
 import { createVoucherScopeChangeHandler } from "./handlers";
 
@@ -34,5 +36,28 @@ describe("Discounts / handlers / createVoucherScopeChangeHandler", () => {
 
     // Assert
     expect(clearShippingChannelAmounts).not.toHaveBeenCalled();
+  });
+
+  it("leaves a saved shipping voucher as loaded after switching away and back", () => {
+    // Arrange
+    type ScopeFields = Pick<VoucherDetailsPageFormData, "discountType" | "type">;
+
+    // How the details page loads a saved free shipping voucher
+    const loaded: ScopeFields = {
+      discountType: DiscountTypeEnum.SHIPPING,
+      type: VoucherTypeEnum.SHIPPING,
+    };
+    let form: ScopeFields = { ...loaded };
+    const change = ({ target }: ChangeEvent) => {
+      form = { ...form, [target.name]: target.value };
+    };
+    const handleScopeChange = createVoucherScopeChangeHandler(change);
+
+    // Act
+    handleScopeChange(VoucherTypeEnum.ENTIRE_ORDER, form.discountType);
+    handleScopeChange(DiscountTypeEnum.SHIPPING, form.discountType);
+
+    // Assert
+    expect(form).toEqual(loaded);
   });
 });

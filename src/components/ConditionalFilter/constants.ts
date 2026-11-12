@@ -643,6 +643,9 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
     label: "Discount type",
     type: "discountType",
     slug: "discountType",
+    // The voucher filter API takes one list per field, so a second row would replace the
+    // first. One row can already hold several values.
+    maxOccurrences: 1,
   },
   {
     value: "started",
@@ -656,6 +659,7 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
     label: "Status",
     type: "voucherStatus",
     slug: "voucherStatus",
+    maxOccurrences: 1,
   },
   {
     value: "timesUsed",

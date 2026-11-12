@@ -1038,6 +1038,10 @@
     "context": "Warning when no warehouses configured",
     "string": "No warehouses"
   },
+  "1ncnQ9": {
+    "context": "toast text when an action got no answer from Saleor, so it may or may not have been applied",
+    "string": "Check whether the change went through before trying again."
+  },
   "1oYjZc": {
     "context": "sum of all granted refunds for an order",
     "string": "Granted refund"
@@ -1980,6 +1984,10 @@
     "context": "acre-ft unit",
     "string": "acre-ft"
   },
+  "5XIqND": {
+    "context": "promotion schedule error when an end date is set without a start date",
+    "string": "Start date is required when end date is provided"
+  },
   "5ZYUn5": {
     "context": "Filter and element text",
     "string": "And"
@@ -2640,6 +2648,10 @@
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
     "string": "Authorized"
   },
+  "7fDyD7": {
+    "context": "text under the heading when a page could not be downloaded because the connection is lost",
+    "string": "It will open once the connection is back."
+  },
   "7gXPhB": {
     "string": "Qty"
   },
@@ -3017,6 +3029,10 @@
     "context": "button",
     "string": "Go back to dashboard"
   },
+  "96Dqyf": {
+    "context": "connection banner text shown briefly once Saleor answers again",
+    "string": "Connected again."
+  },
   "97JrRu": {
     "context": "setup task title",
     "string": "Make available to buy"
@@ -3178,6 +3194,10 @@
   "9bNJUY": {
     "context": "tooltip for the half-open circuit breaker badge",
     "string": "After repeated failures, Saleor is checking whether this app's synchronous webhooks work again. More failures will pause them."
+  },
+  "9cQtjg": {
+    "context": "toast text when data could not be loaded because Saleor failed with a server error",
+    "string": "Saleor ran into a problem (error {status}). Reload the page to try again."
   },
   "9d24PR": {
     "string": "Create rule"
@@ -3654,6 +3674,10 @@
     "context": "error message",
     "string": "This order cannot be cancelled"
   },
+  "BNCw3g": {
+    "context": "voucher redemptions status when its usage limit is used up",
+    "string": "Usage limit reached, so it can't be redeemed."
+  },
   "BNK0E1": {
     "string": "Are you sure you want to delete {counter, plural, one {this value} other {{displayQuantity} values}}? If you delete them you won’t be able to assign them to any of the products with \"{attributeName}\" attribute."
   },
@@ -3727,6 +3751,10 @@
   "BaxGjT": {
     "context": "variant stocks section subtitle",
     "string": "Assigning the stocks will be possible after the variant is saved."
+  },
+  "BbCiTr": {
+    "context": "promotion schedule error when the end is at or before the start",
+    "string": "End date must be after the start date."
   },
   "BbLOvI": {
     "context": "variant pricing channel status description when variant is not available for purchase",
@@ -4128,6 +4156,10 @@
     "context": "Save composition segment for product type name and kind",
     "string": "general"
   },
+  "Cnf2FR": {
+    "context": "promotion rule error when a percentage reward has more than 3 decimal places",
+    "string": "Use up to 3 decimal places."
+  },
   "CrY98m": {
     "context": "button, marks order as paid (legacy payments)",
     "string": "Mark order as paid"
@@ -4167,6 +4199,10 @@
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
   },
+  "Cz5tnE": {
+    "context": "toast heading when an action got no answer because Saleor could not be reached",
+    "string": "No answer from Saleor"
+  },
   "D+Nw8P": {
     "context": "customer email verification status",
     "string": "Unverified"
@@ -4194,6 +4230,10 @@
   "D1rO7x": {
     "context": "tooltip for a clickable voucher name in the line price breakdown that opens the voucher detail page",
     "string": "Open voucher"
+  },
+  "D2gFbm": {
+    "context": "button that leaves the can't-reach-Saleor screen for the sign-in form",
+    "string": "Sign in with another account"
   },
   "D2qihU": {
     "string": "Permission is invalid"
@@ -5511,6 +5551,10 @@
   "HqRNN8": {
     "string": "Support"
   },
+  "Hrnc+j": {
+    "context": "voucher channel status description when its usage limit is used up",
+    "string": "Its usage limit is used up, so it can't be redeemed."
+  },
   "HupwkE": {
     "context": "channel inventory allocation description with warehouses",
     "string": "How stock is drawn when an order can be filled from more than one warehouse."
@@ -5705,6 +5749,10 @@
   },
   "IOg+Hh": {
     "string": "Refund with manual amount"
+  },
+  "IPcSvX": {
+    "context": "connection banner text when requests to the Saleor API get no answer",
+    "string": "You're still signed in, and unsaved changes stay on this page. Trying to reconnect…"
   },
   "ISsHpV": {
     "context": "setup review row description when shop has no warehouses",
@@ -6022,6 +6070,10 @@
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
   },
+  "Jdpg/W": {
+    "context": "toast text when data could not be loaded because the server refused the request, such as a proxy or firewall",
+    "string": "The server refused the request (error {status}). Reload the page to try again."
+  },
   "Jf+f8h": {
     "context": "setup task title when product already has variants",
     "string": "Set a price"
@@ -6247,6 +6299,10 @@
   "Kb8Mdm": {
     "context": "channel payment gateways section title",
     "string": "Payment gateways"
+  },
+  "KcQWVG": {
+    "context": "promotion rule dialog helper under the channel when the rule also applies in other channels",
+    "string": "This rule also applies in {channels}. You can edit the rule here, but not its channels."
   },
   "KcsJKm": {
     "context": "error with activatation alert message",
@@ -6524,6 +6580,10 @@
   "LYeyWD": {
     "context": "voucher discount amount section title",
     "string": "Discount amount"
+  },
+  "LZ+epP": {
+    "context": "toast heading when an action was refused by the server before Saleor handled it, such as a proxy or firewall",
+    "string": "The server refused the request (error {status})"
   },
   "La3xKC": {
     "context": "Description of public API verification feature",
@@ -7067,6 +7127,10 @@
     "context": "gift card bulk create success dialog content",
     "string": "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below."
   },
+  "NaDOHw": {
+    "context": "promotion details error toast when an end date cleared before a failed save could not be restored",
+    "string": "The end date was removed and could not be put back. The promotion now has no end date."
+  },
   "NaEM7l": {
     "context": "section header",
     "string": "Customer attributes"
@@ -7257,6 +7321,10 @@
   "OKVWjP": {
     "context": "promotion details save success toast",
     "string": "Promotion updated"
+  },
+  "OLE34z": {
+    "context": "toast text when data on the page couldn't be loaded because Saleor gave no answer",
+    "string": "Reload the page to try again."
   },
   "OMD3t+": {
     "context": "PDP schematic legend for selectable variant attributes",
@@ -7984,6 +8052,10 @@
     "context": "Exit form dialog body on product update page",
     "string": "Media and metadata changes are already saved. Unsaved product details, attributes, availability, and variant edits will be lost."
   },
+  "R3aqyA": {
+    "context": "toast description when a voucher save got no answer or a server error, so it may or may not have been saved",
+    "string": "Saleor didn't confirm the save. Check whether it went through before trying again."
+  },
   "R4IIw1": {
     "context": "tracking number of the shipment",
     "string": "Tracking number"
@@ -7994,6 +8066,10 @@
   "R5IYxa": {
     "context": "bulk publish picker helper about missing category filter",
     "string": "Products without a category are hidden because they cannot be published."
+  },
+  "R5JuCC": {
+    "context": "connection banner heading when the browser has no network connection",
+    "string": "You're offline."
   },
   "R5r0+F": {
     "context": "Badge label showing total number of app problems",
@@ -8797,6 +8873,10 @@
     "context": "default mode hint on self-hosted",
     "string": "Send staff mail with your store’s usual email settings."
   },
+  "TwDaYs": {
+    "context": "button that reloads the dashboard to open a page whose code could not be downloaded",
+    "string": "Reload page"
+  },
   "TxYWkD": {
     "context": "page header, edit view",
     "string": "Edit grant refund"
@@ -8900,6 +8980,10 @@
   "UC5nF0": {
     "context": "channel inventory card header when no warehouses",
     "string": "Required to sell"
+  },
+  "UCvL1B": {
+    "context": "button that retries reaching the Saleor API",
+    "string": "Try again"
   },
   "UE9zNR": {
     "string": "Recent Searches"
@@ -10049,6 +10133,10 @@
     "context": "voucher application, switch button",
     "string": "Apply only to a single cheapest eligible product"
   },
+  "Y5oSsQ": {
+    "context": "toast heading when data on the page couldn't be loaded because Saleor gave no answer",
+    "string": "Couldn't load some data"
+  },
   "Y6N9EL": {
     "context": "warehouse setup shipping zone task when a usable zone exists beyond the loaded list",
     "string": "Shipping zones linked."
@@ -11120,6 +11208,10 @@
     "context": "shipping method types help example row one cart",
     "string": "$150, 8 kg"
   },
+  "bmhwTj": {
+    "context": "promotion rule error when a fixed reward has decimals but the channel currency has none",
+    "string": "Enter a whole amount for {currency}."
+  },
   "bmi0JZ": {
     "string": "Customer type created"
   },
@@ -11413,6 +11505,10 @@
     "context": "attribute type column",
     "string": "Attribute type"
   },
+  "ckIcOY": {
+    "context": "connection banner button that checks the connection to Saleor right away",
+    "string": "Try now"
+  },
   "ckSjjv": {
     "string": "Too complex conditions to display, use playground to see details."
   },
@@ -11661,6 +11757,10 @@
   "daJDoe": {
     "context": "validation when Custom template mode has empty body",
     "string": "Add an email body, or choose Saleor default or Don’t send. An empty custom body is not allowed."
+  },
+  "dbuT2a": {
+    "context": "promotion rule error when a fixed reward would mix channel currencies",
+    "string": "A fixed amount needs one currency, but this rule also applies in {channels}. Use a percentage instead."
   },
   "dc5KWn": {
     "context": "products export type label",
@@ -12863,6 +12963,10 @@
     "context": "aria-label for the warning icon inside an availability issue callout",
     "string": "Warning"
   },
+  "iEb/sR": {
+    "context": "heading when the dashboard can't reach the Saleor API at startup",
+    "string": "Can't reach Saleor"
+  },
   "iEeIhY": {
     "context": "draft order",
     "string": "Customer"
@@ -12995,6 +13099,10 @@
   "ig8i+W": {
     "context": "warehouse pickup option",
     "string": "From stock at any location"
+  },
+  "igPcAg": {
+    "context": "connection banner heading when requests to the Saleor API get no answer",
+    "string": "Can't reach Saleor."
   },
   "igoIjo": {
     "string": "Line matrix"
@@ -13141,6 +13249,10 @@
   "j7AoSX": {
     "context": "hint when notification is turned off",
     "string": "This email will not be sent."
+  },
+  "j7MPFs": {
+    "context": "toast text when an action was refused by the server before Saleor handled it",
+    "string": "The change wasn't saved."
   },
   "j7XAly": {
     "context": "create warehouse for channel dialog description",
@@ -13742,6 +13854,10 @@
   "l1pZJx": {
     "string": "Not fully authorised"
   },
+  "l23D+b": {
+    "context": "address of the Saleor API the dashboard is trying to reach",
+    "string": "Saleor API: {host}"
+  },
   "l2oVCF": {
     "context": "attributes section name",
     "string": "Attributes"
@@ -14264,6 +14380,10 @@
   "mnm882": {
     "context": "collapse the app's deprecation reason",
     "string": "Show less"
+  },
+  "mqJjbj": {
+    "context": "explanation when the dashboard can't reach the Saleor API at startup",
+    "string": "Your session is kept, and the dashboard keeps trying to connect."
   },
   "mqwLmD": {
     "string": "Menu updated"
@@ -15415,6 +15535,10 @@
   "qSCmIG": {
     "string": "lower than {value}"
   },
+  "qSE4jj": {
+    "context": "toast heading when an action failed because Saleor failed with a server error",
+    "string": "Saleor ran into a problem (error {status})"
+  },
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
@@ -15811,6 +15935,10 @@
   },
   "rpVzFU": {
     "string": "Could not assign shipping zone to this channel"
+  },
+  "rpz4BK": {
+    "context": "toast text when data could not be loaded because the answer was not readable, such as an error page",
+    "string": "The server sent an answer the dashboard can't read. Reload the page to try again."
   },
   "rqiCWU": {
     "string": "Saved changes"
@@ -16579,6 +16707,10 @@
     "context": "setup task CTA",
     "string": "Review countries"
   },
+  "uW3+xR": {
+    "context": "toast heading when an action got an answer that was not readable, such as an error page",
+    "string": "Unexpected answer from the server"
+  },
   "uWxoc+": {
     "context": "review row when the product type has attributes",
     "string": "Product and variant fields from the product type."
@@ -16755,6 +16887,10 @@
   },
   "v0fBOU": {
     "string": "Collapse all"
+  },
+  "v15oA0": {
+    "context": "heading shown in place of a page whose code could not be downloaded",
+    "string": "Couldn't open this page"
   },
   "v17EX7": {
     "context": "built-in attribute list filter preset",
@@ -17769,6 +17905,10 @@
     "context": "discount value",
     "string": "discount"
   },
+  "yL6LN/": {
+    "context": "voucher status when its usage limit is used up",
+    "string": "Used up"
+  },
   "yMjwop": {
     "context": "granted refund amount in line expanded panel",
     "string": "Refund total {amount}"
@@ -17877,6 +18017,10 @@
     "context": "button refreshing page",
     "string": "Refresh page"
   },
+  "ypc1po": {
+    "context": "connection banner text when the browser has no network connection",
+    "string": "You're still signed in, and unsaved changes stay on this page. We'll reconnect when you're back online."
+  },
   "ysIDsl": {
     "context": "message row status: only email body is customized",
     "string": "Custom body"
@@ -17922,6 +18066,10 @@
   "z0gGP+": {
     "context": "number of attributes",
     "string": "{number} Attributes"
+  },
+  "z0nB21": {
+    "context": "promotion rule error when a fixed reward has more decimals than the channel currency allows",
+    "string": "Use up to {places, plural, one {# decimal place} other {# decimal places}} for {currency}."
   },
   "z12p7o": {
     "context": "assign gift card customer dialog subtitle",

@@ -56,26 +56,18 @@ export const useRulesHandlers = ({
       ...getCurrentConditionsValuesLabels([rule]),
     }));
   };
-  const onRuleSubmit = async (rule: Rule, ruleEditIndex: number | null) => {
-    let errors: Array<
-      CommonError<PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment>
-    > = [];
-
+  /** Saves the rule, and resolves to whether it was saved without errors. */
+  const onRuleSubmit = async (rule: Rule, ruleEditIndex: number | null): Promise<boolean> => {
     updateLabels(rule);
 
-    if (ruleEditIndex !== null) {
-      errors = await onRuleUpdateSubmit(rule);
+    const errors: Array<
+      CommonError<PromotionRuleUpdateErrorFragment | PromotionRuleCreateErrorFragment>
+    > = ruleEditIndex !== null ? await onRuleUpdateSubmit(rule) : await onRuleCreateSubmit(rule);
 
-      if (errors.length > 0) {
-        setRulesErrors(errors);
-      }
-    } else {
-      errors = await onRuleCreateSubmit(rule);
+    // Errors from an earlier attempt don't apply to a rule saved now.
+    setRulesErrors(errors);
 
-      if (errors.length > 0) {
-        setRulesErrors(errors);
-      }
-    }
+    return errors.length === 0;
   };
   const onDeleteRule = async (ruleDeleteIndex: number): Promise<boolean> => {
     if (ruleDeleteIndex === null) {

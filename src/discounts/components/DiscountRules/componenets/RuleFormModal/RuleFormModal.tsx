@@ -33,11 +33,14 @@ export const RuleFormModal = ({
 }: RuleFormModalProps): React.ReactNode => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
-  const { discountType } = useDiscountRulesContext();
+  const { discountType, channels } = useDiscountRulesContext();
   const methods = useForm<Rule>({
     mode: "onBlur",
-    resolver: zodResolver(getValidationSchema(intl)),
+    resolver: zodResolver(getValidationSchema(intl, { channels })),
     values: initialFormValues || getDefaultValue(discountType),
+    // The rules list is rebuilt while a save runs. Fields the merchant changed must survive that,
+    // or a failed save would show the saved rule instead of the draft.
+    resetOptions: { keepDirtyValues: true },
   });
   const isSubmitting = confirmButtonState === "loading";
 

@@ -1,12 +1,13 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
+  DiscountStatusEnum,
   ProductTypeConfigurable,
   ProductTypeEnum,
 } from "@dashboard/graphql";
 
 import { Condition } from "./FilterElement/Condition";
-import { ConditionOptions } from "./FilterElement/ConditionOptions";
+import { type ConditionItem, ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import {
   ExpressionValue,
@@ -17,6 +18,7 @@ import {
   createAttributesQueryVariables,
   createCategoryQueryVariables,
   createCustomerWhereVariables,
+  createDiscountsQueryVariables,
   createDraftOrderQueryVariables,
   createGiftCardQueryVariables,
   createPageQueryVariables,
@@ -478,7 +480,7 @@ describe("ConditionalFilter / queryVariables / createVoucherQueryVariables", () 
     const expectedChannel = "channel-1";
     const expectedOutput = {
       discountType: ["discount-1", "discount-2"],
-      started: { lte: "2025-02-15T16:24", gte: "2025-01-31T16:24" },
+      started: { lte: "2025-02-15T16:24:00.000Z", gte: "2025-01-31T16:24:00.000Z" },
       timesUsed: { gte: 10, lte: 10 },
       status: ["status-1"],
     };
@@ -489,6 +491,68 @@ describe("ConditionalFilter / queryVariables / createVoucherQueryVariables", () 
     expect(result).toEqual({
       filters: expectedOutput,
       channel: expectedChannel,
+    });
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createVoucherQueryVariables / started", () => {
+  const createStartedFilter = (
+    value: string | [string, string],
+    label: "lower" | "greater" | "between",
+  ): FilterContainer => [
+    new FilterElement(
+      new ExpressionValue("started", "Started", "started"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("started"),
+        new ConditionSelected(
+          value,
+          {
+            type: label === "between" ? "datetime.range" : "datetime",
+            label,
+            value: "input-1",
+          },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    ),
+  ];
+
+  // Jest runs in UTC, so the local times below read the same as their UTC values.
+  it("sends a Started time as an absolute time instead of a bare local one", () => {
+    // Arrange
+    const filters = createStartedFilter("2025-01-31T16:24", "greater");
+
+    // Act
+    const { filters: variables } = createVoucherQueryVariables(filters);
+
+    // Assert
+    expect(variables).toEqual({ started: { gte: "2025-01-31T16:24:00.000Z" } });
+  });
+
+  it("filters by the set bound when a Started range is half filled", () => {
+    // Arrange
+    const filters = createStartedFilter(["2025-01-31T16:24", ""], "between");
+
+    // Act
+    const { filters: variables } = createVoucherQueryVariables(filters);
+
+    // Assert
+    expect(variables).toEqual({ started: { gte: "2025-01-31T16:24:00.000Z" } });
+  });
+
+  it("filters by both bounds when a Started range is complete", () => {
+    // Arrange
+    const filters = createStartedFilter(["2025-01-31T16:24", "2025-02-15T08:00"], "between");
+
+    // Act
+    const { filters: variables } = createVoucherQueryVariables(filters);
+
+    // Assert
+    expect(variables).toEqual({
+      started: { gte: "2025-01-31T16:24:00.000Z", lte: "2025-02-15T08:00:00.000Z" },
     });
   });
 });
@@ -1096,5 +1160,135 @@ describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", 
 
     // Assert
     expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createDiscountsQueryVariables", () => {
+  const now = new Date("2026-11-09T12:00:00.000Z");
+
+  beforeEach(() => {
+    jest.useFakeTimers().setSystemTime(now);
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it("sends Active as started, with no end date or one still ahead", () => {
+    // Arrange
+    const activeStatus = new FilterElement(
+      new ExpressionValue("promotionStatus", "Status", "promotionStatus"),
+      new Condition(
+        ConditionOptions.fromName("promotionStatus"),
+        new ConditionSelected(
+          { label: "Active", slug: "ACTIVE", value: DiscountStatusEnum.ACTIVE },
+          { type: "combobox", label: "is", value: "input-1" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+
+    // Act
+    const variables = createDiscountsQueryVariables([activeStatus]);
+
+    // Assert
+    expect(variables).toEqual({
+      AND: [
+        {
+          AND: [
+            { startDate: { range: { lte: now.toISOString() } } },
+            { OR: [{ endDate: { eq: null } }, { endDate: { range: { gte: now.toISOString() } } }] },
+          ],
+        },
+      ],
+    });
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createDiscountsQueryVariables / dates", () => {
+  const operators: Record<"lower" | "greater" | "between", ConditionItem> = {
+    lower: { type: "datetime", label: "lower", value: "input-1" },
+    greater: { type: "datetime", label: "greater", value: "input-2" },
+    between: { type: "datetime.range", label: "between", value: "input-3" },
+  };
+
+  const dateFilter = (
+    field: "startDate" | "endDate",
+    operator: keyof typeof operators,
+    value: string | [string, string],
+  ): FilterElement =>
+    new FilterElement(
+      new ExpressionValue(field, field, field),
+      new Condition(
+        ConditionOptions.fromName(field),
+        new ConditionSelected(value, operators[operator], [], false),
+        false,
+      ),
+      false,
+    );
+
+  // What the browser's time zone makes of a typed value. Jest runs in UTC (set in its global
+  // setup, which a test can't change), so these tests check that a full instant is sent, never the
+  // bare typed value. The New York offset was checked in a browser.
+  const instant = (local: string): string => new Date(local).toISOString();
+
+  it("sends a start date as a full instant, not the bare typed value", () => {
+    // Arrange
+    const filter = dateFilter("startDate", "greater", "2026-12-01T00:00");
+
+    // Act
+    const variables = createDiscountsQueryVariables([filter]);
+
+    // Assert
+    expect(variables).toEqual({
+      AND: [{ startDate: { range: { gte: instant("2026-12-01T00:00") } } }],
+    });
+  });
+
+  it("sends both bounds of an end date range", () => {
+    // Arrange
+    const filter = dateFilter("endDate", "between", ["2026-12-01T00:00", "2026-12-31T23:59"]);
+
+    // Act
+    const variables = createDiscountsQueryVariables([filter]);
+
+    // Assert
+    expect(variables).toEqual({
+      AND: [
+        {
+          endDate: {
+            range: { gte: instant("2026-12-01T00:00"), lte: instant("2026-12-31T23:59") },
+          },
+        },
+      ],
+    });
+  });
+
+  it.each<[string, [string, string], { gte?: string; lte?: string }]>([
+    ["only the first date", ["2026-12-01T00:00", ""], { gte: instant("2026-12-01T00:00") }],
+    ["only the second date", ["", "2026-12-31T23:59"], { lte: instant("2026-12-31T23:59") }],
+  ])("filters by the date that is set when a range has %s", (_case, value, range) => {
+    // Arrange
+    const filter = dateFilter("startDate", "between", value);
+
+    // Act
+    const variables = createDiscountsQueryVariables([filter]);
+
+    // Assert
+    expect(variables).toEqual({ AND: [{ startDate: { range } }] });
+  });
+
+  it("sends nothing for a date filter with no value yet", () => {
+    // Arrange
+    const filter = dateFilter("endDate", "lower", "");
+
+    // Act
+    const variables = createDiscountsQueryVariables([filter]);
+
+    // Assert
+    expect(variables).toEqual({});
   });
 });

@@ -62,6 +62,7 @@ import {
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
+import { useLeaveAfterDelete } from "@dashboard/hooks/useLeaveAfterDelete";
 import useLocalPaginator, {
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
@@ -77,7 +78,7 @@ import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button } from "@saleor/macaw-ui-next";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
@@ -108,6 +109,7 @@ interface VoucherDetailsProps {
 
 const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const navigate = useNavigator();
+  const leaveAfterDelete = useLeaveAfterDelete();
   const notify = useNotifier();
   const shop = useShop();
   const hasPermission = useHasPermission();
@@ -346,6 +348,20 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     data?.voucher,
     availableChannels,
   );
+  // Bumped once a successful save has been reloaded, so the form and the channel drafts
+  // start again from what the server stored. Otherwise drafts the server didn't keep, such
+  // as a minimum of 0 or a cleared start date, stay on screen as unsaved changes.
+  const [savedStateKey, setSavedStateKey] = useState(0);
+  const [reloadingSavedVoucherId, setReloadingSavedVoucherId] = useState<string | null>(null);
+  const shownVoucherIdRef = useRef(id);
+
+  useEffect(
+    function trackShownVoucherId() {
+      shownVoucherIdRef.current = id;
+    },
+    [id],
+  );
+
   // Per-channel drafts: `percentageDiscountValue` vs `discountValue` (seeded by active type).
   const voucherChannelsChoices: ChannelVoucherData[] = useMemo(
     () => createSortedChannelsDataFromVoucher(data?.voucher) ?? [],
@@ -370,7 +386,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       closeModal,
       openModal,
     },
-    { formId: VOUCHER_UPDATE_FORM_ID, deferDirtyOnConfirm: true },
+    { formId: VOUCHER_UPDATE_FORM_ID, deferDirtyOnConfirm: true, resetKey: savedStateKey },
   );
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({
     // Field errors are mapped inline; VoucherDetails owns the single save-failure toast.
@@ -428,7 +444,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           status: "success",
           title: intl.formatMessage(voucherFeedbackMessages.voucherDeleted),
         });
-        navigate(voucherListUrl(), { replace: true });
+        leaveAfterDelete(voucherListUrl());
 
         return;
       }
@@ -454,7 +470,11 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     updateChannelsOpts.loading ||
     voucherCodeBulkDeleteOpts.loading ||
     voucherCataloguesAddOpts.loading ||
-    voucherCataloguesRemoveOpts.loading;
+    voucherCataloguesRemoveOpts.loading ||
+    // Keep the page disabled until the saved voucher has reloaded, so the reset that follows
+    // can't drop edits made in the meantime. Only for that voucher: another one opened
+    // meanwhile stays editable.
+    reloadingSavedVoucherId === id;
   // Set from the whole save: voucherUpdate alone can succeed while a later step fails.
   const [saveBarState, setSaveBarState] = useState<ConfirmButtonTransitionState>("default");
   const selectedUnassignIds = params.ids ?? [];
@@ -481,6 +501,26 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       catalogueQueryVariables,
     },
   );
+  const reloadSavedVoucher = async () => {
+    const savedVoucherId = id;
+
+    setReloadingSavedVoucherId(savedVoucherId);
+
+    try {
+      await refetch();
+
+      // Another voucher may have opened meanwhile; its form has nothing to reset.
+      if (shownVoucherIdRef.current === savedVoucherId) {
+        setSavedStateKey(key => key + 1);
+      }
+    } catch {
+      // The save itself went through. Without the reload the form keeps its drafts, as before.
+    } finally {
+      setReloadingSavedVoucherId(reloadingId =>
+        reloadingId === savedVoucherId ? null : reloadingId,
+      );
+    }
+  };
   const handleSubmit = async formData => {
     const { errors, saved, savedChanges } = await updateHandler(formData);
 
@@ -492,7 +532,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       voucherCodesRefetch();
       resetCatalogueDraft();
       reset();
-      refetch();
+      void reloadSavedVoucher();
       refetchCatalogue();
     } else {
       // Drop staged changes that were saved, so saving again doesn't send them twice
@@ -694,6 +734,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       )}
       <VoucherDetailsPage
         voucher={voucherForPage}
+        formResetKey={savedStateKey}
         voucherCodes={voucherCodes}
         addedVoucherCodes={addedVoucherCodes}
         pendingRemovedCodeIds={pendingRemovedCodeIds}

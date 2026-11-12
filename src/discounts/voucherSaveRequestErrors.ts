@@ -1,10 +1,17 @@
 import { type ApolloError, type FetchResult } from "@apollo/client";
+import { isConnectionError } from "@dashboard/connection/connectionErrors";
+import { getServerErrorProblem } from "@dashboard/connection/serverErrors";
 import { CommonErrorCode } from "@dashboard/utils/errors/common";
 
 export interface VoucherSaveError {
   field: string | null;
   code: string;
   message?: string | null;
+  /**
+   * The request got no answer, a server error or an answer that couldn't be read, so the change
+   * may have been saved anyway. Trying again could save it twice.
+   */
+  outcomeUnknown?: boolean;
 }
 
 /**
@@ -30,6 +37,25 @@ const getRequestErrorMessages = (
 };
 
 /**
+ * Whether a request that failed as a whole may still have been saved: it got no answer, a server
+ * error, or an answer that isn't JSON. A request refused with a 4xx, or rejected by the API with
+ * GraphQL errors, wasn't.
+ */
+const isOutcomeUnknown = (errors: MutationOutcome<unknown>["errors"]): boolean => {
+  if (!errors || !("graphQLErrors" in errors) || !errors.networkError) {
+    return false;
+  }
+
+  if (isConnectionError(errors)) {
+    return true;
+  }
+
+  const problem = getServerErrorProblem(errors);
+
+  return problem !== null && problem.kind !== "refused";
+};
+
+/**
  * The errors of one voucher save request. A request that fails as a whole (rejected input, a
  * server or network error) has no payload; it counts as failed rather than as a save without
  * errors.
@@ -47,9 +73,12 @@ export const getVoucherSaveRequestErrors = <TData>(
     return payloadErrors;
   }
 
+  const outcomeUnknown = isOutcomeUnknown(result.errors);
+
   return getRequestErrorMessages(result.errors).map(message => ({
     field: null,
     code: CommonErrorCode.GRAPHQL_ERROR,
     message,
+    ...(outcomeUnknown && { outcomeUnknown }),
   }));
 };

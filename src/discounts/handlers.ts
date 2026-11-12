@@ -34,10 +34,12 @@ export function createVoucherScopeChangeHandler(
           value: DiscountTypeEnum.SHIPPING,
         },
       });
+      // Match the type a saved shipping voucher loads with, so switching away and back
+      // to Free shipping leaves no unsaved change.
       change({
         target: {
           name: "type",
-          value: VoucherTypeEnum.ENTIRE_ORDER,
+          value: VoucherTypeEnum.SHIPPING,
         },
       });
 

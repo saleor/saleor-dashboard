@@ -20,7 +20,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { getMutationErrors, maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -115,6 +118,9 @@ const CollectionList = ({ params }: CollectionListProps) => {
     variables: queryVariables,
   });
   const collections = mapEdgesToItems(data?.collections);
+
+  useClearRowSelectionOnRowsChange({ rows: collections, clearRowSelection });
+
   const [collectionBulkDelete, collectionBulkDeleteOpts] = useCollectionBulkDeleteMutation({
     onCompleted: data => {
       if (data.collectionBulkDelete.errors.length === 0) {

@@ -24,6 +24,9 @@ export const createBaseRuleInputFromAPI = (
   data: PromotionRuleDetailsFragment,
   giftsLabels: Record<string, string>,
 ): Omit<Rule, "conditions"> => {
+  const otherChannels =
+    data.channels?.slice(1).map(({ id, name, currencyCode }) => ({ id, name, currencyCode })) ?? [];
+
   return {
     id: data.id,
     name: data.name ?? "",
@@ -34,6 +37,7 @@ export const createBaseRuleInputFromAPI = (
     channel: data?.channels?.length
       ? { label: data?.channels[0].name, value: data?.channels[0].id }
       : null,
+    ...(otherChannels.length > 0 && { otherChannels }),
     rewardType: data?.rewardType ?? null,
     rewardValue: data.rewardValue ?? null,
     rewardGifts:

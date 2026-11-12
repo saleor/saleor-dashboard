@@ -10,19 +10,7 @@ export interface UseRowSelection {
   setClearDatagridRowSelectionCallback: (callback: () => void) => void;
 }
 
-export const useRowSelection = (
-  paginationParams?: Pagination,
-  {
-    resetKey,
-  }: {
-    /**
-     * Clears the selection whenever it changes. Pass something that changes with the rows shown,
-     * such as their ids: the datagrid keeps its selection by row position, so without a reset it
-     * would move to whichever rows end up in those positions.
-     */
-    resetKey?: string;
-  } = {},
-): UseRowSelection => {
+export const useRowSelection = (paginationParams?: Pagination): UseRowSelection => {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   // Keep reference to clear datagrid selection function
   const clearDatagridRowSelectionCallback = useRef<(() => void) | null>(null);
@@ -46,12 +34,12 @@ export const useRowSelection = (
     clearDatagridRowSelectionCallback.current = callback;
   };
 
-  // Whenever pagination or the rows shown change we need to clear datagrid selection
+  // Whenever pagination changes we need to clear datagrid selection
   useEffect(
-    function clearSelectionOnPageOrQueryChange() {
+    function clearSelectionOnPageChange() {
       clearRowSelection();
     },
-    [paginationParams?.after, paginationParams?.before, resetKey],
+    [paginationParams?.after, paginationParams?.before],
   );
 
   return {
@@ -62,4 +50,43 @@ export const useRowSelection = (
     clearRowSelection,
     setClearDatagridRowSelectionCallback,
   };
+};
+
+/**
+ * Clears the selection when the rows shown change: another filter, search, sort or page, or a
+ * refresh that reorders them. The datagrid keeps its selection by row position, so otherwise the
+ * selection moves to whichever rows end up in those positions, and a bulk delete removes items
+ * nobody picked.
+ *
+ * Call it after the list query. Pass `rows` as `undefined` while there is no data, e.g. while the
+ * query is skipped or loading, so that gap doesn't count as a change: opening a dialog can reload
+ * the filters and briefly skip the query, and the dialog still needs the selection.
+ */
+export const useClearRowSelectionOnRowsChange = ({
+  rows,
+  clearRowSelection,
+}: {
+  rows: ReadonlyArray<{ id: string }> | null | undefined;
+  clearRowSelection: () => void;
+}): void => {
+  const rowIds = rows ? rows.map(({ id }) => id).join(",") : null;
+  const lastShownRowIds = useRef(rowIds);
+
+  useEffect(
+    function clearSelectionOnRowsChange() {
+      if (rowIds === null || rowIds === lastShownRowIds.current) {
+        return;
+      }
+
+      const hadRows = lastShownRowIds.current !== null;
+
+      lastShownRowIds.current = rowIds;
+
+      // Nothing can be selected before the first rows arrive.
+      if (hadRows) {
+        clearRowSelection();
+      }
+    },
+    [rowIds, clearRowSelection],
+  );
 };

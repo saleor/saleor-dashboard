@@ -43,6 +43,12 @@ interface UseFormOpts<T> {
   mergeData?: boolean;
   /** Override default deep merge when `mergeData` is true. */
   mergeFunc?: (prevData: T, prevState: T, data: T) => T;
+  /**
+   * Change it to replace the form data with `initialData`, forget which fields changed and clear
+   * errors and the unsaved-changes flag, e.g. once a successful save has been reloaded, so drafts
+   * the server didn't keep go away.
+   */
+  resetKey?: string | number;
 }
 
 /** @deprecated Use react-hook-form instead */
@@ -105,12 +111,14 @@ function useForm<T extends FormData, TErrors>(
     disabled,
     mergeData = true,
     mergeFunc,
+    resetKey,
   } = opts;
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isSubmittingRef = useRef(false);
   const [data, setData] = useStateFromProps(initialData, {
     mergeFunc: mergeData ? (mergeFunc ?? merge) : undefined,
+    resetKey,
   });
 
   const {
@@ -118,6 +126,7 @@ function useForm<T extends FormData, TErrors>(
     clean: cleanChanged,
     data: changed,
   } = useChangedData<T>(data, initialData);
+  const appliedResetKey = useRef(resetKey);
 
   const isSaveDisabled = () => {
     if (checkIfSaveIsDisabled) {
@@ -145,6 +154,28 @@ function useForm<T extends FormData, TErrors>(
       setIsFormDirtyInExitDialog(value);
     }
   };
+
+  // useExitFormDialog's setters change on every render, so the reset reads the latest one.
+  const handleSetChangedRef = useRef(handleSetChanged);
+
+  useEffect(function keepLatestHandleSetChanged() {
+    handleSetChangedRef.current = handleSetChanged;
+  });
+
+  useEffect(
+    function forgetChangesOnReset() {
+      if (appliedResetKey.current === resetKey) {
+        return;
+      }
+
+      appliedResetKey.current = resetKey;
+      cleanChanged();
+      setErrors({});
+      handleSetChangedRef.current(false);
+    },
+    [resetKey, cleanChanged],
+  );
+
   const setExitDialogData = () => {
     setEnableExitDialog(true);
 

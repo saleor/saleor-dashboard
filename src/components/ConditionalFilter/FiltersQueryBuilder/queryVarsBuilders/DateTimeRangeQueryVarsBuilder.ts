@@ -7,6 +7,7 @@ type DateTimeRangeQueryVars = {
   createdAt?: { gte?: string; lte?: string };
   updatedAt?: { gte?: string; lte?: string };
   dateJoined?: { gte?: string; lte?: string };
+  started?: { gte?: string; lte?: string };
 };
 
 /**
@@ -16,7 +17,7 @@ type DateTimeRangeQueryVars = {
  * For fields using DateTimeFilterInput pattern, use DefaultQueryVarsBuilder
  */
 export class DateTimeRangeQueryVarsBuilder extends BaseMappableQueryVarsBuilder<DateTimeRangeQueryVars> {
-  private static readonly DATE_FIELD_NAMES = ["createdAt", "updatedAt", "dateJoined"];
+  private static readonly DATE_FIELD_NAMES = ["createdAt", "updatedAt", "dateJoined", "started"];
 
   canHandle(element: FilterElement): boolean {
     const fieldName = element.value.value || element.value.label || "";

@@ -1,8 +1,9 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { type VoucherScheduleDateData } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
 import {
-  getVoucherSchedulePhase,
-  type VoucherScheduleDateData,
-} from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
+  getVoucherFormStatus,
+  isVoucherUsageLimitReached,
+} from "@dashboard/discounts/voucherStatus";
 import useDateLocalize, { type LocalizeDate } from "@dashboard/hooks/useDateLocalize";
 import { joinDateTime } from "@dashboard/misc";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -25,29 +26,35 @@ interface VoucherRedemptionsCardProps {
 
 const formatScheduleStatus = ({
   scheduleData,
+  usageLimitReached,
   localizeDate,
   intl,
 }: {
   scheduleData: VoucherScheduleDateData;
+  usageLimitReached: boolean;
   localizeDate: LocalizeDate;
   intl: IntlShape;
 }): string => {
-  const phase = getVoucherSchedulePhase(scheduleData);
+  const status = getVoucherFormStatus({ scheduleData, usageLimitReached });
   const startIso = joinDateTime(scheduleData.startDate, scheduleData.startTime);
   const endIso = scheduleData.hasEndDate
     ? joinDateTime(scheduleData.endDate, scheduleData.endTime)
     : null;
 
-  if (phase === "scheduled") {
+  if (status === "scheduled") {
     return intl.formatMessage(messages.redeemableFrom, {
       date: startIso ? localizeDate(startIso, "ll") : "—",
     });
   }
 
-  if (phase === "ended") {
+  if (status === "finished") {
     return intl.formatMessage(messages.redemptionEnded, {
       date: endIso ? localizeDate(endIso, "ll") : "—",
     });
+  }
+
+  if (status === "usedUp") {
+    return intl.formatMessage(messages.usageLimitReached);
   }
 
   if (endIso) {
@@ -79,7 +86,12 @@ export const VoucherRedemptionsCard = ({
 
   const resolvedCodesCount = codesCount ?? 0;
   const progress = getVoucherRedemptionsProgress({ used, usageLimit });
-  const scheduleStatus = formatScheduleStatus({ scheduleData, localizeDate, intl });
+  const scheduleStatus = formatScheduleStatus({
+    scheduleData,
+    usageLimitReached: isVoucherUsageLimitReached({ usageLimit, used }),
+    localizeDate,
+    intl,
+  });
 
   return (
     <Box className={styles.card} data-test-id="voucher-redemptions-card">

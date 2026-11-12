@@ -10,10 +10,11 @@ import { type Locale } from "@dashboard/components/Locale/Locale";
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { type VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {
-  getPromotionStatus,
-  getRelativePromotionTimeParts,
-  type PromotionStatus,
-} from "@dashboard/discounts/utils";
+  getVoucherStatus,
+  getVoucherStatusTimeParts,
+  type VoucherStatus,
+} from "@dashboard/discounts/voucherStatus";
+import { voucherStatusMessages } from "@dashboard/discounts/voucherStatusMessages";
 import { DiscountValueTypeEnum, type VoucherFragment, VoucherTypeEnum } from "@dashboard/graphql";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -80,7 +81,7 @@ export const vouchersListStaticColumnsAdapter = (
     icon: getColumnSortDirectionIcon(sort, column.id),
   }));
 
-const getStatusDot = (status: PromotionStatus): DotStatus => {
+const getStatusDot = (status: VoucherStatus): DotStatus => {
   if (status === "active") {
     return "success";
   }
@@ -101,20 +102,24 @@ export const getVoucherListStatusLabel = ({
   intl: IntlShape;
   now?: Date;
 }): { label: string; status: DotStatus } => {
-  const promotionStatus = getPromotionStatus({
+  const voucherStatus = getVoucherStatus({
     startDate: voucher.startDate,
     endDate: voucher.endDate,
+    usageLimit: voucher.usageLimit,
+    used: voucher.used,
     now,
   });
   const statusLabel = intl.formatMessage(
-    promotionStatus === "scheduled"
+    voucherStatus === "scheduled"
       ? messages.statusScheduled
-      : promotionStatus === "finished"
+      : voucherStatus === "finished"
         ? messages.statusEnded
-        : messages.statusActive,
+        : voucherStatus === "usedUp"
+          ? voucherStatusMessages.usedUp
+          : messages.statusActive,
   );
-  const timeParts = getRelativePromotionTimeParts({
-    status: promotionStatus,
+  const timeParts = getVoucherStatusTimeParts({
+    status: voucherStatus,
     startDate: voucher.startDate,
     endDate: voucher.endDate,
     now,
@@ -127,7 +132,7 @@ export const getVoucherListStatusLabel = ({
     : null;
 
   return {
-    status: getStatusDot(promotionStatus),
+    status: getStatusDot(voucherStatus),
     label: timeHint ? `${statusLabel} · ${timeHint}` : statusLabel,
   };
 };

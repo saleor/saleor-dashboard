@@ -35,7 +35,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 };
 
 const renderRewardValue = () =>
-  render(<RuleRewardValue currencySymbol="USD" error={undefined} />, { wrapper: Wrapper });
+  render(<RuleRewardValue currencySymbol="USD" />, { wrapper: Wrapper });
 
 describe("RuleRewardValue", () => {
   beforeEach(() => {

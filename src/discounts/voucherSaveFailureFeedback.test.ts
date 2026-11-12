@@ -44,4 +44,19 @@ describe("getVoucherSaveFailureFeedback", () => {
       shownOnPage: false,
     });
   });
+
+  it("asks to check first when the save may have gone through anyway", () => {
+    // Arrange
+    const unanswered: VoucherSaveError = { ...error(null), outcomeUnknown: true };
+
+    // Act
+    const feedback = getVoucherSaveFailureFeedback([unanswered]);
+
+    // Assert
+    expect(feedback).toEqual({
+      section: null,
+      recovery: voucherFeedbackMessages.checkSavedBeforeRetrying,
+      shownOnPage: false,
+    });
+  });
 });

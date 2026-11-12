@@ -6,6 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { DiscountScheduleCard } from "../DiscountScheduleCard/DiscountScheduleCard";
 import { discountScheduleMessages } from "../DiscountScheduleCard/messages";
+import { type ScheduleDateField } from "./incompleteScheduleFields";
 
 interface DiscountDatesWithControllerProps<ErrorCode> {
   disabled?: boolean;
@@ -20,7 +21,7 @@ export const DiscountDatesWithController = <ErrorCode,>({
   const { field } = useController<DiscoutFormData, "dates">({
     name: "dates",
   });
-  const startDateError = formState.errors?.dates?.startDate;
+  const datesErrors = formState.errors?.dates;
   // Enabling "Set end date" fires several field updates in one tick; keep a ref so each
   // merge sees the previous update (RHF field.value does not refresh mid-handler).
   const datesValueRef = useRef(field.value);
@@ -32,14 +33,22 @@ export const DiscountDatesWithController = <ErrorCode,>({
     [field.value],
   );
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const update = (changes: Partial<DiscoutFormData["dates"]>): void => {
     const next = {
       ...datesValueRef.current,
-      [e.target.name]: e.target.value,
+      ...changes,
     };
 
     datesValueRef.current = next;
     field.onChange(next);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    update({ [e.target.name]: e.target.value });
+  };
+
+  const handleIncompleteFieldsChange = (incompleteFields: ScheduleDateField[]): void => {
+    update({ incompleteFields });
   };
 
   return (
@@ -48,8 +57,13 @@ export const DiscountDatesWithController = <ErrorCode,>({
       disabled={disabled || !!field.disabled}
       errors={errors}
       formErrors={{
-        startDate: startDateError,
+        startDate: datesErrors?.startDate,
+        startTime: datesErrors?.startTime,
+        endDate: datesErrors?.endDate,
+        endTime: datesErrors?.endTime,
       }}
+      incompleteFields={field.value.incompleteFields ?? []}
+      onIncompleteFieldsChange={handleIncompleteFieldsChange}
       onChange={handleChange}
       onBlur={field.onBlur}
       intro={<FormattedMessage {...discountScheduleMessages.promotionIntro} />}

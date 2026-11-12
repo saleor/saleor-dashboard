@@ -11,10 +11,9 @@ import styles from "./RuleRewardValue.module.css";
 
 interface RuleRewardPriceProps {
   currencySymbol: string | null;
-  error: string | undefined;
 }
 
-export const RuleRewardValue = ({ currencySymbol, error }: RuleRewardPriceProps) => {
+export const RuleRewardValue = ({ currencySymbol }: RuleRewardPriceProps) => {
   const intl = useIntl();
   const { disabled } = useDiscountRulesContext();
   const { watch, formState } = useFormContext<Rule>();
@@ -25,7 +24,8 @@ export const RuleRewardValue = ({ currencySymbol, error }: RuleRewardPriceProps)
   const { field: rewardValueType } = useController<Rule, "rewardValue">({
     name: "rewardValue",
   });
-  const rewardValueError = error || formState.errors?.rewardValue?.message;
+  // Includes the API's error for the value, which RuleForm sets on the field after a failed save.
+  const rewardValueError = formState.errors?.rewardValue?.message;
 
   return (
     <div className={styles.container}>
@@ -38,7 +38,8 @@ export const RuleRewardValue = ({ currencySymbol, error }: RuleRewardPriceProps)
         <div className={styles.divider} />
         <RuleInputWrapper width="100%">
           <Input
-            value={rewardValueType.value || ""}
+            // `??`, not `||`: a typed "0" must stay, or "0.05" loses its leading zeros and becomes 5.
+            value={rewardValueType.value ?? ""}
             onBlur={rewardValueType.onBlur}
             name={rewardValueType.name}
             ref={rewardValueType.ref}

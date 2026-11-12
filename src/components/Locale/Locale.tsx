@@ -126,9 +126,16 @@ export const LocaleContext = createContext<LocaleContextType>({
   setLocale: () => undefined,
 });
 
+const supportedLocales = new Set<unknown>(Object.values(Locale));
+
+const isSupportedLocale = (value: unknown): value is Locale => supportedLocales.has(value);
+
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 const LocaleProvider = ({ children }: { children: ReactNode }) => {
-  const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
+  const [savedLocale, setLocale] = useLocalStorage<unknown>("locale", defaultLocale);
+  // The saved value may not be a language the dashboard has. Passed on, "undefined" makes every
+  // date and number throw, which blanks the app, and other codes have no translations to load.
+  const locale = isSupportedLocale(savedLocale) ? savedLocale : defaultLocale;
   const [messages, setMessages] = useState(undefined);
   const loaded = useRef(false);
 

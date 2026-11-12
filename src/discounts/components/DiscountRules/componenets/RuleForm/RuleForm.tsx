@@ -8,11 +8,12 @@ import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/uti
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Combobox, Input, type Option } from "@saleor/macaw-ui-next";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { useDiscountRulesContext } from "../../context/consumer";
+import { messages } from "../../messages";
 import { getCurencySymbol } from "../../utils";
 import { RuleConditions } from "./components/RuleConditions/RuleConditions";
 import { RuleDescription } from "./components/RuleDescription/RuleDescription";
@@ -29,7 +30,31 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
   const { disabled, channels, discountType } = useDiscountRulesContext();
   const { watch, getValues, setValue, formState } = useFormContext<Rule>();
   const formErrors = getFormErrors(["rewardValue"], errors);
-  const { trigger } = useFormContext<Rule>();
+  const { trigger, setError, clearErrors, getFieldState } = useFormContext<Rule>();
+  const apiRewardError = getCommonFormFieldErrorMessage(formErrors.rewardValue, intl);
+  const rewardValue = watch("rewardValue");
+
+  // The API's error for the reward is shown as the field's own error, so it doesn't hide the
+  // form's own checks.
+  useEffect(
+    function showApiRewardError() {
+      if (apiRewardError) {
+        setError("rewardValue", { type: "server", message: apiRewardError });
+      }
+    },
+    [apiRewardError, setError],
+  );
+  // Once the value changes, the API's verdict no longer applies; the form checks it again on blur
+  // and on save.
+  useEffect(
+    function clearApiRewardErrorOnChange() {
+      if (getFieldState("rewardValue").error?.type === "server") {
+        clearErrors("rewardValue");
+      }
+    },
+    [rewardValue, clearErrors, getFieldState],
+  );
+
   const { field: nameField } = useController<Rule, "name">({
     name: "name",
   });
@@ -37,6 +62,15 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
     name: "channel",
   });
   const selectedChannel = watch("channel");
+  // A rule made through the API can apply in more channels than this form edits. Name them, and
+  // don't offer to move the rule, since the form can't say what should happen to the others.
+  const otherChannels = watch("otherChannels") ?? [];
+  const otherChannelsNote =
+    otherChannels.length > 0
+      ? intl.formatMessage(messages.ruleOtherChannels, {
+          channels: intl.formatList(otherChannels.map(channel => channel.name)),
+        })
+      : undefined;
   const conditions = watch("conditions");
   const hasSelectedChannel = !!selectedChannel;
   const currencySymbol = getCurencySymbol(selectedChannel, channels);
@@ -109,8 +143,8 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
                   label={intl.formatMessage(commonMessages.channel)}
                   options={channelOptions}
                   error={!!formState.errors?.channel?.message}
-                  helperText={formState.errors?.channel?.message}
-                  disabled={disabled || channelfield.disabled}
+                  helperText={formState.errors?.channel?.message ?? otherChannelsNote}
+                  disabled={disabled || channelfield.disabled || otherChannels.length > 0}
                 />
               </RuleInputWrapper>
             </Box>
@@ -119,10 +153,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
               __flex="1 1 260px"
               __minWidth={discountType === PromotionTypeEnum.ORDER ? "420px" : "260px"}
             >
-              <RuleReward
-                currencySymbol={currencySymbol}
-                error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
-              />
+              <RuleReward currencySymbol={currencySymbol} />
             </Box>
           </Box>
 

@@ -14,7 +14,10 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
@@ -70,6 +73,9 @@ const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
     variables: queryVariables,
   });
   const shippingZones = mapEdgesToItems(data?.shippingZones);
+
+  useClearRowSelectionOnRowsChange({ rows: shippingZones, clearRowSelection });
+
   const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] = useUpdateDefaultWeightUnitMutation(
     {
       onCompleted: data => {

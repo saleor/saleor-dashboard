@@ -23,7 +23,10 @@ import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/use
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { type PaginatorContextValues } from "@dashboard/hooks/usePaginator";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import {
+  useClearRowSelectionOnRowsChange,
+  useRowSelection,
+} from "@dashboard/hooks/useRowSelection";
 import { commonMessages, errorMessages } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -107,6 +110,12 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
 
   const category = data?.category;
   const subcategories = mapEdgesToItems(data?.category?.children) ?? [];
+
+  useClearRowSelectionOnRowsChange({
+    rows: mapEdgesToItems(data?.category?.children),
+    clearRowSelection: clearCategoryRowSelection,
+  });
+
   const subcategoriesPaginator = toPaginatorContext(
     paginateChildren(data?.category?.children?.pageInfo, childrenPaginationState),
   );
