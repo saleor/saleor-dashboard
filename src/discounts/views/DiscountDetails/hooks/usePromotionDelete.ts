@@ -1,13 +1,13 @@
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { usePromotionDeleteMutation } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
+import { useLeaveAfterDelete } from "@dashboard/hooks/useLeaveAfterDelete";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { useIntl } from "react-intl";
 
 export const usePromotionDelete = () => {
   const intl = useIntl();
   const notify = useNotifier();
-  const navigate = useNavigator();
+  const leaveAfterDelete = useLeaveAfterDelete();
   const [promotionDelete, promotionDeleteOpts] = usePromotionDeleteMutation({
     onCompleted(data) {
       if (data?.promotionDelete?.errors?.length === 0) {
@@ -18,7 +18,7 @@ export const usePromotionDelete = () => {
             defaultMessage: "Promotion removed",
           }),
         });
-        navigate(discountListUrl());
+        leaveAfterDelete(discountListUrl());
       }
     },
   });

@@ -1,5 +1,5 @@
 import { type Rule } from "@dashboard/discounts/models/Rule";
-import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
+import { RewardValueTypeEnum } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react";
 
 import { useRulesHandlers } from "./useRulesHandlers";
@@ -16,7 +16,7 @@ const rule = {
 describe("DiscountCreateForm useRulesHandlers", () => {
   it("should allow to add new rule ", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers(PromotionTypeEnum.CATALOGUE));
+    const { result } = renderHook(() => useRulesHandlers());
 
     // Act
     act(() => {
@@ -27,7 +27,7 @@ describe("DiscountCreateForm useRulesHandlers", () => {
   });
   it("should allow to edit rule at index", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers(PromotionTypeEnum.CATALOGUE));
+    const { result } = renderHook(() => useRulesHandlers());
     const rule = {
       name: "Rule 1",
       description: "",
@@ -49,7 +49,7 @@ describe("DiscountCreateForm useRulesHandlers", () => {
   });
   it("should allow to delete rule at index", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers(PromotionTypeEnum.CATALOGUE));
+    const { result } = renderHook(() => useRulesHandlers());
     const rule = {
       name: "Rule 1",
       description: "",

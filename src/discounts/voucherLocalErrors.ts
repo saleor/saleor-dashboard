@@ -1,6 +1,6 @@
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import {
-  END_SCHEDULE_DATE_FIELDS,
+  getUnfinishedScheduleFields,
   type ScheduleDateField,
 } from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
@@ -179,11 +179,7 @@ const getScheduleErrors = (
   >,
   intl: IntlShape,
 ): DiscountErrorFragment[] => {
-  // A partly filled input always reports an empty value, so a field the form has since given a
-  // value is complete. End fields don't count while the end date is off.
-  const incompleteFields = (data.incompleteScheduleFields ?? []).filter(
-    field => !data[field] && (data.hasEndDate || !END_SCHEDULE_DATE_FIELDS.includes(field)),
-  );
+  const incompleteFields = getUnfinishedScheduleFields(data, data.incompleteScheduleFields);
   const errors = incompleteFields.map(field =>
     toLocalError({
       field,

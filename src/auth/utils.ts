@@ -3,6 +3,8 @@ import {
   type INotification,
   type INotificationCallback,
 } from "@dashboard/components/notifications/NotificationContext";
+import { connectionMessages } from "@dashboard/connection/messages";
+import { getServerErrorProblem, type ServerErrorProblem } from "@dashboard/connection/serverErrors";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors, parseLogMessage } from "@dashboard/misc";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
@@ -40,13 +42,74 @@ const getAllErrorMessages = (error: ApolloError) => [
   ...getNetworkErrors(error),
 ];
 
+const getServerErrorNotification = (
+  problem: ServerErrorProblem,
+  intl: IntlShape,
+  context: "load" | "action",
+): INotification => {
+  if (context === "load") {
+    return {
+      status: "error",
+      title: intl.formatMessage(connectionMessages.loadFailedTitle),
+      text:
+        problem.kind === "serverError"
+          ? intl.formatMessage(connectionMessages.loadServerErrorDescription, {
+              status: problem.status,
+            })
+          : problem.kind === "refused"
+            ? intl.formatMessage(connectionMessages.loadRefusedDescription, {
+                status: problem.status,
+              })
+            : intl.formatMessage(connectionMessages.loadUnreadableDescription),
+    };
+  }
+
+  // A refused request never reached Saleor. After a 5xx or an unreadable answer, the change may
+  // or may not have gone through.
+  return problem.kind === "refused"
+    ? {
+        status: "error",
+        title: intl.formatMessage(connectionMessages.actionRefusedTitle, {
+          status: problem.status,
+        }),
+        text: intl.formatMessage(connectionMessages.actionRefusedDescription),
+      }
+    : {
+        status: "error",
+        title:
+          problem.kind === "serverError"
+            ? intl.formatMessage(connectionMessages.actionServerErrorTitle, {
+                status: problem.status,
+              })
+            : intl.formatMessage(connectionMessages.actionUnreadableTitle),
+        text: intl.formatMessage(connectionMessages.actionFailedDescription),
+      };
+};
+
+/**
+ * Reports a failed request's errors. An answer whose raw text would mean nothing to a merchant (a
+ * 5xx, a proxy's page, an answer that isn't JSON) gets a plain message instead; `context` says
+ * whether it failed loading data or doing an action.
+ */
 export const showAllErrors = ({
   notify,
   error,
+  intl,
+  context,
 }: {
   notify: INotificationCallback;
   error: ApolloError;
+  intl: IntlShape;
+  context: "load" | "action";
 }) => {
+  const problem = getServerErrorProblem(error);
+
+  if (problem) {
+    notify(getServerErrorNotification(problem, intl, context));
+
+    return;
+  }
+
   getAllErrorMessages(error).forEach(message => {
     notify({
       text: error.message,
@@ -98,10 +161,10 @@ export async function handleQueryAuthError(
         text: intl.formatMessage(commonMessages.sessionExpired),
       });
     } else {
-      showAllErrors({ notify, error });
+      showAllErrors({ notify, error, intl, context: "load" });
     }
   } else {
-    showAllErrors({ notify, error });
+    showAllErrors({ notify, error, intl, context: "load" });
   }
 }
 

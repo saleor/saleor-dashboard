@@ -28,7 +28,8 @@ interface DiscountRulesProps<ErrorCode> {
   errors: Array<CommonError<ErrorCode>>;
   deleteButtonState: ConfirmButtonTransitionState;
   getRuleConfirmButtonState: (ruleEditIndex: number | null) => ConfirmButtonTransitionState;
-  onRuleSubmit: (data: Rule, ruleIndex: number | null) => void;
+  /** Resolves to `false` when saving the rule failed, so the dialog stays open with the error. */
+  onRuleSubmit: (data: Rule, ruleIndex: number | null) => void | Promise<boolean | void>;
   onRuleDelete: (ruleIndex: number) => void | Promise<boolean>;
 }
 
@@ -50,6 +51,8 @@ export const DiscountRules = <ErrorCode,>({
   const [ruleEditIndex, setRuleEditIndex] = useState<number | null>(null);
   const [ruleDeleteIndex, setRuleDeleteIndex] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  // The API's errors belong to the dialog whose save failed; a dialog opened later starts clean.
+  const [saveFailed, setSaveFailed] = useState(false);
   const { opepnGrapQLPlayground } = useGraphQLPlayground();
 
   useEffect(
@@ -74,9 +77,20 @@ export const DiscountRules = <ErrorCode,>({
   const handleRuleModalClose = () => {
     setIsModalOpen(false);
     setRuleEditIndex(null);
+    setSaveFailed(false);
   };
   const handleRuleModalSubmit = async (data: Rule) => {
-    await onRuleSubmit(data, ruleEditIndex);
+    setSaveFailed(false);
+
+    const saved = await onRuleSubmit(data, ruleEditIndex);
+
+    // Keep the merchant's draft, and the error the form now shows, when the save failed.
+    if (saved === false) {
+      setSaveFailed(true);
+
+      return;
+    }
+
     handleRuleModalClose();
   };
   const handleRuleDelete = async () => {
@@ -139,7 +153,7 @@ export const DiscountRules = <ErrorCode,>({
           initialFormValues={ruleInitialValues}
           onSubmit={handleRuleModalSubmit}
         >
-          <RuleForm errors={errors} openPlayground={handleOpenPlayground} />
+          <RuleForm errors={saveFailed ? errors : []} openPlayground={handleOpenPlayground} />
         </RuleFormModal>
       )}
       <RuleDeleteModal

@@ -8,10 +8,15 @@ import {
   type QueryResult,
   useQuery as useBaseQuery,
 } from "@apollo/client";
+import { isSessionEndedError, isSessionExpiredError } from "@dashboard/auth/errors";
 import { useUser } from "@dashboard/auth/useUser";
 import { handleQueryAuthError } from "@dashboard/auth/utils";
+import { connectionMonitor } from "@dashboard/connection/appConnectionMonitor";
+import { isConnectionError } from "@dashboard/connection/connectionErrors";
+import { connectionMessages } from "@dashboard/connection/messages";
 import { type PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
 import { PermissionEnum, type UserPermissionFragment } from "@dashboard/graphql/types.generated";
+import { commonMessages } from "@dashboard/intl";
 import { type RequireAtLeastOne } from "@dashboard/misc";
 import { type DocumentNode } from "graphql";
 import { useEffect } from "react";
@@ -100,11 +105,32 @@ export function useQuery<TData, TVariables>(
     errorPolicy: "all",
     fetchPolicy: fetchPolicy ?? "cache-and-network",
     onError: error => {
+      // Dropped because its session ended: nothing went wrong for the merchant.
+      if (isSessionEndedError(error)) {
+        return;
+      }
+
+      // The API refused the session's refresh token while this load waited, which logged out.
+      if (isSessionExpiredError(error)) {
+        notify({ status: "error", text: intl.formatMessage(commonMessages.sessionExpired) });
+
+        return;
+      }
+
       if (handleError) {
         handleError(error);
-      } else {
+      } else if (!isConnectionError(error)) {
         handleQueryAuthError(error, notify, user.logout, intl);
+      } else if (!connectionMonitor.isBannerAttached()) {
+        // No connection banner on this screen (sign-in, startup) to explain the failure and
+        // reload the data, so say it here, without the network text.
+        notify({
+          status: "error",
+          title: intl.formatMessage(connectionMessages.loadFailedTitle),
+          text: intl.formatMessage(connectionMessages.loadFailedDescription),
+        });
       }
+      // Otherwise the banner covers the outage, and the query reloads once Saleor answers.
     },
     skip,
     variables: variablesWithPermissions,

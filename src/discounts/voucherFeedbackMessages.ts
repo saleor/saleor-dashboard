@@ -40,6 +40,13 @@ export const voucherFeedbackMessages = defineMessages({
     defaultMessage: "Some changes weren't saved",
     description: "toast title when a voucher save went through only in part",
   },
+  checkSavedBeforeRetrying: {
+    id: "R3aqyA",
+    defaultMessage:
+      "Saleor didn't confirm the save. Check whether it went through before trying again.",
+    description:
+      "toast description when a voucher save got no answer or a server error, so it may or may not have been saved",
+  },
   tryAgain: {
     id: "IsuaVj",
     defaultMessage: "Try again.",

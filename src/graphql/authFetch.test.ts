@@ -1,7 +1,9 @@
+import { ApolloError } from "@apollo/client";
 import { type AuthSDK } from "@dashboard/auth/authSdk";
-import { type OperationDefinitionNode } from "graphql";
+import { SessionEndedError, SessionExpiredError } from "@dashboard/auth/errors";
+import { GraphQLError, type OperationDefinitionNode } from "graphql";
 
-import { createFetch, registerAuthClient } from "./authFetch";
+import { createFetch, refreshAccessToken, registerAuthClient } from "./authFetch";
 import {
   ExternalRefreshDocument,
   ExternalRefreshWithUserDocument,
@@ -22,6 +24,7 @@ jest.mock("@dashboard/auth/tokenStorage", () => ({
   storage: {
     getAccessToken: jest.fn(),
     getRefreshToken: jest.fn(),
+    getSessionId: jest.fn(() => 1),
     setAccessToken: jest.fn(),
     setTokens: jest.fn(),
     getAuthPluginId: jest.fn(),
@@ -361,6 +364,32 @@ describe("createFetch", () => {
       expect(mockRefreshToken).toHaveBeenCalledTimes(1);
     });
 
+    it("hands on a proxy's error page that isn't JSON, so its status reaches Apollo", async () => {
+      // Arrange
+      storage.getAccessToken.mockReturnValue("test-token");
+      jwtDecode.mockReturnValue({ exp: Math.floor(Date.now() / 1000) + 600, owner: "saleor" });
+
+      const proxyPage = {
+        ok: false,
+        status: 503,
+        clone: jest.fn().mockReturnValue({
+          json: jest.fn().mockRejectedValue(new SyntaxError("Unexpected token '<'")),
+        }),
+      };
+
+      mockFetch.mockResolvedValueOnce(proxyPage);
+
+      const fetchFn = createFetch({ autoTokenRefresh: true, refreshOnUnauthorized: true });
+
+      // Act
+      const result = await fetchFn("http://localhost:8000/graphql/", {});
+
+      // Assert
+      expect(result).toBe(proxyPage);
+      expect(mockRefreshToken).not.toHaveBeenCalled();
+      expect(mockLogout).not.toHaveBeenCalled();
+    });
+
     it("retries request on ExpiredSignatureError when refreshOnUnauthorized is enabled", async () => {
       // Arrange
       const futureTimestamp = Math.floor(Date.now() / 1000) + 600;
@@ -400,6 +429,243 @@ describe("createFetch", () => {
       expect(mockRefreshToken).toHaveBeenCalled();
       expect(mockFetch).toHaveBeenCalledTimes(2);
       expect(result).toBe(successResponse);
+    });
+    describe("when the token expired and the refresh does not succeed", () => {
+      const expiredResponse = createMockResponse({
+        errors: [{ extensions: { exception: { code: "ExpiredSignatureError" } } }],
+      });
+      const runRequest = (): Promise<Response> =>
+        createFetch({ autoTokenRefresh: true, refreshOnUnauthorized: true })(
+          "http://localhost:8000/graphql/",
+          {},
+        );
+
+      beforeEach(() => {
+        storage.getAccessToken.mockReturnValue("test-token");
+        jwtDecode.mockReturnValue({ exp: Math.floor(Date.now() / 1000) + 600, owner: "saleor" });
+        mockFetch.mockResolvedValue(expiredResponse);
+      });
+
+      it("keeps the session and reports the failure when the refresh request fails", async () => {
+        // Arrange
+        const networkError = new TypeError("Failed to fetch");
+
+        mockRefreshToken.mockRejectedValueOnce(new ApolloError({ networkError }));
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBe(networkError);
+        expect(mockLogout).not.toHaveBeenCalled();
+      });
+
+      it("returns the expired response when the refresh fails with an API error", async () => {
+        // Arrange
+        mockRefreshToken.mockRejectedValueOnce(
+          new ApolloError({ graphQLErrors: [new GraphQLError("Invalid token")] }),
+        );
+
+        // Act
+        const result = await runRequest();
+
+        // Assert
+        expect(result).toBe(expiredResponse);
+      });
+    });
+
+    describe("when the session ends while the request waits for a refresh", () => {
+      const expiredResponse = createMockResponse({
+        errors: [{ extensions: { exception: { code: "ExpiredSignatureError" } } }],
+      });
+      const runRequest = (): Promise<Response> =>
+        createFetch({ autoTokenRefresh: true, refreshOnUnauthorized: true })(
+          "http://localhost:8000/graphql/",
+          {},
+        );
+      // What a logout (no stored session) or another login (a new stored session) leaves behind.
+      const endSession = (nextRefreshToken: string | null): void => {
+        storage.getSessionId.mockReturnValue(2);
+        storage.getRefreshToken.mockReturnValue(nextRefreshToken);
+      };
+
+      beforeEach(() => {
+        storage.getAccessToken.mockReturnValue("test-token");
+        storage.getRefreshToken.mockReturnValue("refresh-token");
+        jwtDecode.mockReturnValue({ exp: Math.floor(Date.now() / 1000) + 600, owner: "saleor" });
+        mockFetch.mockResolvedValue(expiredResponse);
+      });
+
+      afterEach(() => {
+        storage.getSessionId.mockImplementation(() => 1);
+        mockRefreshToken.mockReset();
+        mockRefreshToken.mockResolvedValue({ data: { tokenRefresh: { token: "new-token" } } });
+      });
+
+      it("drops the request instead of retrying it for the next session", async () => {
+        // Arrange
+        mockRefreshToken.mockImplementationOnce(async () => {
+          endSession("next-session-refresh-token");
+
+          return { data: { tokenRefresh: { token: "old-session-token" } } };
+        });
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBeInstanceOf(SessionEndedError);
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(mockLogout).not.toHaveBeenCalled();
+      });
+
+      it("says the session expired when renewing a token that is about to expire is refused", async () => {
+        // Arrange
+        jwtDecode.mockReturnValue({ exp: Math.floor(Date.now() / 1000) + 60, owner: "saleor" });
+        mockRefreshToken.mockImplementationOnce(async () => {
+          // The SDK logs out when the API refuses the refresh token.
+          endSession(null);
+
+          return { data: { tokenRefresh: { token: null } } };
+        });
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBeInstanceOf(SessionExpiredError);
+        expect(mockFetch).not.toHaveBeenCalled();
+      });
+
+      it("drops quietly a request whose token renewal was overtaken by a logout", async () => {
+        // Arrange
+        jwtDecode.mockReturnValue({ exp: Math.floor(Date.now() / 1000) + 60, owner: "saleor" });
+        mockRefreshToken.mockImplementationOnce(async () => {
+          endSession(null);
+
+          return { data: { tokenRefresh: { token: "renewed-token" } } };
+        });
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBeInstanceOf(SessionEndedError);
+      });
+
+      it("doesn't refresh for a response that came back after the session ended", async () => {
+        // Arrange
+        mockFetch.mockImplementationOnce(async () => {
+          endSession("next-session-refresh-token");
+
+          return expiredResponse;
+        });
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBeInstanceOf(SessionEndedError);
+        expect(mockRefreshToken).not.toHaveBeenCalled();
+      });
+
+      it("does not log out a newer session when an old refresh is refused", async () => {
+        // Arrange
+        mockRefreshToken.mockImplementationOnce(async () => {
+          endSession("next-session-refresh-token");
+
+          return { data: { tokenRefresh: { token: null } } };
+        });
+
+        // Act
+        const request = runRequest();
+
+        // Assert
+        await expect(request).rejects.toBeInstanceOf(SessionEndedError);
+        expect(mockLogout).not.toHaveBeenCalled();
+      });
+
+      it("returns the expired response when this session's own refusal logged out", async () => {
+        // Arrange
+        mockRefreshToken.mockImplementationOnce(async () => {
+          endSession(null);
+
+          return { data: { tokenRefresh: { token: null } } };
+        });
+
+        // Act
+        const result = await runRequest();
+
+        // Assert
+        expect(result).toBe(expiredResponse);
+        expect(mockLogout).not.toHaveBeenCalled();
+      });
+
+      it("leaves requests sent without a token alone", async () => {
+        // Arrange
+        const response = createMockResponse({ data: { shop: {} } });
+
+        storage.getAccessToken.mockReturnValue(null);
+        mockFetch.mockImplementationOnce(async () => {
+          endSession("next-session-refresh-token");
+
+          return response;
+        });
+
+        // Act
+        const result = await runRequest();
+
+        // Assert
+        expect(result).toBe(response);
+      });
+
+      it("starts a new refresh for the next session instead of waiting on the old one", async () => {
+        // Arrange
+        let finishOldRefresh: (value: unknown) => void = () => undefined;
+
+        mockRefreshToken
+          .mockImplementationOnce(() => new Promise(resolve => (finishOldRefresh = resolve)))
+          .mockResolvedValueOnce({ data: { tokenRefresh: { token: "next-session-token" } } });
+
+        const oldRequest = runRequest().catch(() => undefined);
+
+        for (let tick = 0; tick < 20 && mockRefreshToken.mock.calls.length === 0; tick++) {
+          await Promise.resolve();
+        }
+
+        endSession("next-session-refresh-token");
+
+        // Act
+        await runRequest().catch(() => undefined);
+
+        // Assert
+        expect(mockRefreshToken).toHaveBeenCalledTimes(2);
+
+        finishOldRefresh({ data: { tokenRefresh: { token: "old-session-token" } } });
+        await oldRequest;
+      });
+
+      it("gives no token to a caller whose session ended during the refresh", async () => {
+        // Arrange
+        mockRefreshToken
+          .mockImplementationOnce(async () => {
+            endSession("next-session-refresh-token");
+
+            return { data: { tokenRefresh: { token: "old-session-token" } } };
+          })
+          .mockResolvedValueOnce({ data: { tokenRefresh: { token: "fresh-token" } } });
+
+        // Act
+        const afterSessionEnded = await refreshAccessToken();
+
+        storage.getSessionId.mockImplementation(() => 1);
+
+        const sameSession = await refreshAccessToken();
+
+        // Assert
+        expect(afterSessionEnded).toBeNull();
+        expect(sameSession).toBe("test-token");
+      });
     });
   });
 });

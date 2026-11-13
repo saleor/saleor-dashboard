@@ -1,5 +1,11 @@
 import { type FetchResult } from "@apollo/client";
 import { type AuthSDK } from "@dashboard/auth/authSdk";
+import {
+  getTransientRequestError,
+  isTransientRequestError,
+  SessionEndedError,
+  SessionExpiredError,
+} from "@dashboard/auth/errors";
 import { isInternalToken, type JWTToken, storage } from "@dashboard/auth/tokenStorage";
 import jwtDecode from "jwt-decode";
 
@@ -19,9 +25,17 @@ let refreshPromise:
   | ReturnType<AuthSDK["refreshToken"]>
   | ReturnType<AuthSDK["refreshExternalToken"]>
   | null = null;
+/** The session the shared refresh belongs to; a new session never waits on an old refresh. */
+let refreshSessionId: number | null = null;
 const isTokenRefreshExternal = (
   result: RefreshTokenMutation | ExternalRefreshMutation,
 ): result is ExternalRefreshMutation => "externalRefresh" in result;
+const getRefreshedToken = (
+  result: RefreshTokenMutation | ExternalRefreshMutation | null | undefined,
+): string | null | undefined =>
+  result && isTokenRefreshExternal(result)
+    ? result.externalRefresh?.token
+    : (result as RefreshTokenMutation | undefined)?.tokenRefresh?.token;
 
 /**
  * Single-flight token refresh shared by every in-flight request.
@@ -34,7 +48,7 @@ const isTokenRefreshExternal = (
  * the request is still running.
  */
 const runTokenRefresh = (owner: string) => {
-  if (refreshPromise) {
+  if (refreshPromise && refreshSessionId === storage.getSessionId()) {
     return refreshPromise;
   }
 
@@ -43,6 +57,7 @@ const runTokenRefresh = (owner: string) => {
     : authClient!.refreshExternalToken();
 
   refreshPromise = pending;
+  refreshSessionId = storage.getSessionId();
 
   void pending
     .finally(() => {
@@ -70,9 +85,12 @@ export const refreshAccessToken = async (): Promise<string | null> => {
     return null;
   }
 
+  const sessionId = storage.getSessionId();
+
   await runTokenRefresh(jwtDecode<JWTToken>(token).owner);
 
-  return storage.getAccessToken();
+  // A logout or another login while waiting: the caller asked for the previous session's token.
+  return storage.getSessionId() === sessionId ? storage.getAccessToken() : null;
 };
 
 type FetchConfig = Partial<{
@@ -126,20 +144,42 @@ export const createFetch =
       // ignore
     }
 
+    const sessionId = storage.getSessionId();
+    // A logout or another login happened while this request waited for a token refresh. The
+    // request belongs to a session that is gone, so it must not be retried with, or answered for,
+    // the new one.
+    const hasSessionEnded = (): boolean => storage.getSessionId() !== sessionId;
+
     if (autoTokenRefresh && token) {
       // auto refresh token before provided time skew (in seconds) until it expires
       const decodedToken = jwtDecode<JWTToken>(token);
       const expirationTime = (decodedToken.exp - tokenRefreshTimeSkew) * 1000;
       const owner = decodedToken.owner;
 
+      let refreshResult: Awaited<ReturnType<typeof runTokenRefresh>> | null = null;
+
       try {
-        if (refreshPromise) {
-          await refreshPromise;
+        if (refreshPromise && refreshSessionId === sessionId) {
+          refreshResult = await refreshPromise;
         } else if (Date.now() >= expirationTime) {
-          await runTokenRefresh(owner);
+          refreshResult = await runTokenRefresh(owner);
         }
       } catch {
         // ignore
+      }
+
+      if (hasSessionEnded()) {
+        // The API refused this session's refresh token and the SDK logged out (no session is
+        // stored now), rather than the merchant logging out or signing in meanwhile.
+        if (
+          refreshResult &&
+          !getRefreshedToken(refreshResult.data) &&
+          storage.getRefreshToken() === null
+        ) {
+          throw new SessionExpiredError();
+        }
+
+        throw new SessionEndedError();
       }
 
       token = storage.getAccessToken();
@@ -154,7 +194,13 @@ export const createFetch =
 
     if (refreshOnUnauthorized && token) {
       const response = await fetch(input, init);
-      const data: FetchResult = await response.clone().json();
+      // A proxy's error page (a 502 or 503 while Saleor is down) isn't JSON. It can't carry an
+      // expired-token error, so hand it on: Apollo reports it with its status, which tells a
+      // connection failure apart from an error Saleor returned.
+      const data: FetchResult | null = await response
+        .clone()
+        .json()
+        .catch(() => null);
       const isUnauthenticated = data?.errors?.some(
         error =>
           (error.extensions?.exception as Record<string, unknown>)?.code ===
@@ -168,26 +214,48 @@ export const createFetch =
       const owner = jwtDecode<JWTToken>(token).owner;
 
       if (isUnauthenticated) {
+        // The response came back after a logout or another login: a refresh now would run for
+        // the new session, and a refusal would log it out.
+        if (hasSessionEnded()) {
+          throw new SessionEndedError();
+        }
+
         try {
           refreshTokenResponse = await runTokenRefresh(owner);
-
-          if (
-            refreshTokenResponse.data && isTokenRefreshExternal(refreshTokenResponse.data)
-              ? refreshTokenResponse.data.externalRefresh?.token
-              : (refreshTokenResponse.data as RefreshTokenMutation | undefined)?.tokenRefresh?.token
-          ) {
-            // check if mutation returns a valid token after refresh and retry the request
-            return createFetch({
-              autoTokenRefresh: false,
-              refreshOnUnauthorized: false,
-            })(input, init);
-          } else {
-            // after Saleor returns ExpiredSignatureError status and token refresh fails
-            // we log out the user and return the failed response
-            authClient.logout();
+        } catch (error) {
+          if (hasSessionEnded()) {
+            throw new SessionEndedError();
           }
-        } catch {
-          // ignore
+
+          // The refresh request itself failed (offline, a timeout, a 502 or 503), so the session
+          // may still be valid. Report that failure instead of the expired-token response, which
+          // the query and mutation error handlers treat as a logout. The next request refreshes
+          // again.
+          if (isTransientRequestError(error)) {
+            throw getTransientRequestError(error);
+          }
+
+          return response;
+        }
+
+        const refreshed = !!getRefreshedToken(refreshTokenResponse.data);
+
+        if (hasSessionEnded()) {
+          // The refusal of this session's refresh token logged out (no session is stored now):
+          // return the expired response, so the error handlers say the session expired.
+          if (!refreshed && storage.getRefreshToken() === null) {
+            return response;
+          }
+
+          throw new SessionEndedError();
+        }
+
+        if (refreshed) {
+          // check if mutation returns a valid token after refresh and retry the request
+          return createFetch({
+            autoTokenRefresh: false,
+            refreshOnUnauthorized: false,
+          })(input, init);
         }
       }
 

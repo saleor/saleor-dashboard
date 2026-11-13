@@ -17,7 +17,12 @@ import { useEffect, useRef, useState } from "react";
 import { type IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
-import { useAuthState } from "../authState";
+import {
+  apiUnreachableVar,
+  useAnotherAccountChosen,
+  useApiUnreachable,
+  useAuthState,
+} from "../authState";
 import { parseAuthError } from "../errors";
 import {
   type ExternalLoginInput,
@@ -41,6 +46,8 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } = saleorAuth;
   const navigate = useNavigator();
   const { authenticated, authenticating, isStaff } = useAuthState();
+  const apiUnreachable = useApiUnreachable();
+  const anotherAccountChosen = useAnotherAccountChosen();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
   const [isCredentialsLogin, setIsCredentialsLogin] = useState(false);
   const [errors, setErrors] = useState<UserContextError[]>([]);
@@ -55,19 +62,25 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
   useEffect(() => {
     if (authenticated) {
       permitCredentialsAPI.current = true;
+      // However the session came back, Saleor answered.
+      apiUnreachableVar(false);
     }
   }, [authenticated]);
   useEffect(() => {
     if (
       !authenticated &&
       !authenticating &&
+      // The stored session may still open once Saleor answers, and a login can't reach it now.
+      !apiUnreachable &&
+      // The merchant chose to sign in with another account than the saved one.
+      !anotherAccountChosen &&
       !requestedExternalPluginId &&
       permitCredentialsAPI.current
     ) {
       permitCredentialsAPI.current = false;
       loginWithCredentialsManagementAPI(handleLogin);
     }
-  }, [authenticated, authenticating]);
+  }, [authenticated, authenticating, apiUnreachable, anotherAccountChosen]);
 
   const userDetails = useUserDetailsQuery({
     client: apolloClient,

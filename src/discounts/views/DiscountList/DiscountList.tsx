@@ -29,6 +29,7 @@ import {
   type DiscountListUrlQueryParams,
 } from "../../discountsUrls";
 import { storageUtils } from "./filters";
+import { getPromotionListWhere } from "./getPromotionListWhere";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface DiscountListProps {
@@ -50,12 +51,7 @@ export const DiscountList = ({ params }: DiscountListProps) => {
     () => ({
       ...paginationState,
       sort: getSortQueryVariables(params),
-      where: {
-        ...where,
-        ...(params?.query && {
-          name: { eq: params.query },
-        }),
-      },
+      where: getPromotionListWhere(where, params?.query),
     }),
     [params, settings.rowNumber, valueProvider.value],
   );

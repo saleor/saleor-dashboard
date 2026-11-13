@@ -2,6 +2,11 @@ import { type FetchResult } from "@apollo/client";
 import { type Rule } from "@dashboard/discounts/models/Rule";
 import { toAPI } from "@dashboard/discounts/models/transformRule";
 import {
+  getVoucherSaveRequestErrors,
+  type MutationOutcome,
+  type VoucherSaveError,
+} from "@dashboard/discounts/voucherSaveRequestErrors";
+import {
   type PromotionDetailsFragment,
   type PromotionRuleCreateErrorFragment,
   type PromotionRuleCreateMutation,
@@ -12,7 +17,7 @@ import {
   type PromotionUpdateMutation,
   type PromotionUpdateMutationVariables,
 } from "@dashboard/graphql";
-import { getMutationErrors, joinDateTime } from "@dashboard/misc";
+import { joinDateTime } from "@dashboard/misc";
 import { type CommonError } from "@dashboard/utils/errors/common";
 import difference from "lodash/difference";
 
@@ -22,7 +27,8 @@ import { type DiscoutFormData } from "../../types";
  * Saleor promotionUpdate validates dates with
  * `cleaned_input.get("end_date") or instance.end_date`, so `endDate: null` is ignored
  * for validation. Clearing the end while moving start past the previous end fails.
- * Clear end date in a separate mutation first when that conflict would occur.
+ * Clear end date in a separate mutation first when that conflict would occur, and put it
+ * back when the main update fails.
  */
 export const shouldClearPromotionEndDateFirst = ({
   hasEndDate,
@@ -40,13 +46,22 @@ export const shouldClearPromotionEndDateFirst = ({
   return new Date(nextStartDate).getTime() > new Date(currentEndDate).getTime();
 };
 
-export const createUpdateHandler = (
-  promotion: PromotionDetailsFragment | undefined | null,
+/** Payload errors, or one error for a request that failed as a whole (it has no payload). */
+const getPromotionUpdateErrors = (
+  result: MutationOutcome<PromotionUpdateMutation>,
+): VoucherSaveError[] => getVoucherSaveRequestErrors(result, data => data.promotionUpdate?.errors);
+
+interface UpdateHandlerDeps {
+  promotion: PromotionDetailsFragment | undefined | null;
   update: (
     variables: PromotionUpdateMutationVariables,
     options?: { silent?: boolean },
-  ) => Promise<FetchResult<PromotionUpdateMutation>>,
-) => {
+  ) => Promise<MutationOutcome<PromotionUpdateMutation>>;
+  /** Puts back an end date cleared before an update that then failed. */
+  restoreEndDate: (endDate: string) => Promise<unknown>;
+}
+
+export const createUpdateHandler = ({ promotion, update, restoreEndDate }: UpdateHandlerDeps) => {
   return async (data: DiscoutFormData) => {
     if (!promotion) {
       return;
@@ -56,14 +71,29 @@ export const createUpdateHandler = (
     const endDate = data.dates.hasEndDate
       ? joinDateTime(data.dates.endDate, data.dates.endTime)
       : null;
+    // Build the update before clearing the end date, so nothing can throw between the two.
+    const input = {
+      name: data.name,
+      description: data.description ? JSON.parse(data.description) : null,
+      startDate,
+      endDate,
+    };
 
-    if (
-      shouldClearPromotionEndDateFirst({
-        hasEndDate: data.dates.hasEndDate,
-        nextStartDate: startDate,
-        currentEndDate: promotion.endDate,
-      })
-    ) {
+    const previousEndDate = promotion.endDate;
+    const clearsEndDateFirst = shouldClearPromotionEndDateFirst({
+      hasEndDate: data.dates.hasEndDate,
+      nextStartDate: startDate,
+      currentEndDate: previousEndDate,
+    });
+    // The end date is already gone when the update fails. Without it the promotion runs from its
+    // old start with no end, so put it back before reporting the failure.
+    const restoreClearedEndDate = async (): Promise<void> => {
+      if (clearsEndDateFirst && previousEndDate) {
+        await restoreEndDate(previousEndDate);
+      }
+    };
+
+    if (clearsEndDateFirst) {
       const clearEndResponse = await update(
         {
           id: promotion.id,
@@ -71,25 +101,27 @@ export const createUpdateHandler = (
         },
         { silent: true },
       );
-      const clearEndErrors = getMutationErrors(clearEndResponse);
+      const clearEndErrors = getPromotionUpdateErrors(clearEndResponse);
 
       if (clearEndErrors.length) {
         return { errors: clearEndErrors };
       }
     }
 
-    const updateResponse = await update({
-      id: promotion.id,
-      input: {
-        name: data.name,
-        description: data.description ? JSON.parse(data.description) : null,
-        startDate,
-        endDate,
-      },
-    });
-    const errors = getMutationErrors(updateResponse);
+    let updateResponse: MutationOutcome<PromotionUpdateMutation>;
+
+    try {
+      updateResponse = await update({ id: promotion.id, input });
+    } catch (error) {
+      await restoreClearedEndDate();
+      throw error;
+    }
+
+    const errors = getPromotionUpdateErrors(updateResponse);
 
     if (errors.length) {
+      await restoreClearedEndDate();
+
       return { errors };
     }
 
@@ -114,17 +146,22 @@ export const createRuleUpdateHandler = (
     const ruleChannels: string[] = ruleData?.channels?.map(channel => channel.id) ?? [];
     const ruleGifts: string[] = ruleData?.giftIds ?? [];
     const { channels, gifts, ...input } = toAPI(promotionData?.type)(data);
+    // The form edits one channel and carries the rule's other channels; keep those on the rule.
+    const nextChannels = [
+      ...new Set([...(channels ?? []), ...(data.otherChannels?.map(channel => channel.id) ?? [])]),
+    ];
     const response = await updateRule({
       id: data.id!,
       input: {
         ...input,
-        addChannels: difference(channels, ruleChannels),
-        removeChannels: difference(ruleChannels, channels ?? []),
+        addChannels: difference(nextChannels, ruleChannels),
+        removeChannels: difference(ruleChannels, nextChannels),
         addGifts: difference(gifts, ruleGifts),
         removeGifts: difference(ruleGifts, gifts ?? []),
       },
     });
-    const errors = getMutationErrors(response);
+    // A request that failed as a whole (offline, a 500) is a failure too, not an empty error list.
+    const errors = getVoucherSaveRequestErrors(response, data => data.promotionRuleUpdate?.errors);
 
     if (errors.length > 0) {
       return errors as Array<CommonError<PromotionRuleUpdateErrorFragment>>;
@@ -148,7 +185,7 @@ export const createRuleCreateHandler = (
         ...ruleData,
       },
     });
-    const errors = getMutationErrors(response);
+    const errors = getVoucherSaveRequestErrors(response, data => data.promotionRuleCreate?.errors);
 
     if (errors.length > 0) {
       return errors as Array<CommonError<PromotionRuleCreateErrorFragment>>;

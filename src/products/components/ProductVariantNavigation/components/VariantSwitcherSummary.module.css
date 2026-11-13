@@ -1,0 +1,105 @@
+.summary {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+  padding: var(--mu-spacing-2);
+}
+
+/* The whole left part opens the list, so the target is as wide as the row allows. */
+.toggle {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--mu-spacing-3);
+  min-width: 0;
+  padding: var(--mu-spacing-1) var(--mu-spacing-2) var(--mu-spacing-1) var(--mu-spacing-1);
+  border: 0;
+  border-radius: var(--mu-border-radius-3);
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.toggle:active {
+  background-color: var(--mu-colors-background-default2);
+}
+
+/* Not on touch screens, where the hover tint would stay on after a tap. */
+@media (hover: hover) {
+  .toggle:hover {
+    background-color: var(--mu-colors-background-default2);
+  }
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: -2px;
+}
+
+.thumbnail {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--mu-spacing-10);
+  height: var(--mu-spacing-10);
+  overflow: hidden;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: var(--mu-border-radius-2);
+  color: var(--mu-colors-text-default2);
+}
+
+.thumbnailImage {
+  width: 100%;
+  height: 100%;
+  padding: var(--mu-spacing-1);
+  object-fit: cover;
+}
+
+.text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* The name is what tells variants apart, so it wraps before it is cut. */
+.name {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.details {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pending {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--mu-colors-text-default2);
+  transition: transform 0.2s ease;
+}
+
+.toggle[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+.steps {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--mu-spacing-1);
+}

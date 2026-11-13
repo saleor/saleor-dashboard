@@ -23,6 +23,13 @@ export type JWTToken = {
 /** Tokens minted by Saleor itself refresh differently to ones minted by an external auth plugin. */
 export const isInternalToken = (owner: string): boolean => owner === "saleor";
 
+/**
+ * Identifies the stored session. It changes when a login stores the tokens of a new session and
+ * when the session is cleared, and stays the same while a refresh renews the current session's
+ * tokens. Shared by every storage instance, since they all store the same session.
+ */
+let sessionId = 0;
+
 export let storage: {
   setAuthPluginId: (method: string | null) => void;
   getAuthPluginId: () => string | null;
@@ -30,7 +37,11 @@ export let storage: {
   setRefreshToken: (token: string | null) => void;
   getAccessToken: () => string | null;
   getRefreshToken: () => string | null;
+  /** Stores the tokens of a new session. */
   setTokens: (tokens: { accessToken: string | null; refreshToken: string | null }) => void;
+  /** Stores tokens a refresh issued for the current session. */
+  renewTokens: (tokens: { accessToken: string | null; refreshToken: string | null }) => void;
+  getSessionId: () => number;
   clear: () => void;
 };
 
@@ -72,7 +83,7 @@ export const createStorage = (autologinEnabled: boolean): void => {
   const getAccessToken = (): string | null => accessToken;
   const getRefreshToken = (): string | null => refreshToken;
 
-  const setTokens = ({
+  const renewTokens = ({
     accessToken,
     refreshToken,
   }: {
@@ -83,7 +94,15 @@ export const createStorage = (autologinEnabled: boolean): void => {
     setRefreshToken(refreshToken);
   };
 
+  const setTokens = (tokens: { accessToken: string | null; refreshToken: string | null }): void => {
+    sessionId += 1;
+    renewTokens(tokens);
+  };
+
+  const getSessionId = (): number => sessionId;
+
   const clear = (): void => {
+    sessionId += 1;
     setAuthPluginId(null);
     setAccessToken(null);
     setRefreshToken(null);
@@ -97,6 +116,8 @@ export const createStorage = (autologinEnabled: boolean): void => {
     getAccessToken,
     getRefreshToken,
     setTokens,
+    renewTokens,
+    getSessionId,
     clear,
   };
 };

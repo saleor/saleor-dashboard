@@ -1,5 +1,7 @@
+import { type PromotionRuleDetailsFragment, RewardValueTypeEnum } from "@dashboard/graphql";
+
 import { type CataloguePredicateAPI, type OrderPredicateAPI } from "../types";
-import { hasPredicateNestedConditions } from "./helpers";
+import { createBaseRuleInputFromAPI, hasPredicateNestedConditions } from "./helpers";
 
 describe("Rule Model - hasPredicateCreatedViaApi", () => {
   it("should return true if predicate has AND properties", () => {
@@ -191,5 +193,54 @@ describe("Rule Model - hasPredicateCreatedViaApi", () => {
     } as OrderPredicateAPI;
 
     expect(hasPredicateNestedConditions(orderPredicate)).toBe(false);
+  });
+});
+
+describe("createBaseRuleInputFromAPI", () => {
+  type RuleChannel = NonNullable<PromotionRuleDetailsFragment["channels"]>[number];
+
+  const channel = (id: string, name: string, currencyCode: string): RuleChannel => ({
+    __typename: "Channel",
+    id,
+    isActive: true,
+    name,
+    slug: id,
+    currencyCode,
+    defaultCountry: { __typename: "CountryDisplay", code: "US", country: "United States" },
+  });
+  const rule: PromotionRuleDetailsFragment = {
+    __typename: "PromotionRule",
+    id: "rule-1",
+    name: "Two channels",
+    description: null,
+    giftIds: [],
+    rewardType: null,
+    rewardValueType: RewardValueTypeEnum.PERCENTAGE,
+    rewardValue: 5,
+    cataloguePredicate: {},
+    orderPredicate: null,
+    channels: [channel("channel-usd", "Channel-USD", "USD")],
+  };
+
+  it("carries the channels after the first one as the rule's other channels", () => {
+    // Arrange
+    const twoChannels: PromotionRuleDetailsFragment = {
+      ...rule,
+      channels: [
+        channel("channel-usd", "Channel-USD", "USD"),
+        channel("channel-pln", "Channel-PLN", "PLN"),
+      ],
+    };
+
+    // Act
+    const oneChannelRule = createBaseRuleInputFromAPI(rule, {});
+    const twoChannelRule = createBaseRuleInputFromAPI(twoChannels, {});
+
+    // Assert
+    expect(oneChannelRule.otherChannels).toBeUndefined();
+    expect(twoChannelRule.channel).toEqual({ label: "Channel-USD", value: "channel-usd" });
+    expect(twoChannelRule.otherChannels).toEqual([
+      { id: "channel-pln", name: "Channel-PLN", currencyCode: "PLN" },
+    ]);
   });
 });

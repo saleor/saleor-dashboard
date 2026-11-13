@@ -21,19 +21,8 @@ import AttributeDetailsComponent from "./views/AttributeDetails/AttributeDetails
 import AttributeListComponent from "./views/AttributeList/AttributeList";
 
 const AttributeList = ({ location }: RouteComponentProps<{}>) => {
-  const qs = parseQs(location.search.substr(1)) as Record<string, string | undefined>;
-
-  if (
-    qs.sort &&
-    !Object.values(AttributeListUrlSortField).includes(qs.sort as AttributeListUrlSortField)
-  ) {
-    delete qs.sort;
-  }
-
-  const params = asSortParams(
-    qs as Record<string, string>,
-    AttributeListUrlSortField,
-  ) as AttributeListUrlQueryParams;
+  const qs = parseQs(location.search.substr(1)) as Record<string, string>;
+  const params = asSortParams(qs, AttributeListUrlSortField) as AttributeListUrlQueryParams;
 
   return (
     <ConditionalAttributesFilterProvider locationSearch={location.search}>
