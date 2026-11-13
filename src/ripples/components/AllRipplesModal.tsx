@@ -7,7 +7,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { PULSE_DOCS_URL } from "@dashboard/links";
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { allRipples } from "@dashboard/ripples/allRipples";
-import { localizeRippleContent } from "@dashboard/ripples/contentMessages";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { rippleActionMessages } from "@dashboard/ripples/messages";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
@@ -269,9 +268,6 @@ interface RippleEntryRowProps {
 }
 
 const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEntryRowProps) => {
-  const intl = useIntl();
-  const content = localizeRippleContent(ripple, intl);
-
   return (
     <Box display="flex" gap={4}>
       {/* Timeline column - dot and line */}
@@ -310,7 +306,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
           marginBottom={2}
           color="default1"
         >
-          {content.oneLiner}
+          {ripple.content.oneLiner}
         </Text>
 
         {ripple.media?.kind === "video" ? (
@@ -327,7 +323,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
               playsInline
               preload="metadata"
               poster={ripple.media.poster}
-              aria-label={content.oneLiner}
+              aria-label={ripple.content.oneLiner}
             >
               <source src={ripple.media.src} type="video/mp4" />
             </video>
@@ -335,7 +331,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
         ) : null}
 
         {/* Description */}
-        <RippleGlobalDescription content={content.global} />
+        <RippleGlobalDescription content={ripple.content.global} />
 
         {/* Actions - filter out actions marked as hideInModal */}
         {ripple.actions?.some(action => !action.hideInModal) ? (
