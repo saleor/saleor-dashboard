@@ -1,11 +1,9 @@
 import Link from "@dashboard/components/Link";
-import { localizeRippleContent } from "@dashboard/ripples/contentMessages";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { type Ripple } from "@dashboard/ripples/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
 import { type ReactNode, useEffect, useRef } from "react";
-import { useIntl } from "react-intl";
 
 import styles from "./RippleVideoAnnouncement.module.css";
 
@@ -59,8 +57,6 @@ export const RippleVideoAnnouncement = ({
   secondaryAction,
   dismissAriaLabel,
 }: RippleVideoAnnouncementProps): JSX.Element | null => {
-  const intl = useIntl();
-  const content = localizeRippleContent(model, intl);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { getShouldShow, setFirstSeenFlag, setManuallyHidden } = useRippleStorage();
   const shouldShow = getShouldShow(model);
@@ -138,7 +134,7 @@ export const RippleVideoAnnouncement = ({
           playsInline
           preload="metadata"
           poster={posterUrl}
-          aria-label={content.oneLiner}
+          aria-label={model.content.oneLiner}
         >
           <source src={videoUrl} type="video/mp4" />
         </video>
@@ -148,10 +144,10 @@ export const RippleVideoAnnouncement = ({
         <Box display="flex" alignItems="flex-start" gap={2}>
           <Box display="flex" flexDirection="column" gap={1} __flex="1" __minWidth="0">
             <Text size={4} fontWeight="medium">
-              {content.oneLiner}
+              {model.content.oneLiner}
             </Text>
             <Text size={2} color="default2" as="p">
-              {content.contextual}
+              {model.content.contextual}
             </Text>
           </Box>
           <Button

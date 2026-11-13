@@ -1,9 +1,7 @@
-import { attributeListPageMessages } from "@dashboard/attributes/components/AttributeListPage/messages";
 import { type Ripple } from "@dashboard/ripples/types";
 import { Text } from "@saleor/macaw-ui-next";
 import { Settings } from "lucide-react";
 import { type CSSProperties } from "react";
-import { FormattedMessage } from "react-intl";
 
 const settingsIconStyle: CSSProperties = {
   verticalAlign: "text-bottom",
@@ -11,18 +9,10 @@ const settingsIconStyle: CSSProperties = {
 
 const attributeListGroupByTypeContextual = (
   <Text color="default2">
-    <FormattedMessage
-      id="FfD8ko"
-      defaultMessage="Product and model attribute lists are grouped by type. Use the tabs to browse attributes per type, or turn off {groupByType} in the view menu {icon}. Your filters stay above the tabs, and you can unassign attributes from a single type when one tab is selected."
-      values={{
-        groupByType: (
-          <em>
-            <FormattedMessage {...attributeListPageMessages.groupByType} />
-          </em>
-        ),
-        icon: <Settings size={16} aria-hidden style={settingsIconStyle} />,
-      }}
-    />
+    Product and model attribute lists are grouped by type. Use the tabs to browse attributes per
+    type, or turn off <em>Group by type</em> in the view menu{" "}
+    <Settings size={16} aria-hidden style={settingsIconStyle} />. Your filters stay above the tabs,
+    and you can unassign attributes from a single type when one tab is selected.
   </Text>
 );
 
