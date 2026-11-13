@@ -34,6 +34,7 @@ describe("getAttributeData with staging schema", () => {
     const input = getAttributeData(formData, values);
 
     // Assert
+    expect(input.availableInGrid).toBeUndefined();
     expect(input.filterableInStorefront).toBeUndefined();
     expect(input.storefrontSearchPosition).toBeUndefined();
   });
