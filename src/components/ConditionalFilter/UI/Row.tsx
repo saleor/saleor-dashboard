@@ -65,6 +65,23 @@ export const RowComponent = ({
 
     return selected ? enrichAttributeComboboxOption(selected) : null;
   }, [attributeList, item.selectedAttribute]);
+  const conditionOptions = item.condition.options;
+  const selectedCondition = item.condition.selected.conditionValue;
+  // Conditions can share a value (e.g. "is" and "lower" are both "input-1"), so map the
+  // translated options back to the originals by position, never by value.
+  const localizedConditionOptions = useMemo(
+    () => conditionOptions.map(option => localizeFilterCondition(option, intl)),
+    [conditionOptions, intl],
+  );
+  const localizedSelectedCondition = useMemo(() => {
+    if (!selectedCondition) return null;
+
+    const selectedIndex = conditionOptions.indexOf(selectedCondition);
+
+    return selectedIndex === -1
+      ? localizeFilterCondition(selectedCondition, intl)
+      : localizedConditionOptions[selectedIndex];
+  }, [conditionOptions, localizedConditionOptions, selectedCondition, intl]);
   const isFlat = isFlatFilterLayout(layout);
   const inlineControlProps = isFlat ? { backgroundColor: "default1" as const } : {};
 
@@ -150,15 +167,11 @@ export const RowComponent = ({
         {...inlineControlProps}
         id={getFilterControlId("condition", index)}
         data-test-id={`condition-${index}`}
-        value={
-          item.condition.selected.conditionValue
-            ? localizeFilterCondition(item.condition.selected.conditionValue, intl)
-            : null
-        }
-        options={item.condition.options.map(option => localizeFilterCondition(option, intl))}
+        value={localizedSelectedCondition}
+        options={localizedConditionOptions}
         disabled={constrain.disableCondition}
         onChange={value => {
-          const original = item.condition.options.find(option => option.value === value.value);
+          const original = conditionOptions[localizedConditionOptions.indexOf(value)];
 
           if (original) emitter.changeCondition(index, original);
         }}

@@ -219,19 +219,6 @@ const rippleContentMessages: Partial<Record<string, MessageDescriptor>> = define
     defaultMessage:
       "Staff emails now include a New order alerts list. Assign active staff members so they are emailed when a customer completes checkout. Draft orders you complete in the Dashboard are not included.",
   },
-  "cloud-env-link-logo.oneLiner": {
-    id: "HfHSzO",
-    defaultMessage: "Saleor Cloud link moved to logo area",
-  },
-  "cloud-env-link-logo.contextual": {
-    id: "G5b94M",
-    defaultMessage: "The link to Saleor Cloud has moved here. Click the cloud icon to access it.",
-  },
-  "cloud-env-link-logo.global": {
-    id: "qPFfgN",
-    defaultMessage:
-      "The Saleor Cloud environment link has been moved from the bottom of the navigation to the logo area at the top. Hover over the logo to reveal the cloud icon and access your environment.",
-  },
   "global-feedback-button.oneLiner": {
     id: "erboqG",
     defaultMessage: "Send feedback from anywhere",

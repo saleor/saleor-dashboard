@@ -62,6 +62,7 @@ import {
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
+import { useLeaveAfterDelete } from "@dashboard/hooks/useLeaveAfterDelete";
 import useLocalPaginator, {
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
@@ -108,6 +109,7 @@ interface VoucherDetailsProps {
 
 const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const navigate = useNavigator();
+  const leaveAfterDelete = useLeaveAfterDelete();
   const notify = useNotifier();
   const shop = useShop();
   const hasPermission = useHasPermission();
@@ -442,7 +444,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           status: "success",
           title: intl.formatMessage(voucherFeedbackMessages.voucherDeleted),
         });
-        navigate(voucherListUrl(), { replace: true });
+        leaveAfterDelete(voucherListUrl());
 
         return;
       }

@@ -1,6 +1,8 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
 import { initAuth } from "@dashboard/auth/initAuth";
 import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
+import { connectionMonitor } from "@dashboard/connection/appConnectionMonitor";
+import { trackConnection } from "@dashboard/connection/trackConnection";
 import { createUploadLink } from "apollo-upload-client";
 import { type DocumentNode } from "graphql";
 
@@ -43,7 +45,7 @@ const link = attachVariablesLink.concat(
     credentials: "include",
     uri: getApiUrl(),
     // Note this has to be as typeof fetch: ts-expect-error breaks TS in non-strict mode, without it strict mode breaks
-    fetch: createFetch() as typeof fetch,
+    fetch: trackConnection({ fetch: createFetch(), monitor: connectionMonitor }) as typeof fetch,
   }) as unknown as ApolloLink, // type mismatch between apollo-upload-client and @apollo/cient
 );
 

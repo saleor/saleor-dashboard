@@ -1,0 +1,28 @@
+/* The layout comes from useProductVariantLayout (data-layout), not from a media query here,
+   so the grid and the navigation inside it always switch together. */
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.navigation,
+.content {
+  min-width: 0;
+}
+
+.root[data-layout="columns"] {
+  grid-template-columns: 4fr 9fr;
+  column-gap: var(--mu-spacing-5);
+}
+
+/* The list stays in view while the form scrolls. Only in columns: stacked, a sticky list
+   would cover the form it sits above. */
+.root[data-layout="columns"] .navigation {
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
+
+.root[data-layout="stacked"] .navigation {
+  padding: var(--mu-spacing-4) var(--mu-spacing-6) 0;
+}

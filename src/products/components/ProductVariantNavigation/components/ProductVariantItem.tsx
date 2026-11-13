@@ -2,7 +2,8 @@ import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { productVariantEditUrl } from "@dashboard/products/urls";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text, useTheme } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { GripVertical } from "lucide-react";
 import { type CSSProperties, memo, type ReactNode } from "react";
 import { useIntl } from "react-intl";
@@ -11,6 +12,7 @@ import { Link } from "react-router-dom";
 import { messages } from "../messages";
 import { type ProductVariantItem, type ProductVariantItemThumbnail } from "../types";
 import { ImagePlaceholder } from "./ImagePlaceholder";
+import styles from "./ProductVariantItem.module.css";
 
 interface VariantItemProps {
   variant: ProductVariantItem;
@@ -22,15 +24,25 @@ interface VariantItemProps {
   productId: string;
   draggable: boolean;
   /**
-   * When false, render outside a SortableContext (e.g. sticky pinned current
-   * above the scroll list, or while search disables reorder). Defaults to true.
+   * When false, render outside a SortableContext (the pinned current variant above the
+   * scroll list). Defaults to true. A row the list can't reorder right now stays sortable
+   * and is just not `draggable`.
    */
   sortable?: boolean;
   /** When false, omit the drag handle (pinned current is not reorderable). */
   showDragHandle?: boolean;
   /** Optional caption on its own row under the image/name line. */
   caption?: ReactNode;
+  /** Render as the copy that follows the pointer while this variant is dragged. */
+  lifted?: boolean;
 }
+
+/**
+ * - `source`: the row in the list while its copy is dragged; it marks where the variant
+ *   will land.
+ * - `lifted`: the copy that follows the pointer.
+ */
+type DragState = "idle" | "source" | "lifted";
 
 interface VariantItemContentProps {
   variant: ProductVariantItem;
@@ -44,6 +56,7 @@ interface VariantItemContentProps {
   rowRef?: (node: HTMLDivElement | null) => void;
   style?: CSSProperties;
   dragHandleProps?: Record<string, unknown>;
+  dragState?: DragState;
 }
 
 const VariantItemContent = ({
@@ -58,8 +71,10 @@ const VariantItemContent = ({
   rowRef,
   style,
   dragHandleProps,
+  dragState = "idle",
 }: VariantItemContentProps) => {
   const intl = useIntl();
+  const { theme } = useTheme();
   // Active uses the theme accent border; pending uses a neutral gray at the
   // same thickness so the row does not jump when details finish loading.
   const borderLeftColor = isActive
@@ -113,6 +128,11 @@ const VariantItemContent = ({
     <Box
       ref={rowRef}
       style={style}
+      className={clsx(
+        dragState === "source" && styles.source,
+        dragState === "lifted" && styles.lifted,
+        dragState === "lifted" && theme === "defaultDark" && styles.liftedDark,
+      )}
       display="block"
       borderLeftStyle="solid"
       // Passing undefined here shows the accent border for the active item
@@ -131,13 +151,13 @@ const VariantItemContent = ({
         */}
         <Box
           {...(showDragHandle && !isPending ? dragHandleProps : undefined)}
+          className={showDragHandle && draggable && !isPending ? styles.dragHandle : undefined}
           display="flex"
           alignItems="center"
           justifyContent="center"
           flexShrink="0"
           width={6}
           height={6}
-          cursor={showDragHandle && draggable && !isPending ? "grabbing" : "auto"}
           color="default2"
           aria-hidden={!showDragHandle}
         >
@@ -175,7 +195,7 @@ const SortableVariantItem = ({
   showDragHandle = true,
   caption,
 }: Omit<VariantItemProps, "productId" | "sortable">) => {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: variant.id,
     disabled: isPending || !draggable,
   });
@@ -198,6 +218,7 @@ const SortableVariantItem = ({
       rowRef={setNodeRef}
       style={style}
       dragHandleProps={{ ...attributes, ...listeners }}
+      dragState={isDragging ? "source" : "idle"}
     />
   );
 };
@@ -212,8 +233,9 @@ export const VariantItem = memo(function VariantItem({
   sortable = true,
   showDragHandle = true,
   caption,
+  lifted = false,
 }: VariantItemProps) {
-  if (!sortable) {
+  if (!sortable || lifted) {
     return (
       <VariantItemContent
         variant={variant}
@@ -224,6 +246,7 @@ export const VariantItem = memo(function VariantItem({
         draggable={false}
         showDragHandle={showDragHandle}
         caption={caption}
+        dragState={lifted ? "lifted" : "idle"}
       />
     );
   }

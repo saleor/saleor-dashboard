@@ -1,5 +1,6 @@
 import {
   getNextIncompleteScheduleFields,
+  getUnfinishedScheduleFields,
   type ScheduleDateField,
 } from "./incompleteScheduleFields";
 
@@ -56,5 +57,50 @@ describe("getNextIncompleteScheduleFields", () => {
 
     // Assert
     expect(next).toBeNull();
+  });
+});
+
+describe("getUnfinishedScheduleFields", () => {
+  const schedule = {
+    startDate: "2026-07-01",
+    startTime: "10:00",
+    hasEndDate: true,
+    endDate: "2026-07-31",
+    endTime: "10:00",
+  };
+
+  it("counts a partly typed field only while it reports an empty value", () => {
+    // Arrange
+    const partlyTyped = { ...schedule, startTime: "" };
+
+    // Act
+    const stillEmpty = getUnfinishedScheduleFields(partlyTyped, ["startTime"]);
+    const typedAgain = getUnfinishedScheduleFields(schedule, ["startTime"]);
+
+    // Assert
+    expect(stillEmpty).toEqual(["startTime"]);
+    expect(typedAgain).toEqual([]);
+  });
+
+  it("counts a date whose year is still being typed", () => {
+    // Arrange
+    const shortYears = { ...schedule, startDate: "0202-07-01", endDate: "0111-07-31" };
+
+    // Act
+    const unfinished = getUnfinishedScheduleFields(shortYears);
+
+    // Assert
+    expect(unfinished).toEqual(["startDate", "endDate"]);
+  });
+
+  it("ignores end fields while the end date is off", () => {
+    // Arrange
+    const endOff = { ...schedule, hasEndDate: false, endDate: "0111-07-31", endTime: "" };
+
+    // Act
+    const unfinished = getUnfinishedScheduleFields(endOff, ["endTime"]);
+
+    // Assert
+    expect(unfinished).toEqual([]);
   });
 });

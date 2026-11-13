@@ -1,11 +1,14 @@
 import { DiscountDates } from "@dashboard/discounts/components/DiscountDates/DiscountDates";
-import { type ScheduleDateField } from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
+import {
+  getUnfinishedScheduleFields,
+  type ScheduleDateField,
+} from "@dashboard/discounts/components/DiscountDates/incompleteScheduleFields";
 import { type VoucherScheduleDateData } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
 import { getVoucherFormStatus } from "@dashboard/discounts/voucherStatus";
 import { voucherStatusMessages } from "@dashboard/discounts/voucherStatusMessages";
 import { type CommonError } from "@dashboard/utils/errors/common";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import { type ChangeEvent, type FocusEvent, type ReactNode } from "react";
+import { type ChangeEvent, type FocusEvent, type ReactNode, useState } from "react";
 import { type FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -19,9 +22,7 @@ interface DiscountScheduleCardProps<ErrorCode> {
   intro: ReactNode;
   disabled?: boolean;
   loading?: boolean;
-  formErrors?: {
-    startDate?: FieldError;
-  };
+  formErrors?: Partial<Record<ScheduleDateField, FieldError>>;
   incompleteFields?: readonly ScheduleDateField[];
   onIncompleteFieldsChange?: (fields: ScheduleDateField[]) => void;
   /** Vouchers only: every use the usage limit allows is taken. */
@@ -56,7 +57,20 @@ export const DiscountScheduleCard = <ErrorCode,>({
   skeletonTestId,
 }: DiscountScheduleCardProps<ErrorCode>): React.ReactNode => {
   const intl = useIntl();
-  const status = getVoucherFormStatus({ scheduleData: data, usageLimitReached });
+  // A partly typed hour reports an empty value, which the status would read as midnight.
+  const isIncomplete = getUnfinishedScheduleFields(data, incompleteFields).length > 0;
+  // While a date or time is partly typed, the status uses the last complete schedule. The usage
+  // limit still applies as it changes.
+  const [lastCompleteSchedule, setLastCompleteSchedule] = useState(data);
+
+  if (!isIncomplete && data !== lastCompleteSchedule) {
+    setLastCompleteSchedule(data);
+  }
+
+  const status = getVoucherFormStatus({
+    scheduleData: isIncomplete ? lastCompleteSchedule : data,
+    usageLimitReached,
+  });
   const statusMessage =
     status === "scheduled"
       ? messages.statusScheduled

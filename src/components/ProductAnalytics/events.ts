@@ -39,6 +39,16 @@ export interface AnalyticsEventMap {
   configuration_search_no_results: {
     query_length: "1-3" | "4-10" | "11+";
   };
+  connection_lost: {
+    cause: "offline" | "unreachable";
+    /** 0 when requests got no response at all. */
+    http_status: number;
+  };
+  connection_restored: {
+    cause: "offline" | "unreachable";
+    duration: "0-10s" | "10-60s" | "1-5m" | "5m+";
+    try_now_count: number;
+  };
   customer_type_assigned_to_customer: {
     result: "error" | "success";
   };

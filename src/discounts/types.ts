@@ -1,5 +1,6 @@
 import { type DecimalFilterInput, type PromotionTypeEnum } from "@dashboard/graphql";
 
+import { type ScheduleDateField } from "./components/DiscountDates/incompleteScheduleFields";
 import { type Rule } from "./models/Rule";
 
 export enum RequirementsPicker {
@@ -24,6 +25,8 @@ export interface DiscoutFormData {
     hasEndDate: boolean;
     startDate: string;
     startTime: string;
+    /** Date and time inputs that are only partly typed. They report an empty value. */
+    incompleteFields?: ScheduleDateField[];
   };
   rules: Rule[];
 }

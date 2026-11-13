@@ -31,7 +31,7 @@ interface DiscountDetailsFormRenderProps {
   rules: Rule[];
   discountType: PromotionTypeEnum;
   onSubmit: () => void;
-  onRuleSubmit: (rule: Rule, ruleEditIndex: number | null) => Promise<void>;
+  onRuleSubmit: (rule: Rule, ruleEditIndex: number | null) => Promise<boolean>;
   onDeleteRule: (ruleDeleteIndex: number) => Promise<boolean>;
   saveComposition: PromotionSaveComposition;
 }
@@ -74,7 +74,7 @@ export const DiscountDetailsForm = ({
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: baseline,
-    resolver: zodResolver(getValidationSchema(intl)),
+    resolver: zodResolver(getValidationSchema(intl, { savedDates: baseline.dates })),
   });
   const currentValues = useWatch({ control: methods.control });
   const discountType = (currentValues?.type ?? baseline.type) as PromotionTypeEnum;

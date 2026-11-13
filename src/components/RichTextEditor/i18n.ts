@@ -57,8 +57,17 @@ export const editorMessages = defineMessages({
   enterCaption: { id: "OtP8wL", defaultMessage: "Enter a caption" },
   alignLeft: { id: "2DTVgB", defaultMessage: "Align Left" },
   alignCenter: { id: "wxcmPB", defaultMessage: "Align Center" },
-  ordered: { id: "PWTzkQ", defaultMessage: "Ordered" },
-  unordered: { id: "LZyKP7", defaultMessage: "Unordered" },
+  // Described so they don't share IDs (and translations) with the orders "Ordered" quantity column.
+  ordered: {
+    id: "DSguyW",
+    defaultMessage: "Ordered",
+    description: "rich text editor, numbered list style",
+  },
+  unordered: {
+    id: "vXqbtu",
+    defaultMessage: "Unordered",
+    description: "rich text editor, bulleted list style",
+  },
   startWith: { id: "wyIZp9", defaultMessage: "Start with" },
   counterType: { id: "QQR6QN", defaultMessage: "Counter type" },
   numeric: { id: "uaNMpp", defaultMessage: "Numeric" },

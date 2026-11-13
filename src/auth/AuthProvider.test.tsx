@@ -45,6 +45,9 @@ jest.mock("@dashboard/auth/authState", () => ({
     authenticating: false,
     isStaff: false,
   })),
+  useApiUnreachable: jest.fn(() => false),
+  useAnotherAccountChosen: jest.fn(() => false),
+  apiUnreachableVar: jest.fn(),
 }));
 jest.mock("@dashboard/graphql/client", () => ({
   saleorAuth: {

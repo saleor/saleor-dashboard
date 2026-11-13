@@ -8,6 +8,7 @@ import { type RightOperatorOption } from "./UI/types";
 
 const portuguese: Record<string, string> = {
   Price: "Preço",
+  "Product type": "Tipo de produto",
   is: "é",
   in: "incluído em",
   lower: "menor que",
@@ -28,26 +29,62 @@ const makeIntl = (messages: Record<string, string> = portuguese) =>
 
 describe("filter display localisation", () => {
   it("translates static labels without changing the canonical field definition", () => {
+    // Arrange
     const field = Object.freeze({
       label: "Price",
       type: "price",
       value: "price",
     });
 
-    expect(localizeStaticFilterLabel(field.label, field.type, field.value, makeIntl())).toBe(
-      "Preço",
+    // Act
+    const portugueseLabel = localizeStaticFilterLabel(
+      field.label,
+      field.type,
+      field.value,
+      makeIntl(),
     );
+    const englishLabel = localizeStaticFilterLabel("Price", "price", "price", makeIntl({}));
+
+    // Assert
+    expect(portugueseLabel).toBe("Preço");
+    expect(englishLabel).toBe("Price");
     expect(field).toEqual({ label: "Price", type: "price", value: "price" });
-    expect(localizeStaticFilterLabel("Price", "price", "price", makeIntl({}))).toBe("Price");
+  });
+
+  it("shows product fields by their readable names, not their internal keys", () => {
+    // Arrange
+    const field = { label: "ProductType", type: "productType", value: "productType" };
+
+    // Act
+    const englishLabel = localizeStaticFilterLabel(
+      field.label,
+      field.type,
+      field.value,
+      makeIntl({}),
+    );
+    const portugueseLabel = localizeStaticFilterLabel(
+      field.label,
+      field.type,
+      field.value,
+      makeIntl(),
+    );
+
+    // Assert
+    expect(englishLabel).toBe("Product type");
+    expect(portugueseLabel).toBe("Tipo de produto");
   });
 
   it("preserves user-defined attribute labels even when they match a built-in label", () => {
-    expect(localizeStaticFilterLabel("Price", "DROPDOWN", "custom-price", makeIntl())).toBe(
-      "Price",
-    );
-    expect(localizeStaticFilterLabel("Custom field", "UNKNOWN", "custom", makeIntl())).toBe(
-      "Custom field",
-    );
+    // Arrange
+    const intl = makeIntl();
+
+    // Act
+    const attributeLabel = localizeStaticFilterLabel("Price", "DROPDOWN", "custom-price", intl);
+    const unknownLabel = localizeStaticFilterLabel("Custom field", "UNKNOWN", "custom", intl);
+
+    // Assert
+    expect(attributeLabel).toBe("Price");
+    expect(unknownLabel).toBe("Custom field");
   });
 
   it.each([
@@ -58,13 +95,18 @@ describe("filter display localisation", () => {
     ["between", "entre"],
     ["contains", "contém"],
   ])("translates the %s operator label and preserves its protocol fields", (label, translated) => {
+    // Arrange
     const condition = Object.freeze({
       label,
       type: "number",
       value: "input-1",
     });
 
-    expect(localizeFilterCondition(condition, makeIntl())).toEqual({
+    // Act
+    const localized = localizeFilterCondition(condition, makeIntl());
+
+    // Assert
+    expect(localized).toEqual({
       label: translated,
       type: "number",
       value: "input-1",
@@ -73,16 +115,22 @@ describe("filter display localisation", () => {
   });
 
   it("preserves unrecognised operator labels", () => {
+    // Arrange
     const condition = {
       label: "custom operator",
       type: "text",
       value: "custom-token",
     };
 
-    expect(localizeFilterCondition(condition, makeIntl())).toBe(condition);
+    // Act
+    const localized = localizeFilterCondition(condition, makeIntl());
+
+    // Assert
+    expect(localized).toBe(condition);
   });
 
   it("renders Portuguese boolean options while preserving query values and source options", () => {
+    // Arrange
     (useIntl as jest.Mock).mockReturnValueOnce(makeIntl());
 
     const options = [
@@ -95,6 +143,7 @@ describe("filter display localisation", () => {
       }),
     ];
 
+    // Act
     // RightOperator only calls the mocked useIntl hook. Inspect its Select props
     // without mounting the surrounding filter tree or interacting with a browser.
     const element = RightOperator({
@@ -113,6 +162,7 @@ describe("filter display localisation", () => {
       value: RightOperatorOption;
     }>;
 
+    // Assert
     expect(element.props.options).toEqual([
       { label: "Sim", value: "true", slug: "true" },
       { label: "Não", value: "false", slug: "false" },

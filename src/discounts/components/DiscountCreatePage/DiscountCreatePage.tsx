@@ -46,7 +46,15 @@ export const DiscountCreatePage = ({
 
   return (
     <DiscountCreateForm onSubmit={onSubmit}>
-      {({ rules, discountType, onDeleteRule, onRuleSubmit, submitHandler, hasUnsavedChanges }) => (
+      {({
+        rules,
+        discountType,
+        onDeleteRule,
+        onRuleSubmit,
+        onTypeChange,
+        submitHandler,
+        hasUnsavedChanges,
+      }) => (
         <DetailPageLayout testId="discount-form">
           <TopNav
             href={discountListUrl()}
@@ -65,6 +73,7 @@ export const DiscountCreatePage = ({
                 error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
                 disabled={disabled}
                 typeDisabled={false}
+                onTypeChange={onTypeChange}
               />
 
               <DiscountRules

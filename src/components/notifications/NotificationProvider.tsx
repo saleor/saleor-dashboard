@@ -1,6 +1,6 @@
 import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
 import { useSavebarRef } from "@dashboard/components/Savebar/SavebarRefContext";
-import { buttonMessages, sectionNames } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { type PropsWithChildren, type ReactNode, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useIntl } from "react-intl";
@@ -55,7 +55,6 @@ export const NotificationsToaster = (): ReactNode => {
       <ToastDismissAll />
       <Toaster
         containerAriaLabel={intl.formatMessage(sectionNames.notifications)}
-        toastOptions={{ closeButtonAriaLabel: intl.formatMessage(buttonMessages.close) }}
         className={styles.toaster}
         position="bottom-right"
         // Always expanded — Sonner absolute + --offset stacking (see ToastStackSync).

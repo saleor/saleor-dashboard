@@ -33,7 +33,8 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const { promotionData, loading } = usePromotionData(id);
-  const { promotionUpdate, promotionUpdateOpts } = usePromotionUpdate(id);
+  const { promotionUpdate, promotionUpdateOpts, restoreEndDate, restoreEndDateOpts } =
+    usePromotionUpdate(id);
   const { promotionDelete, promotionDeleteOpts } = usePromotionDelete();
   const { promotionRuleUpdate, promotionRuleUpdateOpts } = usePromotionRuleUpdate(id);
   const { promotionRuleCreate, promotionRuleCreateOpts } = usePromotionRuleCreate(id);
@@ -41,9 +42,11 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const discountListBackLink = useBackLinkWithState({
     path: discountSalesListPath,
   });
-  const onSubmit = createUpdateHandler(promotionData?.promotion, (variables, options) =>
-    promotionUpdate({ variables, silent: options?.silent }),
-  );
+  const onSubmit = createUpdateHandler({
+    promotion: promotionData?.promotion,
+    update: (variables, options) => promotionUpdate({ variables, silent: options?.silent }),
+    restoreEndDate,
+  });
   const onRuleUpdateSubmit = createRuleUpdateHandler(promotionData?.promotion, variables =>
     promotionRuleUpdate({ variables }),
   );
@@ -77,6 +80,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           disabled={
             loading ||
             promotionUpdateOpts.loading ||
+            restoreEndDateOpts.loading ||
             promotionDeleteOpts.loading ||
             promotionRuleUpdateOpts.loading ||
             promotionRuleCreateOpts.loading ||

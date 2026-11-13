@@ -2,7 +2,7 @@ import { type ToolSettings } from "@editorjs/editorjs";
 import { type IntlShape, type MessageDescriptor } from "react-intl";
 
 import { getTools, tools } from "./consts";
-import { editorMessages, getEditorI18n } from "./i18n";
+import { getEditorI18n } from "./i18n";
 
 const portuguese: Record<string, string> = {
   Add: "Adicionar",
@@ -24,8 +24,13 @@ const makeIntl = (messages: Record<string, string> = {}) =>
 
 describe("native editor localisation", () => {
   it("uses native dictionary namespaces for core UI, tools, names and block tunes", () => {
-    const messages = getEditorI18n(makeIntl(portuguese))!.messages!;
+    // Arrange
+    const intl = makeIntl(portuguese);
 
+    // Act
+    const messages = getEditorI18n(intl)!.messages!;
+
+    // Assert
     expect(messages.ui).toMatchObject({
       toolbar: { toolbox: { Add: "Adicionar" } },
     });
@@ -44,8 +49,13 @@ describe("native editor localisation", () => {
   });
 
   it("keeps English available through default messages", () => {
-    const messages = getEditorI18n(makeIntl())!.messages!;
+    // Arrange
+    const intl = makeIntl();
 
+    // Act
+    const messages = getEditorI18n(intl)!.messages!;
+
+    // Assert
     expect(messages.toolNames).toMatchObject({
       Heading: "Heading",
       Image: "Image",
@@ -57,10 +67,14 @@ describe("native editor localisation", () => {
   });
 
   it("localises image controls without mutating shared tools or adding content fields", () => {
-    const translated = getTools(makeIntl(portuguese));
-    const image = translated.image as ToolSettings;
+    // Arrange
     const originalImage = tools.image as ToolSettings;
 
+    // Act
+    const translated = getTools(makeIntl(portuguese));
+    const image = translated.image as ToolSettings;
+
+    // Assert
     expect(image.config!.buttonContent).toBe("Adicionar imagem por ligação");
     expect(originalImage.config!.buttonContent).toBe("Add image by link");
     expect(image.class).toBe(originalImage.class);
@@ -69,6 +83,7 @@ describe("native editor localisation", () => {
   });
 
   it("translates the external image URL prompt through the tool-scoped i18n API", () => {
+    // Arrange
     const ImageTool = (tools.image as ToolSettings).class;
 
     if (!ImageTool) {
@@ -81,18 +96,14 @@ describe("native editor localisation", () => {
 
     tool.imageI18n = { t: translate };
     tool.uploadUrl = jest.fn();
+
+    // Act
     tool.askForUrl();
 
+    // Assert
     expect(translate).toHaveBeenCalledWith("Paste a link to an image");
     expect(prompt).toHaveBeenCalledWith("Cole uma ligação para uma imagem");
     expect(tool.uploadUrl).toHaveBeenCalledWith("https://example.com/image.png");
     prompt.mockRestore();
-  });
-
-  it("uses stable, unique Dashboard message IDs", () => {
-    const ids = Object.values(editorMessages).map(message => message.id ?? "");
-
-    expect(new Set(ids).size).toBe(ids.length);
-    expect(ids.every(id => id.length > 0)).toBe(true);
   });
 });

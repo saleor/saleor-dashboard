@@ -123,7 +123,11 @@ const getUsedInOrderTitle = (event: GiftCardEventType, intl: IntlShape): ReactNo
     <>
       {primary}
       <Text size={3} color="default2" as="span" marginLeft={1}>
-        <FormattedMessage id="wTNySU" defaultMessage="by" />{" "}
+        <FormattedMessage
+          id="0nKc2b"
+          defaultMessage="by"
+          description="timeline event attribution, followed by the name of the staff member, app or customer"
+        />{" "}
         <TimelineLink href={customerPath(event.user.id)} entity="customer" color="default2">
           {buyerName}
         </TimelineLink>

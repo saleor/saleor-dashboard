@@ -1,3 +1,4 @@
+import { pageViewportHeight } from "@dashboard/components/AppLayout/consts";
 import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { makeStyles } from "@saleor/macaw-ui";
 
@@ -6,7 +7,8 @@ const useStyles = makeStyles(
     root: {
       alignItems: "center",
       display: "flex",
-      height: "100vh",
+      // Also the loading state of a page below the connection banner.
+      height: pageViewportHeight,
       justifyContent: "center",
     },
   },

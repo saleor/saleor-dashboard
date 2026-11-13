@@ -190,6 +190,13 @@ export const auth = ({
     return null;
   };
 
+  /**
+   * A refresh answers for the session that sent it. Once a logout or another login has replaced
+   * that session, its result must not change the tokens or the auth state, or log out the new
+   * session. `no-cache` keeps Apollo from writing its user into the cache before this check.
+   */
+  const isSameSession = (sessionId: number) => (): boolean => storage.getSessionId() === sessionId;
+
   const refreshToken: AuthSDK["refreshToken"] = (includeUser = false) => {
     const refreshToken = storage.getRefreshToken();
 
@@ -197,13 +204,20 @@ export const auth = ({
       throw Error("refreshToken not present");
     }
 
+    const isCurrentSession = isSameSession(storage.getSessionId());
+
     if (includeUser) {
       return client.mutate<RefreshTokenWithUserMutation, RefreshTokenWithUserMutationVariables>({
         mutation: REFRESH_TOKEN_WITH_USER,
+        fetchPolicy: "no-cache",
         variables: {
           refreshToken,
         },
         update: (_, { data }) => {
+          if (!isCurrentSession()) {
+            return;
+          }
+
           if (data?.tokenRefresh?.token) {
             storage.setAccessToken(data.tokenRefresh.token);
             setAuthState({
@@ -220,10 +234,15 @@ export const auth = ({
 
     return client.mutate<RefreshTokenMutation, RefreshTokenMutationVariables>({
       mutation: REFRESH_TOKEN,
+      fetchPolicy: "no-cache",
       variables: {
         refreshToken,
       },
       update: (_, { data }) => {
+        if (!isCurrentSession()) {
+          return;
+        }
+
         if (data?.tokenRefresh?.token) {
           storage.setAccessToken(data.tokenRefresh.token);
         } else {
@@ -307,12 +326,15 @@ export const auth = ({
       throw Error("refreshToken not present");
     }
 
+    const isCurrentSession = isSameSession(storage.getSessionId());
+
     if (includeUser) {
       return client.mutate<
         ExternalRefreshWithUserMutation,
         ExternalRefreshWithUserMutationVariables
       >({
         mutation: EXTERNAL_REFRESH_WITH_USER,
+        fetchPolicy: "no-cache",
         variables: {
           pluginId: authPluginId,
           input: JSON.stringify({
@@ -320,8 +342,12 @@ export const auth = ({
           }),
         },
         update: (_, { data }) => {
+          if (!isCurrentSession()) {
+            return;
+          }
+
           if (data?.externalRefresh?.token) {
-            storage.setTokens({
+            storage.renewTokens({
               accessToken: data.externalRefresh.token,
               refreshToken: data.externalRefresh.refreshToken,
             });
@@ -339,6 +365,7 @@ export const auth = ({
 
     return client.mutate<ExternalRefreshMutation, ExternalRefreshMutationVariables>({
       mutation: EXTERNAL_REFRESH,
+      fetchPolicy: "no-cache",
       variables: {
         pluginId: authPluginId,
         input: JSON.stringify({
@@ -346,8 +373,12 @@ export const auth = ({
         }),
       },
       update: (_, { data }) => {
+        if (!isCurrentSession()) {
+          return;
+        }
+
         if (data?.externalRefresh?.token) {
-          storage.setTokens({
+          storage.renewTokens({
             accessToken: data.externalRefresh.token,
             refreshToken: data.externalRefresh.refreshToken,
           });

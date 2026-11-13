@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import notFoundImage from "@assets/images/what.svg";
+import { pageViewportHeight } from "@dashboard/components/AppLayout/consts";
 import useAppState from "@dashboard/hooks/useAppState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
@@ -29,7 +30,7 @@ const ErrorPage = ({ onBack, onRefresh }: ErrorPageProps) => {
   const errorTrackingId = appState.error?.type === "unhandled" ? appState.error.id : null;
 
   return (
-    <Box alignItems="center" display="flex" height="100vh">
+    <Box alignItems="center" display="flex" __height={pageViewportHeight}>
       <Box
         display="grid"
         gridTemplateColumns={{
