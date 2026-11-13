@@ -171,6 +171,10 @@
     "context": "button",
     "string": "Activate"
   },
+  "+cHoug": {
+    "context": "button that changes a new promotion's type and removes its rules",
+    "string": "Change type"
+  },
   "+dDyb1": {
     "string": "Allocated"
   },
@@ -11798,6 +11802,10 @@
     "context": "staff detail top nav CTA when staff member is inactive",
     "string": "Activate"
   },
+  "dhCfVo": {
+    "context": "dialog title, shown when changing a new promotion's type would remove its rules",
+    "string": "Change discount type?"
+  },
   "diG2vm": {
     "context": "model type icon colour swatch",
     "string": "Color {color}"
@@ -13664,6 +13672,10 @@
   "kGW52l": {
     "context": "aria label for rest of the world quick pick help tooltip",
     "string": "About Rest of the World"
+  },
+  "kGncRS": {
+    "context": "dialog text; type is the current promotion type, Catalog or Order",
+    "string": "{count, plural, one {The rule you added only works} other {The # rules you added only work}} for {type} discounts. Changing the type removes {count, plural, one {it} other {them}}."
   },
   "kHU+p8": {
     "context": "collapse canceled shipments in line expanded panel",
