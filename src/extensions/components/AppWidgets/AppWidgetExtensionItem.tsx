@@ -13,7 +13,7 @@ import { type ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 import { type ReactNode } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./AppWidgetExtensionItem.module.css";
 
@@ -34,7 +34,9 @@ export const AppWidgetExtensionItem = ({
   if (!settingsValidation.success) {
     return (
       <Box>
-        <Text>Error rendering extension</Text>
+        <Text>
+          <FormattedMessage id="rAJe+i" defaultMessage="Error rendering extension" />
+        </Text>
       </Box>
     );
   }

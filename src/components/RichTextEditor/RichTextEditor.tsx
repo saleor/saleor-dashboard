@@ -4,9 +4,11 @@ import { type EditorCore, type Props as ReactEditorJSProps } from "@react-editor
 import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import * as React from "react";
+import { useIntl } from "react-intl";
 
-import { tools } from "./consts";
+import { getTools } from "./consts";
 import { useHasRendered, useUpdateOnRerender } from "./hooks";
+import { getEditorI18n } from "./i18n";
 import { ReactEditorJS } from "./ReactEditorJS";
 import useStyles from "./styles";
 
@@ -46,6 +48,9 @@ const RichTextEditor = ({
   ...props
 }: RichTextEditorProps) => {
   const classes = useStyles({});
+  const intl = useIntl();
+  const tools = React.useMemo(() => getTools(intl), [intl]);
+  const i18n = React.useMemo(() => getEditorI18n(intl), [intl]);
   const generatedId = React.useId();
   const id = defaultId ?? generatedId;
   const ref = React.useRef<EditorCore | null>(null);
@@ -124,6 +129,7 @@ const RichTextEditor = ({
           // match with the id of holder div
           holder={id}
           tools={tools}
+          i18n={i18n}
           // Log level is undefined at runtime
           logLevel={"ERROR" as LogLevels.ERROR}
           onInitialize={handleInitialize}

@@ -5,6 +5,7 @@ import {
   RangeInput,
   Select,
 } from "@saleor/macaw-ui-next";
+import { useIntl } from "react-intl";
 
 import { isSwatchAttributeOption, isSwatchAttributeType } from "../API/swatchAttributeOption";
 import {
@@ -79,6 +80,7 @@ export const RightOperator = ({
   attributeType,
   leftType,
 }: RightOperatorProps) => {
+  const intl = useIntl();
   const inlineControlProps = getInlineControlProps(layout);
 
   if (isTextInput(selected)) {
@@ -277,7 +279,25 @@ export const RightOperator = ({
   }
 
   if (isSelect(selected)) {
-    const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
+    const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value).map(
+      option => {
+        if (option.value === "true" && option.label === "Yes") {
+          return {
+            ...option,
+            label: intl.formatMessage({ id: "a5msuh", defaultMessage: "Yes" }),
+          };
+        }
+
+        if (option.value === "false" && option.label === "No") {
+          return {
+            ...option,
+            label: intl.formatMessage({ id: "oUWADl", defaultMessage: "No" }),
+          };
+        }
+
+        return option;
+      },
+    );
     const value = resolveComboboxValue(options, selected.value) ?? selected.value;
 
     return (

@@ -11,6 +11,7 @@ import {
 } from "@saleor/macaw-ui-next";
 import { ChevronDown } from "lucide-react";
 import { type ReactNode } from "react";
+import { FormattedMessage } from "react-intl";
 
 type ExtensionsButtonSelectorProps = {
   extensions: Array<ExtensionMenuItem>;
@@ -65,7 +66,7 @@ const ButtonGroupWithDropdown = ({
             justifyContent="flex-start"
           >
             <Text lineHeight={2} color="default2" __fontSize="10px">
-              Apps
+              <FormattedMessage id="gRiKLf" defaultMessage="Apps" />
             </Text>
             {children}
           </Box>
@@ -100,7 +101,7 @@ const ButtonGroupWithDropdown = ({
             justifyContent="flex-start"
           >
             <Text lineHeight={2} color="default2" __fontSize="10px">
-              Apps
+              <FormattedMessage id="gRiKLf" defaultMessage="Apps" />
             </Text>
             {children}
           </Box>

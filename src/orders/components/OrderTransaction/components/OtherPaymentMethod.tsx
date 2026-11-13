@@ -2,6 +2,7 @@ import { getStaticUrl } from "@dashboard/config";
 import { type OtherPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 interface OtherPaymentMethodProps {
   details: OtherPaymentMethodDetailsFragment;
@@ -22,7 +23,10 @@ const Logo = ({ name }: { name?: string }) => {
   if (hasError) {
     return (
       <Text>
-        <Text fontWeight="medium">Paid by:</Text> {name}
+        <Text fontWeight="medium">
+          <FormattedMessage id="kW8K+b" defaultMessage="Paid by:" />
+        </Text>{" "}
+        {name}
       </Text>
     );
   }
