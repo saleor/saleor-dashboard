@@ -40,6 +40,7 @@ export const DiscountTypeChangeDialog = ({
       title={intl.formatMessage(messages.title)}
       confirmButtonLabel={intl.formatMessage(messages.confirm)}
       confirmButtonState="default"
+      variant="delete"
       backButtonText={intl.formatMessage(buttonMessages.cancel)}
       onConfirm={onConfirm}
       onClose={onClose}

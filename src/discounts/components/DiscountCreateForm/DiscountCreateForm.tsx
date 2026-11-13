@@ -46,9 +46,9 @@ export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormPro
   });
   const currentValues = useWatch({ control: methods.control });
   const discountType = (currentValues?.type ?? initialFormValues.type) as PromotionTypeEnum;
-  const { rules, onDeleteRule, onRuleSubmit } = useRulesHandlers(discountType);
-  // Changing the type removes the rules (see useRulesHandlers), so it waits for the merchant to
-  // confirm while there are any.
+  const { rules, onDeleteRule, onRuleSubmit, clearRules } = useRulesHandlers();
+  // Rules only work for the type they were added under, so changing the type removes them. While
+  // there are any, the change waits for the merchant to confirm.
   const [pendingType, setPendingType] = useState<PromotionTypeEnum | null>(null);
   const saveComposition = useMemo(() => {
     if (!currentValues) {
@@ -95,6 +95,7 @@ export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormPro
   };
   const confirmTypeChange = (): void => {
     if (pendingType !== null) {
+      clearRules();
       changeType(pendingType);
     }
 

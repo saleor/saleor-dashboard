@@ -3708,10 +3708,6 @@
     "context": "warehouses that lose their only shared channel",
     "string": "{warehouses} will be unlinked from this zone, because they share no other channel."
   },
-  "BU7Q6s": {
-    "context": "dialog text; type is the current promotion type, Catalog or Order",
-    "string": "{count, plural, one {The rule you added only works} other {The # rules you added only work}} for {type} promotions. Changing the type removes {count, plural, one {it} other {them}}."
-  },
   "BUKMzM": {
     "string": "Variant removed"
   },
@@ -13648,6 +13644,10 @@
   "kGW52l": {
     "context": "aria label for rest of the world quick pick help tooltip",
     "string": "About Rest of the World"
+  },
+  "kGncRS": {
+    "context": "dialog text; type is the current promotion type, Catalog or Order",
+    "string": "{count, plural, one {The rule you added only works} other {The # rules you added only work}} for {type} discounts. Changing the type removes {count, plural, one {it} other {them}}."
   },
   "kHU+p8": {
     "context": "collapse canceled shipments in line expanded panel",

@@ -7,9 +7,9 @@ export const discountTypeChangeDialogMessages = defineMessages({
     description: "dialog title, shown when changing a new promotion's type would remove its rules",
   },
   body: {
-    id: "BU7Q6s",
+    id: "kGncRS",
     defaultMessage:
-      "{count, plural, one {The rule you added only works} other {The # rules you added only work}} for {type} promotions. Changing the type removes {count, plural, one {it} other {them}}.",
+      "{count, plural, one {The rule you added only works} other {The # rules you added only work}} for {type} discounts. Changing the type removes {count, plural, one {it} other {them}}.",
     description: "dialog text; type is the current promotion type, Catalog or Order",
   },
   confirm: {
