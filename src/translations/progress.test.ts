@@ -1,4 +1,5 @@
 import { type TranslationField, TranslationFieldType } from "@dashboard/translations/types";
+import { type OutputBlockData, type OutputData } from "@editorjs/editorjs";
 
 import {
   getFieldsProgress,
@@ -9,7 +10,117 @@ import {
   isResettableBlankTranslation,
 } from "./progress";
 
+interface BlockCompletionCase {
+  name: string;
+  block: OutputBlockData<string, Record<string, unknown>>;
+  complete: boolean;
+}
+
+const blockCompletionCases: BlockCompletionCase[] = [
+  {
+    name: "empty legacy list",
+    block: { type: "list", data: { style: "unordered", items: [] } },
+    complete: false,
+  },
+  {
+    name: "legacy list with blank items",
+    block: { type: "list", data: { style: "ordered", items: ["", "<br>", "&nbsp;"] } },
+    complete: false,
+  },
+  {
+    name: "legacy list with text",
+    block: { type: "list", data: { style: "unordered", items: ["<b>Translated item</b>"] } },
+    complete: true,
+  },
+  {
+    name: "empty nested list with metadata",
+    block: {
+      type: "list",
+      data: {
+        style: "checklist",
+        meta: { start: 1 },
+        items: [{ content: "<br>", meta: { checked: true }, items: [{ content: "", items: [] }] }],
+      },
+    },
+    complete: false,
+  },
+  {
+    name: "nested list with text in a child",
+    block: {
+      type: "list",
+      data: {
+        style: "unordered",
+        items: [{ content: "", items: [{ content: "Translated child", items: [] }] }],
+      },
+    },
+    complete: true,
+  },
+  {
+    name: "empty legacy checklist",
+    block: { type: "checklist", data: { items: [{ text: "", checked: true }] } },
+    complete: false,
+  },
+  {
+    name: "legacy checklist with text",
+    block: { type: "checklist", data: { items: [{ text: "Translated task", checked: false }] } },
+    complete: true,
+  },
+  {
+    name: "table with blank cells",
+    block: {
+      type: "table",
+      data: {
+        withHeadings: true,
+        content: [
+          ["", "<br>"],
+          ["&nbsp;", " "],
+        ],
+      },
+    },
+    complete: false,
+  },
+  {
+    name: "table with a translated cell",
+    block: { type: "table", data: { withHeadings: false, content: [["", "Translated cell"]] } },
+    complete: true,
+  },
+  {
+    name: "image with a caption and no file URL",
+    block: { type: "image", data: { file: {}, caption: "Caption", stretched: true } },
+    complete: false,
+  },
+  {
+    name: "embed with dimensions and no URL",
+    block: {
+      type: "embed",
+      data: { service: "youtube", width: 500, height: 281, caption: "Caption" },
+    },
+    complete: false,
+  },
+  {
+    name: "embed with a URL and no caption",
+    block: { type: "embed", data: { embed: "https://example.com/embed", caption: "" } },
+    complete: true,
+  },
+  {
+    name: "embed with a source URL",
+    block: { type: "embed", data: { source: "https://example.com/video" } },
+    complete: true,
+  },
+];
+
 describe("isFieldTranslationComplete", () => {
+  it.each(blockCompletionCases)("checks the content of a $name", ({ block, complete }) => {
+    // Arrange
+    const content: OutputData = { blocks: [block] };
+
+    // Act
+    const result = isFieldTranslationComplete(JSON.stringify(content), TranslationFieldType.RICH);
+
+    // Assert
+    expect(result).toBe(complete);
+  });
+
   it("returns false for null translation", () => {
     // Arrange // Act // Assert
     expect(isFieldTranslationComplete(null, TranslationFieldType.SHORT)).toBe(false);
@@ -41,6 +152,80 @@ describe("isFieldTranslationComplete", () => {
       ),
     ).toBe(true);
   });
+
+  it.each(["", " \n\t", "<br>", "<b></b>", "<i>&nbsp;&#160;&#xA0;</i>"])(
+    "keeps a paragraph with no visible text incomplete: %p",
+    text => {
+      // Arrange
+      const content: OutputData = { blocks: [{ type: "paragraph", data: { text } }] };
+
+      // Act
+      const complete = isFieldTranslationComplete(
+        JSON.stringify(content),
+        TranslationFieldType.RICH,
+      );
+
+      // Assert
+      expect(complete).toBe(false);
+    },
+  );
+
+  it("counts visible text after empty paragraphs", () => {
+    // Arrange
+    const content: OutputData = {
+      blocks: [
+        { type: "paragraph", data: { text: "" } },
+        { type: "paragraph", data: { text: "<b>Translated details</b>" } },
+      ],
+    };
+
+    // Act
+    const complete = isFieldTranslationComplete(JSON.stringify(content), TranslationFieldType.RICH);
+
+    // Assert
+    expect(complete).toBe(true);
+  });
+
+  it("counts an image without a caption as content", () => {
+    // Arrange
+    const content: OutputData = {
+      blocks: [
+        { type: "image", data: { file: { url: "https://example.com/image.png" }, caption: "" } },
+      ],
+    };
+
+    // Act
+    const complete = isFieldTranslationComplete(JSON.stringify(content), TranslationFieldType.RICH);
+
+    // Assert
+    expect(complete).toBe(true);
+  });
+
+  it.each(["header", "quote"])("keeps an empty %s block incomplete", type => {
+    // Arrange
+    const content: OutputData = { blocks: [{ type, data: { text: "" } }] };
+
+    // Act
+    const complete = isFieldTranslationComplete(JSON.stringify(content), TranslationFieldType.RICH);
+
+    // Assert
+    expect(complete).toBe(false);
+  });
+
+  it.each([
+    "invalid JSON",
+    "null",
+    "{}",
+    '{"blocks":"invalid"}',
+    '{"blocks":[null]}',
+    '{"blocks":[{}]}',
+  ])("keeps malformed rich text incomplete: %p", translation => {
+    // Arrange // Act
+    const complete = isFieldTranslationComplete(translation, TranslationFieldType.RICH);
+
+    // Assert
+    expect(complete).toBe(false);
+  });
 });
 
 describe("getTranslationCompletion", () => {
@@ -57,6 +242,36 @@ describe("getTranslationCompletion", () => {
 });
 
 describe("getFieldsProgress", () => {
+  it("keeps empty description paragraphs out of the six-field detail counter", () => {
+    // Arrange
+    const emptyParagraph: OutputData = {
+      blocks: [{ type: "paragraph", data: { text: "" } }],
+    };
+    const fields: TranslationField[] = [
+      ...["name", "slug", "seoTitle", "seoDescription"].map(name => ({
+        name,
+        displayName: name,
+        translation: null,
+        type: name === "seoDescription" ? TranslationFieldType.LONG : TranslationFieldType.SHORT,
+        value: "Source text",
+      })),
+      ...["description", "fullDescription"].map(name => ({
+        name,
+        displayName: name,
+        translation: JSON.stringify(emptyParagraph),
+        type: TranslationFieldType.RICH,
+        value: "Source description",
+      })),
+    ];
+
+    // Act
+    const progress = getFieldsProgress(fields);
+
+    // Assert
+    expect(progress).toEqual({ completed: 0, total: 6 });
+    expect(getProgressPercentage(progress)).toBe(0);
+  });
+
   it("calculates completed fields", () => {
     // Arrange
     const fields: TranslationField[] = [

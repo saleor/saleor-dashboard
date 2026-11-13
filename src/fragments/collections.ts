@@ -25,6 +25,7 @@ export const collectionDetailsFragment = gql`
     }
     slug
     description
+    fullDescription
     seoDescription
     seoTitle
   }

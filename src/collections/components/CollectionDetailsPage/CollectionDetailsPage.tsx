@@ -154,7 +154,15 @@ const CollectionDetailsPage = ({
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ change, data, handlers, submit, isSaveDisabled, saveComposition }) => {
+      {({
+        change,
+        data,
+        handlers,
+        submit,
+        isSaveDisabled,
+        saveComposition,
+        fullDescriptionRichText,
+      }) => {
         return (
           <DetailPageLayout>
             <TopNav
@@ -199,6 +207,7 @@ const CollectionDetailsPage = ({
             <DetailPageLayout.Content>
               <DetailPageContent>
                 <CollectionDetails
+                  fullDescriptionRichText={fullDescriptionRichText}
                   data={data}
                   disabled={disabled}
                   errors={errors}

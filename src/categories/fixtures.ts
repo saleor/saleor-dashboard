@@ -94,6 +94,7 @@ export const category: (placeholderImage: string) => CategoryDetailsQuery["categ
     oembedData: "{}",
     url: placeholderImage,
   },
+  fullDescription: null,
   children: {
     __typename: "CategoryCountableConnection",
     totalCount: 0,
