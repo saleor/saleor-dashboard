@@ -29,6 +29,7 @@ export const SearchInput = ({
 
   return (
     <Box
+      className={styles.root}
       display="flex"
       alignItems="center"
       gap={2}

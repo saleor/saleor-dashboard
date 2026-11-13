@@ -87,7 +87,12 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
             paddingX={4}
             paddingY={3}
           >
-            <Box __width="320px" position="relative">
+            <Box
+              className={clsx(
+                styles.searchField,
+                searchValue.length > 0 && styles.searchFieldWithClear,
+              )}
+            >
               <SearchInput
                 value={searchValue}
                 onChange={handleSearchChange}

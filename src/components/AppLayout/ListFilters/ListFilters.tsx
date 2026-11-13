@@ -22,21 +22,23 @@ export const ListFilters = ({
   <>
     <LegacyFiltersPresetsAlert />
     <Box display="flex" flexDirection="column" gap={3} paddingBottom={2} paddingX={6}>
-      <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4}>
-        <Box display="flex" alignItems="center" gap={4}>
+      <Box display="flex" alignItems="center" flexWrap="wrap" gap={4}>
+        <Box flexShrink="0">
           <ExpressionFilters />
-          <Box __width="360px">
-            <SearchInput
-              initialSearch={initialSearch}
-              placeholder={searchPlaceholder}
-              onSearchChange={onSearchChange}
-              showSearchTooltip={showSearchTooltip}
-            />
+        </Box>
+        <Box flexGrow="1">
+          <SearchInput
+            initialSearch={initialSearch}
+            placeholder={searchPlaceholder}
+            onSearchChange={onSearchChange}
+            showSearchTooltip={showSearchTooltip}
+          />
+        </Box>
+        {actions ? (
+          <Box display="flex" justifyContent="flex-end" alignItems="center" flexShrink="0">
+            {actions}
           </Box>
-        </Box>
-        <Box display="flex" justifyContent="flex-end" alignItems="center">
-          {actions}
-        </Box>
+        ) : null}
       </Box>
       <ExpressionFilterPanel />
     </Box>
