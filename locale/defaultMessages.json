@@ -970,10 +970,6 @@
     "context": "warehouse pickup toggle when on",
     "string": "Customers can collect orders at this address. Tax for those orders uses this address."
   },
-  "1Sfy/9": {
-    "context": "promotions list search input placeholder",
-    "string": "Search promotions..."
-  },
   "1SwKZV": {
     "context": "create attribute and assign to model type button",
     "string": "Create and assign"
@@ -2455,6 +2451,10 @@
   "720c51": {
     "context": "tax classes name input placeholder",
     "string": "Tax rate name"
+  },
+  "72S9de": {
+    "context": "promotions list search input placeholder; the search only finds a promotion by its whole name",
+    "string": "Search by exact promotion name"
   },
   "73SSOz": {
     "string": "All lines as ordered by the client."

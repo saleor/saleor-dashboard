@@ -134,9 +134,10 @@ const DiscountListPage = ({
               <SearchInput
                 initialSearch={initialSearch}
                 placeholder={intl.formatMessage({
-                  id: "1Sfy/9",
-                  defaultMessage: "Search promotions...",
-                  description: "promotions list search input placeholder",
+                  id: "72S9de",
+                  defaultMessage: "Search by exact promotion name",
+                  description:
+                    "promotions list search input placeholder; the search only finds a promotion by its whole name",
                 })}
                 onSearchChange={onSearchChange}
               />
