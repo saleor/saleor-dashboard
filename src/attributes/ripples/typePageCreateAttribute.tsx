@@ -4,13 +4,16 @@ import { FormattedMessage } from "react-intl";
 
 const typePageCreateAttributeContextual = (
   <Text color="default2">
-    <FormattedMessage id="dsGto6" defaultMessage="Choose " />
-    <em>
-      <FormattedMessage id="gVvUAE" defaultMessage="Create attribute" />
-    </em>
     <FormattedMessage
-      id="rlVejK"
-      defaultMessage=" here to add one and assign it to this type without leaving the page."
+      id="PMEkWs"
+      defaultMessage="Choose {createAttribute} here to add one and assign it to this type without leaving the page."
+      values={{
+        createAttribute: (
+          <em>
+            <FormattedMessage id="gVvUAE" defaultMessage="Create attribute" />
+          </em>
+        ),
+      }}
     />
   </Text>
 );

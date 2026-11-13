@@ -51,7 +51,11 @@ export const TimelineEventHeader = ({
 
   const attribution = actorName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
-      <FormattedMessage id="wTNySU" defaultMessage="by" />{" "}
+      <FormattedMessage
+        id="0nKc2b"
+        defaultMessage="by"
+        description="timeline event attribution, followed by the name of the staff member, app or customer"
+      />{" "}
       {actorLink ? (
         <TimelineLink href={actorLink} entity={actorEntity(actor)} color="default2">
           {actorName}

@@ -350,9 +350,6 @@
     "context": "label for button",
     "string": "Add country"
   },
-  "/6/sPX": {
-    "string": "Docs"
-  },
   "/68iG8": {
     "context": "product export to csv file, header",
     "string": "Information exported"
@@ -690,9 +687,6 @@
     "context": "boolean attribute value",
     "string": "No"
   },
-  "0KGiQf": {
-    "string": "Hello there!"
-  },
   "0KVj6r": {
     "string": "Copy tracking number"
   },
@@ -854,6 +848,10 @@
     "context": "Header row quantity label",
     "string": "Quantity"
   },
+  "0nKc2b": {
+    "context": "timeline event attribution, followed by the name of the staff member, app or customer",
+    "string": "by"
+  },
   "0nLsyM": {
     "string": "No product types found"
   },
@@ -909,6 +907,10 @@
   "1/oauz": {
     "context": "grant refund table, column header",
     "string": "Qty to refund"
+  },
+  "10W/ry": {
+    "context": "GraphiQL sidebar button that closes a panel",
+    "string": "Hide {plugin}"
   },
   "10kBsY": {
     "context": "page translation section subtitle",
@@ -1009,9 +1011,6 @@
   "1LMrlA": {
     "context": "Expanded help for catalogue setup",
     "string": "Specific-product vouchers only discount the catalogue you assign. Until something is assigned, the code won’t reduce any line items."
-  },
-  "1LUj1M": {
-    "string": "and"
   },
   "1LaUBN": {
     "context": "variant pricing channel status when channel is inactive",
@@ -1764,9 +1763,6 @@
   "49vo8t": {
     "string": "Quick search"
   },
-  "4Bs5En": {
-    "string": "To see order details please click the button below."
-  },
   "4CrCbD": {
     "string": "Community"
   },
@@ -1785,9 +1781,6 @@
   "4ErS/1": {
     "context": "gift card tag field label",
     "string": "Card tag"
-  },
-  "4GnxuK": {
-    "string": "The Models list can group model types by splitting their names at a separator. For example,"
   },
   "4H9bIs": {
     "context": "hint when a stored recipient has active=false",
@@ -1958,9 +1951,6 @@
   },
   "52lmfF": {
     "string": "Add Extension"
-  },
-  "53HHG8": {
-    "string": "Product and model attribute lists are grouped by type. Use the tabs to browse attributes per type, or turn off"
   },
   "53W0OD": {
     "string": "Model types deleted"
@@ -2280,9 +2270,6 @@
   },
   "62nsdy": {
     "string": "Retry"
-  },
-  "63b1SX": {
-    "string": "“Storefront — Cart”"
   },
   "64aQXZ": {
     "context": "product variants, full-screen title",
@@ -2729,9 +2716,6 @@
   "7OMaiR": {
     "string": "{counter,plural,one{Are you sure you want to remove this product from the category?} other{Are you sure you want to remove {displayQuantity} products from the category?}}"
   },
-  "7PxvnK": {
-    "string": "IsPublished"
-  },
   "7QPLu0": {
     "context": "empty state message",
     "string": "No transactions made for this order."
@@ -2856,9 +2840,6 @@
   "7yfkyB": {
     "context": "No variants have stock available",
     "string": "No variants in stock"
-  },
-  "7zG4at": {
-    "string": "This link expires in 24 hours. If you miss the window, please reset your password again."
   },
   "8/PQ07": {
     "context": "delete custom app",
@@ -4083,9 +4064,6 @@
   "BvhbSc": {
     "string": "Refreshed Order Sections"
   },
-  "Bx4Qp/": {
-    "string": "Have a great day!"
-  },
   "BxHDRs": {
     "context": "setup review row description when channel has no warehouses",
     "string": "Add products and prices now. Assign a warehouse to this channel for checkout inventory."
@@ -4568,9 +4546,6 @@
   "DK+8PB": {
     "string": "This channel has already been created"
   },
-  "DLPnUt": {
-    "string": "VisibleInListing"
-  },
   "DM/Ha1": {
     "context": "add postal code range, button",
     "string": "Add"
@@ -4606,6 +4581,10 @@
   },
   "DRaREj": {
     "string": "The extension's manifest requests invalid or unrecognized permissions. {docsLink} ({errorCode})"
+  },
+  "DSguyW": {
+    "context": "rich text editor, numbered list style",
+    "string": "Ordered"
   },
   "DTL7sE": {
     "context": "dialog content",
@@ -4829,9 +4808,6 @@
   },
   "Eau5AV": {
     "string": "Manage Products Channel Availability"
-  },
-  "Eb/9wV": {
-    "string": "ProductType"
   },
   "EbHtGh": {
     "context": "accessible label for the PDP schematic figure",
@@ -5163,6 +5139,9 @@
     "context": "header",
     "string": "Translations to {language}"
   },
+  "FfD8ko": {
+    "string": "Product and model attribute lists are grouped by type. Use the tabs to browse attributes per type, or turn off {groupByType} in the view menu {icon}. Your filters stay above the tabs, and you can unassign attributes from a single type when one tab is selected."
+  },
   "FgHWZ1": {
     "context": "bulk unassign attributes from the active product or model type",
     "string": "Unassign"
@@ -5288,6 +5267,9 @@
     "context": "setup task description when priced offer missing",
     "string": "Add a selling price for at least one sales channel."
   },
+  "G/+bM3": {
+    "string": "Order details now open in {lineMatrix} so you can work order line by order line. {timeline} is still available when you need to follow shipments."
+  },
   "G/pgG3": {
     "context": "dialog header",
     "string": "Select a channel"
@@ -5325,9 +5307,6 @@
   "G5NKx6": {
     "context": "tooltip",
     "string": "Checkout reservation time threshold is enabled in settings."
-  },
-  "G5b94M": {
-    "string": "The link to Saleor Cloud has moved here. Click the cloud icon to access it."
   },
   "G8vJ+G": {
     "context": "account settings card header when the list is empty",
@@ -5830,9 +5809,6 @@
     "context": "Health check subtitle when product is not published",
     "string": "Product is not published. Publish it to make it visible in your store."
   },
-  "HfHSzO": {
-    "string": "Saleor Cloud link moved to logo area"
-  },
   "Hgz44z": {
     "context": "dialog header",
     "string": "Delete Voucher"
@@ -6167,9 +6143,6 @@
     "context": "header",
     "string": "Edit Media"
   },
-  "Ii5lye": {
-    "string": "“Storefront — Checkout”"
-  },
   "IlPaqv": {
     "context": "channel detail cogs menu, opens the delete-confirmation dialog",
     "string": "Delete channel"
@@ -6317,9 +6290,6 @@
   "JGmMYz": {
     "context": "accessible label for shipping zone count on channels list",
     "string": "{count, plural, one {# shipping zone} other {# shipping zones}}"
-  },
-  "JHBLyT": {
-    "string": "HasCategory"
   },
   "JI2Xwp": {
     "context": "dialog title",
@@ -6561,9 +6531,6 @@
   },
   "K58C4r": {
     "string": "We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}"
-  },
-  "K7AkdL": {
-    "string": "Show"
   },
   "K8Q9Ho": {
     "context": "deprecated SMTP app row title inside the customer emails card",
@@ -6966,9 +6933,6 @@
   "LZu801": {
     "string": "Staff Customer Profiles"
   },
-  "LZyKP7": {
-    "string": "Unordered"
-  },
   "La3xKC": {
     "context": "Description of public API verification feature",
     "string": "Check if customers can actually purchase this product"
@@ -7094,9 +7058,6 @@
   "M61TN/": {
     "context": "product type shippable",
     "string": "Shippable"
-  },
-  "M68oOR": {
-    "string": "Didn’t request a reset? Ignore this message (or reply to let us know)."
   },
   "M6mWHL": {
     "context": "tooltip helper text",
@@ -7441,9 +7402,6 @@
   "NEJo1I": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {voucherCode}?"
-  },
-  "NEeeDI": {
-    "string": "To download your products data, simply click the button below."
   },
   "NEmY1y": {
     "context": "title for model type tab settings",
@@ -7814,9 +7772,6 @@
     "context": "parenthetical marker on legacy channel setting radio option",
     "string": "legacy"
   },
-  "OXLLjP": {
-    "string": "Reset my password"
-  },
   "OYDVIa": {
     "context": "review row status when SEO slug, title, and description are set",
     "string": "Complete"
@@ -7843,12 +7798,6 @@
   "ObDPaz": {
     "context": "starting row of the price waterfall",
     "string": "Original price ({quantity, plural, one {# unit} other {# units}})"
-  },
-  "ObJEZl": {
-    "string": "To reset your password, simply click the “Reset my password” button below."
-  },
-  "Oco9gj": {
-    "string": "See every line's fulfillment and refund progress in one place. Switch to"
   },
   "Oe62bR": {
     "context": "product availability",
@@ -8015,9 +7964,6 @@
     "context": "save preset, header",
     "string": "Save view preset"
   },
-  "PA5XoW": {
-    "string": "New order just came in!"
-  },
   "PBd/e+": {
     "context": "dialog header",
     "string": "Change address for order"
@@ -8069,6 +8015,9 @@
   "PLX6FH": {
     "context": "sum of all manual refunds for transaction",
     "string": "Manual refund"
+  },
+  "PMEkWs": {
+    "string": "Choose {createAttribute} here to add one and assign it to this type without leaving the page."
   },
   "PNbIOd": {
     "context": "bullet: order and export emails stop",
@@ -8935,6 +8884,9 @@
     "context": "input label",
     "string": "SKU (Stock Keeping Unit)"
   },
+  "SMMrqV": {
+    "string": "Documentation Explorer"
+  },
   "SMTX1t": {
     "string": "Media {number}: {alt}"
   },
@@ -9048,9 +9000,6 @@
   "SeGiFv": {
     "context": "bulk publish defaults inventory optional label",
     "string": "Optional"
-  },
-  "SfKUmG": {
-    "string": "IsGiftcard"
   },
   "SgFE10": {
     "context": "product type digital",
@@ -9538,9 +9487,6 @@
     "context": "section hint for country preset shortcuts in assign countries dialog",
     "string": "Add common country groups in one click. Adjust individual countries in the list below."
   },
-  "UJ6FkX": {
-    "string": "You’re in—welcome to Saleor Commerce!"
-  },
   "UJ97Lb": {
     "string": "Delete codes"
   },
@@ -9803,9 +9749,6 @@
   "V8aQTU": {
     "context": "channel order setting name referenced in redemptions hint",
     "string": "Include draft orders in voucher usage"
-  },
-  "VA/Z1S": {
-    "string": "Hide"
   },
   "VE3U8O": {
     "string": "We have renamed Pages to Models. API still uses the old naming, but it will change in the future."
@@ -10082,9 +10025,6 @@
   "WAcPLa": {
     "context": "settings search alias",
     "string": "block anonymous and customer API access"
-  },
-  "WC05wl": {
-    "string": "Sorry, we couldn’t finish exporting products due to unexpected errors. Please try again."
   },
   "WCaf5C": {
     "string": "Approve"
@@ -10600,9 +10540,6 @@
     "context": "shipping zone warehouses in the older stock mode",
     "string": "Stock in these warehouses can be bought by customers in this zone's countries."
   },
-  "XpMM3P": {
-    "string": "Our apologies and thank you."
-  },
   "XqwYc0": {
     "string": "Could not assign warehouse to this channel"
   },
@@ -10778,12 +10715,6 @@
     "context": "line rollup status when a transaction refund failed",
     "string": "Refund failed"
   },
-  "YKXkbB": {
-    "string": "Hello,"
-  },
-  "YKnqA+": {
-    "string": "is still available when you need to follow shipments."
-  },
   "YL8K/3": {
     "context": "automatic completion delay input label",
     "string": "Delay before completion (minutes). Default is 30."
@@ -10868,9 +10799,6 @@
     "context": "voucher single-use code toggle title",
     "string": "One use per code"
   },
-  "YemaN+": {
-    "string": "Set my password"
-  },
   "Yen5SP": {
     "context": "command palette section grouping actions for the currently open entity",
     "string": "This gift card"
@@ -10898,6 +10826,9 @@
   "YiC3cn": {
     "context": "option description",
     "string": "Allocate stock in the first warehouse in the list assigned to this channel. If stock is insufficient, the remaining quantity is allocated in the next warehouse on the list and repeated if necessary."
+  },
+  "YiLjXa": {
+    "string": "See every line's fulfillment and refund progress in one place. Switch to {timeline} when you want the shipment-by-shipment view."
   },
   "YicEbK": {
     "string": "Search Atrtibuttes"
@@ -11365,9 +11296,6 @@
   "aI80kg": {
     "string": "Properties"
   },
-  "aIBHm6": {
-    "string": "Have a great day and thank you!"
-  },
   "aIaNJa": {
     "context": "settings search alias",
     "string": "automatically confirm"
@@ -11448,9 +11376,6 @@
   },
   "aXytBR": {
     "string": "A required field is missing in the extension's manifest. {docsLink} ({errorCode})"
-  },
-  "aYIUar": {
-    "string": "Thank you!"
   },
   "aYnI0N": {
     "context": "customer overview stat label",
@@ -11949,6 +11874,9 @@
     "context": "password login mode option description",
     "string": "No user can log in with a password"
   },
+  "c5QnqH": {
+    "string": "The Models list can group model types by splitting their names at a separator. For example, <em>“Storefront — Cart”</em> and <em>“Storefront — Checkout”</em> appear under one Storefront tab. Letter case is ignored when matching prefixes. Use the tab dropdown to filter by all grouped types or one type, and open settings next to the tabs to change separators or disable grouping."
+  },
   "c5fFin": {
     "context": "ExitFormPrompt title",
     "string": "Leave without saving changes?"
@@ -12002,9 +11930,6 @@
   "cBrkEM": {
     "context": "shipping method channel status description when price missing",
     "string": "Set a price in the Pricing section to enable this rate"
-  },
-  "cCPJrM": {
-    "string": "when you want the shipment-by-shipment view."
   },
   "cD0BQQ": {
     "context": "sku preview example showing resulting SKU",
@@ -12500,9 +12425,6 @@
     "context": "factor label for order promotion propagated to a line",
     "string": "Order promotion (line share)"
   },
-  "dsGto6": {
-    "string": "Choose"
-  },
   "du3VQz": {
     "context": "warehouse address notice when pickup is enabled",
     "string": "Customers collect orders at this address. Changing it means shoppers who already chose this location have to choose it again."
@@ -12887,9 +12809,6 @@
     "context": "input label",
     "string": "Search Attributes"
   },
-  "fPT1IV": {
-    "string": "We’re happy to let you know that your file with products data is ready to download."
-  },
   "fQ910i": {
     "context": "error message",
     "string": "Max value must be higher than min value"
@@ -13085,9 +13004,6 @@
     "context": "SMTP password helper",
     "string": "Leave blank to keep the current password."
   },
-  "g3jUhb": {
-    "string": "Someone just added you to a Saleor project. That means you’ve got things to build, break, or ship (preferably in that order)."
-  },
   "g3qjSf": {
     "context": "button",
     "string": "Assign categories"
@@ -13182,9 +13098,6 @@
   "gQGUsN": {
     "context": "dialog title",
     "string": "Edit Address"
-  },
-  "gQoY3r": {
-    "string": "Your store"
   },
   "gRa/TS": {
     "context": "shipping zone",
@@ -13656,9 +13569,6 @@
     "context": "section header returned",
     "string": "Fulfillment waiting for approval"
   },
-  "i0KoJH": {
-    "string": "or a single type. Adjust separators, read how grouping works, or turn it off in the settings"
-  },
   "i0dH9w": {
     "context": "Product save pipeline step label",
     "string": "Channel availability"
@@ -13808,9 +13718,6 @@
   },
   "iTFALN": {
     "string": "Initial balance"
-  },
-  "iTwHiz": {
-    "string": "Someone placed a new order in your store."
   },
   "iUIn50": {
     "context": "section notice",
@@ -14029,9 +13936,6 @@
     "context": "hint when notification is turned off",
     "string": "This email will not be sent."
   },
-  "j7JZQv": {
-    "string": "in the view menu"
-  },
   "j7MPFs": {
     "context": "toast text when an action was refused by the server before Saleor handled it",
     "string": "The change wasn't saved."
@@ -14201,9 +14105,6 @@
   "jg1Kcw": {
     "context": "aria label for unpinning a tab",
     "string": "Unpin tab"
-  },
-  "jg5R+i": {
-    "string": ". Your filters stay above the tabs, and you can unassign attributes from a single type when one tab is selected."
   },
   "jg8M0x": {
     "context": "sub-header for line-level discounts in summary",
@@ -14473,6 +14374,9 @@
   "kPbIlj": {
     "context": "voucher type pill amount type: percentage",
     "string": "%"
+  },
+  "kPlDDQ": {
+    "string": "Model types whose names contain a configured separator are grouped into one tab. Open the dropdown on a grouped tab to filter by {all} or a single type. Adjust separators, read how grouping works, or turn it off in the settings {icon}."
   },
   "kQq6/o": {
     "context": "info when addresses search is unsuccessful",
@@ -14868,9 +14772,6 @@
     "context": "metadata edit form, error message",
     "string": "Metadata key cannot be empty"
   },
-  "leZPAy": {
-    "string": "Staff email"
-  },
   "leb986": {
     "context": "shipping method detail page, top-bar metadata button tooltip",
     "string": "Edit shipping method metadata"
@@ -15080,9 +14981,6 @@
     "context": "button",
     "string": "Create shipping zone"
   },
-  "mJN/zn": {
-    "string": "Explorer"
-  },
   "mK1JpE": {
     "context": "icon button next to a text attribute input whose value is a URL",
     "string": "Open link in a new tab"
@@ -15094,9 +14992,6 @@
   "mKu838": {
     "context": "customer overview, value tooltip heading for shipping and refund breakdown",
     "string": "From these orders"
-  },
-  "mLJnYL": {
-    "string": "This is the Saleor default message for this notification."
   },
   "mLZMb6": {
     "context": "ChannelsSection select field label",
@@ -15193,9 +15088,6 @@
     "context": "customer gift cards card issue button",
     "string": "Issue new card"
   },
-  "mbZ2tL": {
-    "string": "To get in, you’ll need to set a password. Just click the button below."
-  },
   "meH8tQ": {
     "context": "account settings card header",
     "string": "Navigation pins"
@@ -15230,6 +15122,10 @@
     "context": "collapse the app's deprecation reason",
     "string": "Show less"
   },
+  "mq5U6P": {
+    "context": "GraphiQL sidebar button that opens a panel",
+    "string": "Show {plugin}"
+  },
   "mqJjbj": {
     "context": "explanation when the dashboard can't reach the Saleor API at startup",
     "string": "Your session is kept, and the dashboard keeps trying to connect."
@@ -15255,9 +15151,6 @@
   },
   "mvVmbJ": {
     "string": "Install extension from manifest"
-  },
-  "mvoL4v": {
-    "string": "appear under one Storefront tab. Letter case is ignored when matching prefixes. Use the tab dropdown to filter by all grouped types or one type, and open settings next to the tabs to change separators or disable grouping."
   },
   "mwmYkm": {
     "context": "bulk publish wizard confirm step",
@@ -15414,9 +15307,6 @@
   },
   "nLML8Y": {
     "string": "Default Shipping Address"
-  },
-  "nMG9yW": {
-    "string": "so you can work order line by order line."
   },
   "nMQ3ZW": {
     "context": "label for voucher discount type in order summary",
@@ -15579,9 +15469,6 @@
     "context": "dialog title",
     "string": "Delete Warehouse"
   },
-  "nyiw2C": {
-    "string": "See order"
-  },
   "nyxzte": {
     "context": "setup task title when product has no variants",
     "string": "Add a variant with a price"
@@ -15597,9 +15484,6 @@
   "o+OjmT": {
     "context": "bulk publish review stock hint",
     "string": "Only stock is prefilled from your default quantity. Clear a row to leave that product's inventory unchanged."
-  },
-  "o+YgVe": {
-    "string": "Order details now open in"
   },
   "o+aRjV": {
     "context": "collection channel availability empty state description",
@@ -16392,9 +16276,6 @@
     "context": "banner when shipping method channels are missing prices",
     "string": "{count, plural, one {# channel is missing a price} other {# channels are missing a price}}"
   },
-  "qPFfgN": {
-    "string": "The Saleor Cloud environment link has been moved from the bottom of the navigation to the logo area at the top. Hover over the logo to reveal the cloud icon and access your environment."
-  },
   "qPSWmL": {
     "string": "Enter usage"
   },
@@ -16852,9 +16733,6 @@
     "context": "expires in label",
     "string": "Expires in"
   },
-  "rlVejK": {
-    "string": "here to add one and assign it to this type without leaving the page."
-  },
   "rnADHu": {
     "context": "settings catalog description for new order alerts",
     "string": "Choose which staff members get an email when a customer places an order"
@@ -17093,9 +16971,6 @@
   "sZpp65": {
     "context": "bulk publish review step description",
     "string": "Set prices in {currency} for each product. Cost price and stock are optional. Values apply to all variants of that product."
-  },
-  "saSBz9": {
-    "string": "IsAvailable"
   },
   "scHVdW": {
     "context": "button",
@@ -17502,9 +17377,6 @@
   "u0V06N": {
     "string": "Max. Order Weight"
   },
-  "u1GExT": {
-    "string": "Download data"
-  },
   "u2/qds": {
     "context": "label for manually added order discount",
     "string": "Manual"
@@ -17756,9 +17628,6 @@
   "ufmuTp": {
     "context": "button",
     "string": "Delete"
-  },
-  "ugazVZ": {
-    "string": "Model types whose names contain a configured separator are grouped into one tab. Open the dropdown on a grouped tab to filter by"
   },
   "uiZoY3": {
     "context": "Status when product is scheduled for future publication",
@@ -18077,6 +17946,10 @@
   "vXCeIi": {
     "string": "Failed"
   },
+  "vXqbtu": {
+    "context": "rich text editor, bulleted list style",
+    "string": "Unordered"
+  },
   "vY7jZc": {
     "context": "setup task title",
     "string": "Add a code"
@@ -18106,9 +17979,6 @@
   "vazr6V": {
     "context": "Button label to open the full problems modal for an app",
     "string": "Open app problems"
-  },
-  "vbjwe2": {
-    "string": "We received your dashboard password reset request."
   },
   "vbop3G": {
     "string": "Create new model"
@@ -18403,9 +18273,6 @@
   "wTHjt3": {
     "string": "Search Orders..."
   },
-  "wTNySU": {
-    "string": "by"
-  },
   "wUMBnP": {
     "context": "warning callout title when disabling staff emails",
     "string": "Saleor will stop sending these messages."
@@ -18427,9 +18294,6 @@
   },
   "wVjyOX": {
     "string": "Fully authorised"
-  },
-  "wVrw7G": {
-    "string": "Group by type"
   },
   "wWELJW": {
     "context": "search results",
@@ -18835,6 +18699,9 @@
   "xy66ru": {
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
+  },
+  "xypzXx": {
+    "string": "GraphiQL Explorer"
   },
   "xzgaxr": {
     "context": "dialog description when restock warehouse must be selected",

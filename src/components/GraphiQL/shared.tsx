@@ -19,19 +19,39 @@ export const PluginSidebarSection = ({
     <div className="graphiql-sidebar-section">
       {pluginContext?.plugins.map(plugin => {
         const isVisible = plugin === pluginContext.visiblePlugin;
+        // Keyed by the titles the installed GraphiQL plugins use.
         const pluginTitles: Record<string, string> = {
-          Docs: intl.formatMessage({ id: "/6/sPX", defaultMessage: "Docs" }),
+          "Documentation Explorer": intl.formatMessage({
+            id: "SMMrqV",
+            defaultMessage: "Documentation Explorer",
+          }),
           History: intl.formatMessage({
             id: "djJp6c",
             defaultMessage: "History",
           }),
-          Explorer: intl.formatMessage({
-            id: "mJN/zn",
-            defaultMessage: "Explorer",
+          "GraphiQL Explorer": intl.formatMessage({
+            id: "xypzXx",
+            defaultMessage: "GraphiQL Explorer",
           }),
         };
         const pluginTitle = pluginTitles[plugin.title] ?? plugin.title;
-        const label = `${isVisible ? intl.formatMessage({ id: "VA/Z1S", defaultMessage: "Hide" }) : intl.formatMessage({ id: "K7AkdL", defaultMessage: "Show" })} ${pluginTitle}`;
+        const label = isVisible
+          ? intl.formatMessage(
+              {
+                id: "10W/ry",
+                defaultMessage: "Hide {plugin}",
+                description: "GraphiQL sidebar button that closes a panel",
+              },
+              { plugin: pluginTitle },
+            )
+          : intl.formatMessage(
+              {
+                id: "mq5U6P",
+                defaultMessage: "Show {plugin}",
+                description: "GraphiQL sidebar button that opens a panel",
+              },
+              { plugin: pluginTitle },
+            );
         const Icon = plugin.icon;
 
         return (
