@@ -77,18 +77,25 @@ export const useHandleMetadataSubmit = <
       return;
     }
 
-    if (refetch) {
-      await refetch();
-    } else {
-      const result = client.refetchQueries({ include: [refetchDocument] });
+    // The metadata is saved at this point. If reloading it fails, still confirm the save and
+    // close: the mutation results already updated the cache, and failing here would leave the
+    // dialog open as if the save hadn't happened.
+    try {
+      if (refetch) {
+        await refetch();
+      } else {
+        const result = client.refetchQueries({ include: [refetchDocument] });
 
-      await Promise.all(
-        result.queries.map(query =>
-          query.refetch({
-            fetchPolicy: "network-only",
-          }),
-        ),
-      );
+        await Promise.all(
+          result.queries.map(query =>
+            query.refetch({
+              fetchPolicy: "network-only",
+            }),
+          ),
+        );
+      }
+    } catch {
+      // Reported by the query hooks where they handle errors; nothing to undo here.
     }
 
     notify({

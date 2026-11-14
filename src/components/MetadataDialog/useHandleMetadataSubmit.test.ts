@@ -170,6 +170,29 @@ describe("useHandleMetadataSubmit", () => {
     expect(mockOnClose).toHaveBeenCalled();
   });
 
+  it("confirms the save and closes even when reloading the metadata afterwards fails", async () => {
+    // Arrange
+    mockRefetch.mockRejectedValue(new Error("Failed to fetch"));
+
+    const { result } = renderHook(() =>
+      useHandleMetadataSubmit({
+        initialData: mockInitialData,
+        onClose: mockOnClose,
+        refetchDocument: mockDocument,
+      }),
+    );
+
+    // Act
+    await act(async () => {
+      await result.current.onSubmit(mockMetadataFormData);
+    });
+
+    // Assert
+    expect(mockUpdateMetadata).toHaveBeenCalled();
+    expect(mockNotify).toHaveBeenCalledWith({ status: "success", text: expect.any(String) });
+    expect(mockOnClose).toHaveBeenCalled();
+  });
+
   it("should not close or show success when mutation returns errors", async () => {
     // Arrange
     mockUpdateMetadata.mockResolvedValue({
