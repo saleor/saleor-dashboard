@@ -1781,6 +1781,10 @@
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
   },
+  "4gJ7Sr": {
+    "context": "Taxes → Channels header button that opens the selected channel's metadata",
+    "string": "Edit tax configuration metadata"
+  },
   "4hOnpC": {
     "context": "bulk publish confirm pricing section label",
     "string": "Pricing"
@@ -11754,6 +11758,10 @@
   "dOQB9o": {
     "context": "payment status",
     "string": "Cancelled"
+  },
+  "dPBzKt": {
+    "context": "tax configuration metadata dialog header naming the channel",
+    "string": "Tax Configuration Metadata: {channelName}"
   },
   "dPYqy0": {
     "string": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"

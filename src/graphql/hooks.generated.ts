@@ -22980,6 +22980,42 @@ export function useTaxConfigurationsListLazyQuery(baseOptions?: ApolloReactHooks
 export type TaxConfigurationsListQueryHookResult = ReturnType<typeof useTaxConfigurationsListQuery>;
 export type TaxConfigurationsListLazyQueryHookResult = ReturnType<typeof useTaxConfigurationsListLazyQuery>;
 export type TaxConfigurationsListQueryResult = Apollo.QueryResult<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>;
+export const TaxConfigurationMetadataDocument = gql`
+    query TaxConfigurationMetadata($id: ID!) {
+  taxConfiguration(id: $id) {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __useTaxConfigurationMetadataQuery__
+ *
+ * To run a query within a React component, call `useTaxConfigurationMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaxConfigurationMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaxConfigurationMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useTaxConfigurationMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>(TaxConfigurationMetadataDocument, options);
+      }
+export function useTaxConfigurationMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>(TaxConfigurationMetadataDocument, options);
+        }
+export type TaxConfigurationMetadataQueryHookResult = ReturnType<typeof useTaxConfigurationMetadataQuery>;
+export type TaxConfigurationMetadataLazyQueryHookResult = ReturnType<typeof useTaxConfigurationMetadataLazyQuery>;
+export type TaxConfigurationMetadataQueryResult = Apollo.QueryResult<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>;
 export const TaxCountriesListDocument = gql`
     query TaxCountriesList {
   taxCountryConfigurations {
