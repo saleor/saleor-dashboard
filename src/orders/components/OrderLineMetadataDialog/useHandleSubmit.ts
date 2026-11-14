@@ -69,6 +69,12 @@ export const useHandleOrderLineMetadataSubmit = ({
   }, [initialData?.variant, updateMetadata, updatePrivateMetadata]);
 
   const onSubmit = async (data: OrderLineAndVariantMetadataFormData) => {
+    // Without loaded metadata there is nothing to compare against and nothing gets sent,
+    // so don't report a save that didn't happen.
+    if (!initialData) {
+      return;
+    }
+
     setSubmitInProgress(true);
     submittedData.current = data;
 

@@ -3,6 +3,7 @@ import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
+import { MetadataLoadError } from "@dashboard/components/MetadataDialog/MetadataLoadError";
 import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalDivider } from "@dashboard/components/Modal/ModalDivider";
@@ -46,7 +47,7 @@ export const OrderLineMetadataDialog = ({
   lineId,
   orderId,
 }: OrderLineMetadataDialogProps) => {
-  const { data, loading } = useMetadataValues({ orderId, lineId, open });
+  const { data, loading, loadFailed, retry } = useMetadataValues({ orderId, lineId, open });
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleOrderLineMetadataSubmit({
     initialData: data,
     onClose,
@@ -129,121 +130,133 @@ export const OrderLineMetadataDialog = ({
             display="flex"
             flexDirection="column"
           >
-            <DashboardModal.Inset>
-              <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
-                <Text size={2} color="default2">
-                  <FormattedMessage
-                    defaultMessage="Metadata stored on this order line only. Changes here do not update the product variant."
-                    description="scope helper for editable order line metadata section"
-                    id="2m2Xi9"
-                  />
-                </Text>
-
-                {loading && !data ? (
-                  <>
-                    <MetadataLoadingCard inModal marginTop={4} />
-                    <MetadataLoadingCard isPrivate inModal />
-                  </>
-                ) : (
-                  <>
-                    <MetadataCard
-                      inModal
-                      marginTop={4}
-                      data={mapFieldArrayToMetadataInput(orderLineMetadataFields)}
-                      isPrivate={false}
-                      disabled={loading || submitInProgress}
-                      onChange={handleOrderLineMetadataChange}
-                      error={
-                        orderLineMetadataErrors.length
-                          ? orderLineMetadataErrors.join(", ")
-                          : undefined
-                      }
-                    />
-
-                    <MetadataCard
-                      inModal
-                      data={mapFieldArrayToMetadataInput(orderLinePrivateMetadataFields)}
-                      isPrivate={true}
-                      disabled={loading || submitInProgress}
-                      onChange={handleOrderLinePrivateMetadataChange}
-                      error={
-                        orderLinePrivateMetadataErrors.length
-                          ? orderLinePrivateMetadataErrors.join(", ")
-                          : undefined
-                      }
-                    />
-                  </>
-                )}
-              </Box>
-            </DashboardModal.Inset>
-
-            <ModalDivider />
-
-            <DashboardModal.Inset>
-              <Box
-                display="flex"
-                flexDirection="column"
-                data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
-              >
-                <Box display="flex" flexDirection="column" gap={2}>
-                  <ModalSectionHeader>
-                    <FormattedMessage
-                      defaultMessage="Product variant metadata"
-                      description="modal header, editable product variant metadata"
-                      id="hQDWIw"
-                    />
-                  </ModalSectionHeader>
-                  <Text size={2} color="default2">
-                    <FormattedMessage
-                      defaultMessage="The read-only metadata of the actual variant used in this order. {link}"
-                      description="info about variant metadata with link to edit"
-                      id="00d8GP"
-                      values={{
-                        link: data?.variant?.id ? (
-                          <MicrocopyLink to={productVariantEditUrl(data.variant.id)}>
-                            <FormattedMessage
-                              defaultMessage="Edit on variant page"
-                              description="link to edit variant metadata"
-                              id="tf+OkY"
-                            />
-                          </MicrocopyLink>
-                        ) : null,
-                      }}
-                    />
-                  </Text>
-                </Box>
-
-                {loading && !data ? (
-                  <>
-                    <MetadataLoadingCard inModal marginTop={4} />
-                    {!hasManageProducts ? null : <MetadataLoadingCard isPrivate inModal />}
-                  </>
-                ) : (
-                  <>
-                    <MetadataCard
-                      inModal
-                      marginTop={4}
-                      data={mapFieldArrayToMetadataInput(variantMetadataFields)}
-                      isPrivate={false}
-                      readonly={true}
-                      defaultExpanded={false}
-                      onChange={handleVariantMetadataChange}
-                    />
-
-                    {hasManageProducts && (
-                      <MetadataCard
-                        inModal
-                        data={mapFieldArrayToMetadataInput(variantPrivateMetadataFields)}
-                        isPrivate={true}
-                        readonly={true}
-                        defaultExpanded={false}
-                        onChange={handleVariantPrivateMetadataChange}
+            {loadFailed && !data ? (
+              <DashboardModal.Inset>
+                <MetadataLoadError onRetry={retry} />
+              </DashboardModal.Inset>
+            ) : (
+              <>
+                <DashboardModal.Inset>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    data-test-id={TEST_ID_ORDER_LINE_METADATA}
+                  >
+                    <Text size={2} color="default2">
+                      <FormattedMessage
+                        defaultMessage="Metadata stored on this order line only. Changes here do not update the product variant."
+                        description="scope helper for editable order line metadata section"
+                        id="2m2Xi9"
                       />
+                    </Text>
+
+                    {loading && !data ? (
+                      <>
+                        <MetadataLoadingCard inModal marginTop={4} />
+                        <MetadataLoadingCard isPrivate inModal />
+                      </>
+                    ) : (
+                      <>
+                        <MetadataCard
+                          inModal
+                          marginTop={4}
+                          data={mapFieldArrayToMetadataInput(orderLineMetadataFields)}
+                          isPrivate={false}
+                          disabled={loading || submitInProgress}
+                          onChange={handleOrderLineMetadataChange}
+                          error={
+                            orderLineMetadataErrors.length
+                              ? orderLineMetadataErrors.join(", ")
+                              : undefined
+                          }
+                        />
+
+                        <MetadataCard
+                          inModal
+                          data={mapFieldArrayToMetadataInput(orderLinePrivateMetadataFields)}
+                          isPrivate={true}
+                          disabled={loading || submitInProgress}
+                          onChange={handleOrderLinePrivateMetadataChange}
+                          error={
+                            orderLinePrivateMetadataErrors.length
+                              ? orderLinePrivateMetadataErrors.join(", ")
+                              : undefined
+                          }
+                        />
+                      </>
                     )}
-                  </>
-                )}
-              </Box>
-            </DashboardModal.Inset>
+                  </Box>
+                </DashboardModal.Inset>
+
+                <ModalDivider />
+
+                <DashboardModal.Inset>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
+                  >
+                    <Box display="flex" flexDirection="column" gap={2}>
+                      <ModalSectionHeader>
+                        <FormattedMessage
+                          defaultMessage="Product variant metadata"
+                          description="modal header, editable product variant metadata"
+                          id="hQDWIw"
+                        />
+                      </ModalSectionHeader>
+                      <Text size={2} color="default2">
+                        <FormattedMessage
+                          defaultMessage="The read-only metadata of the actual variant used in this order. {link}"
+                          description="info about variant metadata with link to edit"
+                          id="00d8GP"
+                          values={{
+                            link: data?.variant?.id ? (
+                              <MicrocopyLink to={productVariantEditUrl(data.variant.id)}>
+                                <FormattedMessage
+                                  defaultMessage="Edit on variant page"
+                                  description="link to edit variant metadata"
+                                  id="tf+OkY"
+                                />
+                              </MicrocopyLink>
+                            ) : null,
+                          }}
+                        />
+                      </Text>
+                    </Box>
+
+                    {loading && !data ? (
+                      <>
+                        <MetadataLoadingCard inModal marginTop={4} />
+                        {!hasManageProducts ? null : <MetadataLoadingCard isPrivate inModal />}
+                      </>
+                    ) : (
+                      <>
+                        <MetadataCard
+                          inModal
+                          marginTop={4}
+                          data={mapFieldArrayToMetadataInput(variantMetadataFields)}
+                          isPrivate={false}
+                          readonly={true}
+                          defaultExpanded={false}
+                          onChange={handleVariantMetadataChange}
+                        />
+
+                        {hasManageProducts && (
+                          <MetadataCard
+                            inModal
+                            data={mapFieldArrayToMetadataInput(variantPrivateMetadataFields)}
+                            isPrivate={true}
+                            readonly={true}
+                            defaultExpanded={false}
+                            onChange={handleVariantPrivateMetadataChange}
+                          />
+                        )}
+                      </>
+                    )}
+                  </Box>
+                </DashboardModal.Inset>
+              </>
+            )}
           </Box>
         </DashboardModal.Body>
 
@@ -255,7 +268,7 @@ export const OrderLineMetadataDialog = ({
             transitionState={submitInProgress ? "loading" : "default"}
             data-test-id="save"
             variant="primary"
-            disabled={submitInProgress || !formState.isDirty}
+            disabled={submitInProgress || !data || !formState.isDirty}
             type="submit"
             form={ORDER_LINE_METADATA_FORM_ID}
           >

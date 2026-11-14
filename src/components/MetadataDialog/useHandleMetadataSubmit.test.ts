@@ -104,7 +104,7 @@ describe("useHandleMetadataSubmit", () => {
     expect(typeof result.current.onSubmit).toBe("function");
   });
 
-  it("should handle undefined initialData gracefully", async () => {
+  it("doesn't report a save or close when no metadata was loaded", async () => {
     // Arrange
     const { result } = renderHook(() =>
       useHandleMetadataSubmit({
@@ -120,7 +120,10 @@ describe("useHandleMetadataSubmit", () => {
     });
 
     // Assert
-    expect(mockClient.refetchQueries).toHaveBeenCalled();
+    expect(mockUpdateMetadata).not.toHaveBeenCalled();
+    expect(mockUpdatePrivateMetadata).not.toHaveBeenCalled();
+    expect(mockNotify).not.toHaveBeenCalled();
+    expect(mockOnClose).not.toHaveBeenCalled();
   });
 
   it("should track lastSubmittedData", async () => {

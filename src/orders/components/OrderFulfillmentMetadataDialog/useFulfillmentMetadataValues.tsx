@@ -10,7 +10,7 @@ export const useFulfillmentMetadataValues = ({
   fulfillmentId: string;
   open: boolean;
 }) => {
-  const [fetchMetadata, { data, loading }] = useOrderFulfillmentMetadataLazyQuery();
+  const [fetchMetadata, { data, loading, error, refetch }] = useOrderFulfillmentMetadataLazyQuery();
 
   useEffect(
     function fetchOrderMetadataOnMount() {
@@ -32,5 +32,10 @@ export const useFulfillmentMetadataValues = ({
   return {
     data: fulfillment,
     loading,
+    // Lazy queries don't report errors on their own: the dialog shows this with a Retry button.
+    loadFailed: !!error && !loading,
+    retry: () => {
+      void refetch?.();
+    },
   } as const;
 };

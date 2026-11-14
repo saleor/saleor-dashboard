@@ -57,6 +57,9 @@ jest.mock("./useMetadataValues", () => ({
     loading: false,
   })),
 }));
+
+const mockUseMetadataValues = useMetadataValues as jest.MockedFunction<typeof useMetadataValues>;
+
 describe("OrderLineMetadataDialog", () => {
   const onCloseMock = jest.fn();
 
@@ -321,6 +324,45 @@ describe("OrderLineMetadataDialog", () => {
       expect(
         within(orderLineMetadata).queryByDisplayValue("order-line-value"),
       ).not.toBeInTheDocument();
+    });
+  });
+
+  describe("when the metadata couldn't be loaded", () => {
+    const loadedImplementation = mockUseMetadataValues.getMockImplementation();
+
+    afterEach(() => {
+      if (loadedImplementation) {
+        mockUseMetadataValues.mockImplementation(loadedImplementation);
+      }
+    });
+
+    it("shows the error with Retry instead of empty editors, and keeps Save disabled", () => {
+      // Arrange
+      const retry = jest.fn();
+
+      mockUseMetadataValues.mockImplementation(() => ({
+        data: undefined,
+        loading: false,
+        loadFailed: true,
+        retry,
+      }));
+      render(
+        <OrderLineMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      // Act
+      fireEvent.click(screen.getByRole("button", { name: "Retry" }));
+
+      // Assert
+      expect(screen.getByRole("alert")).toHaveTextContent("Couldn't load metadata");
+      expect(screen.queryByTestId("metadata-editor")).not.toBeInTheDocument();
+      expect(screen.getByTestId("save")).toBeDisabled();
+      expect(retry).toHaveBeenCalledTimes(1);
     });
   });
 });

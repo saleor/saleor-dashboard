@@ -10,6 +10,8 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { MetadataLoadError } from "./MetadataLoadError";
+
 export interface MetadataDialogProps {
   open: boolean;
   onClose: () => void;
@@ -23,6 +25,9 @@ export interface MetadataDialogProps {
   loading?: boolean;
   /** Shows skeleton cards while the metadata is being fetched (e.g. lazily loaded dialogs) */
   contentLoading?: boolean;
+  /** Shows an error with Retry instead of the editors when lazily loaded metadata failed to load */
+  loadError?: boolean;
+  onRetryLoad?: () => void;
   disabled?: boolean;
   errors?: {
     metadata?: string;
@@ -40,6 +45,8 @@ export const MetadataDialog = ({
   onChange,
   loading = false,
   contentLoading = false,
+  loadError = false,
+  onRetryLoad = () => undefined,
   disabled = false,
   errors = {},
   formIsDirty = false,
@@ -70,7 +77,9 @@ export const MetadataDialog = ({
         <DashboardModal.Body>
           <DashboardModal.Inset>
             <Box display="flex" flexDirection="column">
-              {contentLoading ? (
+              {loadError ? (
+                <MetadataLoadError onRetry={onRetryLoad} />
+              ) : contentLoading ? (
                 <>
                   <MetadataLoadingCard inModal marginTop={0} />
                   <MetadataLoadingCard isPrivate inModal />
@@ -109,7 +118,7 @@ export const MetadataDialog = ({
             transitionState={loading ? "loading" : "default"}
             data-test-id="save"
             variant="primary"
-            disabled={loading || disabled || !formIsDirty}
+            disabled={loading || disabled || loadError || contentLoading || !formIsDirty}
             onClick={onSave}
           >
             <FormattedMessage {...buttonMessages.save} />

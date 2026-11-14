@@ -16,7 +16,7 @@ interface OrderMetadataDialogProps {
 
 export const OrderMetadataDialog = ({ onClose, open, orderId }: OrderMetadataDialogProps) => {
   const intl = useIntl();
-  const { data: order } = useOrderMetadataValues({ orderId, open });
+  const { data: order, loadFailed, retry } = useOrderMetadataValues({ orderId, open });
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
     initialData: order,
     onClose,
@@ -62,6 +62,8 @@ export const OrderMetadataDialog = ({ onClose, open, orderId }: OrderMetadataDia
       onChange={handleChange}
       loading={submitInProgress}
       contentLoading={open && !order}
+      loadError={open && loadFailed}
+      onRetryLoad={retry}
       errors={{
         metadata: metadataErrors.length ? metadataErrors.join(", ") : undefined,
         privateMetadata: privateMetadataErrors.length

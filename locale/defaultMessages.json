@@ -13321,6 +13321,10 @@
     "context": "gift card history message",
     "string": "Gift card was issued"
   },
+  "jDpCIc": {
+    "context": "metadata dialog, shown instead of the editors when loading failed",
+    "string": "Couldn't load metadata"
+  },
   "jE6w+u": {
     "context": "ripple action linking to documentation",
     "string": "See docs"

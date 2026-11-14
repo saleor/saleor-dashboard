@@ -63,6 +63,12 @@ export const useHandleMetadataSubmit = <
   }, [normalizedInitialData, updateMetadata, updatePrivateMetadata]);
 
   const onSubmit = async (data: MetadataFormData): Promise<void> => {
+    // Without loaded metadata there is nothing to compare against and nothing gets sent,
+    // so don't report a save that didn't happen.
+    if (!normalizedInitialData) {
+      return;
+    }
+
     submittedData.current = data;
 
     const errors = await fulfillmentSubmitHandler(data);

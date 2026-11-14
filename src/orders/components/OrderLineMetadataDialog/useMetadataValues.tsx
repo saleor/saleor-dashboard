@@ -12,7 +12,7 @@ export const useMetadataValues = ({
   open: boolean;
 }) => {
   const hasManageProducts = useHasManageProductsPermission();
-  const [fetchMetadata, { data, loading }] = useOrderLinesMetadataLazyQuery();
+  const [fetchMetadata, { data, loading, error, refetch }] = useOrderLinesMetadataLazyQuery();
 
   useEffect(
     function fetchOrderLinesMetadataWhenDialogOpens() {
@@ -36,5 +36,10 @@ export const useMetadataValues = ({
   return {
     data: lineData,
     loading,
+    // Lazy queries don't report errors on their own: the dialog shows this with a Retry button.
+    loadFailed: !!error && !loading,
+    retry: () => {
+      void refetch?.();
+    },
   } as const;
 };
