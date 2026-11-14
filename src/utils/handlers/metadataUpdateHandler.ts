@@ -14,6 +14,18 @@ import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 import { filterMetadataArray } from "./filterMetadataArray";
 import { areMetadataArraysEqual } from "./metadataUpdateHelpers";
 
+/** Entries that are new or whose value differs from what the form loaded. `updateMetadata`
+ * overwrites every key it receives, so sending unchanged entries too would write back old
+ * values over anything an app or another user changed after the form loaded. */
+const getChangedMetadata = (
+  initial: MetadataInput[],
+  current: MetadataInput[],
+): MetadataInput[] => {
+  const initialValues = new Map(initial.map(({ key, value }) => [key, value]));
+
+  return filterMetadataArray(current).filter(({ key, value }) => initialValues.get(key) !== value);
+};
+
 export interface ObjectWithMetadata {
   id: string;
   metadata: MetadataInput[];
@@ -55,7 +67,7 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         const initialKeys = initialMetadata.map(m => m.key);
         const modifiedKeys = data.metadata.map(m => m.key);
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
-        const metadataInput = filterMetadataArray(data.metadata);
+        const metadataInput = getChangedMetadata(initialMetadata, data.metadata);
 
         if (metadataInput.length || keyDiff.removed.length) {
           const updateMetaResult = await updateMetadata({
@@ -78,7 +90,10 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         const initialKeys = initialPrivateMetadata.map(m => m.key);
         const modifiedKeys = data.privateMetadata.map(m => m.key);
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
-        const privateMetadataInput = filterMetadataArray(data.privateMetadata);
+        const privateMetadataInput = getChangedMetadata(
+          initialPrivateMetadata,
+          data.privateMetadata,
+        );
 
         if (privateMetadataInput.length || keyDiff.removed.length) {
           const updatePrivateMetaResult = await updatePrivateMetadata({
