@@ -1,6 +1,7 @@
 import { type FetchResult } from "@apollo/client";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
+  MetadataErrorCode,
   type MetadataErrorFragment,
   type MetadataInput,
   type UpdateMetadataMutation,
@@ -24,6 +25,16 @@ const getChangedMetadata = (
   const initialValues = new Map(initial.map(({ key, value }) => [key, value]));
 
   return filterMetadataArray(current).filter(({ key, value }) => initialValues.get(key) !== value);
+};
+
+/** The app's mutation hooks report request failures themselves (toast or connection banner)
+ * and then resolve without data instead of throwing. Without data nothing was confirmed as
+ * saved, so the save must not count as successful. */
+const requestFailedError: MetadataErrorFragment = {
+  __typename: "MetadataError",
+  code: MetadataErrorCode.GRAPHQL_ERROR,
+  field: null,
+  message: null,
 };
 
 export interface ObjectWithMetadata {
@@ -75,6 +86,11 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
             input: metadataInput,
             keysToDelete: keyDiff.removed,
           });
+
+          if (!updateMetaResult.data) {
+            return [requestFailedError];
+          }
+
           const updateMetaErrors = [
             ...(updateMetaResult.data?.deleteMetadata?.errors || []),
             ...(updateMetaResult.data?.updateMetadata?.errors || []),
@@ -101,6 +117,11 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
             input: privateMetadataInput,
             keysToDelete: keyDiff.removed,
           });
+
+          if (!updatePrivateMetaResult.data) {
+            return [requestFailedError];
+          }
+
           const updatePrivateMetaErrors = [
             ...(updatePrivateMetaResult.data?.deletePrivateMetadata?.errors || []),
             ...(updatePrivateMetaResult.data?.updatePrivateMetadata?.errors || []),

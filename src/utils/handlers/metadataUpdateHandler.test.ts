@@ -361,4 +361,42 @@ describe("createMetadataUpdateHandler — what a save writes", () => {
     expect(updateMetadata).not.toHaveBeenCalled();
     expect(updatePrivateMetadata).not.toHaveBeenCalled();
   });
+
+  it("reports a failed save when the request itself fails, and stops before private metadata", async () => {
+    // Arrange
+    const { handleSubmit, updateMetadata, updatePrivateMetadata } = setup();
+
+    // The app's mutation hooks resolve a failed request without data instead of throwing.
+    updateMetadata.mockResolvedValueOnce({ data: undefined });
+
+    const submitted: MetadataFormData = {
+      metadata: [{ key: "seller.legalName", value: "Example AG" }, ...loaded.metadata.slice(1)],
+      privateMetadata: [{ key: "carrier.ioss", value: "IM1111111111" }, loaded.privateMetadata[1]],
+    };
+
+    // Act
+    const errors = await handleSubmit(submitted);
+
+    // Assert
+    expect(errors).toHaveLength(1);
+    expect(updatePrivateMetadata).not.toHaveBeenCalled();
+  });
+
+  it("reports a failed save when the private metadata request fails", async () => {
+    // Arrange
+    const { handleSubmit, updatePrivateMetadata } = setup();
+
+    updatePrivateMetadata.mockResolvedValueOnce({ data: undefined });
+
+    const submitted: MetadataFormData = {
+      metadata: loaded.metadata,
+      privateMetadata: [{ key: "carrier.ioss", value: "IM1111111111" }, loaded.privateMetadata[1]],
+    };
+
+    // Act
+    const errors = await handleSubmit(submitted);
+
+    // Assert
+    expect(errors).toHaveLength(1);
+  });
 });
