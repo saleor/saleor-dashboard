@@ -11,6 +11,8 @@ interface SettingsHubLayoutProps {
   backHrefIcon: ReactNode;
   /** Tooltip / aria-label for the destination of `backHref`. */
   backHrefTitle: string;
+  /** Buttons shown on the right side of the TopNav, e.g. `TopNav.MetadataButton`. */
+  actions?: ReactNode;
   children: ReactNode;
 }
 
@@ -23,6 +25,7 @@ export const SettingsHubLayout = ({
   backHref,
   backHrefIcon,
   backHrefTitle,
+  actions,
   children,
 }: SettingsHubLayoutProps): React.ReactNode => {
   useScrollToSettingsHash();
@@ -35,7 +38,9 @@ export const SettingsHubLayout = ({
         hrefTitle={backHrefTitle}
         title={title}
         gridColumn="full"
-      />
+      >
+        {actions}
+      </TopNav>
       <DetailPageLayout.Content gridColumn="full" width="100%">
         {children}
       </DetailPageLayout.Content>

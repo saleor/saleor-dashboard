@@ -2022,6 +2022,10 @@
     "context": "taxes section name",
     "string": "Taxes"
   },
+  "5f1Snx": {
+    "context": "store settings metadata button title",
+    "string": "Edit store metadata"
+  },
   "5fCMUI": {
     "context": "translations section name",
     "string": "Translations"
@@ -3068,6 +3072,10 @@
   "9Czafv": {
     "context": "setup checklist optional section title",
     "string": "Worth reviewing"
+  },
+  "9D4Ae3": {
+    "context": "store (shop) metadata dialog header",
+    "string": "Store Metadata"
   },
   "9DUknc": {
     "string": "Installation failed"

@@ -14803,6 +14803,11 @@ export type SiteSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SiteSettingsQuery = { __typename: 'Query', shop: { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, enableAccountConfirmationByEmail: boolean | null, useLegacyUpdateWebhookEmission: boolean | null, useLegacyShippingZoneStockAvailability: boolean, preserveAllAddressFields: boolean, passwordLoginMode: PasswordLoginModeEnum, allowStorefrontTraffic: boolean, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } } };
 
+export type ShopMetadataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShopMetadataQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } };
+
 export type StaffMemberAddMutationVariables = Exact<{
   input: StaffCreateInput;
 }>;
