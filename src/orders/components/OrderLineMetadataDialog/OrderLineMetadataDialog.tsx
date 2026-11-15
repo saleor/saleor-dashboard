@@ -13,6 +13,7 @@ import { type OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { productVariantEditUrl } from "@dashboard/products/urls";
+import { filterMetadataArray } from "@dashboard/utils/handlers/filterMetadataArray";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useLayoutEffect, useMemo, useState } from "react";
@@ -97,6 +98,17 @@ const OpenOrderLineMetadataDialog = ({
 
   const { handleSubmit, control, getValues, formState, trigger, reset } = formMethods;
   const { isDirty } = formState;
+  // Rows without a key aren't saved, so only a difference in what a save would send is a change.
+  const hasChanges =
+    !!baseline &&
+    isDirty &&
+    !areMetadataFormDataEqual(
+      {
+        metadata: filterMetadataArray(getValues().orderLine.metadata),
+        privateMetadata: filterMetadataArray(getValues().orderLine.privateMetadata),
+      },
+      baseline.orderLine,
+    );
 
   // Same rule as the shared metadata form: newly loaded data goes into the form only while the
   // user has no unsaved edits, so a reload never replaces what they're typing.
@@ -142,7 +154,7 @@ const OpenOrderLineMetadataDialog = ({
       return;
     }
 
-    if (isDirty) {
+    if (hasChanges) {
       setShowExitDialog(true);
     } else {
       onClose();
@@ -158,9 +170,7 @@ const OpenOrderLineMetadataDialog = ({
     <DashboardModal open onChange={handleClose}>
       <DashboardModal.Content size="md">
         <DashboardModal.ContextHeader
-          description={
-            loadFailed && !data ? undefined : <OrderLineDetails data={data} loading={loading} />
-          }
+          description={loadFailed ? undefined : <OrderLineDetails data={data} loading={loading} />}
           wrapDescription={false}
         >
           <FormattedMessage
@@ -178,7 +188,7 @@ const OpenOrderLineMetadataDialog = ({
             display="flex"
             flexDirection="column"
           >
-            {loadFailed && !data ? (
+            {loadFailed ? (
               <DashboardModal.Inset>
                 <MetadataLoadError onRetry={retry} />
               </DashboardModal.Inset>
@@ -198,7 +208,7 @@ const OpenOrderLineMetadataDialog = ({
                       />
                     </Text>
 
-                    {loading && !data ? (
+                    {loading ? (
                       <>
                         <MetadataLoadingCard inModal marginTop={4} />
                         <MetadataLoadingCard isPrivate inModal />
@@ -272,7 +282,7 @@ const OpenOrderLineMetadataDialog = ({
                       </Text>
                     </Box>
 
-                    {loading && !data ? (
+                    {loading ? (
                       <>
                         <MetadataLoadingCard inModal marginTop={4} />
                         {!hasManageProducts ? null : <MetadataLoadingCard isPrivate inModal />}
@@ -321,7 +331,7 @@ const OpenOrderLineMetadataDialog = ({
             transitionState={submitInProgress ? "loading" : "default"}
             data-test-id="save"
             variant="primary"
-            disabled={submitInProgress || !baseline || hasErrors || !isDirty}
+            disabled={submitInProgress || hasErrors || !hasChanges}
             type="submit"
             form={ORDER_LINE_METADATA_FORM_ID}
           >

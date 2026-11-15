@@ -3,7 +3,7 @@ import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { useUpdateMetadataMutation, useUpdatePrivateMetadataMutation } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 export const useHandleMetadataSubmit = <T extends { id: string }>({
@@ -32,9 +32,19 @@ export const useHandleMetadataSubmit = <T extends { id: string }>({
   const [updateMetadata, { loading: metadataLoading }] = useUpdateMetadataMutation();
   const [updatePrivateMetadata, { loading: privateMetadataLoading }] =
     useUpdatePrivateMetadataMutation();
-  // Covers the whole save, including the reload after it, so nothing can be typed in a dialog
-  // that is about to close.
+  // Covers both requests of a save, so the dialog can't be edited or closed in between.
   const [saving, setSaving] = useState(false);
+  // A save can finish after its dialog unmounted (closed, or the user navigated away); its
+  // onClose would then close whatever dialog is open by then.
+  const mounted = useRef(true);
+
+  useEffect(function trackMounted() {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const submitInProgress = saving || metadataLoading || privateMetadataLoading;
 
@@ -64,25 +74,25 @@ export const useHandleMetadataSubmit = <T extends { id: string }>({
         return;
       }
 
-      // The metadata is saved at this point; reload it so the page shows the saved values. If
-      // the reload fails, the save still stands, so confirm it anyway.
-      try {
-        if (refetch) {
-          await refetch();
-        } else {
-          await client.refetchQueries({ include: [refetchDocument] });
-        }
-      } catch {
-        // Nothing to undo: the save itself succeeded.
-      }
+      // The metadata is saved, and the mutation results already updated the cache. Reload it
+      // in the background so the page also picks up anything else that changed; the dialog
+      // doesn't wait, so a slow reload can't hold it open, and a failed one doesn't undo the save.
+      const reload = refetch ? refetch() : client.refetchQueries({ include: [refetchDocument] });
+
+      Promise.resolve(reload).catch(() => undefined);
 
       notify({
         status: "success",
         text: intl.formatMessage({ id: "gelco+", defaultMessage: "Metadata updated" }),
       });
-      onClose();
+
+      if (mounted.current) {
+        onClose();
+      }
     } finally {
-      setSaving(false);
+      if (mounted.current) {
+        setSaving(false);
+      }
     }
   };
 

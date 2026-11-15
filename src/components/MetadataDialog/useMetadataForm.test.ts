@@ -274,7 +274,7 @@ describe("useMetadataForm", () => {
     );
   });
 
-  it("validates and rejects empty keys in metadata", async () => {
+  it("rejects a row that has a value but no key", async () => {
     // Arrange
     const graphqlData = {
       metadata: [{ key: "test", value: "value1", __typename: "MetadataItem" as const }],
@@ -299,15 +299,15 @@ describe("useMetadataForm", () => {
 
     const metadataNoOpUpdate: ChangeEvent = {
       target: {
-        name: `metadata:1:${EventDataField.name}`,
-        value: "",
+        name: `metadata:1:${EventDataField.value}`,
+        value: "orphan value",
       },
     };
 
     const privateMetadataNoOpUpdate: ChangeEvent = {
       target: {
-        name: `privateMetadata:1:${EventDataField.name}`,
-        value: "",
+        name: `privateMetadata:1:${EventDataField.value}`,
+        value: "orphan value",
       },
     };
 
@@ -465,6 +465,43 @@ describe("useMetadataForm", () => {
       // Assert
       expect(result.current.formData.metadata).toEqual([{ key: "color", value: "red" }]);
       expect(result.current.baseline?.metadata).toEqual([{ key: "color", value: "red" }]);
+      expect(result.current.formIsDirty).toBe(false);
+    });
+
+    it("keeps a duplicate key flagged after another row is added", async () => {
+      // Arrange
+      const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
+      const duplicateVatId: ChangeEvent = {
+        target: { name: `metadata:1:${EventDataField.name}`, value: "seller.legalName" },
+      };
+
+      await act(async () => {
+        result.current.handleChange(duplicateVatId, false);
+      });
+
+      // Act
+      await act(async () => {
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      // Assert
+      expect(result.current.metadataErrors).toContain(
+        "Metadata keys must be unique, remove duplicate key",
+      );
+    });
+
+    it("doesn't count an added row without a key as a change", async () => {
+      // Arrange
+      const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
+
+      // Act
+      await act(async () => {
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      // Assert
+      expect(result.current.formData.metadata).toHaveLength(3);
+      expect(result.current.metadataErrors).toEqual([]);
       expect(result.current.formIsDirty).toBe(false);
     });
 

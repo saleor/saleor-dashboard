@@ -6,7 +6,7 @@ import {
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -30,6 +30,16 @@ export const useHandleOrderLineMetadataSubmit = ({
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
 
   const [submitInProgress, setSubmitInProgress] = useState(false);
+  // A save can finish after the dialog unmounted; its onClose would then close another dialog.
+  const mounted = useRef(true);
+
+  useEffect(function trackMounted() {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   /** Saves the order line's metadata, sending only what differs from `baseline`, what the form was loaded with. */
   const onSubmit = async (
@@ -71,12 +81,9 @@ export const useHandleOrderLineMetadataSubmit = ({
         return;
       }
 
-      // The save itself succeeded, so a failed reload doesn't undo it.
-      try {
-        await client.refetchQueries({ include: [OrderLinesMetadataDocument] });
-      } catch {
-        // Nothing to undo.
-      }
+      // Reload in the background: a slow reload can't hold the dialog open, and a failed one
+      // doesn't undo the save.
+      client.refetchQueries({ include: [OrderLinesMetadataDocument] }).catch(() => undefined);
 
       notify({
         status: "success",
@@ -85,9 +92,14 @@ export const useHandleOrderLineMetadataSubmit = ({
           defaultMessage: "Metadata updated",
         }),
       });
-      onClose();
+
+      if (mounted.current) {
+        onClose();
+      }
     } finally {
-      setSubmitInProgress(false);
+      if (mounted.current) {
+        setSubmitInProgress(false);
+      }
     }
   };
 

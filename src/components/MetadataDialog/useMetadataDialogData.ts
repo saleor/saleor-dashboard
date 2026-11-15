@@ -33,12 +33,11 @@ export const useMetadataDialogData = <TData, TVariables, TEntity>({
     variables,
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
-    // The dialog shows a failed load itself, with Retry, so no toast on top of it. A failed
-    // reload after a save keeps the saved metadata on screen and the save confirmed.
-    handleError: () => undefined,
   });
   const requestRunning = networkStatus < NetworkStatus.ready;
-  const succeededData = !requestRunning && !error ? data : undefined;
+  // A request that failed on the network can come back with earlier or cached data, which must
+  // not pass for current. One the server answered, even with errors, returns its own data.
+  const succeededData = !requestRunning && !error?.networkError ? data : undefined;
   // The last successful result of this open, kept while a reload runs or after it fails.
   const [lastGoodData, setLastGoodData] = useState<TData | undefined>(undefined);
 

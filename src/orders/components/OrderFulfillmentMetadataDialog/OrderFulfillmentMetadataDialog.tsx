@@ -30,6 +30,7 @@ export const OrderFulfillmentMetadataDialog = ({
       Fulfillment
     >
       open={open}
+      objectId={fulfillmentId}
       onClose={onClose}
       title={intl.formatMessage({
         defaultMessage: "Fulfillment Metadata",

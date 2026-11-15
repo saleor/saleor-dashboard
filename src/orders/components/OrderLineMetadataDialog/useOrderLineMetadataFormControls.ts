@@ -105,10 +105,13 @@ export const useOrderLineMetadataFormControls = ({
 
       if (action === EventDataAction.add) {
         calledMetadataControls.append({ key: "", value: "" });
+        // Adding or removing a row clears the field array's error, so check the rows again.
+        trigger(`${fieldPrefix}.${metadataType}`);
       }
 
       if (action === EventDataAction.delete && typeof fieldIndex === "number") {
         calledMetadataControls.remove(fieldIndex);
+        trigger(`${fieldPrefix}.${metadataType}`);
       }
     };
   };

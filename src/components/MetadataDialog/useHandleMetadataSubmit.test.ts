@@ -1,11 +1,11 @@
 import { type DocumentNode, useApolloClient } from "@apollo/client";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
-  type MetadataInput,
   OrderDetailsDocument,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
+import { type ObjectWithMetadata } from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { renderHook } from "@testing-library/react";
 import { act } from "react";
 
@@ -30,13 +30,7 @@ jest.mock("@dashboard/graphql", () => ({
 }));
 
 // Test fixtures
-interface EntityWithMetadata {
-  id: string;
-  metadata: MetadataInput[];
-  privateMetadata: MetadataInput[];
-}
-
-const mockInitialData: EntityWithMetadata = {
+const mockInitialData: ObjectWithMetadata = {
   id: "test-id",
   metadata: [{ key: "existing-key", value: "existing-value" }],
   privateMetadata: [{ key: "private-key", value: "private-value" }],
@@ -204,15 +198,9 @@ describe("useHandleMetadataSubmit", () => {
     expect(mockNotify).not.toHaveBeenCalledWith(expect.objectContaining({ status: "success" }));
   });
 
-  it("stays in progress and open until the reload after saving has finished", async () => {
+  it("confirms and closes as soon as the save succeeds, without waiting for the reload", async () => {
     // Arrange
-    let finishReload: (value: unknown[]) => void = () => undefined;
-
-    mockClient.refetchQueries.mockReturnValue(
-      new Promise<unknown[]>(resolve => {
-        finishReload = resolve;
-      }),
-    );
+    mockClient.refetchQueries.mockReturnValue(new Promise<unknown[]>(() => undefined));
 
     const { result } = renderHook(() =>
       useHandleMetadataSubmit({
@@ -223,31 +211,55 @@ describe("useHandleMetadataSubmit", () => {
     );
 
     // Act
-    let saving: Promise<void> = Promise.resolve();
-
     await act(async () => {
-      saving = result.current.onSubmit(mockMetadataFormData, mockBaseline);
+      await result.current.onSubmit(mockMetadataFormData, mockBaseline);
     });
 
     // Assert
-    expect(mockClient.refetchQueries).toHaveBeenCalledTimes(1);
     expect(mockClient.refetchQueries).toHaveBeenCalledWith({ include: [mockDocument] });
-    expect(result.current.submitInProgress).toBe(true);
-    expect(mockOnClose).not.toHaveBeenCalled();
+    expect(mockNotify).toHaveBeenCalledWith({ status: "success", text: expect.any(String) });
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(result.current.submitInProgress).toBe(false);
+  });
 
+  it("doesn't close anything when the save finishes after its dialog unmounted", async () => {
+    // Arrange
+    let finishSave: (value: unknown) => void = () => undefined;
+
+    mockUpdateMetadata.mockReturnValue(
+      new Promise(resolve => {
+        finishSave = resolve;
+      }),
+    );
+
+    const { result, unmount } = renderHook(() =>
+      useHandleMetadataSubmit({
+        initialData: mockInitialData,
+        onClose: mockOnClose,
+        refetchDocument: mockDocument,
+      }),
+    );
+    let saving: Promise<void> = Promise.resolve();
+
+    act(() => {
+      saving = result.current.onSubmit(mockMetadataFormData, mockBaseline);
+    });
+
+    // Act
+    unmount();
     await act(async () => {
-      finishReload([]);
+      finishSave({ data: { updateMetadata: { errors: [] } } });
       await saving;
     });
 
-    expect(result.current.submitInProgress).toBe(false);
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    // Assert
+    expect(mockOnClose).not.toHaveBeenCalled();
   });
 
   it("sends only what differs from what the form was loaded with", async () => {
     // Arrange
     // The server already has a newer value for "existing-key" than the form was loaded with.
-    const newerOnServer: EntityWithMetadata = {
+    const newerOnServer: ObjectWithMetadata = {
       ...mockInitialData,
       metadata: [{ key: "existing-key", value: "changed-by-an-app" }],
     };

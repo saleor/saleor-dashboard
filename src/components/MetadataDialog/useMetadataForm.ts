@@ -3,6 +3,7 @@ import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
 import { type MetadataInput, type MetadataItemFragment } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
+import { filterMetadataArray } from "@dashboard/utils/handlers/filterMetadataArray";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useLayoutEffect, useMemo, useState } from "react";
@@ -55,6 +56,14 @@ const areEntriesEqual = (a: MetadataInput[], b: MetadataInput[]): boolean =>
   a.length === b.length &&
   a.every((entry, index) => entry.key === b[index].key && entry.value === b[index].value);
 
+const toSavable = (data: MetadataFormData): MetadataFormData => ({
+  metadata: filterMetadataArray(data.metadata),
+  privateMetadata: filterMetadataArray(data.privateMetadata),
+});
+
+const hasSavableChanges = (current: MetadataFormData, baseline: MetadataFormData): boolean =>
+  !areMetadataFormDataEqual(toSavable(current), baseline);
+
 export const areMetadataFormDataEqual = (a: MetadataFormData, b: MetadataFormData): boolean =>
   areEntriesEqual(a.metadata, b.metadata) && areEntriesEqual(a.privateMetadata, b.privateMetadata);
 
@@ -64,9 +73,13 @@ export const useMetadataForm = ({
 }: UseMetadataFormConfig): MetadataFormReturn => {
   const intl = useIntl();
   const loaded = useMemo(() => toFormData(graphqlData), [graphqlData]);
-  const [baseline, setBaseline] = useState<MetadataFormData | undefined>(loaded);
   const loadedId = graphqlData?.id;
-  const [baselineId, setBaselineId] = useState<string | undefined>(loadedId);
+  // What the form was loaded with, and for which object.
+  const [loadedState, setLoadedState] = useState<{
+    id: string | undefined;
+    data: MetadataFormData | undefined;
+  }>({ id: loadedId, data: loaded });
+  const baseline = loadedState.data;
 
   const formMethods = useForm<MetadataFormData>({
     defaultValues: loaded ?? nothingLoaded,
@@ -81,7 +94,7 @@ export const useMetadataForm = ({
   // when the server has a newer value for it than the form shows. The first load always goes
   // in: nothing can be saved before it, so anything typed earlier has no baseline to save against.
   // When the data belongs to another object, edits made to the previous one don't carry over.
-  const otherObject = !!loaded && loadedId !== baselineId;
+  const otherObject = !!loaded && loadedId !== loadedState.id;
   const loadIntoForm =
     !!loaded &&
     !submitInProgress &&
@@ -89,8 +102,7 @@ export const useMetadataForm = ({
       ((!baseline || !isDirty) && !(baseline && areMetadataFormDataEqual(baseline, loaded))));
 
   if (loadIntoForm) {
-    setBaseline(loaded);
-    setBaselineId(loadedId);
+    setLoadedState({ id: loadedId, data: loaded });
   }
 
   useLayoutEffect(
@@ -146,12 +158,15 @@ export const useMetadataForm = ({
         trigger(metadataType);
       }
 
+      // Adding or removing a row clears the field array's error, so check the rows again.
       if (action === EventDataAction.add) {
         calledMetadataControls.append({ key: "", value: "" });
+        trigger(metadataType);
       }
 
       if (action === EventDataAction.delete && typeof fieldIndex === "number") {
         calledMetadataControls.remove(fieldIndex);
+        trigger(metadataType);
       }
     };
   };
@@ -183,8 +198,9 @@ export const useMetadataForm = ({
     metadataErrors,
     privateMetadataErrors,
     reset,
-    // Nothing to save against until metadata is loaded.
-    formIsDirty: !!baseline && isDirty,
+    // Nothing to save against until metadata is loaded, and rows without a key aren't saved,
+    // so only a difference in what a save would send counts as a change.
+    formIsDirty: !!baseline && isDirty && hasSavableChanges(getValues(), baseline),
     handleChange,
     formData: getValues(),
     getFormData: () => getValues(),

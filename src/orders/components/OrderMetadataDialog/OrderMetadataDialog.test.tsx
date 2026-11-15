@@ -130,7 +130,7 @@ describe("OrderMetadataDialog", () => {
     expect(screen.queryByTestId("skeleton")).not.toBeInTheDocument();
   });
 
-  it("keeps showing the entries while reloading after a save, then closes", async () => {
+  it("closes as soon as the save succeeds, without waiting for the reload", async () => {
     // Arrange
     const onClose = jest.fn();
     const saveVariables: UpdateMetadataMutationVariables = {
@@ -171,13 +171,8 @@ describe("OrderMetadataDialog", () => {
     // Act
     fireEvent.click(screen.getByTestId("save"));
 
-    // Assert: the save has answered and the reload is still running.
+    // Assert: the save has answered; the reload is still running in the background.
     await waitFor(() => expect(saveResult).toHaveBeenCalledTimes(1));
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    expect(onClose).not.toHaveBeenCalled();
-    expect(screen.queryByTestId("skeleton")).not.toBeInTheDocument();
-    expect(screen.getByDisplayValue("SO-2002")).toBeInTheDocument();
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1), { timeout: 3000 });
   });
 

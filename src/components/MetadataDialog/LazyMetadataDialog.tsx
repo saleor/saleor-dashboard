@@ -77,6 +77,8 @@ type LazyMetadataDialogProps<TData, TVariables, TEntity> = OpenLazyMetadataDialo
   TEntity
 > & {
   open: boolean;
+  /** Identifies the edited object when the query variables don't, e.g. one fulfillment of an order. */
+  objectId?: string;
 };
 
 /**
@@ -86,7 +88,10 @@ type LazyMetadataDialogProps<TData, TVariables, TEntity> = OpenLazyMetadataDialo
  */
 export const LazyMetadataDialog = <TData, TVariables, TEntity extends EntityWithMetadata>({
   open,
+  objectId,
   ...props
 }: LazyMetadataDialogProps<TData, TVariables, TEntity>): React.ReactNode =>
-  // Keyed by the query variables, so another object starts over instead of showing this one's data.
-  open ? <OpenLazyMetadataDialog key={JSON.stringify(props.variables ?? {})} {...props} /> : null;
+  // Keyed by what it loads, so another object starts over instead of showing this one's data.
+  open ? (
+    <OpenLazyMetadataDialog key={JSON.stringify([props.variables ?? {}, objectId])} {...props} />
+  ) : null;

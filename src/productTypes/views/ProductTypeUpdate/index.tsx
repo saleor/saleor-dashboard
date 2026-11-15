@@ -447,16 +447,20 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
         }}
         onFetchMoreTaxClasses={fetchMoreTaxClasses}
       />
+      {/* Outside the loading gate: a save's own cache update reloads the product type, and
+          unmounting the dialog mid-save would skip its close, so it would open again. */}
+      {productType && (
+        <ProductTypeMetadataDialog
+          open={params.action === "view-metadata"}
+          onClose={closeModal}
+          productType={productType}
+          refetchProductType={refetch}
+        />
+      )}
       {!dataLoading && (
         <>
           {productType && (
             <>
-              <ProductTypeMetadataDialog
-                open={params.action === "view-metadata" && !!productType}
-                onClose={closeModal}
-                productType={productType}
-                refetchProductType={refetch}
-              />
               <CreateAttributeDialog
                 attributeType={AttributeTypeEnum.PRODUCT_TYPE}
                 confirmButtonState={
