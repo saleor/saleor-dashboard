@@ -24655,7 +24655,9 @@ export const UpdateMetadataDocument = gql`
       ...MetadataError
     }
     item {
-      ...Metadata
+      metadata {
+        ...MetadataItem
+      }
       ... on Node {
         id
       }
@@ -24666,7 +24668,9 @@ export const UpdateMetadataDocument = gql`
       ...MetadataError
     }
     item {
-      ...Metadata
+      metadata {
+        ...MetadataItem
+      }
       ... on Node {
         id
       }
@@ -24674,7 +24678,7 @@ export const UpdateMetadataDocument = gql`
   }
 }
     ${MetadataErrorFragmentDoc}
-${MetadataFragmentDoc}`;
+${MetadataItemFragmentDoc}`;
 export type UpdateMetadataMutationFn = Apollo.MutationFunction<Types.UpdateMetadataMutation, Types.UpdateMetadataMutationVariables>;
 
 /**
@@ -24710,7 +24714,9 @@ export const UpdatePrivateMetadataDocument = gql`
       ...MetadataError
     }
     item {
-      ...Metadata
+      privateMetadata {
+        ...MetadataItem
+      }
       ... on Node {
         id
       }
@@ -24721,7 +24727,9 @@ export const UpdatePrivateMetadataDocument = gql`
       ...MetadataError
     }
     item {
-      ...Metadata
+      privateMetadata {
+        ...MetadataItem
+      }
       ... on Node {
         id
       }
@@ -24729,7 +24737,7 @@ export const UpdatePrivateMetadataDocument = gql`
   }
 }
     ${MetadataErrorFragmentDoc}
-${MetadataFragmentDoc}`;
+${MetadataItemFragmentDoc}`;
 export type UpdatePrivateMetadataMutationFn = Apollo.MutationFunction<Types.UpdatePrivateMetadataMutation, Types.UpdatePrivateMetadataMutationVariables>;
 
 /**
