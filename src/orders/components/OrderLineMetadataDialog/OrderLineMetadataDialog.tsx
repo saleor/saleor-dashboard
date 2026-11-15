@@ -72,7 +72,8 @@ export const OrderLineMetadataDialog = ({
   open,
   ...props
 }: OrderLineMetadataDialogProps): React.ReactNode =>
-  open ? <OpenOrderLineMetadataDialog {...props} /> : null;
+  // Keyed by the line, so another line starts over instead of showing this one's data.
+  open ? <OpenOrderLineMetadataDialog key={`${props.orderId}:${props.lineId}`} {...props} /> : null;
 
 const OpenOrderLineMetadataDialog = ({
   onClose,
@@ -133,7 +134,14 @@ const OpenOrderLineMetadataDialog = ({
 
   const [showExitDialog, setShowExitDialog] = useState(false);
 
+  const hasErrors = orderLineMetadataErrors.length > 0 || orderLinePrivateMetadataErrors.length > 0;
+
   const handleClose = () => {
+    // A running save closes the dialog itself when it's done.
+    if (submitInProgress) {
+      return;
+    }
+
     if (isDirty) {
       setShowExitDialog(true);
     } else {
@@ -301,14 +309,19 @@ const OpenOrderLineMetadataDialog = ({
         </DashboardModal.Body>
 
         <DashboardModal.Actions>
-          <Button data-test-id="back" variant="secondary" onClick={handleClose}>
+          <Button
+            data-test-id="back"
+            variant="secondary"
+            onClick={handleClose}
+            disabled={submitInProgress}
+          >
             <FormattedMessage {...buttonMessages.close} />
           </Button>
           <ButtonWithLoader
             transitionState={submitInProgress ? "loading" : "default"}
             data-test-id="save"
             variant="primary"
-            disabled={submitInProgress || !baseline || !isDirty}
+            disabled={submitInProgress || !baseline || hasErrors || !isDirty}
             type="submit"
             form={ORDER_LINE_METADATA_FORM_ID}
           >

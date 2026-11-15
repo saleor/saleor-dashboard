@@ -88,4 +88,5 @@ export const LazyMetadataDialog = <TData, TVariables, TEntity extends EntityWith
   open,
   ...props
 }: LazyMetadataDialogProps<TData, TVariables, TEntity>): React.ReactNode =>
-  open ? <OpenLazyMetadataDialog {...props} /> : null;
+  // Keyed by the query variables, so another object starts over instead of showing this one's data.
+  open ? <OpenLazyMetadataDialog key={JSON.stringify(props.variables ?? {})} {...props} /> : null;

@@ -236,4 +236,41 @@ describe("MetadataDialog", () => {
       expect(screen.getAllByTestId("metadata-editor")).toHaveLength(2);
     });
   });
+
+  describe("while there are validation errors or a save is running", () => {
+    it("keeps Save disabled while a validation error is shown", () => {
+      // Arrange & Act
+      render(
+        <MetadataDialog
+          {...defaultProps}
+          formIsDirty={true}
+          errors={{ metadata: "Metadata keys must be unique" }}
+        />,
+      );
+
+      // Assert
+      expect(screen.getByTestId("save")).toBeDisabled();
+    });
+
+    it("can't be closed while saving, and can once the save is done", async () => {
+      // Arrange
+      const onClose = jest.fn();
+      const user = userEvent.setup();
+      const { rerender } = render(
+        <MetadataDialog {...defaultProps} onClose={onClose} formIsDirty={true} loading={true} />,
+      );
+
+      // Act
+      await user.keyboard("{Escape}");
+
+      // Assert
+      expect(screen.getByTestId("back")).toBeDisabled();
+      expect(onClose).not.toHaveBeenCalled();
+
+      rerender(<MetadataDialog {...defaultProps} onClose={onClose} loading={false} />);
+      await user.click(screen.getByTestId("back"));
+
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
 });

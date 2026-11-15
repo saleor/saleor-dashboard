@@ -65,8 +65,7 @@ export const useHandleMetadataSubmit = <T extends { id: string }>({
       }
 
       // The metadata is saved at this point; reload it so the page shows the saved values. If
-      // the reload fails, the save still stands, so confirm it anyway: query hooks with error
-      // handling report the failure, and lazily loaded dialogs load again on their next open.
+      // the reload fails, the save still stands, so confirm it anyway.
       try {
         if (refetch) {
           await refetch();

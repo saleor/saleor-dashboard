@@ -1,6 +1,7 @@
 import { type DocumentNode, useApolloClient } from "@apollo/client";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
+  type MetadataInput,
   OrderDetailsDocument,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -29,7 +30,13 @@ jest.mock("@dashboard/graphql", () => ({
 }));
 
 // Test fixtures
-const mockInitialData = {
+interface EntityWithMetadata {
+  id: string;
+  metadata: MetadataInput[];
+  privateMetadata: MetadataInput[];
+}
+
+const mockInitialData: EntityWithMetadata = {
   id: "test-id",
   metadata: [{ key: "existing-key", value: "existing-value" }],
   privateMetadata: [{ key: "private-key", value: "private-value" }],
@@ -240,7 +247,7 @@ describe("useHandleMetadataSubmit", () => {
   it("sends only what differs from what the form was loaded with", async () => {
     // Arrange
     // The server already has a newer value for "existing-key" than the form was loaded with.
-    const newerOnServer = {
+    const newerOnServer: EntityWithMetadata = {
       ...mockInitialData,
       metadata: [{ key: "existing-key", value: "changed-by-an-app" }],
     };

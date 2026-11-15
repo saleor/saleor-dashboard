@@ -441,6 +441,33 @@ describe("useMetadataForm", () => {
       expect(result.current.formIsDirty).toBe(false);
     });
 
+    it("drops edits made to another object when the form gets a different object's metadata", () => {
+      // Arrange
+      const variantA: GraphqlData = {
+        id: "variant-a",
+        metadata: [item("seller.legalName", "Example GmbH")],
+        privateMetadata: [],
+      };
+      const variantB: GraphqlData = {
+        id: "variant-b",
+        metadata: [item("color", "red")],
+        privateMetadata: [],
+      };
+      const { result, rerender } = renderForm({ graphqlData: variantA, submitInProgress: false });
+
+      act(() => {
+        result.current.handleChange(editLegalName, false);
+      });
+
+      // Act
+      rerender({ graphqlData: variantB, submitInProgress: false });
+
+      // Assert
+      expect(result.current.formData.metadata).toEqual([{ key: "color", value: "red" }]);
+      expect(result.current.baseline?.metadata).toEqual([{ key: "color", value: "red" }]);
+      expect(result.current.formIsDirty).toBe(false);
+    });
+
     it("can't be saved until metadata is loaded, then shows it", () => {
       // Arrange
       const { result, rerender } = renderForm({ graphqlData: undefined, submitInProgress: false });

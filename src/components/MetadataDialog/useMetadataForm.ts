@@ -14,6 +14,8 @@ import { getValidateMetadata } from "./validation";
 interface UseMetadataFormConfig {
   graphqlData:
     | {
+        /** Lets the form tell another object apart from new data for the same one. */
+        id?: string;
         metadata: MetadataItemFragment[];
         privateMetadata: MetadataItemFragment[];
       }
@@ -63,6 +65,8 @@ export const useMetadataForm = ({
   const intl = useIntl();
   const loaded = useMemo(() => toFormData(graphqlData), [graphqlData]);
   const [baseline, setBaseline] = useState<MetadataFormData | undefined>(loaded);
+  const loadedId = graphqlData?.id;
+  const [baselineId, setBaselineId] = useState<string | undefined>(loadedId);
 
   const formMethods = useForm<MetadataFormData>({
     defaultValues: loaded ?? nothingLoaded,
@@ -76,14 +80,17 @@ export const useMetadataForm = ({
   // Saves are compared with `baseline`, so an entry the user didn't touch is never sent, even
   // when the server has a newer value for it than the form shows. The first load always goes
   // in: nothing can be saved before it, so anything typed earlier has no baseline to save against.
+  // When the data belongs to another object, edits made to the previous one don't carry over.
+  const otherObject = !!loaded && loadedId !== baselineId;
   const loadIntoForm =
     !!loaded &&
     !submitInProgress &&
-    (!baseline || !isDirty) &&
-    !(baseline && areMetadataFormDataEqual(baseline, loaded));
+    (otherObject ||
+      ((!baseline || !isDirty) && !(baseline && areMetadataFormDataEqual(baseline, loaded))));
 
   if (loadIntoForm) {
     setBaseline(loaded);
+    setBaselineId(loadedId);
   }
 
   useLayoutEffect(

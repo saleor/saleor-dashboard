@@ -1,5 +1,6 @@
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { type ComponentProps } from "react";
 
 import {
   OrderLineMetadataDialog,
@@ -272,7 +273,12 @@ describe("OrderLineMetadataDialog", () => {
 
     it("keeps an edit being typed when the metadata is loaded again", () => {
       // Arrange
-      const props = { open: true, onClose: onCloseMock, orderId: "order-id", lineId: mockData.id };
+      const props: ComponentProps<typeof OrderLineMetadataDialog> = {
+        open: true,
+        onClose: onCloseMock,
+        orderId: "order-id",
+        lineId: mockData.id,
+      };
       const { rerender } = render(<OrderLineMetadataDialog {...props} />);
       const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
 

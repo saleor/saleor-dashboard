@@ -47,7 +47,7 @@ const failedLoad: MockedResponse<OrderMetadataQuery> = {
 const renderDialog = (
   mocks: MockedResponse[],
   onClose = jest.fn(),
-): { setOpen: (open: boolean) => void } => {
+): { setOpen: (open: boolean) => void; showOrder: (id: string) => void } => {
   // possibleTypes lets the `...Metadata` fragment (on ObjectWithMetadata) match Order,
   // like in the app's client.
   const cache = new InMemoryCache({ possibleTypes: introspectionQueryResultData.possibleTypes });
@@ -66,6 +66,7 @@ const renderDialog = (
   return {
     setOpen: open =>
       rerender(<OrderMetadataDialog open={open} onClose={onClose} orderId={orderId} />),
+    showOrder: id => rerender(<OrderMetadataDialog open onClose={onClose} orderId={id} />),
   };
 };
 
@@ -195,5 +196,44 @@ describe("OrderMetadataDialog", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent("Couldn't load metadata");
     expect(screen.queryByDisplayValue("SO-1001")).not.toBeInTheDocument();
     expect(screen.getByTestId("save")).toBeDisabled();
+  });
+
+  it("loads another order's metadata instead of showing the previous one's when the order changes", async () => {
+    // Arrange
+    const otherOrderId = "T3JkZXI6Mg==";
+    const otherOrder: OrderMetadataQuery = {
+      __typename: "Query",
+      order: {
+        __typename: "Order",
+        id: otherOrderId,
+        metadata: [{ __typename: "MetadataItem", key: "erp.orderId", value: "SO-2002" }],
+        privateMetadata: [],
+      },
+    };
+    const { showOrder } = renderDialog([
+      loads("SO-1001"),
+      {
+        request: {
+          query: OrderMetadataDocument,
+          variables: { id: otherOrderId, ...allPermissions },
+        },
+        result: { data: otherOrder },
+        delay: 300,
+      },
+    ]);
+
+    fireEvent.click(within(await publicEditor()).getByTestId("expand"));
+    expect(screen.getByDisplayValue("SO-1001")).toBeInTheDocument();
+
+    // Act
+    showOrder(otherOrderId);
+
+    // Assert
+    expect(screen.queryByDisplayValue("SO-1001")).not.toBeInTheDocument();
+    expect(screen.getAllByTestId("skeleton").length).toBeGreaterThan(0);
+
+    fireEvent.click(within(await publicEditor()).getByTestId("expand"));
+
+    expect(screen.getByDisplayValue("SO-2002")).toBeInTheDocument();
   });
 });

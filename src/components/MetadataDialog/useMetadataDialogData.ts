@@ -33,6 +33,9 @@ export const useMetadataDialogData = <TData, TVariables, TEntity>({
     variables,
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
+    // The dialog shows a failed load itself, with Retry, so no toast on top of it. A failed
+    // reload after a save keeps the saved metadata on screen and the save confirmed.
+    handleError: () => undefined,
   });
   const requestRunning = networkStatus < NetworkStatus.ready;
   const succeededData = !requestRunning && !error ? data : undefined;
@@ -52,7 +55,7 @@ export const useMetadataDialogData = <TData, TVariables, TEntity>({
     contentLoading: !entity && !loadError,
     loadError,
     onRetryLoad: () => {
-      // A failed retry is reported by the query hook and shows the error again.
+      // A failed retry shows the load error again.
       refetch().catch(() => undefined);
     },
   };
