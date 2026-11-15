@@ -6,7 +6,7 @@ import {
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -30,64 +30,54 @@ export const useHandleOrderLineMetadataSubmit = ({
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
 
   const [submitInProgress, setSubmitInProgress] = useState(false);
-  const submittedData = useRef<OrderLineAndVariantMetadataFormData>();
 
-  const orderLineSubmitHandler = useMemo(() => {
-    if (!initialData) {
-      return () => Promise.resolve([]);
-    }
-
-    return createMetadataUpdateHandler(
-      initialData,
-      // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
-      () => Promise.resolve([]),
-      variables => updateMetadata({ variables }),
-      variables => updatePrivateMetadata({ variables }),
-    );
-  }, [initialData, updateMetadata, updatePrivateMetadata]);
-
-  const variantSubmitHandler = useMemo(() => {
-    // Fallback handler: If there is no variant data to submit,
-    // return a promise resolving to an empty error array.
-    // This is appropriate because no submission occurs, so no errors are possible.
-    if (!initialData?.variant) {
-      return () => Promise.resolve([]);
-    }
-
-    // Ensure privateMetadata is always present for the handler
-    const variantWithMetadata = {
-      ...initialData.variant,
-      privateMetadata: initialData.variant.privateMetadata ?? [],
-    };
-
-    return createMetadataUpdateHandler(
-      variantWithMetadata,
-      () => Promise.resolve([]),
-      variables => updateMetadata({ variables }),
-      variables => updatePrivateMetadata({ variables }),
-    );
-  }, [initialData?.variant, updateMetadata, updatePrivateMetadata]);
-
-  const onSubmit = async (data: OrderLineAndVariantMetadataFormData) => {
+  /** Saves the order line's metadata, sending only what differs from `baseline`, what the form was loaded with. */
+  const onSubmit = async (
+    data: OrderLineAndVariantMetadataFormData,
+    baseline: OrderLineAndVariantMetadataFormData | undefined,
+  ): Promise<void> => {
     // Without loaded metadata there is nothing to compare against and nothing gets sent,
     // so don't report a save that didn't happen.
-    if (!initialData) {
+    if (!initialData || !baseline) {
       return;
     }
 
     setSubmitInProgress(true);
-    submittedData.current = data;
 
-    // Submit both order line and variant metadata
-    const orderLineErrors = await orderLineSubmitHandler(data.orderLine);
-    const variantErrors = await variantSubmitHandler(data.variant);
+    try {
+      const saveOrderLine = createMetadataUpdateHandler(
+        { id: initialData.id, ...baseline.orderLine },
+        // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
+        async (): Promise<never[]> => [],
+        variables => updateMetadata({ variables }),
+        variables => updatePrivateMetadata({ variables }),
+      );
+      // The variant's metadata is shown read-only, so this sends nothing unless it was edited.
+      const saveVariant = initialData.variant
+        ? createMetadataUpdateHandler(
+            { id: initialData.variant.id, ...baseline.variant },
+            async (): Promise<never[]> => [],
+            variables => updateMetadata({ variables }),
+            variables => updatePrivateMetadata({ variables }),
+          )
+        : async (): Promise<never[]> => [];
 
-    client.refetchQueries({ include: [OrderLinesMetadataDocument] });
+      const errors = [
+        ...(await saveOrderLine(data.orderLine)),
+        ...(await saveVariant(data.variant)),
+      ];
 
-    // Check if both submissions succeeded
-    const allErrors = [...orderLineErrors, ...variantErrors];
+      if (errors.length > 0) {
+        return;
+      }
 
-    if (allErrors.length === 0) {
+      // The save itself succeeded, so a failed reload doesn't undo it.
+      try {
+        await client.refetchQueries({ include: [OrderLinesMetadataDocument] });
+      } catch {
+        // Nothing to undo.
+      }
+
       notify({
         status: "success",
         text: intl.formatMessage({
@@ -96,14 +86,13 @@ export const useHandleOrderLineMetadataSubmit = ({
         }),
       });
       onClose();
+    } finally {
+      setSubmitInProgress(false);
     }
-
-    setSubmitInProgress(false);
   };
 
   return {
     onSubmit,
-    lastSubmittedData: submittedData.current,
     submitInProgress: submitInProgress,
   };
 };

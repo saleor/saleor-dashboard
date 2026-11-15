@@ -1,45 +1,43 @@
-import { useOrderLinesMetadataLazyQuery } from "@dashboard/graphql";
+import { useMetadataDialogData } from "@dashboard/components/MetadataDialog/useMetadataDialogData";
+import {
+  OrderLinesMetadataDocument,
+  type OrderLinesMetadataQuery,
+  type OrderLinesMetadataQueryVariables,
+} from "@dashboard/graphql";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import { useEffect, useMemo } from "react";
 
+type OrderLineMetadata = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][number];
+
+interface MetadataValues {
+  data: OrderLineMetadata | undefined;
+  loading: boolean;
+  loadFailed: boolean;
+  retry: () => void;
+}
+
+/** Loads the line's metadata; use it in a component mounted only while the dialog is open. */
 export const useMetadataValues = ({
   orderId,
   lineId,
-  open,
 }: {
   orderId: string;
   lineId: string;
-  open: boolean;
-}) => {
+}): MetadataValues => {
   const hasManageProducts = useHasManageProductsPermission();
-  const [fetchMetadata, { data, loading, error, refetch }] = useOrderLinesMetadataLazyQuery();
-
-  useEffect(
-    function fetchOrderLinesMetadataWhenDialogOpens() {
-      if (open) {
-        fetchMetadata({
-          variables: { id: orderId, hasManageProducts },
-        });
-      }
-    },
-    [fetchMetadata, hasManageProducts, open, orderId],
-  );
-
-  const lineData = useMemo(() => {
-    if (!lineId) {
-      return undefined;
-    }
-
-    return data?.order?.lines.find(line => line.id === lineId);
-  }, [data, lineId]);
+  const { entity, contentLoading, loadError, onRetryLoad } = useMetadataDialogData<
+    OrderLinesMetadataQuery,
+    OrderLinesMetadataQueryVariables,
+    OrderLineMetadata
+  >({
+    query: OrderLinesMetadataDocument,
+    variables: { id: orderId, hasManageProducts },
+    select: data => data.order?.lines.find(line => line.id === lineId),
+  });
 
   return {
-    data: lineData,
-    loading,
-    // Lazy queries don't report errors on their own: the dialog shows this with a Retry button.
-    loadFailed: !!error && !loading,
-    retry: () => {
-      void refetch?.();
-    },
-  } as const;
+    data: entity,
+    loading: contentLoading,
+    loadFailed: loadError,
+    retry: onRetryLoad,
+  };
 };

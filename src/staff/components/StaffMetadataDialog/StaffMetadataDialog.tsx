@@ -18,7 +18,7 @@ export const StaffMetadataDialog = ({
   staffMember,
 }: StaffMetadataDialogProps): React.ReactNode => {
   const intl = useIntl();
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: staffMember ?? undefined,
     onClose,
     refetchDocument: StaffMemberDetailsDocument,
@@ -33,10 +33,10 @@ export const StaffMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: staffMember ?? undefined,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(
@@ -53,7 +53,7 @@ export const StaffMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Staff member metadata",

@@ -26,7 +26,7 @@ export const CustomerMetadataDialog = ({
   const normalizedCustomer = customer
     ? { ...customer, privateMetadata: customer.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedCustomer,
     onClose,
     refetchDocument: CustomerDetailsDocument,
@@ -41,10 +41,10 @@ export const CustomerMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedCustomer,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const CustomerMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Customer Metadata",

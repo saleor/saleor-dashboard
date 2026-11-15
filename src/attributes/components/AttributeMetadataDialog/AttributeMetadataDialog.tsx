@@ -35,7 +35,7 @@ export const AttributeMetadataDialog = ({
         : undefined,
     [attribute],
   );
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedAttribute,
     onClose,
     refetchDocument: AttributeDetailsDocument,
@@ -51,10 +51,10 @@ export const AttributeMetadataDialog = ({
     formIsDirty,
     handleChange,
     getFormData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedAttribute,
     submitInProgress,
-    lastSubmittedData,
   });
 
   const wasOpenRef = useRef(false);
@@ -83,7 +83,7 @@ export const AttributeMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(getFormData());
+        await onSubmit(getFormData(), baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Attribute Metadata",

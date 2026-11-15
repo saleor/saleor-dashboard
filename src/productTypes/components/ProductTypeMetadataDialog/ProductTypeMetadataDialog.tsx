@@ -35,7 +35,7 @@ export const ProductTypeMetadataDialog = ({
         : undefined,
     [productType],
   );
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedProductType,
     onClose,
     refetchDocument: ProductTypeDetailsDocument,
@@ -51,10 +51,10 @@ export const ProductTypeMetadataDialog = ({
     formIsDirty,
     handleChange,
     getFormData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedProductType,
     submitInProgress,
-    lastSubmittedData,
   });
 
   const wasOpenRef = useRef(false);
@@ -83,7 +83,7 @@ export const ProductTypeMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(getFormData());
+        await onSubmit(getFormData(), baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Product Type Metadata",

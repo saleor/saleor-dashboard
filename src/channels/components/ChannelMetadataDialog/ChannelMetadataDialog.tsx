@@ -16,7 +16,7 @@ interface ChannelMetadataDialogProps {
 
 export const ChannelMetadataDialog = ({ onClose, open, channel }: ChannelMetadataDialogProps) => {
   const intl = useIntl();
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: channel ?? undefined,
     onClose,
     refetchDocument: ChannelDocument,
@@ -31,10 +31,10 @@ export const ChannelMetadataDialog = ({ onClose, open, channel }: ChannelMetadat
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: channel ?? undefined,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(
@@ -51,7 +51,7 @@ export const ChannelMetadataDialog = ({ onClose, open, channel }: ChannelMetadat
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Channel Metadata",

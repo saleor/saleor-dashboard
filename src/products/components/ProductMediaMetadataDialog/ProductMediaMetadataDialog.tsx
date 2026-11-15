@@ -33,7 +33,7 @@ export const ProductMediaMetadataDialog = ({
   const normalizedMedia = media
     ? { ...media, privateMetadata: media.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedMedia,
     onClose,
     refetchDocument: ProductMediaByIdDocument,
@@ -48,10 +48,10 @@ export const ProductMediaMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedMedia,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export const ProductMediaMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage(messages.title)}
       data={{

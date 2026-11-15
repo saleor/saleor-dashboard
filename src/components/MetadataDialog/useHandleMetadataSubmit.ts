@@ -3,13 +3,10 @@ import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { useUpdateMetadataMutation, useUpdatePrivateMetadataMutation } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { useMemo, useRef } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
-export const useHandleMetadataSubmit = <
-  T extends { id: string; metadata: any; privateMetadata: any },
->({
+export const useHandleMetadataSubmit = <T extends { id: string }>({
   initialData,
   onClose,
   refetchDocument,
@@ -20,8 +17,11 @@ export const useHandleMetadataSubmit = <
   refetchDocument: DocumentNode;
   refetch?: () => Promise<ApolloQueryResult<unknown>>;
 }): {
-  onSubmit: (data: MetadataFormData) => Promise<void>;
-  lastSubmittedData: MetadataFormData | undefined;
+  /**
+   * Saves `data`, sending only what differs from `baseline`: the metadata the form was loaded
+   * with (`useMetadataForm`'s `baseline`). Entries the user didn't touch are never sent.
+   */
+  onSubmit: (data: MetadataFormData, baseline: MetadataFormData | undefined) => Promise<void>;
   submitInProgress: boolean;
 } => {
   const notify = useNotifier();
@@ -32,82 +32,63 @@ export const useHandleMetadataSubmit = <
   const [updateMetadata, { loading: metadataLoading }] = useUpdateMetadataMutation();
   const [updatePrivateMetadata, { loading: privateMetadataLoading }] =
     useUpdatePrivateMetadataMutation();
+  // Covers the whole save, including the reload after it, so nothing can be typed in a dialog
+  // that is about to close.
+  const [saving, setSaving] = useState(false);
 
-  const submitInProgress = metadataLoading || privateMetadataLoading;
-  const submittedData = useRef<MetadataFormData>();
+  const submitInProgress = saving || metadataLoading || privateMetadataLoading;
 
-  const normalizedInitialData = useMemo(() => {
-    if (!initialData) {
-      return undefined;
-    }
-
-    return {
-      ...initialData,
-      metadata: (initialData.metadata ?? []).map(mapMetadataItemToInput),
-      privateMetadata: (initialData.privateMetadata ?? []).map(mapMetadataItemToInput),
-    };
-  }, [initialData]);
-
-  const fulfillmentSubmitHandler = useMemo(() => {
-    if (!normalizedInitialData) {
-      return (): Promise<any[]> => Promise.resolve([]);
-    }
-
-    return createMetadataUpdateHandler(
-      normalizedInitialData,
-      // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
-      (): Promise<any[]> => Promise.resolve([]),
-      variables => updateMetadata({ variables }),
-      variables => updatePrivateMetadata({ variables }),
-    );
-  }, [normalizedInitialData, updateMetadata, updatePrivateMetadata]);
-
-  const onSubmit = async (data: MetadataFormData): Promise<void> => {
+  const onSubmit = async (
+    data: MetadataFormData,
+    baseline: MetadataFormData | undefined,
+  ): Promise<void> => {
     // Without loaded metadata there is nothing to compare against and nothing gets sent,
     // so don't report a save that didn't happen.
-    if (!normalizedInitialData) {
+    if (!initialData || !baseline) {
       return;
     }
 
-    submittedData.current = data;
+    setSaving(true);
 
-    const errors = await fulfillmentSubmitHandler(data);
-
-    if (errors.length > 0) {
-      return;
-    }
-
-    // The metadata is saved at this point. If reloading it fails, still confirm the save and
-    // close: the mutation results already updated the cache, and failing here would leave the
-    // dialog open as if the save hadn't happened.
     try {
-      if (refetch) {
-        await refetch();
-      } else {
-        const result = client.refetchQueries({ include: [refetchDocument] });
+      const saveChanges = createMetadataUpdateHandler(
+        { id: initialData.id, ...baseline },
+        // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
+        async (): Promise<never[]> => [],
+        variables => updateMetadata({ variables }),
+        variables => updatePrivateMetadata({ variables }),
+      );
+      const errors = await saveChanges(data);
 
-        await Promise.all(
-          result.queries.map(query =>
-            query.refetch({
-              fetchPolicy: "network-only",
-            }),
-          ),
-        );
+      if (errors.length > 0) {
+        return;
       }
-    } catch {
-      // Reported by the query hooks where they handle errors; nothing to undo here.
-    }
 
-    notify({
-      status: "success",
-      text: intl.formatMessage({ id: "gelco+", defaultMessage: "Metadata updated" }),
-    });
-    onClose();
+      // The metadata is saved at this point; reload it so the page shows the saved values. If
+      // the reload fails, the save still stands, so confirm it anyway: query hooks with error
+      // handling report the failure, and lazily loaded dialogs load again on their next open.
+      try {
+        if (refetch) {
+          await refetch();
+        } else {
+          await client.refetchQueries({ include: [refetchDocument] });
+        }
+      } catch {
+        // Nothing to undo: the save itself succeeded.
+      }
+
+      notify({
+        status: "success",
+        text: intl.formatMessage({ id: "gelco+", defaultMessage: "Metadata updated" }),
+      });
+      onClose();
+    } finally {
+      setSaving(false);
+    }
   };
 
   return {
     onSubmit,
-    lastSubmittedData: submittedData.current,
-    submitInProgress: submitInProgress,
+    submitInProgress,
   };
 };

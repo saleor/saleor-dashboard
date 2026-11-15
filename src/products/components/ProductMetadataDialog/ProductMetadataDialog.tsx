@@ -19,7 +19,7 @@ export const ProductMetadataDialog = ({ onClose, open, product }: ProductMetadat
   const normalizedProduct = product
     ? { ...product, privateMetadata: product.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedProduct,
     onClose,
     refetchDocument: ProductDetailsDocument,
@@ -34,10 +34,10 @@ export const ProductMetadataDialog = ({ onClose, open, product }: ProductMetadat
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedProduct,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export const ProductMetadataDialog = ({ onClose, open, product }: ProductMetadat
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Product Metadata",

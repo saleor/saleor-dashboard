@@ -13,7 +13,6 @@ const mockOnSubmit = jest.fn();
 jest.mock("./useHandleSubmit", () => ({
   useHandleOrderLineMetadataSubmit: jest.fn(() => ({
     onSubmit: mockOnSubmit,
-    lastSubmittedData: undefined,
     submitInProgress: false,
   })),
 }));
@@ -263,6 +262,46 @@ describe("OrderLineMetadataDialog", () => {
   });
 
   describe("OrderLine metadata's form", () => {
+    const loadedImplementation = mockUseMetadataValues.getMockImplementation();
+
+    afterEach(() => {
+      if (loadedImplementation) {
+        mockUseMetadataValues.mockImplementation(loadedImplementation);
+      }
+    });
+
+    it("keeps an edit being typed when the metadata is loaded again", () => {
+      // Arrange
+      const props = { open: true, onClose: onCloseMock, orderId: "order-id", lineId: mockData.id };
+      const { rerender } = render(<OrderLineMetadataDialog {...props} />);
+      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+
+      fireEvent.click(within(orderLineMetadata).getAllByTestId("expand")[0]);
+      fireEvent.change(within(orderLineMetadata).getByDisplayValue("order-line-value"), {
+        target: { value: "typed-value" },
+      });
+
+      // Act: an app adds a key and the dialog loads the line again.
+      mockUseMetadataValues.mockImplementation(() => ({
+        data: {
+          ...mockData,
+          metadata: [
+            ...mockData.metadata,
+            { key: "app-key", value: "app-value", __typename: "MetadataItem" },
+          ],
+        },
+        loading: false,
+        loadFailed: false,
+        retry: jest.fn(),
+      }));
+      rerender(<OrderLineMetadataDialog {...props} />);
+
+      // Assert: the form stays as the user left it; saving sends only their change.
+      expect(within(orderLineMetadata).getByDisplayValue("typed-value")).toBeInTheDocument();
+      expect(within(orderLineMetadata).queryByDisplayValue("app-value")).not.toBeInTheDocument();
+      expect(screen.getByTestId("save")).toBeEnabled();
+    });
+
     it("displays order line metadata", async () => {
       // Arrange
       render(
