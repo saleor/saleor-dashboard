@@ -27,10 +27,11 @@ const OpenLazyMetadataDialog = <TData, TVariables, TEntity extends EntityWithMet
   ...dataOptions
 }: OpenLazyMetadataDialogProps<TData, TVariables, TEntity>): React.ReactNode => {
   const { entity, contentLoading, loadError, onRetryLoad } = useMetadataDialogData(dataOptions);
+  // Nothing to reload after a save: the dialog closes, and the save's response already updated
+  // the object in the cache, which pages showing it read from.
   const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: entity,
     onClose,
-    refetchDocument: dataOptions.query,
   });
   const {
     metadataFields,

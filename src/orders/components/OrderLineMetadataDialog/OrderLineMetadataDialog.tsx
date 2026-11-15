@@ -4,7 +4,11 @@ import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { MetadataLoadError } from "@dashboard/components/MetadataDialog/MetadataLoadError";
-import { areMetadataFormDataEqual } from "@dashboard/components/MetadataDialog/useMetadataForm";
+import {
+  areMetadataFormDataEqual,
+  hasMetadataChanges,
+} from "@dashboard/components/MetadataDialog/useMetadataForm";
+import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
 import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalDivider } from "@dashboard/components/Modal/ModalDivider";
@@ -13,7 +17,6 @@ import { type OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { productVariantEditUrl } from "@dashboard/products/urls";
-import { filterMetadataArray } from "@dashboard/utils/handlers/filterMetadataArray";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useLayoutEffect, useMemo, useState } from "react";
@@ -25,7 +28,6 @@ import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from ".
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 import { useMetadataValues } from "./useMetadataValues";
 import { useOrderLineMetadataFormControls } from "./useOrderLineMetadataFormControls";
-import { mapFieldArrayToMetadataInput } from "./utils";
 
 export type OrderLineMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
 
@@ -98,17 +100,12 @@ const OpenOrderLineMetadataDialog = ({
 
   const { handleSubmit, control, getValues, formState, trigger, reset } = formMethods;
   const { isDirty } = formState;
-  // Rows without a key aren't saved, so only a difference in what a save would send is a change.
+  // Same rule as the shared metadata form; the variant's metadata is editable with MANAGE_PRODUCTS.
   const hasChanges =
     !!baseline &&
     isDirty &&
-    !areMetadataFormDataEqual(
-      {
-        metadata: filterMetadataArray(getValues().orderLine.metadata),
-        privateMetadata: filterMetadataArray(getValues().orderLine.privateMetadata),
-      },
-      baseline.orderLine,
-    );
+    (hasMetadataChanges(getValues().orderLine, baseline.orderLine) ||
+      hasMetadataChanges(getValues().variant, baseline.variant));
 
   // Same rule as the shared metadata form: newly loaded data goes into the form only while the
   // user has no unsaved edits, so a reload never replaces what they're typing.

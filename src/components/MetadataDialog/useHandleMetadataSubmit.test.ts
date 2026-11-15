@@ -222,38 +222,95 @@ describe("useHandleMetadataSubmit", () => {
     expect(result.current.submitInProgress).toBe(false);
   });
 
-  it("doesn't close anything when the save finishes after its dialog unmounted", async () => {
+  describe("when the save finishes after the dialog or page changed", () => {
+    // Starts a save whose public request finishes only when `finish` is called.
+    const startSlowSave = (): {
+      unmount: () => void;
+      finish: () => Promise<void>;
+    } => {
+      let finishRequest: (value: unknown) => void = () => undefined;
+
+      mockUpdateMetadata.mockReturnValue(
+        new Promise(resolve => {
+          finishRequest = resolve;
+        }),
+      );
+
+      const { result, unmount } = renderHook(() =>
+        useHandleMetadataSubmit({
+          initialData: mockInitialData,
+          onClose: mockOnClose,
+          refetchDocument: mockDocument,
+        }),
+      );
+      let saving: Promise<void> = Promise.resolve();
+
+      act(() => {
+        saving = result.current.onSubmit(mockMetadataFormData, mockBaseline);
+      });
+
+      return {
+        unmount,
+        finish: async () => {
+          await act(async () => {
+            finishRequest({ data: { updateMetadata: { errors: [] } } });
+            await saving;
+          });
+        },
+      };
+    };
+
+    afterEach(() => {
+      window.history.replaceState({}, "", "/");
+    });
+
+    it("doesn't close anything when the user went elsewhere while it ran", async () => {
+      // Arrange
+      window.history.replaceState({}, "", "/products/1?action=view-metadata");
+
+      const save = startSlowSave();
+
+      // Act
+      window.history.pushState({}, "", "/products/1?action=remove");
+      await save.finish();
+
+      // Assert
+      expect(mockNotify).toHaveBeenCalledWith({ status: "success", text: expect.any(String) });
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+
+    it("still closes when the page unmounted the dialog while reloading", async () => {
+      // Arrange
+      window.history.replaceState({}, "", "/product-types/1?action=view-metadata");
+
+      const save = startSlowSave();
+
+      // Act
+      save.unmount();
+      await save.finish();
+
+      // Assert
+      expect(mockOnClose).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it("reloads nothing when given neither a refetch nor a document", async () => {
     // Arrange
-    let finishSave: (value: unknown) => void = () => undefined;
-
-    mockUpdateMetadata.mockReturnValue(
-      new Promise(resolve => {
-        finishSave = resolve;
-      }),
-    );
-
-    const { result, unmount } = renderHook(() =>
+    const { result } = renderHook(() =>
       useHandleMetadataSubmit({
         initialData: mockInitialData,
         onClose: mockOnClose,
-        refetchDocument: mockDocument,
       }),
     );
-    let saving: Promise<void> = Promise.resolve();
-
-    act(() => {
-      saving = result.current.onSubmit(mockMetadataFormData, mockBaseline);
-    });
 
     // Act
-    unmount();
     await act(async () => {
-      finishSave({ data: { updateMetadata: { errors: [] } } });
-      await saving;
+      await result.current.onSubmit(mockMetadataFormData, mockBaseline);
     });
 
     // Assert
-    expect(mockOnClose).not.toHaveBeenCalled();
+    expect(mockClient.refetchQueries).not.toHaveBeenCalled();
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
   it("sends only what differs from what the form was loaded with", async () => {

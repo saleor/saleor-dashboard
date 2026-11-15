@@ -130,7 +130,7 @@ describe("OrderMetadataDialog", () => {
     expect(screen.queryByTestId("skeleton")).not.toBeInTheDocument();
   });
 
-  it("closes as soon as the save succeeds, without waiting for the reload", async () => {
+  it("closes as soon as the save succeeds, without loading its metadata again", async () => {
     // Arrange
     const onClose = jest.fn();
     const saveVariables: UpdateMetadataMutationVariables = {
@@ -153,6 +153,7 @@ describe("OrderMetadataDialog", () => {
     };
 
     const saveResult = jest.fn(() => ({ data: saved }));
+    const reload = jest.fn(() => ({ data: createOrderMetadata("SO-2002") }));
 
     renderDialog(
       [
@@ -161,7 +162,7 @@ describe("OrderMetadataDialog", () => {
           request: { query: UpdateMetadataDocument, variables: saveVariables },
           result: saveResult,
         },
-        loads("SO-2002", 800),
+        { request: orderMetadataRequest, result: reload },
       ],
       onClose,
     );
@@ -171,9 +172,10 @@ describe("OrderMetadataDialog", () => {
     // Act
     fireEvent.click(screen.getByTestId("save"));
 
-    // Assert: the save has answered; the reload is still running in the background.
+    // Assert: the save's response already updated the cached order, so nothing is reloaded.
     await waitFor(() => expect(saveResult).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1), { timeout: 3000 });
+    expect(reload).not.toHaveBeenCalled();
   });
 
   it("shows the error, not the values from the last open, when loading fails on reopening", async () => {

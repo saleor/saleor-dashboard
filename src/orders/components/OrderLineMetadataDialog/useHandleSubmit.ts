@@ -30,7 +30,7 @@ export const useHandleOrderLineMetadataSubmit = ({
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
 
   const [submitInProgress, setSubmitInProgress] = useState(false);
-  // A save can finish after the dialog unmounted; its onClose would then close another dialog.
+  // A save can finish after the dialog unmounted; its state can't be updated then.
   const mounted = useRef(true);
 
   useEffect(function trackMounted() {
@@ -53,6 +53,10 @@ export const useHandleOrderLineMetadataSubmit = ({
     }
 
     setSubmitInProgress(true);
+
+    // Where the save started. Closing rewrites the address, so it's done only while the user
+    // is still there.
+    const startedAt = window.location.href;
 
     try {
       const saveOrderLine = createMetadataUpdateHandler(
@@ -93,7 +97,9 @@ export const useHandleOrderLineMetadataSubmit = ({
         }),
       });
 
-      if (mounted.current) {
+      // If the user went back or elsewhere meanwhile, closing would undo that, or close a dialog
+      // opened since.
+      if (window.location.href === startedAt) {
         onClose();
       }
     } finally {

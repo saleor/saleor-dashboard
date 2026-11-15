@@ -1,5 +1,6 @@
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
+import { getValidateMetadata } from "@dashboard/components/MetadataDialog/validation";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { useMemo } from "react";
@@ -12,7 +13,6 @@ import {
 import { useIntl } from "react-intl";
 
 import { type OrderLineAndVariantMetadataFormData } from "./OrderLineMetadataDialog";
-import { getValidateMetadata } from "./utils";
 
 type UseOrderLineMetadataFormControlsParams = Pick<
   UseFormReturn<OrderLineAndVariantMetadataFormData>,

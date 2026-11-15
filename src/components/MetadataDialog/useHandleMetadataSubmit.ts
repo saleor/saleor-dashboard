@@ -14,7 +14,8 @@ export const useHandleMetadataSubmit = <T extends { id: string }>({
 }: {
   initialData: T | undefined;
   onClose: () => void;
-  refetchDocument: DocumentNode;
+  /** Reloaded after a save, unless `refetch` is given. Without either, nothing is reloaded. */
+  refetchDocument?: DocumentNode;
   refetch?: () => Promise<ApolloQueryResult<unknown>>;
 }): {
   /**
@@ -34,8 +35,7 @@ export const useHandleMetadataSubmit = <T extends { id: string }>({
     useUpdatePrivateMetadataMutation();
   // Covers both requests of a save, so the dialog can't be edited or closed in between.
   const [saving, setSaving] = useState(false);
-  // A save can finish after its dialog unmounted (closed, or the user navigated away); its
-  // onClose would then close whatever dialog is open by then.
+  // A save can finish after its dialog unmounted; its state can't be updated then.
   const mounted = useRef(true);
 
   useEffect(function trackMounted() {
@@ -60,6 +60,10 @@ export const useHandleMetadataSubmit = <T extends { id: string }>({
 
     setSaving(true);
 
+    // Where the save started. Closing rewrites the address, so it's done only while the user
+    // is still there.
+    const startedAt = window.location.href;
+
     try {
       const saveChanges = createMetadataUpdateHandler(
         { id: initialData.id, ...baseline },
@@ -77,7 +81,11 @@ export const useHandleMetadataSubmit = <T extends { id: string }>({
       // The metadata is saved, and the mutation results already updated the cache. Reload it
       // in the background so the page also picks up anything else that changed; the dialog
       // doesn't wait, so a slow reload can't hold it open, and a failed one doesn't undo the save.
-      const reload = refetch ? refetch() : client.refetchQueries({ include: [refetchDocument] });
+      const reload = refetch
+        ? refetch()
+        : refetchDocument
+          ? client.refetchQueries({ include: [refetchDocument] })
+          : undefined;
 
       Promise.resolve(reload).catch(() => undefined);
 
@@ -86,7 +94,10 @@ export const useHandleMetadataSubmit = <T extends { id: string }>({
         text: intl.formatMessage({ id: "gelco+", defaultMessage: "Metadata updated" }),
       });
 
-      if (mounted.current) {
+      // If the user went back or elsewhere meanwhile, closing would undo that, or close a dialog
+      // opened since. A dialog its page unmounted while reloading still closes; otherwise the
+      // page would open it again.
+      if (window.location.href === startedAt) {
         onClose();
       }
     } finally {

@@ -1,5 +1,5 @@
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { type ComponentProps } from "react";
 
 import {
@@ -170,6 +170,31 @@ describe("OrderLineMetadataDialog", () => {
       expect(within(productVariantMetadata).getByDisplayValue("variant-value")).toBeInTheDocument();
     });
 
+    it("can save an edit to only the variant's metadata", () => {
+      // Arrange
+      (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
+      render(
+        <OrderLineMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
+
+      fireEvent.click(within(productVariantMetadata).getAllByTestId("expand")[0]);
+
+      // Act
+      fireEvent.change(within(productVariantMetadata).getByDisplayValue("variant-value"), {
+        target: { value: "edited-variant-value" },
+      });
+
+      // Assert
+      expect(screen.getByTestId("save")).toBeEnabled();
+    });
+
     it("displays product variant private metadata when user has MANAGE_PRODUCTS permission", () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
@@ -305,6 +330,45 @@ describe("OrderLineMetadataDialog", () => {
       // Assert: the form stays as the user left it; saving sends only their change.
       expect(within(orderLineMetadata).getByDisplayValue("typed-value")).toBeInTheDocument();
       expect(within(orderLineMetadata).queryByDisplayValue("app-value")).not.toBeInTheDocument();
+      expect(screen.getByTestId("save")).toBeEnabled();
+    });
+
+    it("shows no error for a new blank row, and can be saved once the row is filled in", async () => {
+      // Arrange
+      render(
+        <OrderLineMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+
+      fireEvent.click(within(orderLineMetadata).getAllByTestId("expand")[0]);
+
+      // Act
+      fireEvent.click(within(orderLineMetadata).getAllByTestId("add-field")[0]);
+      // Let the rows' validation finish.
+      await act(async () => {
+        await new Promise(resolve => setTimeout(resolve, 0));
+      });
+
+      // Assert
+      expect(within(orderLineMetadata).queryByText("Metadata key cannot be empty")).toBeNull();
+      expect(screen.getByTestId("save")).toBeDisabled();
+
+      const newKey = orderLineMetadata.querySelector<HTMLInputElement>('[aria-label="name:1"]');
+      const newValue = orderLineMetadata.querySelector<HTMLInputElement>('[aria-label="value:1"]');
+
+      if (!newKey || !newValue) {
+        throw new Error("The added row isn't rendered");
+      }
+
+      fireEvent.change(newKey, { target: { value: "new-key" } });
+      fireEvent.change(newValue, { target: { value: "new-value" } });
+
       expect(screen.getByTestId("save")).toBeEnabled();
     });
 

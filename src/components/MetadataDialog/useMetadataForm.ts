@@ -3,7 +3,6 @@ import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
 import { type MetadataInput, type MetadataItemFragment } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
-import { filterMetadataArray } from "@dashboard/utils/handlers/filterMetadataArray";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useLayoutEffect, useMemo, useState } from "react";
@@ -52,20 +51,40 @@ const toFormData = (
       }
     : undefined;
 
-const areEntriesEqual = (a: MetadataInput[], b: MetadataInput[]): boolean =>
-  a.length === b.length &&
-  a.every((entry, index) => entry.key === b[index].key && entry.value === b[index].value);
+const sortedEntries = (entries: MetadataInput[]): string[] =>
+  entries.map(({ key, value }) => JSON.stringify([key, value])).sort();
 
-const toSavable = (data: MetadataFormData): MetadataFormData => ({
-  metadata: filterMetadataArray(data.metadata),
-  privateMetadata: filterMetadataArray(data.privateMetadata),
-});
+// The order of the rows isn't saved, so it doesn't matter here.
+const areEntriesEqual = (a: MetadataInput[], b: MetadataInput[]): boolean => {
+  const sortedA = sortedEntries(a);
+  const sortedB = sortedEntries(b);
 
-const hasSavableChanges = (current: MetadataFormData, baseline: MetadataFormData): boolean =>
-  !areMetadataFormDataEqual(toSavable(current), baseline);
+  return sortedA.length === sortedB.length && sortedA.every((entry, i) => entry === sortedB[i]);
+};
 
 export const areMetadataFormDataEqual = (a: MetadataFormData, b: MetadataFormData): boolean =>
   areEntriesEqual(a.metadata, b.metadata) && areEntriesEqual(a.privateMetadata, b.privateMetadata);
+
+// A row with neither key nor value isn't saved. A row with only a value is something the user
+// typed (validation then asks for its key), so it stays.
+const withoutBlankRows = (entries: MetadataInput[]): MetadataInput[] =>
+  entries.filter(({ key, value }) => key !== "" || value !== "");
+
+/**
+ * Whether the form differs from what it was loaded with in anything but blank rows and row order.
+ * Removing an entry and adding it back is no change.
+ */
+export const hasMetadataChanges = (
+  current: MetadataFormData,
+  baseline: MetadataFormData,
+): boolean =>
+  !areMetadataFormDataEqual(
+    {
+      metadata: withoutBlankRows(current.metadata),
+      privateMetadata: withoutBlankRows(current.privateMetadata),
+    },
+    baseline,
+  );
 
 export const useMetadataForm = ({
   graphqlData,
@@ -198,9 +217,8 @@ export const useMetadataForm = ({
     metadataErrors,
     privateMetadataErrors,
     reset,
-    // Nothing to save against until metadata is loaded, and rows without a key aren't saved,
-    // so only a difference in what a save would send counts as a change.
-    formIsDirty: !!baseline && isDirty && hasSavableChanges(getValues(), baseline),
+    // Nothing to save against until metadata is loaded.
+    formIsDirty: !!baseline && isDirty && hasMetadataChanges(getValues(), baseline),
     handleChange,
     formData: getValues(),
     getFormData: () => getValues(),

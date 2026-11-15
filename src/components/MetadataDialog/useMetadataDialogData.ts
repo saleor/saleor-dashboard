@@ -20,9 +20,10 @@ interface MetadataDialogData<TEntity> {
  * Loads the metadata a dialog edits. Use it in a component that is mounted only while the dialog
  * is open, so every open starts a new, network-only request.
  *
- * Until a request in this open succeeds, nothing is shown: Apollo can hand back an earlier result
- * or cached data while loading and even after a failed request, which must not pass for current.
- * After that, a reload (after a save, or Retry) keeps the last good result on screen.
+ * Until a request in this open returns the object, nothing is shown: Apollo can hand back an
+ * earlier result or cached data while loading and even after a failed request, which must not
+ * pass for current. After that, the object stays on screen while a reload runs, and when a reload
+ * fails or comes back without it, so a background reload can't take the editors away mid-edit.
  */
 export const useMetadataDialogData = <TData, TVariables, TEntity>({
   query,
@@ -32,21 +33,25 @@ export const useMetadataDialogData = <TData, TVariables, TEntity>({
   const { data, error, networkStatus, refetch } = useQuery<TData, TVariables>(query, {
     variables,
     fetchPolicy: "network-only",
+    // After the first request, updates come from the cache, such as a save's response, instead
+    // of starting another request. Retry still asks the server.
+    nextFetchPolicy: "cache-first",
     notifyOnNetworkStatusChange: true,
   });
   const requestRunning = networkStatus < NetworkStatus.ready;
   // A request that failed on the network can come back with earlier or cached data, which must
   // not pass for current. One the server answered, even with errors, returns its own data.
   const succeededData = !requestRunning && !error?.networkError ? data : undefined;
-  // The last successful result of this open, kept while a reload runs or after it fails.
+  const succeededEntity = succeededData ? (select(succeededData) ?? undefined) : undefined;
+  // The last result of this open that had the object.
   const [lastGoodData, setLastGoodData] = useState<TData | undefined>(undefined);
 
-  if (succeededData && succeededData !== lastGoodData) {
+  if (succeededData && succeededEntity && succeededData !== lastGoodData) {
     setLastGoodData(succeededData);
   }
 
-  const shownData = succeededData ?? lastGoodData;
-  const entity = shownData ? (select(shownData) ?? undefined) : undefined;
+  const entity =
+    succeededEntity ?? (lastGoodData ? (select(lastGoodData) ?? undefined) : undefined);
   const loadError = !requestRunning && !entity;
 
   return {

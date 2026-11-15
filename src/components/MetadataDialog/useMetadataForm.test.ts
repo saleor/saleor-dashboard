@@ -490,7 +490,7 @@ describe("useMetadataForm", () => {
       );
     });
 
-    it("doesn't count an added row without a key as a change", async () => {
+    it("doesn't count an added blank row as a change", async () => {
       // Arrange
       const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
 
@@ -502,6 +502,56 @@ describe("useMetadataForm", () => {
       // Assert
       expect(result.current.formData.metadata).toHaveLength(3);
       expect(result.current.metadataErrors).toEqual([]);
+      expect(result.current.formIsDirty).toBe(false);
+    });
+
+    it("counts a value typed into a new row before its key as a change", async () => {
+      // Arrange
+      const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
+
+      await act(async () => {
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      // Act
+      await act(async () => {
+        result.current.handleChange(
+          { target: { name: `metadata:2:${EventDataField.value}`, value: '{"long": "json"}' } },
+          false,
+        );
+      });
+
+      // Assert: closing asks before dropping it, and Save waits for the key.
+      expect(result.current.formIsDirty).toBe(true);
+      expect(result.current.metadataErrors).toEqual(["Metadata key cannot be empty"]);
+    });
+
+    it("doesn't count removing an entry and adding it back as a change", async () => {
+      // Arrange
+      const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
+
+      await act(async () => {
+        result.current.handleChange({ target: { name: EventDataAction.delete, value: 0 } }, false);
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      // Act
+      await act(async () => {
+        result.current.handleChange(
+          { target: { name: `metadata:1:${EventDataField.name}`, value: "seller.legalName" } },
+          false,
+        );
+        result.current.handleChange(
+          { target: { name: `metadata:1:${EventDataField.value}`, value: "Example GmbH" } },
+          false,
+        );
+      });
+
+      // Assert
+      expect(result.current.formData.metadata).toEqual([
+        { key: "seller.vatId", value: "DE000000000" },
+        { key: "seller.legalName", value: "Example GmbH" },
+      ]);
       expect(result.current.formIsDirty).toBe(false);
     });
 
