@@ -13,7 +13,7 @@ import { richTextEditorMessages } from "./messages";
 
 // The message IDs belong to the Dashboard catalogue. Native Editor.js dictionary
 // keys must stay in English, matching the installed editor and tool versions.
-export const editorMessages = defineMessages({
+const editorMessages = defineMessages({
   add: { id: "2/2yg+", defaultMessage: "Add" },
   clickToTune: { id: "haWsfa", defaultMessage: "Click to tune" },
   dragToMove: { id: "8W6Qb0", defaultMessage: "or drag to move" },
