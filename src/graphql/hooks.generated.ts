@@ -21967,6 +21967,41 @@ export function useSiteSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type SiteSettingsQueryHookResult = ReturnType<typeof useSiteSettingsQuery>;
 export type SiteSettingsLazyQueryHookResult = ReturnType<typeof useSiteSettingsLazyQuery>;
 export type SiteSettingsQueryResult = Apollo.QueryResult<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>;
+export const ShopMetadataDocument = gql`
+    query ShopMetadata {
+  shop {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __useShopMetadataQuery__
+ *
+ * To run a query within a React component, call `useShopMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShopMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShopMetadataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShopMetadataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>(ShopMetadataDocument, options);
+      }
+export function useShopMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>(ShopMetadataDocument, options);
+        }
+export type ShopMetadataQueryHookResult = ReturnType<typeof useShopMetadataQuery>;
+export type ShopMetadataLazyQueryHookResult = ReturnType<typeof useShopMetadataLazyQuery>;
+export type ShopMetadataQueryResult = Apollo.QueryResult<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>;
 export const StaffMemberAddDocument = gql`
     mutation StaffMemberAdd($input: StaffCreateInput!) {
   staffCreate(input: $input) {

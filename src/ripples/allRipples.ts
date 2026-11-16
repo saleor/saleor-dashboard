@@ -38,6 +38,7 @@ import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGener
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { type Ripple } from "@dashboard/ripples/types";
 import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
+import { rippleStoreMetadata } from "@dashboard/siteSettings/ripples/storeMetadata";
 import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
 import { rippleProductMediaAltTranslation } from "@dashboard/translations/ripples/productMediaAltTranslation";
 import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
@@ -71,6 +72,9 @@ export const allRipples: Ripple[] = [
 
   // Warehouses
   rippleWarehouseMetadata,
+
+  // Store settings
+  rippleStoreMetadata,
 
   // Products
   rippleProductAvailabilityDiagnostics,
