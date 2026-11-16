@@ -23,7 +23,7 @@ export const ProductVariantMetadataDialog = ({
   const normalizedVariant = variant
     ? { ...variant, privateMetadata: variant.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedVariant,
     onClose,
     refetchDocument: ProductVariantDetailsDocument,
@@ -38,10 +38,10 @@ export const ProductVariantMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedVariant,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const ProductVariantMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Variant Metadata",

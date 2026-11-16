@@ -9,7 +9,6 @@ const mockOnSubmit = jest.fn();
 jest.mock("@dashboard/components/MetadataDialog/useHandleMetadataSubmit", () => ({
   useHandleMetadataSubmit: jest.fn(() => ({
     onSubmit: mockOnSubmit,
-    lastSubmittedData: undefined,
     submitInProgress: false,
   })),
 }));

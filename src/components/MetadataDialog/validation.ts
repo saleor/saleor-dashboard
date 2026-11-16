@@ -21,7 +21,10 @@ import { type IntlShape } from "react-intl";
 export const getValidateMetadata =
   (intl: IntlShape) =>
   (metadata: MetadataInput[]): true | string => {
-    const keys = metadata.map(entry => entry.key);
+    // A row with neither key nor value is dropped on save, so it's not an error.
+    const keys = metadata
+      .filter(entry => entry.key !== "" || entry.value !== "")
+      .map(entry => entry.key);
     const uniqueKeys = new Set(keys);
 
     if (uniqueKeys.size !== keys.length) {

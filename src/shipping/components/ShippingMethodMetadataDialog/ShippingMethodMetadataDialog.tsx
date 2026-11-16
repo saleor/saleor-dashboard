@@ -25,7 +25,7 @@ export const ShippingMethodMetadataDialog = ({
   const normalizedShippingMethod = shippingMethod
     ? { ...shippingMethod, privateMetadata: shippingMethod.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedShippingMethod,
     onClose,
     refetchDocument: ShippingZoneDocument,
@@ -40,10 +40,10 @@ export const ShippingMethodMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedShippingMethod,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export const ShippingMethodMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Shipping Method Metadata",

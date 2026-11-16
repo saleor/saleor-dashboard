@@ -1,4 +1,5 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
 import { topNavDestinationMessages } from "@dashboard/components/AppLayout/TopNav/destinationMessages";
 import { CompanyAddressForm } from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
@@ -25,6 +26,7 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { sectionNames } from "@dashboard/intl";
+import { rippleStoreMetadata } from "@dashboard/siteSettings/ripples/storeMetadata";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -74,6 +76,7 @@ interface SiteSettingsPageProps {
   errors: ShopErrorFragment[];
   shop?: SiteSettingsQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
+  onShowMetadata: () => void;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
 
@@ -98,6 +101,7 @@ export const SiteSettingsPage = ({
   errors,
   saveButtonBarState,
   shop,
+  onShowMetadata,
   onSubmit,
 }: SiteSettingsPageProps): React.ReactNode => {
   const intl = useIntl();
@@ -135,6 +139,15 @@ export const SiteSettingsPage = ({
       backHrefIcon={<TopNavDestinationIcon.configuration />}
       backHrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
       title={intl.formatMessage(sectionNames.siteSettings)}
+      actions={
+        <TopNav.MetadataButton
+          onClick={onShowMetadata}
+          disabled={disabled}
+          data-test-id="show-store-metadata"
+          title={intl.formatMessage(messages.editMetadata)}
+          ripple={rippleStoreMetadata}
+        />
+      }
     >
       <Form
         initial={initialForm}

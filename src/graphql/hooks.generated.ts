@@ -10949,6 +10949,42 @@ export function usePromotionDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type PromotionDetailsQueryHookResult = ReturnType<typeof usePromotionDetailsQuery>;
 export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotionDetailsLazyQuery>;
 export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
+export const PromotionMetadataDocument = gql`
+    query PromotionMetadata($id: ID!) {
+  promotion(id: $id) {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __usePromotionMetadataQuery__
+ *
+ * To run a query within a React component, call `usePromotionMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePromotionMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePromotionMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>(PromotionMetadataDocument, options);
+      }
+export function usePromotionMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>(PromotionMetadataDocument, options);
+        }
+export type PromotionMetadataQueryHookResult = ReturnType<typeof usePromotionMetadataQuery>;
+export type PromotionMetadataLazyQueryHookResult = ReturnType<typeof usePromotionMetadataLazyQuery>;
+export type PromotionMetadataQueryResult = Apollo.QueryResult<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>;
 export const RuleConditionsSelectedOptionsDetailsDocument = gql`
     query RuleConditionsSelectedOptionsDetails($categoriesIds: [ID!], $collectionsIds: [ID!], $productsIds: [ID!], $variantsIds: [ID!]) {
   categories(first: 100, where: {ids: $categoriesIds}) {
@@ -21967,6 +22003,41 @@ export function useSiteSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type SiteSettingsQueryHookResult = ReturnType<typeof useSiteSettingsQuery>;
 export type SiteSettingsLazyQueryHookResult = ReturnType<typeof useSiteSettingsLazyQuery>;
 export type SiteSettingsQueryResult = Apollo.QueryResult<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>;
+export const ShopMetadataDocument = gql`
+    query ShopMetadata {
+  shop {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __useShopMetadataQuery__
+ *
+ * To run a query within a React component, call `useShopMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShopMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShopMetadataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShopMetadataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>(ShopMetadataDocument, options);
+      }
+export function useShopMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>(ShopMetadataDocument, options);
+        }
+export type ShopMetadataQueryHookResult = ReturnType<typeof useShopMetadataQuery>;
+export type ShopMetadataLazyQueryHookResult = ReturnType<typeof useShopMetadataLazyQuery>;
+export type ShopMetadataQueryResult = Apollo.QueryResult<Types.ShopMetadataQuery, Types.ShopMetadataQueryVariables>;
 export const StaffMemberAddDocument = gql`
     mutation StaffMemberAdd($input: StaffCreateInput!) {
   staffCreate(input: $input) {
@@ -22945,6 +23016,42 @@ export function useTaxConfigurationsListLazyQuery(baseOptions?: ApolloReactHooks
 export type TaxConfigurationsListQueryHookResult = ReturnType<typeof useTaxConfigurationsListQuery>;
 export type TaxConfigurationsListLazyQueryHookResult = ReturnType<typeof useTaxConfigurationsListLazyQuery>;
 export type TaxConfigurationsListQueryResult = Apollo.QueryResult<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>;
+export const TaxConfigurationMetadataDocument = gql`
+    query TaxConfigurationMetadata($id: ID!) {
+  taxConfiguration(id: $id) {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __useTaxConfigurationMetadataQuery__
+ *
+ * To run a query within a React component, call `useTaxConfigurationMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaxConfigurationMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaxConfigurationMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useTaxConfigurationMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>(TaxConfigurationMetadataDocument, options);
+      }
+export function useTaxConfigurationMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>(TaxConfigurationMetadataDocument, options);
+        }
+export type TaxConfigurationMetadataQueryHookResult = ReturnType<typeof useTaxConfigurationMetadataQuery>;
+export type TaxConfigurationMetadataLazyQueryHookResult = ReturnType<typeof useTaxConfigurationMetadataLazyQuery>;
+export type TaxConfigurationMetadataQueryResult = Apollo.QueryResult<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>;
 export const TaxCountriesListDocument = gql`
     query TaxCountriesList {
   taxCountryConfigurations {
@@ -24655,7 +24762,9 @@ export const UpdateMetadataDocument = gql`
       ...MetadataError
     }
     item {
-      ...Metadata
+      metadata {
+        ...MetadataItem
+      }
       ... on Node {
         id
       }
@@ -24666,7 +24775,9 @@ export const UpdateMetadataDocument = gql`
       ...MetadataError
     }
     item {
-      ...Metadata
+      metadata {
+        ...MetadataItem
+      }
       ... on Node {
         id
       }
@@ -24674,7 +24785,7 @@ export const UpdateMetadataDocument = gql`
   }
 }
     ${MetadataErrorFragmentDoc}
-${MetadataFragmentDoc}`;
+${MetadataItemFragmentDoc}`;
 export type UpdateMetadataMutationFn = Apollo.MutationFunction<Types.UpdateMetadataMutation, Types.UpdateMetadataMutationVariables>;
 
 /**
@@ -24710,7 +24821,9 @@ export const UpdatePrivateMetadataDocument = gql`
       ...MetadataError
     }
     item {
-      ...Metadata
+      privateMetadata {
+        ...MetadataItem
+      }
       ... on Node {
         id
       }
@@ -24721,7 +24834,9 @@ export const UpdatePrivateMetadataDocument = gql`
       ...MetadataError
     }
     item {
-      ...Metadata
+      privateMetadata {
+        ...MetadataItem
+      }
       ... on Node {
         id
       }
@@ -24729,7 +24844,7 @@ export const UpdatePrivateMetadataDocument = gql`
   }
 }
     ${MetadataErrorFragmentDoc}
-${MetadataFragmentDoc}`;
+${MetadataItemFragmentDoc}`;
 export type UpdatePrivateMetadataMutationFn = Apollo.MutationFunction<Types.UpdatePrivateMetadataMutation, Types.UpdatePrivateMetadataMutationVariables>;
 
 /**

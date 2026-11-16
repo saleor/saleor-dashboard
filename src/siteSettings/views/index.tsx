@@ -6,20 +6,30 @@ import {
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { sectionNames } from "@dashboard/intl";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, findInEnum } from "../../misc";
+import { ShopMetadataDialog } from "../components/ShopMetadataDialog/ShopMetadataDialog";
 import {
   areAddressInputFieldsModified,
   SiteSettingsPage,
   type SiteSettingsPageFormData,
 } from "../components/SiteSettingsPage/SiteSettingsPage";
+import { siteSettingsUrl, type SiteSettingsUrlQueryParams } from "../urls";
 
-const SiteSettings = () => {
+interface SiteSettingsProps {
+  params: SiteSettingsUrlQueryParams;
+}
+
+const SiteSettings = ({ params }: SiteSettingsProps): React.ReactNode => {
   const notify = useNotifier();
+  const navigate = useNavigator();
   const intl = useIntl();
+  const [openModal, closeModal] = createDialogActionHandlers(navigate, siteSettingsUrl, params);
   const siteSettings = useSiteSettingsQuery({
     displayLoader: true,
   });
@@ -95,9 +105,11 @@ const SiteSettings = () => {
         disabled={loading}
         errors={errors}
         shop={siteSettings.data?.shop}
+        onShowMetadata={() => openModal("view-metadata")}
         onSubmit={handleUpdateShopSettings}
         saveButtonBarState={updateOpts.status}
       />
+      <ShopMetadataDialog open={params.action === "view-metadata"} onClose={closeModal} />
     </>
   );
 };

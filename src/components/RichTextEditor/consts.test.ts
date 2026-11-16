@@ -20,6 +20,7 @@ describe("rich text image tool", () => {
     const tool = Object.create(ImageTool.prototype);
 
     tool.uploadUrl = jest.fn();
+    tool.editorApi = { i18n: { t: (key: string) => key } };
     jest.spyOn(window, "prompt").mockReturnValue(" https://example.com/cat.png ");
 
     // Act
@@ -63,5 +64,88 @@ describe("rich text image tool", () => {
 
     // Assert
     expect(pasteConfig.files).toBeUndefined();
+  });
+});
+
+describe("rich text embed tool", () => {
+  type EmbedTool = {
+    askForUrl(): void;
+    render(): HTMLElement;
+    save(): { service?: string; source?: string; embed?: string };
+    validate(data: { service?: string }): boolean;
+  };
+  type EmbedToolClass = {
+    new (args: { data: object; api: object; readOnly: boolean }): EmbedTool;
+    prepare(args: { config: object }): void;
+    toolbox: { title: string };
+  };
+
+  const EmbedToolClass = tools.embed as unknown as EmbedToolClass;
+
+  const createTool = ({ readOnly = false }: { readOnly?: boolean } = {}): {
+    tool: EmbedTool;
+    notifier: { show: jest.Mock };
+  } => {
+    const notifier = { show: jest.fn() };
+    const api = {
+      notifier,
+      i18n: { t: (key: string) => `translated: ${key}` },
+      styles: { block: "block", input: "input", button: "cdx-button" },
+    };
+
+    EmbedToolClass.prepare({ config: {} });
+
+    return { tool: new EmbedToolClass({ data: {}, api, readOnly }), notifier };
+  };
+
+  it("is offered in the toolbox", () => {
+    // Assert
+    expect(EmbedToolClass.toolbox.title).toBe("Embed");
+  });
+
+  it("embeds a YouTube link entered in the prompt", () => {
+    // Arrange
+    const { tool } = createTool();
+
+    jest.spyOn(window, "prompt").mockReturnValue(" https://www.youtube.com/watch?v=dQw4w9WgXcQ ");
+
+    // Act
+    tool.askForUrl();
+
+    // Assert
+    expect(tool.save()).toMatchObject({
+      service: "youtube",
+      source: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      embed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    });
+  });
+
+  it("shows an error for a link no service can embed", () => {
+    // Arrange
+    const { tool, notifier } = createTool();
+
+    jest.spyOn(window, "prompt").mockReturnValue("https://example.com/page");
+
+    // Act
+    tool.askForUrl();
+
+    // Assert
+    expect(notifier.show).toHaveBeenCalledWith({
+      message: "translated: This link can't be embedded",
+      style: "error",
+    });
+    expect(tool.validate(tool.save())).toBe(false);
+  });
+
+  it("shows an add button while empty, but not in read-only mode", () => {
+    // Act
+    const editable = createTool().tool.render();
+    const readOnly = createTool({ readOnly: true }).tool.render();
+
+    // Assert
+    expect(editable.querySelector(".cdx-button")?.textContent).toBe(
+      "translated: Add embed by link",
+    );
+    expect(readOnly.querySelector(".cdx-button")).toBeNull();
   });
 });

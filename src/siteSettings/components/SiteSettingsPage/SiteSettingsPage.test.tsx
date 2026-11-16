@@ -29,13 +29,22 @@ const Wrapper = ({ children }: { children: ReactNode }): React.ReactNode => (
   </ApolloMockedProvider>
 );
 
-const renderPage = (allowStorefrontTraffic: boolean) =>
+const renderPage = ({
+  allowStorefrontTraffic = true,
+  disabled = false,
+  onShowMetadata = jest.fn(),
+}: {
+  allowStorefrontTraffic?: boolean;
+  disabled?: boolean;
+  onShowMetadata?: () => void;
+} = {}) =>
   render(
     <SiteSettingsPage
-      disabled={false}
+      disabled={disabled}
       errors={[]}
       shop={{ ...shop!, allowStorefrontTraffic }}
       saveButtonBarState="default"
+      onShowMetadata={onShowMetadata}
       onSubmit={jest.fn()}
     />,
     { wrapper: Wrapper },
@@ -48,7 +57,7 @@ const storefrontTrafficToggle = () =>
 describe("SiteSettingsPage — API access section", () => {
   it("sits between customer accounts and advanced sections", () => {
     // Arrange & Act
-    const { container } = renderPage(true);
+    const { container } = renderPage();
 
     // Assert
     const sectionIds = Array.from(container.querySelectorAll("section")).map(section => section.id);
@@ -64,7 +73,7 @@ describe("SiteSettingsPage — API access section", () => {
 
   it("reflects allowStorefrontTraffic and hides the warning when traffic is allowed", () => {
     // Arrange & Act
-    renderPage(true);
+    renderPage();
 
     // Assert
     expect(storefrontTrafficToggle()).toBeChecked();
@@ -75,7 +84,7 @@ describe("SiteSettingsPage — API access section", () => {
 
   it("lists the consequences once storefront traffic is blocked", async () => {
     // Arrange
-    renderPage(true);
+    renderPage();
 
     // Act
     await userEvent.click(storefrontTrafficToggle());
@@ -89,5 +98,33 @@ describe("SiteSettingsPage — API access section", () => {
     expect(
       screen.getByText(/Schema introspection requires app or staff credentials/),
     ).toBeInTheDocument();
+  });
+});
+
+describe("SiteSettingsPage — store metadata", () => {
+  it("opens the store metadata editor from the top bar", async () => {
+    // Arrange
+    const onShowMetadata = jest.fn();
+
+    renderPage({ onShowMetadata });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Edit store metadata" }));
+
+    // Assert
+    expect(onShowMetadata).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not open the editor while the page is loading or saving", async () => {
+    // Arrange
+    const onShowMetadata = jest.fn();
+
+    renderPage({ disabled: true, onShowMetadata });
+
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Edit store metadata" }));
+
+    // Assert
+    expect(onShowMetadata).not.toHaveBeenCalled();
   });
 });

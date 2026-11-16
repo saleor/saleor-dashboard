@@ -206,4 +206,71 @@ describe("MetadataDialog", () => {
       expect(screen.queryByTestId("back")).not.toBeInTheDocument();
     });
   });
+
+  describe("when the metadata couldn't be loaded", () => {
+    it("shows the error with Retry instead of the editors, and keeps Save disabled", async () => {
+      // Arrange
+      const onRetryLoad = jest.fn();
+      const user = userEvent.setup();
+
+      render(
+        <MetadataDialog {...defaultProps} formIsDirty={true} loadError onRetryLoad={onRetryLoad} />,
+      );
+
+      // Act
+      await user.click(screen.getByRole("button", { name: "Retry" }));
+
+      // Assert
+      expect(screen.getByRole("alert")).toHaveTextContent("Couldn't load metadata");
+      expect(screen.queryByTestId("metadata-editor")).not.toBeInTheDocument();
+      expect(screen.getByTestId("save")).toBeDisabled();
+      expect(onRetryLoad).toHaveBeenCalledTimes(1);
+    });
+
+    it("shows the editors and no error once the metadata is loaded", () => {
+      // Arrange & Act
+      render(<MetadataDialog {...defaultProps} loadError={false} />);
+
+      // Assert
+      expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+      expect(screen.getAllByTestId("metadata-editor")).toHaveLength(2);
+    });
+  });
+
+  describe("while there are validation errors or a save is running", () => {
+    it("keeps Save disabled while a validation error is shown", () => {
+      // Arrange & Act
+      render(
+        <MetadataDialog
+          {...defaultProps}
+          formIsDirty={true}
+          errors={{ metadata: "Metadata keys must be unique" }}
+        />,
+      );
+
+      // Assert
+      expect(screen.getByTestId("save")).toBeDisabled();
+    });
+
+    it("can't be closed while saving, and can once the save is done", async () => {
+      // Arrange
+      const onClose = jest.fn();
+      const user = userEvent.setup();
+      const { rerender } = render(
+        <MetadataDialog {...defaultProps} onClose={onClose} formIsDirty={true} loading={true} />,
+      );
+
+      // Act
+      await user.keyboard("{Escape}");
+
+      // Assert
+      expect(screen.getByTestId("back")).toBeDisabled();
+      expect(onClose).not.toHaveBeenCalled();
+
+      rerender(<MetadataDialog {...defaultProps} onClose={onClose} loading={false} />);
+      await user.click(screen.getByTestId("back"));
+
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
 });

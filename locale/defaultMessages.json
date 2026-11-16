@@ -1173,6 +1173,10 @@
     "context": "assign collection picker, client-side filter emptied the loaded pages",
     "string": "Every collection loaded so far is already assigned. Search by name, or keep loading the list."
   },
+  "28sK1U": {
+    "context": "rich text editor toolbox item that embeds a video or a post",
+    "string": "Embed"
+  },
   "28vvyx": {
     "context": "deselect all values button",
     "string": "None"
@@ -1851,6 +1855,10 @@
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
   },
+  "4gJ7Sr": {
+    "context": "Taxes → Channels header button that opens the selected channel's metadata",
+    "string": "Edit tax configuration metadata"
+  },
   "4hOnpC": {
     "context": "bulk publish confirm pricing section label",
     "string": "Pricing"
@@ -2107,6 +2115,10 @@
   "5elC9k": {
     "context": "taxes section name",
     "string": "Taxes"
+  },
+  "5f1Snx": {
+    "context": "store settings metadata button title",
+    "string": "Edit store metadata"
   },
   "5fCMUI": {
     "context": "translations section name",
@@ -2554,9 +2566,6 @@
   },
   "73SSOz": {
     "string": "All lines as ordered by the client."
-  },
-  "73UntD": {
-    "string": "Add image by link"
   },
   "73mL5a": {
     "context": "return items table, column header",
@@ -3184,6 +3193,10 @@
   "9Czafv": {
     "context": "setup checklist optional section title",
     "string": "Worth reviewing"
+  },
+  "9D4Ae3": {
+    "context": "store (shop) metadata dialog header",
+    "string": "Store Metadata"
   },
   "9DUknc": {
     "string": "Installation failed"
@@ -4228,9 +4241,6 @@
   "CWqmRU": {
     "context": "customer's address book when no customer name is available, header",
     "string": "Address Book"
-  },
-  "CX0oDN": {
-    "string": "Paste a link to an image"
   },
   "CXIW51": {
     "context": "voucher discount scope section title",
@@ -6593,6 +6603,10 @@
     "context": "intro under store settings page title",
     "string": "Store identity, company address, how customers sign in, and who may call the API. Advanced options cover legacy API behavior."
   },
+  "KqZYkD": {
+    "context": "rich text editor error when no embed service matches the link",
+    "string": "This link can't be embedded"
+  },
   "KqbfFa": {
     "context": "expiry date selection info message",
     "string": "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
@@ -7736,6 +7750,10 @@
     "context": "Label prefix for the last occurrence date of a recurring problem",
     "string": "last occurred at"
   },
+  "Ov45QH": {
+    "context": "promotion metadata dialog header",
+    "string": "Promotion Metadata"
+  },
   "Owgj18": {
     "context": "section description",
     "string": "Your store's public name and description, used across the storefront and in SEO metadata."
@@ -8370,6 +8388,10 @@
   "RBCyrU": {
     "context": "shipping zone warehouses expand control",
     "string": "Add a warehouse"
+  },
+  "RBn+PH": {
+    "context": "promotion metadata button title",
+    "string": "Edit promotion metadata"
   },
   "RBxYJf": {
     "context": "sale status",
@@ -11566,9 +11588,6 @@
     "context": "header",
     "string": "Quantity"
   },
-  "bp3HuS": {
-    "string": "Embed"
-  },
   "bp7Fo7": {
     "context": "customer type slug column",
     "string": "Slug"
@@ -12069,6 +12088,10 @@
   "dOQB9o": {
     "context": "payment status",
     "string": "Cancelled"
+  },
+  "dPBzKt": {
+    "context": "tax configuration metadata dialog header naming the channel",
+    "string": "Tax Configuration Metadata: {channelName}"
   },
   "dPYqy0": {
     "string": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
@@ -13603,6 +13626,10 @@
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
+  "iz1ug3": {
+    "context": "rich text editor prompt asking for an image link",
+    "string": "Paste a link to an image"
+  },
   "j+lQWT": {
     "context": "error message when cut-off date is older than 30 days",
     "string": "Cut-off date cannot be more than 30 days in the past"
@@ -13697,6 +13724,10 @@
   "jDovoJ": {
     "context": "gift card history message",
     "string": "Gift card was issued"
+  },
+  "jDpCIc": {
+    "context": "metadata dialog, shown instead of the editors when loading failed",
+    "string": "Couldn't load metadata"
   },
   "jE6w+u": {
     "context": "ripple action linking to documentation",
@@ -14965,6 +14996,10 @@
     "context": "TopNav destination link tooltip to categories list",
     "string": "All categories"
   },
+  "nGWrzz": {
+    "context": "rich text editor button in an empty embed block",
+    "string": "Add embed by link"
+  },
   "nGuFx9": {
     "context": "Channel status blocking purchase in a channel",
     "string": "Channel inactive — cannot be purchased"
@@ -15874,6 +15909,10 @@
     "context": "header",
     "string": "Add Value to Authorization Field"
   },
+  "qCHM6u": {
+    "context": "rich text editor button in an empty image block",
+    "string": "Add image by link"
+  },
   "qDwvZ4": {
     "string": "Unknown error"
   },
@@ -16583,6 +16622,10 @@
   "sKbtzQ": {
     "context": "voucher catalogue collections row title",
     "string": "Collections"
+  },
+  "sMubuZ": {
+    "context": "rich text editor prompt asking for a link to embed",
+    "string": "Paste a link to a YouTube or Vimeo video, a post, or another embeddable page"
   },
   "sO+uiz": {
     "string": "These codes will be removed when you save the voucher."

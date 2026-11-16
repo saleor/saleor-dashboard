@@ -23,7 +23,7 @@ export const CategoryMetadataDialog = ({
   const normalizedCategory = category
     ? { ...category, privateMetadata: category.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedCategory,
     onClose,
     refetchDocument: CategoryDetailsDocument,
@@ -38,10 +38,10 @@ export const CategoryMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedCategory,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const CategoryMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Category Metadata",

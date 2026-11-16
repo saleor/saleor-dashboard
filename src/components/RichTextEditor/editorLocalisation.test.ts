@@ -1,7 +1,7 @@
 import { type ToolSettings } from "@editorjs/editorjs";
 import { type IntlShape, type MessageDescriptor } from "react-intl";
 
-import { getTools, tools } from "./consts";
+import { tools } from "./consts";
 import { getEditorI18n } from "./i18n";
 
 const portuguese: Record<string, string> = {
@@ -11,6 +11,9 @@ const portuguese: Record<string, string> = {
   "Pasted link is not valid.": "A ligação colada não é válida.",
   "Add image by link": "Adicionar imagem por ligação",
   "Paste a link to an image": "Cole uma ligação para uma imagem",
+  Embed: "Incorporar",
+  "Add embed by link": "Adicionar incorporação por ligação",
+  "This link can't be embedded": "Não é possível incorporar esta ligação",
   "Move up": "Mover para cima",
   "Start with": "Começar em",
   "Delete row": "Eliminar linha",
@@ -66,20 +69,25 @@ describe("native editor localisation", () => {
     expect(messages.blockTunes).toMatchObject({ delete: { Delete: "Delete" } });
   });
 
-  it("localises image controls without mutating shared tools or adding content fields", () => {
+  it("translates the image and embed tools' own texts", () => {
     // Arrange
-    const originalImage = tools.image as ToolSettings;
+    const intl = makeIntl(portuguese);
 
     // Act
-    const translated = getTools(makeIntl(portuguese));
-    const image = translated.image as ToolSettings;
+    const messages = getEditorI18n(intl)!.messages!;
 
     // Assert
-    expect(image.config!.buttonContent).toBe("Adicionar imagem por ligação");
-    expect(originalImage.config!.buttonContent).toBe("Add image by link");
-    expect(image.class).toBe(originalImage.class);
-    expect(image.config!.uploader).toBe(originalImage.config!.uploader);
-    expect(Object.keys(image.config!)).toEqual(Object.keys(originalImage.config!));
+    expect(messages.toolNames).toMatchObject({ Embed: "Incorporar" });
+    expect(messages.tools).toMatchObject({
+      image: {
+        "Add image by link": "Adicionar imagem por ligação",
+        "Paste a link to an image": "Cole uma ligação para uma imagem",
+      },
+      embed: {
+        "Add embed by link": "Adicionar incorporação por ligação",
+        "This link can't be embedded": "Não é possível incorporar esta ligação",
+      },
+    });
   });
 
   it("translates the external image URL prompt through the tool-scoped i18n API", () => {
@@ -94,7 +102,7 @@ describe("native editor localisation", () => {
     const translate = jest.fn(() => portuguese["Paste a link to an image"]);
     const prompt = jest.spyOn(window, "prompt").mockReturnValue(" https://example.com/image.png ");
 
-    tool.imageI18n = { t: translate };
+    tool.editorApi = { i18n: { t: translate } };
     tool.uploadUrl = jest.fn();
 
     // Act

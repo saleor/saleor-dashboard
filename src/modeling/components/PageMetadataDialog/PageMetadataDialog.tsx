@@ -37,7 +37,7 @@ export const PageMetadataDialog = ({
         : undefined,
     [page],
   );
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedPage,
     onClose,
     refetchDocument: PageDetailsDocument,
@@ -53,10 +53,10 @@ export const PageMetadataDialog = ({
     formIsDirty,
     handleChange,
     getFormData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedPage,
     submitInProgress,
-    lastSubmittedData,
   });
 
   const wasOpenRef = useRef(false);
@@ -85,7 +85,7 @@ export const PageMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(getFormData());
+        await onSubmit(getFormData(), baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Model Metadata",

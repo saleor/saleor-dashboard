@@ -206,6 +206,17 @@ export const promotionDetails = gql`
   }
 `;
 
+// Fetched only while the metadata dialog is open. PromotionDetails doesn't include metadata,
+// so saving it leaves the promotion form and its data untouched.
+export const promotionMetadata = gql`
+  query PromotionMetadata($id: ID!) {
+    promotion(id: $id) {
+      id
+      ...Metadata
+    }
+  }
+`;
+
 export const ruleConditionsSelectedOptionsDetails = gql`
   query RuleConditionsSelectedOptionsDetails(
     $categoriesIds: [ID!]

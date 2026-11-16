@@ -10,6 +10,8 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { MetadataLoadError } from "./MetadataLoadError";
+
 export interface MetadataDialogProps {
   open: boolean;
   onClose: () => void;
@@ -23,6 +25,9 @@ export interface MetadataDialogProps {
   loading?: boolean;
   /** Shows skeleton cards while the metadata is being fetched (e.g. lazily loaded dialogs) */
   contentLoading?: boolean;
+  /** Shows an error with Retry instead of the editors when lazily loaded metadata failed to load */
+  loadError?: boolean;
+  onRetryLoad?: () => void;
   disabled?: boolean;
   errors?: {
     metadata?: string;
@@ -40,6 +45,8 @@ export const MetadataDialog = ({
   onChange,
   loading = false,
   contentLoading = false,
+  loadError = false,
+  onRetryLoad = () => undefined,
   disabled = false,
   errors = {},
   formIsDirty = false,
@@ -47,7 +54,15 @@ export const MetadataDialog = ({
   const intl = useIntl();
   const [showExitDialog, setShowExitDialog] = useState(false);
 
+  const hasErrors = !!errors.metadata || !!errors.privateMetadata;
+
   const handleClose = () => {
+    // A running save closes the dialog itself when it's done; closing earlier would leave it
+    // running unseen, and its close could then dismiss whatever dialog is open by then.
+    if (loading) {
+      return;
+    }
+
     if (formIsDirty) {
       setShowExitDialog(true);
     } else {
@@ -70,7 +85,9 @@ export const MetadataDialog = ({
         <DashboardModal.Body>
           <DashboardModal.Inset>
             <Box display="flex" flexDirection="column">
-              {contentLoading ? (
+              {loadError ? (
+                <MetadataLoadError onRetry={onRetryLoad} />
+              ) : contentLoading ? (
                 <>
                   <MetadataLoadingCard inModal marginTop={0} />
                   <MetadataLoadingCard isPrivate inModal />
@@ -102,14 +119,16 @@ export const MetadataDialog = ({
         </DashboardModal.Body>
 
         <DashboardModal.Actions>
-          <Button data-test-id="back" variant="secondary" onClick={handleClose}>
+          <Button data-test-id="back" variant="secondary" onClick={handleClose} disabled={loading}>
             <FormattedMessage {...buttonMessages.close} />
           </Button>
           <ButtonWithLoader
             transitionState={loading ? "loading" : "default"}
             data-test-id="save"
             variant="primary"
-            disabled={loading || disabled || !formIsDirty}
+            disabled={
+              loading || disabled || loadError || contentLoading || hasErrors || !formIsDirty
+            }
             onClick={onSave}
           >
             <FormattedMessage {...buttonMessages.save} />

@@ -10,7 +10,7 @@ const taxSection = "/taxes/";
 
 export const taxTabPath = (tab: TaxTab) => urlJoin(taxSection, tab);
 
-export type TaxesUrlDialog = "add-country";
+export type TaxesUrlDialog = "add-country" | "view-metadata";
 export type TaxesUrlQueryParams = Dialog<TaxesUrlDialog>;
 
 export const taxConfigurationListPath = (id?: string) =>

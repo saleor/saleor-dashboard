@@ -42,7 +42,7 @@ export const CustomerTypeMetadataDialog = ({
         : undefined,
     [customerType],
   );
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedCustomerType,
     onClose,
     refetchDocument: CustomerTypeDetailsDocument,
@@ -57,10 +57,10 @@ export const CustomerTypeMetadataDialog = ({
     formIsDirty,
     handleChange,
     getFormData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedCustomerType,
     submitInProgress,
-    lastSubmittedData,
   });
   const wasOpenRef = useRef(false);
 
@@ -88,7 +88,7 @@ export const CustomerTypeMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(getFormData());
+        await onSubmit(getFormData(), baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Customer Type Metadata",

@@ -1,5 +1,6 @@
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { type ComponentProps } from "react";
 
 import {
   OrderLineMetadataDialog,
@@ -13,7 +14,6 @@ const mockOnSubmit = jest.fn();
 jest.mock("./useHandleSubmit", () => ({
   useHandleOrderLineMetadataSubmit: jest.fn(() => ({
     onSubmit: mockOnSubmit,
-    lastSubmittedData: undefined,
     submitInProgress: false,
   })),
 }));
@@ -57,6 +57,9 @@ jest.mock("./useMetadataValues", () => ({
     loading: false,
   })),
 }));
+
+const mockUseMetadataValues = useMetadataValues as jest.MockedFunction<typeof useMetadataValues>;
+
 describe("OrderLineMetadataDialog", () => {
   const onCloseMock = jest.fn();
 
@@ -167,6 +170,31 @@ describe("OrderLineMetadataDialog", () => {
       expect(within(productVariantMetadata).getByDisplayValue("variant-value")).toBeInTheDocument();
     });
 
+    it("can save an edit to only the variant's metadata", () => {
+      // Arrange
+      (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
+      render(
+        <OrderLineMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
+
+      fireEvent.click(within(productVariantMetadata).getAllByTestId("expand")[0]);
+
+      // Act
+      fireEvent.change(within(productVariantMetadata).getByDisplayValue("variant-value"), {
+        target: { value: "edited-variant-value" },
+      });
+
+      // Assert
+      expect(screen.getByTestId("save")).toBeEnabled();
+    });
+
     it("displays product variant private metadata when user has MANAGE_PRODUCTS permission", () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
@@ -260,6 +288,90 @@ describe("OrderLineMetadataDialog", () => {
   });
 
   describe("OrderLine metadata's form", () => {
+    const loadedImplementation = mockUseMetadataValues.getMockImplementation();
+
+    afterEach(() => {
+      if (loadedImplementation) {
+        mockUseMetadataValues.mockImplementation(loadedImplementation);
+      }
+    });
+
+    it("keeps an edit being typed when the metadata is loaded again", () => {
+      // Arrange
+      const props: ComponentProps<typeof OrderLineMetadataDialog> = {
+        open: true,
+        onClose: onCloseMock,
+        orderId: "order-id",
+        lineId: mockData.id,
+      };
+      const { rerender } = render(<OrderLineMetadataDialog {...props} />);
+      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+
+      fireEvent.click(within(orderLineMetadata).getAllByTestId("expand")[0]);
+      fireEvent.change(within(orderLineMetadata).getByDisplayValue("order-line-value"), {
+        target: { value: "typed-value" },
+      });
+
+      // Act: an app adds a key and the dialog loads the line again.
+      mockUseMetadataValues.mockImplementation(() => ({
+        data: {
+          ...mockData,
+          metadata: [
+            ...mockData.metadata,
+            { key: "app-key", value: "app-value", __typename: "MetadataItem" },
+          ],
+        },
+        loading: false,
+        loadFailed: false,
+        retry: jest.fn(),
+      }));
+      rerender(<OrderLineMetadataDialog {...props} />);
+
+      // Assert: the form stays as the user left it; saving sends only their change.
+      expect(within(orderLineMetadata).getByDisplayValue("typed-value")).toBeInTheDocument();
+      expect(within(orderLineMetadata).queryByDisplayValue("app-value")).not.toBeInTheDocument();
+      expect(screen.getByTestId("save")).toBeEnabled();
+    });
+
+    it("shows no error for a new blank row, and can be saved once the row is filled in", async () => {
+      // Arrange
+      render(
+        <OrderLineMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      const orderLineMetadata = screen.getByTestId(TEST_ID_ORDER_LINE_METADATA);
+
+      fireEvent.click(within(orderLineMetadata).getAllByTestId("expand")[0]);
+
+      // Act
+      fireEvent.click(within(orderLineMetadata).getAllByTestId("add-field")[0]);
+      // Let the rows' validation finish.
+      await act(async () => {
+        await new Promise(resolve => setTimeout(resolve, 0));
+      });
+
+      // Assert
+      expect(within(orderLineMetadata).queryByText("Metadata key cannot be empty")).toBeNull();
+      expect(screen.getByTestId("save")).toBeDisabled();
+
+      const newKey = orderLineMetadata.querySelector<HTMLInputElement>('[aria-label="name:1"]');
+      const newValue = orderLineMetadata.querySelector<HTMLInputElement>('[aria-label="value:1"]');
+
+      if (!newKey || !newValue) {
+        throw new Error("The added row isn't rendered");
+      }
+
+      fireEvent.change(newKey, { target: { value: "new-key" } });
+      fireEvent.change(newValue, { target: { value: "new-value" } });
+
+      expect(screen.getByTestId("save")).toBeEnabled();
+    });
+
     it("displays order line metadata", async () => {
       // Arrange
       render(
@@ -321,6 +433,45 @@ describe("OrderLineMetadataDialog", () => {
       expect(
         within(orderLineMetadata).queryByDisplayValue("order-line-value"),
       ).not.toBeInTheDocument();
+    });
+  });
+
+  describe("when the metadata couldn't be loaded", () => {
+    const loadedImplementation = mockUseMetadataValues.getMockImplementation();
+
+    afterEach(() => {
+      if (loadedImplementation) {
+        mockUseMetadataValues.mockImplementation(loadedImplementation);
+      }
+    });
+
+    it("shows the error with Retry instead of empty editors, and keeps Save disabled", () => {
+      // Arrange
+      const retry = jest.fn();
+
+      mockUseMetadataValues.mockImplementation(() => ({
+        data: undefined,
+        loading: false,
+        loadFailed: true,
+        retry,
+      }));
+      render(
+        <OrderLineMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      // Act
+      fireEvent.click(screen.getByRole("button", { name: "Retry" }));
+
+      // Assert
+      expect(screen.getByRole("alert")).toHaveTextContent("Couldn't load metadata");
+      expect(screen.queryByTestId("metadata-editor")).not.toBeInTheDocument();
+      expect(screen.getByTestId("save")).toBeDisabled();
+      expect(retry).toHaveBeenCalledTimes(1);
     });
   });
 });
