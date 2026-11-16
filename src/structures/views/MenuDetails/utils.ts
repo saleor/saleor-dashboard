@@ -1,8 +1,11 @@
+import { type FetchResult } from "@apollo/client";
 import {
+  type MenuErrorFragment,
   type MenuItemCreateInput,
   type MenuItemFragment,
   type MenuItemInput,
   type MenuItemMoveInput,
+  type MenuUpdateMutation,
 } from "@dashboard/graphql";
 
 import { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage/MenuDetailsPage";
@@ -121,4 +124,26 @@ export function getRemoveIds(data: MenuDetailsSubmitData): string[] {
   return data.operations
     .filter(operation => operation.type === "remove")
     .map(operation => operation.id);
+}
+
+/**
+ * Errors of a structure save, or `undefined` when the request failed outright.
+ *
+ * MenuDetailsPage drops its pending item moves and deletions when the save returns a list, even
+ * one with errors, because part of the save may have gone through. A request that failed outright
+ * saved nothing, so returning nothing keeps them for another try. The mutation hook reports the
+ * failure itself and resolves without data instead of throwing.
+ */
+export function getMenuUpdateErrors(
+  result: FetchResult<MenuUpdateMutation>,
+): MenuErrorFragment[] | undefined {
+  if (!result.data) {
+    return undefined;
+  }
+
+  return [
+    ...(result.data.menuItemBulkDelete?.errors ?? []),
+    ...(result.data.menuItemMove?.errors ?? []),
+    ...(result.data.menuUpdate?.errors ?? []),
+  ];
 }
