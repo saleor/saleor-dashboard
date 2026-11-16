@@ -47,6 +47,7 @@ import {
   getInitialMenuItemValue,
   getMenuItemCreateInputData,
   getMenuItemInputData,
+  getMenuUpdateErrors,
   getMoves,
   getRemoveIds,
 } from "./utils";
@@ -136,9 +137,9 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
     linkType: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
     linkValue: getInitialMenuItemValue(menuItem),
   };
-  // This is a workaround to let know <MenuDetailsPage />
-  // that it should clean operation stack if mutations
-  // were successful
+  // <MenuDetailsPage /> drops its pending item operations when this returns errors (possibly
+  // none), and handleUpdate then reloads the structure to show what was saved. It keeps them when
+  // the request failed outright and this returns nothing.
   const handleSubmit = async (data: MenuDetailsSubmitData) => {
     const result = await menuUpdate({
       variables: {
@@ -149,11 +150,7 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
       },
     });
 
-    return [
-      ...result.data.menuItemBulkDelete.errors,
-      ...result.data.menuItemMove.errors,
-      ...result.data.menuUpdate.errors,
-    ];
+    return getMenuUpdateErrors(result);
   };
 
   return (
@@ -163,7 +160,7 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
         errors={[
           ...(menuUpdateOpts.data?.menuUpdate.errors || []),
           ...(menuUpdateOpts.data?.menuItemMove.errors || []),
-          ...(menuUpdateOpts.data?.menuUpdate.errors || []),
+          ...(menuUpdateOpts.data?.menuItemBulkDelete.errors || []),
         ]}
         menu={maybe(() => data.menu)}
         onDelete={() =>

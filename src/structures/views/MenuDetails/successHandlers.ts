@@ -65,9 +65,15 @@ export function handleDelete(
 export function handleUpdate(
   data: MenuUpdateMutation,
   notify: UseNotifierResult,
-  refetch: () => void,
+  refetch: () => Promise<unknown>,
   intl: IntlShape,
 ) {
+  // The page drops its pending item moves and deletions after every save, so
+  // reload the structure to show what Saleor actually saved, also when part
+  // of the save failed. Errors are already reported by the mutation hook, and
+  // a failed reload by the details query.
+  refetch().catch(() => undefined);
+
   if (
     data.menuItemBulkDelete.errors.length === 0 &&
     data.menuItemMove.errors.length === 0 &&
@@ -77,6 +83,5 @@ export function handleUpdate(
       status: "success",
       text: intl.formatMessage({ id: "mqwLmD", defaultMessage: "Menu updated" }),
     });
-    refetch();
   }
 }
