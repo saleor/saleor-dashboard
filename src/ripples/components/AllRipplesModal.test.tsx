@@ -1,3 +1,4 @@
+import { type useFeedbackSurvey } from "@dashboard/components/Sidebar/user/useFeedbackSurvey";
 import { type useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { type Ripple } from "@dashboard/ripples/types";
 import { Text, ThemeProvider } from "@saleor/macaw-ui-next";
@@ -19,6 +20,17 @@ const mockNavigate = jest.fn();
 const mockOnChange = jest.fn();
 const mockTrackEvent = jest.fn();
 const mockSetManuallyHidden = jest.fn();
+const mockOpenSurvey = jest.fn();
+const availableFeedbackSurvey = (): ReturnType<typeof useFeedbackSurvey> => ({
+  isAvailable: true,
+  canOpenSurvey: true,
+  openSurvey: mockOpenSurvey,
+});
+const mockFeedbackSurvey = jest.fn(availableFeedbackSurvey);
+
+jest.mock("@dashboard/components/Sidebar/user/useFeedbackSurvey", () => ({
+  useFeedbackSurvey: () => mockFeedbackSurvey(),
+}));
 
 jest.mock("@dashboard/hooks/useNavigator", () => ({
   __esModule: true,
@@ -352,6 +364,50 @@ describe("AllRipplesModal", () => {
       intent: "install",
       loading: false,
     });
+    mockFeedbackSurvey.mockImplementation(availableFeedbackSurvey);
+  });
+
+  it("closes the modal and opens the feedback survey from the footer", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    render(<AllRipplesModal open onChange={mockOnChange} />, { wrapper: Wrapper });
+
+    // Act
+    await user.click(screen.getByRole("button", { name: "Share feedback" }));
+
+    // Assert
+    expect(mockOnChange).toHaveBeenCalledWith(false);
+    expect(mockOpenSurvey).toHaveBeenCalledWith({
+      source: "whats_new",
+      prompt: {
+        title: "What should we build next?",
+        description: "Suggest a feature, or tell us what you think of these updates.",
+      },
+    });
+    expect(mockOnChange.mock.invocationCallOrder[0]).toBeLessThan(
+      mockOpenSurvey.mock.invocationCallOrder[0],
+    );
+    expect(screen.queryByRole("link", { name: "Suggest a change" })).not.toBeInTheDocument();
+  });
+
+  it("links to a new GitHub issue when the feedback survey cannot open", () => {
+    // Arrange
+    mockFeedbackSurvey.mockReturnValue({
+      isAvailable: true,
+      canOpenSurvey: false,
+      openSurvey: mockOpenSurvey,
+    });
+
+    // Act
+    render(<AllRipplesModal open onChange={mockOnChange} />, { wrapper: Wrapper });
+
+    // Assert
+    expect(screen.getByRole("link", { name: "Suggest a change" })).toHaveAttribute(
+      "href",
+      "https://github.com/saleor/saleor-dashboard/issues/new",
+    );
+    expect(screen.queryByRole("button", { name: "Share feedback" })).not.toBeInTheDocument();
   });
 
   it("tracks each modal open once", () => {

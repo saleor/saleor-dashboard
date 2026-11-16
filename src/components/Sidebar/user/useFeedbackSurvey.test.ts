@@ -53,10 +53,12 @@ it("stays hidden until the renderer loads and the feedback survey matches", () =
 
   // Act
   expect(result.current.isAvailable).toBe(false);
+  expect(result.current.canOpenSurvey).toBe(false);
   act(() => loaded.mock.calls[0][0]([feedbackSurvey], { isLoaded: true }));
 
   // Assert
   expect(result.current.isAvailable).toBe(true);
+  expect(result.current.canOpenSurvey).toBe(true);
 });
 
 it("shows the feedback button in development when analytics is disabled", () => {
@@ -72,6 +74,7 @@ it("shows the feedback button in development when analytics is disabled", () => 
 
     // Assert
     expect(result.current.isAvailable).toBe(true);
+    expect(result.current.canOpenSurvey).toBe(false);
     expect(loaded).not.toHaveBeenCalled();
     expect(matching).not.toHaveBeenCalled();
   } finally {
@@ -208,6 +211,24 @@ it("opens the dialog with the survey and where it was opened from", () => {
   expect(mockPosthog.capture).toHaveBeenCalledWith(
     SurveyEventName.SHOWN,
     expect.objectContaining({ $survey_id: feedbackSurvey.id, feedback_source: "command_menu" }),
+  );
+});
+
+it("opens the dialog with an entry point's own prompt", () => {
+  // Arrange
+  const prompt = { title: "What should we build next?", description: "Suggest a feature." };
+  const { result } = renderFeedbackSurvey();
+
+  act(() => loadSurveys([feedbackSurvey]));
+
+  // Act
+  act(() => result.current.entry.openSurvey({ source: "whats_new", prompt }));
+
+  // Assert
+  expect(result.current.dialog.prompt).toEqual(prompt);
+  expect(mockPosthog.capture).toHaveBeenCalledWith(
+    SurveyEventName.SHOWN,
+    expect.objectContaining({ feedback_source: "whats_new", feedback_prompt: prompt.title }),
   );
 });
 

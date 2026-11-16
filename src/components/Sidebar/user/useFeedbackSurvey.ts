@@ -7,9 +7,21 @@ import { type PostHog, type Survey, SurveyQuestionType, SurveyType } from "posth
 import { usePostHog } from "posthog-js/react";
 import { useCallback, useEffect, useState } from "react";
 
-import { type FeedbackSource, surveyShownEvent } from "./feedbackSurveyEvents";
+import {
+  type FeedbackPrompt,
+  type FeedbackSource,
+  promptProperties,
+  surveyShownEvent,
+} from "./feedbackSurveyEvents";
 
-const openedFromAtom: PrimitiveAtom<FeedbackSource | null> = atom(null as FeedbackSource | null);
+interface OpenFeedbackOptions {
+  source: FeedbackSource;
+  prompt?: FeedbackPrompt;
+}
+
+const openedAtom: PrimitiveAtom<OpenFeedbackOptions | null> = atom(
+  null as OpenFeedbackOptions | null,
+);
 
 /**
  * The Dashboard draws the survey itself, so it only takes a PostHog "API" survey with one
@@ -76,30 +88,33 @@ const useLoadedFeedbackSurvey = (): Survey | undefined => {
 interface FeedbackSurvey {
   /** Whether to show feedback entry points. Always true in development, even without a survey. */
   isAvailable: boolean;
+  /** Whether `openSurvey` will actually open the dialog. */
+  canOpenSurvey: boolean;
   /** Opens the feedback dialog. Does nothing while the survey isn't loaded. */
-  openSurvey: (options: { source: FeedbackSource }) => void;
+  openSurvey: (options: OpenFeedbackOptions) => void;
 }
 
 export const useFeedbackSurvey = (): FeedbackSurvey => {
   const posthog = usePostHog();
   const survey = useLoadedFeedbackSurvey();
-  const setOpenedFrom = useSetAtom(openedFromAtom);
+  const setOpened = useSetAtom(openedAtom);
   const isDev = process.env.NODE_ENV === "development";
 
   const openSurvey = useCallback(
-    ({ source }: { source: FeedbackSource }) => {
+    (options: OpenFeedbackOptions) => {
       if (!survey) return;
 
-      const { name, properties } = surveyShownEvent(survey, source);
+      const { name, properties } = surveyShownEvent(survey, options.source);
 
-      posthog.capture(name, properties);
-      setOpenedFrom(source);
+      posthog.capture(name, { ...properties, ...promptProperties(options.prompt) });
+      setOpened(options);
     },
-    [posthog, survey, setOpenedFrom],
+    [posthog, survey, setOpened],
   );
 
   return {
     isAvailable: isDev || survey !== undefined,
+    canOpenSurvey: survey !== undefined,
     openSurvey,
   };
 };
@@ -108,13 +123,14 @@ interface FeedbackSurveyDialogState {
   survey: Survey | undefined;
   /** Set while the dialog is open. */
   openedFrom: FeedbackSource | null;
+  prompt: FeedbackPrompt | undefined;
   close: () => void;
 }
 
 export const useFeedbackSurveyDialog = (): FeedbackSurveyDialogState => {
   const survey = useLoadedFeedbackSurvey();
-  const [openedFrom, setOpenedFrom] = useAtom(openedFromAtom);
-  const close = useCallback(() => setOpenedFrom(null), [setOpenedFrom]);
+  const [opened, setOpened] = useAtom(openedAtom);
+  const close = useCallback(() => setOpened(null), [setOpened]);
 
-  return { survey, openedFrom, close };
+  return { survey, openedFrom: opened?.source ?? null, prompt: opened?.prompt, close };
 };

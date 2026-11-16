@@ -7,7 +7,12 @@ import { usePostHog } from "posthog-js/react";
 import { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { getFeedbackResponse, surveyDismissedEvent, surveySentEvent } from "./feedbackSurveyEvents";
+import {
+  getFeedbackResponse,
+  promptProperties,
+  surveyDismissedEvent,
+  surveySentEvent,
+} from "./feedbackSurveyEvents";
 import { useFeedbackSurveyDialog } from "./useFeedbackSurvey";
 
 const messages = defineMessages({
@@ -74,7 +79,7 @@ export const FeedbackSurveyDialogView = ({
 
 /** The feedback survey from PostHog, drawn as a Dashboard dialog. */
 export const FeedbackSurveyDialog = (): JSX.Element | null => {
-  const { survey, openedFrom, close } = useFeedbackSurveyDialog();
+  const { survey, openedFrom, prompt, close } = useFeedbackSurveyDialog();
   const posthog = usePostHog();
   const notify = useNotifier();
   const intl = useIntl();
@@ -91,7 +96,7 @@ export const FeedbackSurveyDialog = (): JSX.Element | null => {
 
     const { name, properties } = surveySentEvent(survey, openedFrom, answer);
 
-    posthog.capture(name, properties);
+    posthog.capture(name, { ...properties, ...promptProperties(prompt) });
     setResponse("");
     close();
     notify({ status: "success", title: intl.formatMessage(messages.sent) });
@@ -102,7 +107,7 @@ export const FeedbackSurveyDialog = (): JSX.Element | null => {
 
     const { name, properties } = surveyDismissedEvent(survey, openedFrom);
 
-    posthog.capture(name, properties);
+    posthog.capture(name, { ...properties, ...promptProperties(prompt) });
     setResponse("");
     close();
   };
@@ -110,8 +115,8 @@ export const FeedbackSurveyDialog = (): JSX.Element | null => {
   return (
     <FeedbackSurveyDialogView
       open={openedFrom !== null}
-      question={question.question}
-      description={question.description ?? undefined}
+      question={prompt?.title ?? question.question}
+      description={prompt ? prompt.description : (question.description ?? undefined)}
       response={response}
       onResponseChange={setResponse}
       onSend={handleSend}

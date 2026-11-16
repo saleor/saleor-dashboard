@@ -2,6 +2,7 @@ import githubLogo from "@assets/images/github-logo.svg";
 import { Link } from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
+import { useFeedbackSurvey } from "@dashboard/components/Sidebar/user/useFeedbackSurvey";
 import { usePulsePromotionLink } from "@dashboard/home/usePulsePromotionLink";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { PULSE_DOCS_URL } from "@dashboard/links";
@@ -360,6 +361,24 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
   );
 };
 
+const footerMessages = defineMessages({
+  shareFeedback: {
+    defaultMessage: "Share feedback",
+    id: "tlttZA",
+    description: "What's New modal footer action that opens the feedback survey",
+  },
+  feedbackTitle: {
+    defaultMessage: "What should we build next?",
+    id: "9e4hdW",
+    description: "title of the feedback dialog opened from What's New",
+  },
+  feedbackDescription: {
+    defaultMessage: "Suggest a feature, or tell us what you think of these updates.",
+    id: "Nhnf9J",
+    description: "description of the feedback dialog opened from What's New",
+  },
+});
+
 interface AllRipplesModalProps {
   open: boolean;
   onChange: (open: boolean) => void;
@@ -369,6 +388,7 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
   const intl = useIntl();
   const { hideAllRipples, setManuallyHidden } = useRippleStorage();
   const { trackEvent } = useAnalytics();
+  const { canOpenSurvey, openSurvey } = useFeedbackSurvey();
   const wasOpen = useRef(false);
 
   const flattenedRipples = useMemo(
@@ -405,6 +425,18 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
 
   const handleClose = (): void => {
     onChange(false);
+  };
+
+  const handleShareFeedback = (): void => {
+    // The feedback dialog replaces What's New instead of stacking on top of it.
+    handleClose();
+    openSurvey({
+      source: "whats_new",
+      prompt: {
+        title: intl.formatMessage(footerMessages.feedbackTitle),
+        description: intl.formatMessage(footerMessages.feedbackDescription),
+      },
+    });
   };
 
   const handleCloseAndHideAll = (): void => {
@@ -495,24 +527,46 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
                 })}
               </Box>
             </Box>
-            <Box
-              as="a"
-              href="https://github.com/saleor/saleor-dashboard/issues/new"
-              target="_blank"
-              rel="noopener noreferrer"
-              display="flex"
-              alignItems="center"
-              gap={1}
-              fontSize={1}
-              __color={vars.colors.text.accent1}
-              textDecoration={{ default: "none", hover: "underline" }}
-            >
-              {intl.formatMessage({
-                defaultMessage: "Suggest a change",
-                id: "FN+iLO",
-              })}
-              <ChevronRightIcon size={12} />
-            </Box>
+            {canOpenSurvey ? (
+              <Box
+                as="button"
+                type="button"
+                onClick={handleShareFeedback}
+                display="flex"
+                alignItems="center"
+                gap={1}
+                cursor="pointer"
+                backgroundColor="transparent"
+                borderWidth={0}
+                padding={0}
+                fontSize={1}
+                __lineHeight="inherit"
+                __color={vars.colors.text.accent1}
+                textDecoration={{ default: "none", hover: "underline" }}
+              >
+                {intl.formatMessage(footerMessages.shareFeedback)}
+                <ChevronRightIcon size={12} />
+              </Box>
+            ) : (
+              <Box
+                as="a"
+                href="https://github.com/saleor/saleor-dashboard/issues/new"
+                target="_blank"
+                rel="noopener noreferrer"
+                display="flex"
+                alignItems="center"
+                gap={1}
+                fontSize={1}
+                __color={vars.colors.text.accent1}
+                textDecoration={{ default: "none", hover: "underline" }}
+              >
+                {intl.formatMessage({
+                  defaultMessage: "Suggest a change",
+                  id: "FN+iLO",
+                })}
+                <ChevronRightIcon size={12} />
+              </Box>
+            )}
           </Box>
         </DashboardModal.Actions>
       </DashboardModal.Content>

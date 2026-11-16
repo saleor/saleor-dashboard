@@ -3345,6 +3345,10 @@
   "9d24PR": {
     "string": "Create rule"
   },
+  "9e4hdW": {
+    "context": "title of the feedback dialog opened from What's New",
+    "string": "What should we build next?"
+  },
   "9eC0MZ": {
     "context": "collection",
     "string": "Hidden"
@@ -7415,6 +7419,10 @@
   "NhQboB": {
     "context": "dialog header",
     "string": "Saleor couldn’t cancel order"
+  },
+  "Nhnf9J": {
+    "context": "description of the feedback dialog opened from What's New",
+    "string": "Suggest a feature, or tell us what you think of these updates."
   },
   "Nj9iSB": {
     "context": "table header column",
@@ -17034,6 +17042,10 @@
   },
   "tl1/1E": {
     "string": "Learn more about {orderManagement}"
+  },
+  "tlttZA": {
+    "context": "What's New modal footer action that opens the feedback survey",
+    "string": "Share feedback"
   },
   "tmcdrp": {
     "string": "ID:"

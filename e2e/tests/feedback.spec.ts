@@ -127,11 +127,12 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
     page: Page,
     captured: CapturedEvent[],
     response: string,
+    question = "What could we improve?",
   ): Promise<Record<string, unknown> | undefined> => {
     const dialog = page.getByRole("dialog");
 
-    await expect(dialog.getByText("What could we improve?")).toBeVisible();
-    const textbox = dialog.getByRole("textbox", { name: "What could we improve?" });
+    await expect(dialog.getByText(question)).toBeVisible();
+    const textbox = dialog.getByRole("textbox", { name: question });
     const send = dialog.getByRole("button", { name: "Send" });
 
     await textbox.fill(" \n\u200b\u00a0 ");
@@ -269,6 +270,66 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
         });
       });
     }
+  });
+
+  test.describe("from What's New", () => {
+    const openWhatsNew = async (page: Page, responses: PostHogResponses): Promise<void> => {
+      await routePostHog(page, responses);
+
+      const home = new HomePage(page);
+      const surveysLoaded = page.waitForResponse(response =>
+        response.url().includes("/api/surveys/"),
+      );
+
+      await home.goto();
+      await home.expectSignedIn();
+      await surveysLoaded;
+      const dismissAnnouncement = page.getByTestId("ripple-video-announcement-dismiss");
+
+      if (await dismissAnnouncement.isVisible()) await dismissAnnouncement.click();
+      await page.getByText("What's New", { exact: true }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+    };
+
+    test("replaces What's New with the feedback dialog", async ({ page }, testInfo) => {
+      // Arrange
+      const captured: CapturedEvent[] = [];
+
+      await openWhatsNew(page, { captured });
+
+      const shareFeedback = page.getByRole("button", { name: "Share feedback" });
+
+      await expect(shareFeedback).toBeVisible();
+      await page.screenshot({ path: testInfo.outputPath("whats-new-share-feedback.png") });
+
+      // Act
+      await shareFeedback.click();
+
+      // Assert
+      await expect(page.getByRole("dialog")).toHaveCount(1);
+      await expect(page.getByRole("dialog").getByText("What should we build next?")).toBeVisible();
+      await page.screenshot({ path: testInfo.outputPath("whats-new-survey.png") });
+      expect(
+        await sendFeedback(page, captured, "What's New feedback", "What should we build next?"),
+      ).toMatchObject({
+        $survey_id: feedbackSurvey.id,
+        feedback_source: "whats_new",
+        feedback_prompt: "What should we build next?",
+      });
+    });
+
+    test("links to GitHub when no survey matches", async ({ page }, testInfo) => {
+      // Arrange & Act
+      await openWhatsNew(page, { surveys: [{ ...feedbackSurvey, end_date: "2026-09-30" }] });
+
+      // Assert
+      await expect(page.getByRole("link", { name: "Suggest a change" })).toHaveAttribute(
+        "href",
+        "https://github.com/saleor/saleor-dashboard/issues/new",
+      );
+      await expect(page.getByRole("button", { name: "Share feedback" })).toHaveCount(0);
+      await page.screenshot({ path: testInfo.outputPath("whats-new-suggest-change.png") });
+    });
   });
 
   for (const block of ["api", "script"] as const) {

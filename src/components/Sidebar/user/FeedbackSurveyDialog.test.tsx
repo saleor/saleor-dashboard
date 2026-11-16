@@ -15,6 +15,7 @@ const mockClose = jest.fn();
 const openDialog = (): ReturnType<typeof useFeedbackSurveyDialog> => ({
   survey: feedbackSurvey,
   openedFrom: "sidebar",
+  prompt: undefined,
   close: mockClose,
 });
 const mockDialog = jest.fn(openDialog);
@@ -79,6 +80,31 @@ it("sends the response with where the survey was opened from", async () => {
   expect(mockNotify).toHaveBeenCalledWith({ status: "success", title: "Feedback sent" });
 });
 
+it("asks with the entry point's own prompt and records it", async () => {
+  // Arrange
+  const user = userEvent.setup();
+  const prompt = { title: "What should we build next?", description: "Suggest a feature." };
+
+  mockDialog.mockReturnValue({ ...openDialog(), openedFrom: "whats_new", prompt });
+  render(<FeedbackSurveyDialog />, { wrapper: Wrapper });
+
+  // Act
+  await user.type(screen.getByRole("textbox", { name: prompt.title }), "Bulk price editing");
+  await user.click(screen.getByRole("button", { name: "Send" }));
+
+  // Assert
+  expect(screen.queryByText(question.question)).not.toBeInTheDocument();
+  expect(screen.getByText(prompt.description)).toBeInTheDocument();
+  expect(mockCapture).toHaveBeenLastCalledWith(
+    SurveyEventName.SENT,
+    expect.objectContaining({
+      feedback_source: "whats_new",
+      feedback_prompt: prompt.title,
+      [responseKey]: "Bulk price editing",
+    }),
+  );
+});
+
 it("keeps Send disabled when nothing visible is typed", async () => {
   // Arrange
   const user = userEvent.setup();
@@ -130,7 +156,12 @@ it("records a dismissal without the unsent text", async () => {
 
 it("stays closed and records nothing until it is opened", () => {
   // Arrange
-  mockDialog.mockReturnValue({ survey: feedbackSurvey, openedFrom: null, close: mockClose });
+  mockDialog.mockReturnValue({
+    survey: feedbackSurvey,
+    openedFrom: null,
+    prompt: undefined,
+    close: mockClose,
+  });
 
   // Act
   render(<FeedbackSurveyDialog />, { wrapper: Wrapper });
