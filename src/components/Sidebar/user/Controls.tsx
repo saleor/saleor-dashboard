@@ -68,7 +68,8 @@ const feedbackMessage = defineMessage({
 export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "rail" }) => {
   const intl = useIntl();
 
-  const { isAvailable } = useFeedbackSurvey();
+  const { isAvailable, openSurvey } = useFeedbackSurvey();
+  const openFromSidebar = (): void => openSurvey({ source: "sidebar" });
 
   if (variant === "rail") {
     return (
@@ -83,8 +84,7 @@ export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "r
         hidden={!isAvailable}
       >
         {content => (
-          // Same selector contract as the full button: PostHog binds to whichever is mounted.
-          <button type="button" data-test-id="feedback-button" data-posthog-feedback-trigger="true">
+          <button type="button" data-test-id="feedback-button" onClick={openFromSidebar}>
             {content}
           </button>
         )}
@@ -92,10 +92,12 @@ export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "r
     );
   }
 
+  if (!isAvailable) {
+    return null;
+  }
+
   return (
-    // PostHog can require this selector to exist before the survey matches.
-    // Keep the trigger mounted while hiding it until the survey is ready.
-    <Box hidden={!isAvailable} position="relative" display={isAvailable ? "inline-flex" : "none"}>
+    <Box position="relative" display="inline-flex">
       <Tooltip>
         <Tooltip.Trigger>
           <Button
@@ -103,8 +105,8 @@ export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "r
             icon={<MessageSquareText {...navigationLucideIconProps} />}
             aria-label={intl.formatMessage(feedbackMessage)}
             data-test-id="feedback-button"
-            data-posthog-feedback-trigger="true"
             size="medium"
+            onClick={openFromSidebar}
           />
         </Tooltip.Trigger>
         <Tooltip.Content side="top">
@@ -112,11 +114,9 @@ export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "r
           <FormattedMessage {...feedbackMessage} />
         </Tooltip.Content>
       </Tooltip>
-      {isAvailable && (
-        <Box position="absolute" __top="-4px" __right="-4px" __zIndex="1">
-          <Ripple model={rippleGlobalFeedback} />
-        </Box>
-      )}
+      <Box position="absolute" __top="-4px" __right="-4px" __zIndex="1">
+        <Ripple model={rippleGlobalFeedback} />
+      </Box>
     </Box>
   );
 };
