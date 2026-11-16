@@ -20,6 +20,7 @@ describe("rich text image tool", () => {
     const tool = Object.create(ImageTool.prototype);
 
     tool.uploadUrl = jest.fn();
+    tool.editorApi = { i18n: { t: (key: string) => key } };
     jest.spyOn(window, "prompt").mockReturnValue(" https://example.com/cat.png ");
 
     // Act
@@ -86,7 +87,11 @@ describe("rich text embed tool", () => {
     notifier: { show: jest.Mock };
   } => {
     const notifier = { show: jest.fn() };
-    const api = { notifier, styles: { block: "block", input: "input", button: "cdx-button" } };
+    const api = {
+      notifier,
+      i18n: { t: (key: string) => `translated: ${key}` },
+      styles: { block: "block", input: "input", button: "cdx-button" },
+    };
 
     EmbedToolClass.prepare({ config: {} });
 
@@ -125,7 +130,10 @@ describe("rich text embed tool", () => {
     tool.askForUrl();
 
     // Assert
-    expect(notifier.show).toHaveBeenCalledWith(expect.objectContaining({ style: "error" }));
+    expect(notifier.show).toHaveBeenCalledWith({
+      message: "translated: This link can't be embedded",
+      style: "error",
+    });
     expect(tool.validate(tool.save())).toBe(false);
   });
 
@@ -135,7 +143,9 @@ describe("rich text embed tool", () => {
     const readOnly = createTool({ readOnly: true }).tool.render();
 
     // Assert
-    expect(editable.querySelector(".cdx-button")).not.toBeNull();
+    expect(editable.querySelector(".cdx-button")?.textContent).toBe(
+      "translated: Add embed by link",
+    );
     expect(readOnly.querySelector(".cdx-button")).toBeNull();
   });
 });
