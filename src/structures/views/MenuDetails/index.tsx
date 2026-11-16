@@ -39,6 +39,7 @@ import {
   getItemType,
   unknownTypeError,
 } from "../../components/MenuItemsSortableTree/utils";
+import { MenuMetadataDialog } from "../../components/MenuMetadataDialog/MenuMetadataDialog";
 import { menuUrl, type MenuUrlQueryParams } from "../../urls";
 import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
 import {
@@ -198,6 +199,13 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
                 )
             : undefined
         }
+        onShowMetadata={() =>
+          navigate(
+            menuUrl(id, {
+              action: "view-metadata",
+            }),
+          )
+        }
         onSubmit={handleSubmit}
         saveButtonState={menuUpdateOpts.status}
       />
@@ -232,6 +240,11 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
         onClose={closeModal}
         onSubmit={handleMenuItemUpdate}
         open={params.action === "edit-item"}
+      />
+      <MenuMetadataDialog
+        menuId={id}
+        open={params.action === "view-metadata"}
+        onClose={closeModal}
       />
     </>
   );

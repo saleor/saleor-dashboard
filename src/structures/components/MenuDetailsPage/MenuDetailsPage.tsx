@@ -16,6 +16,7 @@ import { type MenuDetailsFragment, type MenuErrorFragment } from "@dashboard/gra
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/structures/queries";
+import { rippleStructureMetadata } from "@dashboard/structures/ripples/structureMetadata";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -38,17 +39,23 @@ interface MenuDetailsPageProps {
   saveButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: MenuErrorFragment[];
-  menu: MenuDetailsFragment;
+  menu: MenuDetailsFragment | undefined;
   onDelete: () => void;
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
+  onShowMetadata: () => void;
   // If not passed, it will not render the button. Use to control permissions
   onTranslate?: (id: string) => void;
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
 const messages = defineMessages({
+  editMetadata: {
+    id: "e7HYoX",
+    defaultMessage: "Edit structure metadata",
+    description: "structure (navigation menu) details metadata button title",
+  },
   openGraphiQL: {
     id: "XL64mm",
     defaultMessage: "Open this menu in GraphiQL",
@@ -64,6 +71,7 @@ const MenuDetailsPage = ({
   onItemAdd,
   onItemClick,
   onItemEdit,
+  onShowMetadata,
   onSubmit,
   onTranslate,
 }: MenuDetailsPageProps) => {
@@ -115,7 +123,15 @@ const MenuDetailsPage = ({
             hrefIcon={<TopNavDestinationIcon.modeling />}
             hrefTitle={intl.formatMessage(topNavDestinationMessages.allStructures)}
             title={menu?.name}
+            actionsGap={3}
           >
+            <TopNav.MetadataButton
+              onClick={onShowMetadata}
+              disabled={disabled || !menu}
+              data-test-id="show-structure-metadata"
+              title={intl.formatMessage(messages.editMetadata)}
+              ripple={rippleStructureMetadata}
+            />
             <TopNav.Menu
               items={[
                 ...extensionMenuItems,

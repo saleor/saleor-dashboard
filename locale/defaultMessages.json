@@ -6405,6 +6405,10 @@
     "context": "shipment refund title",
     "string": "Shipment was refunded"
   },
+  "Ks0oRH": {
+    "context": "structure (navigation menu) metadata dialog header",
+    "string": "Structure Metadata"
+  },
   "KszPFx": {
     "context": "dialog header",
     "string": "Void Payment"
@@ -11936,6 +11940,10 @@
   },
   "e71euF": {
     "string": "Refunds Model Type"
+  },
+  "e7HYoX": {
+    "context": "structure (navigation menu) details metadata button title",
+    "string": "Edit structure metadata"
   },
   "e7yOai": {
     "context": "shipping address is not set in draft order",
