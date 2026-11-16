@@ -24,6 +24,7 @@ import { sidebarCollapseMessages } from "../sidebarCollapseMessages";
 import { SidebarIconSlot } from "../SidebarIconSlot";
 import styles from "./Controls.module.css";
 import { FeatureFlagsModal } from "./FeatureFlagsModal";
+import { FeedbackPopover } from "./FeedbackPopover";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useFeedbackSurvey } from "./useFeedbackSurvey";
 
@@ -68,7 +69,7 @@ const feedbackMessage = defineMessage({
 export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "rail" }) => {
   const intl = useIntl();
 
-  const { isAvailable } = useFeedbackSurvey();
+  const { isAvailable, survey } = useFeedbackSurvey();
 
   if (variant === "rail") {
     return (
@@ -83,40 +84,44 @@ export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "r
         hidden={!isAvailable}
       >
         {content => (
-          // Same selector contract as the full button: PostHog binds to whichever is mounted.
-          <button type="button" data-test-id="feedback-button" data-posthog-feedback-trigger="true">
-            {content}
-          </button>
+          <FeedbackPopover survey={survey} side="right">
+            <button type="button" data-test-id="feedback-button">
+              {content}
+            </button>
+          </FeedbackPopover>
         )}
       </RailItem>
     );
   }
 
+  if (!isAvailable) {
+    return null;
+  }
+
   return (
-    // PostHog can require this selector to exist before the survey matches.
-    // Keep the trigger mounted while hiding it until the survey is ready.
-    <Box hidden={!isAvailable} position="relative" display={isAvailable ? "inline-flex" : "none"}>
-      <Tooltip>
-        <Tooltip.Trigger>
-          <Button
-            variant="tertiary"
-            icon={<MessageSquareText {...navigationLucideIconProps} />}
-            aria-label={intl.formatMessage(feedbackMessage)}
-            data-test-id="feedback-button"
-            data-posthog-feedback-trigger="true"
-            size="medium"
-          />
-        </Tooltip.Trigger>
-        <Tooltip.Content side="top">
-          <Tooltip.Arrow />
-          <FormattedMessage {...feedbackMessage} />
-        </Tooltip.Content>
-      </Tooltip>
-      {isAvailable && (
-        <Box position="absolute" __top="-4px" __right="-4px" __zIndex="1">
-          <Ripple model={rippleGlobalFeedback} />
+    <Box position="relative" display="inline-flex">
+      <FeedbackPopover survey={survey} side="top">
+        <Box display="inline-flex">
+          <Tooltip>
+            <Tooltip.Trigger>
+              <Button
+                variant="tertiary"
+                icon={<MessageSquareText {...navigationLucideIconProps} />}
+                aria-label={intl.formatMessage(feedbackMessage)}
+                data-test-id="feedback-button"
+                size="medium"
+              />
+            </Tooltip.Trigger>
+            <Tooltip.Content side="top">
+              <Tooltip.Arrow />
+              <FormattedMessage {...feedbackMessage} />
+            </Tooltip.Content>
+          </Tooltip>
         </Box>
-      )}
+      </FeedbackPopover>
+      <Box position="absolute" __top="-4px" __right="-4px" __zIndex="1">
+        <Ripple model={rippleGlobalFeedback} />
+      </Box>
     </Box>
   );
 };

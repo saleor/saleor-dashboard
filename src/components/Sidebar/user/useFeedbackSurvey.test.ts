@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { type PostHog, type Survey, SurveyType, SurveyWidgetType } from "posthog-js";
+import { type PostHog, type Survey, SurveyQuestionType, SurveyType } from "posthog-js";
 
 import { useFeedbackSurvey } from "./useFeedbackSurvey";
 
@@ -28,18 +28,10 @@ const feedbackSurvey: Survey = {
   id: "feedback",
   name: "Feedback",
   description: "",
-  type: SurveyType.Widget,
-  appearance: {
-    widgetType: SurveyWidgetType.Selector,
-    widgetSelector: '[data-posthog-feedback-trigger="true"]',
-  },
-  conditions: {
-    selector: '[data-posthog-feedback-trigger="true"]',
-    events: null,
-    cancelEvents: null,
-    actions: null,
-  },
-  questions: [],
+  type: SurveyType.API,
+  appearance: null,
+  conditions: null,
+  questions: [{ id: "feedback-question", type: SurveyQuestionType.Open, question: "Feedback" }],
   start_date: "2026-09-01",
   end_date: null,
   feature_flag_keys: null,
@@ -71,6 +63,7 @@ it("stays hidden until the renderer loads and the feedback survey matches", () =
 
   // Assert
   expect(result.current.isAvailable).toBe(true);
+  expect(result.current.survey).toBe(feedbackSurvey);
 });
 
 it("shows the feedback button in development when analytics is disabled", () => {
@@ -108,7 +101,22 @@ it("stays hidden when loading fails", () => {
 it("stays hidden when only another survey is available", () => {
   // Arrange
   matching.mockImplementation(callback =>
-    callback([{ ...feedbackSurvey, appearance: { widgetSelector: "#other" } }]),
+    callback([
+      { ...feedbackSurvey, type: SurveyType.Popover },
+      {
+        ...feedbackSurvey,
+        questions: [
+          {
+            type: SurveyQuestionType.Rating,
+            question: "How likely are you to recommend us?",
+            display: "number",
+            scale: 10,
+            lowerBoundLabel: "Unlikely",
+            upperBoundLabel: "Very likely",
+          },
+        ],
+      },
+    ]),
   );
 
   const { result } = renderHook(useFeedbackSurvey);

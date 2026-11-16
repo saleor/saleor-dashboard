@@ -21,7 +21,7 @@ import {
   useCustomSidebarBreakpoint,
 } from "./SidebarContext";
 
-const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true }));
+const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true, survey: undefined }));
 const renderEnvironmentSwitcherStub = (): ReactElement => (
   <div data-test-id="cloud-environment-switcher" />
 );
@@ -101,32 +101,24 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 describe("Sidebar", () => {
   it("renders the global feedback trigger", () => {
     // Arrange
-    mockFeedbackSurvey.mockReturnValue({ isAvailable: true });
+    mockFeedbackSurvey.mockReturnValue({ isAvailable: true, survey: undefined });
 
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
 
     // Assert
-    expect(screen.getByRole("button", { name: "Send feedback" })).toHaveAttribute(
-      "data-posthog-feedback-trigger",
-      "true",
-    );
+    expect(screen.getByRole("button", { name: "Send feedback" })).toBeVisible();
   });
 
   it("hides feedback when its survey is unavailable", () => {
     // Arrange
-    mockFeedbackSurvey.mockReturnValue({ isAvailable: false });
+    mockFeedbackSurvey.mockReturnValue({ isAvailable: false, survey: undefined });
 
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
 
     // Assert
     expect(screen.queryByRole("button", { name: "Send feedback" })).not.toBeInTheDocument();
-    expect(screen.getByTestId("feedback-button")).not.toBeVisible();
-    expect(screen.getByTestId("feedback-button")).toHaveAttribute(
-      "data-posthog-feedback-trigger",
-      "true",
-    );
   });
 
   it.each([
@@ -769,10 +761,7 @@ describe("Sidebar collapse", () => {
 
     // Assert
     expect(screen.getAllByTestId("feedback-button")).toHaveLength(1);
-    expect(screen.getByTestId("feedback-button")).toHaveAttribute(
-      "data-posthog-feedback-trigger",
-      "true",
-    );
+    expect(screen.getByTestId("feedback-button")).toHaveAttribute("aria-haspopup", "dialog");
     expect(screen.getByRole("button", { name: "Account menu" })).toHaveAttribute(
       "data-test-id",
       "userMenu",

@@ -1879,6 +1879,10 @@
   "5FSIZp": {
     "string": "Create new attribute"
   },
+  "5FTSod": {
+    "context": "feedback form submit button",
+    "string": "Send"
+  },
   "5HXDLH": {
     "context": "helper under locked currency on edit",
     "string": "Fixed at creation. To sell in another currency, create a second channel."
@@ -7591,6 +7595,10 @@
     "context": "Status when product has availability issues",
     "string": "Issues"
   },
+  "PFCWLv": {
+    "context": "feedback form question when the survey has no question text",
+    "string": "What could we improve?"
+  },
   "PFJYxb": {
     "context": "bulk publish defaults step intro",
     "string": "These apply to every product you selected."
@@ -7930,6 +7938,10 @@
   "QQdTUC": {
     "context": "order header date, less than a minute ago",
     "string": "Created just now"
+  },
+  "QQojCW": {
+    "context": "notification after sending feedback",
+    "string": "Thanks for your feedback"
   },
   "QSTD5z": {
     "context": "dialog title for order line metadata",
@@ -11250,6 +11262,10 @@
   "bp7Fo7": {
     "context": "customer type slug column",
     "string": "Slug"
+  },
+  "bpy0b2": {
+    "context": "feedback form checkbox; when ticked, the staff member's email is sent with the feedback",
+    "string": "Can we contact you about this by email?"
   },
   "bqAJCT": {
     "context": "section header",

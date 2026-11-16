@@ -1,17 +1,27 @@
 import { isProductAnalyticsEnabled } from "@dashboard/components/ProductAnalytics/config";
-import { type PostHog, SurveyType, SurveyWidgetType } from "posthog-js";
+import { type PostHog, type Survey, SurveyQuestionType, SurveyType } from "posthog-js";
 import { usePostHog } from "posthog-js/react";
 import { useEffect, useState } from "react";
 
-const feedbackSelector = '[data-posthog-feedback-trigger="true"]';
-
 interface FeedbackSurveyAvailability {
   isAvailable: boolean;
+  /** Undefined in development without analytics; the form then sends nothing. */
+  survey: Survey | undefined;
 }
+
+/**
+ * The dashboard renders the feedback form itself, so the survey is an API survey whose first
+ * question is the open-text feedback question.
+ */
+const isFeedbackSurvey = (survey: Survey): boolean =>
+  survey.type === SurveyType.API && survey.questions[0]?.type === SurveyQuestionType.Open;
 
 export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
   const posthog = usePostHog();
-  const [availability, setAvailability] = useState<{ client: PostHog; available: boolean }>();
+  const [availability, setAvailability] = useState<{
+    client: PostHog;
+    survey: Survey | undefined;
+  }>();
   const isDev = process.env.NODE_ENV === "development";
   const enabled = isProductAnalyticsEnabled();
 
@@ -29,22 +39,14 @@ export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
         posthog.getActiveMatchingSurveys(surveys => {
           if (!active) return;
 
-          setAvailability({
-            client: posthog,
-            available: surveys.some(
-              survey =>
-                survey.type === SurveyType.Widget &&
-                survey.appearance?.widgetType === SurveyWidgetType.Selector &&
-                survey.appearance.widgetSelector === feedbackSelector,
-            ),
-          });
+          setAvailability({ client: posthog, survey: surveys.find(isFeedbackSurvey) });
         });
       };
       const unsubscribeSurveys = posthog.onSurveysLoaded((_surveys, context) => {
         rendererLoaded = context?.isLoaded === true && !context.error;
 
         if (!rendererLoaded) {
-          if (active) setAvailability({ client: posthog, available: false });
+          if (active) setAvailability({ client: posthog, survey: undefined });
 
           return;
         }
@@ -62,10 +64,10 @@ export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
     [enabled, posthog],
   );
 
-  const isSurveyAvailable =
-    enabled && availability?.client === posthog && availability?.available === true;
+  const survey = enabled && availability?.client === posthog ? availability.survey : undefined;
 
   return {
-    isAvailable: isDev || isSurveyAvailable,
+    isAvailable: isDev || survey !== undefined,
+    survey,
   };
 };
