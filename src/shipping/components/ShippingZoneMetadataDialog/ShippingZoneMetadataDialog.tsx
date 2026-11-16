@@ -23,7 +23,7 @@ export const ShippingZoneMetadataDialog = ({
   const normalizedShippingZone = shippingZone
     ? { ...shippingZone, privateMetadata: shippingZone.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedShippingZone,
     onClose,
     refetchDocument: ShippingZoneDocument,
@@ -38,10 +38,10 @@ export const ShippingZoneMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedShippingZone,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const ShippingZoneMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Shipping Zone Metadata",

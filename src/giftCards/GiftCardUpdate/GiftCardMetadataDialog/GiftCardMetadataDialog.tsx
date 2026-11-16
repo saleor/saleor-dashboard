@@ -23,7 +23,7 @@ export const GiftCardMetadataDialog = ({
   const normalizedGiftCard = giftCard
     ? { ...giftCard, privateMetadata: giftCard.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedGiftCard,
     onClose,
     refetchDocument: GiftCardDetailsDocument,
@@ -38,10 +38,10 @@ export const GiftCardMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedGiftCard,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const GiftCardMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Gift card metadata",

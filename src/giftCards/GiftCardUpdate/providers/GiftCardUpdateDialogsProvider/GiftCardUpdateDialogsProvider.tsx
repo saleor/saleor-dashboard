@@ -69,13 +69,15 @@ const GiftCardUpdateDialogsProvider = ({
           />
           <GiftCardResendCodeDialog open={isDialogOpen(RESEND_CODE)} onClose={onClose} />
           <GiftCardAssignCustomerDialog open={isDialogOpen(ASSIGN_CUSTOMER)} onClose={onClose} />
-          <GiftCardMetadataDialog
-            open={isDialogOpen(VIEW_METADATA) && !!giftCard}
-            onClose={onClose}
-            giftCard={giftCard}
-          />
         </>
       )}
+      {/* Outside the loading gate: a save's own cache update reloads the gift card, and
+          unmounting the dialog mid-save would skip its close, so it would open again. */}
+      <GiftCardMetadataDialog
+        open={isDialogOpen(VIEW_METADATA) && !!giftCard}
+        onClose={onClose}
+        giftCard={giftCard}
+      />
     </GiftCardUpdateDialogsContext.Provider>
   );
 };

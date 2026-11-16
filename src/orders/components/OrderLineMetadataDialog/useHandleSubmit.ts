@@ -6,7 +6,7 @@ import {
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -30,58 +30,65 @@ export const useHandleOrderLineMetadataSubmit = ({
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
 
   const [submitInProgress, setSubmitInProgress] = useState(false);
-  const submittedData = useRef<OrderLineAndVariantMetadataFormData>();
+  // A save can finish after the dialog unmounted; its state can't be updated then.
+  const mounted = useRef(true);
 
-  const orderLineSubmitHandler = useMemo(() => {
-    if (!initialData) {
-      return () => Promise.resolve([]);
-    }
+  useEffect(function trackMounted() {
+    mounted.current = true;
 
-    return createMetadataUpdateHandler(
-      initialData,
-      // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
-      () => Promise.resolve([]),
-      variables => updateMetadata({ variables }),
-      variables => updatePrivateMetadata({ variables }),
-    );
-  }, [initialData, updateMetadata, updatePrivateMetadata]);
-
-  const variantSubmitHandler = useMemo(() => {
-    // Fallback handler: If there is no variant data to submit,
-    // return a promise resolving to an empty error array.
-    // This is appropriate because no submission occurs, so no errors are possible.
-    if (!initialData?.variant) {
-      return () => Promise.resolve([]);
-    }
-
-    // Ensure privateMetadata is always present for the handler
-    const variantWithMetadata = {
-      ...initialData.variant,
-      privateMetadata: initialData.variant.privateMetadata ?? [],
+    return () => {
+      mounted.current = false;
     };
+  }, []);
 
-    return createMetadataUpdateHandler(
-      variantWithMetadata,
-      () => Promise.resolve([]),
-      variables => updateMetadata({ variables }),
-      variables => updatePrivateMetadata({ variables }),
-    );
-  }, [initialData?.variant, updateMetadata, updatePrivateMetadata]);
+  /** Saves the order line's metadata, sending only what differs from `baseline`, what the form was loaded with. */
+  const onSubmit = async (
+    data: OrderLineAndVariantMetadataFormData,
+    baseline: OrderLineAndVariantMetadataFormData | undefined,
+  ): Promise<void> => {
+    // Without loaded metadata there is nothing to compare against and nothing gets sent,
+    // so don't report a save that didn't happen.
+    if (!initialData || !baseline) {
+      return;
+    }
 
-  const onSubmit = async (data: OrderLineAndVariantMetadataFormData) => {
     setSubmitInProgress(true);
-    submittedData.current = data;
 
-    // Submit both order line and variant metadata
-    const orderLineErrors = await orderLineSubmitHandler(data.orderLine);
-    const variantErrors = await variantSubmitHandler(data.variant);
+    // Where the save started. Closing rewrites the address, so it's done only while the user
+    // is still there.
+    const startedAt = window.location.href;
 
-    client.refetchQueries({ include: [OrderLinesMetadataDocument] });
+    try {
+      const saveOrderLine = createMetadataUpdateHandler(
+        { id: initialData.id, ...baseline.orderLine },
+        // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
+        async (): Promise<never[]> => [],
+        variables => updateMetadata({ variables }),
+        variables => updatePrivateMetadata({ variables }),
+      );
+      // The variant's metadata is shown read-only, so this sends nothing unless it was edited.
+      const saveVariant = initialData.variant
+        ? createMetadataUpdateHandler(
+            { id: initialData.variant.id, ...baseline.variant },
+            async (): Promise<never[]> => [],
+            variables => updateMetadata({ variables }),
+            variables => updatePrivateMetadata({ variables }),
+          )
+        : async (): Promise<never[]> => [];
 
-    // Check if both submissions succeeded
-    const allErrors = [...orderLineErrors, ...variantErrors];
+      const errors = [
+        ...(await saveOrderLine(data.orderLine)),
+        ...(await saveVariant(data.variant)),
+      ];
 
-    if (allErrors.length === 0) {
+      if (errors.length > 0) {
+        return;
+      }
+
+      // Reload in the background: a slow reload can't hold the dialog open, and a failed one
+      // doesn't undo the save.
+      client.refetchQueries({ include: [OrderLinesMetadataDocument] }).catch(() => undefined);
+
       notify({
         status: "success",
         text: intl.formatMessage({
@@ -89,15 +96,21 @@ export const useHandleOrderLineMetadataSubmit = ({
           defaultMessage: "Metadata updated",
         }),
       });
-      onClose();
-    }
 
-    setSubmitInProgress(false);
+      // If the user went back or elsewhere meanwhile, closing would undo that, or close a dialog
+      // opened since.
+      if (window.location.href === startedAt) {
+        onClose();
+      }
+    } finally {
+      if (mounted.current) {
+        setSubmitInProgress(false);
+      }
+    }
   };
 
   return {
     onSubmit,
-    lastSubmittedData: submittedData.current,
     submitInProgress: submitInProgress,
   };
 };

@@ -18,7 +18,7 @@ export const WarehouseMetadataDialog = ({
   warehouse,
 }: WarehouseMetadataDialogProps) => {
   const intl = useIntl();
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: warehouse,
     onClose,
     refetchDocument: WarehouseDetailsDocument,
@@ -33,10 +33,10 @@ export const WarehouseMetadataDialog = ({
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: warehouse,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const WarehouseMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Warehouse Metadata",
