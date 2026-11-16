@@ -14997,6 +14997,13 @@ export type TaxConfigurationsListQueryVariables = Exact<{
 
 export type TaxConfigurationsListQuery = { __typename: 'Query', taxConfigurations: { __typename: 'TaxConfigurationCountableConnection', edges: Array<{ __typename: 'TaxConfigurationCountableEdge', node: { __typename: 'TaxConfiguration', id: string, displayGrossPrices: boolean, pricesEnteredWithTax: boolean, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, channel: { __typename: 'Channel', id: string, name: string }, countries: Array<{ __typename: 'TaxConfigurationPerCountry', chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null, taxAppId: string | null, displayGrossPrices: boolean, country: { __typename: 'CountryDisplay', country: string, code: string } }> } }> } | null };
 
+export type TaxConfigurationMetadataQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type TaxConfigurationMetadataQuery = { __typename: 'Query', taxConfiguration: { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+
 export type TaxCountriesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 

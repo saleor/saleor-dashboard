@@ -23,6 +23,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { TaxCountryDialog } from "@dashboard/taxes/components/TaxCountryDialog/TaxCountryDialog";
 import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
+import { rippleTaxConfigurationMetadata } from "@dashboard/taxes/ripples/taxConfigurationMetadata";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { List, ListHeader, ListItem, ListItemCell, PageTab, PageTabs } from "@saleor/macaw-ui";
 import { Box, Button, Divider, Skeleton } from "@saleor/macaw-ui-next";
@@ -46,6 +47,8 @@ interface TaxChannelsPageProps {
   onSubmit: (input: TaxConfigurationUpdateInput) => void;
   savebarState: ConfirmButtonTransitionState;
   disabled: boolean;
+  /** Passed only to users who can edit tax configuration metadata; hides the button otherwise. */
+  onShowMetadata?: () => void;
 }
 
 export type TaxCountryConfiguration = Omit<
@@ -76,6 +79,7 @@ const TaxChannelsPage = (props: TaxChannelsPageProps) => {
     onSubmit,
     savebarState,
     disabled,
+    onShowMetadata,
   } = props;
   const intl = useIntl();
   const classes = useStyles();
@@ -166,7 +170,17 @@ const TaxChannelsPage = (props: TaxChannelsPageProps) => {
               href={configurationMenuUrl}
               hrefIcon={<TopNavDestinationIcon.configuration />}
               hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
-            />
+            >
+              {onShowMetadata && (
+                <TopNav.MetadataButton
+                  onClick={onShowMetadata}
+                  disabled={disabled || !currentTaxConfiguration}
+                  data-test-id="show-tax-configuration-metadata"
+                  title={intl.formatMessage(taxesMessages.editTaxConfigurationMetadata)}
+                  ripple={rippleTaxConfigurationMetadata}
+                />
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <Box padding={6}>
                 <PageTabs value="channels" onChange={handleTabChange}>
