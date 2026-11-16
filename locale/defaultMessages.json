@@ -1120,6 +1120,10 @@
     "context": "assign collection picker, client-side filter emptied the loaded pages",
     "string": "Every collection loaded so far is already assigned. Search by name, or keep loading the list."
   },
+  "28sK1U": {
+    "context": "rich text editor toolbox item that embeds a video or a post",
+    "string": "Embed"
+  },
   "28vvyx": {
     "context": "deselect all values button",
     "string": "None"
@@ -6384,6 +6388,10 @@
   "KqJTVN": {
     "context": "intro under store settings page title",
     "string": "Store identity, company address, how customers sign in, and who may call the API. Advanced options cover legacy API behavior."
+  },
+  "KqZYkD": {
+    "context": "rich text editor error when no embed service matches the link",
+    "string": "This link can't be embedded"
   },
   "KqbfFa": {
     "context": "expiry date selection info message",
@@ -13234,6 +13242,10 @@
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
+  "iz1ug3": {
+    "context": "rich text editor prompt asking for an image link",
+    "string": "Paste a link to an image"
+  },
   "j+lQWT": {
     "context": "error message when cut-off date is older than 30 days",
     "string": "Cut-off date cannot be more than 30 days in the past"
@@ -14563,6 +14575,10 @@
     "context": "TopNav destination link tooltip to categories list",
     "string": "All categories"
   },
+  "nGWrzz": {
+    "context": "rich text editor button in an empty embed block",
+    "string": "Add embed by link"
+  },
   "nGuFx9": {
     "context": "Channel status blocking purchase in a channel",
     "string": "Channel inactive — cannot be purchased"
@@ -15466,6 +15482,10 @@
     "context": "header",
     "string": "Add Value to Authorization Field"
   },
+  "qCHM6u": {
+    "context": "rich text editor button in an empty image block",
+    "string": "Add image by link"
+  },
   "qDwvZ4": {
     "string": "Unknown error"
   },
@@ -16145,6 +16165,10 @@
   "sKbtzQ": {
     "context": "voucher catalogue collections row title",
     "string": "Collections"
+  },
+  "sMubuZ": {
+    "context": "rich text editor prompt asking for a link to embed",
+    "string": "Paste a link to a YouTube or Vimeo video, a post, or another embeddable page"
   },
   "sO+uiz": {
     "string": "These codes will be removed when you save the voucher."
