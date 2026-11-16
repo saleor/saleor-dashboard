@@ -10949,6 +10949,42 @@ export function usePromotionDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type PromotionDetailsQueryHookResult = ReturnType<typeof usePromotionDetailsQuery>;
 export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotionDetailsLazyQuery>;
 export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
+export const PromotionMetadataDocument = gql`
+    query PromotionMetadata($id: ID!) {
+  promotion(id: $id) {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __usePromotionMetadataQuery__
+ *
+ * To run a query within a React component, call `usePromotionMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePromotionMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePromotionMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>(PromotionMetadataDocument, options);
+      }
+export function usePromotionMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>(PromotionMetadataDocument, options);
+        }
+export type PromotionMetadataQueryHookResult = ReturnType<typeof usePromotionMetadataQuery>;
+export type PromotionMetadataLazyQueryHookResult = ReturnType<typeof usePromotionMetadataLazyQuery>;
+export type PromotionMetadataQueryResult = Apollo.QueryResult<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>;
 export const RuleConditionsSelectedOptionsDetailsDocument = gql`
     query RuleConditionsSelectedOptionsDetails($categoriesIds: [ID!], $collectionsIds: [ID!], $productsIds: [ID!], $variantsIds: [ID!]) {
   categories(first: 100, where: {ids: $categoriesIds}) {

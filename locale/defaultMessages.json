@@ -7510,6 +7510,10 @@
     "context": "Label prefix for the last occurrence date of a recurring problem",
     "string": "last occurred at"
   },
+  "Ov45QH": {
+    "context": "promotion metadata dialog header",
+    "string": "Promotion Metadata"
+  },
   "Owgj18": {
     "context": "section description",
     "string": "Your store's public name and description, used across the storefront and in SEO metadata."
@@ -8138,6 +8142,10 @@
   "RBCyrU": {
     "context": "shipping zone warehouses expand control",
     "string": "Add a warehouse"
+  },
+  "RBn+PH": {
+    "context": "promotion metadata button title",
+    "string": "Edit promotion metadata"
   },
   "RBxYJf": {
     "context": "sale status",

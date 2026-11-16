@@ -12142,6 +12142,13 @@ export type PromotionDetailsQueryVariables = Exact<{
 
 export type PromotionDetailsQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: unknown | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: unknown | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: unknown | null, orderPredicate: unknown | null, channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } }> | null }> | null } | null };
 
+export type PromotionMetadataQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type PromotionMetadataQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+
 export type RuleConditionsSelectedOptionsDetailsQueryVariables = Exact<{
   categoriesIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
   collectionsIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;

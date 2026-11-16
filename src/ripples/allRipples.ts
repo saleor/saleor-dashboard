@@ -11,6 +11,7 @@ import { rippleSidebarCollapse } from "@dashboard/components/Sidebar/ripples/sid
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
+import { ripplePromotionMetadata } from "@dashboard/discounts/ripples/promotionMetadata";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { rippleSaleorPulse } from "@dashboard/home/ripples/saleorPulse";
@@ -86,6 +87,9 @@ export const allRipples: Ripple[] = [
   rippleProductTypeInHeader,
   rippleProductVariantMetadata,
   rippleVariantGenerator,
+
+  // Discounts
+  ripplePromotionMetadata,
 
   // Attributes
   rippleAttributeListGroupByType,
