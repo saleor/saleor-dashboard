@@ -1,17 +1,31 @@
 import { isProductAnalyticsEnabled } from "@dashboard/components/ProductAnalytics/config";
-import { type PostHog, SurveyType, SurveyWidgetType } from "posthog-js";
+import {
+  DisplaySurveyType,
+  type PostHog,
+  SurveyPosition,
+  SurveyType,
+  SurveyWidgetType,
+} from "posthog-js";
 import { usePostHog } from "posthog-js/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const feedbackSelector = '[data-posthog-feedback-trigger="true"]';
 
-interface FeedbackSurveyAvailability {
+/** Where the survey was opened from, sent as `feedback_source` with the response. */
+type FeedbackSource = "command_menu";
+
+interface FeedbackSurvey {
   isAvailable: boolean;
+  /** Opens the feedback survey in the middle of the screen, away from the sidebar button. */
+  openSurvey: (options: { source: FeedbackSource }) => void;
 }
 
-export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
+export const useFeedbackSurvey = (): FeedbackSurvey => {
   const posthog = usePostHog();
-  const [availability, setAvailability] = useState<{ client: PostHog; available: boolean }>();
+  const [availability, setAvailability] = useState<{
+    client: PostHog;
+    surveyId: string | undefined;
+  }>();
   const isDev = process.env.NODE_ENV === "development";
   const enabled = isProductAnalyticsEnabled();
 
@@ -31,12 +45,12 @@ export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
 
           setAvailability({
             client: posthog,
-            available: surveys.some(
+            surveyId: surveys.find(
               survey =>
                 survey.type === SurveyType.Widget &&
                 survey.appearance?.widgetType === SurveyWidgetType.Selector &&
                 survey.appearance.widgetSelector === feedbackSelector,
-            ),
+            )?.id,
           });
         });
       };
@@ -44,7 +58,7 @@ export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
         rendererLoaded = context?.isLoaded === true && !context.error;
 
         if (!rendererLoaded) {
-          if (active) setAvailability({ client: posthog, available: false });
+          if (active) setAvailability({ client: posthog, surveyId: undefined });
 
           return;
         }
@@ -62,10 +76,26 @@ export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
     [enabled, posthog],
   );
 
-  const isSurveyAvailable =
-    enabled && availability?.client === posthog && availability?.available === true;
+  const surveyId = enabled && availability?.client === posthog ? availability.surveyId : undefined;
+
+  const openSurvey = useCallback(
+    ({ source }: { source: FeedbackSource }) => {
+      if (!posthog || !surveyId) return;
+
+      posthog.displaySurvey(surveyId, {
+        displayType: DisplaySurveyType.Popover,
+        // The sidebar button can be anywhere or nowhere on screen, so open where the caller was.
+        position: SurveyPosition.MiddleCenter,
+        ignoreConditions: true,
+        ignoreDelay: true,
+        properties: { feedback_source: source },
+      });
+    },
+    [posthog, surveyId],
+  );
 
   return {
-    isAvailable: isDev || isSurveyAvailable,
+    isAvailable: isDev || surveyId !== undefined,
+    openSurvey,
   };
 };

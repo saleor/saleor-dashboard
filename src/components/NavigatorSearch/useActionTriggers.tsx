@@ -3,6 +3,7 @@ import { categoryListUrl } from "@dashboard/categories/urls";
 import { channelCreateUrl, channelsListUrl } from "@dashboard/channels/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
 import Link from "@dashboard/components/Link";
+import { useFeedbackSurvey } from "@dashboard/components/Sidebar/user/useFeedbackSurvey";
 import { customerAddPath, customerListUrl } from "@dashboard/customers/urls";
 import { saleAddUrl, saleListUrl, voucherAddUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -71,6 +72,8 @@ const ActionButtonItem = ({ id, children }: { id: string; children: React.ReactN
 interface TriggerDescriptor {
   section: MessageDescriptor;
   name: MessageDescriptor;
+  /** Other words people search for to find this action. */
+  keywords?: MessageDescriptor[];
   Component: React.ComponentType<{
     onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
   }>;
@@ -141,6 +144,44 @@ const allMessages = defineMessages({
     defaultMessage: "Create a product type",
     id: "OAuXGE",
   },
+  helpSection: {
+    defaultMessage: "Help",
+    id: "N7TOMQ",
+    description: "Cmd+K section heading for help and feedback actions",
+  },
+  shareFeedback: {
+    defaultMessage: "Share feedback",
+    id: "ZGle+H",
+    description: "Cmd+K action that opens the feedback form",
+  },
+});
+
+const feedbackKeywords = defineMessages({
+  feedback: {
+    defaultMessage: "feedback",
+    id: "V1oKpF",
+    description: "Cmd+K search keyword for the share feedback action",
+  },
+  bug: {
+    defaultMessage: "bug",
+    id: "E71npX",
+    description: "Cmd+K search keyword for the share feedback action",
+  },
+  idea: {
+    defaultMessage: "idea",
+    id: "heAX4q",
+    description: "Cmd+K search keyword for the share feedback action",
+  },
+  suggestion: {
+    defaultMessage: "suggestion",
+    id: "p4Hbrl",
+    description: "Cmd+K search keyword for the share feedback action",
+  },
+  reportProblem: {
+    defaultMessage: "report a problem",
+    id: "OaCUOK",
+    description: "Cmd+K search keyword for the share feedback action",
+  },
 });
 
 const InviteStaffNavigatorItem = ({
@@ -162,6 +203,34 @@ const InviteStaffNavigatorItem = ({
       </ActionButtonItem>
     </Box>
   );
+};
+
+const FeedbackNavigatorItem = ({
+  onClick,
+}: {
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+}): JSX.Element => {
+  const { openSurvey } = useFeedbackSurvey();
+
+  return (
+    <Box
+      onClick={event => {
+        onClick?.(event as React.MouseEvent<HTMLAnchorElement>);
+        openSurvey({ source: "command_menu" });
+      }}
+    >
+      <ActionButtonItem id="navigator-option-share-feedback">
+        <FormattedMessage {...allMessages.shareFeedback} />
+      </ActionButtonItem>
+    </Box>
+  );
+};
+
+const feedbackAction: TriggerDescriptor = {
+  section: allMessages.helpSection,
+  name: allMessages.shareFeedback,
+  keywords: Object.values(feedbackKeywords),
+  Component: FeedbackNavigatorItem,
 };
 
 const allActions: TriggerDescriptor[] = [
@@ -675,10 +744,13 @@ const allActions: TriggerDescriptor[] = [
 
 export const useActionTriggers = () => {
   const intl = useIntl();
+  const { isAvailable: isFeedbackAvailable } = useFeedbackSurvey();
+  const actions = isFeedbackAvailable ? [...allActions, feedbackAction] : allActions;
 
-  return allActions.map(action => ({
+  return actions.map(action => ({
     ...action,
     section: intl.formatMessage(action.section),
     name: intl.formatMessage(action.name),
+    keywords: action.keywords?.map(keyword => intl.formatMessage(keyword)) ?? [],
   }));
 };

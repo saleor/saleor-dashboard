@@ -4637,6 +4637,10 @@
   "E6m1iT": {
     "string": "Visible in Storefront"
   },
+  "E71npX": {
+    "context": "Cmd+K search keyword for the share feedback action",
+    "string": "bug"
+  },
   "E8T3e+": {
     "string": "Cannot add and remove group the same time"
   },
@@ -7258,6 +7262,10 @@
     "context": "page header",
     "string": "Create Customer"
   },
+  "N7TOMQ": {
+    "context": "Cmd+K section heading for help and feedback actions",
+    "string": "Help"
+  },
   "N7XGzW": {
     "context": "error message",
     "string": "This name is already taken. Please provide another."
@@ -7664,6 +7672,10 @@
   },
   "OaA0f9": {
     "string": "You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "OaCUOK": {
+    "context": "Cmd+K search keyword for the share feedback action",
+    "string": "report a problem"
   },
   "OaKyz4": {
     "context": "input label",
@@ -9550,6 +9562,10 @@
     "context": "shipping zones section name",
     "string": "Shipping Zones"
   },
+  "V1oKpF": {
+    "context": "Cmd+K search keyword for the share feedback action",
+    "string": "feedback"
+  },
   "V21v8h": {
     "string": "{currency} {totalAmount}"
   },
@@ -10831,6 +10847,10 @@
   "ZFqgI5": {
     "context": "warehouse channels assign button",
     "string": "Add"
+  },
+  "ZGle+H": {
+    "context": "Cmd+K action that opens the feedback form",
+    "string": "Share feedback"
   },
   "ZGmd4h": {
     "context": "button",
@@ -13191,6 +13211,10 @@
   "hbNxgV": {
     "string": "Are you sure you want to activate {email}?"
   },
+  "heAX4q": {
+    "context": "Cmd+K search keyword for the share feedback action",
+    "string": "idea"
+  },
   "hg79SY": {
     "context": "Label for collection toggle row when publication is scheduled",
     "string": "Scheduled"
@@ -15528,6 +15552,10 @@
   },
   "p2EAP0": {
     "string": "Promotion removed"
+  },
+  "p4Hbrl": {
+    "context": "Cmd+K search keyword for the share feedback action",
+    "string": "suggestion"
   },
   "p4L3Gb": {
     "context": "button, order add product picker loads the next pages",

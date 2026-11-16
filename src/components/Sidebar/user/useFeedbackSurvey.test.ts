@@ -1,5 +1,12 @@
 import { act, renderHook } from "@testing-library/react";
-import { type PostHog, type Survey, SurveyType, SurveyWidgetType } from "posthog-js";
+import {
+  DisplaySurveyType,
+  type PostHog,
+  type Survey,
+  SurveyPosition,
+  SurveyType,
+  SurveyWidgetType,
+} from "posthog-js";
 
 import { useFeedbackSurvey } from "./useFeedbackSurvey";
 
@@ -15,6 +22,10 @@ const mockPosthog = {
   getActiveMatchingSurveys: jest.fn<
     ReturnType<PostHog["getActiveMatchingSurveys"]>,
     Parameters<PostHog["getActiveMatchingSurveys"]>
+  >(),
+  displaySurvey: jest.fn<
+    ReturnType<PostHog["displaySurvey"]>,
+    Parameters<PostHog["displaySurvey"]>
   >(),
 };
 const mockAnalyticsEnabled = jest.fn(() => true);
@@ -158,4 +169,38 @@ it("stays hidden in production when analytics is disabled", () => {
   } finally {
     process.env.NODE_ENV = originalNodeEnv;
   }
+});
+
+it("opens the matching survey in the middle of the screen with its source", () => {
+  // Arrange
+  const { result } = renderHook(useFeedbackSurvey);
+
+  act(() => loaded.mock.calls[0][0]([feedbackSurvey], { isLoaded: true }));
+
+  // Act
+  act(() => result.current.openSurvey({ source: "command_menu" }));
+
+  // Assert
+  expect(mockPosthog.displaySurvey).toHaveBeenCalledWith(feedbackSurvey.id, {
+    displayType: DisplaySurveyType.Popover,
+    position: SurveyPosition.MiddleCenter,
+    ignoreConditions: true,
+    ignoreDelay: true,
+    properties: { feedback_source: "command_menu" },
+  });
+});
+
+it("opens nothing when no feedback survey matches", () => {
+  // Arrange
+  matching.mockImplementation(callback => callback([]));
+
+  const { result } = renderHook(useFeedbackSurvey);
+
+  act(() => loaded.mock.calls[0][0]([], { isLoaded: true }));
+
+  // Act
+  act(() => result.current.openSurvey({ source: "command_menu" }));
+
+  // Assert
+  expect(mockPosthog.displaySurvey).not.toHaveBeenCalled();
 });
