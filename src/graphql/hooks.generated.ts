@@ -22743,6 +22743,42 @@ export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
 export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
 export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
+export const MenuMetadataDocument = gql`
+    query MenuMetadata($id: ID!) {
+  menu(id: $id) {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __useMenuMetadataQuery__
+ *
+ * To run a query within a React component, call `useMenuMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMenuMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMenuMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useMenuMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>(MenuMetadataDocument, options);
+      }
+export function useMenuMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>(MenuMetadataDocument, options);
+        }
+export type MenuMetadataQueryHookResult = ReturnType<typeof useMenuMetadataQuery>;
+export type MenuMetadataLazyQueryHookResult = ReturnType<typeof useMenuMetadataLazyQuery>;
+export type MenuMetadataQueryResult = Apollo.QueryResult<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>;
 export const TaxConfigurationUpdateDocument = gql`
     mutation TaxConfigurationUpdate($id: ID!, $input: TaxConfigurationUpdateInput!) {
   taxConfigurationUpdate(id: $id, input: $input) {

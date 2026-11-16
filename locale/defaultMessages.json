@@ -6615,6 +6615,10 @@
     "context": "shipment refund title",
     "string": "Shipment was refunded"
   },
+  "Ks0oRH": {
+    "context": "structure (navigation menu) metadata dialog header",
+    "string": "Structure Metadata"
+  },
   "KszPFx": {
     "context": "dialog header",
     "string": "Void Payment"
@@ -8187,6 +8191,10 @@
   "QM9P8G": {
     "context": "dialog header",
     "string": "Assign Attribute"
+  },
+  "QNTwRh": {
+    "context": "section description",
+    "string": "Your company's legal name, address and phone. Storefronts and apps can show them; for example, Customer Emails uses this address in email footers unless its own branding sets a different one."
   },
   "QOGxSK": {
     "string": "Payment Type"
@@ -12265,6 +12273,10 @@
   "e71euF": {
     "string": "Refunds Model Type"
   },
+  "e7HYoX": {
+    "context": "structure (navigation menu) details metadata button title",
+    "string": "Edit structure metadata"
+  },
   "e7yOai": {
     "context": "shipping address is not set in draft order",
     "string": "Not set"
@@ -15654,10 +15666,6 @@
   "pPl6GN": {
     "context": "warehouse delete dialog when the location has no stock",
     "string": "There is no stock in this warehouse."
-  },
-  "pRYGUR": {
-    "context": "section description",
-    "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
   },
   "pSFOFy": {
     "context": "relative time in days",

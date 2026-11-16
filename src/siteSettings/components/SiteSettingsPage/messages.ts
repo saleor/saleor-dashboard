@@ -23,9 +23,9 @@ export const messages = defineMessages({
     description: "section title",
   },
   sectionCompanyDescription: {
-    id: "pRYGUR",
+    id: "QNTwRh",
     defaultMessage:
-      "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers.",
+      "Your company's legal name, address and phone. Storefronts and apps can show them; for example, Customer Emails uses this address in email footers unless its own branding sets a different one.",
     description: "section description",
   },
   sectionCustomerAccountsTitle: {
