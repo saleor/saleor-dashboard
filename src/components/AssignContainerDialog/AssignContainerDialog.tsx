@@ -77,7 +77,7 @@ const AssignContainerDialog = ({
   onFetchMore,
   onSubmit,
   open,
-  emptyMessage = "No objects found",
+  emptyMessage: suppliedEmptyMessage,
   excludeContainer,
   backfillResetKey,
   backfillExhaustedMessage,
@@ -90,6 +90,7 @@ const AssignContainerDialog = ({
   onResetFilters,
 }: AssignContainerDialogProps) => {
   const intl = useIntl();
+  const emptyMessage = suppliedEmptyMessage ?? intl.formatMessage(messages.noObjectsFound);
   const { query, onQueryChange, handleClose, isSearching, showSearchProgress } =
     useAssignContainerSearch({
       onFetch,

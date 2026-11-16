@@ -4,7 +4,7 @@ import { Box, SearchInput, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { type ChangeEvent, type KeyboardEvent, type ReactNode, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { iconSize, iconStrokeWidthBySize } from "../icons";
 import styles from "./ResponsiveTable.module.css";
@@ -28,6 +28,8 @@ interface ResponsiveTableProps {
 }
 
 export const ResponsiveTable = (props: ResponsiveTableProps) => {
+  const intl = useIntl();
+
   const {
     bleed = false,
     children,
@@ -114,7 +116,10 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
                     border: "none",
                     color: "var(--mu-colors-foreground-default1)",
                   }}
-                  title="Clear search (Esc)"
+                  title={intl.formatMessage({
+                    id: "3o+vsJ",
+                    defaultMessage: "Clear search (Esc)",
+                  })}
                 >
                   <X size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                 </Box>

@@ -90,10 +90,22 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
         <PlayIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
 
-      <ToolbarButton onClick={() => prettify()} label="Prettify query (Shift-Ctrl-P)">
+      <ToolbarButton
+        onClick={() => prettify()}
+        label={intl.formatMessage({
+          id: "H3BSQt",
+          defaultMessage: "Prettify query (Shift-Ctrl-P)",
+        })}
+      >
         <PrettifyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
-      <ToolbarButton onClick={() => copy()} label="Copy query (Shift-Ctrl-C)">
+      <ToolbarButton
+        onClick={() => copy()}
+        label={intl.formatMessage({
+          id: "8DRrsO",
+          defaultMessage: "Copy query (Shift-Ctrl-C)",
+        })}
+      >
         <CopyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
     </>
@@ -147,7 +159,10 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                   <div ref={editorToolsResize.firstRef}>
                     <section
                       className="graphiql-query-editor"
-                      aria-label="Query Editor"
+                      aria-label={intl.formatMessage({
+                        id: "qyMjmk",
+                        defaultMessage: "Query Editor",
+                      })}
                       style={{ borderBottom: 0 }}
                     >
                       <div className="graphiql-query-editor-wrapper">
@@ -160,7 +175,14 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                           readOnly={props.readOnly}
                         />
                       </div>
-                      <div className="graphiql-toolbar" role="toolbar" aria-label="Editor Commands">
+                      <div
+                        className="graphiql-toolbar"
+                        role="toolbar"
+                        aria-label={intl.formatMessage({
+                          id: "5SfUYr",
+                          defaultMessage: "Editor Commands",
+                        })}
+                      >
                         {toolbar}
                       </div>
                     </section>

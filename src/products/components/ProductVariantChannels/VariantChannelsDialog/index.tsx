@@ -9,6 +9,7 @@ import { type FormsetData } from "@dashboard/hooks/useFormset";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { toggle } from "@dashboard/utils/lists/lists";
 import { useMemo, useState } from "react";
+import { useIntl } from "react-intl";
 
 import { type ProductChannelListing } from "../types";
 
@@ -27,6 +28,8 @@ export const VariantChannelsDialog = ({
   onClose,
   onConfirm,
 }: VariantChannelsDialogProps) => {
+  const intl = useIntl();
+
   const selectedOrDefaults = selectedChannelListings ?? channelListings;
   const allChannelsIds = channelListings.map(c => c.channel.id);
   const allChannels = channelListings.map(c => c.channel);
@@ -67,7 +70,10 @@ export const VariantChannelsDialog = ({
       onChange={handleChange}
       onClose={handleClose}
       open={open}
-      title="Manage Products Channel Availability"
+      title={intl.formatMessage({
+        id: "Eau5AV",
+        defaultMessage: "Manage Products Channel Availability",
+      })}
       confirmButtonState="default"
       selected={selected.length}
       hasSelectionChanged={hasSelectionChanged}

@@ -2,7 +2,6 @@
 import { StrikethroughIcon } from "@dashboard/icons/StrikethroughIcon";
 import {
   type API,
-  type I18nConfig,
   type PasteConfig,
   type ToolboxConfig,
   type ToolConstructable,
@@ -16,9 +15,6 @@ import Paragraph from "@editorjs/paragraph";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
 import createGenericInlineTool from "editorjs-inline-tool";
-import { type IntlShape } from "react-intl";
-
-import { richTextEditorMessages as messages } from "./messages";
 
 const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
 
@@ -28,34 +24,15 @@ interface ImageToolInternals {
   uploadUrl(url: string): void;
 }
 
-// Keys into Editor.js's i18n dictionary, filled by `getEditorI18n`. Tools look them up
-// with `api.i18n.t(key)`, which falls back to the key itself.
-const ADD_BY_LINK_LABEL = "Add image by link";
-const ADD_BY_LINK_PROMPT = "Paste a link to an image";
-const EMBED_TITLE = "Embed";
-const ADD_EMBED_LABEL = "Add embed by link";
-const ADD_EMBED_PROMPT =
+// Keys into Editor.js's i18n dictionary, filled by `getEditorI18n` in ./i18n. Tools look them
+// up with `api.i18n.t(key)`, which falls back to the key itself.
+export const ADD_BY_LINK_LABEL = "Add image by link";
+export const ADD_BY_LINK_PROMPT = "Paste a link to an image";
+export const EMBED_TITLE = "Embed";
+export const ADD_EMBED_LABEL = "Add embed by link";
+export const ADD_EMBED_PROMPT =
   "Paste a link to a YouTube or Vimeo video, a post, or another embeddable page";
-const UNSUPPORTED_EMBED_MESSAGE = "This link can't be embedded";
-
-export const getEditorI18n = (intl: IntlShape): I18nConfig => ({
-  messages: {
-    toolNames: {
-      [EMBED_TITLE]: intl.formatMessage(messages.embedTitle),
-    },
-    tools: {
-      embed: {
-        [ADD_EMBED_LABEL]: intl.formatMessage(messages.addEmbedByLink),
-        [ADD_EMBED_PROMPT]: intl.formatMessage(messages.embedLinkPrompt),
-        [UNSUPPORTED_EMBED_MESSAGE]: intl.formatMessage(messages.embedLinkUnsupported),
-      },
-      image: {
-        [ADD_BY_LINK_LABEL]: intl.formatMessage(messages.addImageByLink),
-        [ADD_BY_LINK_PROMPT]: intl.formatMessage(messages.imageLinkPrompt),
-      },
-    },
-  },
-});
+export const UNSUPPORTED_EMBED_MESSAGE = "This link can't be embedded";
 
 // Icon copied from https://github.com/codex-team/icons (IconPlay), like the other editor.js icons.
 const EmbedIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M10 10.5606V13.4394C10 14.4777 11.1572 15.0971 12.0211 14.5211L14.1803 13.0817C14.9536 12.5661 14.9503 11.4317 14.18 10.9181L12.0214 9.47907C11.1591 8.9042 10 9.5203 10 10.5606Z"/><rect width="14" height="14" x="5" y="5" stroke="currentColor" stroke-width="2" rx="4"/></svg>`;
@@ -233,12 +210,16 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     },
   },
   embed: LinkEmbed,
-  strikethrough: createGenericInlineTool({
-    sanitize: {
-      s: {},
-    },
-    shortcut: "CMD+S",
-    tagName: "s",
-    toolboxIcon: StrikethroughIcon,
-  }),
+  // Titled so the inline toolbar can show its name from the editor's dictionary.
+  strikethrough: Object.assign(
+    createGenericInlineTool({
+      sanitize: {
+        s: {},
+      },
+      shortcut: "CMD+S",
+      tagName: "s",
+      toolboxIcon: StrikethroughIcon,
+    }),
+    { title: "Strikethrough" },
+  ),
 };

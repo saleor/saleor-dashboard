@@ -1,7 +1,9 @@
 import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
 import { useSavebarRef } from "@dashboard/components/Savebar/SavebarRefContext";
+import { sectionNames } from "@dashboard/intl";
 import { type PropsWithChildren, type ReactNode, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useIntl } from "react-intl";
 import { toast, Toaster } from "sonner";
 
 import { type INotificationContext, NotificationContext } from "./NotificationContext";
@@ -28,6 +30,7 @@ const TOAST_STACK_GAP_PX = 12;
  * clear the sticky Savebar — most notifies fire from Save on detail pages.
  */
 export const NotificationsToaster = (): ReactNode => {
+  const intl = useIntl();
   const { isSavebarMounted } = useSavebarRef();
   const viewportRef = useRef<HTMLDivElement>(null);
   const container = document.getElementById("toast-portal");
@@ -51,6 +54,7 @@ export const NotificationsToaster = (): ReactNode => {
     >
       <ToastDismissAll />
       <Toaster
+        containerAriaLabel={intl.formatMessage(sectionNames.notifications)}
         className={styles.toaster}
         position="bottom-right"
         // Always expanded — Sonner absolute + --offset stacking (see ToastStackSync).

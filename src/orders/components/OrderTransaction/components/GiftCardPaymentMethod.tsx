@@ -2,7 +2,7 @@ import { getStaticUrl } from "@dashboard/config";
 import { type GiftCardPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Gift } from "lucide-react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import icon from "./saleor-gift-card.svg";
 
@@ -12,21 +12,35 @@ const BRAND_LOGO_SIZE = 26;
 const getPaymentMethodIconUrl = (fileName: string) =>
   `${getStaticUrl()}payment-methods/${fileName}.svg`;
 
-const SaleorGiftCardIcon = () => (
-  <Box
-    width={6}
-    height={4}
-    borderRadius={2}
-    borderStyle="solid"
-    borderWidth={1}
-    borderColor="default1"
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-  >
-    <img src={icon} alt="Saleor Gift Card" title="Saleor Gift Card" />
-  </Box>
-);
+const SaleorGiftCardIcon = () => {
+  const intl = useIntl();
+
+  return (
+    <Box
+      width={6}
+      height={4}
+      borderRadius={2}
+      borderStyle="solid"
+      borderWidth={1}
+      borderColor="default1"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <img
+        src={icon}
+        alt={intl.formatMessage({
+          id: "M59tVJ",
+          defaultMessage: "Saleor Gift Card",
+        })}
+        title={intl.formatMessage({
+          id: "M59tVJ",
+          defaultMessage: "Saleor Gift Card",
+        })}
+      />
+    </Box>
+  );
+};
 
 const ExternalGiftCardIcon = ({ brand }: { brand: string | null }) => {
   if (brand) {
@@ -63,7 +77,7 @@ export const GiftCardPaymentMethod = ({ details }: GiftCardPaymentMethodProps) =
       <Box display="flex" alignItems="center" gap={2}>
         <SaleorGiftCardIcon />
         <Text size={2} color="default2">
-          Saleor Gift Card
+          <FormattedMessage id="M59tVJ" defaultMessage="Saleor Gift Card" />
         </Text>
         {formattedCode && (
           <Text size={2} color="default2">

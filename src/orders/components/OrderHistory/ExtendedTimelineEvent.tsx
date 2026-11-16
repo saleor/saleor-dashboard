@@ -213,7 +213,13 @@ const ExtendedTimelineEvent = ({
                 key={orderLine?.id ? `${id}-line-${orderLine.id}` : `${id}-line-${i}`}
                 orderLine={orderLine}
                 quantity={quantity ?? 0}
-                fallbackItemName={itemName ?? "Product"}
+                fallbackItemName={
+                  itemName ??
+                  intl.formatMessage({
+                    id: "x/ZVlU",
+                    defaultMessage: "Product",
+                  })
+                }
               />
             ))}
           </>

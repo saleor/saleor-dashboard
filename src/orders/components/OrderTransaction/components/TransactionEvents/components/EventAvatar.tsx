@@ -3,6 +3,7 @@ import { type AppAvatarFragment, type StaffMemberAvatarFragment } from "@dashboa
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, vars } from "@saleor/macaw-ui-next";
 import { LayoutGridIcon, ZapIcon } from "lucide-react";
+import { useIntl } from "react-intl";
 
 interface EventAvatarProps {
   createdBy: StaffMemberAvatarFragment | AppAvatarFragment | null;
@@ -12,6 +13,8 @@ const AVATAR_SIZE = "32px";
 const ICON_SIZE = 16;
 
 export const EventAvatar = ({ createdBy }: EventAvatarProps) => {
+  const intl = useIntl();
+
   if (!createdBy) {
     return (
       <Box
@@ -27,7 +30,10 @@ export const EventAvatar = ({ createdBy }: EventAvatarProps) => {
         __height={AVATAR_SIZE}
         flexShrink="0"
         __color={vars.colors.text.default2}
-        title="System"
+        title={intl.formatMessage({
+          id: "+CwN9C",
+          defaultMessage: "System",
+        })}
       >
         <ZapIcon size={ICON_SIZE} color="currentColor" />
       </Box>

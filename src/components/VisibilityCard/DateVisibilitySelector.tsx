@@ -3,6 +3,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
 import FormSpacer from "../FormSpacer";
 
@@ -38,6 +39,8 @@ interface Props {
 }
 
 const DateVisibilitySelector = ({ buttonText, children, onInputClose }: Props) => {
+  const intl = useIntl();
+
   const classes = useStyles({});
   const [showInput, setShowInput] = useState<boolean>(false);
   const handleCloseIconClick = () => {
@@ -58,7 +61,15 @@ const DateVisibilitySelector = ({ buttonText, children, onInputClose }: Props) =
       <div className={classes.container}>
         {children}
         <div className={classes.icon} onClick={handleCloseIconClick}>
-          <img src={closeIcon} alt="close icon" width={CLOSE_ICON_SIZE} height={CLOSE_ICON_SIZE} />
+          <img
+            src={closeIcon}
+            alt={intl.formatMessage({
+              id: "7bfLJQ",
+              defaultMessage: "close icon",
+            })}
+            width={CLOSE_ICON_SIZE}
+            height={CLOSE_ICON_SIZE}
+          />
         </div>
       </div>
       <FormSpacer />
