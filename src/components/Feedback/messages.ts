@@ -11,6 +11,12 @@ export const feedbackMessages = defineMessages({
     defaultMessage: "What could we improve?",
     description: "feedback form question when the survey has no question text",
   },
+  sensitiveDataWarning: {
+    id: "eGUNpq",
+    defaultMessage:
+      "Do not include passwords, API keys, personal data, or other sensitive information.",
+    description: "feedback form helper text under the feedback text box",
+  },
   contact: {
     id: "bpy0b2",
     defaultMessage: "Can we contact you about this by email?",

@@ -84,6 +84,7 @@ export const FeedbackForm = ({ survey, context, onSent }: FeedbackFormProps): Re
     >
       <Textarea
         label={question}
+        helperText={intl.formatMessage(feedbackMessages.sensitiveDataWarning)}
         value={feedback}
         onChange={event => setFeedback(event.target.value)}
         rows={4}

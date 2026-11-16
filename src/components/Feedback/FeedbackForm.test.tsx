@@ -104,6 +104,11 @@ describe("Feedback from the sidebar", () => {
     // Assert
     expect(screen.getByRole("textbox", { name: "What could we improve?" })).toHaveFocus();
     expect(
+      screen.getByText(
+        "Do not include passwords, API keys, personal data, or other sensitive information.",
+      ),
+    ).toBeInTheDocument();
+    expect(
       screen.getByRole("checkbox", { name: "Can we contact you about this by email?" }),
     ).not.toBeChecked();
     expect(screen.getByRole("button", { name: "Send" })).toBeDisabled();

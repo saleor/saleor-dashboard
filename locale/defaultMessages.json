@@ -11956,6 +11956,10 @@
     "context": "gift card detail cogs menu, opens the delete-confirmation dialog",
     "string": "Delete gift card"
   },
+  "eGUNpq": {
+    "context": "feedback form helper text under the feedback text box",
+    "string": "Do not include passwords, API keys, personal data, or other sensitive information."
+  },
   "eIGXwJ": {
     "context": "Alert text",
     "string": "You are using an old version of filter presets. The following presets: {presetNames} must be updated to continue using filters"
