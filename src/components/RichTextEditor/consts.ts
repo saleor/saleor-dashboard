@@ -10,7 +10,9 @@ import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
 import createGenericInlineTool from "editorjs-inline-tool";
 
-const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
+import { LinkTargetTool } from "./LinkTargetTool";
+
+const inlineToolbar = ["link", "linkTarget", "bold", "italic", "strikethrough"];
 
 // The plugin types mark `uploadUrl` private, but it is the tool's own entry point
 // for filling a block from a URL (shows the preloader, then stores the result).
@@ -120,6 +122,8 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
       },
     },
   },
+  // @ts-expect-error InlineToolConstructable still types render() as HTMLElement-only, but Editor.js accepts MenuConfig
+  linkTarget: LinkTargetTool,
   strikethrough: createGenericInlineTool({
     sanitize: {
       s: {},

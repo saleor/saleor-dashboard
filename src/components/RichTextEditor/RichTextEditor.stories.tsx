@@ -198,6 +198,48 @@ const savedBlocks = async (args: Props): Promise<OutputData["blocks"]> => {
 
 type PlayContext = { args: Props; canvasElement: HTMLElement };
 
+export const LinkOpensInNewTab: Story = {
+  args: {
+    defaultValue: linkedParagraph,
+    onInitialize: fn(),
+  },
+  play: async ({ args, canvasElement }: PlayContext) => {
+    // Arrange
+    await selectLink(canvasElement);
+
+    // Act
+    await clickInlineTool(canvasElement, "linkTarget");
+
+    // Assert
+    await expect(await savedBlocks(args)).toEqual(
+      savedParagraph('Visit <a href="https://saleor.io" target="_blank">Saleor</a> website'),
+    );
+  },
+};
+
+export const LinkOpensInSameTabAgain: Story = {
+  args: {
+    defaultValue: {
+      blocks: savedParagraph(
+        'Visit <a href="https://saleor.io" target="_blank">Saleor</a> website',
+      ),
+    },
+    onInitialize: fn(),
+  },
+  play: async ({ args, canvasElement }: PlayContext) => {
+    // Arrange
+    await selectLink(canvasElement);
+
+    // Act
+    await clickInlineTool(canvasElement, "linkTarget");
+
+    // Assert
+    await expect(await savedBlocks(args)).toEqual(
+      savedParagraph('Visit <a href="https://saleor.io">Saleor</a> website'),
+    );
+  },
+};
+
 export const BoldKeepsLink: Story = {
   args: {
     defaultValue: linkedParagraph,
