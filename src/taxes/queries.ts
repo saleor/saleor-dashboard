@@ -18,6 +18,18 @@ export const taxConfigurationsList = gql`
   }
 `;
 
+// Reading private tax configuration metadata requires HANDLE_TAXES or MANAGE_TAXES,
+// and the Taxes pages are open to every staff user. Fetching it separately, only when
+// the metadata dialog opens, keeps the list above working without that permission.
+export const taxConfigurationMetadata = gql`
+  query TaxConfigurationMetadata($id: ID!) {
+    taxConfiguration(id: $id) {
+      id
+      ...Metadata
+    }
+  }
+`;
+
 export const taxCountriesList = gql`
   query TaxCountriesList {
     taxCountryConfigurations {

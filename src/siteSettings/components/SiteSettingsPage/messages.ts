@@ -1,6 +1,11 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  editMetadata: {
+    id: "5f1Snx",
+    defaultMessage: "Edit store metadata",
+    description: "store settings metadata button title",
+  },
   sectionStoreDetailsTitle: {
     id: "TihW9+",
     defaultMessage: "Store details",

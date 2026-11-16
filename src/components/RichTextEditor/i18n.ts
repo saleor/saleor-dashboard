@@ -1,6 +1,16 @@
 import { type EditorConfig } from "@editorjs/editorjs";
 import { defineMessages, type IntlShape } from "react-intl";
 
+import {
+  ADD_BY_LINK_LABEL,
+  ADD_BY_LINK_PROMPT,
+  ADD_EMBED_LABEL,
+  ADD_EMBED_PROMPT,
+  EMBED_TITLE,
+  UNSUPPORTED_EMBED_MESSAGE,
+} from "./consts";
+import { richTextEditorMessages } from "./messages";
+
 // The message IDs belong to the Dashboard catalogue. Native Editor.js dictionary
 // keys must stay in English, matching the installed editor and tool versions.
 export const editorMessages = defineMessages({
@@ -23,7 +33,6 @@ export const editorMessages = defineMessages({
   italic: { id: "g2V+es", defaultMessage: "Italic" },
   strikethrough: { id: "lH8y+X", defaultMessage: "Strikethrough" },
   image: { id: "+0zv6g", defaultMessage: "Image" },
-  embed: { id: "bp3HuS", defaultMessage: "Embed" },
   addLink: { id: "Bem7D1", defaultMessage: "Add a link" },
   invalidLink: { id: "t+BvXw", defaultMessage: "Pasted link is not valid." },
   unsupportedBlock: {
@@ -40,11 +49,6 @@ export const editorMessages = defineMessages({
   imageUploadError: {
     id: "eAVz80",
     defaultMessage: "Couldn’t upload image. Please try another.",
-  },
-  imageByLink: { id: "73UntD", defaultMessage: "Add image by link" },
-  imageUrlPrompt: {
-    id: "CX0oDN",
-    defaultMessage: "Paste a link to an image",
   },
   heading1: { id: "/7maNQ", defaultMessage: "Heading 1" },
   heading2: { id: "Zqekct", defaultMessage: "Heading 2" },
@@ -94,6 +98,9 @@ export const editorMessages = defineMessages({
 /** UI configuration only; never merged into the editor's saved block data. */
 export const getEditorI18n = (intl: IntlShape): EditorConfig["i18n"] => {
   const t = (key: keyof typeof editorMessages) => intl.formatMessage(editorMessages[key]);
+  // The image and embed tools' own texts (./messages).
+  const own = (key: keyof typeof richTextEditorMessages) =>
+    intl.formatMessage(richTextEditorMessages[key]);
 
   return {
     messages: {
@@ -126,7 +133,7 @@ export const getEditorI18n = (intl: IntlShape): EditorConfig["i18n"] => {
         Italic: t("italic"),
         Strikethrough: t("strikethrough"),
         Image: t("image"),
-        Embed: t("embed"),
+        [EMBED_TITLE]: own("embedTitle"),
       },
       tools: {
         link: {
@@ -145,7 +152,8 @@ export const getEditorI18n = (intl: IntlShape): EditorConfig["i18n"] => {
           "With background": t("imageBackground"),
           "With caption": t("imageCaption"),
           "Couldn’t upload image. Please try another.": t("imageUploadError"),
-          "Paste a link to an image": t("imageUrlPrompt"),
+          [ADD_BY_LINK_LABEL]: own("addImageByLink"),
+          [ADD_BY_LINK_PROMPT]: own("imageLinkPrompt"),
         },
         header: {
           "Heading 1": t("heading1"),
@@ -187,7 +195,12 @@ export const getEditorI18n = (intl: IntlShape): EditorConfig["i18n"] => {
           Collapse: t("collapse"),
           Stretch: t("stretch"),
         },
-        embed: { "Enter a caption": t("enterCaption") },
+        embed: {
+          "Enter a caption": t("enterCaption"),
+          [ADD_EMBED_LABEL]: own("addEmbedByLink"),
+          [ADD_EMBED_PROMPT]: own("embedLinkPrompt"),
+          [UNSUPPORTED_EMBED_MESSAGE]: own("embedLinkUnsupported"),
+        },
         convertTo: { "Convert to": t("convertTo") },
       },
       blockTunes: {

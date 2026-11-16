@@ -22,13 +22,13 @@ export type DiscountListUrlQueryParams = Dialog<DiscountListUrlDialog> &
     query?: string;
   };
 
-type DiscountUrlDialog = "remove";
+type DiscountUrlDialog = "remove" | "view-metadata";
 export type DiscountUrlQueryParams = Dialog<DiscountUrlDialog>;
 
 export const discountListUrl = (params?: DiscountListUrlQueryParams) =>
   discountSection + "?" + stringifyQs(params);
 
-export const discountUrl = (id: string, params?: DiscountListUrlQueryParams) =>
+export const discountUrl = (id: string, params?: DiscountUrlQueryParams) =>
   urlJoin(discountSection, id) + "?" + stringifyQs(params);
 
 export const discountAddUrl = () => urlJoin(discountSection, "add");

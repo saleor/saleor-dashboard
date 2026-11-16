@@ -1,0 +1,98 @@
+import { type MetadataItemFragment } from "@dashboard/graphql";
+
+import { MetadataDialog } from "./MetadataDialog";
+import { useHandleMetadataSubmit } from "./useHandleMetadataSubmit";
+import { type MetadataDialogDataOptions, useMetadataDialogData } from "./useMetadataDialogData";
+import { useMetadataForm } from "./useMetadataForm";
+import { mapFieldArrayToMetadataInput } from "./validation";
+
+interface EntityWithMetadata {
+  id: string;
+  metadata: MetadataItemFragment[];
+  privateMetadata: MetadataItemFragment[];
+}
+
+type OpenLazyMetadataDialogProps<TData, TVariables, TEntity> = MetadataDialogDataOptions<
+  TData,
+  TVariables,
+  TEntity
+> & {
+  title: string;
+  onClose: () => void;
+};
+
+const OpenLazyMetadataDialog = <TData, TVariables, TEntity extends EntityWithMetadata>({
+  title,
+  onClose,
+  ...dataOptions
+}: OpenLazyMetadataDialogProps<TData, TVariables, TEntity>): React.ReactNode => {
+  const { entity, contentLoading, loadError, onRetryLoad } = useMetadataDialogData(dataOptions);
+  // Nothing to reload after a save: the dialog closes, and the save's response already updated
+  // the object in the cache, which pages showing it read from.
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
+    initialData: entity,
+    onClose,
+  });
+  const {
+    metadataFields,
+    privateMetadataFields,
+    metadataErrors,
+    privateMetadataErrors,
+    formIsDirty,
+    handleChange,
+    getFormData,
+    baseline,
+  } = useMetadataForm({ graphqlData: entity, submitInProgress });
+
+  return (
+    <MetadataDialog
+      open
+      onClose={onClose}
+      onSave={async () => {
+        await onSubmit(getFormData(), baseline);
+      }}
+      title={title}
+      data={{
+        metadata: mapFieldArrayToMetadataInput(metadataFields),
+        privateMetadata: mapFieldArrayToMetadataInput(privateMetadataFields),
+      }}
+      onChange={handleChange}
+      loading={submitInProgress}
+      contentLoading={contentLoading}
+      loadError={loadError}
+      onRetryLoad={onRetryLoad}
+      errors={{
+        metadata: metadataErrors.length ? metadataErrors.join(", ") : undefined,
+        privateMetadata: privateMetadataErrors.length
+          ? privateMetadataErrors.join(", ")
+          : undefined,
+      }}
+      formIsDirty={formIsDirty}
+    />
+  );
+};
+
+type LazyMetadataDialogProps<TData, TVariables, TEntity> = OpenLazyMetadataDialogProps<
+  TData,
+  TVariables,
+  TEntity
+> & {
+  open: boolean;
+  /** Identifies the edited object when the query variables don't, e.g. one fulfillment of an order. */
+  objectId?: string;
+};
+
+/**
+ * A metadata dialog for an object whose metadata the dialog loads itself: loading, load errors
+ * with Retry, editing and saving. It is mounted only while open, so every open loads fresh data
+ * and starts with a clean form.
+ */
+export const LazyMetadataDialog = <TData, TVariables, TEntity extends EntityWithMetadata>({
+  open,
+  objectId,
+  ...props
+}: LazyMetadataDialogProps<TData, TVariables, TEntity>): React.ReactNode =>
+  // Keyed by what it loads, so another object starts over instead of showing this one's data.
+  open ? (
+    <OpenLazyMetadataDialog key={JSON.stringify([props.variables ?? {}, objectId])} {...props} />
+  ) : null;

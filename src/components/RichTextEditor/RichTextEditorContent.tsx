@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useId, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { getTools } from "./consts";
+import { tools } from "./consts";
 import { useHasRendered } from "./hooks";
 import { getEditorI18n } from "./i18n";
 import { ReactEditorJS } from "./ReactEditorJS";
@@ -23,7 +23,6 @@ const RichTextEditorContent = ({
 }: RichTextEditorContentProps) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const tools = useMemo(() => getTools(intl), [intl]);
   const i18n = useMemo(() => getEditorI18n(intl), [intl]);
   const generatedId = useId();
   const id = defaultId ?? generatedId;

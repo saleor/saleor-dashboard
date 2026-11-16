@@ -1,12 +1,10 @@
-import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
-import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
-import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
-import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
-import { OrderFulfillmentMetadataDocument } from "@dashboard/graphql";
-import { useEffect } from "react";
+import { LazyMetadataDialog } from "@dashboard/components/MetadataDialog/LazyMetadataDialog";
+import {
+  OrderFulfillmentMetadataDocument,
+  type OrderFulfillmentMetadataQuery,
+  type OrderFulfillmentMetadataQueryVariables,
+} from "@dashboard/graphql";
 import { useIntl } from "react-intl";
-
-import { useFulfillmentMetadataValues } from "./useFulfillmentMetadataValues";
 
 interface OrderFulfillmentMetadataDialogProps {
   open: boolean;
@@ -15,70 +13,34 @@ interface OrderFulfillmentMetadataDialogProps {
   fulfillmentId: string;
 }
 
+type Fulfillment = NonNullable<OrderFulfillmentMetadataQuery["order"]>["fulfillments"][number];
+
 export const OrderFulfillmentMetadataDialog = ({
   onClose,
   open,
   orderId,
   fulfillmentId,
-}: OrderFulfillmentMetadataDialogProps) => {
+}: OrderFulfillmentMetadataDialogProps): React.ReactNode => {
   const intl = useIntl();
-  const { data: fulfillment } = useFulfillmentMetadataValues({
-    orderId,
-    fulfillmentId,
-    open,
-  });
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
-    initialData: fulfillment,
-    onClose,
-    refetchDocument: OrderFulfillmentMetadataDocument,
-  });
-
-  const {
-    metadataFields,
-    privateMetadataFields,
-    metadataErrors,
-    privateMetadataErrors,
-    reset,
-    formIsDirty,
-    handleChange,
-    formData,
-  } = useMetadataForm({
-    graphqlData: fulfillment,
-    submitInProgress,
-    lastSubmittedData,
-  });
-
-  useEffect(() => {
-    if (!open) {
-      reset();
-    }
-  }, [open, reset]);
 
   return (
-    <MetadataDialog
+    <LazyMetadataDialog<
+      OrderFulfillmentMetadataQuery,
+      OrderFulfillmentMetadataQueryVariables,
+      Fulfillment
+    >
       open={open}
+      objectId={fulfillmentId}
       onClose={onClose}
-      onSave={async () => {
-        await onSubmit(formData);
-      }}
       title={intl.formatMessage({
         defaultMessage: "Fulfillment Metadata",
         id: "lDdWo9",
       })}
-      data={{
-        metadata: mapFieldArrayToMetadataInput(metadataFields),
-        privateMetadata: mapFieldArrayToMetadataInput(privateMetadataFields),
-      }}
-      onChange={handleChange}
-      loading={submitInProgress}
-      contentLoading={open && !fulfillment}
-      errors={{
-        metadata: metadataErrors.length ? metadataErrors.join(", ") : undefined,
-        privateMetadata: privateMetadataErrors.length
-          ? privateMetadataErrors.join(", ")
-          : undefined,
-      }}
-      formIsDirty={formIsDirty}
+      query={OrderFulfillmentMetadataDocument}
+      variables={{ id: orderId }}
+      select={data =>
+        data.order?.fulfillments.find(fulfillment => fulfillment.id === fulfillmentId)
+      }
     />
   );
 };

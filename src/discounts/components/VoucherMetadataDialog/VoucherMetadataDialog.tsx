@@ -19,7 +19,7 @@ export const VoucherMetadataDialog = ({ onClose, open, voucher }: VoucherMetadat
   const normalizedVoucher = voucher
     ? { ...voucher, privateMetadata: voucher.privateMetadata ?? [] }
     : undefined;
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedVoucher,
     onClose,
     refetchDocument: VoucherDetailsDocument,
@@ -34,10 +34,10 @@ export const VoucherMetadataDialog = ({ onClose, open, voucher }: VoucherMetadat
     formIsDirty,
     handleChange,
     formData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedVoucher,
     submitInProgress,
-    lastSubmittedData,
   });
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export const VoucherMetadataDialog = ({ onClose, open, voucher }: VoucherMetadat
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(formData, baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Voucher Metadata",

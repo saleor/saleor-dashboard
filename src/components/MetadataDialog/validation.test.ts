@@ -104,6 +104,35 @@ describe("getValidateMetadata", () => {
   });
 
   describe("edge cases", () => {
+    it("ignores rows with neither key nor value, which aren't saved", () => {
+      // Arrange
+      const metadata: MetadataInput[] = [
+        { key: "color", value: "blue" },
+        { key: "", value: "" },
+        { key: "", value: "" },
+      ];
+
+      // Act
+      const result = validateMetadata(metadata);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("still rejects a row with a value but no key", () => {
+      // Arrange
+      const metadata: MetadataInput[] = [
+        { key: "", value: "" },
+        { key: "", value: "orphan" },
+      ];
+
+      // Act
+      const result = validateMetadata(metadata);
+
+      // Assert
+      expect(result).toBe("Metadata key cannot be empty");
+    });
+
     it("accepts empty array", () => {
       // Arrange
       const metadata: MetadataInput[] = [];

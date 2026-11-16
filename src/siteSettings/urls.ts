@@ -5,7 +5,7 @@ import { type Dialog } from "../types";
 const siteSettingsSection = "/site-settings";
 
 export const siteSettingsPath = siteSettingsSection;
-type SiteSettingsUrlDialog = "add-key";
-type SiteSettingsUrlQueryParams = Dialog<SiteSettingsUrlDialog>;
+type SiteSettingsUrlDialog = "view-metadata";
+export type SiteSettingsUrlQueryParams = Dialog<SiteSettingsUrlDialog>;
 export const siteSettingsUrl = (params?: SiteSettingsUrlQueryParams) =>
   `${siteSettingsPath}?${stringifyQs(params)}`;

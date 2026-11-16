@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+// Each save reads back only the metadata it changed. Reading private metadata needs its own
+// permission, and a response field the user can't read would fail a save that went through.
 export const updateMetadata = gql`
   mutation UpdateMetadata($id: ID!, $input: [MetadataInput!]!, $keysToDelete: [String!]!) {
     updateMetadata(id: $id, input: $input) {
@@ -7,7 +9,9 @@ export const updateMetadata = gql`
         ...MetadataError
       }
       item {
-        ...Metadata
+        metadata {
+          ...MetadataItem
+        }
         ... on Node {
           id
         }
@@ -18,7 +22,9 @@ export const updateMetadata = gql`
         ...MetadataError
       }
       item {
-        ...Metadata
+        metadata {
+          ...MetadataItem
+        }
         ... on Node {
           id
         }
@@ -34,7 +40,9 @@ export const updatePrivateMetadata = gql`
         ...MetadataError
       }
       item {
-        ...Metadata
+        privateMetadata {
+          ...MetadataItem
+        }
         ... on Node {
           id
         }
@@ -45,7 +53,9 @@ export const updatePrivateMetadata = gql`
         ...MetadataError
       }
       item {
-        ...Metadata
+        privateMetadata {
+          ...MetadataItem
+        }
         ... on Node {
           id
         }

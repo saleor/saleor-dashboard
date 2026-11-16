@@ -10,6 +10,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useIntl } from "react-intl";
 
+import { TaxConfigurationMetadataDialog } from "../components/TaxConfigurationMetadataDialog/TaxConfigurationMetadataDialog";
 import TaxChannelsPage from "../pages/TaxChannelsPage/TaxChannelsPage";
 import {
   taxConfigurationListUrl,
@@ -18,6 +19,7 @@ import {
   type TaxTab,
   taxTabPath,
 } from "../urls";
+import { useCanEditTaxConfigurationMetadata } from "../utils/useCanEditTaxConfigurationMetadata";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface TaxChannelsListProps {
@@ -53,6 +55,10 @@ const TaxChannelsList = ({ id, params }: TaxChannelsListProps) => {
   );
   const { data } = useTaxConfigurationsListQuery({ variables: { first: 100 } });
   const taxConfigurations = mapEdgesToItems(data?.taxConfigurations);
+  const selectedTaxConfiguration = taxConfigurations?.find(
+    taxConfiguration => taxConfiguration.id === id,
+  );
+  const canEditMetadata = useCanEditTaxConfigurationMetadata();
 
   useTaxUrlRedirect({
     id,
@@ -66,25 +72,37 @@ const TaxChannelsList = ({ id, params }: TaxChannelsListProps) => {
   }
 
   return (
-    <TaxChannelsPage
-      taxConfigurations={taxConfigurations}
-      selectedConfigurationId={id!}
-      handleTabChange={handleTabChange}
-      allCountries={shop?.countries}
-      isDialogOpen={params?.action === "add-country"}
-      openDialog={openDialog}
-      closeDialog={closeDialog}
-      onSubmit={input =>
-        taxConfigurationUpdateMutation({
-          variables: {
-            id,
-            input,
-          },
-        })
-      }
-      savebarState={mutationStatus}
-      disabled={mutationInProgress}
-    />
+    <>
+      <TaxChannelsPage
+        taxConfigurations={taxConfigurations}
+        selectedConfigurationId={id!}
+        handleTabChange={handleTabChange}
+        allCountries={shop?.countries}
+        isDialogOpen={params?.action === "add-country"}
+        openDialog={openDialog}
+        closeDialog={closeDialog}
+        onSubmit={input =>
+          taxConfigurationUpdateMutation({
+            variables: {
+              id,
+              input,
+            },
+          })
+        }
+        savebarState={mutationStatus}
+        disabled={mutationInProgress}
+        onShowMetadata={canEditMetadata ? (): void => openDialog("view-metadata") : undefined}
+      />
+      {selectedTaxConfiguration ? (
+        <TaxConfigurationMetadataDialog
+          // A shared link can carry the action for a user without tax permissions.
+          open={canEditMetadata && params?.action === "view-metadata"}
+          onClose={closeDialog}
+          taxConfigurationId={selectedTaxConfiguration.id}
+          channelName={selectedTaxConfiguration.channel.name}
+        />
+      ) : null}
+    </>
   );
 };
 
