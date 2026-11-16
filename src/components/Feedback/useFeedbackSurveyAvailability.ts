@@ -16,7 +16,7 @@ interface FeedbackSurveyAvailability {
 const isFeedbackSurvey = (survey: Survey): boolean =>
   survey.type === SurveyType.API && survey.questions[0]?.type === SurveyQuestionType.Open;
 
-export const useFeedbackSurvey = (): FeedbackSurveyAvailability => {
+export const useFeedbackSurveyAvailability = (): FeedbackSurveyAvailability => {
   const posthog = usePostHog();
   const [availability, setAvailability] = useState<{
     client: PostHog;

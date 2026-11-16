@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { type PostHog, type Survey, SurveyQuestionType, SurveyType } from "posthog-js";
 
-import { useFeedbackSurvey } from "./useFeedbackSurvey";
+import { useFeedbackSurveyAvailability } from "./useFeedbackSurveyAvailability";
 
 const mockPosthog = {
   onSurveysLoaded: jest.fn<
@@ -55,7 +55,7 @@ beforeEach(() => {
 
 it("stays hidden until the renderer loads and the feedback survey matches", () => {
   // Arrange
-  const { result } = renderHook(useFeedbackSurvey);
+  const { result } = renderHook(useFeedbackSurveyAvailability);
 
   // Act
   expect(result.current.isAvailable).toBe(false);
@@ -75,7 +75,7 @@ it("shows the feedback button in development when analytics is disabled", () => 
 
   try {
     // Act
-    const { result } = renderHook(useFeedbackSurvey);
+    const { result } = renderHook(useFeedbackSurveyAvailability);
 
     // Assert
     expect(result.current.isAvailable).toBe(true);
@@ -88,7 +88,7 @@ it("shows the feedback button in development when analytics is disabled", () => 
 
 it("stays hidden when loading fails", () => {
   // Arrange
-  const { result } = renderHook(useFeedbackSurvey);
+  const { result } = renderHook(useFeedbackSurveyAvailability);
 
   // Act
   act(() => loaded.mock.calls[0][0]([], { isLoaded: false, error: "blocked" }));
@@ -119,7 +119,7 @@ it("stays hidden when only another survey is available", () => {
     ]),
   );
 
-  const { result } = renderHook(useFeedbackSurvey);
+  const { result } = renderHook(useFeedbackSurveyAvailability);
 
   // Act
   act(() => loaded.mock.calls[0][0]([feedbackSurvey], { isLoaded: true }));
@@ -134,7 +134,7 @@ it("updates availability after feature flag changes and unsubscribes on unmount"
 
   loaded.mockReturnValue(unsubscribe);
 
-  const { result, unmount } = renderHook(useFeedbackSurvey);
+  const { result, unmount } = renderHook(useFeedbackSurveyAvailability);
 
   act(() => loaded.mock.calls[0][0]([feedbackSurvey], { isLoaded: true }));
   matching.mockImplementation(callback => callback([]));
@@ -157,7 +157,7 @@ it("stays hidden in production when analytics is disabled", () => {
 
   try {
     // Act
-    const { result } = renderHook(useFeedbackSurvey);
+    const { result } = renderHook(useFeedbackSurveyAvailability);
 
     // Assert
     expect(result.current.isAvailable).toBe(false);

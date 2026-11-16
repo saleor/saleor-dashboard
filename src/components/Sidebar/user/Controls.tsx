@@ -1,5 +1,8 @@
 import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { useUser } from "@dashboard/auth/useUser";
+import { FeedbackPopover } from "@dashboard/components/Feedback/FeedbackPopover";
+import { useFeedbackSurvey } from "@dashboard/components/Feedback/FeedbackSurveyProvider";
+import { feedbackMessages } from "@dashboard/components/Feedback/messages";
 import {
   iconSize,
   iconStrokeWidthBySize,
@@ -24,9 +27,7 @@ import { sidebarCollapseMessages } from "../sidebarCollapseMessages";
 import { SidebarIconSlot } from "../SidebarIconSlot";
 import styles from "./Controls.module.css";
 import { FeatureFlagsModal } from "./FeatureFlagsModal";
-import { FeedbackPopover } from "./FeedbackPopover";
 import { ThemeSwitcher } from "./ThemeSwitcher";
-import { useFeedbackSurvey } from "./useFeedbackSurvey";
 
 export const useLegacyThemeHandler = () => {
   const { theme, setTheme } = useTheme();
@@ -60,21 +61,15 @@ const goToSaleorCloudMessage = defineMessage({
   defaultMessage: "Go to Saleor Cloud",
 });
 
-const feedbackMessage = defineMessage({
-  id: "41DrcD",
-  defaultMessage: "Send feedback",
-  description: "global Dashboard feedback button label",
-});
-
 export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "rail" }) => {
   const intl = useIntl();
 
-  const { isAvailable, survey } = useFeedbackSurvey();
+  const { isAvailable } = useFeedbackSurvey();
 
   if (variant === "rail") {
     return (
       <RailItem
-        label={intl.formatMessage(feedbackMessage)}
+        label={intl.formatMessage(feedbackMessages.sendFeedback)}
         icon={
           <SidebarIconSlot>
             <MessageSquareText {...navigationLucideIconProps} />
@@ -84,7 +79,7 @@ export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "r
         hidden={!isAvailable}
       >
         {content => (
-          <FeedbackPopover survey={survey} side="right">
+          <FeedbackPopover side="right">
             <button type="button" data-test-id="feedback-button">
               {content}
             </button>
@@ -100,21 +95,21 @@ export const FeedbackButton = ({ variant = "button" }: { variant?: "button" | "r
 
   return (
     <Box position="relative" display="inline-flex">
-      <FeedbackPopover survey={survey} side="top">
+      <FeedbackPopover side="top">
         <Box display="inline-flex">
           <Tooltip>
             <Tooltip.Trigger>
               <Button
                 variant="tertiary"
                 icon={<MessageSquareText {...navigationLucideIconProps} />}
-                aria-label={intl.formatMessage(feedbackMessage)}
+                aria-label={intl.formatMessage(feedbackMessages.sendFeedback)}
                 data-test-id="feedback-button"
                 size="medium"
               />
             </Tooltip.Trigger>
             <Tooltip.Content side="top">
               <Tooltip.Arrow />
-              <FormattedMessage {...feedbackMessage} />
+              <FormattedMessage {...feedbackMessages.sendFeedback} />
             </Tooltip.Content>
           </Tooltip>
         </Box>

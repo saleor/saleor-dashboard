@@ -2,6 +2,7 @@ import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
+import { FeedbackSurveyProvider } from "@dashboard/components/Feedback/FeedbackSurveyProvider";
 import { history, Route, Router } from "@dashboard/components/Router";
 import { customerTypesPath } from "@dashboard/customerTypes/urls";
 import { AppExtensionPopupProvider } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
@@ -199,201 +200,206 @@ const Routes = () => {
         {homePageLoaded ? (
           <AppExtensionPopupProvider>
             <StaffInviteProvider>
-              <AppLayout fullSize={isAppPath}>
-                <ErrorBoundary
-                  onError={e => {
-                    // Not a bug: the connection dropped, or a new release replaced the code.
-                    if (isSectionDownloadFailure(e)) {
-                      return;
+              <FeedbackSurveyProvider>
+                <AppLayout fullSize={isAppPath}>
+                  <ErrorBoundary
+                    onError={e => {
+                      // Not a bug: the connection dropped, or a new release replaced the code.
+                      if (isSectionDownloadFailure(e)) {
+                        return;
+                      }
+
+                      const errorId = errorTracker.captureException(e);
+
+                      dispatchAppState({
+                        payload: {
+                          error: "unhandled",
+                          errorId,
+                        },
+                        type: "displayError",
+                      });
+                    }}
+                    fallbackRender={({ error, resetErrorBoundary }) =>
+                      isSectionDownloadFailure(error) ? (
+                        <SectionLoadErrorView onLeave={resetErrorBoundary} />
+                      ) : (
+                        <ErrorPage
+                          onBack={resetErrorBoundary}
+                          onRefresh={() => window.location.reload()}
+                        />
+                      )
                     }
-
-                    const errorId = errorTracker.captureException(e);
-
-                    dispatchAppState({
-                      payload: {
-                        error: "unhandled",
-                        errorId,
-                      },
-                      type: "displayError",
-                    });
-                  }}
-                  fallbackRender={({ error, resetErrorBoundary }) =>
-                    isSectionDownloadFailure(error) ? (
-                      <SectionLoadErrorView onLeave={resetErrorBoundary} />
-                    ) : (
-                      <ErrorPage
-                        onBack={resetErrorBoundary}
-                        onRefresh={() => window.location.reload()}
-                      />
-                    )
-                  }
-                >
-                  <Suspense fallback={<LoginLoading />}>
-                    <Switch>
-                      {legacyRedirects}
-                      <Redirect exact from="/" to="/home" />
-                      {/* One Route so HomePage stays mounted across tab changes;
+                  >
+                    <Suspense fallback={<LoginLoading />}>
+                      <Switch>
+                        {legacyRedirects}
+                        <Redirect exact from="/" to="/home" />
+                        {/* One Route so HomePage stays mounted across tab changes;
                         separate paths would remount and reboot keep-alive iframes. */}
-                      <SectionRoute
-                        exact
-                        path={["/home", "/home/widget/:extensionId", "/home/widgets"]}
-                        component={HomePage}
-                      />
-                      <SectionRoute
-                        permissions={[
-                          PermissionEnum.MANAGE_PRODUCTS,
-                          PermissionEnum.MANAGE_ORDERS,
-                          PermissionEnum.MANAGE_PAGES,
-                          PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-                        ]}
-                        matchPermission="any"
-                        path="/search"
-                        component={SearchSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                        path="/categories"
-                        component={CategorySection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                        path="/collections"
-                        component={CollectionSection}
-                      />
-                      <SectionRoute
-                        permissions={[
-                          PermissionEnum.MANAGE_USERS,
-                          PermissionEnum.MANAGE_ORDERS,
-                          PermissionEnum.MANAGE_STAFF,
-                        ]}
-                        matchPermission="any"
-                        path="/customers"
-                        component={CustomerSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_GIFT_CARD]}
-                        path={giftCardsSectionUrlName}
-                        component={GiftCardSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                        path="/discounts"
-                        component={DiscountSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_PAGES]}
-                        path={pageListPath}
-                        component={PageSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES]}
-                        path={modelTypesPath}
-                        component={PageTypesSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES]}
-                        path={customerTypesPath}
-                        component={CustomerTypesSection}
-                      />
-                      <SectionRoute
-                        exact
-                        permissions={[PermissionEnum.MANAGE_ORDERS, PermissionEnum.MANAGE_SETTINGS]}
-                        matchPermission="any"
-                        path={orderSettingsPath}
-                        component={OrderSettingsSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_ORDERS]}
-                        path="/orders"
-                        component={OrdersSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                        path="/products"
-                        component={ProductSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES]}
-                        path="/product-types"
-                        component={ProductTypesSection}
-                      />
-                      <SectionRoute path="/staff" component={StaffSection} />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_STAFF]}
-                        path="/permission-groups"
-                        component={PermissionGroupSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_SETTINGS]}
-                        path="/site-settings"
-                        component={SiteSettingsSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_SETTINGS]}
-                        path={refundsSettingsPath}
-                        component={RefundsSettingsRoute}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_PLUGINS]}
-                        path={notificationsSettingsPath}
-                        component={NotificationsSettingsRoute}
-                      />
-                      <SectionRoute path="/taxes" component={TaxesSection} />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_SHIPPING]}
-                        path="/shipping"
-                        component={ShippingSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
-                        path="/translations"
-                        component={TranslationsSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_MENUS]}
-                        path={structuresListPath}
-                        component={NavigationSection}
-                      />
-                      <SectionRoute
-                        permissions={[
-                          PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-                          PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-                          PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
-                        ]}
-                        path={attributeSection}
-                        component={AttributeSection}
-                        matchPermission="any"
-                      />
-                      <SectionRoute
-                        permissions={[]}
-                        path={extensionsSection}
-                        component={ExtensionsSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                        path={warehouseSection}
-                        component={WarehouseSection}
-                      />
-                      <SectionRoute
-                        permissions={[PermissionEnum.MANAGE_CHANNELS]}
-                        path={channelsSection}
-                        component={ChannelsSection}
-                      />
-                      <SectionRoute
-                        matchPermission="any"
-                        permissions={getConfigMenuItemsPermissions(intl)}
-                        exact
-                        path="/configuration"
-                        component={ConfigurationSection}
-                      />
-                      <Redirect to={ExtensionsPaths.installedExtensions} path={"/apps"} />
-                      <Redirect to={ExtensionsPaths.installedExtensions} path="/custom-apps/" />
-                      <Redirect to={ExtensionsPaths.installedExtensions} path="/plugins" />
-                      <Route component={NotFound} />
-                    </Switch>
-                  </Suspense>
-                </ErrorBoundary>
-              </AppLayout>
+                        <SectionRoute
+                          exact
+                          path={["/home", "/home/widget/:extensionId", "/home/widgets"]}
+                          component={HomePage}
+                        />
+                        <SectionRoute
+                          permissions={[
+                            PermissionEnum.MANAGE_PRODUCTS,
+                            PermissionEnum.MANAGE_ORDERS,
+                            PermissionEnum.MANAGE_PAGES,
+                            PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                          ]}
+                          matchPermission="any"
+                          path="/search"
+                          component={SearchSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                          path="/categories"
+                          component={CategorySection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                          path="/collections"
+                          component={CollectionSection}
+                        />
+                        <SectionRoute
+                          permissions={[
+                            PermissionEnum.MANAGE_USERS,
+                            PermissionEnum.MANAGE_ORDERS,
+                            PermissionEnum.MANAGE_STAFF,
+                          ]}
+                          matchPermission="any"
+                          path="/customers"
+                          component={CustomerSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_GIFT_CARD]}
+                          path={giftCardsSectionUrlName}
+                          component={GiftCardSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                          path="/discounts"
+                          component={DiscountSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_PAGES]}
+                          path={pageListPath}
+                          component={PageSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES]}
+                          path={modelTypesPath}
+                          component={PageTypesSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES]}
+                          path={customerTypesPath}
+                          component={CustomerTypesSection}
+                        />
+                        <SectionRoute
+                          exact
+                          permissions={[
+                            PermissionEnum.MANAGE_ORDERS,
+                            PermissionEnum.MANAGE_SETTINGS,
+                          ]}
+                          matchPermission="any"
+                          path={orderSettingsPath}
+                          component={OrderSettingsSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_ORDERS]}
+                          path="/orders"
+                          component={OrdersSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                          path="/products"
+                          component={ProductSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES]}
+                          path="/product-types"
+                          component={ProductTypesSection}
+                        />
+                        <SectionRoute path="/staff" component={StaffSection} />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_STAFF]}
+                          path="/permission-groups"
+                          component={PermissionGroupSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                          path="/site-settings"
+                          component={SiteSettingsSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                          path={refundsSettingsPath}
+                          component={RefundsSettingsRoute}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_PLUGINS]}
+                          path={notificationsSettingsPath}
+                          component={NotificationsSettingsRoute}
+                        />
+                        <SectionRoute path="/taxes" component={TaxesSection} />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_SHIPPING]}
+                          path="/shipping"
+                          component={ShippingSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
+                          path="/translations"
+                          component={TranslationsSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_MENUS]}
+                          path={structuresListPath}
+                          component={NavigationSection}
+                        />
+                        <SectionRoute
+                          permissions={[
+                            PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                            PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                            PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
+                          ]}
+                          path={attributeSection}
+                          component={AttributeSection}
+                          matchPermission="any"
+                        />
+                        <SectionRoute
+                          permissions={[]}
+                          path={extensionsSection}
+                          component={ExtensionsSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                          path={warehouseSection}
+                          component={WarehouseSection}
+                        />
+                        <SectionRoute
+                          permissions={[PermissionEnum.MANAGE_CHANNELS]}
+                          path={channelsSection}
+                          component={ChannelsSection}
+                        />
+                        <SectionRoute
+                          matchPermission="any"
+                          permissions={getConfigMenuItemsPermissions(intl)}
+                          exact
+                          path="/configuration"
+                          component={ConfigurationSection}
+                        />
+                        <Redirect to={ExtensionsPaths.installedExtensions} path={"/apps"} />
+                        <Redirect to={ExtensionsPaths.installedExtensions} path="/custom-apps/" />
+                        <Redirect to={ExtensionsPaths.installedExtensions} path="/plugins" />
+                        <Route component={NotFound} />
+                      </Switch>
+                    </Suspense>
+                  </ErrorBoundary>
+                </AppLayout>
+              </FeedbackSurveyProvider>
             </StaffInviteProvider>
           </AppExtensionPopupProvider>
         ) : apiUnreachable ? (

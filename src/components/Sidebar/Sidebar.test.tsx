@@ -21,7 +21,11 @@ import {
   useCustomSidebarBreakpoint,
 } from "./SidebarContext";
 
-const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true, survey: undefined }));
+const mockFeedbackSurvey = jest.fn(() => ({
+  isAvailable: true,
+  survey: undefined,
+  openFeedback: jest.fn(),
+}));
 const renderEnvironmentSwitcherStub = (): ReactElement => (
   <div data-test-id="cloud-environment-switcher" />
 );
@@ -35,7 +39,7 @@ jest.mock("@dashboard/services/errorTracking", () => ({
   errorTracker: { captureException: (error: Error) => mockCaptureException(error) },
 }));
 
-jest.mock("./user/useFeedbackSurvey", () => ({
+jest.mock("@dashboard/components/Feedback/FeedbackSurveyProvider", () => ({
   useFeedbackSurvey: () => mockFeedbackSurvey(),
 }));
 
@@ -101,7 +105,11 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 describe("Sidebar", () => {
   it("renders the global feedback trigger", () => {
     // Arrange
-    mockFeedbackSurvey.mockReturnValue({ isAvailable: true, survey: undefined });
+    mockFeedbackSurvey.mockReturnValue({
+      isAvailable: true,
+      survey: undefined,
+      openFeedback: jest.fn(),
+    });
 
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
@@ -112,7 +120,11 @@ describe("Sidebar", () => {
 
   it("hides feedback when its survey is unavailable", () => {
     // Arrange
-    mockFeedbackSurvey.mockReturnValue({ isAvailable: false, survey: undefined });
+    mockFeedbackSurvey.mockReturnValue({
+      isAvailable: false,
+      survey: undefined,
+      openFeedback: jest.fn(),
+    });
 
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
