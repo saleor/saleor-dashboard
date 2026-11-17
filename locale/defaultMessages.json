@@ -1912,6 +1912,10 @@
     "context": "error message when bulk variant creation fails completely",
     "string": "All variants failed to create"
   },
+  "4wUbGG": {
+    "context": "What's New modal footer action that opens the feature request survey",
+    "string": "Share feedback"
+  },
   "4y3Smi": {
     "string": "Removing permissions may cause extension to break."
   },

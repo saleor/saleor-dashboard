@@ -17,7 +17,8 @@ To test feedback against the real PostHog SDK in the production dashboard build:
 
 ```bash
 IS_CLOUD_INSTANCE=true POSTHOG_HOST=https://posthog.example.test \
-POSTHOG_KEY=phc_feedback_e2e POSTHOG_FEEDBACK_SURVEY_ID=feedback-e2e POSTHOG_EXCLUDED_DOMAINS= \
+POSTHOG_KEY=phc_feedback_e2e POSTHOG_FEEDBACK_SURVEY_ID=feedback-e2e \
+POSTHOG_FEATURE_REQUEST_SURVEY_ID=feature-request-e2e POSTHOG_EXCLUDED_DOMAINS= \
 pnpm e2e tests/feedback.spec.ts
 ```
 

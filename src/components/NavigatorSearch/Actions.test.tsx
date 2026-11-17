@@ -11,6 +11,7 @@ import { useActionItems } from "./useActionItems";
 const mockOpenSurvey = jest.fn();
 const availableFeedback = (): ReturnType<typeof useFeedbackSurvey> => ({
   isAvailable: true,
+  canOpenSurvey: true,
   openSurvey: mockOpenSurvey,
 });
 const mockFeedbackSurvey = jest.fn(availableFeedback);
@@ -81,6 +82,7 @@ describe("Actions", () => {
       // Arrange
       mockFeedbackSurvey.mockImplementation(() => ({
         isAvailable: false,
+        canOpenSurvey: false,
         openSurvey: mockOpenSurvey,
       }));
 

@@ -35,6 +35,22 @@ const feedbackSurvey: Survey = {
   current_iteration_start_date: null,
 };
 
+const featureRequestSurvey: Survey = {
+  ...feedbackSurvey,
+  id: "feature-request-e2e",
+  name: "Dashboard feature requests",
+  questions: [
+    {
+      id: "feature-request-question-e2e",
+      type: SurveyQuestionType.Open,
+      question: "What should we build next?",
+      description: "Suggest a feature, or tell us what you think of these updates.",
+      optional: true,
+    },
+  ],
+  internal_targeting_flag_key: "survey-targeting-feature-request-e2e",
+};
+
 interface CapturedEvent {
   event: string;
   properties: Record<string, unknown>;
@@ -58,7 +74,12 @@ const parseCapturedEvents = (body: string): CapturedEvent[] => {
 
 const routePostHog = async (
   page: Page,
-  { surveys = [feedbackSurvey], waitForSurveys, block, captured }: PostHogResponses = {},
+  {
+    surveys = [feedbackSurvey, featureRequestSurvey],
+    waitForSurveys,
+    block,
+    captured,
+  }: PostHogResponses = {},
 ): Promise<void> => {
   // Only HTTP responses are controlled; matching and rendering use the installed SDK.
   const script = readFileSync(repoPath("node_modules/posthog-js/dist/surveys.js"), "utf8");
@@ -106,6 +127,7 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
       process.env.POSTHOG_HOST !== "https://posthog.example.test" ||
       process.env.POSTHOG_KEY !== "phc_feedback_e2e" ||
       process.env.POSTHOG_FEEDBACK_SURVEY_ID !== feedbackSurvey.id ||
+      process.env.POSTHOG_FEATURE_REQUEST_SURVEY_ID !== featureRequestSurvey.id ||
       Boolean(process.env.POSTHOG_EXCLUDED_DOMAINS),
     "Run with the isolated analytics configuration documented in e2e/README.md",
   );
@@ -127,11 +149,12 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
     page: Page,
     captured: CapturedEvent[],
     response: string,
+    question = "What could we improve?",
   ): Promise<Record<string, unknown> | undefined> => {
     const dialog = page.getByRole("dialog");
 
-    await expect(dialog.getByText("What could we improve?")).toBeVisible();
-    const textbox = dialog.getByRole("textbox", { name: "What could we improve?" });
+    await expect(dialog.getByText(question)).toBeVisible();
+    const textbox = dialog.getByRole("textbox", { name: question });
     const send = dialog.getByRole("button", { name: "Send" });
 
     await textbox.fill(" \n\u200b\u00a0 ");
@@ -269,6 +292,67 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
         });
       });
     }
+  });
+
+  test.describe("from What's New", () => {
+    const openWhatsNew = async (page: Page, responses: PostHogResponses): Promise<void> => {
+      await routePostHog(page, responses);
+
+      const home = new HomePage(page);
+      const surveysLoaded = page.waitForResponse(response =>
+        response.url().includes("/api/surveys/"),
+      );
+
+      await home.goto();
+      await home.expectSignedIn();
+      await surveysLoaded;
+      const dismissAnnouncement = page.getByTestId("ripple-video-announcement-dismiss");
+
+      if (await dismissAnnouncement.isVisible()) await dismissAnnouncement.click();
+      await page.getByText("What's New", { exact: true }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+    };
+
+    test("replaces What's New with the feature request dialog", async ({ page }, testInfo) => {
+      // Arrange
+      const captured: CapturedEvent[] = [];
+
+      await openWhatsNew(page, { captured });
+
+      const shareFeedback = page.getByRole("button", { name: "Share feedback" });
+
+      await expect(shareFeedback).toBeVisible();
+      await page.screenshot({ path: testInfo.outputPath("whats-new-share-feedback.png") });
+
+      // Act
+      await shareFeedback.click();
+
+      // Assert
+      await expect(page.getByRole("dialog")).toHaveCount(1);
+      await expect(page.getByRole("dialog").getByText("What should we build next?")).toBeVisible();
+      await page.screenshot({ path: testInfo.outputPath("whats-new-survey.png") });
+      expect(
+        await sendFeedback(page, captured, "What's New feedback", "What should we build next?"),
+      ).toMatchObject({
+        $survey_id: featureRequestSurvey.id,
+        feedback_source: "whats_new",
+      });
+    });
+
+    test("links to GitHub when the feature request survey isn't active", async ({
+      page,
+    }, testInfo) => {
+      // Arrange & Act
+      await openWhatsNew(page, { surveys: [feedbackSurvey] });
+
+      // Assert
+      await expect(page.getByRole("link", { name: "Suggest a change" })).toHaveAttribute(
+        "href",
+        "https://github.com/saleor/saleor-dashboard/issues/new",
+      );
+      await expect(page.getByRole("button", { name: "Share feedback" })).toHaveCount(0);
+      await page.screenshot({ path: testInfo.outputPath("whats-new-suggest-change.png") });
+    });
   });
 
   for (const block of ["api", "script"] as const) {

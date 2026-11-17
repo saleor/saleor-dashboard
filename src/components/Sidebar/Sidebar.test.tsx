@@ -25,6 +25,7 @@ import { type useFeedbackSurvey } from "./user/useFeedbackSurvey";
 const mockOpenSurvey = jest.fn();
 const availableFeedback = (): ReturnType<typeof useFeedbackSurvey> => ({
   isAvailable: true,
+  canOpenSurvey: true,
   openSurvey: mockOpenSurvey,
 });
 const mockFeedbackSurvey = jest.fn(availableFeedback);
@@ -43,7 +44,7 @@ jest.mock("@dashboard/services/errorTracking", () => ({
 
 jest.mock("./user/useFeedbackSurvey", () => ({
   useFeedbackSurvey: () => mockFeedbackSurvey(),
-  useFeedbackSurveyDialog: () => ({ survey: undefined, openedFrom: null, close: jest.fn() }),
+  useFeedbackSurveyDialog: () => ({ dialog: null, close: jest.fn() }),
 }));
 
 jest.mock("./menu/hooks/useMenuStructure", () => ({
@@ -121,7 +122,11 @@ describe("Sidebar", () => {
 
   it("hides feedback when its survey is unavailable", () => {
     // Arrange
-    mockFeedbackSurvey.mockReturnValue({ isAvailable: false, openSurvey: mockOpenSurvey });
+    mockFeedbackSurvey.mockReturnValue({
+      isAvailable: false,
+      canOpenSurvey: false,
+      openSurvey: mockOpenSurvey,
+    });
 
     // Act
     render(<Sidebar />, { wrapper: Wrapper });

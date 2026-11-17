@@ -72,24 +72,25 @@ export const FeedbackSurveyDialogView = ({
   );
 };
 
-/** The feedback survey from PostHog, drawn as a Dashboard dialog. */
+/** The opened PostHog survey, drawn as a Dashboard dialog. */
 export const FeedbackSurveyDialog = (): JSX.Element | null => {
-  const { survey, openedFrom, close } = useFeedbackSurveyDialog();
+  const { dialog, close } = useFeedbackSurveyDialog();
   const posthog = usePostHog();
   const notify = useNotifier();
   const intl = useIntl();
   const [response, setResponse] = useState("");
 
-  if (!survey) return null;
+  if (!dialog) return null;
 
+  const { survey, source, open } = dialog;
   const [question] = survey.questions;
 
   const handleSend = (): void => {
     const answer = getFeedbackResponse(response);
 
-    if (!openedFrom || !answer) return;
+    if (!answer) return;
 
-    const { name, properties } = surveySentEvent(survey, openedFrom, answer);
+    const { name, properties } = surveySentEvent(survey, source, answer);
 
     posthog.capture(name, properties);
     setResponse("");
@@ -98,9 +99,7 @@ export const FeedbackSurveyDialog = (): JSX.Element | null => {
   };
 
   const handleDismiss = (): void => {
-    if (!openedFrom) return;
-
-    const { name, properties } = surveyDismissedEvent(survey, openedFrom);
+    const { name, properties } = surveyDismissedEvent(survey, source);
 
     posthog.capture(name, properties);
     setResponse("");
@@ -109,7 +108,7 @@ export const FeedbackSurveyDialog = (): JSX.Element | null => {
 
   return (
     <FeedbackSurveyDialogView
-      open={openedFrom !== null}
+      open={open}
       question={question.question}
       description={question.description ?? undefined}
       response={response}

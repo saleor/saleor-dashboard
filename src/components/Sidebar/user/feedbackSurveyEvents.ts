@@ -1,7 +1,7 @@
 import { type Properties, type Survey, SurveyEventName, SurveyEventProperties } from "posthog-js";
 
 /** Where the survey was opened from, sent as `feedback_source` with every survey event. */
-export type FeedbackSource = "sidebar" | "command_menu";
+export type FeedbackSource = "sidebar" | "command_menu" | "whats_new";
 
 // The same events and properties PostHog's own survey popup sends, so responses show up in the
 // survey's results. See `sendSurveyEvent` in posthog-js.

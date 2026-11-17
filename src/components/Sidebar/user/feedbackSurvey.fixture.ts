@@ -25,3 +25,18 @@ export const feedbackSurvey: Survey = {
   current_iteration: null,
   current_iteration_start_date: null,
 };
+
+export const featureRequestSurvey: Survey = {
+  ...feedbackSurvey,
+  id: "feature-request-survey",
+  name: "Dashboard feature requests",
+  questions: [
+    {
+      id: "feature-request-question",
+      type: SurveyQuestionType.Open,
+      optional: true,
+      question: "What should we build next?",
+      description: "Suggest a feature, or tell us what you think of these updates.",
+    },
+  ],
+};
