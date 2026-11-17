@@ -17754,6 +17754,10 @@
     "context": "command palette section grouping actions for the currently open entity",
     "string": "This model type"
   },
+  "vilKnI": {
+    "context": "rich text editor inline toolbar button that makes the selected link open in a new tab",
+    "string": "Open in new tab"
+  },
   "vitgwA": {
     "string": "Search syntax"
   },

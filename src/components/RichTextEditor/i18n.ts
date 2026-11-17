@@ -9,6 +9,7 @@ import {
   EMBED_TITLE,
   UNSUPPORTED_EMBED_MESSAGE,
 } from "./consts";
+import { OPEN_IN_NEW_TAB_TITLE } from "./LinkTargetTool";
 import { richTextEditorMessages } from "./messages";
 
 // The message IDs belong to the Dashboard catalogue. Native Editor.js dictionary
@@ -98,7 +99,7 @@ const editorMessages = defineMessages({
 /** UI configuration only; never merged into the editor's saved block data. */
 export const getEditorI18n = (intl: IntlShape): EditorConfig["i18n"] => {
   const t = (key: keyof typeof editorMessages) => intl.formatMessage(editorMessages[key]);
-  // The image and embed tools' own texts (./messages).
+  // The image, embed and link target tools' own texts (./messages).
   const own = (key: keyof typeof richTextEditorMessages) =>
     intl.formatMessage(richTextEditorMessages[key]);
 
@@ -134,6 +135,7 @@ export const getEditorI18n = (intl: IntlShape): EditorConfig["i18n"] => {
         Strikethrough: t("strikethrough"),
         Image: t("image"),
         [EMBED_TITLE]: own("embedTitle"),
+        [OPEN_IN_NEW_TAB_TITLE]: own("openLinkInNewTab"),
       },
       tools: {
         link: {

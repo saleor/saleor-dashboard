@@ -21,6 +21,12 @@ export const richTextEditorMessages = defineMessages({
     defaultMessage: "This link can't be embedded",
     description: "rich text editor error when no embed service matches the link",
   },
+  openLinkInNewTab: {
+    id: "vilKnI",
+    defaultMessage: "Open in new tab",
+    description:
+      "rich text editor inline toolbar button that makes the selected link open in a new tab",
+  },
   addImageByLink: {
     id: "qCHM6u",
     defaultMessage: "Add image by link",

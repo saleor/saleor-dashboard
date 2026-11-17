@@ -12,6 +12,7 @@ const portuguese: Record<string, string> = {
   "Add image by link": "Adicionar imagem por ligação",
   "Paste a link to an image": "Cole uma ligação para uma imagem",
   Embed: "Incorporar",
+  "Open in new tab": "Abrir num novo separador",
   "Add embed by link": "Adicionar incorporação por ligação",
   "This link can't be embedded": "Não é possível incorporar esta ligação",
   "Move up": "Mover para cima",
@@ -37,7 +38,10 @@ describe("native editor localisation", () => {
     expect(messages.ui).toMatchObject({
       toolbar: { toolbox: { Add: "Adicionar" } },
     });
-    expect(messages.toolNames).toMatchObject({ Heading: "Título" });
+    expect(messages.toolNames).toMatchObject({
+      Heading: "Título",
+      "Open in new tab": "Abrir num novo separador",
+    });
     expect(messages.tools).toMatchObject({
       link: {
         "Add a link": "Adicionar uma ligação",

@@ -9,12 +9,15 @@
 
 /* Popovers such as the rich text block menu render inside the card and must escape it.
    Without overflow clipping, the tinted header is a rectangle that covers the card's
-   rounded corners, so those corners are rounded on the header itself. */
-.cardVisible {
+   rounded corners, so those corners are rounded on the header itself.
+   Cards holding a rich text editor lift the clipping only while an editor menu is open. */
+.cardVisible,
+.card:has(:global(.ce-popover--opened)) {
   overflow: visible;
 }
 
-.cardVisible .header {
+.cardVisible .header,
+.card:has(:global(.ce-popover--opened)) .header {
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
 }
