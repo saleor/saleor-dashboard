@@ -364,18 +364,8 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
 const footerMessages = defineMessages({
   shareFeedback: {
     defaultMessage: "Share feedback",
-    id: "tlttZA",
-    description: "What's New modal footer action that opens the feedback survey",
-  },
-  feedbackTitle: {
-    defaultMessage: "What should we build next?",
-    id: "9e4hdW",
-    description: "title of the feedback dialog opened from What's New",
-  },
-  feedbackDescription: {
-    defaultMessage: "Suggest a feature, or tell us what you think of these updates.",
-    id: "Nhnf9J",
-    description: "description of the feedback dialog opened from What's New",
+    id: "4wUbGG",
+    description: "What's New modal footer action that opens the feature request survey",
   },
 });
 
@@ -388,7 +378,7 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
   const intl = useIntl();
   const { hideAllRipples, setManuallyHidden } = useRippleStorage();
   const { trackEvent } = useAnalytics();
-  const { canOpenSurvey, openSurvey } = useFeedbackSurvey();
+  const { canOpenSurvey, openSurvey } = useFeedbackSurvey("feature_request");
   const wasOpen = useRef(false);
 
   const flattenedRipples = useMemo(
@@ -430,13 +420,7 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
   const handleShareFeedback = (): void => {
     // The feedback dialog replaces What's New instead of stacking on top of it.
     handleClose();
-    openSurvey({
-      source: "whats_new",
-      prompt: {
-        title: intl.formatMessage(footerMessages.feedbackTitle),
-        description: intl.formatMessage(footerMessages.feedbackDescription),
-      },
-    });
+    openSurvey({ source: "whats_new" });
   };
 
   const handleCloseAndHideAll = (): void => {

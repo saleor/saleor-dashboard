@@ -3,16 +3,6 @@ import { type Properties, type Survey, SurveyEventName, SurveyEventProperties } 
 /** Where the survey was opened from, sent as `feedback_source` with every survey event. */
 export type FeedbackSource = "sidebar" | "command_menu" | "whats_new";
 
-/** Copy that replaces the survey question, for entry points where it reads better in context. */
-export interface FeedbackPrompt {
-  title: string;
-  description: string;
-}
-
-/** Recorded with every event, so readers in PostHog know what was asked. */
-export const promptProperties = (prompt: FeedbackPrompt | undefined): Properties =>
-  prompt ? { feedback_prompt: prompt.title } : {};
-
 // The same events and properties PostHog's own survey popup sends, so responses show up in the
 // survey's results. See `sendSurveyEvent` in posthog-js.
 

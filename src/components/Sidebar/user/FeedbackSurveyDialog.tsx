@@ -7,12 +7,7 @@ import { usePostHog } from "posthog-js/react";
 import { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import {
-  getFeedbackResponse,
-  promptProperties,
-  surveyDismissedEvent,
-  surveySentEvent,
-} from "./feedbackSurveyEvents";
+import { getFeedbackResponse, surveyDismissedEvent, surveySentEvent } from "./feedbackSurveyEvents";
 import { useFeedbackSurveyDialog } from "./useFeedbackSurvey";
 
 const messages = defineMessages({
@@ -77,46 +72,45 @@ export const FeedbackSurveyDialogView = ({
   );
 };
 
-/** The feedback survey from PostHog, drawn as a Dashboard dialog. */
+/** The opened PostHog survey, drawn as a Dashboard dialog. */
 export const FeedbackSurveyDialog = (): JSX.Element | null => {
-  const { survey, openedFrom, prompt, close } = useFeedbackSurveyDialog();
+  const { dialog, close } = useFeedbackSurveyDialog();
   const posthog = usePostHog();
   const notify = useNotifier();
   const intl = useIntl();
   const [response, setResponse] = useState("");
 
-  if (!survey) return null;
+  if (!dialog) return null;
 
+  const { survey, source, open } = dialog;
   const [question] = survey.questions;
 
   const handleSend = (): void => {
     const answer = getFeedbackResponse(response);
 
-    if (!openedFrom || !answer) return;
+    if (!answer) return;
 
-    const { name, properties } = surveySentEvent(survey, openedFrom, answer);
+    const { name, properties } = surveySentEvent(survey, source, answer);
 
-    posthog.capture(name, { ...properties, ...promptProperties(prompt) });
+    posthog.capture(name, properties);
     setResponse("");
     close();
     notify({ status: "success", title: intl.formatMessage(messages.sent) });
   };
 
   const handleDismiss = (): void => {
-    if (!openedFrom) return;
+    const { name, properties } = surveyDismissedEvent(survey, source);
 
-    const { name, properties } = surveyDismissedEvent(survey, openedFrom);
-
-    posthog.capture(name, { ...properties, ...promptProperties(prompt) });
+    posthog.capture(name, properties);
     setResponse("");
     close();
   };
 
   return (
     <FeedbackSurveyDialogView
-      open={openedFrom !== null}
-      question={prompt?.title ?? question.question}
-      description={prompt ? prompt.description : (question.description ?? undefined)}
+      open={open}
+      question={question.question}
+      description={question.description ?? undefined}
       response={response}
       onResponseChange={setResponse}
       onSend={handleSend}

@@ -5,7 +5,7 @@ import { SurveyEventName } from "posthog-js";
 import { type ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 
-import { feedbackSurvey } from "./feedbackSurvey.fixture";
+import { featureRequestSurvey, feedbackSurvey } from "./feedbackSurvey.fixture";
 import { FeedbackSurveyDialog } from "./FeedbackSurveyDialog";
 import { type useFeedbackSurveyDialog } from "./useFeedbackSurvey";
 
@@ -13,9 +13,7 @@ const mockCapture = jest.fn();
 const mockNotify = jest.fn();
 const mockClose = jest.fn();
 const openDialog = (): ReturnType<typeof useFeedbackSurveyDialog> => ({
-  survey: feedbackSurvey,
-  openedFrom: "sidebar",
-  prompt: undefined,
+  dialog: { survey: feedbackSurvey, source: "sidebar", open: true },
   close: mockClose,
 });
 const mockDialog = jest.fn(openDialog);
@@ -80,27 +78,33 @@ it("sends the response with where the survey was opened from", async () => {
   expect(mockNotify).toHaveBeenCalledWith({ status: "success", title: "Feedback sent" });
 });
 
-it("asks with the entry point's own prompt and records it", async () => {
+it("asks the question of the survey it was opened with and sends the answer to it", async () => {
   // Arrange
   const user = userEvent.setup();
-  const prompt = { title: "What should we build next?", description: "Suggest a feature." };
+  const [featureQuestion] = featureRequestSurvey.questions;
 
-  mockDialog.mockReturnValue({ ...openDialog(), openedFrom: "whats_new", prompt });
+  mockDialog.mockReturnValue({
+    dialog: { survey: featureRequestSurvey, source: "whats_new", open: true },
+    close: mockClose,
+  });
   render(<FeedbackSurveyDialog />, { wrapper: Wrapper });
 
   // Act
-  await user.type(screen.getByRole("textbox", { name: prompt.title }), "Bulk price editing");
+  await user.type(
+    screen.getByRole("textbox", { name: featureQuestion.question }),
+    "Bulk price editing",
+  );
   await user.click(screen.getByRole("button", { name: "Send" }));
 
   // Assert
   expect(screen.queryByText(question.question)).not.toBeInTheDocument();
-  expect(screen.getByText(prompt.description)).toBeInTheDocument();
+  expect(screen.getByText(featureQuestion.description!)).toBeInTheDocument();
   expect(mockCapture).toHaveBeenLastCalledWith(
     SurveyEventName.SENT,
     expect.objectContaining({
+      $survey_id: featureRequestSurvey.id,
       feedback_source: "whats_new",
-      feedback_prompt: prompt.title,
-      [responseKey]: "Bulk price editing",
+      [`$survey_response_${featureQuestion.id}`]: "Bulk price editing",
     }),
   );
 });
@@ -156,10 +160,20 @@ it("records a dismissal without the unsent text", async () => {
 
 it("stays closed and records nothing until it is opened", () => {
   // Arrange
+  mockDialog.mockReturnValue({ dialog: null, close: mockClose });
+
+  // Act
+  render(<FeedbackSurveyDialog />, { wrapper: Wrapper });
+
+  // Assert
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(mockCapture).not.toHaveBeenCalled();
+});
+
+it("keeps the closed survey rendered closed, so it can animate out", () => {
+  // Arrange
   mockDialog.mockReturnValue({
-    survey: feedbackSurvey,
-    openedFrom: null,
-    prompt: undefined,
+    dialog: { survey: feedbackSurvey, source: "sidebar", open: false },
     close: mockClose,
   });
 

@@ -44,7 +44,7 @@ jest.mock("@dashboard/services/errorTracking", () => ({
 
 jest.mock("./user/useFeedbackSurvey", () => ({
   useFeedbackSurvey: () => mockFeedbackSurvey(),
-  useFeedbackSurveyDialog: () => ({ survey: undefined, openedFrom: null, close: jest.fn() }),
+  useFeedbackSurveyDialog: () => ({ dialog: null, close: jest.fn() }),
 }));
 
 jest.mock("./menu/hooks/useMenuStructure", () => ({

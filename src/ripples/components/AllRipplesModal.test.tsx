@@ -26,10 +26,13 @@ const availableFeedbackSurvey = (): ReturnType<typeof useFeedbackSurvey> => ({
   canOpenSurvey: true,
   openSurvey: mockOpenSurvey,
 });
-const mockFeedbackSurvey = jest.fn(availableFeedbackSurvey);
+const mockFeedbackSurvey = jest.fn<
+  ReturnType<typeof useFeedbackSurvey>,
+  Parameters<typeof useFeedbackSurvey>
+>(availableFeedbackSurvey);
 
 jest.mock("@dashboard/components/Sidebar/user/useFeedbackSurvey", () => ({
-  useFeedbackSurvey: () => mockFeedbackSurvey(),
+  useFeedbackSurvey: (...args: Parameters<typeof useFeedbackSurvey>) => mockFeedbackSurvey(...args),
 }));
 
 jest.mock("@dashboard/hooks/useNavigator", () => ({
@@ -367,7 +370,7 @@ describe("AllRipplesModal", () => {
     mockFeedbackSurvey.mockImplementation(availableFeedbackSurvey);
   });
 
-  it("closes the modal and opens the feedback survey from the footer", async () => {
+  it("closes the modal and opens the feature request survey from the footer", async () => {
     // Arrange
     const user = userEvent.setup();
 
@@ -378,20 +381,15 @@ describe("AllRipplesModal", () => {
 
     // Assert
     expect(mockOnChange).toHaveBeenCalledWith(false);
-    expect(mockOpenSurvey).toHaveBeenCalledWith({
-      source: "whats_new",
-      prompt: {
-        title: "What should we build next?",
-        description: "Suggest a feature, or tell us what you think of these updates.",
-      },
-    });
+    expect(mockFeedbackSurvey).toHaveBeenCalledWith("feature_request");
+    expect(mockOpenSurvey).toHaveBeenCalledWith({ source: "whats_new" });
     expect(mockOnChange.mock.invocationCallOrder[0]).toBeLessThan(
       mockOpenSurvey.mock.invocationCallOrder[0],
     );
     expect(screen.queryByRole("link", { name: "Suggest a change" })).not.toBeInTheDocument();
   });
 
-  it("links to a new GitHub issue when the feedback survey cannot open", () => {
+  it("links to a new GitHub issue when the feature request survey cannot open", () => {
     // Arrange
     mockFeedbackSurvey.mockReturnValue({
       isAvailable: true,

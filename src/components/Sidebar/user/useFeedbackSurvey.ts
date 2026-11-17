@@ -1,4 +1,5 @@
 import {
+  getFeatureRequestSurveyId,
   getFeedbackSurveyId,
   isProductAnalyticsEnabled,
 } from "@dashboard/components/ProductAnalytics/config";
@@ -7,21 +8,24 @@ import { type PostHog, type Survey, SurveyQuestionType, SurveyType } from "posth
 import { usePostHog } from "posthog-js/react";
 import { useCallback, useEffect, useState } from "react";
 
-import {
-  type FeedbackPrompt,
-  type FeedbackSource,
-  promptProperties,
-  surveyShownEvent,
-} from "./feedbackSurveyEvents";
+import { type FeedbackSource, surveyShownEvent } from "./feedbackSurveyEvents";
 
-interface OpenFeedbackOptions {
+/** Which PostHog survey to ask: general feedback, or feature requests from What's New. */
+export type FeedbackSurveyKind = "feedback" | "feature_request";
+
+const surveyIds: Record<FeedbackSurveyKind, () => string | undefined> = {
+  feedback: getFeedbackSurveyId,
+  feature_request: getFeatureRequestSurveyId,
+};
+
+interface DialogSurvey {
+  survey: Survey;
   source: FeedbackSource;
-  prompt?: FeedbackPrompt;
+  /** False while the dialog animates closed; the survey stays so its text doesn't vanish. */
+  open: boolean;
 }
 
-const openedAtom: PrimitiveAtom<OpenFeedbackOptions | null> = atom(
-  null as OpenFeedbackOptions | null,
-);
+const dialogAtom: PrimitiveAtom<DialogSurvey | null> = atom(null as DialogSurvey | null);
 
 /**
  * The Dashboard draws the survey itself, so it only takes a PostHog "API" survey with one
@@ -33,12 +37,12 @@ const isSupportedFeedbackSurvey = (survey: Survey, surveyId: string): boolean =>
   survey.questions.length === 1 &&
   survey.questions[0].type === SurveyQuestionType.Open;
 
-/** The feedback survey, once PostHog has loaded it and it targets the current user. */
-const useLoadedFeedbackSurvey = (): Survey | undefined => {
+/** The survey, once PostHog has loaded it and it targets the current user. */
+const useLoadedSurvey = (kind: FeedbackSurveyKind): Survey | undefined => {
   const posthog = usePostHog();
   const [loaded, setLoaded] = useState<{ client: PostHog; survey: Survey | undefined }>();
   const enabled = isProductAnalyticsEnabled();
-  const surveyId = getFeedbackSurveyId();
+  const surveyId = surveyIds[kind]();
 
   useEffect(
     function subscribeToFeedbackSurvey() {
@@ -90,26 +94,26 @@ interface FeedbackSurvey {
   isAvailable: boolean;
   /** Whether `openSurvey` will actually open the dialog. */
   canOpenSurvey: boolean;
-  /** Opens the feedback dialog. Does nothing while the survey isn't loaded. */
-  openSurvey: (options: OpenFeedbackOptions) => void;
+  /** Opens the survey in the feedback dialog. Does nothing while the survey isn't loaded. */
+  openSurvey: (options: { source: FeedbackSource }) => void;
 }
 
-export const useFeedbackSurvey = (): FeedbackSurvey => {
+export const useFeedbackSurvey = (kind: FeedbackSurveyKind = "feedback"): FeedbackSurvey => {
   const posthog = usePostHog();
-  const survey = useLoadedFeedbackSurvey();
-  const setOpened = useSetAtom(openedAtom);
+  const survey = useLoadedSurvey(kind);
+  const setDialog = useSetAtom(dialogAtom);
   const isDev = process.env.NODE_ENV === "development";
 
   const openSurvey = useCallback(
-    (options: OpenFeedbackOptions) => {
+    ({ source }: { source: FeedbackSource }) => {
       if (!survey) return;
 
-      const { name, properties } = surveyShownEvent(survey, options.source);
+      const { name, properties } = surveyShownEvent(survey, source);
 
-      posthog.capture(name, { ...properties, ...promptProperties(options.prompt) });
-      setOpened(options);
+      posthog.capture(name, properties);
+      setDialog({ survey, source, open: true });
     },
-    [posthog, survey, setOpened],
+    [posthog, survey, setDialog],
   );
 
   return {
@@ -120,17 +124,17 @@ export const useFeedbackSurvey = (): FeedbackSurvey => {
 };
 
 interface FeedbackSurveyDialogState {
-  survey: Survey | undefined;
-  /** Set while the dialog is open. */
-  openedFrom: FeedbackSource | null;
-  prompt: FeedbackPrompt | undefined;
+  /** The last opened survey and where it was opened from. */
+  dialog: DialogSurvey | null;
   close: () => void;
 }
 
 export const useFeedbackSurveyDialog = (): FeedbackSurveyDialogState => {
-  const survey = useLoadedFeedbackSurvey();
-  const [opened, setOpened] = useAtom(openedAtom);
-  const close = useCallback(() => setOpened(null), [setOpened]);
+  const [dialog, setDialog] = useAtom(dialogAtom);
+  const close = useCallback(
+    () => setDialog(current => (current ? { ...current, open: false } : null)),
+    [setDialog],
+  );
 
-  return { survey, openedFrom: opened?.source ?? null, prompt: opened?.prompt, close };
+  return { dialog, close };
 };

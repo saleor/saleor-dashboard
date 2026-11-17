@@ -35,6 +35,22 @@ const feedbackSurvey: Survey = {
   current_iteration_start_date: null,
 };
 
+const featureRequestSurvey: Survey = {
+  ...feedbackSurvey,
+  id: "feature-request-e2e",
+  name: "Dashboard feature requests",
+  questions: [
+    {
+      id: "feature-request-question-e2e",
+      type: SurveyQuestionType.Open,
+      question: "What should we build next?",
+      description: "Suggest a feature, or tell us what you think of these updates.",
+      optional: true,
+    },
+  ],
+  internal_targeting_flag_key: "survey-targeting-feature-request-e2e",
+};
+
 interface CapturedEvent {
   event: string;
   properties: Record<string, unknown>;
@@ -58,7 +74,12 @@ const parseCapturedEvents = (body: string): CapturedEvent[] => {
 
 const routePostHog = async (
   page: Page,
-  { surveys = [feedbackSurvey], waitForSurveys, block, captured }: PostHogResponses = {},
+  {
+    surveys = [feedbackSurvey, featureRequestSurvey],
+    waitForSurveys,
+    block,
+    captured,
+  }: PostHogResponses = {},
 ): Promise<void> => {
   // Only HTTP responses are controlled; matching and rendering use the installed SDK.
   const script = readFileSync(repoPath("node_modules/posthog-js/dist/surveys.js"), "utf8");
@@ -106,6 +127,7 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
       process.env.POSTHOG_HOST !== "https://posthog.example.test" ||
       process.env.POSTHOG_KEY !== "phc_feedback_e2e" ||
       process.env.POSTHOG_FEEDBACK_SURVEY_ID !== feedbackSurvey.id ||
+      process.env.POSTHOG_FEATURE_REQUEST_SURVEY_ID !== featureRequestSurvey.id ||
       Boolean(process.env.POSTHOG_EXCLUDED_DOMAINS),
     "Run with the isolated analytics configuration documented in e2e/README.md",
   );
@@ -291,7 +313,7 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
       await expect(page.getByRole("dialog")).toBeVisible();
     };
 
-    test("replaces What's New with the feedback dialog", async ({ page }, testInfo) => {
+    test("replaces What's New with the feature request dialog", async ({ page }, testInfo) => {
       // Arrange
       const captured: CapturedEvent[] = [];
 
@@ -312,15 +334,16 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
       expect(
         await sendFeedback(page, captured, "What's New feedback", "What should we build next?"),
       ).toMatchObject({
-        $survey_id: feedbackSurvey.id,
+        $survey_id: featureRequestSurvey.id,
         feedback_source: "whats_new",
-        feedback_prompt: "What should we build next?",
       });
     });
 
-    test("links to GitHub when no survey matches", async ({ page }, testInfo) => {
+    test("links to GitHub when the feature request survey isn't active", async ({
+      page,
+    }, testInfo) => {
       // Arrange & Act
-      await openWhatsNew(page, { surveys: [{ ...feedbackSurvey, end_date: "2026-09-30" }] });
+      await openWhatsNew(page, { surveys: [feedbackSurvey] });
 
       // Assert
       await expect(page.getByRole("link", { name: "Suggest a change" })).toHaveAttribute(
