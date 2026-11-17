@@ -9,6 +9,7 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { type Rule } from "@dashboard/discounts/models/Rule";
 import { promotionGraphiQLQuery } from "@dashboard/discounts/queries";
+import { ripplePromotionMetadata } from "@dashboard/discounts/ripples/promotionMetadata";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForDiscountDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -23,21 +24,15 @@ import {
 import { getFormErrors } from "@dashboard/utils/errors";
 import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { DiscountDatesWithController } from "../DiscountDates/DiscountDatesWithController";
 import { DiscountDetailsForm } from "../DiscountDetailsForm/DiscountDetailsForm";
 import { DiscountGeneralInfo } from "../DiscountGeneralInfo/DiscountGeneralInfo";
 import { DiscountRules } from "../DiscountRules/DiscountRules";
 import { DiscountSavebar } from "../DiscountSavebar/DiscountSavebar";
+import { messages } from "./messages";
 import { DiscountDetailsTitle } from "./Title";
-
-const messages = defineMessages({
-  openGraphiQL: {
-    id: "xfvvg2",
-    defaultMessage: "Open this promotion in GraphiQL",
-  },
-});
 
 interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
@@ -47,6 +42,7 @@ interface DiscountDetailsPageProps {
   submitButtonState: ConfirmButtonTransitionState;
   onSubmit: (data: DiscoutFormData) => void;
   onDelete: () => void;
+  onShowMetadata: () => void;
   onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
   ruleUpdateButtonState: ConfirmButtonTransitionState;
   onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
@@ -66,6 +62,7 @@ export const DiscountDetailsPage = ({
   onBack,
   onSubmit,
   onDelete,
+  onShowMetadata,
   onRuleCreateSubmit,
   onRuleUpdateSubmit,
   onRuleDeleteSubmit,
@@ -114,7 +111,15 @@ export const DiscountDetailsPage = ({
             hrefIcon={<TopNavDestinationIcon.discounts />}
             hrefTitle={intl.formatMessage(topNavDestinationMessages.allDiscounts)}
             title={<DiscountDetailsTitle data={data} />}
+            actionsGap={3}
           >
+            <TopNav.MetadataButton
+              onClick={onShowMetadata}
+              disabled={disabled || !data}
+              data-test-id="show-promotion-metadata"
+              title={intl.formatMessage(messages.editMetadata)}
+              ripple={ripplePromotionMetadata}
+            />
             <TopNav.Menu
               items={[
                 ...extensionMenuItems,

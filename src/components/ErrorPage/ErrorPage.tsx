@@ -69,7 +69,7 @@ const ErrorPage = ({ onBack, onRefresh }: ErrorPageProps) => {
                   marginTop={4}
                   textTransform="uppercase"
                 >
-                  Error ID
+                  <FormattedMessage id="5fZQDw" defaultMessage="Error ID" />
                 </Text>
                 <Text size={4} fontWeight="regular" display="block">
                   {errorTrackingId}

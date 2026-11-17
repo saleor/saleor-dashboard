@@ -2,6 +2,7 @@ import { type LanguageCodeEnum } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import { type BulkTranslationValue } from "@dashboard/translations/types";
 import { type OutputData } from "@editorjs/editorjs";
+import { useIntl } from "react-intl";
 
 import { submitBulkTranslations } from "../bulkSubmit";
 import { type BulkTranslationSubmitResult } from "../bulkSubmitResult";
@@ -68,6 +69,7 @@ export function useTranslationEntityView<TTranslation>({
   attributeValueMutation,
   multiFieldNavigation = false,
 }: UseTranslationEntityViewOptions) {
+  const intl = useIntl();
   const shop = useShop();
   const { onBulkChange, onDiscard, onEdit, navigateToQuery } =
     useTranslationDetailNavigation(params);
@@ -145,6 +147,10 @@ export function useTranslationEntityView<TTranslation>({
     values: BulkTranslationValue[],
   ): Promise<BulkTranslationSubmitResult> => {
     const result = await submitBulkTranslations({
+      fallbackMessage: intl.formatMessage({
+        id: "V28ees",
+        defaultMessage: "Translation could not be saved",
+      }),
       onAttributeValueSubmit:
         updateAttributeValue && handleAttributeValueSubmit
           ? async (field, data) => {

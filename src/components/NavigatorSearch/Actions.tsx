@@ -11,7 +11,7 @@ interface ActionsProps {
 
 export const Actions = ({ query, onActionClick }: ActionsProps) => {
   const triggers = useActionTriggers();
-  const searchResults = fuzzySearch(triggers, query, ["name"]);
+  const searchResults = fuzzySearch(triggers, query, ["name", "keywords"]);
 
   const groupedBySection = Object.groupBy(searchResults, result => result.section) as Record<
     string,

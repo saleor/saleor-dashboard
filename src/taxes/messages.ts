@@ -239,4 +239,14 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Tax settings",
     description: "link to tax classes settings",
   },
+  editTaxConfigurationMetadata: {
+    id: "4gJ7Sr",
+    defaultMessage: "Edit tax configuration metadata",
+    description: "Taxes → Channels header button that opens the selected channel's metadata",
+  },
+  channelTaxConfigurationMetadataTitle: {
+    id: "dPBzKt",
+    defaultMessage: "Tax Configuration Metadata: {channelName}",
+    description: "tax configuration metadata dialog header naming the channel",
+  },
 });

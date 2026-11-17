@@ -284,7 +284,13 @@ const OrderHistory = ({
                               key={`${id}-line-${line.orderLine?.id || `${line.itemName}-${line.quantity}-${i}`}`}
                               orderLine={line.orderLine}
                               quantity={line.quantity ?? 0}
-                              fallbackItemName={line.itemName ?? "Product"}
+                              fallbackItemName={
+                                line.itemName ??
+                                intl.formatMessage({
+                                  id: "x/ZVlU",
+                                  defaultMessage: "Product",
+                                })
+                              }
                             />
                           ))}
                         {hasRelatedOrder && (

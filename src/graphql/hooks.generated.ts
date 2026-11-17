@@ -10949,6 +10949,42 @@ export function usePromotionDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type PromotionDetailsQueryHookResult = ReturnType<typeof usePromotionDetailsQuery>;
 export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotionDetailsLazyQuery>;
 export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
+export const PromotionMetadataDocument = gql`
+    query PromotionMetadata($id: ID!) {
+  promotion(id: $id) {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __usePromotionMetadataQuery__
+ *
+ * To run a query within a React component, call `usePromotionMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePromotionMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePromotionMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>(PromotionMetadataDocument, options);
+      }
+export function usePromotionMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>(PromotionMetadataDocument, options);
+        }
+export type PromotionMetadataQueryHookResult = ReturnType<typeof usePromotionMetadataQuery>;
+export type PromotionMetadataLazyQueryHookResult = ReturnType<typeof usePromotionMetadataLazyQuery>;
+export type PromotionMetadataQueryResult = Apollo.QueryResult<Types.PromotionMetadataQuery, Types.PromotionMetadataQueryVariables>;
 export const RuleConditionsSelectedOptionsDetailsDocument = gql`
     query RuleConditionsSelectedOptionsDetails($categoriesIds: [ID!], $collectionsIds: [ID!], $productsIds: [ID!], $variantsIds: [ID!]) {
   categories(first: 100, where: {ids: $categoriesIds}) {
@@ -22707,6 +22743,42 @@ export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
 export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
 export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
+export const MenuMetadataDocument = gql`
+    query MenuMetadata($id: ID!) {
+  menu(id: $id) {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __useMenuMetadataQuery__
+ *
+ * To run a query within a React component, call `useMenuMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMenuMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMenuMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useMenuMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>(MenuMetadataDocument, options);
+      }
+export function useMenuMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>(MenuMetadataDocument, options);
+        }
+export type MenuMetadataQueryHookResult = ReturnType<typeof useMenuMetadataQuery>;
+export type MenuMetadataLazyQueryHookResult = ReturnType<typeof useMenuMetadataLazyQuery>;
+export type MenuMetadataQueryResult = Apollo.QueryResult<Types.MenuMetadataQuery, Types.MenuMetadataQueryVariables>;
 export const TaxConfigurationUpdateDocument = gql`
     mutation TaxConfigurationUpdate($id: ID!, $input: TaxConfigurationUpdateInput!) {
   taxConfigurationUpdate(id: $id, input: $input) {
@@ -22980,6 +23052,42 @@ export function useTaxConfigurationsListLazyQuery(baseOptions?: ApolloReactHooks
 export type TaxConfigurationsListQueryHookResult = ReturnType<typeof useTaxConfigurationsListQuery>;
 export type TaxConfigurationsListLazyQueryHookResult = ReturnType<typeof useTaxConfigurationsListLazyQuery>;
 export type TaxConfigurationsListQueryResult = Apollo.QueryResult<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>;
+export const TaxConfigurationMetadataDocument = gql`
+    query TaxConfigurationMetadata($id: ID!) {
+  taxConfiguration(id: $id) {
+    id
+    ...Metadata
+  }
+}
+    ${MetadataFragmentDoc}`;
+
+/**
+ * __useTaxConfigurationMetadataQuery__
+ *
+ * To run a query within a React component, call `useTaxConfigurationMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaxConfigurationMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaxConfigurationMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useTaxConfigurationMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>(TaxConfigurationMetadataDocument, options);
+      }
+export function useTaxConfigurationMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>(TaxConfigurationMetadataDocument, options);
+        }
+export type TaxConfigurationMetadataQueryHookResult = ReturnType<typeof useTaxConfigurationMetadataQuery>;
+export type TaxConfigurationMetadataLazyQueryHookResult = ReturnType<typeof useTaxConfigurationMetadataLazyQuery>;
+export type TaxConfigurationMetadataQueryResult = Apollo.QueryResult<Types.TaxConfigurationMetadataQuery, Types.TaxConfigurationMetadataQueryVariables>;
 export const TaxCountriesListDocument = gql`
     query TaxCountriesList {
   taxCountryConfigurations {

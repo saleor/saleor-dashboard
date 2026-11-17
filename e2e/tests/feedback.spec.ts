@@ -50,15 +50,30 @@ const feedbackSurvey: Survey = {
   current_iteration_start_date: null,
 };
 
+interface CapturedEvent {
+  event: string;
+  properties: Record<string, unknown>;
+}
+
 interface PostHogResponses {
   surveys?: Survey[];
   waitForSurveys?: Promise<void>;
   block?: "api" | "script";
+  captured?: CapturedEvent[];
 }
+
+const parseCapturedEvents = (body: string): CapturedEvent[] => {
+  const json = body.startsWith("data=")
+    ? Buffer.from(decodeURIComponent(body.slice("data=".length)), "base64").toString("utf8")
+    : body;
+  const parsed: CapturedEvent | CapturedEvent[] = JSON.parse(json);
+
+  return Array.isArray(parsed) ? parsed : [parsed];
+};
 
 const routePostHog = async (
   page: Page,
-  { surveys = [feedbackSurvey], waitForSurveys, block }: PostHogResponses = {},
+  { surveys = [feedbackSurvey], waitForSurveys, block, captured }: PostHogResponses = {},
 ): Promise<void> => {
   // Only HTTP responses are controlled; matching and rendering use the installed SDK.
   const script = readFileSync(repoPath("node_modules/posthog-js/dist/surveys.js"), "utf8");
@@ -90,6 +105,12 @@ const routePostHog = async (
     }
 
     // Analytics submissions also stay within the intercepted test endpoint.
+    const body = route.request().postData();
+
+    if (captured && body && !pathname.startsWith("/flags")) {
+      captured.push(...parseCapturedEvents(body));
+    }
+
     return route.fulfill({ json: config });
   });
 };
@@ -140,6 +161,96 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
     await page.getByPlaceholder("Start typing...").fill("Feedback regression test");
     await page.getByRole("button", { name: "Submit survey", exact: true }).click();
     await expect(page.getByText("Thank you for your feedback!", { exact: true })).toBeVisible();
+  });
+
+  test.describe("from the command menu", () => {
+    // PostHog drops events from headless and automated browsers as bot traffic.
+    test.use({
+      userAgent:
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    });
+
+    const openCommandMenu = async (
+      page: Page,
+      viewport: { width: number; height: number },
+      layoutTestId: string,
+      captured: CapturedEvent[] = [],
+    ): Promise<void> => {
+      await page.addInitScript(() => {
+        Object.defineProperty(navigator, "webdriver", { get: () => false });
+        Object.defineProperty(navigator, "userAgentData", { get: () => undefined });
+      });
+      await routePostHog(page, { captured });
+
+      const home = new HomePage(page);
+      const surveysLoaded = page.waitForResponse(response =>
+        response.url().includes("/api/surveys/"),
+      );
+
+      await home.goto();
+      await home.expectSignedIn();
+      await surveysLoaded;
+      const dismissAnnouncement = page.getByTestId("ripple-video-announcement-dismiss");
+
+      if (await dismissAnnouncement.isVisible()) await dismissAnnouncement.click();
+      // Signed in at desktop size; the sidebar switches layout when the viewport changes.
+      await page.setViewportSize(viewport);
+      await expect(page.getByTestId(layoutTestId)).toBeVisible();
+      await page.keyboard.press("ControlOrMeta+k");
+      await page.keyboard.type("feedback");
+    };
+
+    for (const { layout, viewport, testId } of [
+      { layout: "column", viewport: { width: 1280, height: 800 }, testId: "sidebar-column" },
+      { layout: "rail", viewport: { width: 900, height: 800 }, testId: "sidebar-rail" },
+    ]) {
+      test(`opens the survey in the ${layout} layout`, async ({ page }, testInfo) => {
+        // Arrange
+        const captured: CapturedEvent[] = [];
+
+        await openCommandMenu(page, viewport, testId, captured);
+
+        const action = page.getByRole("option", { name: "Share feedback" });
+
+        await expect(action).toHaveAttribute("aria-selected", "true");
+        await page.screenshot({ path: testInfo.outputPath(`command-menu-${layout}.png`) });
+
+        // Act
+        await page.keyboard.press("Enter");
+
+        // Assert
+        await expect(page.getByText("What could we improve?", { exact: true })).toBeVisible();
+        await page.locator(".ph-survey").evaluate(async element => {
+          await Promise.all(
+            element.getAnimations({ subtree: true }).map(animation => animation.finished),
+          );
+        });
+        await page.screenshot({ path: testInfo.outputPath(`survey-${layout}.png`) });
+        await page.getByPlaceholder("Start typing...").fill("Command menu feedback");
+        await page.getByRole("button", { name: "Submit survey", exact: true }).click();
+        await expect(page.getByText("Thank you for your feedback!", { exact: true })).toBeVisible();
+        await expect
+          .poll(() => captured.find(({ event }) => event === "survey sent"), { timeout: 15_000 })
+          .toBeDefined();
+
+        // posthog-js adds displaySurvey properties to "survey sent" only.
+        expect(captured.find(({ event }) => event === "survey sent")?.properties).toMatchObject({
+          $survey_id: feedbackSurvey.id,
+          feedback_source: "command_menu",
+        });
+      });
+    }
+
+    // The survey only matches while a feedback button is on the page, and the drawer
+    // mounts its button only when it is open.
+    test("hides the action in the drawer layout", async ({ page }, testInfo) => {
+      // Arrange & Act
+      await openCommandMenu(page, { width: 390, height: 844 }, "sidebar-app-bar");
+
+      // Assert
+      await expect(page.getByRole("option", { name: "Share feedback" })).toHaveCount(0);
+      await page.screenshot({ path: testInfo.outputPath("command-menu-drawer.png") });
+    });
   });
 
   for (const block of ["api", "script"] as const) {

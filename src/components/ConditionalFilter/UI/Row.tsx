@@ -7,7 +7,9 @@ import { Box, Button, DynamicCombobox, Select, Text } from "@saleor/macaw-ui-nex
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { useMemo } from "react";
+import { useIntl } from "react-intl";
 
+import { localizeFilterCondition } from "../displayMessages";
 import { getItemConstraint } from "./constrains";
 import { ConstraintReasonHint } from "./ConstraintReasonHint";
 import { type ErrorLookup } from "./errors";
@@ -45,6 +47,7 @@ export const RowComponent = ({
   error,
   layout = "popover",
 }: RowProps): React.ReactNode => {
+  const intl = useIntl();
   const constrain = getItemConstraint(item.constraint);
   const reasonLabels = getConstraintReasonLabels(item, rows);
   const isAttribute = item.isAttribute;
@@ -62,6 +65,23 @@ export const RowComponent = ({
 
     return selected ? enrichAttributeComboboxOption(selected) : null;
   }, [attributeList, item.selectedAttribute]);
+  const conditionOptions = item.condition.options;
+  const selectedCondition = item.condition.selected.conditionValue;
+  // Conditions can share a value (e.g. "is" and "lower" are both "input-1"), so map the
+  // translated options back to the originals by position, never by value.
+  const localizedConditionOptions = useMemo(
+    () => conditionOptions.map(option => localizeFilterCondition(option, intl)),
+    [conditionOptions, intl],
+  );
+  const localizedSelectedCondition = useMemo(() => {
+    if (!selectedCondition) return null;
+
+    const selectedIndex = conditionOptions.indexOf(selectedCondition);
+
+    return selectedIndex === -1
+      ? localizeFilterCondition(selectedCondition, intl)
+      : localizedConditionOptions[selectedIndex];
+  }, [conditionOptions, localizedConditionOptions, selectedCondition, intl]);
   const isFlat = isFlatFilterLayout(layout);
   const inlineControlProps = isFlat ? { backgroundColor: "default1" as const } : {};
 
@@ -147,11 +167,13 @@ export const RowComponent = ({
         {...inlineControlProps}
         id={getFilterControlId("condition", index)}
         data-test-id={`condition-${index}`}
-        value={item.condition.selected.conditionValue}
-        options={item.condition.options}
+        value={localizedSelectedCondition}
+        options={localizedConditionOptions}
         disabled={constrain.disableCondition}
         onChange={value => {
-          emitter.changeCondition(index, value);
+          const original = conditionOptions[localizedConditionOptions.indexOf(value)];
+
+          if (original) emitter.changeCondition(index, original);
         }}
         onFocus={() => {
           emitter.focusCondition(index);

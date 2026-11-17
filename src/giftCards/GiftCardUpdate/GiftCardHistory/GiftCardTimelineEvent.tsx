@@ -19,7 +19,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { type ReactNode } from "react";
-import { type IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import { giftCardHistoryTimelineMessages as timelineMessages } from "./messages";
 
@@ -123,7 +123,11 @@ const getUsedInOrderTitle = (event: GiftCardEventType, intl: IntlShape): ReactNo
     <>
       {primary}
       <Text size={3} color="default2" as="span" marginLeft={1}>
-        by{" "}
+        <FormattedMessage
+          id="0nKc2b"
+          defaultMessage="by"
+          description="timeline event attribution, followed by the name of the staff member, app or customer"
+        />{" "}
         <TimelineLink href={customerPath(event.user.id)} entity="customer" color="default2">
           {buyerName}
         </TimelineLink>

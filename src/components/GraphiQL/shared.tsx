@@ -1,4 +1,5 @@
 import { Tooltip, UnStyledButton, type useDragResize, usePluginContext } from "@graphiql/react";
+import { useIntl } from "react-intl";
 
 import { useDashboardTheme } from "./styles";
 
@@ -12,12 +13,45 @@ export const PluginSidebarSection = ({
   pluginResize: ReturnType<typeof useDragResize>;
 }) => {
   const pluginContext = usePluginContext();
+  const intl = useIntl();
 
   return (
     <div className="graphiql-sidebar-section">
       {pluginContext?.plugins.map(plugin => {
         const isVisible = plugin === pluginContext.visiblePlugin;
-        const label = `${isVisible ? "Hide" : "Show"} ${plugin.title}`;
+        // Keyed by the titles the installed GraphiQL plugins use.
+        const pluginTitles: Record<string, string> = {
+          "Documentation Explorer": intl.formatMessage({
+            id: "SMMrqV",
+            defaultMessage: "Documentation Explorer",
+          }),
+          History: intl.formatMessage({
+            id: "djJp6c",
+            defaultMessage: "History",
+          }),
+          "GraphiQL Explorer": intl.formatMessage({
+            id: "xypzXx",
+            defaultMessage: "GraphiQL Explorer",
+          }),
+        };
+        const pluginTitle = pluginTitles[plugin.title] ?? plugin.title;
+        const label = isVisible
+          ? intl.formatMessage(
+              {
+                id: "10W/ry",
+                defaultMessage: "Hide {plugin}",
+                description: "GraphiQL sidebar button that closes a panel",
+              },
+              { plugin: pluginTitle },
+            )
+          : intl.formatMessage(
+              {
+                id: "mq5U6P",
+                defaultMessage: "Show {plugin}",
+                description: "GraphiQL sidebar button that opens a panel",
+              },
+              { plugin: pluginTitle },
+            );
         const Icon = plugin.icon;
 
         return (

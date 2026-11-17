@@ -1,6 +1,7 @@
 import EventTime from "@dashboard/components/EventTime/EventTime";
 import { type EventDeliveryAttemptFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
+import { FormattedMessage } from "react-intl";
 
 interface AppWebhooksAttemptDetailsProps {
   attempt: EventDeliveryAttemptFragment;
@@ -31,7 +32,10 @@ export const AppWebhooksAttemptDetails = ({ attempt }: AppWebhooksAttemptDetails
           <Text color="critical1" fontWeight="bold" marginRight={4}>
             {responseStatusCode}
           </Text>
-          <Text color="default2">Status</Text>:{" "}
+          <Text color="default2">
+            <FormattedMessage id="tzMNF3" defaultMessage="Status" />
+          </Text>
+          :{" "}
           <Text color={status === "FAILED" ? "critical1" : "default1"} fontWeight="bold">
             {status}
           </Text>

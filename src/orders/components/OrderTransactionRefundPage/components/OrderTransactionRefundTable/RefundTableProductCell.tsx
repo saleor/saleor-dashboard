@@ -2,12 +2,15 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { type OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { useIntl } from "react-intl";
 
 interface RefundTableProductCellProps {
   line: OrderDetailsGrantRefundFragment["lines"][number];
 }
 
 export const RefundTableProductCell = ({ line }: RefundTableProductCellProps) => {
+  const intl = useIntl();
+
   const { elementRef: productElementRef, isOverflowing: isProductOverflowing } =
     useOverflowDetection<HTMLDivElement>();
   const { elementRef: variantElementRef, isOverflowing: isVariantOverflowing } =
@@ -21,7 +24,13 @@ export const RefundTableProductCell = ({ line }: RefundTableProductCellProps) =>
         <GridTable.Cell>
           <Box display="grid" __gridTemplateColumns="min-content auto" gap={2} alignItems="start">
             <Box width={8} height={8}>
-              <img src={line.thumbnail?.url} alt="product thumbnail" />
+              <img
+                src={line.thumbnail?.url}
+                alt={intl.formatMessage({
+                  id: "2YFFfV",
+                  defaultMessage: "product thumbnail",
+                })}
+              />
             </Box>
             <Box overflow="hidden" minWidth={0}>
               <Box

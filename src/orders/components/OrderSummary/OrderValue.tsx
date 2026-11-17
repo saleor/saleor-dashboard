@@ -20,7 +20,7 @@ import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { ChevronDown, ChevronUp, Info } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { defineMessages, type MessageDescriptor, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 import { OrderDiscountModal } from "../OrderDiscountModal/OrderDiscountModal";
 import { type LineDiscountSummaryEntry } from "./getLineDiscountsSummary";
@@ -725,7 +725,7 @@ export const OrderValue = (props: Props): ReactNode => {
               {intl.formatMessage(messages.discount)}
             </Text>
             <Text as="span" color="default2" fontWeight="regular" size={4} marginLeft={1}>
-              (applied)
+              <FormattedMessage id="8W1P82" defaultMessage="(applied)" />
             </Text>
             <Box
               as="span"
@@ -904,7 +904,7 @@ export const OrderValue = (props: Props): ReactNode => {
               id: "HTiAMm",
             })}
             <Text color="default2" fontWeight="medium" size={3}>
-              (included)
+              <FormattedMessage id="0pApsp" defaultMessage="(included)" />
             </Text>
           </OrderSummaryListItem>
         )}
