@@ -1,41 +1,26 @@
 import type { Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
-import {
-  type Survey,
-  SurveyPosition,
-  SurveyQuestionType,
-  SurveySchedule,
-  SurveyType,
-  SurveyWidgetType,
-} from "posthog-js";
+import { type Survey, SurveyQuestionType, SurveySchedule, SurveyType } from "posthog-js";
 
 import { parallel } from "../config.ts";
 import { expect, test } from "../fixtures/test.ts";
 import { repoPath } from "../lib/paths.ts";
 import { HomePage } from "../pages/homePage.ts";
 
-const selector = '[data-posthog-feedback-trigger="true"]';
-// Includes the selector condition that caused the production circular dependency.
+// Shaped like the production survey: PostHog's "API" type, which the Dashboard draws itself.
 const feedbackSurvey: Survey = {
   id: "feedback-e2e",
   name: "Dashboard feedback",
   description: "",
-  type: SurveyType.Widget,
-  appearance: {
-    widgetType: SurveyWidgetType.Selector,
-    widgetSelector: selector,
-    position: SurveyPosition.NextToTrigger,
-    whiteLabel: true,
-    placeholder: "Start typing...",
-    displayThankYouMessage: true,
-    thankYouMessageHeader: "Thank you for your feedback!",
-  },
-  conditions: { selector, events: null, cancelEvents: null, actions: null },
+  type: SurveyType.API,
+  appearance: null,
+  conditions: null,
   questions: [
     {
       id: "feedback-question-e2e",
       type: SurveyQuestionType.Open,
       question: "What could we improve?",
+      description: "Tell us about something confusing, difficult, or missing.",
       optional: true,
     },
   ],
@@ -120,11 +105,49 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
     !process.env.IS_CLOUD_INSTANCE ||
       process.env.POSTHOG_HOST !== "https://posthog.example.test" ||
       process.env.POSTHOG_KEY !== "phc_feedback_e2e" ||
+      process.env.POSTHOG_FEEDBACK_SURVEY_ID !== feedbackSurvey.id ||
       Boolean(process.env.POSTHOG_EXCLUDED_DOMAINS),
     "Run with the isolated analytics configuration documented in e2e/README.md",
   );
 
-  test("reveals the trigger after loading and opens and submits the real survey", async ({
+  // PostHog drops events from headless and automated browsers as bot traffic.
+  test.use({
+    userAgent:
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+  });
+
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, "webdriver", { get: () => false });
+      Object.defineProperty(navigator, "userAgentData", { get: () => undefined });
+    });
+  });
+
+  const sendFeedback = async (
+    page: Page,
+    captured: CapturedEvent[],
+    response: string,
+  ): Promise<Record<string, unknown> | undefined> => {
+    const dialog = page.getByRole("dialog");
+
+    await expect(dialog.getByText("What could we improve?")).toBeVisible();
+    const textbox = dialog.getByRole("textbox", { name: "What could we improve?" });
+    const send = dialog.getByRole("button", { name: "Send" });
+
+    await textbox.fill(" \n\u200b\u00a0 ");
+    await expect(send).toBeDisabled();
+    await textbox.fill(response);
+    await send.click();
+    await expect(dialog).toBeHidden();
+    await expect(page.getByText("Feedback sent")).toBeVisible();
+    await expect
+      .poll(() => captured.find(({ event }) => event === "survey sent"), { timeout: 15_000 })
+      .toBeDefined();
+
+    return captured.find(({ event }) => event === "survey sent")?.properties;
+  };
+
+  test("reveals the trigger after loading and sends feedback from the sidebar", async ({
     page,
   }, testInfo) => {
     // Arrange
@@ -132,13 +155,14 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
     const waitForSurveys = new Promise<void>(resolve => {
       releaseSurveys = resolve;
     });
+    const captured: CapturedEvent[] = [];
 
-    await routePostHog(page, { waitForSurveys });
+    await routePostHog(page, { waitForSurveys, captured });
 
     const home = new HomePage(page);
     const trigger = page.getByTestId("feedback-button");
 
-    // Act & Assert: hide while loading, then let the SDK evaluate the production selector condition.
+    // Act & Assert: hidden while loading, shown once the survey is ready.
     await home.goto();
     await home.expectSignedIn();
     const dismissAnnouncement = page.getByTestId("ripple-video-announcement-dismiss");
@@ -147,39 +171,57 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
     await expect(trigger).toBeHidden();
     releaseSurveys();
     await expect(trigger).toBeVisible();
-    await expect(trigger).toHaveAttribute("PHWidgetSurveyClickListener", "true");
-    await expect(page.getByRole("link", { name: "Install Pulse", exact: true })).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("feedback-available.png") });
     await trigger.click();
-    await expect(page.getByText("What could we improve?", { exact: true })).toBeVisible();
-    await page.locator(".ph-survey").evaluate(async element => {
-      await Promise.all(
-        element.getAnimations({ subtree: true }).map(animation => animation.finished),
-      );
-    });
+    await expect(page.getByText("Tell us about something confusing")).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("feedback-open.png") });
-    await page.getByPlaceholder("Start typing...").fill("Feedback regression test");
-    await page.getByRole("button", { name: "Submit survey", exact: true }).click();
-    await expect(page.getByText("Thank you for your feedback!", { exact: true })).toBeVisible();
+
+    expect(await sendFeedback(page, captured, "Feedback regression test")).toMatchObject({
+      $survey_id: feedbackSurvey.id,
+      [`$survey_response_${feedbackSurvey.questions[0].id}`]: "Feedback regression test",
+      feedback_source: "sidebar",
+    });
+    expect(captured.find(({ event }) => event === "survey shown")?.properties).toMatchObject({
+      $survey_id: feedbackSurvey.id,
+      feedback_source: "sidebar",
+    });
+  });
+
+  test("records a dismissal without the unsent text", async ({ page }) => {
+    // Arrange
+    const captured: CapturedEvent[] = [];
+
+    await routePostHog(page, { captured });
+    await new HomePage(page).goto();
+    await new HomePage(page).expectSignedIn();
+
+    const dismissAnnouncement = page.getByTestId("ripple-video-announcement-dismiss");
+
+    if (await dismissAnnouncement.isVisible()) await dismissAnnouncement.click();
+    await page.getByTestId("feedback-button").click();
+
+    const dialog = page.getByRole("dialog");
+
+    await dialog.getByRole("textbox", { name: "What could we improve?" }).fill("Not sending this");
+
+    // Act
+    await page.keyboard.press("Escape");
+
+    // Assert
+    await expect(dialog).toBeHidden();
+    await expect
+      .poll(() => captured.find(({ event }) => event === "survey dismissed"), { timeout: 15_000 })
+      .toBeDefined();
+    expect(JSON.stringify(captured)).not.toContain("Not sending this");
   });
 
   test.describe("from the command menu", () => {
-    // PostHog drops events from headless and automated browsers as bot traffic.
-    test.use({
-      userAgent:
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
-    });
-
     const openCommandMenu = async (
       page: Page,
       viewport: { width: number; height: number },
       layoutTestId: string,
       captured: CapturedEvent[] = [],
     ): Promise<void> => {
-      await page.addInitScript(() => {
-        Object.defineProperty(navigator, "webdriver", { get: () => false });
-        Object.defineProperty(navigator, "userAgentData", { get: () => undefined });
-      });
       await routePostHog(page, { captured });
 
       const home = new HomePage(page);
@@ -203,8 +245,9 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
     for (const { layout, viewport, testId } of [
       { layout: "column", viewport: { width: 1280, height: 800 }, testId: "sidebar-column" },
       { layout: "rail", viewport: { width: 900, height: 800 }, testId: "sidebar-rail" },
+      { layout: "drawer", viewport: { width: 390, height: 844 }, testId: "sidebar-app-bar" },
     ]) {
-      test(`opens the survey in the ${layout} layout`, async ({ page }, testInfo) => {
+      test(`sends feedback in the ${layout} layout`, async ({ page }, testInfo) => {
         // Arrange
         const captured: CapturedEvent[] = [];
 
@@ -219,38 +262,13 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
         await page.keyboard.press("Enter");
 
         // Assert
-        await expect(page.getByText("What could we improve?", { exact: true })).toBeVisible();
-        await page.locator(".ph-survey").evaluate(async element => {
-          await Promise.all(
-            element.getAnimations({ subtree: true }).map(animation => animation.finished),
-          );
-        });
         await page.screenshot({ path: testInfo.outputPath(`survey-${layout}.png`) });
-        await page.getByPlaceholder("Start typing...").fill("Command menu feedback");
-        await page.getByRole("button", { name: "Submit survey", exact: true }).click();
-        await expect(page.getByText("Thank you for your feedback!", { exact: true })).toBeVisible();
-        await expect
-          .poll(() => captured.find(({ event }) => event === "survey sent"), { timeout: 15_000 })
-          .toBeDefined();
-
-        // posthog-js adds displaySurvey properties to "survey sent" only.
-        expect(captured.find(({ event }) => event === "survey sent")?.properties).toMatchObject({
+        expect(await sendFeedback(page, captured, "Command menu feedback")).toMatchObject({
           $survey_id: feedbackSurvey.id,
           feedback_source: "command_menu",
         });
       });
     }
-
-    // The survey only matches while a feedback button is on the page, and the drawer
-    // mounts its button only when it is open.
-    test("hides the action in the drawer layout", async ({ page }, testInfo) => {
-      // Arrange & Act
-      await openCommandMenu(page, { width: 390, height: 844 }, "sidebar-app-bar");
-
-      // Assert
-      await expect(page.getByRole("option", { name: "Share feedback" })).toHaveCount(0);
-      await page.screenshot({ path: testInfo.outputPath("command-menu-drawer.png") });
-    });
   });
 
   for (const block of ["api", "script"] as const) {
@@ -268,7 +286,6 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
       await failed;
 
       // Assert
-      await expect(page.getByTestId("feedback-button")).toHaveCount(1);
       await expect(page.getByTestId("feedback-button")).toBeHidden();
       await expect(page.getByRole("button", { name: "Send feedback" })).toHaveCount(0);
     });

@@ -17,3 +17,7 @@ export const isProductAnalyticsEnabled = (): boolean =>
     process.env.POSTHOG_KEY &&
     !isDomainExcluded(),
   );
+
+/** The PostHog survey the Dashboard shows in its own feedback dialog. */
+export const getFeedbackSurveyId = (): string | undefined =>
+  process.env.POSTHOG_FEEDBACK_SURVEY_ID || undefined;

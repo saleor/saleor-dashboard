@@ -2704,6 +2704,10 @@
     "context": "Health check subtitle when product cannot be purchased",
     "string": "Check the issues above to fix configuration"
   },
+  "7RGhGL": {
+    "context": "notification after sending the feedback survey",
+    "string": "Feedback sent"
+  },
   "7U/NPm": {
     "context": "tax class rates list label when no country is selected",
     "string": "Add country to access tax classes"
