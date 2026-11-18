@@ -1,4 +1,6 @@
+import { useUser } from "@dashboard/auth/useUser";
 import { allRipples } from "@dashboard/ripples/allRipples";
+import { isRippleWithinLifecycle } from "@dashboard/ripples/rippleLifecycle";
 import { type Ripple } from "@dashboard/ripples/types";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/vanilla/utils";
@@ -90,6 +92,8 @@ export class RipplesStorage {
 
 export const useRippleStorage = () => {
   const [storedState, setStoreState] = useAtom(storageAtom);
+  const dateJoined = useUser().user?.dateJoined;
+  const userJoinedAt = useMemo(() => (dateJoined ? new Date(dateJoined) : undefined), [dateJoined]);
 
   const storage = useMemo(
     () => new RipplesStorage(storedState, setStoreState, allRipples),
@@ -100,7 +104,12 @@ export const useRippleStorage = () => {
     (ripple: Ripple) => storage.setFirstSeenFlag(ripple),
     [storage],
   );
-  const getShouldShow = useCallback((ripple: Ripple) => storage.getShouldShow(ripple), [storage]);
+  const getShouldShow = useCallback(
+    (ripple: Ripple) =>
+      isRippleWithinLifecycle(ripple, { now: new Date(), userJoinedAt }) &&
+      storage.getShouldShow(ripple),
+    [storage, userJoinedAt],
+  );
   const setManuallyHidden = useCallback(
     (ripple: Ripple) => storage.setManuallyHidden(ripple),
     [storage],

@@ -1,4 +1,5 @@
 import pulsePoster from "@assets/images/cover-big-pulse-by-saleor.png";
+import { withExistingUser } from "@dashboard/ripples/components/withExistingUser";
 import { type Ripple } from "@dashboard/ripples/types";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { MemoryRouter } from "react-router-dom";
@@ -9,7 +10,7 @@ const model: Ripple = {
   type: "feature",
   ID: "story-video-announcement",
   TTL_seconds: 999999,
-  dateAdded: new Date(2026, 6, 31),
+  dateAdded: new Date(),
   content: {
     oneLiner: "Saleor Pulse",
     contextual: "See real-time store analytics on your homepage.",
@@ -29,6 +30,7 @@ const meta: Meta<typeof RippleVideoAnnouncement> = {
     localStorage.removeItem(RIPPLE_STORAGE_KEY);
   },
   decorators: [
+    withExistingUser,
     (Story: StoryFn): JSX.Element => (
       <MemoryRouter>
         <div
