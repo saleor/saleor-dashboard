@@ -34,22 +34,20 @@ export const SearchForm = ({
   }, []);
 
   return (
-    <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4} paddingBottom={2} paddingX={6}>
-      <Box display="flex" alignItems="center" gap={4}>
-        <Box __width="320px" ref={inputSearchContainer}>
-          <SearchInput
-            initialSearch={query}
-            placeholder={intl.formatMessage({
-              id: "QTuSw/",
-              defaultMessage: "Search",
-              description: "navigator search input placeholder",
-            })}
-            onSearchChange={onSearchChange}
-            showSearchTooltip
-          />
-        </Box>
+    <Box display="flex" alignItems="center" flexWrap="wrap" gap={4} paddingBottom={2} paddingX={6}>
+      <Box flexGrow="1" ref={inputSearchContainer}>
+        <SearchInput
+          initialSearch={query}
+          placeholder={intl.formatMessage({
+            id: "QTuSw/",
+            defaultMessage: "Search",
+            description: "navigator search input placeholder",
+          })}
+          onSearchChange={onSearchChange}
+          showSearchTooltip
+        />
       </Box>
-      <Box display="flex" justifyContent="flex-end">
+      <Box display="flex" justifyContent="flex-end" flexShrink="0">
         <Switch defaultValue={scope} onValueChange={onScopeChange}>
           <SwitchItem id="all" value="all">
             <FormattedMessage id="zQvVDJ" defaultMessage="All" />
