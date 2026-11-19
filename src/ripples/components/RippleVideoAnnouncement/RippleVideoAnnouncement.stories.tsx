@@ -1,7 +1,7 @@
 import pulsePoster from "@assets/images/cover-big-pulse-by-saleor.png";
-import { withExistingUser } from "@dashboard/ripples/components/withExistingUser";
 import { type Ripple } from "@dashboard/ripples/types";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
+import { withExistingUser } from "@storybookUtils/withExistingUser";
 import { MemoryRouter } from "react-router-dom";
 
 import { RippleVideoAnnouncement } from "./RippleVideoAnnouncement";

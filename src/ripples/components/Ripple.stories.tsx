@@ -1,10 +1,10 @@
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { withExistingUser } from "@storybookUtils/withExistingUser";
 import { defineMessage } from "react-intl";
 import { fn } from "storybook/test";
 
 import { Ripple } from "./Ripple";
-import { withExistingUser } from "./withExistingUser";
 
 const baseRipple: RippleModel = {
   type: "feature",

@@ -1,11 +1,15 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { allRipples } from "@dashboard/ripples/allRipples";
-import { isRippleWithinLifecycle } from "@dashboard/ripples/rippleLifecycle";
 import { type Ripple } from "@dashboard/ripples/types";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/vanilla/utils";
 import lodashSet from "lodash/set";
 import { useCallback, useMemo } from "react";
+
+/** How long after its release a ripple keeps pointing at the change. */
+export const RIPPLE_LIFETIME_DAYS = 14;
+
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 type StoredRipple = {
   manuallyHidden: boolean;
@@ -27,6 +31,8 @@ export class RipplesStorage {
     private storedState: StoredRipplesRecord,
     private updateState: StateUpdater,
     private allRipples: Ripple[],
+    /** When the signed-in user joined. Undefined while the user is loading. */
+    private userJoinedAt: Date | undefined,
   ) {}
 
   private get now() {
@@ -47,8 +53,28 @@ export class RipplesStorage {
     return firstSeenAt ? firstSeenAt + TTL * 1000 < this.now : false;
   }
 
+  /**
+   * A ripple points at a change, so it only applies to users who knew the dashboard before it
+   * and only while the change is recent. The What's New list ignores this and stays permanent.
+   */
+  private getIsWithinLifecycle(ripple: Ripple): boolean {
+    if (!this.userJoinedAt) {
+      return false;
+    }
+
+    const releasedAt = ripple.dateAdded.getTime();
+    const isNewerThanUser = this.userJoinedAt.getTime() < releasedAt;
+    const isRecent = this.now < releasedAt + RIPPLE_LIFETIME_DAYS * DAY_MS;
+
+    return isNewerThanUser && isRecent;
+  }
+
   getShouldShow(ripple: Ripple): boolean {
-    return !this.getIsManuallyHidden(ripple.ID) && !this.getIsStale(ripple.ID, ripple.TTL_seconds);
+    return (
+      this.getIsWithinLifecycle(ripple) &&
+      !this.getIsManuallyHidden(ripple.ID) &&
+      !this.getIsStale(ripple.ID, ripple.TTL_seconds)
+    );
   }
 
   setFirstSeenFlag(ripple: Ripple): void {
@@ -96,20 +122,15 @@ export const useRippleStorage = () => {
   const userJoinedAt = useMemo(() => (dateJoined ? new Date(dateJoined) : undefined), [dateJoined]);
 
   const storage = useMemo(
-    () => new RipplesStorage(storedState, setStoreState, allRipples),
-    [storedState, setStoreState],
+    () => new RipplesStorage(storedState, setStoreState, allRipples, userJoinedAt),
+    [storedState, setStoreState, userJoinedAt],
   );
 
   const setFirstSeenFlag = useCallback(
     (ripple: Ripple) => storage.setFirstSeenFlag(ripple),
     [storage],
   );
-  const getShouldShow = useCallback(
-    (ripple: Ripple) =>
-      isRippleWithinLifecycle(ripple, { now: new Date(), userJoinedAt }) &&
-      storage.getShouldShow(ripple),
-    [storage, userJoinedAt],
-  );
+  const getShouldShow = useCallback((ripple: Ripple) => storage.getShouldShow(ripple), [storage]);
   const setManuallyHidden = useCallback(
     (ripple: Ripple) => storage.setManuallyHidden(ripple),
     [storage],

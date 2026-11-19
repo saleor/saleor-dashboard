@@ -1,6 +1,6 @@
 import { type Ripple } from "@dashboard/ripples/types";
 
-import { RipplesStorage } from "./useRipplesStorage";
+import { RIPPLE_LIFETIME_DAYS, RipplesStorage } from "./useRipplesStorage";
 
 // Polyfill for structuredClone in Node.js test environment in case older node is used
 if (!global.structuredClone) {
@@ -54,6 +54,9 @@ const mockRipple3: Ripple = {
 
 const mockAllRipples = [mockRipple1, mockRipple2, mockRipple3];
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+const existingUserJoinedAt = new Date("2021-01-01T00:00:00Z");
+
 describe("RipplesStorage", () => {
   let mockUpdateState: jest.Mock;
   let storage: RipplesStorage;
@@ -69,13 +72,14 @@ describe("RipplesStorage", () => {
 
   beforeEach(() => {
     mockUpdateState = jest.fn();
-    storage = new RipplesStorage({}, mockUpdateState, mockAllRipples);
+    storage = new RipplesStorage({}, mockUpdateState, mockAllRipples, existingUserJoinedAt);
 
-    jest.spyOn(Date.prototype, "getTime").mockReturnValue(currentTime);
+    jest.useFakeTimers();
+    jest.setSystemTime(currentTime);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.useRealTimers();
   });
 
   describe("getShouldShow", () => {
@@ -99,6 +103,7 @@ describe("RipplesStorage", () => {
         },
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -120,6 +125,7 @@ describe("RipplesStorage", () => {
         },
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -141,6 +147,7 @@ describe("RipplesStorage", () => {
         },
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -161,6 +168,7 @@ describe("RipplesStorage", () => {
         },
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -168,6 +176,82 @@ describe("RipplesStorage", () => {
 
       // Assert
       expect(result).toBe(true);
+    });
+  });
+
+  describe("getShouldShow within the release lifetime", () => {
+    const daysAgo = (days: number): Date => new Date(currentTime - days * DAY_MS);
+    const releasedRipple = (releasedDaysAgo: number): Ripple => ({
+      ...mockRipple1,
+      dateAdded: daysAgo(releasedDaysAgo),
+    });
+    const storageFor = (userJoinedAt: Date | undefined): RipplesStorage =>
+      new RipplesStorage({}, mockUpdateState, mockAllRipples, userJoinedAt);
+
+    it("shows a recent ripple to a user who joined before the release", () => {
+      // Arrange
+      const ripple = releasedRipple(1);
+
+      // Act
+      const result = storageFor(existingUserJoinedAt).getShouldShow(ripple);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("hides the ripple from a user who joined after the release", () => {
+      // Arrange
+      const ripple = releasedRipple(1);
+
+      // Act
+      const result = storageFor(daysAgo(0.5)).getShouldShow(ripple);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("shows the ripple to a user who joined just before the release", () => {
+      // Arrange
+      const ripple = releasedRipple(1);
+
+      // Act
+      const result = storageFor(daysAgo(1.5)).getShouldShow(ripple);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("shows the ripple on the last day of its lifetime", () => {
+      // Arrange
+      const ripple = releasedRipple(RIPPLE_LIFETIME_DAYS - 1);
+
+      // Act
+      const result = storageFor(existingUserJoinedAt).getShouldShow(ripple);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("hides the ripple once its lifetime has passed", () => {
+      // Arrange
+      const ripple = releasedRipple(RIPPLE_LIFETIME_DAYS + 1);
+
+      // Act
+      const result = storageFor(existingUserJoinedAt).getShouldShow(ripple);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("hides the ripple while the user is not loaded", () => {
+      // Arrange
+      const ripple = releasedRipple(1);
+
+      // Act
+      const result = storageFor(undefined).getShouldShow(ripple);
+
+      // Assert
+      expect(result).toBe(false);
     });
   });
 
@@ -197,6 +281,7 @@ describe("RipplesStorage", () => {
         existingState,
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -214,7 +299,12 @@ describe("RipplesStorage", () => {
           firstSeenAt: undefined as any,
         },
       };
-      const storageWithPartialData = new RipplesStorage(prev, mockUpdateState, mockAllRipples);
+      const storageWithPartialData = new RipplesStorage(
+        prev,
+        mockUpdateState,
+        mockAllRipples,
+        existingUserJoinedAt,
+      );
 
       // Act
       storageWithPartialData.setFirstSeenFlag(mockRipple1);
@@ -251,7 +341,12 @@ describe("RipplesStorage", () => {
           firstSeenAt: existingTime,
         },
       };
-      const storageWithExistingRipple = new RipplesStorage(prev, mockUpdateState, mockAllRipples);
+      const storageWithExistingRipple = new RipplesStorage(
+        prev,
+        mockUpdateState,
+        mockAllRipples,
+        existingUserJoinedAt,
+      );
 
       // Act
       storageWithExistingRipple.setManuallyHidden(mockRipple1);
@@ -281,6 +376,7 @@ describe("RipplesStorage", () => {
         existingData,
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -322,7 +418,12 @@ describe("RipplesStorage", () => {
           firstSeenAt: existingTime,
         },
       };
-      const storageWithExistingData = new RipplesStorage(prev, mockUpdateState, mockAllRipples);
+      const storageWithExistingData = new RipplesStorage(
+        prev,
+        mockUpdateState,
+        mockAllRipples,
+        existingUserJoinedAt,
+      );
 
       // Act
       storageWithExistingData.hideAllRipples();
@@ -340,7 +441,12 @@ describe("RipplesStorage", () => {
 
     it("should work with empty allRipples array", () => {
       // Arrange
-      const storageWithNoRipples = new RipplesStorage({}, mockUpdateState, []);
+      const storageWithNoRipples = new RipplesStorage(
+        {},
+        mockUpdateState,
+        [],
+        existingUserJoinedAt,
+      );
 
       // Act
       storageWithNoRipples.hideAllRipples();
@@ -366,6 +472,7 @@ describe("RipplesStorage", () => {
         existingData,
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -394,6 +501,7 @@ describe("RipplesStorage", () => {
         originalState,
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -420,6 +528,7 @@ describe("RipplesStorage", () => {
         originalState,
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
@@ -441,6 +550,7 @@ describe("RipplesStorage", () => {
         originalState,
         mockUpdateState,
         mockAllRipples,
+        existingUserJoinedAt,
       );
 
       // Act
