@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.23.46
+
+### Patch Changes
+
+- [#7119](https://github.com/saleor/saleor-dashboard/pull/7119) [`657bfae`](https://github.com/saleor/saleor-dashboard/commit/657bfaeb8bf94e23ef74486a00417800eedf0a3d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - If you signed in with "Continue with Saleor Cloud", the sidebar now shows the current environment's name in place of "Saleor Dashboard", with a Production or Sandbox badge and its project and organization below. The switch button next to it opens a dialog that lists all your environments grouped by project, with search, production environments marked, and the current one selected. Previously the sidebar only showed a small menu button, and you had to step through organizations and projects to find an environment.
+
+- [#7114](https://github.com/saleor/saleor-dashboard/pull/7114) [`88aa035`](https://github.com/saleor/saleor-dashboard/commit/88aa0353e179e120ae62769257b3aa653295ee06) Thanks [@peelar](https://github.com/peelar)! - The feedback survey now opens in a Dashboard dialog, from the sidebar "Send feedback" button or "Share feedback" in the command menu, instead of PostHog's floating popup. "Share feedback" in the command menu now also works on phone-sized screens.
+
+- [#7113](https://github.com/saleor/saleor-dashboard/pull/7113) [`e836736`](https://github.com/saleor/saleor-dashboard/commit/e836736e6815785fba0d7c004fd490c622b0d147) Thanks [@peelar](https://github.com/peelar)! - The What's New window now has a "Share feedback" link that asks "What should we build next?" in a Dashboard dialog, replacing "Suggest a change", which opened a new GitHub issue. When the feature request survey isn't available, "Suggest a change" is shown as before.
+
 ## 3.23.45
 
 ### Patch Changes
