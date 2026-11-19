@@ -35,8 +35,13 @@ const renderEnvironmentSwitcherStub = (): ReactElement => (
 const mockEnvironmentSwitcher = jest.fn(renderEnvironmentSwitcherStub);
 const mockCaptureException = jest.fn();
 
+let mockHasCloudExtensions = true;
+
 jest.mock("@dashboard/cloud-extensions", () => ({
-  EnvironmentSwitcher: () => mockEnvironmentSwitcher(),
+  get hasCloudExtensions() {
+    return mockHasCloudExtensions;
+  },
+  EnvironmentHeader: () => mockEnvironmentSwitcher(),
 }));
 jest.mock("@dashboard/services/errorTracking", () => ({
   errorTracker: { captureException: (error: Error) => mockCaptureException(error) },
@@ -107,6 +112,11 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 };
 
 describe("Sidebar", () => {
+  afterEach(() => {
+    // Tests below opt into a Cloud session; later tests expect the default "Saleor Dashboard" title.
+    (useCloud as jest.Mock).mockImplementation(() => ({ isAuthenticatedViaCloud: false }));
+  });
+
   it("opens the feedback survey from the sidebar", async () => {
     // Arrange
     mockFeedbackSurvey.mockImplementation(availableFeedback);
@@ -192,6 +202,22 @@ describe("Sidebar", () => {
     // Assert
     expect(screen.queryByTestId("cloud-environment-switcher")).not.toBeInTheDocument();
     expect(mockEnvironmentSwitcher).not.toHaveBeenCalled();
+  });
+  it("should keep the default title when the Cloud extensions are not checked out", () => {
+    // Arrange
+    mockHasCloudExtensions = false;
+    mockEnvironmentSwitcher.mockClear();
+    (useCloud as jest.Mock).mockImplementation(() => ({
+      isCloudInstance: true,
+      isAuthenticatedViaCloud: true,
+    }));
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "false");
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+    // Assert
+    expect(screen.getByText("Saleor Dashboard")).toBeInTheDocument();
+    expect(mockEnvironmentSwitcher).not.toHaveBeenCalled();
+    mockHasCloudExtensions = true;
   });
   it("should keep the sidebar and report the error when the environment switcher fails", async () => {
     // Arrange

@@ -1,23 +1,32 @@
-import { type ComponentType, lazy, type LazyExoticComponent } from "react";
+import { type ComponentType, lazy } from "react";
 
 /*
   Saleor Cloud features live in the private saleor/dashboard-cloud-extensions repository, checked
-  out as a git submodule at ./src (see README.md). Without it, the glob matches nothing and every
-  export here renders nothing.
+  out as a git submodule at ./src (see README.md). Without it, the glob matches nothing,
+  `hasCloudExtensions` is false and every export here renders nothing.
 */
 
 /** @public What the default export of ./src/index.ts must provide. */
 export interface CloudExtensions {
-  EnvironmentSwitcher: ComponentType;
+  /** Replaces the "Saleor Dashboard" title in the sidebar for users signed in through Saleor Cloud. */
+  EnvironmentHeader: ComponentType;
 }
 
 const [loadExtensions] = Object.values(
   import.meta.glob<CloudExtensions>("./src/index.ts", { import: "default" }),
 );
 
+export const hasCloudExtensions = loadExtensions !== undefined;
+
 const RenderNothing = (): null => null;
 
-const lazyExtension = (name: keyof CloudExtensions): LazyExoticComponent<ComponentType> =>
-  lazy(async () => ({ default: (await loadExtensions?.())?.[name] ?? RenderNothing }));
+const lazyExtension = <Props extends object>(
+  pick: (extensions: CloudExtensions) => ComponentType<Props>,
+) =>
+  lazy(async () => {
+    const extensions = await loadExtensions?.();
 
-export const EnvironmentSwitcher = lazyExtension("EnvironmentSwitcher");
+    return { default: extensions ? pick(extensions) : RenderNothing };
+  });
+
+export const EnvironmentHeader = lazyExtension(({ EnvironmentHeader }) => EnvironmentHeader);
