@@ -60,7 +60,8 @@ const existingUserJoinedAt = new Date("2021-01-01T00:00:00Z");
 describe("RipplesStorage", () => {
   let mockUpdateState: jest.Mock;
   let storage: RipplesStorage;
-  const currentTime = 1640995200000;
+  // A few days after the mock ripples were released, within their lifetime.
+  const currentTime = new Date("2023-01-05T00:00:00Z").getTime();
 
   const resolveUpdate = (prev: StoredRipplesRecord = {}): StoredRipplesRecord => {
     expect(mockUpdateState).toHaveBeenCalled();
