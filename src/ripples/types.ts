@@ -44,8 +44,7 @@ export type Ripple = {
   type: RippleType;
   /**
    * Release date of the change. Set it to the day the change ships: the contextual ripple shows only
-   * to users who joined before this date, and only for `RIPPLE_LIFETIME_DAYS` after it.
-   * Also sorts the What's New list.
+   * to users who joined before this date. Also sorts the What's New list.
    */
   dateAdded: Date;
   content: {
@@ -63,8 +62,7 @@ export type Ripple = {
     contextual: ReactNode; // React Node / md -> react / md -> html or just plain here
   };
   /**
-   * After first mount, how long to show the contextual ripple (seconds), within its release lifetime.
-   * In global list it's permanent.
+   * After first mount, how long to show the contextual ripple (seconds). In global list it's permanent.
    */
   TTL_seconds: number;
   // A unique ID to reference Ripple when checking it's state in the storage

@@ -1,6 +1,6 @@
 import { type Ripple } from "@dashboard/ripples/types";
 
-import { RIPPLE_LIFETIME_DAYS, RipplesStorage } from "./useRipplesStorage";
+import { RipplesStorage } from "./useRipplesStorage";
 
 // Polyfill for structuredClone in Node.js test environment in case older node is used
 if (!global.structuredClone) {
@@ -60,7 +60,7 @@ const existingUserJoinedAt = new Date("2021-01-01T00:00:00Z");
 describe("RipplesStorage", () => {
   let mockUpdateState: jest.Mock;
   let storage: RipplesStorage;
-  // A few days after the mock ripples were released, within their lifetime.
+  // A few days after the mock ripples were released.
   const currentTime = new Date("2023-01-05T00:00:00Z").getTime();
 
   const resolveUpdate = (prev: StoredRipplesRecord = {}): StoredRipplesRecord => {
@@ -180,7 +180,7 @@ describe("RipplesStorage", () => {
     });
   });
 
-  describe("getShouldShow within the release lifetime", () => {
+  describe("getShouldShow for when the user joined", () => {
     const daysAgo = (days: number): Date => new Date(currentTime - days * DAY_MS);
     const releasedRipple = (releasedDaysAgo: number): Ripple => ({
       ...mockRipple1,
@@ -189,7 +189,7 @@ describe("RipplesStorage", () => {
     const storageFor = (userJoinedAt: Date | undefined): RipplesStorage =>
       new RipplesStorage({}, mockUpdateState, mockAllRipples, userJoinedAt);
 
-    it("shows a recent ripple to a user who joined before the release", () => {
+    it("shows the ripple to a user who joined before the release", () => {
       // Arrange
       const ripple = releasedRipple(1);
 
@@ -220,28 +220,6 @@ describe("RipplesStorage", () => {
 
       // Assert
       expect(result).toBe(true);
-    });
-
-    it("shows the ripple on the last day of its lifetime", () => {
-      // Arrange
-      const ripple = releasedRipple(RIPPLE_LIFETIME_DAYS - 1);
-
-      // Act
-      const result = storageFor(existingUserJoinedAt).getShouldShow(ripple);
-
-      // Assert
-      expect(result).toBe(true);
-    });
-
-    it("hides the ripple once its lifetime has passed", () => {
-      // Arrange
-      const ripple = releasedRipple(RIPPLE_LIFETIME_DAYS + 1);
-
-      // Act
-      const result = storageFor(existingUserJoinedAt).getShouldShow(ripple);
-
-      // Assert
-      expect(result).toBe(false);
     });
 
     it("hides the ripple while the user is not loaded", () => {

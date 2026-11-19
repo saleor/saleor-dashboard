@@ -6,11 +6,6 @@ import { atomWithStorage } from "jotai/vanilla/utils";
 import lodashSet from "lodash/set";
 import { useCallback, useMemo } from "react";
 
-/** How long after its release a ripple keeps pointing at the change. */
-export const RIPPLE_LIFETIME_DAYS = 14;
-
-const DAY_MS = 24 * 60 * 60 * 1000;
-
 type StoredRipple = {
   manuallyHidden: boolean;
   firstSeenAt: number; // seconds
@@ -54,24 +49,20 @@ export class RipplesStorage {
   }
 
   /**
-   * A ripple points at a change, so it only applies to users who knew the dashboard before it
-   * and only while the change is recent. The What's New list ignores this and stays permanent.
+   * A ripple points at a change, so it only applies to users who knew the dashboard before it.
+   * The What's New list ignores this and stays permanent.
    */
-  private getIsWithinLifecycle(ripple: Ripple): boolean {
+  private getIsNewToUser(ripple: Ripple): boolean {
     if (!this.userJoinedAt) {
       return false;
     }
 
-    const releasedAt = ripple.dateAdded.getTime();
-    const isNewerThanUser = this.userJoinedAt.getTime() < releasedAt;
-    const isRecent = this.now < releasedAt + RIPPLE_LIFETIME_DAYS * DAY_MS;
-
-    return isNewerThanUser && isRecent;
+    return this.userJoinedAt.getTime() < ripple.dateAdded.getTime();
   }
 
   getShouldShow(ripple: Ripple): boolean {
     return (
-      this.getIsWithinLifecycle(ripple) &&
+      this.getIsNewToUser(ripple) &&
       !this.getIsManuallyHidden(ripple.ID) &&
       !this.getIsStale(ripple.ID, ripple.TTL_seconds)
     );
