@@ -71,7 +71,8 @@
     "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-changesets.test.ts && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-cloud-extensions.test.ts && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/fetch-release-schema.test.ts",
     "test:quiet": "jest --silent",
     "test:watch": "jest --watch",
-    "update-payment-assets": "node scripts/update-payment-assets.cjs"
+    "update-payment-assets": "node scripts/update-payment-assets.cjs",
+    "verify": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON .claude/skills/verify-dashboard/scripts/verify.ts"
   },
   "config": {
     "saleor": {
