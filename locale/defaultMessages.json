@@ -1398,6 +1398,10 @@
     "context": "channel metadata dialog header",
     "string": "Channel Metadata"
   },
+  "2s7Mv6": {
+    "context": "Saleor Cloud environment snapshots and data settings section name",
+    "string": "Snapshots and data"
+  },
   "2sDBzg": {
     "context": "reference types multiselect label for product entity",
     "string": "Product types"
@@ -10050,6 +10054,10 @@
   "WpKh6Y": {
     "string": "Disabling"
   },
+  "WpgVrV": {
+    "context": "settings search alias",
+    "string": "snapshot backup restore sample data populate clear orders clear database reset wipe"
+  },
   "Wr5UOV": {
     "context": "error message",
     "string": "Login went wrong. Please try again."
@@ -10371,6 +10379,10 @@
   "XiQfIl": {
     "context": "channel form payments and checkout section title",
     "string": "Payments & checkout"
+  },
+  "XinnPy": {
+    "context": "configuration menu item description for Saleor Cloud snapshots and data",
+    "string": "Back up, restore, or reset this environment's data"
   },
   "XitW/z": {
     "string": "Translation Category \"{categoryName}\" - {languageCode}"

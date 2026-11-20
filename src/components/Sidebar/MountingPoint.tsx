@@ -1,5 +1,5 @@
-import { useCloud } from "@dashboard/auth/hooks/useCloud";
-import { EnvironmentHeader, hasCloudExtensions } from "@dashboard/cloud-extensions";
+import { useCloudExtensionsAvailable } from "@dashboard/auth/hooks/useCloudExtensionsAvailable";
+import { EnvironmentHeader } from "@dashboard/cloud-extensions";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { Avatar, Box, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -31,8 +31,7 @@ interface MountingPointProps {
 export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
   const intl = useIntl();
   const logo = useSidebarLogo();
-  const { isCloudInstance, isAuthenticatedViaCloud } = useCloud();
-  const showEnvironmentHeader = hasCloudExtensions && isCloudInstance && isAuthenticatedViaCloud;
+  const showEnvironmentHeader = useCloudExtensionsAvailable();
 
   if (collapsed) {
     return (

@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { useCloudExtensionsAvailable } from "@dashboard/auth/hooks/useCloudExtensionsAvailable";
 import { useUser } from "@dashboard/auth/useUser";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { APP_VERSION as dashboardVersion } from "@dashboard/config";
@@ -18,12 +19,13 @@ const ConfigurationSection = () => {
   };
   const user = useUser();
   const intl = useIntl();
+  const cloudExtensionsAvailable = useCloudExtensionsAvailable();
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.configuration)} />
       <ConfigurationPage
-        menu={createConfigurationMenu(intl)}
+        menu={createConfigurationMenu(intl, { cloudExtensionsAvailable })}
         user={maybe(() => user.user)}
         versionInfo={versions}
       />
