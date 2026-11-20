@@ -40,6 +40,7 @@ import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRi
 import { type Ripple } from "@dashboard/ripples/types";
 import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
 import { rippleStoreMetadata } from "@dashboard/siteSettings/ripples/storeMetadata";
+import { rippleSnapshotsAndData } from "@dashboard/snapshotsAndData/ripples/snapshotsAndData";
 import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
 import { rippleStructureMetadata } from "@dashboard/structures/ripples/structureMetadata";
 import { rippleTaxConfigurationMetadata } from "@dashboard/taxes/ripples/taxConfigurationMetadata";
@@ -139,6 +140,9 @@ export const allRipples: Ripple[] = [
   rippleNavigationPins,
   rippleGlobalFeedback,
   rippleSidebarCollapse,
+
+  // Configuration
+  rippleSnapshotsAndData,
 ];
 
 /**

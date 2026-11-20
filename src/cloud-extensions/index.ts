@@ -10,6 +10,8 @@ import { type ComponentType, lazy } from "react";
 export interface CloudExtensions {
   /** Replaces the "Saleor Dashboard" title in the sidebar for users signed in through Saleor Cloud. */
   EnvironmentHeader: ComponentType;
+  /** The whole "Snapshots and data" settings page for the current environment. */
+  SnapshotsAndDataPage: ComponentType;
 }
 
 const [loadExtensions] = Object.values(
@@ -30,3 +32,6 @@ const lazyExtension = <Props extends object>(
   });
 
 export const EnvironmentHeader = lazyExtension(({ EnvironmentHeader }) => EnvironmentHeader);
+export const SnapshotsAndDataPage = lazyExtension(
+  ({ SnapshotsAndDataPage }) => SnapshotsAndDataPage,
+);

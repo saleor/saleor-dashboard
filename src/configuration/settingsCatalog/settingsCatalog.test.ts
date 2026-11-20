@@ -191,4 +191,23 @@ describe("settingsCatalog", () => {
     // Assert
     expect(results).toEqual(catalog);
   });
+
+  it("shows Snapshots and data only when Cloud extensions are available", () => {
+    // Arrange
+    const user = createUser([]);
+
+    // Act
+    const withoutCloud = resolveSettingsCatalog(settingsCatalogEntries, intl, user);
+    const withCloud = resolveSettingsCatalog(settingsCatalogEntries, intl, user, {
+      cloudExtensionsAvailable: true,
+    });
+
+    // Assert
+    expect(withoutCloud.some(entry => entry.id === "snapshotsAndData.hub")).toBe(false);
+    expect(
+      searchSettingsCatalog(withCloud, "clear database").some(
+        entry => entry.id === "snapshotsAndData.hub",
+      ),
+    ).toBe(true);
+  });
 });

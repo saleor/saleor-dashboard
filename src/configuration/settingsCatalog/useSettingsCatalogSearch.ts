@@ -1,3 +1,4 @@
+import { useCloudExtensionsAvailable } from "@dashboard/auth/hooks/useCloudExtensionsAvailable";
 import { useUser } from "@dashboard/auth/useUser";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -10,8 +11,12 @@ import { type ResolvedSettingsCatalogEntry } from "./types";
 const useResolvedSettingsCatalog = (): ResolvedSettingsCatalogEntry[] => {
   const intl = useIntl();
   const { user } = useUser();
+  const cloudExtensionsAvailable = useCloudExtensionsAvailable();
 
-  return useMemo(() => resolveSettingsCatalog(settingsCatalogEntries, intl, user), [intl, user]);
+  return useMemo(
+    () => resolveSettingsCatalog(settingsCatalogEntries, intl, user, { cloudExtensionsAvailable }),
+    [intl, user, cloudExtensionsAvailable],
+  );
 };
 
 export const useSettingsCatalogSearch = (query: string): ResolvedSettingsCatalogEntry[] => {

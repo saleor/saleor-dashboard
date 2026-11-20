@@ -16,11 +16,15 @@ import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
+import { snapshotsAndDataMessages } from "@dashboard/snapshotsAndData/messages";
+import { rippleSnapshotsAndData } from "@dashboard/snapshotsAndData/ripples/snapshotsAndData";
+import { snapshotsAndDataPath } from "@dashboard/snapshotsAndData/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
 import {
   Bell,
+  DatabaseBackup,
   Gift,
   Globe,
   Package,
@@ -49,12 +53,21 @@ const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
 const ConfigurationGiftCardsIcon = createConfigurationLucideIcon(Gift);
 const ConfigurationNotificationsIcon = createConfigurationLucideIcon(Bell);
 const ConfigurationCustomerTypesIcon = createConfigurationLucideIcon(UserRound);
+const ConfigurationSnapshotsIcon = createConfigurationLucideIcon(DatabaseBackup);
+
+interface ConfigurationMenuOptions {
+  /** Shows the Saleor Cloud settings, which need the Cloud extensions and a Cloud sign-in. */
+  cloudExtensionsAvailable?: boolean;
+}
 
 /**
  * Configuration IA: merchant jobs, not engineering modules.
  * Order: Store → Markets → Catalog → Content → Shipping → Orders → Users.
  */
-export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
+export function createConfigurationMenu(
+  intl: IntlShape,
+  { cloudExtensionsAvailable = false }: ConfigurationMenuOptions = {},
+): MenuSection[] {
   return [
     {
       label: intl.formatMessage({
@@ -99,6 +112,15 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.notifications),
           url: notificationsSettingsUrl(),
           testId: "configuration-menu-notifications",
+        },
+        {
+          description: intl.formatMessage(snapshotsAndDataMessages.description),
+          icon: <ConfigurationSnapshotsIcon />,
+          title: intl.formatMessage(sectionNames.snapshotsAndData),
+          url: snapshotsAndDataPath,
+          testId: "configuration-menu-snapshots-and-data",
+          hidden: !cloudExtensionsAvailable,
+          ripple: rippleSnapshotsAndData,
         },
       ],
     },

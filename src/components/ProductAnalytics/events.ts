@@ -62,6 +62,9 @@ export interface AnalyticsEventMap {
   customer_type_set_as_default: {
     result: "error" | "success";
   };
+  environment_data_reset: {
+    kind: "database" | "orders" | "sample_data";
+  };
   environment_switched: {
     domain: string;
   };
@@ -127,6 +130,12 @@ export interface AnalyticsEventMap {
   sidebar_drawer_opened: {
     layout: "drawer" | "rail";
   };
+  snapshot_created: undefined;
+  snapshot_deleted: undefined;
+  snapshot_restored: {
+    source: "other_environment" | "own";
+  };
+  snapshots_page_viewed: undefined;
   warehouse_channels_changed: {
     action: "assign" | "remove";
     channel_count: number;

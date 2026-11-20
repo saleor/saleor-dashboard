@@ -49,11 +49,17 @@ const resolveSettingsCatalogEntry = (
   };
 };
 
+interface ResolveSettingsCatalogOptions {
+  cloudExtensionsAvailable?: boolean;
+}
+
 export const resolveSettingsCatalog = (
   entries: SettingsCatalogEntry[],
   intl: IntlShape,
   user: UserFragment | null | undefined,
+  { cloudExtensionsAvailable = false }: ResolveSettingsCatalogOptions = {},
 ): ResolvedSettingsCatalogEntry[] =>
   entries
+    .filter(entry => cloudExtensionsAvailable || !entry.cloudOnly)
     .filter(entry => canAccessSettingsEntry(entry, user))
     .map(entry => resolveSettingsCatalogEntry(entry, intl));
