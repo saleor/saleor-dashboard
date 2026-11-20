@@ -2,7 +2,7 @@ import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -10,6 +10,7 @@ import {
   taxConfigurationListPath,
   taxCountriesListPath,
   type TaxesUrlQueryParams,
+  taxSection,
 } from "./urls";
 import TaxChannelsListComponent from "./views/TaxChannelsList";
 import TaxClassesListComponent from "./views/TaxClassesList";
@@ -35,6 +36,11 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.taxes)} />
       <Switch>
+        <Route
+          exact
+          path={taxSection}
+          render={() => <Redirect to={taxConfigurationListPath()} />}
+        />
         <Route path={taxConfigurationListPath(":id")} component={TaxChannelsList} />
         <Route path={taxConfigurationListPath()} component={TaxChannelsList} />
         <Route path={taxCountriesListPath(":id")} component={TaxCountriesList} />
