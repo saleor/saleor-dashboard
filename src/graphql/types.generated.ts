@@ -14647,6 +14647,16 @@ export type SearchVariantsWithProductDataQueryVariables = Exact<{
 
 export type SearchVariantsWithProductDataQuery = { __typename: 'Query', search: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', name: string } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
+export type SearchVouchersQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+  channel?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchVouchersQuery = { __typename: 'Query', search: { __typename: 'VoucherCountableConnection', edges: Array<{ __typename: 'VoucherCountableEdge', node: { __typename: 'Voucher', id: string, name: string | null, type: VoucherTypeEnum, singleUse: boolean, discountValueType: DiscountValueTypeEnum, discountValue: number | null, currency: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
 export type SearchWarehousesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
   first: Scalars['Int']['input'];

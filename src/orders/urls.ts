@@ -255,6 +255,7 @@ export type OrderUrlDialog =
   | "edit-fulfillment"
   | "edit-shipping"
   | "edit-shipping-address"
+  | "edit-voucher"
   | "finalize"
   | "mark-paid"
   | "void"
