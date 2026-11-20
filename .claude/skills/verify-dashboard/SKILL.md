@@ -8,15 +8,15 @@ description: "Run this checkout's Dashboard against a local Saleor (default) or 
 `pnpm verify` ([`scripts/verify.ts`](scripts/verify.ts)) owns one run per machine: it serves the working tree with the vite dev server, points it at a Saleor, and writes every artifact to the run's evidence directory. Run every command from the checkout under test.
 
 ```
-pnpm verify up [--target local|cloud] [--saleor stable|main] [--scenario <name>]
-pnpm verify doctor
-pnpm verify shot <route> [--as <actor>] [--all] [--name <label>]
-pnpm verify exec <snippet.mjs> [--as <actor>] [--headed] [args...]
-pnpm verify gql '<query>' ['<variables json>'] [--as <actor>]
-pnpm verify sql '<statement>'
-pnpm verify reset [--scenario <name>]
-pnpm verify login [--check]
-pnpm verify down [--volumes]
+pnpm verify up [--target local|cloud] [--saleor stable|main] [--scenario <name>] - Start Saleor (local only) and the dev server pointed at it
+pnpm verify doctor - Check the run serves this checkout, reaches its API, and is signed in
+pnpm verify shot <route> [--as <actor>] [--all] [--name <label>] - Screenshot a route and save its ARIA snapshot
+pnpm verify exec <snippet.mjs> [--as <actor>] [--headed] [args...] - Run a Playwright snippet in a signed-in browser
+pnpm verify gql '<query>' ['<variables json>'] [--as <actor>] - Send a GraphQL request as an actor
+pnpm verify sql '<statement>' - Run SQL against the local database (local only)
+pnpm verify reset [--scenario <name>] - Restore the local database to a seeded scenario (local only)
+pnpm verify login [--check] - Sign in to the Cloud sandbox in a visible browser (cloud only)
+pnpm verify down [--volumes] - Stop the run and keep its evidence
 ```
 
 ## Run
