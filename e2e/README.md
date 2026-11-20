@@ -219,14 +219,16 @@ Real shortcuts, taken knowingly, with what would undo them:
   environment is baked at build time (it has to be, for the schema flag). The shipped
   image's runtime substitution therefore has no coverage here; it wants a smoke test of the
   actual Docker image, which is a different suite.
-- **Nightly CI only.** `.github/workflows/e2e-local.yml` runs nightly and on demand. A
-  failed nightly run posts its failed tests to Slack; a manual run does not.
-  Putting it on pull requests is a one-line change once the suite is broad enough to be
-  worth the minutes.
-- **Few specs so far.** `tests/login.spec.ts` and the order flows in `tests/orders/`. A
-  single-permission spec is still worth porting early — it is the part of the actor model
-  most likely to be subtly wrong, and the first place a `populatedb` difference between
-  `3.23` and `unstable-main` would show.
+- **Pull requests opt in.** `.github/workflows/e2e-local.yml` runs nightly, on demand, and
+  on pull requests labelled `e2e` (every push while the label stays). A failed nightly run
+  posts its failed tests to Slack; other runs do not. Running it on every pull request is a
+  change to the job's `if` once the suite is broad enough to be worth the minutes.
+- **Few specs so far.** `tests/login.spec.ts`, the order flows in `tests/orders/`, and
+  `tests/permissions.spec.ts`: every single-permission actor walks the pages its permission
+  opens, and some save a change, failing on any GraphQL error (`graphqlErrors` fixture).
+- **The permission walks run serially.** They only read and could be tagged `parallel()`,
+  but a failing parallel group skips every project after it, and the walks are red until
+  the leaks they report are fixed. Tag them once they pass.
 - **No multi-actor test helper.** One actor per test. Two actors in one test needs a second
   `browser.newContext({ storageState })`; four lines, written when a spec needs it.
 - **Product images are skipped** (`populatedb --withoutimages`) — minutes off the build and
