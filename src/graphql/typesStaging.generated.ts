@@ -1763,7 +1763,7 @@ export enum CountryCode {
   BQ = 'BQ',
   /** Brazil */
   BR = 'BR',
-  /** Bahamas */
+  /** Bahamas (The) */
   BS = 'BS',
   /** Bhutan */
   BT = 'BT',
@@ -1779,7 +1779,7 @@ export enum CountryCode {
   CA = 'CA',
   /** Cocos (Keeling) Islands */
   CC = 'CC',
-  /** Congo (the Democratic Republic of the) */
+  /** Democratic Republic of the Congo */
   CD = 'CD',
   /** Central African Republic */
   CF = 'CF',
@@ -1881,7 +1881,7 @@ export enum CountryCode {
   GQ = 'GQ',
   /** Greece */
   GR = 'GR',
-  /** South Georgia and the South Sandwich Islands */
+  /** South Georgia */
   GS = 'GS',
   /** Guatemala */
   GT = 'GT',
@@ -2039,7 +2039,7 @@ export enum CountryCode {
   NO = 'NO',
   /** Nepal */
   NP = 'NP',
-  /** Nauru */
+  /** Naoero */
   NR = 'NR',
   /** Niue */
   NU = 'NU',
@@ -2067,7 +2067,7 @@ export enum CountryCode {
   PN = 'PN',
   /** Puerto Rico */
   PR = 'PR',
-  /** Palestine, State of */
+  /** Palestine */
   PS = 'PS',
   /** Portugal */
   PT = 'PT',
@@ -2099,7 +2099,7 @@ export enum CountryCode {
   SE = 'SE',
   /** Singapore */
   SG = 'SG',
-  /** Saint Helena, Ascension and Tristan da Cunha */
+  /** Saint Helena */
   SH = 'SH',
   /** Slovenia */
   SI = 'SI',
@@ -2173,7 +2173,7 @@ export enum CountryCode {
   UY = 'UY',
   /** Uzbekistan */
   UZ = 'UZ',
-  /** Holy See */
+  /** Vatican City */
   VA = 'VA',
   /** Saint Vincent and the Grenadines */
   VC = 'VC',
