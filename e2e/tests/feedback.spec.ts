@@ -121,6 +121,40 @@ const routePostHog = async (
   });
 };
 
+/**
+ * For every frame over `durationMs`, how visible the most visible dialog is: the lower of its own
+ * opacity and its backdrop's. A dialog handing over to another one should stay at 1 throughout.
+ */
+const recordDialogVisibility = (page: Page, durationMs = 1_000): Promise<number[]> =>
+  page.evaluate(
+    duration =>
+      new Promise<number[]>(resolve => {
+        const frames: number[] = [];
+        const start = performance.now();
+        const sample = (): void => {
+          const visibility = Array.from(
+            document.querySelectorAll<HTMLElement>('[role="dialog"]'),
+            dialog =>
+              Math.min(
+                Number(getComputedStyle(dialog).opacity),
+                Number(dialog.parentElement ? getComputedStyle(dialog.parentElement).opacity : 0),
+              ),
+          );
+
+          frames.push(Math.max(0, ...visibility));
+
+          if (performance.now() - start < duration) {
+            requestAnimationFrame(sample);
+          } else {
+            resolve(frames);
+          }
+        };
+
+        requestAnimationFrame(sample);
+      }),
+    durationMs,
+  );
+
 test.describe("Feedback availability", { tag: parallel() }, () => {
   test.skip(
     !process.env.IS_CLOUD_INSTANCE ||
@@ -282,9 +316,12 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
         await page.screenshot({ path: testInfo.outputPath(`command-menu-${layout}.png`) });
 
         // Act
+        const visibility = recordDialogVisibility(page);
+
         await page.keyboard.press("Enter");
 
-        // Assert
+        // Assert: the backdrop stays dark while the command menu hands over.
+        expect(Math.min(...(await visibility))).toBe(1);
         await page.screenshot({ path: testInfo.outputPath(`survey-${layout}.png`) });
         expect(await sendFeedback(page, captured, "Command menu feedback")).toMatchObject({
           $survey_id: feedbackSurvey.id,
@@ -325,9 +362,12 @@ test.describe("Feedback availability", { tag: parallel() }, () => {
       await page.screenshot({ path: testInfo.outputPath("whats-new-share-feedback.png") });
 
       // Act
+      const visibility = recordDialogVisibility(page);
+
       await shareFeedback.click();
 
-      // Assert
+      // Assert: the backdrop stays dark while What's New hands over.
+      expect(Math.min(...(await visibility))).toBe(1);
       await expect(page.getByRole("dialog")).toHaveCount(1);
       await expect(page.getByRole("dialog").getByText("What should we build next?")).toBeVisible();
       await page.screenshot({ path: testInfo.outputPath("whats-new-survey.png") });
