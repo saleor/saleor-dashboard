@@ -2763,6 +2763,10 @@
     "context": "PDP schematic empty state for non-selection variant attributes",
     "string": "Assign below — leave <em>Variant selection</em> off"
   },
+  "7ddI1l": {
+    "context": "link that lets staff pick another code of the chosen voucher",
+    "string": "Change"
+  },
   "7e3EYJ": {
     "context": "TopNav destination link tooltip to models list",
     "string": "All models"
@@ -10721,6 +10725,10 @@
     "context": "used warehouses counter",
     "string": "{count}/{max} warehouses used"
   },
+  "YkuxH+": {
+    "context": "voucher picker option summary for fixed amount vouchers, value is a price",
+    "string": "{value} off"
+  },
   "Ykw8k5": {
     "context": "dialog title",
     "string": "Delete collections"
@@ -12774,6 +12782,10 @@
     "context": "product's sku",
     "string": "SKU"
   },
+  "fw8p+t": {
+    "context": "shown when loading the codes of the chosen voucher failed",
+    "string": "Could not load this voucher's codes. Pick the voucher again to retry."
+  },
   "fxFjSN": {
     "context": "setup task CTA",
     "string": "Add inventory"
@@ -13902,6 +13914,10 @@
   "ja+tNj": {
     "string": "requests access to new permissions."
   },
+  "jarKdD": {
+    "context": "link that swaps the voucher picker for a code text field",
+    "string": "Enter code manually"
+  },
   "jb9Vzu": {
     "context": "warehouse setup task title",
     "string": "Add to a channel"
@@ -14617,6 +14633,10 @@
   "ljwv+L": {
     "context": "discount value label",
     "string": "Discount value"
+  },
+  "lkqy2y": {
+    "context": "shown when every code of the chosen voucher is used up or inactive",
+    "string": "This voucher has no unused codes"
   },
   "lkuKaM": {
     "context": "mark as paid transaction option label",
@@ -16341,6 +16361,10 @@
     "context": "voucher add-code menu hint for bulk generate",
     "string": "Create multiple codes at once"
   },
+  "rAoOl6": {
+    "context": "voucher picker option summary for percentage vouchers",
+    "string": "{value}% off"
+  },
   "rBEb3x": {
     "context": "warehouse list column",
     "string": "Address"
@@ -16790,6 +16814,10 @@
     "context": "create attribute dialog step two intro for model types",
     "string": "Add the choices merchants can pick from and set how this attribute behaves on models."
   },
+  "shLDoH": {
+    "context": "voucher picker option summary for shipping vouchers",
+    "string": "Free shipping"
+  },
   "shmSDX": {
     "context": "no products placeholder",
     "string": "No products are available in the channel assigned to this order."
@@ -16925,6 +16953,10 @@
   "t84lbb": {
     "context": "empty list message",
     "string": "You haven't assigned any member to this permission group yet."
+  },
+  "t9Ir1W": {
+    "context": "voucher picker option for a voucher without a name",
+    "string": "Unnamed voucher"
   },
   "tCLTCb": {
     "context": "tab name",
@@ -17940,6 +17972,10 @@
     "context": "account settings section title for personal widget chrome",
     "string": "Dashboard extension widgets"
   },
+  "w6VwEw": {
+    "context": "label of the voucher picker in the draft order voucher dialog",
+    "string": "Voucher"
+  },
   "w6kcxY": {
     "string": "What happens if I approve?"
   },
@@ -18927,6 +18963,10 @@
   "zY1K7Q": {
     "context": "fulfillment status refunded and returned",
     "string": "Refunded and Returned"
+  },
+  "zYlJxn": {
+    "context": "link that swaps the code text field back to the voucher picker",
+    "string": "Search vouchers"
   },
   "zZCCqz": {
     "context": "button",

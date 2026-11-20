@@ -8,39 +8,14 @@ import {
   type OrderDraftUpdateMutationVariables,
   type OrderErrorFragment,
   PermissionEnum,
-  type SearchVoucherCodesQuery,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { type VoucherInputMode } from "@dashboard/orders/components/OrderVoucherDialog/OrderVoucherDialog";
-import { useVoucherCodeSearch } from "@dashboard/searches/useVoucherCodeSearch";
+import { useVoucherSearch } from "@dashboard/searches/useVoucherSearch";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { type Option, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
-
-type SearchedVoucher = NonNullable<SearchVoucherCodesQuery["search"]>["edges"][number]["node"];
-
-// ponytail: lists the first 20 codes per voucher; vouchers with more codes need a per-code search.
-const mapVoucherCodeOptions = (vouchers: SearchedVoucher[]): Option[] =>
-  vouchers.flatMap(voucher =>
-    (voucher.codes?.edges ?? []).flatMap(({ node }) =>
-      node.code
-        ? [
-            {
-              value: node.code,
-              label: node.code,
-              disabled: !node.isActive,
-              endAdornment: (
-                <Text size={2} color="default2">
-                  {voucher.name}
-                </Text>
-              ),
-            },
-          ]
-        : [],
-    ),
-  );
 
 interface UseDraftOrderVoucherArgs {
   order: Pick<OrderDetailsFragment, "id" | "channel">;
@@ -70,14 +45,14 @@ export const useDraftOrderVoucher = ({
   const canManageDiscounts = hasPermissions(useUserPermissions() ?? [], [
     PermissionEnum.MANAGE_DISCOUNTS,
   ]);
-  const { result, search, loadMore } = useVoucherCodeSearch({
+  const { result, search, loadMore } = useVoucherSearch({
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, channel: order.channel.slug },
     skip: !canManageDiscounts || !open,
   });
   const mode: VoucherInputMode = canManageDiscounts
     ? {
         kind: "picker",
-        options: mapVoucherCodeOptions(mapEdgesToItems(result.data?.search) ?? []),
+        vouchers: mapEdgesToItems(result.data?.search) ?? [],
         onSearch: search,
         fetchMore: {
           loading: result.loading,

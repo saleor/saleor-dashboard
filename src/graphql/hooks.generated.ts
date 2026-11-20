@@ -21115,8 +21115,8 @@ export function useSearchVariantsWithProductDataLazyQuery(baseOptions?: ApolloRe
 export type SearchVariantsWithProductDataQueryHookResult = ReturnType<typeof useSearchVariantsWithProductDataQuery>;
 export type SearchVariantsWithProductDataLazyQueryHookResult = ReturnType<typeof useSearchVariantsWithProductDataLazyQuery>;
 export type SearchVariantsWithProductDataQueryResult = Apollo.QueryResult<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>;
-export const SearchVoucherCodesDocument = gql`
-    query SearchVoucherCodes($after: String, $first: Int!, $query: String!, $channel: String) {
+export const SearchVouchersDocument = gql`
+    query SearchVouchers($after: String, $first: Int!, $query: String!, $channel: String) {
   search: vouchers(
     after: $after
     first: $first
@@ -21127,16 +21127,11 @@ export const SearchVoucherCodesDocument = gql`
       node {
         id
         name
-        codes(first: 20) {
-          edges {
-            node {
-              id
-              code
-              isActive
-              used
-            }
-          }
-        }
+        type
+        singleUse
+        discountValueType
+        discountValue
+        currency
       }
     }
     pageInfo {
@@ -21147,16 +21142,16 @@ export const SearchVoucherCodesDocument = gql`
     ${PageInfoFragmentDoc}`;
 
 /**
- * __useSearchVoucherCodesQuery__
+ * __useSearchVouchersQuery__
  *
- * To run a query within a React component, call `useSearchVoucherCodesQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchVoucherCodesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useSearchVouchersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchVouchersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearchVoucherCodesQuery({
+ * const { data, loading, error } = useSearchVouchersQuery({
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
@@ -21165,17 +21160,17 @@ export const SearchVoucherCodesDocument = gql`
  *   },
  * });
  */
-export function useSearchVoucherCodesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchVoucherCodesQuery, Types.SearchVoucherCodesQueryVariables>) {
+export function useSearchVouchersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchVouchersQuery, Types.SearchVouchersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchVoucherCodesQuery, Types.SearchVoucherCodesQueryVariables>(SearchVoucherCodesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchVouchersQuery, Types.SearchVouchersQueryVariables>(SearchVouchersDocument, options);
       }
-export function useSearchVoucherCodesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchVoucherCodesQuery, Types.SearchVoucherCodesQueryVariables>) {
+export function useSearchVouchersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchVouchersQuery, Types.SearchVouchersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchVoucherCodesQuery, Types.SearchVoucherCodesQueryVariables>(SearchVoucherCodesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchVouchersQuery, Types.SearchVouchersQueryVariables>(SearchVouchersDocument, options);
         }
-export type SearchVoucherCodesQueryHookResult = ReturnType<typeof useSearchVoucherCodesQuery>;
-export type SearchVoucherCodesLazyQueryHookResult = ReturnType<typeof useSearchVoucherCodesLazyQuery>;
-export type SearchVoucherCodesQueryResult = Apollo.QueryResult<Types.SearchVoucherCodesQuery, Types.SearchVoucherCodesQueryVariables>;
+export type SearchVouchersQueryHookResult = ReturnType<typeof useSearchVouchersQuery>;
+export type SearchVouchersLazyQueryHookResult = ReturnType<typeof useSearchVouchersLazyQuery>;
+export type SearchVouchersQueryResult = Apollo.QueryResult<Types.SearchVouchersQuery, Types.SearchVouchersQueryVariables>;
 export const SearchWarehousesDocument = gql`
     query SearchWarehouses($after: String, $first: Int!, $query: String!, $channnelsId: [ID!]) {
   search: warehouses(

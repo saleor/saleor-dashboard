@@ -1,23 +1,53 @@
+import { MockedProvider } from "@apollo/client/testing";
 import { OrderErrorCode } from "@dashboard/graphql";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
+import { type ReactElement } from "react";
 import { fn } from "storybook/test";
 
+import {
+  shippingVoucher,
+  summerVoucher,
+  voucherCode,
+  voucherCodesMock,
+  welcomeVoucher,
+} from "./fixtures";
 import { OrderVoucherDialog, type VoucherInputMode } from "./OrderVoucherDialog";
 
 const pickerMode: VoucherInputMode = {
   kind: "picker",
-  options: [
-    { value: "SUMMER10", label: "SUMMER10" },
-    { value: "SUMMER20", label: "SUMMER20" },
-    { value: "WELCOME", label: "WELCOME", disabled: true },
-  ],
+  vouchers: [summerVoucher, welcomeVoucher, shippingVoucher],
   onSearch: fn(),
   fetchMore: { loading: false, hasMore: false, onFetchMore: fn() },
 };
 
+// Picking a voucher loads its codes: Summer sale has several, the single-use welcome gift
+// is used up, and Free delivery has one code.
+const codeMocks = [
+  voucherCodesMock({
+    voucherId: summerVoucher.id,
+    codes: [
+      voucherCode("SUMMER-OLD", { isActive: false }),
+      voucherCode("SUMMER10"),
+      voucherCode("SUMMER20"),
+    ],
+  }),
+  voucherCodesMock({
+    voucherId: welcomeVoucher.id,
+    codes: [voucherCode("6f1c7a0e-6b1d-4f53-9a4e-0c1f3f0d2b11", { used: 1 })],
+  }),
+  voucherCodesMock({ voucherId: shippingVoucher.id, codes: [voucherCode("SHIPFREE")] }),
+];
+
 const meta: Meta<typeof OrderVoucherDialog> = {
   title: "Orders/OrderVoucherDialog",
   component: OrderVoucherDialog,
+  decorators: [
+    (Story: StoryFn): ReactElement => (
+      <MockedProvider mocks={codeMocks}>
+        <Story />
+      </MockedProvider>
+    ),
+  ],
   args: {
     open: true,
     mode: pickerMode,
@@ -32,17 +62,17 @@ const meta: Meta<typeof OrderVoucherDialog> = {
 export default meta;
 type Story = StoryObj<typeof OrderVoucherDialog>;
 
-/** Staff with MANAGE_DISCOUNTS search active voucher codes in the draft's channel. */
+/** Staff with MANAGE_DISCOUNTS pick an active voucher in the draft's channel. */
 export const Picker: Story = {};
 
 export const PickerLoading: Story = {
   args: {
-    mode: { ...pickerMode, options: [], fetchMore: { ...pickerMode.fetchMore, loading: true } },
+    mode: { ...pickerMode, vouchers: [], fetchMore: { ...pickerMode.fetchMore, loading: true } },
   },
 };
 
 export const PickerEmpty: Story = {
-  args: { mode: { ...pickerMode, options: [] } },
+  args: { mode: { ...pickerMode, vouchers: [] } },
 };
 
 /** Staff without MANAGE_DISCOUNTS cannot list vouchers, so they type the code. */
