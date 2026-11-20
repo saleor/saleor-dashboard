@@ -7,7 +7,12 @@ import { usePostHog } from "posthog-js/react";
 import { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { getFeedbackResponse, surveyDismissedEvent, surveySentEvent } from "./feedbackSurveyEvents";
+import {
+  type FeedbackSource,
+  getFeedbackResponse,
+  surveyDismissedEvent,
+  surveySentEvent,
+} from "./feedbackSurveyEvents";
 import { useFeedbackSurveyDialog } from "./useFeedbackSurvey";
 
 const messages = defineMessages({
@@ -18,8 +23,17 @@ const messages = defineMessages({
   },
 });
 
+/** Whether the source is another dialog, which closes in the same click this one opens. */
+const opensFromDialog: Record<FeedbackSource, boolean> = {
+  sidebar: false,
+  command_menu: true,
+  whats_new: true,
+};
+
 interface FeedbackSurveyDialogViewProps {
   open: boolean;
+  /** False when replacing another dialog, so the backdrop stays dark between the two. */
+  animateIn?: boolean;
   question: string;
   description?: string;
   response: string;
@@ -30,6 +44,7 @@ interface FeedbackSurveyDialogViewProps {
 
 export const FeedbackSurveyDialogView = ({
   open,
+  animateIn = true,
   question,
   description,
   response,
@@ -41,7 +56,7 @@ export const FeedbackSurveyDialogView = ({
 
   return (
     <DashboardModal open={open} onChange={isOpen => !isOpen && onDismiss()}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="sm" animateIn={animateIn}>
         {description ? (
           <DashboardModal.Header subtitle={description}>{question}</DashboardModal.Header>
         ) : (
@@ -109,6 +124,7 @@ export const FeedbackSurveyDialog = (): JSX.Element | null => {
   return (
     <FeedbackSurveyDialogView
       open={open}
+      animateIn={!opensFromDialog[source]}
       question={question.question}
       description={question.description ?? undefined}
       response={response}
