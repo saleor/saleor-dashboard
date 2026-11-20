@@ -95,19 +95,21 @@ const OrderVoucherDialogContent = ({
         <FormattedMessage {...(currentCode ? messages.changeTitle : messages.addTitle)} />
       </DashboardModal.Header>
       <DashboardModal.Body>
-        {mode.kind === "picker" ? (
-          <VoucherCodePicker mode={mode} code={code} error={error} onChange={setCode} />
-        ) : (
-          <Input
-            data-test-id="voucher-code-input"
-            label={intl.formatMessage(messages.codeLabel)}
-            value={code}
-            onChange={event => setCode(event.target.value)}
-            error={!!error}
-            helperText={error}
-            autoFocus
-          />
-        )}
+        <DashboardModal.Inset>
+          {mode.kind === "picker" ? (
+            <VoucherCodePicker mode={mode} code={code} error={error} onChange={setCode} />
+          ) : (
+            <Input
+              data-test-id="voucher-code-input"
+              label={intl.formatMessage(messages.codeLabel)}
+              value={code}
+              onChange={event => setCode(event.target.value)}
+              error={!!error}
+              helperText={error}
+              autoFocus
+            />
+          )}
+        </DashboardModal.Inset>
       </DashboardModal.Body>
       <DashboardModal.Actions>
         <BackButton onClick={onClose} />
