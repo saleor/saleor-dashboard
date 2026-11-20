@@ -54,7 +54,7 @@ interface UseDraftOrderVoucherArgs {
 interface DraftOrderVoucher {
   mode: VoucherInputMode;
   errors: OrderErrorFragment[];
-  submit: (voucherCode: string) => Promise<void>;
+  submit: (voucherCode: string) => Promise<boolean>;
   remove: () => Promise<void>;
 }
 
@@ -87,14 +87,17 @@ export const useDraftOrderVoucher = ({
       }
     : { kind: "manual" };
 
-  const submit = async (voucherCode: string): Promise<void> => {
+  const submit = async (voucherCode: string): Promise<boolean> => {
     const response = await orderDraftUpdate.mutate({ id: order.id, input: { voucherCode } });
+    const succeeded = !!response?.data && !response.data.draftOrderUpdate?.errors?.length;
 
     trackEvent("draft_order_voucher_changed", {
       action: "apply",
       mode: mode.kind,
-      result: response?.data?.draftOrderUpdate?.errors?.length ? "error" : "success",
+      result: succeeded ? "success" : "error",
     });
+
+    return succeeded;
   };
 
   // Saleor's clean_voucher_code clears both the code and the voucher on null.

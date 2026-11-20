@@ -292,7 +292,11 @@ export const OrderDraftDetails = ({
         confirmButtonState={orderDraftUpdate.opts.status}
         errors={voucher.errors}
         onClose={closeModal}
-        onSubmit={voucher.submit}
+        onSubmit={async voucherCode => {
+          if (await voucher.submit(voucherCode)) {
+            closeModal();
+          }
+        }}
       />
       <OrderProductAddDialog
         confirmButtonState={orderLinesAdd.opts.status}
