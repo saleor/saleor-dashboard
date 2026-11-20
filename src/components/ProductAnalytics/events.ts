@@ -49,6 +49,9 @@ export interface AnalyticsEventMap {
     duration: "0-10s" | "10-60s" | "1-5m" | "5m+";
     try_now_count: number;
   };
+  draft_order_voucher_changed:
+    | { action: "apply"; mode: "manual" | "picker"; result: "error" | "success" }
+    | { action: "remove"; result: "error" | "success" };
   customer_type_assigned_to_customer: {
     result: "error" | "success";
   };

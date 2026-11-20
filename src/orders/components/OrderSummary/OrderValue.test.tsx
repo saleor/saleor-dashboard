@@ -121,6 +121,8 @@ const createEditableProps = (overrides: Partial<Parameters<typeof OrderValue>[0]
   orderDiscountRemoveStatus: "default" as const,
   undiscountedPrice: prepareMoney(110),
   onShippingMethodEdit: jest.fn(),
+  voucherCode: null,
+  voucherActions: { onEdit: jest.fn(), onRemove: jest.fn() },
   shippingMethods: [],
   shippingMethod: null,
   shippingAddress: null,
@@ -850,6 +852,65 @@ describe("OrderValue", () => {
       // Assert
       expect(screen.getByText("Taxes")).toBeInTheDocument();
       expect(screen.queryByText("(included)")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("voucher", () => {
+    it("offers 'Add voucher' when the draft has no voucher", async () => {
+      // Arrange
+      const onEdit = jest.fn();
+      const props = createEditableProps({ voucherActions: { onEdit, onRemove: jest.fn() } });
+
+      // Act
+      render(
+        <RouterWrapper>
+          <OrderValue {...props} />
+        </RouterWrapper>,
+      );
+      await userEvent.click(screen.getByText("Add voucher"));
+
+      // Assert
+      expect(onEdit).toHaveBeenCalledTimes(1);
+      expect(screen.queryByTestId("remove-voucher")).not.toBeInTheDocument();
+    });
+
+    it("shows the applied code with Change and Remove", async () => {
+      // Arrange
+      const onEdit = jest.fn();
+      const onRemove = jest.fn();
+      const props = createEditableProps({
+        voucherCode: "SUMMER10",
+        voucherActions: { onEdit, onRemove },
+      });
+
+      // Act
+      render(
+        <RouterWrapper>
+          <OrderValue {...props} />
+        </RouterWrapper>,
+      );
+      await userEvent.click(screen.getByTestId("change-voucher"));
+      await userEvent.click(screen.getByTestId("remove-voucher"));
+
+      // Assert
+      expect(screen.getByTestId("voucher-code")).toHaveTextContent("SUMMER10");
+      expect(onEdit).toHaveBeenCalledTimes(1);
+      expect(onRemove).toHaveBeenCalledTimes(1);
+    });
+
+    it("hides voucher actions when the order does not accept a voucher", () => {
+      // Arrange
+      const props = createEditableProps({ voucherActions: undefined });
+
+      // Act
+      render(
+        <RouterWrapper>
+          <OrderValue {...props} />
+        </RouterWrapper>,
+      );
+
+      // Assert
+      expect(screen.queryByTestId("order-voucher-row")).not.toBeInTheDocument();
     });
   });
 });

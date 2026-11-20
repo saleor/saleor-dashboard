@@ -547,6 +547,10 @@
   "/vCXIP": {
     "string": "Translation"
   },
+  "/w+8gp": {
+    "context": "dialog header for changing the voucher of a draft order",
+    "string": "Change voucher"
+  },
   "/x7Y7U": {
     "context": "search models placeholder",
     "string": "Search models"
@@ -714,6 +718,10 @@
   "0R1EEd": {
     "context": "staff notification description",
     "string": "Sent to people in {alertsLink} when a customer completes checkout. Draft orders completed in the Dashboard are not included."
+  },
+  "0Rr+gs": {
+    "context": "accessible label for the link that changes the draft order voucher",
+    "string": "Change voucher"
   },
   "0Sq+Ey": {
     "context": "button opening the model type icon picker",
@@ -4463,6 +4471,10 @@
   "DAdjTt": {
     "context": "warehouse delete dialog when the channel count is known and above zero",
     "string": "It is removed from {count, plural, one {# channel} other {# channels}}."
+  },
+  "DAoKyB": {
+    "context": "accessible label for the link that removes the draft order voucher",
+    "string": "Remove voucher"
   },
   "DBuWYc": {
     "context": "voucher list status after end date",
@@ -9223,6 +9235,10 @@
     "context": "page header, edit view",
     "string": "Edit grant refund"
   },
+  "Tz0M48": {
+    "context": "empty state of the voucher code picker",
+    "string": "No active vouchers match your search in this channel."
+  },
   "U+Fl4Z": {
     "context": "customer detail, label above the address when default billing and default shipping are the same",
     "string": "Default address"
@@ -13329,6 +13345,10 @@
     "context": "shipping method channel min order value aria label",
     "string": "Minimum order value for {channelName}"
   },
+  "hvCS1h": {
+    "context": "voucher code input label",
+    "string": "Voucher code"
+  },
   "hw9Fah": {
     "context": "button",
     "string": "Send invite"
@@ -13952,6 +13972,10 @@
   "jp2Jjs": {
     "context": "automatic completion cut-off date description",
     "string": "Only checkouts created on or after this date will be automatically completed. If not set, current time will be used. {link}"
+  },
+  "jp4DrW": {
+    "context": "dialog header for adding a voucher to a draft order",
+    "string": "Add voucher"
   },
   "jpY7Ne": {
     "context": "settings search alias",
@@ -17434,6 +17458,10 @@
   "usjqAQ": {
     "context": "Badge showing number of issues in a channel",
     "string": "{count, plural, one {# issue} other {# issues}}"
+  },
+  "usvI6J": {
+    "context": "link in draft order summary that opens the voucher dialog",
+    "string": "Add voucher"
   },
   "utaSh3": {
     "context": "staff member's account",

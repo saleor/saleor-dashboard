@@ -103,6 +103,8 @@ const editableBase = {
   orderDiscountRemoveStatus: "default" as const,
   undiscountedPrice: prepareMoney(8.95),
   onShippingMethodEdit: fn(),
+  voucherCode: null,
+  voucherActions: { onEdit: fn(), onRemove: fn() },
   shippingAddress,
   shippingMethods,
   shippingMethod,
