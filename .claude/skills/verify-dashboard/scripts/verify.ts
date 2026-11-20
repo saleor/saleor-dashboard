@@ -258,16 +258,20 @@ const portOwner = (port: number): string => {
   }
 };
 
-const isPortFree = (port: number) =>
+const isListening = (port: number, host: string) =>
   new Promise<boolean>(resolve => {
-    const socket = net.connect({ port, host: "127.0.0.1" });
+    const socket = net.connect({ port, host });
 
     socket.once("connect", () => {
       socket.destroy();
-      resolve(false);
+      resolve(true);
     });
-    socket.once("error", () => resolve(true));
+    socket.once("error", () => resolve(false));
   });
+
+/** Both loopbacks: on macOS `localhost` dev servers often listen on `::1` only. */
+const isPortFree = async (port: number) =>
+  !(await isListening(port, "127.0.0.1")) && !(await isListening(port, "::1"));
 
 // ---------------------------------------------------------------------------------------
 // Browser
@@ -480,15 +484,18 @@ const postGraphql = async (
   return (await response.json()) as GraphqlResult;
 };
 
-/** An access token for the actor: signed in on local, refreshed from the Cloud profile. */
-const accessToken = async (run: RunState, actor: Actor): Promise<string> => {
-  if (run.target === "local") {
-    const { email, password } = credentialsFor(actor);
+let cloudRefreshToken: string | undefined;
 
-    return (await signIn(localConfig(run), email, password)).token;
+/**
+ * Read once per process and kept: the Cloud profile can only be open in one browser at a
+ * time, so `exec` reads it before opening its own and its snippet's `gql` reuses it.
+ */
+const readCloudRefreshToken = async (run: RunState): Promise<string> => {
+  if (cloudRefreshToken) {
+    return cloudRefreshToken;
   }
 
-  const { context, page } = await openBrowser(run, { actor });
+  const { context, page } = await openBrowser(run, { actor: "admin" });
 
   try {
     await page.goto(run.dashboardUrl);
@@ -499,25 +506,49 @@ const accessToken = async (run: RunState, actor: Actor): Promise<string> => {
       fail("the Cloud profile is signed out - ask the user to run `pnpm verify login`");
     }
 
-    const result = await postGraphql(
-      run.apiUrl,
-      "mutation($refreshToken: String!) { tokenRefresh(refreshToken: $refreshToken) { token errors { message } } }",
-      { refreshToken },
-    );
-    const token = (result.data?.tokenRefresh as { token?: string } | undefined)?.token;
+    cloudRefreshToken = refreshToken;
 
-    if (!token) {
-      fail("the Cloud session expired - ask the user to run `pnpm verify login`");
-    }
-
-    return token;
+    return refreshToken;
   } finally {
     await context.close();
   }
 };
 
+/** An access token for the actor: signed in on local, refreshed from the Cloud profile. */
+const accessToken = async (run: RunState, actor: Actor): Promise<string> => {
+  if (run.target === "local") {
+    const { email, password } = credentialsFor(actor);
+
+    return (await signIn(localConfig(run), email, password)).token;
+  }
+
+  if (actor !== "admin") {
+    fail("on cloud `gql` runs as whoever signed in with `login`; --as is local only");
+  }
+
+  const refreshToken = await readCloudRefreshToken(run);
+  const result = await postGraphql(
+    run.apiUrl,
+    "mutation($refreshToken: String!) { tokenRefresh(refreshToken: $refreshToken) { token errors { message } } }",
+    { refreshToken },
+  );
+  const token = (result.data?.tokenRefresh as { token?: string } | undefined)?.token;
+
+  if (!token) {
+    fail("the Cloud session expired - ask the user to run `pnpm verify login`");
+  }
+
+  return token;
+};
+
+/** `anonymous` sends no token, so the query sees what an unauthenticated caller can. */
 const gqlAs = async (run: RunState, actor: Actor, query: string, variables: unknown = {}) =>
-  postGraphql(run.apiUrl, query, variables, await accessToken(run, actor));
+  postGraphql(
+    run.apiUrl,
+    query,
+    variables,
+    actor === "anonymous" ? undefined : await accessToken(run, actor),
+  );
 
 const ME_QUERY = `{ me { email firstName lastName isStaff dateJoined
   permissionGroups { name } userPermissions { code } } shop { version } }`;
@@ -568,22 +599,45 @@ const startDevServer = async (run: RunState): Promise<number> => {
     fail(`the dev server did not start - see ${logFile}`);
   }
 
-  await waitForHttp(run.dashboardUrl);
+  // Without this, a server that exits (a port taken after the check) would leave
+  // `waitForHttp` to time out, or to succeed against whoever holds the port.
+  const exited = new Promise<never>((_, reject) =>
+    child.once("exit", code =>
+      reject(new Error(`the dev server exited with code ${code} - see ${logFile}`)),
+    ),
+  );
+
+  await Promise.race([waitForHttp(run.dashboardUrl), exited]);
 
   return child.pid;
 };
 
-const stopDevServer = (run: RunState) => {
-  if (!isAlive(run.devServerPid)) {
+/** Detached, so the pid leads its own group: vite and its esbuild children go together. */
+const signalGroup = (pid: number, signal: NodeJS.Signals | 0): boolean => {
+  try {
+    process.kill(-pid, signal);
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+/** Returns once the whole group is gone, so a following `up` finds the port free. */
+const stopDevServer = async ({ devServerPid: pid }: RunState) => {
+  if (!pid || !signalGroup(pid, 0)) {
     return;
   }
 
-  try {
-    // Detached, so the pid leads its own group: vite and its esbuild children go together.
-    process.kill(-(run.devServerPid as number), "SIGTERM");
-  } catch {
-    process.kill(run.devServerPid as number, "SIGTERM");
+  signalGroup(pid, "SIGTERM");
+
+  const deadline = Date.now() + 10_000;
+
+  while (signalGroup(pid, 0) && Date.now() < deadline) {
+    await new Promise(resolve => setTimeout(resolve, 100));
   }
+
+  signalGroup(pid, "SIGKILL");
 };
 
 // ---------------------------------------------------------------------------------------
@@ -616,8 +670,15 @@ const up = async () => {
 
   if (active) {
     log(`reclaiming the dead run ${active.id}`);
-    fs.rmSync(ACTIVE_LINK, { force: true });
+    await stopDevServer(active);
+
+    if (active.target === "local") {
+      compose(localConfig(active), ["down"]);
+    }
   }
+
+  // Also clears a link whose run dir is gone, which `readActiveRun` reports as no run.
+  fs.rmSync(ACTIVE_LINK, { force: true });
 
   const cloud = target === "cloud" ? readCloudConfig() : undefined;
   const local = target === "local" ? localConfig({ saleor }) : undefined;
@@ -818,6 +879,10 @@ const exec = async () => {
   const { default: snippet } = (await import(pathToFileURL(path.resolve(file)).href)) as {
     default: (context: SnippetContext) => Promise<unknown>;
   };
+  if (run.target === "cloud") {
+    await readCloudRefreshToken(run);
+  }
+
   const { context, page } = await openBrowser(run, { actor, headed });
 
   try {
@@ -931,17 +996,18 @@ const login = async () => {
   }
 };
 
-const down = () => {
+const down = async () => {
   const run = readActiveRun();
   const volumes = takeFlag("--volumes");
 
   if (!run) {
+    fs.rmSync(ACTIVE_LINK, { force: true });
     log("no active run");
 
     return;
   }
 
-  stopDevServer(run);
+  await stopDevServer(run);
 
   if (run.target === "local") {
     compose(localConfig(run), ["down", ...(volumes ? ["-v"] : [])]);
