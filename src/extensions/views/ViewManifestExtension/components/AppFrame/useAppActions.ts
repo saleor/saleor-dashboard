@@ -121,6 +121,15 @@ export const useAppActions = (
         return;
       }
 
+      // Widgets and popups from one app share an origin. Resize only the
+      // originating widget, never another widget or its co-located popup.
+      if (
+        event.data.type === "widgetResize" &&
+        (target !== "WIDGET" || !frameEl?.contentWindow || event.source !== frameEl.contentWindow)
+      ) {
+        return;
+      }
+
       const response = handleAction(event.data);
 
       if (response) {
@@ -133,7 +142,7 @@ export const useAppActions = (
     return () => {
       window.removeEventListener("message", handler);
     };
-  }, [appOrigin, handleAction, postToExtension]);
+  }, [appOrigin, frameEl, handleAction, postToExtension, target]);
 
   return {
     handshakeDone,

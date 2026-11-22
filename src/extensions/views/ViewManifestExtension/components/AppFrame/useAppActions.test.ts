@@ -65,6 +65,7 @@ describe("useAppActions", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    document.body.appendChild(mockFrameEl);
 
     // Setup mocks
     mockUsePostToExtension.mockReturnValue(mockPostToExtension);
@@ -116,6 +117,10 @@ describe("useAppActions", () => {
 
       return "";
     });
+  });
+
+  afterEach(() => {
+    mockFrameEl.remove();
   });
 
   it("should capture unknown action type to Sentry", () => {
@@ -369,12 +374,74 @@ describe("useAppActions", () => {
         new MessageEvent("message", {
           origin: mockAppOrigin,
           data: widgetResizeAction,
+          source: mockFrameEl.contentWindow,
         }),
       );
     });
 
     expect(mockHandleWidgetResize).toHaveBeenCalledWith(widgetResizeAction);
     expect(mockPostToExtension).toHaveBeenCalledWith(mockResponse);
+  });
+
+  it("does not apply a widget resize to a same-app popup or sibling widget", () => {
+    const popup = document.createElement("iframe");
+    const sibling = document.createElement("iframe");
+
+    document.body.append(popup, sibling);
+
+    const resize = {
+      type: "widgetResize",
+      payload: { actionId: "resize-widget-only", height: 164 },
+    } as Actions;
+    const handlers = new Map<HTMLIFrameElement, jest.Mock>();
+
+    (AppActionsHandler.useHandleWidgetResizeAction as jest.Mock).mockImplementation(frame => {
+      if (!handlers.has(frame)) handlers.set(frame, jest.fn());
+
+      return { handle: handlers.get(frame) };
+    });
+
+    const { unmount } = renderHook(() => {
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, "WIDGET");
+      useAppActions(popup, mockAppOrigin, mockAppId, mockAppToken, mockVersions, "POPUP");
+      useAppActions(sibling, mockAppOrigin, mockAppId, mockAppToken, mockVersions, "WIDGET");
+    });
+
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          source: mockFrameEl.contentWindow,
+          data: resize,
+        }),
+      );
+    });
+
+    expect(handlers.get(mockFrameEl)).toHaveBeenCalledWith(resize);
+    expect(handlers.get(popup)).not.toHaveBeenCalled();
+    expect(handlers.get(sibling)).not.toHaveBeenCalled();
+    unmount();
+    popup.remove();
+    sibling.remove();
+  });
+
+  it.each(["POPUP", "APP_PAGE"] as const)("ignores resize even from its own %s frame", target => {
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, target),
+    );
+
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          source: mockFrameEl.contentWindow,
+          data: { type: "widgetResize", payload: { actionId: "own-resize", height: 164 } },
+        }),
+      );
+    });
+
+    expect(mockHandleWidgetResize).not.toHaveBeenCalled();
+    expect(mockPostToExtension).not.toHaveBeenCalled();
   });
 
   it("should handle notifyReady action and set handshake done", () => {
