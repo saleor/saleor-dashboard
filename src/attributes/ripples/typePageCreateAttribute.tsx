@@ -1,10 +1,34 @@
 import { type Ripple } from "@dashboard/ripples/types";
 import { Text } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
+import { defineMessages, FormattedMessage } from "react-intl";
+
+const contentMessages = defineMessages({
+  oneLiner: {
+    id: "adKZn6",
+    defaultMessage: "Create attributes on type pages",
+    description: "ripple title",
+  },
+  contextual: {
+    id: "uMjAsu",
+    defaultMessage:
+      "Choose <em>Create attribute</em> here to add one and assign it to this type without leaving the page.",
+    description: "ripple contextual hint",
+  },
+  global: {
+    id: "/BHvXA",
+    defaultMessage:
+      "On product and model type pages, open the menu beside Assign attribute and choose Create attribute. Complete the short wizard and the new attribute is created and linked to that type automatically—no trip to the Attributes section required.",
+    description: "ripple description in What's New",
+  },
+});
 
 const typePageCreateAttributeContextual = (
   <Text color="default2">
-    Choose <em>Create attribute</em> here to add one and assign it to this type without leaving the
-    page.
+    <FormattedMessage
+      {...contentMessages.contextual}
+      values={{ em: (chunks: ReactNode[]) => <em>{chunks}</em> }}
+    />
   </Text>
 );
 
@@ -14,9 +38,8 @@ export const rippleTypePageCreateAttribute: Ripple = {
   TTL_seconds: 60 * 60 * 24 * 7,
   dateAdded: new Date(2026, 6, 8),
   content: {
-    oneLiner: "Create attributes on type pages",
+    oneLiner: contentMessages.oneLiner,
     contextual: typePageCreateAttributeContextual,
-    global:
-      "On product and model type pages, open the menu beside Assign attribute and choose Create attribute. Complete the short wizard and the new attribute is created and linked to that type automatically—no trip to the Attributes section required.",
+    global: contentMessages.global,
   },
 };

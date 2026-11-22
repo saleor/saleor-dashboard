@@ -36,7 +36,11 @@ interface RippleActionWithHref extends RippleActionBase {
  */
 export type RippleAction = RippleActionWithOnClick | RippleActionWithHref;
 
-// TODO Consider translations
+/**
+ * Ripple text. A message descriptor is translated where it's shown; a plain string is shown as-is.
+ */
+export type RippleText = string | MessageDescriptor;
+
 export type Ripple = {
   /**
    * Type of change - used for badge display in the changelog
@@ -51,15 +55,17 @@ export type Ripple = {
     /**
      * Short header-like text for global view
      */
-    oneLiner: string;
+    oneLiner: RippleText;
     /**
-     * In global changelog-like list
+     * In global changelog-like list. Use a message, or a node built with FormattedMessage for
+     * rich text.
      */
-    global: ReactNode; // React Node / md -> react / md -> html or just plain here
+    global: RippleText | ReactNode;
     /**
-     * In contextual ripple like tooltip around the element
+     * In contextual ripple like tooltip around the element. Use a message, or a node built with
+     * FormattedMessage for rich text.
      */
-    contextual: ReactNode; // React Node / md -> react / md -> html or just plain here
+    contextual: RippleText | ReactNode;
   };
   /**
    * After first mount, how long to show the contextual ripple (seconds). In global list it's permanent.

@@ -1,4 +1,25 @@
 import { type Ripple } from "@dashboard/ripples/types";
+import { defineMessages } from "react-intl";
+
+const contentMessages = defineMessages({
+  oneLiner: {
+    id: "UXT3QZ",
+    defaultMessage: "Shipping rates are easier to manage",
+    description: "ripple title",
+  },
+  contextual: {
+    id: "fDaLPM",
+    defaultMessage:
+      "Each method shows which channels have pricing. Open one to set per-channel prices, availability, and postal codes.",
+    description: "ripple contextual hint",
+  },
+  global: {
+    id: "nvS6zS",
+    defaultMessage:
+      "The shipping rate editor now shows per-channel pricing inline, a channel availability summary in the sidebar, and clearer postal code controls. Shipping method metadata is in the header, and shipping zones on channel settings are clickable links.",
+    description: "ripple description in What's New",
+  },
+});
 
 export const rippleShippingRateEditor: Ripple = {
   type: "improvement",
@@ -6,10 +27,8 @@ export const rippleShippingRateEditor: Ripple = {
   TTL_seconds: 60 * 60 * 24 * 7,
   dateAdded: new Date(2026, 5, 24),
   content: {
-    oneLiner: "Shipping rates are easier to manage",
-    contextual:
-      "Each method shows which channels have pricing. Open one to set per-channel prices, availability, and postal codes.",
-    global:
-      "The shipping rate editor now shows per-channel pricing inline, a channel availability summary in the sidebar, and clearer postal code controls. Shipping method metadata is in the header, and shipping zones on channel settings are clickable links.",
+    oneLiner: contentMessages.oneLiner,
+    contextual: contentMessages.contextual,
+    global: contentMessages.global,
   },
 };
