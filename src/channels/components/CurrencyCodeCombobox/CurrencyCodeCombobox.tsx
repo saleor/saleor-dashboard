@@ -4,6 +4,7 @@ import {
   getCurrencySearchLabel,
   getCurrencySymbol,
 } from "@dashboard/channels/utils/currencyCodeOptions";
+import { getCurrencyCountryLabels } from "@dashboard/channels/utils/currencyCountryLabels";
 import { Box, DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -55,11 +56,14 @@ export const CurrencyCodeCombobox = ({
     return currencyCodeSources.map(source => {
       const symbol = getCurrencySymbol(source.code, intl.locale);
       const showSymbol = symbol !== source.code;
-      const countries = getCurrencyCountriesForSearch(source.countries).join(", ");
+      const countries = getCurrencyCountryLabels(
+        getCurrencyCountriesForSearch(source.countries),
+        intl.locale,
+      ).join(", ");
 
       return {
         // Label is visually hidden; kept for Macaw's built-in filter (code, symbol, countries).
-        label: getCurrencySearchLabel(source, symbol),
+        label: getCurrencySearchLabel(source, symbol, intl.locale),
         value: source.code,
         startAdornment: (
           <Box

@@ -4,6 +4,7 @@ import { createContext, type ReactNode, useEffect, useState } from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
 import { getFormattingLocale } from "./formattingLocale";
+import { referenceLabelsLocale } from "./referenceLabels";
 
 export enum Locale {
   AR = "ar",
@@ -146,6 +147,7 @@ const LocaleProvider = ({ children }: { children: ReactNode }) => {
   const catalogueReady = locale === Locale.EN || catalogue?.locale === locale;
 
   useEffect(() => {
+    referenceLabelsLocale(locale);
     document.documentElement.lang = getFormattingLocale(locale);
 
     let cancelled = false;

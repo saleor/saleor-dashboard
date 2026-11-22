@@ -1,5 +1,7 @@
 import currencyCodes from "currency-codes";
 
+import { getCurrencyCountryLabels } from "./currencyCountryLabels";
+
 export interface CurrencyCodeSource {
   code: string;
   currency: string;
@@ -38,7 +40,19 @@ export const getCurrencyCountriesForSearch = (countries: string[]): string[] =>
 
 /**
  * Searchable label for Macaw's built-in filter.
- * Includes symbol so queries like "$" / "€" match the right currencies.
+ * Includes symbol so queries like "$" / "€" match the right currencies. Countries are named in the
+ * Dashboard language, and the English names are kept so English searches still match.
  */
-export const getCurrencySearchLabel = (source: CurrencyCodeSource, symbol: string): string =>
-  `${source.code} ${symbol} - ${getCurrencyCountriesForSearch(source.countries).join(",")}`;
+export const getCurrencySearchLabel = (
+  source: CurrencyCodeSource,
+  symbol: string,
+  locale = "en",
+): string => {
+  const englishCountries = getCurrencyCountriesForSearch(source.countries);
+  const countries = getCurrencyCountryLabels(englishCountries, locale);
+  const englishAliases = countries.some((country, index) => country !== englishCountries[index])
+    ? ` ${englishCountries.join(",")}`
+    : "";
+
+  return `${source.code} ${symbol} - ${countries.join(",")}${englishAliases}`;
+};

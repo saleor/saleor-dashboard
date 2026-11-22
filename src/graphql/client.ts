@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
 import { initAuth } from "@dashboard/auth/initAuth";
+import { referenceLabelTypePolicies } from "@dashboard/components/Locale/referenceLabels";
 import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
 import { connectionMonitor } from "@dashboard/connection/appConnectionMonitor";
 import { trackConnection } from "@dashboard/connection/trackConnection";
@@ -77,9 +78,7 @@ export const apolloClient = new ApolloClient({
   cache: new SchemaAwareCache({
     possibleTypes: introspectionData.possibleTypes,
     typePolicies: {
-      CountryDisplay: {
-        keyFields: ["code"],
-      },
+      ...referenceLabelTypePolicies,
       Money: {
         merge: false,
       },
