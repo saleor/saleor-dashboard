@@ -1,3 +1,4 @@
+import { getFormattingLocale } from "@dashboard/components/Locale/formattingLocale";
 import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import { type IMoney } from "@dashboard/utils/intl";
 
@@ -40,23 +41,23 @@ export const roundMoneyAmount = (amount: number, currency: string): number =>
 
 export const formatMoneyAmount = (money: IMoney, locale: string) => {
   try {
-    const currencyFractionDigits = new Intl.NumberFormat(locale, {
+    const currencyFractionDigits = new Intl.NumberFormat(getFormattingLocale(locale), {
       style: "currency",
       currency: money.currency,
     }).resolvedOptions().maximumFractionDigits;
 
-    return money.amount.toLocaleString(locale, {
+    return money.amount.toLocaleString(getFormattingLocale(locale), {
       maximumFractionDigits: currencyFractionDigits,
       minimumFractionDigits: currencyFractionDigits,
     });
   } catch (e) {
-    return money.amount.toLocaleString(locale);
+    return money.amount.toLocaleString(getFormattingLocale(locale));
   }
 };
 
 export const formatMoney = (money: IMoney, locale: string) => {
   try {
-    const formattedMoney = Intl.NumberFormat(locale, {
+    const formattedMoney = Intl.NumberFormat(getFormattingLocale(locale), {
       style: "currency",
       currency: money.currency,
     }).format(money.amount);
@@ -69,7 +70,7 @@ export const formatMoney = (money: IMoney, locale: string) => {
 
 export const formatMoneyRange = (moneyFrom: IMoney, moneyTo: IMoney, locale: string) => {
   try {
-    const formattedMoneyRange = Intl.NumberFormat(locale, {
+    const formattedMoneyRange = Intl.NumberFormat(getFormattingLocale(locale), {
       style: "currency",
       currency: moneyFrom.currency,
     }).formatRange(moneyFrom.amount, moneyTo.amount);

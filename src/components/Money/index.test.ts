@@ -1,4 +1,4 @@
-import { roundMoneyAmount, roundMoneyByDigits } from "./index";
+import { formatMoney, roundMoneyAmount, roundMoneyByDigits } from "./index";
 
 describe("roundMoneyByDigits", () => {
   it("rounds to the given number of fraction digits (half away from zero)", () => {
@@ -51,5 +51,23 @@ describe("roundMoneyAmount", () => {
   it("preserves negative amounts", () => {
     expect(roundMoneyAmount(-1.234, "USD")).toBe(-1.23);
     expect(roundMoneyAmount(-1.236, "USD")).toBe(-1.24);
+  });
+});
+
+describe("formatMoney", () => {
+  it("formats the European Portuguese language for Portugal", () => {
+    // Arrange
+    const money = { amount: 1234.56, currency: "EUR" };
+
+    // Act
+    const formatted = formatMoney(money, "pt");
+
+    // Assert
+    expect(formatted).toBe(
+      new Intl.NumberFormat("pt-PT", { style: "currency", currency: "EUR" }).format(1234.56),
+    );
+    expect(formatted).not.toBe(
+      new Intl.NumberFormat("pt", { style: "currency", currency: "EUR" }).format(1234.56),
+    );
   });
 });

@@ -1,3 +1,4 @@
+import { getFormattingLocale } from "@dashboard/components/Locale/formattingLocale";
 import { LocaleContext } from "@dashboard/components/Locale/Locale";
 import { useContext } from "react";
 import { useIntl } from "react-intl";
@@ -36,7 +37,7 @@ function useDateLocalize(): LocalizeDate {
 
     const options = FORMAT_OPTIONS[format || "ll"] ?? FORMAT_OPTIONS.ll;
 
-    return new Intl.DateTimeFormat(locale, options).format(parsed);
+    return new Intl.DateTimeFormat(getFormattingLocale(locale), options).format(parsed);
   };
 }
 

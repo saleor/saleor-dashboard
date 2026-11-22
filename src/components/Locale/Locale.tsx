@@ -1,7 +1,9 @@
 // @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { createContext, type ReactNode, useEffect, useRef, useState } from "react";
+import { createContext, type ReactNode, useEffect, useState } from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
+
+import { getFormattingLocale } from "./formattingLocale";
 
 export enum Locale {
   AR = "ar",
@@ -115,7 +117,7 @@ function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
 }
 
 const localeCode = process.env.LOCALE_CODE || "EN";
-const defaultLocale = Locale[localeCode];
+const defaultLocale = Locale[localeCode] || Locale.EN;
 
 interface LocaleContextType {
   locale: Locale;
@@ -130,42 +132,53 @@ const supportedLocales = new Set<unknown>(Object.values(Locale));
 
 const isSupportedLocale = (value: unknown): value is Locale => supportedLocales.has(value);
 
-// The "pt" catalogue is European Portuguese. Formatting it as plain "pt" would apply Brazilian
-// plural rules, which treat 0 as singular ("0 produto" instead of "0 produtos").
-const getIntlLocale = (locale: Locale): string => (locale === Locale.PT ? "pt-PT" : locale);
-
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 const LocaleProvider = ({ children }: { children: ReactNode }) => {
   const [savedLocale, setLocale] = useLocalStorage<unknown>("locale", defaultLocale);
   // The saved value may not be a language the dashboard has. Passed on, "undefined" makes every
   // date and number throw, which blanks the app, and other codes have no translations to load.
   const locale = isSupportedLocale(savedLocale) ? savedLocale : defaultLocale;
-  const [messages, setMessages] = useState(undefined);
-  const loaded = useRef(false);
+  const [catalogue, setCatalogue] = useState<{
+    locale: Locale;
+    messages: LocaleMessages;
+  }>();
+  const messages = catalogue?.locale === locale ? catalogue.messages : undefined;
+  const catalogueReady = locale === Locale.EN || catalogue?.locale === locale;
 
   useEffect(() => {
+    document.documentElement.lang = getFormattingLocale(locale);
+
+    let cancelled = false;
+
     async function changeLocale() {
-      if (locale !== Locale.EN && !loaded.current) {
+      if (locale !== Locale.EN) {
         // It seems like Webpack is unable to use aliases for lazy imports
         const mod = await import(`../../../locale/${locale}.json`);
 
-        setMessages(mod.default);
-
-        if (!loaded.current) {
-          loaded.current = true;
+        if (!cancelled) {
+          setCatalogue({ locale, messages: mod.default });
         }
       } else {
-        setMessages(undefined);
+        setCatalogue(undefined);
       }
     }
 
-    changeLocale();
+    changeLocale().catch(error => {
+      if (!cancelled) {
+        console.error("Could not load Dashboard translations", error);
+        setCatalogue({ locale, messages: {} });
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, [locale]);
 
   return (
     <IntlProvider
-      defaultLocale={defaultLocale}
-      locale={getIntlLocale(locale)}
+      defaultLocale={Locale.EN}
+      locale={getFormattingLocale(locale)}
       messages={getKeyValueJson(messages)}
       onError={err => {
         if (!(err.code === ReactIntlErrorCode.MISSING_TRANSLATION)) {
@@ -180,7 +193,7 @@ const LocaleProvider = ({ children }: { children: ReactNode }) => {
           setLocale,
         }}
       >
-        {children}
+        {catalogueReady ? children : null}
       </RawLocaleProvider>
     </IntlProvider>
   );

@@ -1,3 +1,4 @@
+import { getFormattingLocale } from "@dashboard/components/Locale/formattingLocale";
 import { type Locale } from "@dashboard/components/Locale/Locale";
 import {
   type CustomCell,
@@ -82,12 +83,12 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
       return true;
     }
 
-    const codeFormatter = new Intl.NumberFormat(locale, {
+    const codeFormatter = new Intl.NumberFormat(getFormattingLocale(locale), {
       style: "currency",
       currencyDisplay: "code",
       currency,
     });
-    const symbolFormatter = new Intl.NumberFormat(locale, {
+    const symbolFormatter = new Intl.NumberFormat(getFormattingLocale(locale), {
       style: "currency",
       currencyDisplay: "symbol",
       currency,

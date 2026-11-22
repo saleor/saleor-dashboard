@@ -1,9 +1,9 @@
 import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { useIntl } from "react-intl";
 
-import { LocaleProvider } from "./Locale";
+import { Locale, LocaleProvider } from "./Locale";
 
 // Jest maps react-intl to a stub; these tests need the real provider, which throws on a language
 // tag it can't use.
@@ -11,10 +11,12 @@ jest.mock("react-intl", () => jest.requireActual("react-intl/index.js"));
 
 const LocalizedContent = (): React.ReactNode => {
   const intl = useIntl();
-  const { locale } = useLocale();
+  const { locale, setLocale } = useLocale();
 
   return (
     <>
+      <button onClick={() => setLocale(Locale.EN)}>EN</button>
+      <button onClick={() => setLocale(Locale.PT)}>PT</button>
       <span data-test-id="locale">{locale}</span>
       <span data-test-id="number">{intl.formatNumber(1234.5)}</span>
       <span data-test-id="message">{intl.formatMessage(buttonMessages.save)}</span>
@@ -44,6 +46,31 @@ describe("LocaleProvider", () => {
     expect(await screen.findByText("Zapisz")).toBeInTheDocument();
     expect(screen.getByTestId("locale")).toHaveTextContent("pl");
     expect(screen.getByTestId("number")).toHaveTextContent("1234,5");
+  });
+
+  it("formats Portuguese for Portugal and marks the document as pt-PT", async () => {
+    // Arrange & Act
+    renderWithSavedLocale("pt");
+
+    // Assert
+    expect(await screen.findByText("Guardar")).toBeInTheDocument();
+    expect(screen.getByTestId("locale")).toHaveTextContent("pt");
+    expect(document.documentElement.lang).toBe("pt-PT");
+  });
+
+  it("loads a translation again after switching to English and back without a page reload", async () => {
+    // Arrange
+    renderWithSavedLocale("pt");
+    expect(await screen.findByText("Guardar")).toBeInTheDocument();
+
+    // Act
+    fireEvent.click(screen.getByText("EN"));
+    expect(await screen.findByText("Save")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("PT"));
+
+    // Assert
+    expect(await screen.findByText("Guardar")).toBeInTheDocument();
+    expect(localStorage.getItem("locale")).toBe("pt");
   });
 
   it.each(["undefined", "", "xx"])(
