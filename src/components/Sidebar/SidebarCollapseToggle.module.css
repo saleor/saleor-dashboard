@@ -29,7 +29,7 @@
 
 .collapseButton:hover {
   color: var(--mu-colors-text-default1);
-  background-color: var(--mu-colors-background-default1);
+  background-color: var(--mu-colors-background-default1-hovered);
 }
 
 .ripple {
@@ -70,7 +70,7 @@
 .expandButton:hover,
 .expandButton:focus-visible {
   color: var(--mu-colors-text-default1);
-  background-color: var(--mu-colors-background-default1);
+  background-color: var(--mu-colors-background-default1-hovered);
 }
 
 .expandButton:hover .logo,
