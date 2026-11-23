@@ -7,3 +7,44 @@
   overscroll-behavior: contain;
   padding-bottom: 32px;
 }
+
+/* Stacked, the list is a panel inside the page's own scroll. It is capped so the form
+   below stays within reach, and passes the scroll on at its ends (a contained scroll
+   area traps a finger on a phone). */
+.scrollContainerStacked {
+  flex: 0 1 auto;
+  max-height: min(55vh, 448px);
+  overscroll-behavior: auto;
+  padding-bottom: 0;
+}
+
+/* The switcher reads as one control above the form, not as another form section. */
+.switcher {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: var(--mu-border-radius-4);
+  background-color: var(--mu-colors-background-default1);
+}
+
+.switcherList {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-top: 1px solid var(--mu-colors-border-default1);
+}
+
+.switcherToolbar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+  padding: var(--mu-spacing-2) var(--mu-spacing-3);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.switcherSearch {
+  flex: 1 1 auto;
+  min-width: 0;
+}

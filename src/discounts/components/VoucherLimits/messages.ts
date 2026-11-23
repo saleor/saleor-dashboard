@@ -22,15 +22,16 @@ export default defineMessages({
     description: "usage limit uses left caption",
   },
   applyOncePerCustomer: {
-    id: "p7GaL2",
-    defaultMessage: "One use per customer",
-    description: "voucher apply once per customer toggle title",
+    id: "PgVXIr",
+    defaultMessage: "One use per email address",
+    description: "voucher toggle title: one redemption per customer email address",
   },
   applyOncePerCustomerDescription: {
-    id: "KysW5s",
+    id: "Z2U8fc",
     defaultMessage:
-      "Each customer account can redeem this voucher only once, no matter which code they use.",
-    description: "voucher apply once per customer toggle description",
+      "Each email address can redeem this voucher once, no matter which code is used. The same person can redeem again with a different address, so add a total limit or one-use codes to cap redemptions.",
+    description:
+      "voucher toggle description: the limit is per customer email address, not per person",
   },
   onlyForStaff: {
     id: "+jHXT3",

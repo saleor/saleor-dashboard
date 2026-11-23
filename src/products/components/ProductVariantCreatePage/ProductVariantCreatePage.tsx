@@ -22,7 +22,6 @@ import { VariantAttributeScope } from "@dashboard/components/Attributes/types";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
-import Grid from "@dashboard/components/Grid/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
@@ -53,6 +52,7 @@ import { ProductStocks } from "../ProductStocks/ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
+import { ProductVariantLayout } from "../ProductVariantLayout/ProductVariantLayout";
 import ProductVariantName from "../ProductVariantName/ProductVariantName";
 import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
 import { ProductVariantNavigation } from "../ProductVariantNavigation/ProductVariantNavigation";
@@ -108,7 +108,7 @@ interface ProductVariantCreatePageProps {
   attributeValues: AttributeValueChoices;
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   onVariantClick: (variantId: string) => void;
-  onVariantReorder: (move: VariantReorderMove) => void;
+  onVariantReorder: (move: VariantReorderMove) => void | Promise<unknown>;
   onWarehouseConfigure: () => void;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
@@ -234,8 +234,8 @@ export const ProductVariantCreatePage = ({
               title={header}
             />
             <DetailPageLayout.Content>
-              <Grid variant="inverted">
-                <div>
+              <ProductVariantLayout
+                navigation={
                   <ProductVariantNavigation
                     fallbackThumbnail={product?.thumbnail?.url}
                     productId={productId}
@@ -243,141 +243,140 @@ export const ProductVariantCreatePage = ({
                     onReorder={onVariantReorder}
                     isCreate={true}
                   />
-                </div>
-                <div>
-                  <ProductVariantName value={data.variantName} onChange={change} errors={errors} />
-                  <CardSpacer />
-                  <ProductVariantPrice
-                    disabled={!product}
-                    productVariantChannelListings={data.channelListings.map(channel => ({
-                      ...channel.data,
-                      ...channel.value,
-                    }))}
-                    errors={errors}
-                    loading={!product}
-                    onChange={handlers.changeChannels}
-                    onChannelsReplace={handlers.replaceChannels}
-                    onManageClick={product ? toggleManageChannels : undefined}
-                    availableChannelsCount={product?.channelListings?.length}
-                  />
-                  {product?.productType?.hasVariants && (
-                    <Attributes
-                      chrome="card"
-                      referenceLayoutView="variant"
-                      referenceTypeId={product?.productType?.id}
-                      title={intl.formatMessage(messages.attributesHeader)}
-                      attributes={data.attributes.filter(
-                        attribute =>
-                          attribute.data.variantAttributeScope ===
-                          VariantAttributeScope.NOT_VARIANT_SELECTION,
-                      )}
-                      attributeValues={attributeValues}
-                      loading={disabled}
-                      disabled={disabled}
-                      errors={errors}
-                      onChange={handlers.selectAttribute}
-                      onMultiChange={handlers.selectAttributeMultiple}
-                      onFileChange={handlers.selectAttributeFile}
-                      onReferencesRemove={handlers.selectAttributeReference}
-                      onReferencesAddClick={onAssignReferencesClick}
-                      onReferencesReorder={handlers.reorderAttributeValue}
-                      fetchAttributeValues={fetchAttributeValues}
-                      fetchMoreAttributeValues={fetchMoreAttributeValues}
-                      onAttributeSelectBlur={onAttributeSelectBlur}
-                      richTextGetters={attributeRichTextGetters}
-                    />
-                  )}
-                  {product?.productType?.hasVariants && (
-                    <Attributes
-                      chrome="card"
-                      referenceLayoutView="variant"
-                      referenceTypeId={product?.productType?.id}
-                      title={intl.formatMessage(messages.attributesSelectionHeader)}
-                      attributes={data.attributes.filter(
-                        attribute =>
-                          attribute.data.variantAttributeScope ===
-                          VariantAttributeScope.VARIANT_SELECTION,
-                      )}
-                      attributeValues={attributeValues}
-                      loading={disabled}
-                      disabled={disabled}
-                      errors={errors}
-                      onChange={handlers.selectAttribute}
-                      onMultiChange={handlers.selectAttributeMultiple}
-                      onFileChange={handlers.selectAttributeFile}
-                      onReferencesRemove={handlers.selectAttributeReference}
-                      onReferencesAddClick={onAssignReferencesClick}
-                      onReferencesReorder={handlers.reorderAttributeValue}
-                      fetchAttributeValues={fetchAttributeValues}
-                      fetchMoreAttributeValues={fetchMoreAttributeValues}
-                      onAttributeSelectBlur={onAttributeSelectBlur}
-                      richTextGetters={attributeRichTextGetters}
-                    />
-                  )}
-                  {!product?.productType?.hasVariants && data.attributes.length > 0 && (
-                    <DashboardCard paddingTop={6}>
-                      <DashboardCard.Content>
-                        <Box display="flex" flexDirection="column" gap={4} paddingBottom={4}>
-                          <Text size={6} fontWeight="medium">
-                            {intl.formatMessage(messages.attributesHeader)}
-                          </Text>
-                          <Text size={2} color="default2">
-                            <FormattedMessage
-                              id="zN0Eub"
-                              defaultMessage="This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
-                              description="info message when hasVariants is false but variant attributes exist"
-                              values={{
-                                count: data.attributes.length,
-                                productTypeLink: product?.productType ? (
-                                  <Link href={productTypeUrl(product.productType.id)} underline>
-                                    {product.productType.name}
-                                  </Link>
-                                ) : null,
-                              }}
-                            />
-                          </Text>
-                        </Box>
-                      </DashboardCard.Content>
-                    </DashboardCard>
-                  )}
-                  <CardSpacer />
-                  <ProductVariantCheckoutSettings
-                    data={data}
+                }
+              >
+                <ProductVariantName value={data.variantName} onChange={change} errors={errors} />
+                <CardSpacer />
+                <ProductVariantPrice
+                  disabled={!product}
+                  productVariantChannelListings={data.channelListings.map(channel => ({
+                    ...channel.data,
+                    ...channel.value,
+                  }))}
+                  errors={errors}
+                  loading={!product}
+                  onChange={handlers.changeChannels}
+                  onChannelsReplace={handlers.replaceChannels}
+                  onManageClick={product ? toggleManageChannels : undefined}
+                  availableChannelsCount={product?.channelListings?.length}
+                />
+                {product?.productType?.hasVariants && (
+                  <Attributes
+                    chrome="card"
+                    referenceLayoutView="variant"
+                    referenceTypeId={product?.productType?.id}
+                    title={intl.formatMessage(messages.attributesHeader)}
+                    attributes={data.attributes.filter(
+                      attribute =>
+                        attribute.data.variantAttributeScope ===
+                        VariantAttributeScope.NOT_VARIANT_SELECTION,
+                    )}
+                    attributeValues={attributeValues}
+                    loading={disabled}
                     disabled={disabled}
                     errors={errors}
-                    onChange={change}
+                    onChange={handlers.selectAttribute}
+                    onMultiChange={handlers.selectAttributeMultiple}
+                    onFileChange={handlers.selectAttributeFile}
+                    onReferencesRemove={handlers.selectAttributeReference}
+                    onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={fetchAttributeValues}
+                    fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={attributeRichTextGetters}
                   />
-                  <CardSpacer />
-                  <ProductShipping
-                    data={data}
+                )}
+                {product?.productType?.hasVariants && (
+                  <Attributes
+                    chrome="card"
+                    referenceLayoutView="variant"
+                    referenceTypeId={product?.productType?.id}
+                    title={intl.formatMessage(messages.attributesSelectionHeader)}
+                    attributes={data.attributes.filter(
+                      attribute =>
+                        attribute.data.variantAttributeScope ===
+                        VariantAttributeScope.VARIANT_SELECTION,
+                    )}
+                    attributeValues={attributeValues}
+                    loading={disabled}
                     disabled={disabled}
                     errors={errors}
-                    weightUnit={weightUnit}
-                    onChange={change}
+                    onChange={handlers.selectAttribute}
+                    onMultiChange={handlers.selectAttributeMultiple}
+                    onFileChange={handlers.selectAttributeFile}
+                    onReferencesRemove={handlers.selectAttributeReference}
+                    onReferencesAddClick={onAssignReferencesClick}
+                    onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={fetchAttributeValues}
+                    fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={attributeRichTextGetters}
                   />
-                  <CardSpacer />
-                  <ProductStocks
-                    data={data}
-                    warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
-                    fetchMoreWarehouses={fetchMoreWarehouses}
-                    hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
-                    hasVariants={true}
-                    onFormDataChange={change}
-                    errors={errors}
-                    stocks={data.stocks}
-                    loading={!product}
-                    searchWarehouses={searchWarehouses}
-                    onChange={handlers.changeStock}
-                    onStocksReplace={handlers.replaceStocks}
-                    onWarehouseStockAdd={handlers.addStock}
-                    onWarehouseStockDelete={handlers.deleteStock}
-                    onWarehouseConfigure={onWarehouseConfigure}
-                    isCreate={true}
-                  />
-                  <CardSpacer />
-                  <Metadata data={data} onChange={handlers.changeMetadata} />
-                </div>
-              </Grid>
+                )}
+                {!product?.productType?.hasVariants && data.attributes.length > 0 && (
+                  <DashboardCard paddingTop={6}>
+                    <DashboardCard.Content>
+                      <Box display="flex" flexDirection="column" gap={4} paddingBottom={4}>
+                        <Text size={6} fontWeight="medium">
+                          {intl.formatMessage(messages.attributesHeader)}
+                        </Text>
+                        <Text size={2} color="default2">
+                          <FormattedMessage
+                            id="zN0Eub"
+                            defaultMessage="This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
+                            description="info message when hasVariants is false but variant attributes exist"
+                            values={{
+                              count: data.attributes.length,
+                              productTypeLink: product?.productType ? (
+                                <Link href={productTypeUrl(product.productType.id)} underline>
+                                  {product.productType.name}
+                                </Link>
+                              ) : null,
+                            }}
+                          />
+                        </Text>
+                      </Box>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                )}
+                <CardSpacer />
+                <ProductVariantCheckoutSettings
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <ProductShipping
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  weightUnit={weightUnit}
+                  onChange={change}
+                />
+                <CardSpacer />
+                <ProductStocks
+                  data={data}
+                  warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
+                  fetchMoreWarehouses={fetchMoreWarehouses}
+                  hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
+                  hasVariants={true}
+                  onFormDataChange={change}
+                  errors={errors}
+                  stocks={data.stocks}
+                  loading={!product}
+                  searchWarehouses={searchWarehouses}
+                  onChange={handlers.changeStock}
+                  onStocksReplace={handlers.replaceStocks}
+                  onWarehouseStockAdd={handlers.addStock}
+                  onWarehouseStockDelete={handlers.deleteStock}
+                  onWarehouseConfigure={onWarehouseConfigure}
+                  isCreate={true}
+                />
+                <CardSpacer />
+                <Metadata data={data} onChange={handlers.changeMetadata} />
+              </ProductVariantLayout>
               <Savebar>
                 <Savebar.Spacer />
                 <Savebar.CancelButton onClick={() => navigate(productUrl(productId))} />

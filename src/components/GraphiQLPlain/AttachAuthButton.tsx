@@ -1,5 +1,6 @@
 import { UnStyledButton, useEditorContext } from "@graphiql/react";
 import { useCallback } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./AttachAuthButton.module.css";
 
@@ -12,6 +13,7 @@ export const AttachAuthButton = ({
   setActiveSecondaryEditor,
   showEditorTools,
 }: AttachAuthButtonProps) => {
+  const intl = useIntl();
   const editorContext = useEditorContext({ nonNull: true });
 
   const handleClick = useCallback(() => {
@@ -38,7 +40,13 @@ export const AttachAuthButton = ({
       headers["Authorization"] ||
       ""
     ).replace(/^Bearer\s+/i, "");
-    const rawToken = window.prompt("Paste auth token (leave empty to clear):", existingToken);
+    const rawToken = window.prompt(
+      intl.formatMessage({
+        id: "HDoUL0",
+        defaultMessage: "Paste auth token (leave empty to clear):",
+      }),
+      existingToken,
+    );
 
     if (rawToken === null) {
       return;
@@ -59,11 +67,11 @@ export const AttachAuthButton = ({
     headerEditor.setValue(updated);
     showEditorTools();
     setActiveSecondaryEditor("headers");
-  }, [editorContext.headerEditor, setActiveSecondaryEditor, showEditorTools]);
+  }, [editorContext.headerEditor, intl, setActiveSecondaryEditor, showEditorTools]);
 
   return (
     <UnStyledButton type="button" className={styles.attachButton} onClick={handleClick}>
-      Attach Token
+      <FormattedMessage id="wqT5JO" defaultMessage="Attach Token" />
     </UnStyledButton>
   );
 };

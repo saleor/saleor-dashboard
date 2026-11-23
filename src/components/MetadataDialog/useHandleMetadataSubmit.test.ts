@@ -5,6 +5,7 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
+import { type ObjectWithMetadata } from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { renderHook } from "@testing-library/react";
 import { act } from "react";
 
@@ -29,8 +30,14 @@ jest.mock("@dashboard/graphql", () => ({
 }));
 
 // Test fixtures
-const mockInitialData = {
+const mockInitialData: ObjectWithMetadata = {
   id: "test-id",
+  metadata: [{ key: "existing-key", value: "existing-value" }],
+  privateMetadata: [{ key: "private-key", value: "private-value" }],
+};
+
+// What the form was loaded with.
+const mockBaseline: MetadataFormData = {
   metadata: [{ key: "existing-key", value: "existing-value" }],
   privateMetadata: [{ key: "private-key", value: "private-value" }],
 };
@@ -49,7 +56,6 @@ describe("useHandleMetadataSubmit", () => {
     refetchQueries: jest.Mock;
   };
   let mockOnClose: jest.Mock;
-  let mockRefetch: jest.Mock;
 
   beforeEach(() => {
     // Arrange
@@ -63,12 +69,8 @@ describe("useHandleMetadataSubmit", () => {
       data: { updatePrivateMetadata: { errors: [] } },
     });
 
-    mockRefetch = jest.fn().mockResolvedValue({});
-
     mockClient = {
-      refetchQueries: jest.fn(() => ({
-        queries: [{ refetch: mockRefetch }],
-      })),
+      refetchQueries: jest.fn(() => Promise.resolve([])),
     };
 
     mockOnClose = jest.fn();
@@ -86,7 +88,7 @@ describe("useHandleMetadataSubmit", () => {
     (useApolloClient as jest.Mock).mockReturnValue(mockClient);
   });
 
-  it("should return onSubmit, lastSubmittedData, and submitInProgress", () => {
+  it("should return onSubmit and submitInProgress", () => {
     // Arrange
     // Act
     const { result } = renderHook(() =>
@@ -99,12 +101,11 @@ describe("useHandleMetadataSubmit", () => {
 
     // Assert
     expect(result.current).toHaveProperty("onSubmit");
-    expect(result.current).toHaveProperty("lastSubmittedData");
     expect(result.current).toHaveProperty("submitInProgress");
     expect(typeof result.current.onSubmit).toBe("function");
   });
 
-  it("should handle undefined initialData gracefully", async () => {
+  it("doesn't report a save or close when no metadata was loaded", async () => {
     // Arrange
     const { result } = renderHook(() =>
       useHandleMetadataSubmit({
@@ -116,32 +117,14 @@ describe("useHandleMetadataSubmit", () => {
 
     // Act
     await act(async () => {
-      await result.current.onSubmit(mockMetadataFormData);
+      await result.current.onSubmit(mockMetadataFormData, mockBaseline);
     });
 
     // Assert
-    expect(mockClient.refetchQueries).toHaveBeenCalled();
-  });
-
-  it("should track lastSubmittedData", async () => {
-    // Arrange
-    const { result, rerender } = renderHook(() =>
-      useHandleMetadataSubmit({
-        initialData: mockInitialData,
-        onClose: mockOnClose,
-        refetchDocument: mockDocument,
-      }),
-    );
-
-    // Act
-    await act(async () => {
-      await result.current.onSubmit(mockMetadataFormData);
-    });
-
-    rerender();
-
-    // Assert
-    expect(result.current.lastSubmittedData).toEqual(mockMetadataFormData);
+    expect(mockUpdateMetadata).not.toHaveBeenCalled();
+    expect(mockUpdatePrivateMetadata).not.toHaveBeenCalled();
+    expect(mockNotify).not.toHaveBeenCalled();
+    expect(mockOnClose).not.toHaveBeenCalled();
   });
 
   it("should show success notification and close on successful submission", async () => {
@@ -156,7 +139,7 @@ describe("useHandleMetadataSubmit", () => {
 
     // Act
     await act(async () => {
-      await result.current.onSubmit(mockMetadataFormData);
+      await result.current.onSubmit(mockMetadataFormData, mockBaseline);
     });
 
     // Assert
@@ -164,6 +147,29 @@ describe("useHandleMetadataSubmit", () => {
       status: "success",
       text: expect.any(String),
     });
+    expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it("confirms the save and closes even when reloading the metadata afterwards fails", async () => {
+    // Arrange
+    mockClient.refetchQueries.mockReturnValue(Promise.reject(new Error("Failed to fetch")));
+
+    const { result } = renderHook(() =>
+      useHandleMetadataSubmit({
+        initialData: mockInitialData,
+        onClose: mockOnClose,
+        refetchDocument: mockDocument,
+      }),
+    );
+
+    // Act
+    await act(async () => {
+      await result.current.onSubmit(mockMetadataFormData, mockBaseline);
+    });
+
+    // Assert
+    expect(mockUpdateMetadata).toHaveBeenCalled();
+    expect(mockNotify).toHaveBeenCalledWith({ status: "success", text: expect.any(String) });
     expect(mockOnClose).toHaveBeenCalled();
   });
 
@@ -183,7 +189,7 @@ describe("useHandleMetadataSubmit", () => {
 
     // Act
     await act(async () => {
-      await result.current.onSubmit(mockMetadataFormData);
+      await result.current.onSubmit(mockMetadataFormData, mockBaseline);
     });
 
     // Assert
@@ -192,8 +198,10 @@ describe("useHandleMetadataSubmit", () => {
     expect(mockNotify).not.toHaveBeenCalledWith(expect.objectContaining({ status: "success" }));
   });
 
-  it("should call client.refetchQueries with refetchDocument", async () => {
+  it("confirms and closes as soon as the save succeeds, without waiting for the reload", async () => {
     // Arrange
+    mockClient.refetchQueries.mockReturnValue(new Promise<unknown[]>(() => undefined));
+
     const { result } = renderHook(() =>
       useHandleMetadataSubmit({
         initialData: mockInitialData,
@@ -204,14 +212,140 @@ describe("useHandleMetadataSubmit", () => {
 
     // Act
     await act(async () => {
-      await result.current.onSubmit(mockMetadataFormData);
+      await result.current.onSubmit(mockMetadataFormData, mockBaseline);
     });
 
     // Assert
-    expect(mockClient.refetchQueries).toHaveBeenCalledWith({
-      include: [mockDocument],
+    expect(mockClient.refetchQueries).toHaveBeenCalledWith({ include: [mockDocument] });
+    expect(mockNotify).toHaveBeenCalledWith({ status: "success", text: expect.any(String) });
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
+    expect(result.current.submitInProgress).toBe(false);
+  });
+
+  describe("when the save finishes after the dialog or page changed", () => {
+    // Starts a save whose public request finishes only when `finish` is called.
+    const startSlowSave = (): {
+      unmount: () => void;
+      finish: () => Promise<void>;
+    } => {
+      let finishRequest: (value: unknown) => void = () => undefined;
+
+      mockUpdateMetadata.mockReturnValue(
+        new Promise(resolve => {
+          finishRequest = resolve;
+        }),
+      );
+
+      const { result, unmount } = renderHook(() =>
+        useHandleMetadataSubmit({
+          initialData: mockInitialData,
+          onClose: mockOnClose,
+          refetchDocument: mockDocument,
+        }),
+      );
+      let saving: Promise<void> = Promise.resolve();
+
+      act(() => {
+        saving = result.current.onSubmit(mockMetadataFormData, mockBaseline);
+      });
+
+      return {
+        unmount,
+        finish: async () => {
+          await act(async () => {
+            finishRequest({ data: { updateMetadata: { errors: [] } } });
+            await saving;
+          });
+        },
+      };
+    };
+
+    afterEach(() => {
+      window.history.replaceState({}, "", "/");
     });
-    expect(mockRefetch).toHaveBeenCalled();
+
+    it("doesn't close anything when the user went elsewhere while it ran", async () => {
+      // Arrange
+      window.history.replaceState({}, "", "/products/1?action=view-metadata");
+
+      const save = startSlowSave();
+
+      // Act
+      window.history.pushState({}, "", "/products/1?action=remove");
+      await save.finish();
+
+      // Assert
+      expect(mockNotify).toHaveBeenCalledWith({ status: "success", text: expect.any(String) });
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+
+    it("still closes when the page unmounted the dialog while reloading", async () => {
+      // Arrange
+      window.history.replaceState({}, "", "/product-types/1?action=view-metadata");
+
+      const save = startSlowSave();
+
+      // Act
+      save.unmount();
+      await save.finish();
+
+      // Assert
+      expect(mockOnClose).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it("reloads nothing when given neither a refetch nor a document", async () => {
+    // Arrange
+    const { result } = renderHook(() =>
+      useHandleMetadataSubmit({
+        initialData: mockInitialData,
+        onClose: mockOnClose,
+      }),
+    );
+
+    // Act
+    await act(async () => {
+      await result.current.onSubmit(mockMetadataFormData, mockBaseline);
+    });
+
+    // Assert
+    expect(mockClient.refetchQueries).not.toHaveBeenCalled();
+    expect(mockOnClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("sends only what differs from what the form was loaded with", async () => {
+    // Arrange
+    // The server already has a newer value for "existing-key" than the form was loaded with.
+    const newerOnServer: ObjectWithMetadata = {
+      ...mockInitialData,
+      metadata: [{ key: "existing-key", value: "changed-by-an-app" }],
+    };
+    const { result } = renderHook(() =>
+      useHandleMetadataSubmit({
+        initialData: newerOnServer,
+        onClose: mockOnClose,
+        refetchDocument: mockDocument,
+      }),
+    );
+    const edited: MetadataFormData = {
+      metadata: [...mockBaseline.metadata, { key: "added-key", value: "added-value" }],
+      privateMetadata: mockBaseline.privateMetadata,
+    };
+
+    // Act
+    await act(async () => {
+      await result.current.onSubmit(edited, mockBaseline);
+    });
+
+    // Assert
+    expect(mockUpdateMetadata).toHaveBeenCalledWith({
+      variables: {
+        id: mockInitialData.id,
+        input: [{ key: "added-key", value: "added-value" }],
+        keysToDelete: [],
+      },
+    });
+    expect(mockUpdatePrivateMetadata).not.toHaveBeenCalled();
   });
 
   it("should reflect loading state during mutation", () => {

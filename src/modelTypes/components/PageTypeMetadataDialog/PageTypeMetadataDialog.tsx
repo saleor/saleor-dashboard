@@ -37,7 +37,7 @@ export const PageTypeMetadataDialog = ({
         : undefined,
     [pageType],
   );
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+  const { onSubmit, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedPageType,
     onClose,
     refetchDocument: PageTypeDetailsDocument,
@@ -53,10 +53,10 @@ export const PageTypeMetadataDialog = ({
     formIsDirty,
     handleChange,
     getFormData,
+    baseline,
   } = useMetadataForm({
     graphqlData: normalizedPageType,
     submitInProgress,
-    lastSubmittedData,
   });
 
   const wasOpenRef = useRef(false);
@@ -85,7 +85,7 @@ export const PageTypeMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(getFormData());
+        await onSubmit(getFormData(), baseline);
       }}
       title={intl.formatMessage({
         defaultMessage: "Model Type Metadata",

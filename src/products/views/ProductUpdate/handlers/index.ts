@@ -147,12 +147,17 @@ export function createVariantReorderHandler(
   productId: string | undefined,
   reorderProductVariants: ProductVariantReorderMutationFn,
 ) {
-  return ({ id, sortOrder }: { id: string; sortOrder: number }) => {
+  /**
+   * Saves one move. Rejects when the move was not saved, so the list can put the variant
+   * back; the mutation hook has shown the error by then. The list applies a saved move to
+   * the pages it has loaded itself, so nothing is refetched here.
+   */
+  return async ({ id, sortOrder }: { id: string; sortOrder: number }): Promise<void> => {
     if (!productId) {
-      return;
+      throw new Error("Variant order was not saved: the product is not loaded yet");
     }
 
-    reorderProductVariants({
+    const result = await reorderProductVariants({
       variables: {
         move: {
           id,
@@ -160,7 +165,11 @@ export function createVariantReorderHandler(
         },
         productId,
       },
-      refetchQueries: ["ProductVariantSiblings"],
     });
+    const errors = result.data?.productVariantReorder?.errors ?? [];
+
+    if (!result.data || result.errors?.length || errors.length) {
+      throw new Error("Variant order was not saved");
+    }
   };
 }

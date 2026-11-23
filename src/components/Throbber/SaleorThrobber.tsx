@@ -1,3 +1,5 @@
+import { useIntl } from "react-intl";
+
 import { THROBBER_BEAM_LENGTH, THROBBER_PATH_D, THROBBER_PATH_LENGTH } from "./throbberGeometry";
 
 interface SaleorThrobberProps {
@@ -11,6 +13,8 @@ export function SaleorThrobber({
   className,
   "data-test-id": dataTestId,
 }: SaleorThrobberProps) {
+  const intl = useIntl();
+
   const pathLength = THROBBER_PATH_LENGTH;
   const beamLength = THROBBER_BEAM_LENGTH;
 
@@ -30,7 +34,10 @@ export function SaleorThrobber({
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="Loading"
+        aria-label={intl.formatMessage({
+          id: "iFsDVR",
+          defaultMessage: "Loading",
+        })}
         role="progressbar"
       >
         <style>

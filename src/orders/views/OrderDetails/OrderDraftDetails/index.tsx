@@ -29,6 +29,7 @@ import { OrderCustomerChangeDialog } from "@dashboard/orders/components/OrderCus
 import { OrderCustomerEditDialog } from "@dashboard/orders/components/OrderCustomerEditDialog/OrderCustomerEditDialog";
 import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
 import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
+import { OrderVoucherDialog } from "@dashboard/orders/components/OrderVoucherDialog/OrderVoucherDialog";
 import { getVariantSearchAddress, isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
@@ -49,6 +50,7 @@ import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog";
 import { orderDraftListUrl, type OrderUrlDialog, type OrderUrlQueryParams } from "../../../urls";
 import { getUnresolvedFinalizeErrors } from "./getUnresolvedFinalizeErrors";
+import { useDraftOrderVoucher } from "./useDraftOrderVoucher";
 
 interface OrderDraftDetailsProps {
   id: string;
@@ -135,6 +137,8 @@ export const OrderDraftDetails = ({
     skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
   });
   const intl = useIntl();
+  const isVoucherDialogOpen = params.action === "edit-voucher";
+  const voucher = useDraftOrderVoucher({ order, open: isVoucherDialogOpen, orderDraftUpdate });
   const handleCustomerChange = async ({
     user,
     userEmail,
@@ -236,6 +240,10 @@ export const OrderDraftDetails = ({
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
             onShippingMethodEdit={() => openModal("edit-shipping")}
+            voucherActions={{
+              onEdit: () => openModal("edit-voucher"),
+              onRemove: voucher.remove,
+            }}
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
             orderLineRemoveConfirmState={orderLineDelete.opts.status}
             orderLineRemoveErrors={orderLineDelete.opts.data?.orderLineDelete?.errors ?? []}
@@ -276,6 +284,19 @@ export const OrderDraftDetails = ({
             },
           })
         }
+      />
+      <OrderVoucherDialog
+        open={isVoucherDialogOpen}
+        mode={voucher.mode}
+        currentCode={order.voucherCode}
+        confirmButtonState={orderDraftUpdate.opts.status}
+        errors={voucher.errors}
+        onClose={closeModal}
+        onSubmit={async voucherCode => {
+          if (await voucher.submit(voucherCode)) {
+            closeModal();
+          }
+        }}
       />
       <OrderProductAddDialog
         confirmButtonState={orderLinesAdd.opts.status}

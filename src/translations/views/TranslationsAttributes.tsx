@@ -11,6 +11,7 @@ import useShop from "@dashboard/hooks/useShop";
 import { maybe } from "@dashboard/misc";
 import { ListViews, type Pagination } from "@dashboard/types";
 import { type OutputData } from "@editorjs/editorjs";
+import { useIntl } from "react-intl";
 
 import { submitBulkAttributeTranslations } from "../bulkSubmit";
 import {
@@ -36,6 +37,7 @@ interface TranslationsAttributesProps {
 }
 
 const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttributesProps) => {
+  const intl = useIntl();
   const shop = useShop();
   const { onBulkChange, onDiscard, onEdit, navigateToQuery } =
     useTranslationDetailNavigation(params);
@@ -120,6 +122,10 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
     values: Parameters<typeof submitBulkAttributeTranslations>[0]["values"],
   ) => {
     const result = await submitBulkAttributeTranslations({
+      fallbackMessage: intl.formatMessage({
+        id: "V28ees",
+        defaultMessage: "Translation could not be saved",
+      }),
       onAttributeChoiceSubmit: async (field, data) => {
         const [fieldName, fieldId] = field.name.split(":");
         const isRichText = fieldName === fieldNames.richTextValue;

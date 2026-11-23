@@ -43,8 +43,8 @@ export type Ripple = {
    */
   type: RippleType;
   /**
-   * Date when the Ripple was added to the system. It doesn't have to be accurate, but will be used for sorting.
-   * Can be approx date of the release
+   * Release date of the change. Set it to the day the change ships: the contextual ripple shows only
+   * to users who joined before this date. Also sorts the What's New list.
    */
   dateAdded: Date;
   content: {

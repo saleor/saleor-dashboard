@@ -1,0 +1,19 @@
+.discount {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: var(--mu-spacing-4);
+  white-space: nowrap;
+}
+
+/* Macaw renders the option label as a sibling of the adornment; truncate it instead of wrapping. */
+:global([data-macaw-ui-component="List.Item"]):has(> .discount) > :not(.discount) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code {
+  font-family: var(--mu-fonts-mono, ui-monospace, monospace);
+  white-space: nowrap;
+}

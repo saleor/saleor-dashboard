@@ -1,3 +1,4 @@
+import { useUser } from "@dashboard/auth/useUser";
 import { allRipples } from "@dashboard/ripples/allRipples";
 import { type Ripple } from "@dashboard/ripples/types";
 import { useAtom } from "jotai";
@@ -25,6 +26,8 @@ export class RipplesStorage {
     private storedState: StoredRipplesRecord,
     private updateState: StateUpdater,
     private allRipples: Ripple[],
+    /** When the signed-in user joined. Undefined while the user is loading. */
+    private userJoinedAt: Date | undefined,
   ) {}
 
   private get now() {
@@ -45,8 +48,24 @@ export class RipplesStorage {
     return firstSeenAt ? firstSeenAt + TTL * 1000 < this.now : false;
   }
 
+  /**
+   * A ripple points at a change, so it only applies to users who knew the dashboard before it.
+   * The What's New list ignores this and stays permanent.
+   */
+  private getIsNewToUser(ripple: Ripple): boolean {
+    if (!this.userJoinedAt) {
+      return false;
+    }
+
+    return this.userJoinedAt.getTime() < ripple.dateAdded.getTime();
+  }
+
   getShouldShow(ripple: Ripple): boolean {
-    return !this.getIsManuallyHidden(ripple.ID) && !this.getIsStale(ripple.ID, ripple.TTL_seconds);
+    return (
+      this.getIsNewToUser(ripple) &&
+      !this.getIsManuallyHidden(ripple.ID) &&
+      !this.getIsStale(ripple.ID, ripple.TTL_seconds)
+    );
   }
 
   setFirstSeenFlag(ripple: Ripple): void {
@@ -90,10 +109,12 @@ export class RipplesStorage {
 
 export const useRippleStorage = () => {
   const [storedState, setStoreState] = useAtom(storageAtom);
+  const dateJoined = useUser().user?.dateJoined;
+  const userJoinedAt = useMemo(() => (dateJoined ? new Date(dateJoined) : undefined), [dateJoined]);
 
   const storage = useMemo(
-    () => new RipplesStorage(storedState, setStoreState, allRipples),
-    [storedState, setStoreState],
+    () => new RipplesStorage(storedState, setStoreState, allRipples, userJoinedAt),
+    [storedState, setStoreState, userJoinedAt],
   );
 
   const setFirstSeenFlag = useCallback(

@@ -1,9 +1,18 @@
-import { type ProductFragment, ProductMediaType } from "@dashboard/graphql";
+import { type FetchResult } from "@apollo/client";
+import {
+  ProductErrorCode,
+  type ProductFragment,
+  ProductMediaType,
+  type ProductVariantReorderMutation,
+  type ProductVariantReorderMutationFn,
+} from "@dashboard/graphql";
+import { type VariantReorderMove } from "@dashboard/products/components/ProductVariantNavigation/hooks/useVariantDrag";
 
 import {
   createImageReorderHandler,
   createImagesUploadCompleteHandler,
   createImageUploadHandler,
+  createVariantReorderHandler,
 } from "./index";
 
 function createProductWithMedia(mediaIds: string[]): ProductFragment {
@@ -182,5 +191,105 @@ describe("createImageReorderHandler", () => {
         },
       },
     });
+  });
+});
+
+describe("createVariantReorderHandler", () => {
+  const move: VariantReorderMove = { id: "variant-1", sortOrder: 2 };
+  const saved: FetchResult<ProductVariantReorderMutation> = {
+    data: {
+      __typename: "Mutation",
+      productVariantReorder: { __typename: "ProductVariantReorder", errors: [] },
+    },
+  };
+  const refused: FetchResult<ProductVariantReorderMutation> = {
+    data: {
+      __typename: "Mutation",
+      productVariantReorder: {
+        __typename: "ProductVariantReorder",
+        errors: [
+          {
+            __typename: "ProductError",
+            code: ProductErrorCode.NOT_FOUND,
+            field: "moves",
+            message: "Variant not found",
+          },
+        ],
+      },
+    },
+  };
+  // The mutation hook reports a failed request by resolving without data.
+  const unanswered: FetchResult<ProductVariantReorderMutation> = { data: undefined };
+
+  const mutation = (
+    result: FetchResult<ProductVariantReorderMutation>,
+  ): jest.MockedFunction<ProductVariantReorderMutationFn> => {
+    const reorderProductVariants: jest.MockedFunction<ProductVariantReorderMutationFn> = jest.fn();
+
+    reorderProductVariants.mockResolvedValue(result);
+
+    return reorderProductVariants;
+  };
+
+  it("sends the move for the product and resolves once it is saved", async () => {
+    // Arrange
+    const reorderProductVariants = mutation(saved);
+    const handler = createVariantReorderHandler("product-1", reorderProductVariants);
+
+    // Act
+    const result = handler(move);
+
+    // Assert
+    await expect(result).resolves.toBeUndefined();
+    expect(reorderProductVariants).toHaveBeenCalledWith({
+      variables: { move, productId: "product-1" },
+    });
+  });
+
+  it("does not ask for the variant list again: the list applies the move itself", async () => {
+    // Arrange
+    const reorderProductVariants = mutation(saved);
+    const handler = createVariantReorderHandler("product-1", reorderProductVariants);
+
+    // Act
+    await handler(move);
+
+    // Assert
+    expect(reorderProductVariants.mock.calls[0][0]).not.toHaveProperty("refetchQueries");
+  });
+
+  it("rejects when the API refuses the move", async () => {
+    // Arrange
+    const handler = createVariantReorderHandler("product-1", mutation(refused));
+
+    // Act
+    const result = handler(move);
+
+    // Assert
+    await expect(result).rejects.toThrow("Variant order was not saved");
+  });
+
+  it("rejects when the request brought no answer", async () => {
+    // Arrange
+    const handler = createVariantReorderHandler("product-1", mutation(unanswered));
+
+    // Act
+    const result = handler(move);
+
+    // Assert
+    await expect(result).rejects.toThrow("Variant order was not saved");
+  });
+
+  it("rejects without a request while the product is unknown", async () => {
+    // Arrange
+    const reorderProductVariants = mutation(saved);
+    const handler = createVariantReorderHandler(undefined, reorderProductVariants);
+
+    // Act
+    const result = handler(move);
+
+    // Assert
+    await expect(result).rejects.toThrow("Variant order was not saved");
+    expect(reorderProductVariants).not.toHaveBeenCalled();
   });
 });

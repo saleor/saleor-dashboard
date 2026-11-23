@@ -8,13 +8,14 @@ import { useIntl } from "react-intl";
 import { getLineDiscountsSummary } from "./getLineDiscountsSummary";
 import { getUndiscountedSubtotal } from "./getUndiscountedSubtotal";
 import { LegacyPaymentsApiButtons } from "./LegacyPaymentsApiButtons";
-import { OrderValue } from "./OrderValue";
+import { OrderValue, type VoucherActions } from "./OrderValue";
 import { PaymentsSummary } from "./PaymentsSummary";
 import { TransactionsApiButtons } from "./TransactionsApiButtons";
 
 type EditableOrderSummary = {
   isEditable: true;
   onShippingMethodEdit: () => void;
+  voucherActions?: VoucherActions;
   errors?: OrderErrorFragment[];
 } & OrderDiscountContextConsumerProps;
 
@@ -119,6 +120,8 @@ export const OrderSummary = (props: Props) => {
             undiscountedSubtotal={undiscountedSubtotal}
             isEditable={true}
             onShippingMethodEdit={editableProps.onShippingMethodEdit}
+            voucherCode={order.voucherCode ?? null}
+            voucherActions={editableProps.voucherActions}
             shippingMethods={order.shippingMethods}
             shippingMethod={order.shippingMethod}
             shippingAddress={order.shippingAddress}

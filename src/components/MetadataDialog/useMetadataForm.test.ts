@@ -19,7 +19,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -57,7 +56,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -109,7 +107,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -155,7 +152,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -200,7 +196,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -235,7 +230,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -280,7 +274,7 @@ describe("useMetadataForm", () => {
     );
   });
 
-  it("validates and rejects empty keys in metadata", async () => {
+  it("rejects a row that has a value but no key", async () => {
     // Arrange
     const graphqlData = {
       metadata: [{ key: "test", value: "value1", __typename: "MetadataItem" as const }],
@@ -293,7 +287,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -306,15 +299,15 @@ describe("useMetadataForm", () => {
 
     const metadataNoOpUpdate: ChangeEvent = {
       target: {
-        name: `metadata:1:${EventDataField.name}`,
-        value: "",
+        name: `metadata:1:${EventDataField.value}`,
+        value: "orphan value",
       },
     };
 
     const privateMetadataNoOpUpdate: ChangeEvent = {
       target: {
-        name: `privateMetadata:1:${EventDataField.name}`,
-        value: "",
+        name: `privateMetadata:1:${EventDataField.value}`,
+        value: "orphan value",
       },
     };
 
@@ -348,7 +341,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -357,36 +349,230 @@ describe("useMetadataForm", () => {
     expect(result.current.privateMetadataErrors).toEqual([]);
   });
 
-  it("uses lastSubmittedData when submitInProgress is true", () => {
-    // Arrange
-    const graphqlData = {
-      metadata: [{ key: "old-key", value: "old-value", __typename: "MetadataItem" as const }],
-      privateMetadata: [
-        { key: "old-private-key", value: "old-private-value", __typename: "MetadataItem" as const },
-      ],
+  describe("when metadata is loaded again", () => {
+    type GraphqlData = Parameters<typeof useMetadataForm>[0]["graphqlData"];
+    type HookProps = Parameters<typeof useMetadataForm>[0];
+
+    const item = (key: string, value: string) => ({
+      key,
+      value,
+      __typename: "MetadataItem" as const,
+    });
+    const loadedFirst: GraphqlData = {
+      metadata: [item("seller.legalName", "Example GmbH"), item("seller.vatId", "DE000000000")],
+      privateMetadata: [],
+    };
+    const reloaded: GraphqlData = {
+      metadata: [item("seller.legalName", "Example GmbH"), item("seller.vatId", "DE111111111")],
+      privateMetadata: [],
+    };
+    const editLegalName: ChangeEvent = {
+      target: { name: `metadata:0:${EventDataField.value}`, value: "Typed AG" },
     };
 
-    const lastSubmittedData = {
-      metadata: [{ key: "submitted-key", value: "submitted-value" }],
-      privateMetadata: [{ key: "submitted-private-key", value: "submitted-private-value" }],
-    };
+    const renderForm = (initialProps: HookProps) =>
+      renderHook((props: HookProps) => useMetadataForm(props), { initialProps });
 
-    // Act
-    const { result } = renderHook(() =>
-      useMetadataForm({
-        graphqlData,
-        submitInProgress: true,
-        lastSubmittedData,
-      }),
-    );
+    it("keeps the user's edits after a save fails", () => {
+      // Arrange
+      const { result, rerender } = renderForm({
+        graphqlData: loadedFirst,
+        submitInProgress: false,
+      });
 
-    // Assert
-    expect(result.current.formData.metadata).toEqual([
-      { key: "submitted-key", value: "submitted-value" },
-    ]);
-    expect(result.current.formData.privateMetadata).toEqual([
-      { key: "submitted-private-key", value: "submitted-private-value" },
-    ]);
+      act(() => {
+        result.current.handleChange(editLegalName, false);
+      });
+
+      // Act
+      rerender({ graphqlData: loadedFirst, submitInProgress: true });
+      rerender({ graphqlData: loadedFirst, submitInProgress: false });
+
+      // Assert
+      expect(result.current.formData.metadata[0]).toEqual({
+        key: "seller.legalName",
+        value: "Typed AG",
+      });
+      expect(result.current.formIsDirty).toBe(true);
+    });
+
+    it("leaves the form as the user edited it, and saves against what it was loaded with", () => {
+      // Arrange
+      const { result, rerender } = renderForm({
+        graphqlData: loadedFirst,
+        submitInProgress: false,
+      });
+
+      act(() => {
+        result.current.handleChange(editLegalName, false);
+      });
+
+      // Act
+      rerender({ graphqlData: reloaded, submitInProgress: false });
+
+      // Assert
+      expect(result.current.formData.metadata).toEqual([
+        { key: "seller.legalName", value: "Typed AG" },
+        { key: "seller.vatId", value: "DE000000000" },
+      ]);
+      expect(result.current.baseline?.metadata).toEqual([
+        { key: "seller.legalName", value: "Example GmbH" },
+        { key: "seller.vatId", value: "DE000000000" },
+      ]);
+      expect(result.current.formIsDirty).toBe(true);
+    });
+
+    it("shows the reloaded data when the user hasn't changed anything", () => {
+      // Arrange
+      const { result, rerender } = renderForm({
+        graphqlData: loadedFirst,
+        submitInProgress: false,
+      });
+
+      // Act
+      rerender({ graphqlData: reloaded, submitInProgress: false });
+
+      // Assert
+      expect(result.current.formData.metadata[1]).toEqual({
+        key: "seller.vatId",
+        value: "DE111111111",
+      });
+      expect(result.current.baseline?.metadata[1].value).toBe("DE111111111");
+      expect(result.current.formIsDirty).toBe(false);
+    });
+
+    it("drops edits made to another object when the form gets a different object's metadata", () => {
+      // Arrange
+      const variantA: GraphqlData = {
+        id: "variant-a",
+        metadata: [item("seller.legalName", "Example GmbH")],
+        privateMetadata: [],
+      };
+      const variantB: GraphqlData = {
+        id: "variant-b",
+        metadata: [item("color", "red")],
+        privateMetadata: [],
+      };
+      const { result, rerender } = renderForm({ graphqlData: variantA, submitInProgress: false });
+
+      act(() => {
+        result.current.handleChange(editLegalName, false);
+      });
+
+      // Act
+      rerender({ graphqlData: variantB, submitInProgress: false });
+
+      // Assert
+      expect(result.current.formData.metadata).toEqual([{ key: "color", value: "red" }]);
+      expect(result.current.baseline?.metadata).toEqual([{ key: "color", value: "red" }]);
+      expect(result.current.formIsDirty).toBe(false);
+    });
+
+    it("keeps a duplicate key flagged after another row is added", async () => {
+      // Arrange
+      const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
+      const duplicateVatId: ChangeEvent = {
+        target: { name: `metadata:1:${EventDataField.name}`, value: "seller.legalName" },
+      };
+
+      await act(async () => {
+        result.current.handleChange(duplicateVatId, false);
+      });
+
+      // Act
+      await act(async () => {
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      // Assert
+      expect(result.current.metadataErrors).toContain(
+        "Metadata keys must be unique, remove duplicate key",
+      );
+    });
+
+    it("doesn't count an added blank row as a change", async () => {
+      // Arrange
+      const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
+
+      // Act
+      await act(async () => {
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      // Assert
+      expect(result.current.formData.metadata).toHaveLength(3);
+      expect(result.current.metadataErrors).toEqual([]);
+      expect(result.current.formIsDirty).toBe(false);
+    });
+
+    it("counts a value typed into a new row before its key as a change", async () => {
+      // Arrange
+      const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
+
+      await act(async () => {
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      // Act
+      await act(async () => {
+        result.current.handleChange(
+          { target: { name: `metadata:2:${EventDataField.value}`, value: '{"long": "json"}' } },
+          false,
+        );
+      });
+
+      // Assert: closing asks before dropping it, and Save waits for the key.
+      expect(result.current.formIsDirty).toBe(true);
+      expect(result.current.metadataErrors).toEqual(["Metadata key cannot be empty"]);
+    });
+
+    it("doesn't count removing an entry and adding it back as a change", async () => {
+      // Arrange
+      const { result } = renderForm({ graphqlData: loadedFirst, submitInProgress: false });
+
+      await act(async () => {
+        result.current.handleChange({ target: { name: EventDataAction.delete, value: 0 } }, false);
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      // Act
+      await act(async () => {
+        result.current.handleChange(
+          { target: { name: `metadata:1:${EventDataField.name}`, value: "seller.legalName" } },
+          false,
+        );
+        result.current.handleChange(
+          { target: { name: `metadata:1:${EventDataField.value}`, value: "Example GmbH" } },
+          false,
+        );
+      });
+
+      // Assert
+      expect(result.current.formData.metadata).toEqual([
+        { key: "seller.vatId", value: "DE000000000" },
+        { key: "seller.legalName", value: "Example GmbH" },
+      ]);
+      expect(result.current.formIsDirty).toBe(false);
+    });
+
+    it("can't be saved until metadata is loaded, then shows it", () => {
+      // Arrange
+      const { result, rerender } = renderForm({ graphqlData: undefined, submitInProgress: false });
+
+      act(() => {
+        result.current.handleChange({ target: { name: EventDataAction.add, value: "" } }, false);
+      });
+
+      const savableBeforeLoad = result.current.formIsDirty;
+
+      // Act
+      rerender({ graphqlData: loadedFirst, submitInProgress: false });
+
+      // Assert
+      expect(savableBeforeLoad).toBe(false);
+      expect(result.current.formData.metadata).toHaveLength(2);
+      expect(result.current.formIsDirty).toBe(false);
+    });
   });
 
   it("resets form to initial values when reset is called", () => {
@@ -408,7 +594,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -447,7 +632,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -476,7 +660,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData: undefined,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 
@@ -499,7 +682,6 @@ describe("useMetadataForm", () => {
       useMetadataForm({
         graphqlData,
         submitInProgress: false,
-        lastSubmittedData: undefined,
       }),
     );
 

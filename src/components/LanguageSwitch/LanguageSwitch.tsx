@@ -1,6 +1,7 @@
 import { type LanguageCodeEnum, type LanguageFragment } from "@dashboard/graphql";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Combobox, type ComboboxProps } from "@saleor/macaw-ui-next";
+import { useIntl } from "react-intl";
 
 type BaseComboboxProps = ComboboxProps<
   { value: LanguageCodeEnum; label: string },
@@ -15,6 +16,8 @@ interface LanguageSwitchProps extends CutProps {
 }
 
 const LanguageSwitch = (props: LanguageSwitchProps) => {
+  const intl = useIntl();
+
   const { currentLanguage, languages, onLanguageChange, ...rest } = props;
 
   return (
@@ -23,7 +26,10 @@ const LanguageSwitch = (props: LanguageSwitchProps) => {
       __minWidth={200}
       {...rest}
       value={currentLanguage}
-      label="Choose language"
+      label={intl.formatMessage({
+        id: "uIgWIr",
+        defaultMessage: "Choose language",
+      })}
       options={languages.map(l => ({
         // Adding code to label, so search works. TODO: Macaw should allow 3rd value for search only
         label: `${l.language} (${l.code})`,

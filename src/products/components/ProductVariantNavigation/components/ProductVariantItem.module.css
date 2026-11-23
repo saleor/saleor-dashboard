@@ -1,0 +1,55 @@
+/* A finger that lands on the grip drags the row; anywhere else on the row it scrolls the
+   list. Without this the browser takes a touch on the grip for a scroll and cancels the drag. */
+.dragHandle {
+  position: relative;
+  border-radius: var(--mu-border-radius-2);
+  cursor: grab;
+  touch-action: none;
+}
+
+.dragHandle:hover {
+  color: var(--mu-colors-text-default1);
+}
+
+.dragHandle:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}
+
+/* On touch screens the grip takes a finger-sized target without moving anything around it. */
+@media (pointer: coarse) {
+  .dragHandle::after {
+    position: absolute;
+    inset: -10px;
+    content: "";
+  }
+}
+
+/* The row left in the list while its copy is dragged: faded, it shows where the variant
+   will land as the rows around it make room. */
+.source {
+  opacity: 0.4;
+}
+
+/* The copy that follows the pointer. It floats above the page, so it gets a shadow with the
+   hairline in its last layer (smooth-shadow-ring-sm) and no border. */
+.lifted {
+  --smooth-ring-color: rgba(0, 0, 0, 0.05);
+  border-radius: var(--mu-border-radius-3);
+  background-color: var(--mu-colors-background-default1);
+  box-shadow:
+    0 18px 47px 0 rgba(0, 0, 0, 0.03),
+    0 7.5px 19px 0 rgba(0, 0, 0, 0.02),
+    0 4px 10.5px 0 rgba(0, 0, 0, 0.02),
+    0 2.3px 5.8px 0 rgba(0, 0, 0, 0.01),
+    0 1.2px 3.1px 0 rgba(0, 0, 0, 0.01),
+    0 0.5px 1.3px 0 rgba(0, 0, 0, 0.01),
+    0 0 0 1px var(--smooth-ring-color);
+  cursor: grabbing;
+}
+
+/* On a dark page the dark hairline and shadows don't show; a light hairline gives the
+   lifted row its edge. */
+.liftedDark {
+  --smooth-ring-color: rgba(255, 255, 255, 0.18);
+}

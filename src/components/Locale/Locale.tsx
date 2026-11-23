@@ -130,6 +130,10 @@ const supportedLocales = new Set<unknown>(Object.values(Locale));
 
 const isSupportedLocale = (value: unknown): value is Locale => supportedLocales.has(value);
 
+// The "pt" catalogue is European Portuguese. Formatting it as plain "pt" would apply Brazilian
+// plural rules, which treat 0 as singular ("0 produto" instead of "0 produtos").
+const getIntlLocale = (locale: Locale): string => (locale === Locale.PT ? "pt-PT" : locale);
+
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 const LocaleProvider = ({ children }: { children: ReactNode }) => {
   const [savedLocale, setLocale] = useLocalStorage<unknown>("locale", defaultLocale);
@@ -161,7 +165,7 @@ const LocaleProvider = ({ children }: { children: ReactNode }) => {
   return (
     <IntlProvider
       defaultLocale={defaultLocale}
-      locale={locale}
+      locale={getIntlLocale(locale)}
       messages={getKeyValueJson(messages)}
       onError={err => {
         if (!(err.code === ReactIntlErrorCode.MISSING_TRANSLATION)) {

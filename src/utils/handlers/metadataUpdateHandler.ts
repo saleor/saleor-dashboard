@@ -1,6 +1,7 @@
 import { type FetchResult } from "@apollo/client";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
+  MetadataErrorCode,
   type MetadataErrorFragment,
   type MetadataInput,
   type UpdateMetadataMutation,
@@ -13,6 +14,28 @@ import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 
 import { filterMetadataArray } from "./filterMetadataArray";
 import { areMetadataArraysEqual } from "./metadataUpdateHelpers";
+
+/** Entries that are new or whose value differs from what the form loaded. `updateMetadata`
+ * overwrites every key it receives, so sending unchanged entries too would write back old
+ * values over anything an app or another user changed after the form loaded. */
+const getChangedMetadata = (
+  initial: MetadataInput[],
+  current: MetadataInput[],
+): MetadataInput[] => {
+  const initialValues = new Map(initial.map(({ key, value }) => [key, value]));
+
+  return filterMetadataArray(current).filter(({ key, value }) => initialValues.get(key) !== value);
+};
+
+/** The app's mutation hooks report request failures themselves (toast or connection banner)
+ * and then resolve without data instead of throwing. Without data nothing was confirmed as
+ * saved, so the save must not count as successful. */
+const requestFailedError: MetadataErrorFragment = {
+  __typename: "MetadataError",
+  code: MetadataErrorCode.GRAPHQL_ERROR,
+  field: null,
+  message: null,
+};
 
 export interface ObjectWithMetadata {
   id: string;
@@ -55,7 +78,7 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         const initialKeys = initialMetadata.map(m => m.key);
         const modifiedKeys = data.metadata.map(m => m.key);
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
-        const metadataInput = filterMetadataArray(data.metadata);
+        const metadataInput = getChangedMetadata(initialMetadata, data.metadata);
 
         if (metadataInput.length || keyDiff.removed.length) {
           const updateMetaResult = await updateMetadata({
@@ -63,6 +86,11 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
             input: metadataInput,
             keysToDelete: keyDiff.removed,
           });
+
+          if (!updateMetaResult.data) {
+            return [requestFailedError];
+          }
+
           const updateMetaErrors = [
             ...(updateMetaResult.data?.deleteMetadata?.errors || []),
             ...(updateMetaResult.data?.updateMetadata?.errors || []),
@@ -78,7 +106,10 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         const initialKeys = initialPrivateMetadata.map(m => m.key);
         const modifiedKeys = data.privateMetadata.map(m => m.key);
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
-        const privateMetadataInput = filterMetadataArray(data.privateMetadata);
+        const privateMetadataInput = getChangedMetadata(
+          initialPrivateMetadata,
+          data.privateMetadata,
+        );
 
         if (privateMetadataInput.length || keyDiff.removed.length) {
           const updatePrivateMetaResult = await updatePrivateMetadata({
@@ -86,6 +117,11 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
             input: privateMetadataInput,
             keysToDelete: keyDiff.removed,
           });
+
+          if (!updatePrivateMetaResult.data) {
+            return [requestFailedError];
+          }
+
           const updatePrivateMetaErrors = [
             ...(updatePrivateMetaResult.data?.deletePrivateMetadata?.errors || []),
             ...(updatePrivateMetaResult.data?.updatePrivateMetadata?.errors || []),

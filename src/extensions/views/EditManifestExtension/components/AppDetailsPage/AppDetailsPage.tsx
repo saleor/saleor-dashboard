@@ -47,7 +47,9 @@ export const AppDetailsPage = ({
       onError={errorTracker.captureException}
       fallbackRender={() => (
         <Box padding={4}>
-          <Text>Error, please refresh the page</Text>
+          <Text>
+            <FormattedMessage id="5e7WuW" defaultMessage="Error, please refresh the page" />
+          </Text>
         </Box>
       )}
     >

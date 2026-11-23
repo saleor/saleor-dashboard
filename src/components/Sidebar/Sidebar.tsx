@@ -11,6 +11,7 @@ import classes from "./Sidebar.module.css";
 import { SidebarAppBar } from "./SidebarAppBar";
 import { useSidebarBreakpointContext, useSidebarCollapse } from "./SidebarContext";
 import { SidebarDrawerContent, useDrawerRemount } from "./SidebarDrawer";
+import { FeedbackSurveyDialog } from "./user/FeedbackSurveyDialog";
 import { useSidebarCollapseToggle } from "./useSidebarCollapseToggle";
 import { type SidebarLayout, useSidebarLayout } from "./useSidebarLayout";
 import { useSidebarLogo } from "./useSidebarLogo";
@@ -99,6 +100,7 @@ export const Sidebar = () => {
       <SidebarForLayout layout={layout} />
       {/* Once per app: the drawer and the rail can both be mounted. */}
       <AllRipplesModal open={isModalOpen} onChange={setModalState} />
+      <FeedbackSurveyDialog />
     </>
   );
 };

@@ -28,6 +28,8 @@ const fingerprint = (config: E2eConfig) => {
       POSTHOG_HOST: process.env.POSTHOG_HOST,
       POSTHOG_KEY: process.env.POSTHOG_KEY,
       POSTHOG_EXCLUDED_DOMAINS: process.env.POSTHOG_EXCLUDED_DOMAINS,
+      POSTHOG_FEEDBACK_SURVEY_ID: process.env.POSTHOG_FEEDBACK_SURVEY_ID,
+      POSTHOG_FEATURE_REQUEST_SURVEY_ID: process.env.POSTHOG_FEATURE_REQUEST_SURVEY_ID,
     }),
   );
 

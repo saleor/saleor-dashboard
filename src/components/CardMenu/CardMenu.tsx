@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { EllipsisVertical } from "lucide-react";
 import type * as React from "react";
 import { useEffect, useRef, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { IconButton } from "../IconButton/IconButton";
 import { cardMenuMessages as messages } from "./messages";
@@ -87,6 +87,8 @@ const useStyles = makeStyles(
  * @deprecated use [`TopNav.Menu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/AppLayout/TopNav/Menu.tsx) instead
  */
 const CardMenu = (props: CardMenuProps) => {
+  const intl = useIntl();
+
   const {
     className,
     disabled,
@@ -159,7 +161,10 @@ const CardMenu = (props: CardMenuProps) => {
     <div className={className} {...rest}>
       <IconButton
         data-test-id="show-more-button"
-        aria-label="More"
+        aria-label={intl.formatMessage({
+          id: "I5NMJ8",
+          defaultMessage: "More",
+        })}
         aria-owns={open ? "long-menu" : null}
         aria-haspopup="true"
         disabled={disabled}

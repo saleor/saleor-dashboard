@@ -196,8 +196,8 @@ export const messages = defineMessages({
     description: "setup review row title",
   },
   limitsReviewDescription: {
-    id: "PwrYMn",
-    defaultMessage: "Cap total redemptions or limit use to once per customer.",
+    id: "YstMl4",
+    defaultMessage: "Cap total redemptions or limit use to once per email address.",
     description: "setup review row description",
   },
   requirementsReviewTitle: {

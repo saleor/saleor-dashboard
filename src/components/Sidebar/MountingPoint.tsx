@@ -1,10 +1,11 @@
 import { useCloud } from "@dashboard/auth/hooks/useCloud";
-import { EnvironmentSwitcher } from "@dashboard/cloud-extensions";
+import { EnvironmentHeader, hasCloudExtensions } from "@dashboard/cloud-extensions";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { Avatar, Box, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { useIntl } from "react-intl";
 
 import { type SidebarContentVariant } from "./Content";
 import styles from "./MountingPoint.module.css";
@@ -13,7 +14,14 @@ import {
   SidebarDrawerOpenButton,
   SidebarExpandButton,
 } from "./SidebarCollapseToggle";
+import { sidebarStoreAvatarMessages } from "./sidebarStoreAvatarMessages";
 import { useSidebarLogo } from "./useSidebarLogo";
+
+const DefaultTitle = () => (
+  <Text size={3} fontWeight="bold" __flex="1" className="ellipsis">
+    Saleor Dashboard
+  </Text>
+);
 
 interface MountingPointProps {
   variant: SidebarContentVariant;
@@ -21,8 +29,10 @@ interface MountingPointProps {
 }
 
 export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
+  const intl = useIntl();
   const logo = useSidebarLogo();
   const { isCloudInstance, isAuthenticatedViaCloud } = useCloud();
+  const showEnvironmentHeader = hasCloudExtensions && isCloudInstance && isAuthenticatedViaCloud;
 
   if (collapsed) {
     return (
@@ -43,16 +53,21 @@ export const MountingPoint = ({ variant, collapsed }: MountingPointProps) => {
       alignItems="center"
       className={clsx(styles.header, styles.expandedHeader)}
     >
-      <Avatar.Store src={logo} scheme="accent1" size="small" />
-      <Text size={3} fontWeight="bold" __flex="1" className="ellipsis">
-        Saleor Dashboard
-      </Text>
-      {isCloudInstance && isAuthenticatedViaCloud && (
-        <ErrorBoundary fallbackRender={() => null} onError={errorTracker.captureException}>
-          <Suspense fallback={null}>
-            <EnvironmentSwitcher />
+      <Avatar.Store
+        src={logo}
+        scheme="accent1"
+        size="small"
+        aria-label={intl.formatMessage(sidebarStoreAvatarMessages.storeAvatar)}
+      />
+      {showEnvironmentHeader ? (
+        // The default title covers loading and failures, so the header never ends up empty.
+        <ErrorBoundary fallback={<DefaultTitle />} onError={errorTracker.captureException}>
+          <Suspense fallback={<DefaultTitle />}>
+            <EnvironmentHeader />
           </Suspense>
         </ErrorBoundary>
+      ) : (
+        <DefaultTitle />
       )}
       {variant === "collapsible" && <SidebarCollapseButton />}
     </Box>

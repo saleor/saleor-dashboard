@@ -192,22 +192,6 @@ export const VoucherLimits = ({
           </DetailSettingToggleRow>
 
           <DetailSettingToggleRow
-            testId="apply-once-per-customer"
-            title={intl.formatMessage(messages.applyOncePerCustomer)}
-            description={<FormattedMessage {...messages.applyOncePerCustomerDescription} />}
-            pressed={data.applyOncePerCustomer}
-            onPressedChange={pressed =>
-              onChange({
-                target: {
-                  name: "applyOncePerCustomer",
-                  value: pressed,
-                },
-              } as ChangeEvent<any>)
-            }
-            disabled={disabled}
-          />
-
-          <DetailSettingToggleRow
             testId="single-use"
             title={intl.formatMessage(messages.singleUse)}
             description={<FormattedMessage {...messages.singleUseDescription} />}
@@ -228,6 +212,23 @@ export const VoucherLimits = ({
                 </LockedSettingNotice>
               ) : null
             }
+          />
+
+          {/* Below the two limits that cap redemptions: this one limits email addresses, not people. */}
+          <DetailSettingToggleRow
+            testId="apply-once-per-customer"
+            title={intl.formatMessage(messages.applyOncePerCustomer)}
+            description={<FormattedMessage {...messages.applyOncePerCustomerDescription} />}
+            pressed={data.applyOncePerCustomer}
+            onPressedChange={pressed =>
+              onChange({
+                target: {
+                  name: "applyOncePerCustomer",
+                  value: pressed,
+                },
+              } as ChangeEvent<any>)
+            }
+            disabled={disabled}
           />
 
           <DetailSettingToggleRow

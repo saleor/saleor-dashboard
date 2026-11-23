@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.23.43",
+  "version": "3.23.46",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -84,7 +84,7 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@editorjs/editorjs": "2.30.7",
+    "@editorjs/editorjs": "2.31.7",
     "@editorjs/header": "2.8.8",
     "@editorjs/image": "^2.10.3",
     "@editorjs/list": "2.0.8",

@@ -11,6 +11,7 @@ import { rippleSidebarCollapse } from "@dashboard/components/Sidebar/ripples/sid
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
+import { ripplePromotionMetadata } from "@dashboard/discounts/ripples/promotionMetadata";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { rippleSaleorPulse } from "@dashboard/home/ripples/saleorPulse";
@@ -38,7 +39,10 @@ import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGener
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { type Ripple } from "@dashboard/ripples/types";
 import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
+import { rippleStoreMetadata } from "@dashboard/siteSettings/ripples/storeMetadata";
 import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
+import { rippleStructureMetadata } from "@dashboard/structures/ripples/structureMetadata";
+import { rippleTaxConfigurationMetadata } from "@dashboard/taxes/ripples/taxConfigurationMetadata";
 import { rippleProductMediaAltTranslation } from "@dashboard/translations/ripples/productMediaAltTranslation";
 import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import { rippleTranslationDetailRefresh } from "@dashboard/translations/ripples/translationDetailRefresh";
@@ -53,6 +57,9 @@ export const allRipples: Ripple[] = [
   rippleModelTypeTabs,
   rippleGroupedModelTypeTabs,
   rippleModelMetadata,
+
+  // Structures
+  rippleStructureMetadata,
 
   // Categories
   rippleExpandedSubcategories,
@@ -72,12 +79,21 @@ export const allRipples: Ripple[] = [
   // Warehouses
   rippleWarehouseMetadata,
 
+  // Store settings
+  rippleStoreMetadata,
+
+  // Taxes
+  rippleTaxConfigurationMetadata,
+
   // Products
   rippleProductAvailabilityDiagnostics,
   rippleProductMetadata,
   rippleProductTypeInHeader,
   rippleProductVariantMetadata,
   rippleVariantGenerator,
+
+  // Discounts
+  ripplePromotionMetadata,
 
   // Attributes
   rippleAttributeListGroupByType,

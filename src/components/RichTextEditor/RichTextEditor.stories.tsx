@@ -1,6 +1,8 @@
 import { type OutputData } from "@editorjs/editorjs";
+import { type EditorCore } from "@react-editor-js/core";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ComponentProps, type ComponentType, useRef, useState } from "react";
+import { expect, fn, userEvent, waitFor } from "storybook/test";
 
 import fixtures from "./fixtures.json";
 import RichTextEditor from "./RichTextEditor";
@@ -134,5 +136,125 @@ export const NoLabel: Story = {
   args: {
     defaultValue,
     label: "",
+  },
+};
+
+const linkedParagraph: OutputData = {
+  blocks: [
+    {
+      id: "linked-paragraph",
+      type: "paragraph",
+      data: { text: 'Visit <a href="https://saleor.io">Saleor</a> website' },
+    },
+  ],
+};
+
+const savedParagraph = (text: string): OutputData["blocks"] => [
+  { id: "linked-paragraph", type: "paragraph", data: { text } },
+];
+
+// Selects the link text and fires the mouseup Editor.js opens its inline toolbar on.
+const selectLink = async (canvasElement: HTMLElement): Promise<void> => {
+  const link = await waitFor(() => {
+    const element = canvasElement.querySelector(".ce-paragraph a");
+
+    if (!element) {
+      throw new globalThis.Error("Link not rendered yet");
+    }
+
+    return element;
+  });
+  const range = document.createRange();
+
+  range.selectNodeContents(link);
+  window.getSelection()?.removeAllRanges();
+  window.getSelection()?.addRange(range);
+  link.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+};
+
+const clickInlineTool = async (canvasElement: HTMLElement, name: string): Promise<void> => {
+  const item = await waitFor(() => {
+    const element = canvasElement.ownerDocument.querySelector<HTMLElement>(
+      `.ce-popover--inline [data-item-name="${name}"]`,
+    );
+
+    if (!element) {
+      throw new globalThis.Error(`Inline tool "${name}" not shown`);
+    }
+
+    return element;
+  });
+
+  await userEvent.click(item);
+};
+
+// The same value forms send to the API: EditorCore.save() output.
+const savedBlocks = async (args: Props): Promise<OutputData["blocks"]> => {
+  const onInitialize = args.onInitialize as ReturnType<typeof fn>;
+  const editor = onInitialize.mock.calls[0][0] as EditorCore;
+
+  return (await editor.save()).blocks;
+};
+
+type PlayContext = { args: Props; canvasElement: HTMLElement };
+
+export const LinkOpensInNewTab: Story = {
+  args: {
+    defaultValue: linkedParagraph,
+    onInitialize: fn(),
+  },
+  play: async ({ args, canvasElement }: PlayContext) => {
+    // Arrange
+    await selectLink(canvasElement);
+
+    // Act
+    await clickInlineTool(canvasElement, "linkTarget");
+
+    // Assert
+    await expect(await savedBlocks(args)).toEqual(
+      savedParagraph('Visit <a href="https://saleor.io" target="_blank">Saleor</a> website'),
+    );
+  },
+};
+
+export const LinkOpensInSameTabAgain: Story = {
+  args: {
+    defaultValue: {
+      blocks: savedParagraph(
+        'Visit <a href="https://saleor.io" target="_blank">Saleor</a> website',
+      ),
+    },
+    onInitialize: fn(),
+  },
+  play: async ({ args, canvasElement }: PlayContext) => {
+    // Arrange
+    await selectLink(canvasElement);
+
+    // Act
+    await clickInlineTool(canvasElement, "linkTarget");
+
+    // Assert
+    await expect(await savedBlocks(args)).toEqual(
+      savedParagraph('Visit <a href="https://saleor.io">Saleor</a> website'),
+    );
+  },
+};
+
+export const BoldKeepsLink: Story = {
+  args: {
+    defaultValue: linkedParagraph,
+    onInitialize: fn(),
+  },
+  play: async ({ args, canvasElement }: PlayContext) => {
+    // Arrange
+    await selectLink(canvasElement);
+
+    // Act
+    await clickInlineTool(canvasElement, "bold");
+
+    // Assert
+    await expect(await savedBlocks(args)).toEqual(
+      savedParagraph('Visit <a href="https://saleor.io"><b>Saleor</b></a> website'),
+    );
   },
 };

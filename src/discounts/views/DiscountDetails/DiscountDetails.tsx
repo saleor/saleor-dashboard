@@ -2,14 +2,17 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountDeleteModal } from "@dashboard/discounts/components/DiscountDeleteModal/DiscountDeleteModal";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage/DiscountDetailsPage";
+import { PromotionMetadataDialog } from "@dashboard/discounts/components/PromotionMetadataDialog/PromotionMetadataDialog";
 import {
   discountSalesListPath,
+  discountUrl,
   type DiscountUrlQueryParams,
 } from "@dashboard/discounts/discountsUrls";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -27,11 +30,16 @@ interface DiscountDetailsProps {
   params: DiscountUrlQueryParams;
 }
 
-export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
+export const DiscountDetails = ({ id, params }: DiscountDetailsProps) => {
   const { availableChannels } = useAppChannel(false);
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigator();
   const intl = useIntl();
+  const [openDialog, closeDialog] = createDialogActionHandlers(
+    navigate,
+    (dialogParams: DiscountUrlQueryParams) => discountUrl(id, dialogParams),
+    params,
+  );
   const { promotionData, loading } = usePromotionData(id);
   const { promotionUpdate, promotionUpdateOpts, restoreEndDate, restoreEndDateOpts } =
     usePromotionUpdate(id);
@@ -92,6 +100,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
           channels={availableChannels}
           onSubmit={onSubmit}
           onDelete={() => setOpenModal(true)}
+          onShowMetadata={() => openDialog("view-metadata")}
           submitButtonState={promotionUpdateOpts.status}
           onRuleUpdateSubmit={onRuleUpdateSubmit}
           ruleUpdateButtonState={promotionRuleUpdateOpts.status}
@@ -107,6 +116,11 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         onClose={() => setOpenModal(false)}
         onConfirm={onPromotionDelete}
         open={openModal}
+      />
+      <PromotionMetadataDialog
+        open={params.action === "view-metadata" && !!promotionData?.promotion}
+        onClose={closeDialog}
+        promotionId={id}
       />
     </>
   );

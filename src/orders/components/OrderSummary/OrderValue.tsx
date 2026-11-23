@@ -8,6 +8,7 @@ import {
   type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { buttonMessages } from "@dashboard/intl";
 import { getDeliveryMethodInfo } from "@dashboard/orders/utils/deliveryMethod";
 import {
   type DiscountTypeCategory,
@@ -20,7 +21,7 @@ import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { ChevronDown, ChevronUp, Info } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { defineMessages, type MessageDescriptor, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 import { OrderDiscountModal } from "../OrderDiscountModal/OrderDiscountModal";
 import { type LineDiscountSummaryEntry } from "./getLineDiscountsSummary";
@@ -34,6 +35,21 @@ const messages = defineMessages({
     id: "+8v1ny",
     defaultMessage: "Discount",
     description: "discount button",
+  },
+  addVoucher: {
+    id: "usvI6J",
+    defaultMessage: "Add voucher",
+    description: "link in draft order summary that opens the voucher dialog",
+  },
+  changeVoucher: {
+    id: "0Rr+gs",
+    defaultMessage: "Change voucher",
+    description: "accessible label for the link that changes the draft order voucher",
+  },
+  removeVoucher: {
+    id: "DAoKyB",
+    defaultMessage: "Remove voucher",
+    description: "accessible label for the link that removes the draft order voucher",
   },
   addDiscount: {
     id: "Myx1Qp",
@@ -206,9 +222,17 @@ type EditableProps = {
   orderDiscountRemoveStatus: OrderDiscountContextConsumerProps["orderDiscountRemoveStatus"];
   undiscountedPrice: OrderDiscountContextConsumerProps["undiscountedPrice"];
   onShippingMethodEdit: () => void;
+  voucherCode: string | null;
+  // Only draft orders accept a voucher code (`draftOrderUpdate`); unconfirmed orders omit this.
+  voucherActions?: VoucherActions;
   shippingAddress: OrderDetailsFragment["shippingAddress"];
   errors?: OrderErrorFragment[];
 };
+
+export interface VoucherActions {
+  onEdit: () => void;
+  onRemove: () => void;
+}
 
 type ReadOnlyProps = {
   isEditable?: false;
@@ -725,7 +749,7 @@ export const OrderValue = (props: Props): ReactNode => {
               {intl.formatMessage(messages.discount)}
             </Text>
             <Text as="span" color="default2" fontWeight="regular" size={4} marginLeft={1}>
-              (applied)
+              <FormattedMessage id="8W1P82" defaultMessage="(applied)" />
             </Text>
             <Box
               as="span"
@@ -749,6 +773,59 @@ export const OrderValue = (props: Props): ReactNode => {
             {renderLineDiscountSubgroup()}
           </Box>
         )}
+      </Box>
+    );
+  };
+
+  const renderVoucherRow = (): ReactNode => {
+    if (!editableProps?.voucherActions) {
+      return null;
+    }
+
+    const { voucherCode, voucherActions } = editableProps;
+
+    if (!voucherCode) {
+      return (
+        <Box as="li" data-test-id="order-voucher-row">
+          <ButtonLink onClick={voucherActions.onEdit} data-test-id="add-voucher">
+            {intl.formatMessage(messages.addVoucher)}
+          </ButtonLink>
+        </Box>
+      );
+    }
+
+    return (
+      <Box
+        as="li"
+        display="flex"
+        alignItems="baseline"
+        flexWrap="wrap"
+        gap={2}
+        __minWidth={0}
+        data-test-id="order-voucher-row"
+      >
+        <Text size={4}>{intl.formatMessage(messages.voucher)}</Text>
+        <Text size={4} color="default2" title={voucherCode} data-test-id="voucher-code">
+          {voucherCode}
+        </Text>
+        <Text as="span" size={3}>
+          <ButtonLink
+            onClick={voucherActions.onEdit}
+            aria-label={intl.formatMessage(messages.changeVoucher)}
+            data-test-id="change-voucher"
+          >
+            {intl.formatMessage(messages.change)}
+          </ButtonLink>
+        </Text>
+        <Text as="span" size={3}>
+          <ButtonLink
+            onClick={voucherActions.onRemove}
+            aria-label={intl.formatMessage(messages.removeVoucher)}
+            data-test-id="remove-voucher"
+          >
+            {intl.formatMessage(buttonMessages.remove)}
+          </ButtonLink>
+        </Text>
       </Box>
     );
   };
@@ -893,6 +970,8 @@ export const OrderValue = (props: Props): ReactNode => {
 
         {renderDiscountSection()}
 
+        {renderVoucherRow()}
+
         {displayGrossPrices && (
           <OrderSummaryListItem
             amount={orderTotal.tax.amount}
@@ -904,7 +983,7 @@ export const OrderValue = (props: Props): ReactNode => {
               id: "HTiAMm",
             })}
             <Text color="default2" fontWeight="medium" size={3}>
-              (included)
+              <FormattedMessage id="0pApsp" defaultMessage="(included)" />
             </Text>
           </OrderSummaryListItem>
         )}

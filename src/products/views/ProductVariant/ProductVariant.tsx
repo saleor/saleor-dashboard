@@ -147,17 +147,17 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     skip: !channels.length,
   });
 
-  const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
+  const [reorderProductVariants] = useProductVariantReorderMutation({});
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
   const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
+  // Reordering the list beside the form changes nothing in the form, so it doesn't lock it.
   const disableFormSave =
     loading ||
     uploadFileOpts.loading ||
     deleteVariantOpts.loading ||
     updateVariantOpts.loading ||
     assignMediaOpts.loading ||
-    unassignMediaOpts.loading ||
-    reorderProductVariantsOpts.loading;
+    unassignMediaOpts.loading;
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,

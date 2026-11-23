@@ -12,6 +12,12 @@
   overflow-y: hidden;
 }
 
+/* macaw fades the dialog and its backdrop in; the backdrop is the dialog's parent. */
+.contentShell.noEnterAnimation,
+*:has(> .contentShell.noEnterAnimation) {
+  animation: none;
+}
+
 /* Standard horizontal padding for chrome regions that are not the header row. */
 .modalChrome {
   padding-inline: var(--modal-padding);

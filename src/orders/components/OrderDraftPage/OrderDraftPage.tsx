@@ -38,6 +38,7 @@ import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory/OrderHistory";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
+import { type VoucherActions } from "../OrderSummary/OrderValue";
 import OrderDraftAlert from "./OrderDraftAlert";
 
 interface OrderDraftPageProps {
@@ -62,6 +63,7 @@ interface OrderDraftPageProps {
   onProductClick: (id: string) => void;
   onShippingAddressEdit: () => void;
   onShippingMethodEdit: () => void;
+  voucherActions: VoucherActions;
   onProfileView: () => void;
   onOrderLineShowMetadata: (id: string) => void;
   onOrderShowMetadata: () => void;
@@ -87,6 +89,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
     orderLineRemoveErrors,
     onShippingAddressEdit,
     onShippingMethodEdit,
+    voucherActions,
     onProfileView,
     onOrderLineShowMetadata,
     onOrderShowMetadata,
@@ -162,6 +165,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
               order={order}
               isEditable
               onShippingMethodEdit={onShippingMethodEdit}
+              voucherActions={voucherActions}
               errors={errors}
               {...orderDiscountContext}
             />

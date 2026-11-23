@@ -20,16 +20,28 @@ import {
   SidebarProvider,
   useCustomSidebarBreakpoint,
 } from "./SidebarContext";
+import { type useFeedbackSurvey } from "./user/useFeedbackSurvey";
 
-const mockFeedbackSurvey = jest.fn(() => ({ isAvailable: true }));
+const mockOpenSurvey = jest.fn();
+const availableFeedback = (): ReturnType<typeof useFeedbackSurvey> => ({
+  isAvailable: true,
+  canOpenSurvey: true,
+  openSurvey: mockOpenSurvey,
+});
+const mockFeedbackSurvey = jest.fn(availableFeedback);
 const renderEnvironmentSwitcherStub = (): ReactElement => (
   <div data-test-id="cloud-environment-switcher" />
 );
 const mockEnvironmentSwitcher = jest.fn(renderEnvironmentSwitcherStub);
 const mockCaptureException = jest.fn();
 
+let mockHasCloudExtensions = true;
+
 jest.mock("@dashboard/cloud-extensions", () => ({
-  EnvironmentSwitcher: () => mockEnvironmentSwitcher(),
+  get hasCloudExtensions() {
+    return mockHasCloudExtensions;
+  },
+  EnvironmentHeader: () => mockEnvironmentSwitcher(),
 }));
 jest.mock("@dashboard/services/errorTracking", () => ({
   errorTracker: { captureException: (error: Error) => mockCaptureException(error) },
@@ -37,6 +49,7 @@ jest.mock("@dashboard/services/errorTracking", () => ({
 
 jest.mock("./user/useFeedbackSurvey", () => ({
   useFeedbackSurvey: () => mockFeedbackSurvey(),
+  useFeedbackSurveyDialog: () => ({ dialog: null, close: jest.fn() }),
 }));
 
 jest.mock("./menu/hooks/useMenuStructure", () => ({
@@ -99,34 +112,37 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 };
 
 describe("Sidebar", () => {
-  it("renders the global feedback trigger", () => {
-    // Arrange
-    mockFeedbackSurvey.mockReturnValue({ isAvailable: true });
+  afterEach(() => {
+    // Tests below opt into a Cloud session; later tests expect the default "Saleor Dashboard" title.
+    (useCloud as jest.Mock).mockImplementation(() => ({ isAuthenticatedViaCloud: false }));
+  });
 
-    // Act
+  it("opens the feedback survey from the sidebar", async () => {
+    // Arrange
+    mockFeedbackSurvey.mockImplementation(availableFeedback);
+
     render(<Sidebar />, { wrapper: Wrapper });
 
+    // Act
+    await userEvent.click(screen.getByRole("button", { name: "Send feedback" }));
+
     // Assert
-    expect(screen.getByRole("button", { name: "Send feedback" })).toHaveAttribute(
-      "data-posthog-feedback-trigger",
-      "true",
-    );
+    expect(mockOpenSurvey).toHaveBeenCalledWith({ source: "sidebar" });
   });
 
   it("hides feedback when its survey is unavailable", () => {
     // Arrange
-    mockFeedbackSurvey.mockReturnValue({ isAvailable: false });
+    mockFeedbackSurvey.mockReturnValue({
+      isAvailable: false,
+      canOpenSurvey: false,
+      openSurvey: mockOpenSurvey,
+    });
 
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
 
     // Assert
     expect(screen.queryByRole("button", { name: "Send feedback" })).not.toBeInTheDocument();
-    expect(screen.getByTestId("feedback-button")).not.toBeVisible();
-    expect(screen.getByTestId("feedback-button")).toHaveAttribute(
-      "data-posthog-feedback-trigger",
-      "true",
-    );
   });
 
   it.each([
@@ -186,6 +202,22 @@ describe("Sidebar", () => {
     // Assert
     expect(screen.queryByTestId("cloud-environment-switcher")).not.toBeInTheDocument();
     expect(mockEnvironmentSwitcher).not.toHaveBeenCalled();
+  });
+  it("should keep the default title when the Cloud extensions are not checked out", () => {
+    // Arrange
+    mockHasCloudExtensions = false;
+    mockEnvironmentSwitcher.mockClear();
+    (useCloud as jest.Mock).mockImplementation(() => ({
+      isCloudInstance: true,
+      isAuthenticatedViaCloud: true,
+    }));
+    localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "false");
+    // Act
+    render(<Sidebar />, { wrapper: Wrapper });
+    // Assert
+    expect(screen.getByText("Saleor Dashboard")).toBeInTheDocument();
+    expect(mockEnvironmentSwitcher).not.toHaveBeenCalled();
+    mockHasCloudExtensions = true;
   });
   it("should keep the sidebar and report the error when the environment switcher fails", async () => {
     // Arrange
@@ -760,19 +792,17 @@ describe("Sidebar collapse", () => {
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
 
-  it("moves feedback into the rail and the account menu onto the avatar", () => {
+  it("moves feedback into the rail and the account menu onto the avatar", async () => {
     // Arrange
     localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, "true");
 
     // Act
     render(<Sidebar />, { wrapper: Wrapper });
+    await userEvent.click(screen.getByTestId("feedback-button"));
 
     // Assert
     expect(screen.getAllByTestId("feedback-button")).toHaveLength(1);
-    expect(screen.getByTestId("feedback-button")).toHaveAttribute(
-      "data-posthog-feedback-trigger",
-      "true",
-    );
+    expect(mockOpenSurvey).toHaveBeenCalledWith({ source: "sidebar" });
     expect(screen.getByRole("button", { name: "Account menu" })).toHaveAttribute(
       "data-test-id",
       "userMenu",

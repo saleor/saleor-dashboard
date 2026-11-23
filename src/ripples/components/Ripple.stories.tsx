@@ -1,5 +1,6 @@
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { withExistingUser } from "@storybookUtils/withExistingUser";
 import { defineMessage } from "react-intl";
 import { fn } from "storybook/test";
 
@@ -8,7 +9,7 @@ import { Ripple } from "./Ripple";
 const baseRipple: RippleModel = {
   type: "feature",
   ID: "story-ripple",
-  dateAdded: new Date(2025, 0, 15),
+  dateAdded: new Date(),
   TTL_seconds: 999999,
   content: {
     oneLiner: "New feature available",
@@ -23,6 +24,7 @@ const RIPPLE_STORAGE_KEY = "dashboard-ripples";
 const meta: Meta<typeof Ripple> = {
   title: "Ripples/Ripple",
   component: Ripple,
+  decorators: [withExistingUser],
   beforeEach: () => {
     localStorage.removeItem(RIPPLE_STORAGE_KEY);
   },

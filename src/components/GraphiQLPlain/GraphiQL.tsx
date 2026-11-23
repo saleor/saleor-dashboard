@@ -4,7 +4,6 @@
  *  This source code is licensed under the MIT license found in the
  *  LICENSE file in the root directory of this source tree.
  */
-
 import "graphiql/graphiql.min.css";
 
 import {
@@ -42,6 +41,7 @@ import {
   type WriteableEditorProps,
 } from "@graphiql/react";
 import { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { PluginSidebarSection } from "../GraphiQL/shared";
 import { useDashboardTheme, useEditorStyles, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
@@ -104,6 +104,8 @@ type GraphiQLInterfaceProps = WriteableEditorProps &
   };
 
 function GraphiQLInterface(props: GraphiQLInterfaceProps) {
+  const intl = useIntl();
+
   const isHeadersEditorEnabled = props.isHeadersEditorEnabled ?? true;
   const editorContext = useEditorContext({ nonNull: true });
   const executionContext = useExecutionContext({ nonNull: true });
@@ -136,13 +138,31 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   );
   const toolbar = (
     <>
-      <ToolbarButton onClick={() => prettify()} label="Prettify query (Shift-Ctrl-P)">
+      <ToolbarButton
+        onClick={() => prettify()}
+        label={intl.formatMessage({
+          id: "H3BSQt",
+          defaultMessage: "Prettify query (Shift-Ctrl-P)",
+        })}
+      >
         <PrettifyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
-      <ToolbarButton onClick={() => merge()} label="Merge fragments into query (Shift-Ctrl-M)">
+      <ToolbarButton
+        onClick={() => merge()}
+        label={intl.formatMessage({
+          id: "riqffW",
+          defaultMessage: "Merge fragments into query (Shift-Ctrl-M)",
+        })}
+      >
         <MergeIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
-      <ToolbarButton onClick={() => copy()} label="Copy query (Shift-Ctrl-C)">
+      <ToolbarButton
+        onClick={() => copy()}
+        label={intl.formatMessage({
+          id: "8DRrsO",
+          defaultMessage: "Copy query (Shift-Ctrl-C)",
+        })}
+      >
         <CopyIcon className="graphiql-toolbar-icon" aria-hidden="true" />
       </ToolbarButton>
     </>
@@ -158,12 +178,20 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       <div className="graphiql-sidebar">
         <PluginSidebarSection pluginResize={pluginResize} />
         <div className="graphiql-sidebar-section">
-          <Tooltip label="Re-fetch GraphQL schema">
+          <Tooltip
+            label={intl.formatMessage({
+              id: "BGwfJz",
+              defaultMessage: "Re-fetch GraphQL schema",
+            })}
+          >
             <UnStyledButton
               type="button"
               disabled={schemaContext.isFetching}
               onClick={() => schemaContext.introspect()}
-              aria-label="Re-fetch GraphQL schema"
+              aria-label={intl.formatMessage({
+                id: "BGwfJz",
+                defaultMessage: "Re-fetch GraphQL schema",
+              })}
             >
               <ReloadIcon
                 className={schemaContext.isFetching ? "graphiql-spin" : ""}
@@ -190,7 +218,12 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
         <div ref={pluginResize.secondRef} style={{ minWidth: 0 }}>
           <div className="graphiql-sessions">
             <div className="graphiql-session-header">
-              <Tabs aria-label="Select active operation">
+              <Tabs
+                aria-label={intl.formatMessage({
+                  id: "rtmtQa",
+                  defaultMessage: "Select active operation",
+                })}
+              >
                 {editorContext.tabs.length > 1 ? (
                   <>
                     {editorContext.tabs.map((tab, index) => (
@@ -217,12 +250,20 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                       </Tab>
                     ))}
                     <div>
-                      <Tooltip label="Add tab">
+                      <Tooltip
+                        label={intl.formatMessage({
+                          id: "HMPPjb",
+                          defaultMessage: "Add tab",
+                        })}
+                      >
                         <UnStyledButton
                           type="button"
                           className="graphiql-tab-add"
                           onClick={() => editorContext.addTab()}
-                          aria-label="Add tab"
+                          aria-label={intl.formatMessage({
+                            id: "HMPPjb",
+                            defaultMessage: "Add tab",
+                          })}
                         >
                           <PlusIcon aria-hidden="true" />
                         </UnStyledButton>
@@ -234,12 +275,20 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
               <div className="graphiql-session-header-right">
                 {editorContext.tabs.length === 1 ? (
                   <div className="graphiql-add-tab-wrapper">
-                    <Tooltip label="Add tab">
+                    <Tooltip
+                      label={intl.formatMessage({
+                        id: "HMPPjb",
+                        defaultMessage: "Add tab",
+                      })}
+                    >
                       <UnStyledButton
                         type="button"
                         className="graphiql-tab-add"
                         onClick={() => editorContext.addTab()}
-                        aria-label="Add tab"
+                        aria-label={intl.formatMessage({
+                          id: "HMPPjb",
+                          defaultMessage: "Add tab",
+                        })}
                       >
                         <PlusIcon aria-hidden="true" />
                       </UnStyledButton>
@@ -261,7 +310,13 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                   }`}
                 >
                   <div ref={editorToolsResize.firstRef}>
-                    <section className="graphiql-query-editor" aria-label="Query Editor">
+                    <section
+                      className="graphiql-query-editor"
+                      aria-label={intl.formatMessage({
+                        id: "qyMjmk",
+                        defaultMessage: "Query Editor",
+                      })}
+                    >
                       <div className="graphiql-query-editor-wrapper">
                         <QueryEditor
                           editorTheme={props.editorTheme}
@@ -272,7 +327,14 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                           readOnly={props.readOnly}
                         />
                       </div>
-                      <div className="graphiql-toolbar" role="toolbar" aria-label="Editor Commands">
+                      <div
+                        className="graphiql-toolbar"
+                        role="toolbar"
+                        aria-label={intl.formatMessage({
+                          id: "5SfUYr",
+                          defaultMessage: "Editor Commands",
+                        })}
+                      >
                         <ExecuteButton />
                         {toolbar}
                       </div>
@@ -297,7 +359,7 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                             setActiveSecondaryEditor("variables");
                           }}
                         >
-                          Variables
+                          <FormattedMessage id="tr0YPg" defaultMessage="Variables" />
                         </UnStyledButton>
                         {isHeadersEditorEnabled ? (
                           <UnStyledButton
@@ -316,7 +378,7 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                               setActiveSecondaryEditor("headers");
                             }}
                           >
-                            Headers
+                            <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
                           </UnStyledButton>
                         ) : null}
                         {isHeadersEditorEnabled ? (
@@ -333,8 +395,14 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                       <Tooltip
                         label={
                           editorToolsResize.hiddenElement === "second"
-                            ? "Show editor tools"
-                            : "Hide editor tools"
+                            ? intl.formatMessage({
+                                id: "kYWkbi",
+                                defaultMessage: "Show editor tools",
+                              })
+                            : intl.formatMessage({
+                                id: "hE13D/",
+                                defaultMessage: "Hide editor tools",
+                              })
                         }
                       >
                         <UnStyledButton
@@ -346,8 +414,14 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                           }}
                           aria-label={
                             editorToolsResize.hiddenElement === "second"
-                              ? "Show editor tools"
-                              : "Hide editor tools"
+                              ? intl.formatMessage({
+                                  id: "kYWkbi",
+                                  defaultMessage: "Show editor tools",
+                                })
+                              : intl.formatMessage({
+                                  id: "hE13D/",
+                                  defaultMessage: "Hide editor tools",
+                                })
                           }
                         >
                           {editorToolsResize.hiddenElement === "second" ? (
@@ -362,7 +436,17 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                   <div ref={editorToolsResize.secondRef}>
                     <section
                       className="graphiql-editor-tool"
-                      aria-label={activeSecondaryEditor === "variables" ? "Variables" : "Headers"}
+                      aria-label={
+                        activeSecondaryEditor === "variables"
+                          ? intl.formatMessage({
+                              id: "tr0YPg",
+                              defaultMessage: "Variables",
+                            })
+                          : intl.formatMessage({
+                              id: "Wm+KUd",
+                              defaultMessage: "Headers",
+                            })
+                      }
                     >
                       <VariableEditor
                         editorTheme={props.editorTheme}

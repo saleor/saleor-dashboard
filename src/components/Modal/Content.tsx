@@ -16,6 +16,11 @@ export type ContentSize = "xs" | "sm" | "picker" | "md" | "lg" | "xl";
 
 type ContentProps = PropsWithBox<{
   children: ReactNode;
+  /**
+   * Fade the dialog and its backdrop in. Turn off when this dialog replaces another one in the
+   * same click, so the page behind doesn't brighten between them.
+   */
+  animateIn?: boolean;
   disableAutofocus?: boolean;
   disableEscapeKeyDown?: boolean;
   /** Keep children as-is when the modal manages its own scroll regions (e.g. nested forms). */
@@ -70,6 +75,7 @@ const findLastModalChildIndex = (items: ReactNode[], displayName: string): numbe
 
 export const Content = ({
   children,
+  animateIn = true,
   disableAutofocus,
   disableEscapeKeyDown,
   disableScrollLayout = false,
@@ -155,6 +161,7 @@ export const Content = ({
         __maxWidth={sizes[size]}
         className={clsx(
           styles.contentShell,
+          !animateIn && styles.noEnterAnimation,
           !hasBody && styles.contentShellNoBody,
           isHeaderOnlyDialog && styles.contentShellHeaderOnly,
           className,
