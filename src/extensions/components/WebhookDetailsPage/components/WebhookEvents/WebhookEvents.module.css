@@ -1,0 +1,62 @@
+.objectsWrapper {
+  border-right: 1px solid var(--mu-colors-border-default1);
+  padding: 2.4rem;
+}
+
+.eventsWrapper {
+  padding: 3.2rem;
+  padding-left: 0;
+}
+
+.listHeader {
+  padding: 0.8rem;
+  color: var(--mu-colors-text-default2);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.56;
+  text-transform: uppercase;
+}
+
+.listBody {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.objectItem {
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  align-items: center;
+  width: 100%;
+  padding: 1.6rem 0.8rem;
+  border: none;
+  background-color: transparent;
+  color: var(--mu-colors-text-default1);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: left;
+  word-break: break-all;
+  cursor: pointer;
+  transition: background-color 150ms;
+}
+
+.objectItem:hover {
+  background-color: var(--mu-colors-background-default1-hovered);
+}
+
+.objectItem:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: -2px;
+}
+
+.objectItemSelected,
+.objectItemSelected:hover {
+  background-color: var(--mu-colors-background-default1-pressed);
+}
+
+.eventItem {
+  color: var(--mu-colors-text-default1);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  word-break: break-all;
+}

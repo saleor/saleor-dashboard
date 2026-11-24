@@ -1,0 +1,14 @@
+/* Legacy macaw-ui `breakpoints.down("md")`: its `lg` breakpoint is 1680px. */
+@media (max-width: 1679.95px) {
+  .colNote {
+    width: 200px;
+  }
+}
+
+.colActions {
+  width: 100px;
+}
+
+.colKey {
+  width: 200px;
+}

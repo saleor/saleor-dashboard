@@ -1,0 +1,12 @@
+.item {
+  align-items: center;
+  display: flex;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.hr {
+  margin: 1.6rem 0;
+}

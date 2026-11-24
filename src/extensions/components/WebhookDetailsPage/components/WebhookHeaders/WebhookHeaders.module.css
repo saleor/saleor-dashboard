@@ -1,0 +1,20 @@
+.tableCell {
+  padding-left: 3.2rem !important;
+}
+
+.tableCell:first-child {
+  padding-right: 0;
+}
+
+.colNameHeader {
+  width: 250px;
+}
+
+.colActionHeader {
+  width: 130px;
+  text-align: right;
+}
+
+.table {
+  margin-top: 1.6rem;
+}
