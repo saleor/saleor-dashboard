@@ -53,13 +53,7 @@ export const PermissionList = ({
   const columns = getPermissionColumns(permissions);
 
   return (
-    <Box
-      className={styles.grid}
-      display="grid"
-      gap={6}
-      marginTop={4}
-      data-test-id="permission-group-list"
-    >
+    <Box className={styles.grid} display="grid" marginTop={4} data-test-id="permission-group-list">
       {columns.map((col, colIdx) => (
         <Box key={colIdx} display="flex" flexDirection="column" gap={3}>
           {col.map(permission => (

@@ -17,7 +17,7 @@ import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import { useStyles } from "./styles";
+import styles from "./WebhooksList.module.css";
 
 interface WebhooksListProps {
   webhooks: WebhookFragment[];
@@ -33,7 +33,6 @@ export const WebhooksList = ({
   hasManagedAppsPermission,
 }: WebhooksListProps) => {
   const intl = useIntl();
-  const classes = useStyles();
   const navigate = useNavigator();
   const numberOfColumns = hasManagedAppsPermission ? 3 : 1;
 
@@ -46,7 +45,7 @@ export const WebhooksList = ({
   return (
     <DashboardCard>
       <DashboardCard.Header>
-        <DashboardCard.Title className={classes.cardTitle}>
+        <DashboardCard.Title>
           {intl.formatMessage(sectionNames.webhooksAndEvents)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
@@ -58,13 +57,13 @@ export const WebhooksList = ({
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <ResponsiveTable className={classes.table}>
+        <ResponsiveTable>
           {hasManagedAppsPermission && (
             <TableHead>
               <TableRowLink>
                 <TableCellHeader>{intl.formatMessage(commonMessages.name)}</TableCellHeader>
                 <TableCellHeader>{intl.formatMessage(commonMessages.status)}</TableCellHeader>
-                <TableCell className={clsx(classes.colAction, classes.colRight)}>
+                <TableCell className={styles.colAction}>
                   <FormattedMessage {...messages.action} />
                 </TableCell>
               </TableRowLink>
@@ -77,7 +76,7 @@ export const WebhooksList = ({
                 webhook => (
                   <TableRowLink
                     hover={!!webhook}
-                    className={webhook ? classes.tableRow : undefined}
+                    className={webhook ? styles.tableRow : undefined}
                     href={
                       webhook &&
                       ExtensionsUrls.resolveEditCustomExtensionWebhookUrl(
@@ -88,8 +87,8 @@ export const WebhooksList = ({
                     key={webhook ? webhook.id : "skeleton"}
                   >
                     <TableCell
-                      className={clsx(classes.colName, {
-                        [classes.colNameUnnamed]: isUnnamed(webhook),
+                      className={clsx(styles.colName, {
+                        [styles.colNameUnnamed]: isUnnamed(webhook),
                       })}
                     >
                       {isUnnamed(webhook) ? (
@@ -116,7 +115,7 @@ export const WebhooksList = ({
                         <Skeleton />
                       )}
                     </TableCell>
-                    <TableCell className={clsx(classes.colAction, classes.colRight)}>
+                    <TableCell className={styles.colAction}>
                       {hasManagedAppsPermission && (
                         <Box display="flex" justifyContent="flex-end" width="100%">
                           <TableButtonWrapper>

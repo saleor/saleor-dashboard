@@ -10,8 +10,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { type WebhookFormData } from "../../WebhookDetailsPage";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import { hasEmptyHeader, mapHeaders, stringifyHeaders } from "./utils";
+import styles from "./WebhookHeaders.module.css";
 import { WebhookHeadersTableBody } from "./WebhookHeadersTableBody";
 
 export interface WebhookHeadersProps {
@@ -22,7 +22,6 @@ export interface WebhookHeadersProps {
 export const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHeadersProps) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
-  const classes = useStyles();
   const headers = useMemo(() => mapHeaders(customHeaders), [customHeaders]);
 
   useEffect(() => {
@@ -72,7 +71,7 @@ export const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHea
         </DashboardCard.Content>
       ) : (
         <>
-          <DashboardCard.Content className={classes.content}>
+          <DashboardCard.Content paddingBottom={0} __paddingTop="0.8rem">
             {headers.length > 0 && (
               <Text color="default2" fontSize={3}>
                 <FormattedMessage
@@ -87,7 +86,7 @@ export const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHea
           {expanded && (
             <>
               {headers.length === 0 ? (
-                <DashboardCard.Content className={classes.emptyContainer}>
+                <DashboardCard.Content paddingY={0}>
                   <Text size={3} fontWeight="regular" color="default2">
                     <FormattedMessage {...messages.noHeaders} />
                   </Text>
@@ -105,16 +104,16 @@ export const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHea
                     </Text>
                   </DashboardCard.Content>
 
-                  <Table className={classes.table}>
+                  <Table className={styles.table}>
                     <TableHead>
                       <TableRowLink>
-                        <TableCell className={clsx(classes.colNameHeader, classes.tableCell)}>
+                        <TableCell className={clsx(styles.colNameHeader, styles.tableCell)}>
                           <FormattedMessage {...messages.headerName} />
                         </TableCell>
-                        <TableCell className={clsx(classes.colValue, classes.tableCell)}>
+                        <TableCell className={styles.tableCell}>
                           <FormattedMessage {...messages.headerValue} />
                         </TableCell>
-                        <TableCell className={classes.colActionHeader}>
+                        <TableCell className={styles.colActionHeader}>
                           <FormattedMessage {...messages.actions} />
                         </TableCell>
                       </TableRowLink>

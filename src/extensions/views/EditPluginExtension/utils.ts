@@ -4,7 +4,6 @@ import {
   ConfigurationTypeFieldEnum,
   type PluginConfigurationBaseFragment,
 } from "@dashboard/graphql";
-import { type PillColor } from "@saleor/macaw-ui";
 import { type MessageDescriptor } from "react-intl";
 
 export const isPluginGlobal = (globalConfiguration: PluginConfigurationBaseFragment) =>
@@ -29,5 +28,6 @@ export const getPluginStatusLabel = (
   channelData: PluginConfigurationBaseFragment,
 ): MessageDescriptor =>
   channelData.active ? pluginStatusMessages.active : pluginStatusMessages.deactivated;
-export const getPluginStatusColor = (channelData: PluginConfigurationBaseFragment): PillColor =>
-  channelData.active ? "success" : "error";
+export const getPluginStatusColor = (
+  channelData: PluginConfigurationBaseFragment,
+): "success" | "error" => (channelData.active ? "success" : "error");

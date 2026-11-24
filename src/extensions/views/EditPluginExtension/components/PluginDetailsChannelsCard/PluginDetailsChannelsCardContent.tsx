@@ -2,29 +2,12 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers/CollectionWithDividers";
 import { type PluginsDetailsFragment } from "@dashboard/graphql";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getPluginStatusColor, getPluginStatusLabel, isPluginGlobal } from "../../utils";
 import { pluginDetailsChannelsCardMessages as messages } from "./messages";
-
-const useStyles = makeStyles(
-  theme => ({
-    itemContainer: {
-      position: "relative",
-      cursor: "pointer",
-    },
-    itemActiveIndicator: {
-      position: "absolute",
-      left: 0,
-      backgroundColor: theme.palette.primary.main,
-      width: 2,
-      height: "100%",
-    },
-  }),
-  { name: "PluginDetailsChannelsCardContent" },
-);
+import styles from "./PluginDetailsChannelsCardContent.module.css";
 
 export interface PluginDetailsChannelsCardProps {
   setSelectedChannelId: (channelId: string) => void;
@@ -49,7 +32,6 @@ export const PluginDetailsChannelsCardContent = ({
   setSelectedChannelId,
 }: PluginDetailsChannelsCardProps) => {
   const intl = useIntl();
-  const classes = useStyles({});
 
   if (!plugin) {
     return (
@@ -78,12 +60,12 @@ export const PluginDetailsChannelsCardContent = ({
         renderItem={channel => (
           <div
             data-test-id="channel"
-            className={classes.itemContainer}
+            className={styles.itemContainer}
             key={channel.channel.id}
             onClick={() => setSelectedChannelId(channel.channel.id)}
           >
             {isChannelSelected(channel.channel.id) && (
-              <div className={classes.itemActiveIndicator}></div>
+              <div className={styles.itemActiveIndicator}></div>
             )}
             <DashboardCard.Content padding={4} display="flex" alignItems="center" gap={2}>
               <Text>{channel.channel.name}</Text>

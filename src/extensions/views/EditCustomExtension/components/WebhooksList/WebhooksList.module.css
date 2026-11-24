@@ -1,0 +1,23 @@
+.colName {
+  width: 250px;
+}
+
+/* Legacy macaw-ui `breakpoints.up("lg")`: its `lg` breakpoint is 1680px. */
+@media (min-width: 1680px) {
+  /* Doubled to outrank the base width above. */
+  .colName.colName {
+    width: auto;
+  }
+}
+
+.colNameUnnamed {
+  color: var(--mu-colors-text-default2);
+}
+
+.colAction {
+  text-align: right;
+}
+
+.tableRow {
+  cursor: pointer;
+}

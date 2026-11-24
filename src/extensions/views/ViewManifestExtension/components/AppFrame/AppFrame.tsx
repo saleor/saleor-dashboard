@@ -8,8 +8,8 @@ import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
 import { useCallback, useEffect } from "react";
 
+import styles from "./AppFrame.module.css";
 import { AppIFrame } from "./AppIFrame";
-import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
 import { useAppDashboardUpdates } from "./useAppDashboardUpdates";
 import { useTokenRefresh } from "./useTokenRefresh";
@@ -50,7 +50,6 @@ export const AppFrame = ({
   autoHeight = false,
 }: Props) => {
   const { ref: frameRef, node: frameEl, setRef: setFrameRef } = useNodeRef<HTMLIFrameElement>();
-  const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
   const { setIframe, clearIframe } = useAppFrameReferences();
@@ -109,7 +108,7 @@ export const AppFrame = ({
   return (
     <>
       {!handshakeDone && (
-        <div className={classes.loader}>
+        <div className={styles.loader}>
           <SaleorThrobber />
         </div>
       )}
@@ -121,8 +120,8 @@ export const AppFrame = ({
         params={params}
         onLoad={handleLoad}
         onError={onError}
-        className={clsx(autoHeight ? classes.iframeWidget : classes.iframe, className, {
-          [classes.iframeHidden]: !handshakeDone,
+        className={clsx(autoHeight ? styles.iframeWidget : styles.iframe, className, {
+          [styles.iframeHidden]: !handshakeDone,
         })}
       />
     </>
