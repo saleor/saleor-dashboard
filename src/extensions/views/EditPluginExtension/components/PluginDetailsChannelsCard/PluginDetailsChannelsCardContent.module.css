@@ -1,0 +1,12 @@
+.itemContainer {
+  position: relative;
+  cursor: pointer;
+}
+
+.itemActiveIndicator {
+  position: absolute;
+  left: 0;
+  background-color: var(--mu-colors-text-default1);
+  width: 2px;
+  height: 100%;
+}

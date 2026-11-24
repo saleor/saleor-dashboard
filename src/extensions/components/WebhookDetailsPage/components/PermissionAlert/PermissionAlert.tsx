@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { Alert } from "@saleor/macaw-ui";
+import { Callout } from "@dashboard/components/Callout/Callout";
 import { Box, Chip, Text } from "@saleor/macaw-ui-next";
 import { getIntrospectionQuery } from "graphql";
 import { useIntl } from "react-intl";
@@ -22,15 +22,13 @@ export const PermissionAlert = ({ query }: PermissionAlertProps) => {
   return (
     <div data-test-id="permission-alert">
       {hasPermissions && (
-        <Alert
+        <Callout
+          type="warning"
           title={intl.formatMessage({
             id: "ngSJ7N",
             defaultMessage: "Your subscription query requires the following permissions:",
             description: "alert title",
           })}
-          variant="warning"
-          close={false}
-          className="remove-icon-background"
         >
           <Box display="flex" flexDirection="column" gap={2}>
             {Object.entries(permissionInfo).map(
@@ -72,7 +70,7 @@ export const PermissionAlert = ({ query }: PermissionAlertProps) => {
               ),
             )}
           </Box>
-        </Alert>
+        </Callout>
       )}
     </div>
   );

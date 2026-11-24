@@ -1,0 +1,18 @@
+.tableCell {
+  padding-left: 3.2rem !important;
+}
+
+.tableCell:first-child {
+  padding-top: 2.4rem;
+  padding-right: 0;
+}
+
+.colName {
+  width: 250px;
+}
+
+.colAction:last-child {
+  width: 130px;
+  padding-right: 3.2rem;
+  text-align: right;
+}

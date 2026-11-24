@@ -5,21 +5,14 @@ import { type WebhookEventTypeAsyncEnum, type WebhookEventTypeSyncEnum } from "@
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
 import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
-import {
-  List,
-  ListBody,
-  ListHeader,
-  ListItem,
-  ListItemCell,
-  useListWidths,
-} from "@saleor/macaw-ui";
 import { Box, Checkbox, Chip, Divider, Switch, Text, Tooltip } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import { EventTypes, getEventName, isDirectStockModeOnlyEvent } from "./utils";
+import styles from "./WebhookEvents.module.css";
 
 interface WebhookEventsProps {
   data: {
@@ -40,8 +33,6 @@ export const WebhookEvents = ({
   onAsyncEventChange,
 }: WebhookEventsProps) => {
   const intl = useIntl();
-  const { checkbox } = useListWidths();
-  const classes = useStyles({ checkbox });
   const [tab, setTab] = useState<WebhookEventTypeSelection>("async");
   const [object, setObject] = useState<string | null>(null);
 
@@ -99,126 +90,111 @@ export const WebhookEvents = ({
         </DashboardCard.Content>
         <Divider />
         <Grid variant="uniform">
-          <div className={classes.objectsWrapper}>
-            <List gridTemplate={["1fr 50px"]}>
-              <ListHeader>
-                <ListItem className={classes.listHeader}>
-                  <ListItemCell className={classes.listItemCell}>
-                    <FormattedMessage {...messages.objects} />
-                  </ListItemCell>
-                  <ListItemCell></ListItemCell>
-                </ListItem>
-              </ListHeader>
-              <ListBody className={classes.listBody}>
-                {Object.keys(EventTypes[tab]).map((object, idx) => {
-                  const eventCount = countEvents(object);
+          <div className={styles.objectsWrapper}>
+            <div className={styles.listHeader}>
+              <FormattedMessage {...messages.objects} />
+            </div>
+            <div className={styles.listBody}>
+              {Object.keys(EventTypes[tab]).map(eventObject => {
+                const eventCount = countEvents(eventObject);
+                const isSelected = eventObject === object;
+
+                return (
+                  <button
+                    type="button"
+                    data-test-id="webhook-objects-items"
+                    key={eventObject}
+                    aria-pressed={isSelected}
+                    className={clsx(styles.objectItem, isSelected && styles.objectItemSelected)}
+                    onClick={() => setObject(eventObject)}
+                  >
+                    <span>{capitalize(eventObject.replaceAll("_", " ").toLowerCase())}</span>
+                    <span>
+                      {eventCount > 0 && (
+                        <Chip size="small" backgroundColor="critical1" color="critical1">
+                          {eventCount}
+                        </Chip>
+                      )}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div className={styles.eventsWrapper}>
+            <div className={styles.listHeader}>
+              <FormattedMessage {...messages.events} />
+            </div>
+            <div className={styles.listBody}>
+              {object &&
+                EventTypes[tab][object] &&
+                EventTypes[tab][object].map((event, idx) => {
+                  const eventName = getEventName(object, event);
+                  const showDirectStockModeBadge = isDirectStockModeOnlyEvent(eventName);
 
                   return (
-                    <ListItem
-                      data-test-id="webhook-objects-items"
-                      key={idx}
-                      className={classes.listItem}
-                      onClick={() => setObject(object)}
+                    <Box
+                      key={event}
+                      display="flex"
+                      alignItems="center"
+                      gap={2}
+                      className={styles.eventItem}
                     >
-                      <ListItemCell className={classes.listItemCell}>
-                        {capitalize(object.replaceAll("_", " ").toLowerCase())}
-                      </ListItemCell>
-                      <ListItemCell>
-                        {eventCount > 0 && (
-                          <Chip size="small" backgroundColor="critical1" color="critical1">
-                            {eventCount}
-                          </Chip>
+                      <Checkbox
+                        data-test-id="events-checkbox"
+                        name={`${tab}Events`}
+                        checked={(data[`${tab}Events`] as WebhookEventTypeSyncEnum[]).includes(
+                          eventName,
                         )}
-                      </ListItemCell>
-                    </ListItem>
+                        value={eventName}
+                        onCheckedChange={checked =>
+                          handleEventChange({
+                            target: {
+                              name: `${tab}Events`,
+                              value: eventName,
+                              // @ts-expect-error incorrect useForm types - cannot set required checked property
+                              checked,
+                            },
+                          })
+                        }
+                        id={`event-checkbox-${idx}`}
+                        paddingX={1.5}
+                        paddingY={3.5}
+                        fontWeight="bold"
+                      >
+                        {capitalize(event.toLowerCase().replaceAll("_", " "))}
+                      </Checkbox>
+                      {showDirectStockModeBadge && (
+                        <Tooltip>
+                          <Tooltip.Trigger>
+                            <Chip
+                              data-test-id="direct-stock-mode-badge"
+                              backgroundColor="warning1"
+                              borderColor="warning1"
+                              color="warning1"
+                              size="small"
+                              __cursor="help"
+                            >
+                              {intl.formatMessage(messages.directStockModeBadge)}
+                            </Chip>
+                          </Tooltip.Trigger>
+                          <Tooltip.Content side="top">
+                            <Tooltip.Arrow />
+                            <Box __maxWidth="320px" display="flex" flexDirection="column" gap={2}>
+                              <Text size={2}>
+                                <FormattedMessage {...messages.directStockModeTooltipBody} />
+                              </Text>
+                              <Link href={siteSettingsUrl()} underline>
+                                <FormattedMessage {...messages.directStockModeTooltipLink} />
+                              </Link>
+                            </Box>
+                          </Tooltip.Content>
+                        </Tooltip>
+                      )}
+                    </Box>
                   );
                 })}
-              </ListBody>
-            </List>
-          </div>
-          <div className={classes.eventsWrapper}>
-            <List gridTemplate={["1fr", checkbox]}>
-              <ListHeader>
-                <ListItem className={classes.listHeader}>
-                  <ListItemCell className={classes.listItemCell}>
-                    <FormattedMessage {...messages.events} />
-                  </ListItemCell>
-                </ListItem>
-              </ListHeader>
-              <ListBody className={classes.listBody}>
-                {object &&
-                  EventTypes[tab][object] &&
-                  EventTypes[tab][object].map((event, idx) => {
-                    const eventName = getEventName(object, event);
-                    const showDirectStockModeBadge = isDirectStockModeOnlyEvent(eventName);
-
-                    return (
-                      <ListItem className={classes.eventListItem} key={event}>
-                        <ListItemCell className={classes.eventListItemCell}>
-                          <Box display="flex" alignItems="center" gap={2}>
-                            <Checkbox
-                              data-test-id="events-checkbox"
-                              name={`${tab}Events`}
-                              checked={(
-                                data[`${tab}Events`] as WebhookEventTypeSyncEnum[]
-                              ).includes(eventName)}
-                              value={eventName}
-                              onCheckedChange={checked =>
-                                handleEventChange({
-                                  target: {
-                                    name: `${tab}Events`,
-                                    value: eventName,
-                                    // @ts-expect-error incorrect useForm types - cannot set required checked property
-                                    checked,
-                                  },
-                                })
-                              }
-                              id={`event-checkbox-${idx}`}
-                              paddingX={1.5}
-                              paddingY={3.5}
-                              fontWeight="bold"
-                            >
-                              {capitalize(event.toLowerCase().replaceAll("_", " "))}
-                            </Checkbox>
-                            {showDirectStockModeBadge && (
-                              <Tooltip>
-                                <Tooltip.Trigger>
-                                  <Chip
-                                    data-test-id="direct-stock-mode-badge"
-                                    backgroundColor="warning1"
-                                    borderColor="warning1"
-                                    color="warning1"
-                                    size="small"
-                                    __cursor="help"
-                                  >
-                                    {intl.formatMessage(messages.directStockModeBadge)}
-                                  </Chip>
-                                </Tooltip.Trigger>
-                                <Tooltip.Content side="top">
-                                  <Tooltip.Arrow />
-                                  <Box
-                                    __maxWidth="320px"
-                                    display="flex"
-                                    flexDirection="column"
-                                    gap={2}
-                                  >
-                                    <Text size={2}>
-                                      <FormattedMessage {...messages.directStockModeTooltipBody} />
-                                    </Text>
-                                    <Link href={siteSettingsUrl()} underline>
-                                      <FormattedMessage {...messages.directStockModeTooltipLink} />
-                                    </Link>
-                                  </Box>
-                                </Tooltip.Content>
-                              </Tooltip>
-                            )}
-                          </Box>
-                        </ListItemCell>
-                      </ListItem>
-                    );
-                  })}
-              </ListBody>
-            </List>
+            </div>
           </div>
         </Grid>
         <Divider />

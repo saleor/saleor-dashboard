@@ -1,7 +1,7 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 
-export const useStyles = makeStyles<{ checkbox?: string }>(
+export const useStyles = makeStyles<{}>(
   theme => ({
     eventsWrapper: {
       padding: theme.spacing(4),
@@ -57,5 +57,5 @@ export const useStyles = makeStyles<{ checkbox?: string }>(
       wordBreak: "break-all",
     },
   }),
-  { name: "WebhookEvents" },
+  { name: "DryRun" },
 );

@@ -1,12 +1,12 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { type ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Divider, Text } from "@saleor/macaw-ui-next";
 import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isSecretField } from "../utils";
+import styles from "./PluginAuthorization.module.css";
 
 interface PluginAuthorizationProps {
   fields: ConfigurationItemFragment[];
@@ -14,25 +14,8 @@ interface PluginAuthorizationProps {
   onEdit: (field: string) => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    hr: {
-      margin: theme.spacing(2, 0),
-    },
-    item: {
-      alignItems: "center",
-      display: "flex",
-    },
-    spacer: {
-      flex: 1,
-    },
-  }),
-  { name: "PluginAuthorization" },
-);
-
 export const PluginAuthorization = (props: PluginAuthorizationProps) => {
   const { fields, onClear, onEdit } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
   const secretFields = fields.filter(field => isSecretField(fields, field.name));
 
@@ -50,7 +33,7 @@ export const PluginAuthorization = (props: PluginAuthorizationProps) => {
       <DashboardCard.Content>
         {secretFields.map((field, fieldIndex) => (
           <Fragment key={field.name}>
-            <div className={classes.item} key={field.name}>
+            <div className={styles.item} key={field.name}>
               {field.type === ConfigurationTypeFieldEnum.SECRET ||
               field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
                 <div>
@@ -64,7 +47,7 @@ export const PluginAuthorization = (props: PluginAuthorizationProps) => {
                   {field.label}
                 </Text>
               )}
-              <div className={classes.spacer} />
+              <div className={styles.spacer} />
               {field.value === null ? (
                 <Button variant="secondary" onClick={() => onEdit(field.name)}>
                   <FormattedMessage {...buttonMessages.create} />
@@ -80,7 +63,7 @@ export const PluginAuthorization = (props: PluginAuthorizationProps) => {
                 </>
               )}
             </div>
-            {fieldIndex !== secretFields.length - 1 && <Divider className={classes.hr} />}
+            {fieldIndex !== secretFields.length - 1 && <Divider className={styles.hr} />}
           </Fragment>
         ))}
       </DashboardCard.Content>
