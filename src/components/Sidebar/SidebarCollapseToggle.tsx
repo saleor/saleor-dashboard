@@ -85,7 +85,8 @@ export const SidebarCollapseButton = () => {
   const label = intl.formatMessage(messages.collapseNavigation);
 
   return (
-    <Box position="relative" display="flex">
+    // Above controls stretched over the header row, so its clicks stay its own.
+    <Box position="relative" zIndex="1" display="flex">
       <Tooltip {...tooltip.rootProps} delayDuration={TOGGLE_TOOLTIP_DELAY_MS}>
         <Tooltip.Trigger>
           <button
