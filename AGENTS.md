@@ -33,6 +33,8 @@ Read documentation when its subject is relevant to the task:
 - `docs/running-tests.md` when running Playwright tests.
 - `.claude/skills/saleor-dashboard-cloud-extensions/SKILL.md` when touching
   `src/cloud-extensions` or the submodule pointer.
+- `.claude/skills/verify-dashboard/SKILL.md` when proving a change in a running
+  Dashboard: screenshots, reproducing a bug, or capturing PR evidence.
 
 Read current commands, dependencies, and runtime requirements from `package.json`,
 including `packageManager` and `engines`; read aliases from `tsconfig.json`.

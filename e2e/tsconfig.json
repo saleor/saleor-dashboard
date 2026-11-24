@@ -23,5 +23,6 @@
     "isolatedModules": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["**/*.ts"]
+  // The verify-dashboard skill's helper drives this suite's stack, so it is checked with it.
+  "include": ["**/*.ts", "../.claude/skills/verify-dashboard/scripts/**/*.ts"]
 }
