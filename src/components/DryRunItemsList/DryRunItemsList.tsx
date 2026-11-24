@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 
+import { useStyles } from "@dashboard/components/DryRun/styles";
 import { Radio } from "@dashboard/components/Radio/Radio";
-import { useStyles } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/styles";
 import { useQuery } from "@dashboard/hooks/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import {

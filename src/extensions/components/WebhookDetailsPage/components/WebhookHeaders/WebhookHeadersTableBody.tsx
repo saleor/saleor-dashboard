@@ -4,16 +4,15 @@ import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists/lists";
-import { IconButton } from "@saleor/macaw-ui";
-import { Input } from "@saleor/macaw-ui-next";
+import { Button, Input } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Trash2 } from "lucide-react";
 import { type ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import { type Header, stringifyHeaders } from "./utils";
+import styles from "./WebhookHeadersTableBody.module.css";
 
 const nameSeparator = ":";
 const nameInputPrefix = "name";
@@ -25,7 +24,6 @@ interface WebhookHeadersTableBodyProps {
 }
 
 export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyProps) => {
-  const classes = useStyles();
   const intl = useIntl();
   const updateWebhookItem = (target: EventTarget & HTMLInputElement) => {
     const { name, value } = target;
@@ -59,7 +57,7 @@ export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTab
     <TableBody>
       {headers.map((field, fieldIndex) => (
         <TableRowLink data-test-id="field" key={fieldIndex}>
-          <TableCell className={clsx(classes.colName, classes.tableCell)}>
+          <TableCell className={clsx(styles.colName, styles.tableCell)}>
             <Input
               aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
               name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
@@ -70,7 +68,7 @@ export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTab
               helperText={(field.error && intl.formatMessage(messages.headerNameError)) || " "}
             />
           </TableCell>
-          <TableCell className={clsx(classes.colValue, classes.tableCell)}>
+          <TableCell className={styles.tableCell}>
             <Input
               aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
               name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
@@ -79,9 +77,10 @@ export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTab
               helperText={" "}
             />
           </TableCell>
-          <TableCell className={classes.colAction}>
-            <IconButton
+          <TableCell className={styles.colAction}>
+            <Button
               variant="secondary"
+              icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
               data-test-id={"delete-field-" + fieldIndex}
               onClick={() =>
                 onChange({
@@ -91,9 +90,7 @@ export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTab
                   },
                 })
               }
-            >
-              <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-            </IconButton>
+            />
           </TableCell>
         </TableRowLink>
       ))}

@@ -1,5 +1,8 @@
 .grid {
   grid-template-columns: 1fr;
+  /* Stacked columns must read as one list, so rows use the in-column item gap. */
+  row-gap: var(--mu-spacing-3);
+  column-gap: var(--mu-spacing-6);
 }
 
 /** Show two columns of permissions when we have enough horizontal space */

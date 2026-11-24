@@ -1,7 +1,7 @@
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { usePostToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
 import useLocale from "@dashboard/hooks/useLocale";
-import { useTheme } from "@saleor/macaw-ui";
+import { useTheme } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 
 /**
@@ -15,7 +15,8 @@ export const useAppDashboardUpdates = (
 ) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
   const { locale } = useLocale();
-  const { themeType } = useTheme();
+  const { theme } = useTheme();
+  const themeType = theme === "defaultDark" ? "dark" : "light";
 
   useEffect(() => {
     if (!enabled) {

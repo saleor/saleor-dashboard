@@ -13,7 +13,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { type WebhookFormData } from "../../WebhookDetailsPage";
 import { WebhookStatus } from "../WebhookStatus/WebhookStatus";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 
 interface WebhookInfoProps {
   data: WebhookFormData;
@@ -25,16 +24,15 @@ interface WebhookInfoProps {
 
 export const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: WebhookInfoProps) => {
   const intl = useIntl();
-  const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
 
   return (
-    <DashboardCard className={classes.card}>
+    <DashboardCard paddingLeft={0}>
       <DashboardCard.Header paddingLeft={0}>
         <DashboardCard.Title>{intl.formatMessage(messages.webhookInformation)}</DashboardCard.Title>
       </DashboardCard.Header>
 
-      <DashboardCard.Content className={classes.card}>
+      <DashboardCard.Content paddingLeft={0}>
         <Text fontWeight="medium" fontSize={3} display="block">
           {intl.formatMessage(commonMessages.generalInformations)}
         </Text>
