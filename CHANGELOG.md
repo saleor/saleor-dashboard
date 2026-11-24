@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.23.47
+
+### Patch Changes
+
+- [#7132](https://github.com/saleor/saleor-dashboard/pull/7132) [`3cb54f6`](https://github.com/saleor/saleor-dashboard/commit/3cb54f68a5dda4286ae649277acc04fa0a671642) Thanks [@lkostrowski](https://github.com/lkostrowski)! - For users signed in through Saleor Cloud, the whole sidebar header now opens the environment switcher and highlights on hover, instead of a small chevron button next to the environment name. The sidebar collapse button keeps working on its own.
+
+- [#7127](https://github.com/saleor/saleor-dashboard/pull/7127) [`c32c1c3`](https://github.com/saleor/saleor-dashboard/commit/c32c1c361d3489c24f94c6f5f79487cebb256710) Thanks [@lkostrowski](https://github.com/lkostrowski)! - If you signed in with "Continue with Saleor Cloud", Configuration now has a "Snapshots and data" page, also found by searching settings for "snapshot", "restore" or "clear database". It lists the environment's snapshots and lets you create, restore and delete them, restore from any snapshot in your organization, replace the data with a sample store, or clear its orders or its whole database. Destructive actions ask you to type the environment's name. Actions your Saleor Cloud role doesn't allow, or that must wait for a running task, are disabled with the reason. Previously this was only possible in the Saleor Cloud console.
+
+- [#7128](https://github.com/saleor/saleor-dashboard/pull/7128) [`0fc19b8`](https://github.com/saleor/saleor-dashboard/commit/0fc19b8502e6477a623df5962903a26446245e1b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Staff can now add, change, and remove a voucher on a draft order. Before, the draft order summary showed an applied voucher but gave no way to set one. The summary now has an "Add voucher" link that opens a dialog. Staff with the "Manage discounts" permission search active vouchers in the order's channel, and each voucher shows its discount, such as "10% off" or "Free shipping". The dialog then picks the voucher's first unused code, and staff can choose a different code or type one instead. Other staff type the code. Errors from the API, such as an invalid or inactive code, show in the dialog. When a voucher is applied, the summary shows its code with "Change" and "Remove".
+
+- [#7125](https://github.com/saleor/saleor-dashboard/pull/7125) [`2a72268`](https://github.com/saleor/saleor-dashboard/commit/2a72268ef311b2e8ea318e6b5a8a3e0e65fb4e2b) Thanks [@peelar](https://github.com/peelar)! - Opening "Share feedback" from What's New or the command menu no longer flashes the page behind. The feedback dialog now takes over in place, with the backdrop staying dark.
+
+- [#7129](https://github.com/saleor/saleor-dashboard/pull/7129) [`a36ea16`](https://github.com/saleor/saleor-dashboard/commit/a36ea16380a053b929ef5fd99bafe92b817cf300) Thanks [@peelar](https://github.com/peelar)! - Hovering the sidebar's collapse and expand buttons no longer turns them solid white. They now get the same subtle highlight as the navigation items next to them.
+
 ## 3.23.46
 
 ### Patch Changes
