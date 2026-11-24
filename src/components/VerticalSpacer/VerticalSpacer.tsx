@@ -1,21 +1,12 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
 
 interface VerticalSpacerProps {
+  /** Multiples of the legacy 0.8rem spacing unit. */
   spacing?: number;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    container: ({ spacing }: Required<VerticalSpacerProps>) => ({
-      height: theme.spacing(spacing),
-    }),
-  }),
-  { name: "VerticalSpacer" },
+const VerticalSpacer = ({ spacing = 1 }: VerticalSpacerProps): JSX.Element => (
+  <Box __height={`${0.8 * spacing}rem`} />
 );
-const VerticalSpacer = ({ spacing = 1 }: VerticalSpacerProps) => {
-  const classes = useStyles({ spacing });
-
-  return <div className={classes.container} />;
-};
 
 export default VerticalSpacer;
