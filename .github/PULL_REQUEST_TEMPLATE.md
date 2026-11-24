@@ -1,12 +1,21 @@
 <!-- Title: Describe the change in plain words (e.g. "Fix adding variants to an order" or "Simplify test setup"). The title and description should explain the full scope without requiring reviewers to read the diff. -->
 
-## Screenshot / Video
+## Proof
 
-<!-- Required for any UI change: include before/after screenshots or video. Remove this section for non-UI changes. -->
+<!--
+Show that the change works and how it works.
+Required when users can see or interact with the change. Capture it from the running Dashboard against a real Saleor API, not mocks or Storybook.
+
+Pick the format that fits the change:
+- Video: anything with motion or steps (a flow, interaction, loading, animation, transition). Record the whole path from start to the final result. Leave out Saleor login and all the prep-work.
+- Screenshot: static changes (layout, copy, styles). Show before and after at the same viewport.
+
+Embed media inline so it plays in the PR. Avoid long stacks of artifacts (e.g. 5 screenshots). Remove this section only when the change has no user-visible effect.
+-->
 
 ## What was done
 
-<!-- Describe the changes in simple English, covering every area this PR touches. -->
+<!-- Describe the changes in simple English, covering every area this PR touches. Use visual explanation (such as a state chart or diagram) as aid to explain complex changes. -->
 
 ## Why
 

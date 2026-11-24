@@ -40,6 +40,18 @@ END $$;
 `;
 
 /**
+ * Written aside and renamed into place, so a concurrent run (`pnpm e2e` and `pnpm verify`
+ * share this cache) never reads a half-written dump.
+ */
+const writeDump = (target: string, dump: string) => {
+  const partial = `${target}.${process.pid}.partial`;
+
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(partial, `${TRUNCATE_ALL}\n${dump}`);
+  fs.renameSync(partial, target);
+};
+
+/**
  * Saleor's data migrations seed rows of their own - the default customer type
  * (`account/migrations/0103_create_default_customer_type.py`) is one, and `populatedb`
  * fails outright without it. Those rows belong to the schema, not to the test data, so
@@ -84,8 +96,7 @@ export const ensureBaseline = async (config: E2eConfig): Promise<string> => {
 
   const dump = await step("capturing the migrated baseline", () => pgDump(config));
 
-  fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.writeFileSync(target, `${TRUNCATE_ALL}\n${dump}`);
+  writeDump(target, dump);
 
   return target;
 };
@@ -129,8 +140,7 @@ export const ensureScenario = async (config: E2eConfig, name: string): Promise<s
 
   const dump = await step(`capturing the "${name}" scenario`, () => pgDump(config));
 
-  fs.mkdirSync(path.dirname(dumpPath), { recursive: true });
-  fs.writeFileSync(dumpPath, `${TRUNCATE_ALL}\n${dump}`);
+  writeDump(dumpPath, dump);
   log(`  cached at ${path.relative(process.cwd(), dumpPath)}`);
 
   return dumpPath;
