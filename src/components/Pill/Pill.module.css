@@ -1,0 +1,37 @@
+/* Measured from the legacy macaw-ui Pill (MUI Chip) in the production build.
+   Height and radius are set inline in Pill.tsx so they beat Chip's size recipe. */
+.pill {
+  box-sizing: border-box;
+  padding: 0 2px;
+  border-style: solid;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 12px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.56;
+  letter-spacing: 0.02rem;
+  user-select: none;
+}
+
+.small .label {
+  padding: 0 8px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+}
+
+.pill > svg,
+.pill > div {
+  flex-shrink: 0;
+  margin-left: 8px;
+  margin-right: -6px;
+}
