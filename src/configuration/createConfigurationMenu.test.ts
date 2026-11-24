@@ -44,8 +44,26 @@ describe("createConfigurationMenu", () => {
       "configuration-menu-site-settings",
       "configuration-menu-gift-cards",
       "configuration-menu-notifications",
+      "configuration-menu-snapshots-and-data",
     ]);
   });
+
+  it.each([
+    { cloudExtensionsAvailable: true, hidden: false },
+    { cloudExtensionsAvailable: false, hidden: true },
+  ])(
+    "hides Snapshots and data unless Cloud extensions are available ($cloudExtensionsAvailable)",
+    ({ cloudExtensionsAvailable, hidden }) => {
+      // Arrange / Act
+      const item = createConfigurationMenu(intl, { cloudExtensionsAvailable })
+        .flatMap(section => section.menuItems)
+        .find(menuItem => menuItem.testId === "configuration-menu-snapshots-and-data");
+
+      // Assert
+      expect(item?.url).toBe("/snapshots-and-data");
+      expect(item?.hidden).toBe(hidden);
+    },
+  );
 
   it("places channels and taxes under Markets & channels", () => {
     // Arrange / Act

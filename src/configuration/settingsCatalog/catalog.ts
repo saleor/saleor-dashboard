@@ -4,6 +4,7 @@ import { configurationHubsCatalogEntries } from "./hubs";
 import { notificationsCatalogEntries } from "./notifications";
 import { ordersCatalogEntries } from "./orders";
 import { refundsCatalogEntries } from "./refunds";
+import { snapshotsAndDataCatalogEntries } from "./snapshotsAndData";
 import { storeCatalogEntries } from "./store";
 import { type SettingsCatalogEntry } from "./types";
 
@@ -19,6 +20,7 @@ export const settingsCatalogEntries: SettingsCatalogEntry[] = [
   ...giftCardsCatalogEntries,
   ...channelsCatalogEntries,
   ...notificationsCatalogEntries,
+  ...snapshotsAndDataCatalogEntries,
   ...configurationHubsCatalogEntries,
 ];
 
