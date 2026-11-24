@@ -503,6 +503,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Notifications",
     description: "notifications settings section name",
   },
+  snapshotsAndData: {
+    id: "2s7Mv6",
+    defaultMessage: "Snapshots and data",
+    description: "Saleor Cloud environment snapshots and data settings section name",
+  },
   customers: {
     id: "McN+wq",
     defaultMessage: "Customers",

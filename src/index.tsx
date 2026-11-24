@@ -13,6 +13,7 @@ import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { notificationsSettingsPath } from "@dashboard/notificationsSettings/urls";
 import { orderSettingsPath } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { snapshotsAndDataPath } from "@dashboard/snapshotsAndData/urls";
 import { StaffInviteProvider } from "@dashboard/staff/components/StaffInviteProvider/StaffInviteProvider";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme/provider";
@@ -107,6 +108,12 @@ const RefundsSettingsRoute = lazy(() =>
 const NotificationsSettingsRoute = lazy(() =>
   import("./notificationsSettings/route").then(m => ({
     default: m.NotificationsSettingsRoute,
+  })),
+);
+
+const SnapshotsAndDataRoute = lazy(() =>
+  import("./snapshotsAndData/SnapshotsAndDataRoute").then(m => ({
+    default: m.SnapshotsAndDataRoute,
   })),
 );
 
@@ -338,6 +345,7 @@ const Routes = () => {
                         path={notificationsSettingsPath}
                         component={NotificationsSettingsRoute}
                       />
+                      <SectionRoute path={snapshotsAndDataPath} component={SnapshotsAndDataRoute} />
                       <SectionRoute path="/taxes" component={TaxesSection} />
                       <SectionRoute
                         permissions={[PermissionEnum.MANAGE_SHIPPING]}

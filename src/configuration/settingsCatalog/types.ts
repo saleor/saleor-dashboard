@@ -24,6 +24,8 @@ export interface SettingsCatalogEntry {
   requireAllPermissions?: boolean;
   ownership?: SettingsCatalogOwnership;
   kind: SettingsCatalogKind;
+  /** Shown only when the Saleor Cloud extensions are available to the user. */
+  cloudOnly?: boolean;
 }
 
 export interface ResolvedSettingsCatalogEntry {
