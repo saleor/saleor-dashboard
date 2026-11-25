@@ -72,19 +72,13 @@ const manifest: Manifest = {
 interface PreviewProps {
   manifest: Manifest;
   manifestUrl: string;
-  /** Storybook has no Saleor app domain configured, so official apps are simulated. */
-  isOfficial?: boolean;
 }
 
-const Preview = ({ manifest, manifestUrl, isOfficial }: PreviewProps) => {
+const Preview = ({ manifest, manifestUrl }: PreviewProps) => {
   const checks = useInstallChecks({ manifest, manifestUrl });
 
   return (
-    <InstallExtensionManifestData
-      manifest={manifest}
-      manifestUrl={manifestUrl}
-      checks={{ ...checks, isOfficial: isOfficial ?? checks.isOfficial }}
-    />
+    <InstallExtensionManifestData manifest={manifest} manifestUrl={manifestUrl} checks={checks} />
   );
 };
 
@@ -102,7 +96,6 @@ export const External: Story = {};
 export const Official: Story = {
   args: {
     manifestUrl: "https://payments.saleor.app/api/manifest",
-    isOfficial: true,
     manifest: {
       ...manifest,
       appUrl: "https://payments.saleor.app",

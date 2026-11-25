@@ -11,26 +11,30 @@ describe("isSaleorOfficialAppUrl", () => {
     window.__SALEOR_CONFIG__ = originalConfig;
   });
 
-  it("returns false when cloud domain env var is not set", () => {
+  it("falls back to saleor.app when cloud domain env var is not set", () => {
     // Arrange
     setCloudDomain(undefined);
 
     // Act
-    const result = isSaleorOfficialAppUrl("https://app.saleor.app/widget");
+    const official = isSaleorOfficialAppUrl("https://app.saleor.app/widget");
+    const external = isSaleorOfficialAppUrl("https://app.example.com/widget");
 
     // Assert
-    expect(result).toBe(false);
+    expect(official).toBe(true);
+    expect(external).toBe(false);
   });
 
-  it("returns false when cloud domain env var is empty string", () => {
+  it("falls back to saleor.app when cloud domain env var is empty string", () => {
     // Arrange
     setCloudDomain("");
 
     // Act
-    const result = isSaleorOfficialAppUrl("https://app.saleor.app/widget");
+    const official = isSaleorOfficialAppUrl("https://app.saleor.app/widget");
+    const external = isSaleorOfficialAppUrl("https://app.example.com/widget");
 
     // Assert
-    expect(result).toBe(false);
+    expect(official).toBe(true);
+    expect(external).toBe(false);
   });
 
   it("returns true for URL hosted exactly on the cloud domain", () => {
