@@ -1,13 +1,14 @@
 import { RippleAnimation } from "@dashboard/ripples/components/RippleAnimation";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
+import { formatRippleText } from "@dashboard/ripples/rippleText";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export const Ripple = (props: { model: RippleModel }) => {
-  const content = props.model.content.contextual;
-  const isPlainString = typeof content === "string";
   const intl = useIntl();
+  const content = formatRippleText(intl, props.model.content.contextual);
+  const isPlainString = typeof content === "string";
   const { setFirstSeenFlag, getShouldShow, setManuallyHidden } = useRippleStorage();
 
   if (!getShouldShow(props.model)) {

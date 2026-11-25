@@ -22,4 +22,19 @@ describe("allRipples", () => {
     // Assert
     expect(hasProductMediaAltTranslationRipple).toBe(true);
   });
+
+  it("should define ripple text as messages so it can be translated", () => {
+    // Arrange
+    const fields = ["oneLiner", "contextual", "global"] as const;
+
+    // Act
+    const plainStrings = allRipples.flatMap(ripple =>
+      fields
+        .filter(field => typeof ripple.content[field] === "string")
+        .map(field => `${ripple.ID}.${field}`),
+    );
+
+    // Assert
+    expect(plainStrings).toEqual([]);
+  });
 });

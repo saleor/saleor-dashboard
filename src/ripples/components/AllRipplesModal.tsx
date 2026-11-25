@@ -11,6 +11,7 @@ import { allRipples } from "@dashboard/ripples/allRipples";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { rippleActionMessages } from "@dashboard/ripples/messages";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
+import { formatRippleText } from "@dashboard/ripples/rippleText";
 import { type Ripple, type RippleAction, type RippleType } from "@dashboard/ripples/types";
 import { isExternalURL } from "@dashboard/utils/urls";
 import { Box, Button, Text, useTheme, vars } from "@saleor/macaw-ui-next";
@@ -269,6 +270,9 @@ interface RippleEntryRowProps {
 }
 
 const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEntryRowProps) => {
+  const intl = useIntl();
+  const oneLiner = formatRippleText(intl, ripple.content.oneLiner);
+
   return (
     <Box display="flex" gap={4}>
       {/* Timeline column - dot and line */}
@@ -307,7 +311,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
           marginBottom={2}
           color="default1"
         >
-          {ripple.content.oneLiner}
+          {oneLiner}
         </Text>
 
         {ripple.media?.kind === "video" ? (
@@ -324,7 +328,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
               playsInline
               preload="metadata"
               poster={ripple.media.poster}
-              aria-label={ripple.content.oneLiner}
+              aria-label={oneLiner}
             >
               <source src={ripple.media.src} type="video/mp4" />
             </video>
@@ -332,7 +336,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
         ) : null}
 
         {/* Description */}
-        <RippleGlobalDescription content={ripple.content.global} />
+        <RippleGlobalDescription content={formatRippleText(intl, ripple.content.global)} />
 
         {/* Actions - filter out actions marked as hideInModal */}
         {ripple.actions?.some(action => !action.hideInModal) ? (
