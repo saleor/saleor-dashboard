@@ -1,62 +1,43 @@
-// @ts-strict-ignore
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
-import { makeStyles, Pill as MacawuiPill, type PillProps } from "@saleor/macaw-ui";
-import { useTheme } from "@saleor/macaw-ui-next";
+import { Chip, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { forwardRef } from "react";
+import { forwardRef, type HTMLAttributes, type ReactElement, type ReactNode } from "react";
 
-const useStyles = makeStyles(
-  {
-    pill: {
-      borderRadius: "32px",
-      border: "1px solid",
-      fontWeight: 500,
-      paddingLeft: "2px",
-      paddingRight: "2px",
-      paddingTop: "0",
-      paddingBottom: "0",
-      "& > span": {
-        fontWeight: 500,
-      },
-      // Override MacawUI Pill padding when there is an icon
-      "& > div, & > svg": {
-        marginLeft: "8px", // Compemsate for the icon internal padding if needed, or adjust based on real DOM
-      },
-    },
-  },
-  { name: "Pill" },
-);
+import styles from "./Pill.module.css";
 
-interface CustomPillProps extends Omit<PillProps, "color"> {
+interface PillProps extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
+  label: ReactNode;
   color: PillStatusType;
+  size?: "small" | "medium";
+  /** Rendered before the label, e.g. a lucide icon. */
+  icon?: ReactElement;
+  "data-test-id"?: string;
 }
 
-// Main purpose of this component is to override default Pill component
-// from macaw-ui to add custom styles
-// TODO: migrate to Pill component from new macaw-ui when it will be ready
-export const Pill = forwardRef<HTMLDivElement, CustomPillProps>(
-  ({ color: status, ...props }, ref) => {
+/** Status pill: a macaw-ui-next Chip coloured by `getStatusColor`. */
+export const Pill = forwardRef<HTMLDivElement, PillProps>(
+  ({ label, color: status, size = "medium", icon, className, style, ...rest }, ref) => {
     const { theme: currentTheme } = useTheme();
-
-    const colors = getStatusColor({
-      status: status,
-      currentTheme,
-    });
-    const classes = useStyles();
+    const colors = getStatusColor({ status, currentTheme });
 
     return (
-      <MacawuiPill
-        {...(props as any)}
+      <Chip
+        {...rest}
+        as="div"
         ref={ref}
-        className={clsx(classes.pill, props.className)}
+        className={clsx(styles.pill, size === "small" && styles.small, className)}
+        __height={size === "small" ? "24px" : "32px"}
+        __borderRadius="32px"
         style={{
           backgroundColor: colors.base,
           borderColor: colors.border,
           color: colors.text,
-          fontWeight: 500,
-          ...props.style,
+          ...style,
         }}
-      />
+      >
+        {icon}
+        <span className={styles.label}>{label}</span>
+      </Chip>
     );
   },
 );

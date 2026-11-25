@@ -1,10 +1,11 @@
 import { TableRow, type TableRowProps } from "@dashboard/components/Table/Table";
 import { isExternalURL } from "@dashboard/utils/urls";
-import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import type * as React from "react";
 import { forwardRef } from "react";
 import { Link, type LinkProps } from "react-router-dom";
+
+import styles from "./TableRowLink.module.css";
 
 type LocationDescriptor = LinkProps["to"];
 
@@ -17,19 +18,8 @@ export interface TableRowLinkProps extends Omit<TableRowProps, "onClick"> {
   style?: React.CSSProperties;
 }
 
-const useStyles = makeStyles(
-  {
-    link: {
-      all: "inherit",
-      display: "contents",
-    },
-  },
-  { name: "TableRowLink" },
-);
-
 const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, ref) => {
   const { href, children, linkClassName, onClick, ...restProps } = props;
-  const classes = useStyles();
 
   if (!href || (typeof href === "string" && isExternalURL(href))) {
     return (
@@ -41,7 +31,7 @@ const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, 
 
   return (
     <TableRow ref={ref} hover={true} onClick={onClick} {...restProps}>
-      <Link className={clsx(classes.link, linkClassName)} to={href}>
+      <Link className={clsx(styles.link, linkClassName)} to={href}>
         {children}
       </Link>
     </TableRow>

@@ -1,0 +1,10 @@
+/* Legacy theme.spacing(4) / spacing(2); the old `sm` down-breakpoint ended at 1280px. */
+.spacer {
+  margin-top: 3.2rem;
+}
+
+@media (max-width: 1279.95px) {
+  .spacer {
+    margin-top: 1.6rem;
+  }
+}
