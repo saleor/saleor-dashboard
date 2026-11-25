@@ -32,6 +32,17 @@ export const appManifestFragment = gql`
         default(format: WEBP, size: 64)
       }
     }
+    author
+    requiredSaleorVersion {
+      constraint
+      satisfied
+    }
+    webhooks {
+      name
+      asyncEvents
+      syncEvents
+      targetUrl
+    }
   }
 `;
 

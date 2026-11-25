@@ -1,117 +1,160 @@
-import { DashboardCard } from "@dashboard/components/Card";
+import { Callout } from "@dashboard/components/Callout/Callout";
+import { CountPill, countPillFromNumber } from "@dashboard/components/CountPill/CountPill";
+import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
+import {
+  DetailSection,
+  DetailSectionNav,
+  type DetailSectionNavItem,
+} from "@dashboard/components/DetailSectionNav/DetailSectionNav";
+import { useDetailSectionScrollSpy } from "@dashboard/components/DetailSectionNav/useDetailSectionScrollSpy";
 import { AppDeprecationNotice } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
-import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled/ExternalLinkUnstyled";
-import { deprecationMessages, messages } from "@dashboard/extensions/messages";
-import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
+import { deprecationMessages } from "@dashboard/extensions/messages";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
-import { type ZodIssue } from "zod";
+import { type ReactNode, useMemo } from "react";
+import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 import { fromZodIssue } from "zod-validation-error";
 
-import { type InstallDetailsManifestData } from "../../../types";
-import { IconsSection } from "./IconsSection";
+import { type useInstallChecks } from "../../../hooks/useInstallChecks";
+import { getManifestEndpoints, groupEndpointsByHost } from "../../../manifestEndpoints";
+import { type Manifest } from "../../../types";
+import { ManifestDomainsCard } from "./ManifestDomainsCard";
+import { ManifestExtensionsCard } from "./ManifestExtensionsCard";
+import { ManifestHeader } from "./ManifestHeader";
+import { ManifestOverviewCard } from "./ManifestOverviewCard";
+import { ManifestPermissionsCard } from "./ManifestPermissionsCard";
+import { ManifestTrustCallout } from "./ManifestTrustCallout";
+import { manifestMessages } from "./messages";
+
+interface ManifestSection {
+  id: string;
+  title: MessageDescriptor;
+  count?: number;
+  content: ReactNode;
+}
 
 export const InstallExtensionManifestData = ({
   manifest,
-  issues,
-  deprecationAcknowledged,
-  onDeprecationAcknowledgedChange,
+  manifestUrl,
+  checks,
 }: {
-  manifest: InstallDetailsManifestData;
-  issues?: ZodIssue[];
-  deprecationAcknowledged: boolean;
-  onDeprecationAcknowledgedChange: (acknowledged: boolean) => void;
+  manifest: Manifest;
+  manifestUrl: string;
+  checks: Pick<
+    ReturnType<typeof useInstallChecks>,
+    "issues" | "isOfficial" | "deprecation" | "trust"
+  >;
 }) => {
   const intl = useIntl();
+  const groups = useMemo(
+    () => groupEndpointsByHost(getManifestEndpoints(manifestUrl, manifest)),
+    [manifestUrl, manifest],
+  );
+  const permissions = manifest.permissions ?? [];
+
+  const sections: ManifestSection[] = [
+    {
+      id: "install-manifest-overview",
+      title: manifestMessages.overview,
+      content: <ManifestOverviewCard manifest={manifest} manifestUrl={manifestUrl} />,
+    },
+    {
+      id: "install-manifest-domains",
+      title: manifestMessages.domains,
+      count: groups.length,
+      content: <ManifestDomainsCard groups={groups} />,
+    },
+    {
+      id: "install-manifest-permissions",
+      title: manifestMessages.permissions,
+      count: permissions.length,
+      content: <ManifestPermissionsCard permissions={permissions} />,
+    },
+    ...(manifest.extensions.length > 0
+      ? [
+          {
+            id: "install-manifest-extensions",
+            title: manifestMessages.extensions,
+            count: manifest.extensions.length,
+            content: <ManifestExtensionsCard extensions={manifest.extensions} />,
+          },
+        ]
+      : []),
+  ];
+
+  const { activeId, selectSection } = useDetailSectionScrollSpy({
+    sectionIds: sections.map(section => section.id),
+  });
+  const navItems: DetailSectionNavItem[] = sections.map(section => ({
+    id: section.id,
+    label: (
+      <Box as="span" display="inline-flex" alignItems="center" gap={2}>
+        {intl.formatMessage(section.title)}
+        <CountPill count={countPillFromNumber(section.count ?? 0)} />
+      </Box>
+    ),
+  }));
 
   return (
-    <Box display="flex" flexDirection="column" gap={6} alignItems="flex-start">
-      <Text size={5} fontWeight="medium">
-        <FormattedMessage
-          {...messages.installExtensionNameHeader}
-          values={{
-            extensionName: manifest?.name || "",
-          }}
+    <Box display="flex" flexDirection="column" gap={2}>
+      <ManifestHeader
+        manifest={manifest}
+        manifestHost={groups[0]?.host ?? manifestUrl}
+        isOfficial={checks.isOfficial}
+      />
+      <DetailPageSectionLayout
+        nav={
+          <DetailSectionNav
+            items={navItems}
+            activeId={activeId}
+            onSelect={selectSection}
+            ariaLabel={intl.formatMessage(manifestMessages.navAriaLabel)}
+            data-test-id="install-manifest-nav"
+          />
+        }
+      >
+        <ManifestTrustCallout
+          isOfficial={checks.isOfficial}
+          hosts={groups.map(group => group.host)}
+          acknowledgement={checks.trust}
         />
-      </Text>
 
-      <IconsSection appLogo={manifest?.brand?.logo.default} />
-
-      {manifest.deprecationReason && (
-        <AppDeprecationNotice reason={manifest.deprecationReason}>
-          <Checkbox
-            marginTop={2}
-            checked={deprecationAcknowledged}
-            onCheckedChange={checked => onDeprecationAcknowledgedChange(checked === true)}
-            data-test-id="app-deprecation-acknowledgement"
-          >
-            <Text size={3}>
-              <FormattedMessage {...deprecationMessages.installAcknowledgement} />
-            </Text>
-          </Checkbox>
-        </AppDeprecationNotice>
-      )}
-
-      <Box display="flex" flexDirection="column" gap={4}>
-        <Text size={5} fontWeight="medium">
-          <FormattedMessage {...messages.permissions} />
-        </Text>
-        <div>
-          <Text>
-            <FormattedMessage {...messages.permissionsExplanation} />
-          </Text>
-          <Box as="ul" listStyleType="disc" paddingLeft={4} fontSize={3}>
-            {manifest?.permissions?.map(permission => (
-              <li key={permission.code}>{permission.name}</li>
-            ))}
-          </Box>
-        </div>
-        {issues?.length && (
-          <Box display="flex" flexDirection="column" gap={4}>
-            <Text size={5} fontWeight="medium">
-              {intl.formatMessage({ defaultMessage: "Issues", id: "Wj5TbN" })}
-            </Text>
-            <Text>
-              {intl.formatMessage({
-                defaultMessage:
-                  "App manifest contains issues. You can still install it, but it may not work properly. See technical details below:",
-                id: "yyJcyW",
-              })}
-            </Text>
-            <ul>
-              {issues.map((issue, index) => {
-                const formattedMessage = fromZodIssue(issue);
-
-                return (
-                  <li key={index}>
-                    <Text color="critical2">{formattedMessage.message}</Text>
-                  </li>
-                );
-              })}
-            </ul>
-          </Box>
+        {manifest.deprecationReason && (
+          <AppDeprecationNotice reason={manifest.deprecationReason}>
+            <Checkbox
+              marginTop={2}
+              checked={checks.deprecation.acknowledged}
+              onCheckedChange={checked => checks.deprecation.setAcknowledged(checked === true)}
+              data-test-id="app-deprecation-acknowledgement"
+            >
+              <Text size={3}>
+                <FormattedMessage {...deprecationMessages.installAcknowledgement} />
+              </Text>
+            </Checkbox>
+          </AppDeprecationNotice>
         )}
 
-        <DashboardCard withBorder gap={1} __width="fit-content">
-          <DashboardCard.Title display="flex" gap={2} alignItems="center">
-            <ExclamationIcon />
-            <FormattedMessage {...messages.infoCardTitle} />
-          </DashboardCard.Title>
-          <DashboardCard.Content fontSize={3} paddingRight={0}>
-            <FormattedMessage
-              {...messages.infoCardText}
-              values={{
-                extensionName: manifest.name ?? "this extension",
-                learnMoreLink: manifest.dataPrivacyUrl ? (
-                  <ExternalLinkUnstyled href={manifest.dataPrivacyUrl} target="_blank">
-                    <FormattedMessage {...messages.infoCardLearnMoreLink} />
-                  </ExternalLinkUnstyled>
-                ) : null,
-              }}
-            />
-          </DashboardCard.Content>
-        </DashboardCard>
-      </Box>
+        {checks.issues && (
+          <Callout
+            type="error"
+            title={intl.formatMessage(manifestMessages.issuesTitle, {
+              count: checks.issues.length,
+            })}
+            data-test-id="install-manifest-issues"
+          >
+            <Box as="ul" margin={0} paddingLeft={4}>
+              {checks.issues.map((issue, index) => (
+                <li key={index}>{fromZodIssue(issue).message}</li>
+              ))}
+            </Box>
+          </Callout>
+        )}
+
+        {sections.map(section => (
+          <DetailSection key={section.id} id={section.id}>
+            {section.content}
+          </DetailSection>
+        ))}
+      </DetailPageSectionLayout>
     </Box>
   );
 };

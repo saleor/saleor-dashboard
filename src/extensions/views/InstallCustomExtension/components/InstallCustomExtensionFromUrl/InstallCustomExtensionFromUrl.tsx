@@ -1,9 +1,8 @@
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
-import { ExtensionManifestValidator } from "@dashboard/extensions/domain/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { type ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
 import { Box } from "@saleor/macaw-ui-next";
-import { useMemo } from "react";
 import {
   type Control,
   type UseFormClearErrors,
@@ -16,16 +15,14 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { previousPagePath } from "../../consts";
-import { useDeprecationAcknowledgement } from "../../hooks/useDeprecationAcknowledgement";
 import { useFetchManifest } from "../../hooks/useFetchManifest";
 import { useInstallApp } from "../../hooks/useInstallApp";
+import { useInstallChecks } from "../../hooks/useInstallChecks";
 import { useLoadQueryParamsToForm } from "../../hooks/useLoadQueryParamsToForm";
 import { type ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestErrorMessage } from "../ManifestErrorMessage/ManifestErrorMessage";
-
-const manifestValidator = new ExtensionManifestValidator();
 
 export const InstallCustomExtensionFromUrl = ({
   trigger,
@@ -70,51 +67,40 @@ export const InstallCustomExtensionFromUrl = ({
     manifest,
   });
 
-  const issues = useMemo(() => {
-    const manifestValidation = manifestValidator.validateAppManifest(manifest);
-
-    return "issues" in manifestValidation ? manifestValidation.issues : undefined;
-  }, [manifest]);
-
-  /**
-   * Prevent installation if validation fails. In the future we can change errors to warnings, but first we need to add special handling
-   * to Dashboard, e.g. render "warning" near widget that widget is broken.
-   */
-  const deprecation = useDeprecationAcknowledgement(manifest);
-  const canInstall = !issues && manifest && deprecation.acknowledged;
+  const checks = useInstallChecks({ manifest, manifestUrl: lastFetchedManifestUrl });
 
   return (
-    <>
+    <DetailPageLayout gridTemplateColumns={1}>
       <InstallTopNav
         title={intl.formatMessage(headerTitles.addCustomExtensionManifestUrl)}
         showDocsLink={false}
       />
-      <Box marginX={6} marginTop={10} display="flex" flexDirection="column" gap={10}>
-        <InstallSectionData
-          isFetchingManifest={isFetchingManifest}
-          manifest={manifest}
-          lastFetchedManifestUrl={lastFetchedManifestUrl}
-          control={control}
-          issues={issues}
-          deprecationAcknowledged={deprecation.acknowledged}
-          onDeprecationAcknowledgedChange={deprecation.setAcknowledged}
-        />
-        <ManifestErrorMessage
-          error={alreadyInstalledApp ? undefined : errors.manifestUrl}
-          alreadyInstalledApp={alreadyInstalledApp}
-        />
-      </Box>
+      <DetailPageLayout.Content>
+        <Box marginX={6} marginTop={10} display="flex" flexDirection="column" gap={10}>
+          <InstallSectionData
+            isFetchingManifest={isFetchingManifest}
+            manifest={manifest}
+            lastFetchedManifestUrl={lastFetchedManifestUrl}
+            control={control}
+            checks={checks}
+          />
+          <ManifestErrorMessage
+            error={alreadyInstalledApp ? undefined : errors.manifestUrl}
+            alreadyInstalledApp={alreadyInstalledApp}
+          />
+        </Box>
+      </DetailPageLayout.Content>
       <Savebar>
         <Savebar.Spacer />
         <Savebar.CancelButton href={previousPagePath} />
         <Savebar.ConfirmButton
-          disabled={!canInstall}
+          disabled={!checks.canInstall}
           transitionState={isSubmittingInstallation ? "loading" : "default"}
           onClick={() => submitInstallApp()}
         >
           <FormattedMessage {...messages.install} />
         </Savebar.ConfirmButton>
       </Savebar>
-    </>
+    </DetailPageLayout>
   );
 };

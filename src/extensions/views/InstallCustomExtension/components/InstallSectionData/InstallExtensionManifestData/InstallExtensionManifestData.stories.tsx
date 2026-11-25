@@ -1,49 +1,124 @@
-import { type InstallDetailsManifestData } from "@dashboard/extensions/views/InstallCustomExtension/types";
+import {
+  PermissionEnum,
+  WebhookEventTypeAsyncEnum,
+  WebhookEventTypeSyncEnum,
+} from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type ComponentProps, useState } from "react";
-import { ZodIssueCode } from "zod";
 
+import { useInstallChecks } from "../../../hooks/useInstallChecks";
+import { type Manifest } from "../../../types";
 import { InstallExtensionManifestData } from "./InstallExtensionManifestData";
 
-const manifest: InstallDetailsManifestData = {
-  name: "Acme Analytics",
+const manifestUrl = "https://payments.acme-apps.io/api/manifest";
+
+const manifest: Manifest = {
+  __typename: "Manifest",
+  identifier: "io.acme-apps.payments",
+  version: "2.4.1",
+  name: "Acme Payments",
+  about: "Accept card and wallet payments with Acme.",
+  author: "Acme Apps Ltd",
+  appUrl: "https://payments.acme-apps.io",
+  tokenTargetUrl: "https://api.acme-cdn.net/register",
+  dataPrivacy: null,
+  dataPrivacyUrl: "https://acme-apps.io/privacy",
+  deprecationReason: null,
+  homepageUrl: "https://acme-apps.io",
+  supportUrl: "https://acme-apps.io/support",
+  requiredSaleorVersion: {
+    __typename: "AppManifestRequiredSaleorVersion",
+    constraint: ">=3.20",
+    satisfied: true,
+  },
   brand: {
     __typename: "AppManifestBrand",
     logo: { __typename: "AppManifestBrandLogo", default: "https://placehold.co/64x64/png" },
   },
   permissions: [
-    { __typename: "Permission", code: "MANAGE_ORDERS" as any, name: "Manage orders" },
-    { __typename: "Permission", code: "MANAGE_PRODUCTS" as any, name: "Manage products" },
+    { __typename: "Permission", code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
+    { __typename: "Permission", code: PermissionEnum.MANAGE_USERS, name: "Manage customers" },
+    { __typename: "Permission", code: PermissionEnum.MANAGE_ORDERS, name: "Manage orders" },
   ],
-  dataPrivacyUrl: "https://example.com/privacy",
-  deprecationReason: null,
+  extensions: [
+    {
+      __typename: "AppManifestExtension",
+      label: "Refund with Acme",
+      url: "/refund",
+      mountName: "ORDER_DETAILS_MORE_ACTIONS",
+      targetName: "POPUP",
+      permissions: [
+        { __typename: "Permission", code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
+      ],
+    },
+  ],
+  webhooks: [
+    {
+      __typename: "AppManifestWebhook",
+      name: "Transaction initialize",
+      syncEvents: [WebhookEventTypeSyncEnum.TRANSACTION_INITIALIZE_SESSION],
+      asyncEvents: [],
+      targetUrl: "https://payments.acme-apps.io/api/webhooks/transaction-initialize",
+    },
+    {
+      __typename: "AppManifestWebhook",
+      name: "Order fully paid",
+      syncEvents: [],
+      asyncEvents: [WebhookEventTypeAsyncEnum.ORDER_FULLY_PAID],
+      targetUrl: "https://payments.acme-apps.io/api/webhooks/order-fully-paid",
+    },
+  ],
 };
 
-const meta: Meta<typeof InstallExtensionManifestData> = {
+interface PreviewProps {
+  manifest: Manifest;
+  manifestUrl: string;
+  /** Storybook has no Saleor app domain configured, so official apps are simulated. */
+  isOfficial?: boolean;
+}
+
+const Preview = ({ manifest, manifestUrl, isOfficial }: PreviewProps) => {
+  const checks = useInstallChecks({ manifest, manifestUrl });
+
+  return (
+    <InstallExtensionManifestData
+      manifest={manifest}
+      manifestUrl={manifestUrl}
+      checks={{ ...checks, isOfficial: isOfficial ?? checks.isOfficial }}
+    />
+  );
+};
+
+const meta: Meta<typeof Preview> = {
   title: "Extensions/InstallCustomExtension/InstallExtensionManifestData",
-  component: InstallExtensionManifestData,
-  args: { manifest, deprecationAcknowledged: false, onDeprecationAcknowledgedChange: () => {} },
+  component: Preview,
+  args: { manifest, manifestUrl },
 };
 
 export default meta;
-type Story = StoryObj<typeof InstallExtensionManifestData>;
+type Story = StoryObj<typeof Preview>;
 
-export const Default: Story = {};
+export const External: Story = {};
+
+export const Official: Story = {
+  args: {
+    manifestUrl: "https://payments.saleor.app/api/manifest",
+    isOfficial: true,
+    manifest: {
+      ...manifest,
+      appUrl: "https://payments.saleor.app",
+      tokenTargetUrl: "https://payments.saleor.app/api/register",
+      webhooks: [],
+    },
+  },
+};
 
 export const WithIssues: Story = {
   args: {
-    issues: [
-      {
-        code: ZodIssueCode.custom,
-        path: ["appUrl"],
-        message: "appUrl is missing",
-      },
-      {
-        code: ZodIssueCode.custom,
-        path: ["tokenTargetUrl"],
-        message: "tokenTargetUrl is not a valid URL",
-      },
-    ],
+    manifest: {
+      ...manifest,
+      // An extension permission missing from the app permissions fails validation.
+      permissions: [],
+    },
   },
 };
 
@@ -52,18 +127,20 @@ export const Deprecated: Story = {
     manifest: {
       ...manifest,
       deprecationReason:
-        "Acme Analytics is replaced by Acme Insights. Install Acme Insights from Extensions and move your dashboards before the end of the year.",
+        "Acme Payments is replaced by Acme Checkout. Install Acme Checkout from Extensions before the end of the year.",
     },
   },
-  render: (args: ComponentProps<typeof InstallExtensionManifestData>) => {
-    const [acknowledged, setAcknowledged] = useState(false);
+};
 
-    return (
-      <InstallExtensionManifestData
-        {...args}
-        deprecationAcknowledged={acknowledged}
-        onDeprecationAcknowledgedChange={setAcknowledged}
-      />
-    );
+export const UnsupportedSaleorVersion: Story = {
+  args: {
+    manifest: {
+      ...manifest,
+      requiredSaleorVersion: {
+        __typename: "AppManifestRequiredSaleorVersion",
+        constraint: ">=3.99",
+        satisfied: false,
+      },
+    },
   },
 };
