@@ -70,7 +70,7 @@ export function useMutation<TData, TVariables>(
               text: intl.formatMessage(commonMessages.readOnly),
             });
           } else if (err.graphQLErrors.some(isJwtError)) {
-            user.logout();
+            user.logout?.({ sessionExpired: true });
             notify({
               status: "error",
               text: intl.formatMessage(commonMessages.sessionExpired),

@@ -61,13 +61,21 @@ export const UserContextError = {
 
 export type UserContextError = (typeof UserContextError)[keyof typeof UserContextError];
 
+export interface LogoutOptions {
+  /**
+   * The API stopped accepting the session; the merchant didn't choose to log out. The browser's
+   * saved password may then sign them back in.
+   */
+  sessionExpired?: boolean;
+}
+
 export interface UserContext {
   login?: (username: string, password: string) => Promise<LoginData | undefined>;
   loginByExternalPlugin?: (
     pluginId: string | null,
     input: ExternalLoginInput,
   ) => Promise<GetExternalAccessTokenData | undefined>;
-  logout?: () => Promise<void>;
+  logout?: (options?: LogoutOptions) => Promise<void>;
   requestLoginByExternalPlugin?: (
     pluginId: string,
     input: RequestExternalLoginInput,
