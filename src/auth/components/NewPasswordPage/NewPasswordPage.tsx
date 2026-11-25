@@ -1,11 +1,16 @@
 import { type AccountErrorFragment } from "@dashboard/graphql";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { AuthButton } from "../AuthButton/AuthButton";
+import { AuthField } from "../AuthField/AuthField";
+import { AuthNotice } from "../AuthNotice/AuthNotice";
+import { AuthWell } from "../AuthWell/AuthWell";
 import { newPasswordPageMessages } from "./messages";
+import styles from "./NewPasswordPage.module.css";
 import { getNewPasswordSchema, type NewPasswordPageFormData } from "./validationSchema";
 
 export { type NewPasswordPageFormData };
@@ -21,7 +26,7 @@ const defaultValues: NewPasswordPageFormData = {
   confirmPassword: "",
 };
 
-export const NewPasswordPage = ({ loading, errors, onSubmit }: NewPasswordPageProps) => {
+export const NewPasswordPage = ({ loading, errors, onSubmit }: NewPasswordPageProps): ReactNode => {
   const intl = useIntl();
   const {
     control,
@@ -34,78 +39,90 @@ export const NewPasswordPage = ({ loading, errors, onSubmit }: NewPasswordPagePr
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Box display="flex" flexDirection="column" gap={6}>
-        <Text size={6} fontWeight="bold" lineHeight={3}>
+    <AuthWell>
+      <div className={styles.header}>
+        <h1 className={styles.title}>
           <FormattedMessage {...newPasswordPageMessages.title} />
-        </Text>
-        {errors.length > 0 && (
-          <Box display="flex" flexDirection="column" gap={2}>
-            {errors.map(error => (
-              <Box
-                borderRadius={4}
-                padding={4}
-                backgroundColor="critical1"
-                width="100%"
-                key={`${error.code}-${error.field}`}
-              >
-                {getAccountErrorMessage(error, intl)}
-              </Box>
-            ))}
-          </Box>
-        )}
-        <Text size={4} fontWeight="light" color="default2" display="block">
+        </h1>
+        <p className={styles.lede}>
           <FormattedMessage {...newPasswordPageMessages.description} />
-        </Text>
-        <Controller
-          control={control}
-          name="password"
-          render={({ field }) => (
-            <Input
-              {...field}
-              autoFocus
-              width="100%"
-              autoComplete="new-password"
-              disabled={loading}
-              label={intl.formatMessage(newPasswordPageMessages.newPasswordLabel)}
-              type="password"
-              error={!!formErrors.password}
-              helperText={formErrors.password?.message}
-              data-test-id="password"
-              spellCheck={false}
-              required
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <Input
-              {...field}
-              width="100%"
-              autoComplete="new-password"
-              disabled={loading}
-              label={intl.formatMessage(newPasswordPageMessages.confirmPasswordLabel)}
-              type="password"
-              error={!!formErrors.confirmPassword}
-              helperText={formErrors.confirmPassword?.message}
-              data-test-id="confirm-password"
-              spellCheck={false}
-              required
-            />
-          )}
-        />
-        <Button
-          data-test-id="button-bar-confirm"
-          width="100%"
-          disabled={loading}
-          variant="primary"
-          type="submit"
-        >
-          <FormattedMessage {...newPasswordPageMessages.submitButton} />
-        </Button>
-      </Box>
-    </form>
+        </p>
+      </div>
+
+      {errors.length > 0 && (
+        <div className={styles.notices}>
+          {errors.map(error => (
+            <AuthNotice tone="error" key={`${error.code}-${error.field}`}>
+              {getAccountErrorMessage(error, intl)}
+            </AuthNotice>
+          ))}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.fields}>
+          <Controller
+            control={control}
+            name="password"
+            render={({ field }) => (
+              <AuthField
+                {...field}
+                id="password"
+                autoFocus
+                autoComplete="new-password"
+                disabled={loading}
+                label={intl.formatMessage(newPasswordPageMessages.newPasswordLabel)}
+                showPasswordToggle
+                showPasswordLabel={intl.formatMessage(newPasswordPageMessages.showPassword)}
+                hidePasswordLabel={intl.formatMessage(newPasswordPageMessages.hidePassword)}
+                error={!!formErrors.password}
+                helperText={formErrors.password?.message}
+                data-test-id="password"
+                spellCheck={false}
+                required
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <AuthField
+                {...field}
+                id="confirmPassword"
+                autoComplete="new-password"
+                disabled={loading}
+                label={intl.formatMessage(newPasswordPageMessages.confirmPasswordLabel)}
+                showPasswordToggle
+                showPasswordLabel={intl.formatMessage(newPasswordPageMessages.showPassword)}
+                hidePasswordLabel={intl.formatMessage(newPasswordPageMessages.hidePassword)}
+                error={!!formErrors.confirmPassword}
+                helperText={formErrors.confirmPassword?.message}
+                data-test-id="confirm-password"
+                spellCheck={false}
+                required
+              />
+            )}
+          />
+
+          <AuthButton
+            className={styles.actionButton}
+            data-test-id="button-bar-confirm"
+            loading={loading}
+            variant="primary"
+            type="submit"
+          >
+            <FormattedMessage {...newPasswordPageMessages.submitButton} />
+          </AuthButton>
+        </div>
+      </form>
+
+      <p className={styles.help}>
+        <FormattedMessage {...newPasswordPageMessages.passwordHint} />
+      </p>
+    </AuthWell>
   );
 };
+
+NewPasswordPage.displayName = "NewPasswordPage";

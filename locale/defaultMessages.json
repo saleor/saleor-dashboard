@@ -468,6 +468,10 @@
     "context": "error when channel order settings fail to save from orders hub",
     "string": "Could not save channel settings for: {channels}"
   },
+  "/c0Gdp": {
+    "context": "error shown on login page when available login methods failed to load",
+    "string": "Couldn't load login methods. Check your connection and try again."
+  },
   "/dnWE8": {
     "context": "products in collection",
     "string": "Products in {name}"
@@ -1212,6 +1216,10 @@
     "context": "button",
     "string": "Clear"
   },
+  "2FS/p2": {
+    "context": "hint below back to login button on reset confirmation screen",
+    "string": "Didn’t arrive? Check spam, or try again in five minutes."
+  },
   "2HfSiT": {
     "context": "pagination",
     "string": "No. of rows"
@@ -1376,9 +1384,6 @@
   "2nnp9+": {
     "context": "Info box title when product is not available for purchase",
     "string": "Visible but not purchasable."
-  },
-  "2ob30/": {
-    "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
   },
   "2oyWT9": {
     "context": "button",
@@ -1741,6 +1746,10 @@
   "46BDBP": {
     "context": "warehouse delete dialog when the channel count is unknown",
     "string": "It is removed from every channel it is in."
+  },
+  "47logQ": {
+    "context": "button",
+    "string": "Log in"
   },
   "48dMqY": {
     "context": "Dry run trigger button",
@@ -2412,6 +2421,10 @@
     "context": "Save composition segment for shipping zone channel assignment",
     "string": "channels"
   },
+  "6ZNHWw": {
+    "context": "divider between password sign-in and external SSO methods",
+    "string": "or"
+  },
   "6ZfDCV": {
     "context": "warehouse channels footer when every channel already includes this location",
     "string": "All channels are assigned."
@@ -2525,6 +2538,10 @@
   },
   "6sr5Sp": {
     "string": "Either term matches"
+  },
+  "6tg2dD": {
+    "context": "password guidance below set new password button",
+    "string": "Use 8 or more characters."
   },
   "6tlOZ8": {
     "context": "dialog header",
@@ -2927,6 +2944,9 @@
   "8HRy+U": {
     "string": "Category Description"
   },
+  "8HimVK": {
+    "string": "Confirm password"
+  },
   "8HmEqK": {
     "context": "Transaction refund button - return captured amount to client",
     "string": "Refund"
@@ -2957,6 +2977,10 @@
   "8LWaFr": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
+  },
+  "8LxIiH": {
+    "context": "support prompt below actions when Saleor API is unreachable",
+    "string": "Still stuck? {contactLink}"
   },
   "8MSYNw": {
     "context": "order send refund, manual transaction refund was created",
@@ -3710,10 +3734,6 @@
   "ArgcnR": {
     "context": "voucher percentage spreadsheet paste hint",
     "string": "You can paste from a spreadsheet. Select a field and paste a column of values to fill percentages down the list."
-  },
-  "AubJ/S": {
-    "context": "button",
-    "string": "Sign in"
   },
   "AulH/n": {
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
@@ -4854,9 +4874,6 @@
     "context": "review row status when SEO fields are empty",
     "string": "Optional"
   },
-  "Ev6SEF": {
-    "string": "New Password"
-  },
   "EwoyVr": {
     "context": "bulk remove button label",
     "string": "Delete shipping zones"
@@ -4872,6 +4889,10 @@
   "F/Tado": {
     "context": "voucher setup card title on create",
     "string": "Set up this voucher"
+  },
+  "F/uQnO": {
+    "context": "page title",
+    "string": "Set new password"
   },
   "F08wV2": {
     "context": "issued by app label",
@@ -5716,6 +5737,9 @@
     "context": "section title for country preset shortcuts in assign countries dialog",
     "string": "Quick picks"
   },
+  "HUqG6y": {
+    "string": "In a few minutes you’ll receive a message with instructions on how to reset your password."
+  },
   "HVFq//": {
     "context": "button",
     "string": "Copy token"
@@ -6251,6 +6275,10 @@
   "JN8kTJ": {
     "context": "channel delivery empty state description",
     "string": "Customers won't see any delivery method at checkout, so the order can't be completed."
+  },
+  "JP4Xv6": {
+    "context": "support link label when Saleor API is unreachable",
+    "string": "Contact support"
   },
   "JRfJD9": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
@@ -6865,6 +6893,10 @@
     "context": "voucher discount amount section title",
     "string": "Discount amount"
   },
+  "LYu01+": {
+    "context": "aria-label for password visibility toggle button",
+    "string": "Hide password"
+  },
   "LZ+epP": {
     "context": "toast heading when an action was refused by the server before Saleor handled it, such as a proxy or firewall",
     "string": "The server refused the request (error {status})"
@@ -7249,6 +7281,10 @@
     "context": "create attribute from model type, button",
     "string": "Create attribute"
   },
+  "N0dWxf": {
+    "context": "support prompt below sign-in card",
+    "string": "Need help? {contactLink}"
+  },
   "N1Z/Er": {
     "context": "Title when product is not visible in listings",
     "string": "Hidden from browsing."
@@ -7350,6 +7386,10 @@
   "NLybdq": {
     "context": "voucher channel",
     "string": "Channel"
+  },
+  "NMw7ip": {
+    "context": "aria-label for new password visibility toggle button",
+    "string": "Hide password"
   },
   "NNT3Lp": {
     "context": "collections section name",
@@ -7746,6 +7786,10 @@
     "context": "setup task description",
     "string": "Create a shipping zone for your default country with a flat rate, or assign an existing zone."
   },
+  "OoGGN6": {
+    "context": "status eyebrow when the dashboard can't reach the Saleor API at startup",
+    "string": "Connection"
+  },
   "OpgSjI": {
     "context": "dialog header",
     "string": "Assign Model"
@@ -7797,6 +7841,10 @@
   "Ov45QH": {
     "context": "promotion metadata dialog header",
     "string": "Promotion Metadata"
+  },
+  "OvAlM0": {
+    "context": "aria-label for password visibility toggle button",
+    "string": "Show password"
   },
   "Owgj18": {
     "context": "section description",
@@ -8746,6 +8794,10 @@
     "context": "voucher schedule header status when currently redeemable",
     "string": "Active"
   },
+  "SFjTGt": {
+    "context": "eyebrow on password reset confirmation page",
+    "string": "All set"
+  },
   "SGdcJD": {
     "string": "Enter code"
   },
@@ -8915,6 +8967,10 @@
   "Snodo/": {
     "context": "attribute type",
     "string": "Customer Attribute"
+  },
+  "SpCeoK": {
+    "context": "legal footer link to Saleor Terms of Use",
+    "string": "Terms of Use"
   },
   "SpngiS": {
     "context": "sale status",
@@ -9736,6 +9792,10 @@
   "VYK2nN": {
     "string": "Product details"
   },
+  "VYdDDs": {
+    "context": "login page subtitle",
+    "string": "Log in to your Saleor Dashboard."
+  },
   "VYhySD": {
     "context": "setup task description when shipping voucher has no countries",
     "string": "No countries selected means free shipping worldwide. Limit the list if this offer should only apply in some markets."
@@ -9765,6 +9825,10 @@
   },
   "Vf57Ie": {
     "string": "Partially fulfilled"
+  },
+  "VfzAVN": {
+    "context": "login page heading",
+    "string": "Welcome back"
   },
   "VhAHLQ": {
     "context": "assign picker, client-side filter emptied the loaded pages",
@@ -9969,6 +10033,10 @@
   "WMNtD2": {
     "string": "The extension will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the extension before you approve."
   },
+  "WNW5VT": {
+    "context": "link back to login screen",
+    "string": "Back to login"
+  },
   "WNwbEi": {
     "context": "bulk publish confirm stock single warehouse detail",
     "string": "Applies to {productCount, plural, one {# product} other {# products}} in {warehouseName}"
@@ -10033,10 +10101,6 @@
   "WcEwji": {
     "context": "settings search alias",
     "string": "returns"
-  },
-  "WhKGPA": {
-    "context": "page title",
-    "string": "Set up new password"
   },
   "WhvuCb": {
     "context": "plugins section name",
@@ -12285,6 +12349,9 @@
     "context": "inline error when sender email format is invalid",
     "string": "Enter a valid email address"
   },
+  "dwE5UC": {
+    "string": "Choose a password you don’t use anywhere else."
+  },
   "dxCVWI": {
     "context": "error message",
     "string": "Cannot request an invoice for draft order"
@@ -12389,6 +12456,10 @@
   "eLJQSh": {
     "context": "column title gift card",
     "string": "Gift Card"
+  },
+  "eLl71O": {
+    "context": "aria-label for new password visibility toggle button",
+    "string": "Show password"
   },
   "eOrLzG": {
     "context": "button",
@@ -12587,6 +12658,10 @@
     "context": "attributes, section header",
     "string": "Variant Attributes"
   },
+  "f3NBH+": {
+    "context": "secondary prompt below reset password submit button",
+    "string": "Remembered it? {loginLink}"
+  },
   "f4mftg": {
     "context": "bullet: can re-enable later",
     "string": "You can turn this back on later."
@@ -12660,6 +12735,9 @@
   "fS2rip": {
     "context": "tooltip for taxes amount",
     "string": "Tax amount"
+  },
+  "fTHhSB": {
+    "string": "New password"
   },
   "fU+a9k": {
     "context": "date attribute type",
@@ -14739,9 +14817,6 @@
     "context": "field is optional",
     "string": "Optional"
   },
-  "m0Dz+2": {
-    "string": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
-  },
   "m14laH": {
     "context": "collection channel status when publication is scheduled",
     "string": "Scheduled"
@@ -16577,6 +16652,10 @@
     "context": "order status",
     "string": "Ready to capture"
   },
+  "rrQA6H": {
+    "context": "legal footer link to Saleor Privacy Policy",
+    "string": "Privacy Policy"
+  },
   "rrU/T2": {
     "context": "create shipping for channel dialog description",
     "string": "Creates a zone for {country} on this channel{warehouseSuffix}, with one flat-rate method."
@@ -16822,6 +16901,10 @@
   "sfErC+": {
     "string": "Voucher Name"
   },
+  "sfF32h": {
+    "context": "support link label below sign-in card",
+    "string": "Contact support"
+  },
   "sglKoA": {
     "context": "create attribute dialog step two intro for model types",
     "string": "Add the choices merchants can pick from and set how this attribute behaves on models."
@@ -16869,6 +16952,10 @@
   },
   "sq1btl": {
     "string": "Caption"
+  },
+  "sqP2Sp": {
+    "context": "aria-label for back button to sign in screen",
+    "string": "Back to sign in"
   },
   "sqz22u": {
     "context": "footer when redeem blockers are done",
@@ -16957,6 +17044,10 @@
   "t4hWFu": {
     "context": "Shown while verification is in progress",
     "string": "Verifying..."
+  },
+  "t5Og1p": {
+    "context": "heading on password reset confirmation page",
+    "string": "Check your email"
   },
   "t5s7MG": {
     "context": "button to export staff email subjects and templates",
@@ -17819,9 +17910,6 @@
     "context": "address type",
     "string": "Use one of customer addresses"
   },
-  "vfG+nh": {
-    "string": "Confirm Password"
-  },
   "vg2Rv4": {
     "context": "shipping method channel status description when configured",
     "string": "Price is set for this channel"
@@ -17919,10 +18007,6 @@
   },
   "vz3yxp": {
     "string": "Channels permissions"
-  },
-  "vzgZ3U": {
-    "context": "card header",
-    "string": "Sign In"
   },
   "w+3Q3e": {
     "context": "input label",

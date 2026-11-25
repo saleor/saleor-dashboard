@@ -1,25 +1,18 @@
-import { getAbsoluteApiUrl } from "@dashboard/config";
+import { type ReactNode } from "react";
 
 import { useAutologinRecovery } from "../../hooks/useAutologinRecovery";
 import { showSignIn } from "../../initAuth";
-import Layout from "../Layout";
+import { getSafeApiHost } from "../../utils";
+import { Layout } from "../Layout";
 import { ApiUnreachablePage } from "./ApiUnreachablePage";
 
-const getApiHost = (): string | null => {
-  try {
-    return new URL(getAbsoluteApiUrl()).host;
-  } catch {
-    return null;
-  }
-};
-
-export const ApiUnreachableView = (): React.ReactNode => {
+export const ApiUnreachableView = (): ReactNode => {
   const { retrying, retry } = useAutologinRecovery();
 
   return (
     <Layout>
       <ApiUnreachablePage
-        apiHost={getApiHost()}
+        apiHost={getSafeApiHost()}
         retrying={retrying}
         onRetry={retry}
         onSignIn={showSignIn}

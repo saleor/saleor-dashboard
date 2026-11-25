@@ -1,0 +1,58 @@
+.notice {
+  --auth-signal-color: var(--auth-signal-info, oklch(0.58 0.12 275));
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 8px;
+  background-color: var(--mu-colors-background-default2);
+  border: 1px solid var(--mu-colors-border-default1);
+}
+
+.toneError {
+  --auth-signal-color: var(--auth-signal-error, oklch(0.58 0.2 25));
+}
+
+.toneWarning {
+  --auth-signal-color: var(--auth-signal-warning, oklch(0.72 0.15 72));
+}
+
+.toneInfo {
+  --auth-signal-color: var(--auth-signal-info, oklch(0.58 0.12 275));
+}
+
+.toneSuccess {
+  --auth-signal-color: var(--auth-signal-success, oklch(0.62 0.16 150));
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+  background-color: var(--auth-signal-color);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--auth-signal-color) 18%, transparent);
+}
+
+@keyframes authSignalPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dotBlink {
+    animation: authSignalPulse 2.4s ease-in-out infinite;
+  }
+}
+
+.body {
+  line-height: 1.5;
+  min-width: 0;
+}

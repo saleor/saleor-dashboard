@@ -1,0 +1,171 @@
+/*
+ * Full-bleed auth shell following saleor.io's pricing hero grid:
+ * six equal columns separated by 1px vertical hairlines, with the unmasked
+ * Saleor wave tile filling the two rightmost columns (33%) top to bottom
+ * behind the grid lines. Light uses a warm alabaster page ground so the white
+ * well lifts gently off it; dark uses Dashboard's own background.default1.
+ */
+.root {
+  --auth-well-ring: rgb(0 0 0 / 0.05);
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr;
+  grid-template-rows: 1fr;
+  min-height: calc(100vh - var(--connection-banner-height, 0px));
+  min-height: calc(100dvh - var(--connection-banner-height, 0px));
+  width: 100%;
+  overflow-x: hidden;
+  background-color: rgb(250 250 248);
+  color: var(--mu-colors-text-default1);
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+}
+
+.rootDark {
+  --auth-well-ring: rgb(255 255 255 / 0.18);
+  --auth-signal-error: oklch(0.7 0.18 25);
+  --auth-signal-warning: oklch(0.78 0.14 76);
+  --auth-signal-info: oklch(0.72 0.12 275);
+  --auth-signal-success: oklch(0.72 0.15 150);
+  background-color: var(--mu-colors-background-default1);
+}
+
+/* Unified hover/focus feedback for every text link inside the auth shell. */
+.root a:not([data-auth-link-button="true"]) {
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease;
+}
+
+.root a:not([data-auth-link-button="true"]):hover,
+.root a:not([data-auth-link-button="true"]):focus-visible {
+  color: var(--mu-colors-text-default1);
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 4px;
+}
+
+.root a:not([data-auth-link-button="true"]):focus-visible {
+  outline: 2px solid var(--mu-colors-border-default1-focused);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.wavesColumn {
+  grid-column: 9 / 12;
+  grid-row: 1;
+  position: relative;
+  color: oklch(0.42 0.06 268);
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.rootDark .wavesColumn {
+  color: oklch(0.92 0.03 268);
+  opacity: 0.09;
+}
+
+.gridLine {
+  grid-row: 1;
+  background-color: var(--mu-colors-border-default1);
+  opacity: 0.4;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.rootDark .gridLine {
+  opacity: 0.35;
+}
+
+.line1 {
+  grid-column: 2;
+}
+
+.line2 {
+  grid-column: 4;
+}
+
+.line3 {
+  grid-column: 6;
+}
+
+.line4 {
+  grid-column: 8;
+}
+
+.line5 {
+  grid-column: 10;
+}
+
+.content {
+  grid-column: 1 / 8;
+  grid-row: 1;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 48px 24px;
+  min-width: 0;
+}
+
+.header {
+  display: inline-flex;
+  align-self: flex-start;
+  flex: none;
+}
+
+.stage {
+  margin: auto;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding-block: 24px;
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  min-height: 18px;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--mu-colors-text-default2);
+}
+
+.legalLink {
+  color: var(--mu-colors-text-default2);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .gridLine {
+    display: none;
+  }
+
+  .wavesColumn {
+    grid-column: 1 / 12;
+  }
+
+  .content {
+    grid-column: 1 / 12;
+    padding: 24px 20px 20px;
+  }
+
+  .header {
+    width: 100%;
+    max-width: 460px;
+    margin: auto auto 0;
+    padding-left: 24px;
+  }
+
+  .stage {
+    margin: 24px auto auto;
+    padding-block: 0 20px;
+  }
+
+  .legal {
+    justify-content: center;
+  }
+}

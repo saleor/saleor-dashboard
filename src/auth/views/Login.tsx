@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 import urlJoin from "url-join";
 
-import LoginPage from "../components/LoginPage/LoginPage";
+import { LoginPage } from "../components/LoginPage/LoginPage";
 import { type LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
@@ -46,11 +46,21 @@ const LoginView = ({ params }: LoginViewProps) => {
 
   const isCallbackFlow = !!(params.code && params.state && isCallbackPath);
 
-  const { data: externalAuthentications, loading: externalAuthenticationsLoading } =
-    useAvailableExternalAuthenticationsQuery({
-      skip: isCallbackFlow,
-      fetchPolicy: "network-only",
-    });
+  const {
+    data: externalAuthentications,
+    loading: externalAuthenticationsLoading,
+    error: externalAuthenticationsError,
+    refetch: refetchExternalAuthentications,
+  } = useAvailableExternalAuthenticationsQuery({
+    skip: isCallbackFlow,
+    fetchPolicy: "network-only",
+    // Reports `loading` while a retry after a failed request is in flight.
+    notifyOnNetworkStatusChange: true,
+  });
+  const handleRetryLoginMethods = (): void => {
+    // A failure is shown from the query's `error`; the rejected promise has nothing to add.
+    refetchExternalAuthentications().catch(() => undefined);
+  };
 
   const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
 
@@ -116,6 +126,8 @@ const LoginView = ({ params }: LoginViewProps) => {
       disabled={authenticating}
       externalAuthentications={externalAuthentications?.shop?.availableExternalAuthentications}
       passwordLoginEnabled={passwordLoginEnabled}
+      loginMethodsError={!!externalAuthenticationsError}
+      onRetryLoginMethods={handleRetryLoginMethods}
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
       onSubmit={handleSubmit}

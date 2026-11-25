@@ -30,7 +30,7 @@ import { attributeSection } from "./attributes/urls";
 import AuthProvider from "./auth/AuthProvider";
 import { useApiUnreachable } from "./auth/authState";
 import { ApiUnreachableView } from "./auth/components/ApiUnreachablePage/ApiUnreachableView";
-import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
+import { LoginLoading } from "./auth/components/LoginLoading/LoginLoading";
 import { RootRoutes } from "./auth/components/RootRoutes";
 import SectionRoute from "./auth/components/SectionRoute";
 import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";

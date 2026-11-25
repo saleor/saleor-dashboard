@@ -1,8 +1,9 @@
 import { AccountErrorCode, type AccountErrorFragment } from "@dashboard/graphql";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { type ComponentProps } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
+import { AuthShell } from "../Layout";
 import { NewPasswordPage } from "./NewPasswordPage";
 
 type Props = ComponentProps<typeof NewPasswordPage>;
@@ -21,6 +22,16 @@ const serverErrors: AccountErrorFragment[] = [
 const meta: Meta<typeof NewPasswordPage> = {
   title: "Auth / NewPasswordPage",
   component: NewPasswordPage,
+  parameters: {
+    layout: "fullscreen",
+  },
+  decorators: [
+    (Story: StoryFn) => (
+      <AuthShell isCloudInstance>
+        <Story />
+      </AuthShell>
+    ),
+  ],
   args: {
     loading: false,
     errors: [],
@@ -46,7 +57,8 @@ export const Loading: Story = {
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
 
-    await expect(canvas.getByTestId("button-bar-confirm")).toBeDisabled();
+    await expect(canvas.getByTestId("button-bar-confirm")).toHaveAttribute("aria-busy", "true");
+    await expect(canvas.getByTestId("button-progress")).toBeInTheDocument();
   },
 };
 

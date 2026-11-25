@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Also serves as the Suspense fallback inside AppLayout below any connection banner. */
+  height: calc(100vh - var(--connection-banner-height, 0px));
+  height: calc(100dvh - var(--connection-banner-height, 0px));
+  width: 100%;
+  background-color: var(--mu-colors-background-default1);
+}

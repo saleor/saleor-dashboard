@@ -1,0 +1,135 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  color: var(--mu-colors-text-default1);
+}
+
+.lede {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--mu-colors-text-default2);
+  text-wrap: pretty;
+}
+
+.notices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.forgotLink {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--mu-colors-text-default2);
+  text-decoration: none;
+}
+
+.actionButton {
+  margin-top: 8px;
+}
+
+.submitArrow {
+  flex-shrink: 0;
+  transition: transform 180ms ease-out;
+}
+
+.actionButton:hover:not(:disabled) .submitArrow {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submitArrow {
+    transition: none;
+  }
+
+  .actionButton:hover:not(:disabled) .submitArrow {
+    transform: none;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 16px 0 8px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--mu-colors-border-default1);
+}
+
+.dividerLabel {
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--mu-colors-text-default2);
+  white-space: nowrap;
+}
+
+.externalList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.spinnerWrap {
+  display: flex;
+  justify-content: center;
+  padding-block: 16px;
+  width: 100%;
+}
+
+.loginMethodsError {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.below {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--mu-colors-text-default2);
+  text-align: center;
+}
+
+.belowLink {
+  color: var(--mu-colors-text-default1);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
+  text-underline-offset: 3px;
+}

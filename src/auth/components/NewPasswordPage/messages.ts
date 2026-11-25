@@ -2,27 +2,41 @@ import { defineMessages } from "react-intl";
 
 export const newPasswordPageMessages = defineMessages({
   title: {
-    id: "WhKGPA",
-    defaultMessage: "Set up new password",
+    id: "F/uQnO",
+    defaultMessage: "Set new password",
     description: "page title",
   },
   description: {
-    id: "m0Dz+2",
-    defaultMessage:
-      "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it.",
+    id: "dwE5UC",
+    defaultMessage: "Choose a password you don’t use anywhere else.",
   },
   newPasswordLabel: {
-    id: "Ev6SEF",
-    defaultMessage: "New Password",
+    id: "fTHhSB",
+    defaultMessage: "New password",
   },
   confirmPasswordLabel: {
-    id: "vfG+nh",
-    defaultMessage: "Confirm Password",
+    id: "8HimVK",
+    defaultMessage: "Confirm password",
+  },
+  showPassword: {
+    id: "eLl71O",
+    defaultMessage: "Show password",
+    description: "aria-label for new password visibility toggle button",
+  },
+  hidePassword: {
+    id: "NMw7ip",
+    defaultMessage: "Hide password",
+    description: "aria-label for new password visibility toggle button",
   },
   submitButton: {
     id: "S22jIs",
     defaultMessage: "Set new password",
     description: "button",
+  },
+  passwordHint: {
+    id: "6tg2dD",
+    defaultMessage: "Use 8 or more characters.",
+    description: "password guidance below set new password button",
   },
 });
 

@@ -1,24 +1,24 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
-export const LastLoginIndicator = () => {
+import styles from "./LastLoginIndicator.module.css";
+
+interface LastLoginIndicatorProps {
+  id?: string;
+}
+
+export const LastLoginIndicator = ({ id }: LastLoginIndicatorProps): ReactNode => {
   const { formatMessage } = useIntl();
 
   return (
-    <Box
-      position="absolute"
-      __inset="-9px -6px auto auto"
-      backgroundColor="info1"
-      paddingX={2}
-      borderRadius={4}
-    >
-      <Text size={1}>
-        {formatMessage({
-          id: "AR/VVX",
-          defaultMessage: "Last used",
-          description: "Indicates last login method user used",
-        })}
-      </Text>
-    </Box>
+    <span id={id} aria-hidden="true" className={styles.badge}>
+      {formatMessage({
+        id: "AR/VVX",
+        defaultMessage: "Last used",
+        description: "Indicates last login method user used",
+      })}
+    </span>
   );
 };
+
+LastLoginIndicator.displayName = "LastLoginIndicator";

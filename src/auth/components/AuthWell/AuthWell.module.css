@@ -1,0 +1,30 @@
+/*
+ * Elevated auth form card matching Cloud Console's SplitCard / MessageCard well
+ * and Dashboard's smooth-shadow-ring-sm (see ChannelSetupCard.module.css).
+ * Hairline is baked into the final shadow layer — never pair with a border.
+ * Light ring: rgb(0 0 0 / 0.05); AuthShell overrides `--auth-well-ring` to
+ * rgb(255 255 255 / 0.18) in dark mode.
+ */
+.well {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--mu-colors-background-default1);
+  color: var(--mu-colors-text-default1);
+  overflow: hidden;
+  padding: 40px 40px 36px;
+  box-shadow:
+    0 18px 47px 0 rgb(0 0 0 / 0.03),
+    0 7.5px 19px 0 rgb(0 0 0 / 0.02),
+    0 4px 10.5px 0 rgb(0 0 0 / 0.02),
+    0 2.3px 5.8px 0 rgb(0 0 0 / 0.01),
+    0 1.2px 3.1px 0 rgb(0 0 0 / 0.01),
+    0 0.5px 1.3px 0 rgb(0 0 0 / 0.01),
+    0 0 0 1px var(--auth-well-ring, rgb(0 0 0 / 0.05));
+}
+
+@media (max-width: 768px) {
+  .well {
+    padding: 28px 24px;
+  }
+}

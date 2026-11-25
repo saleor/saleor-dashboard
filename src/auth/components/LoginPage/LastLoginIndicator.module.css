@@ -1,0 +1,20 @@
+/* Matches Cloud Console's .ds-chip + .auth-last-used astride a button's top edge */
+.badge {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 999px;
+  background-color: var(--mu-colors-background-default1);
+  color: var(--mu-colors-text-default2);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+}

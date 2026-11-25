@@ -1,4 +1,4 @@
-import LoginLoading from "@dashboard/auth/components/LoginLoading/LoginLoading";
+import { LoginLoading } from "@dashboard/auth/components/LoginLoading/LoginLoading";
 import { useUser } from "@dashboard/auth/useUser";
 import { type ReactNode, useEffect, useState } from "react";
 

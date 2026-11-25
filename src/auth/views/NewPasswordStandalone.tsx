@@ -1,6 +1,6 @@
 import { type RouteComponentProps } from "react-router";
 
-import Layout from "../components/Layout";
+import { Layout } from "../components/Layout";
 import NewPassword from "./NewPassword";
 
 // New/set-password must be reachable regardless of auth state. OIDC users are
