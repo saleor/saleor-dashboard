@@ -73,6 +73,20 @@ describe("manifestEndpoints", () => {
     expect(webhook).toMatchObject({ name: "Order paid", events: ["ORDER_FULLY_PAID"] });
   });
 
+  it("keeps extension label and mount on extension endpoints", () => {
+    // Arrange & Act
+    const extension = getManifestEndpoints(manifestUrl, officialManifest).find(
+      endpoint => endpoint.kind === "extension",
+    );
+
+    // Assert
+    expect(extension).toMatchObject({
+      label: "Refund",
+      mountName: "ORDER_DETAILS_MORE_ACTIONS",
+      targetName: "POPUP",
+    });
+  });
+
   it("is official when every endpoint is on the Saleor app domain", () => {
     // Arrange
     const endpoints = getManifestEndpoints(manifestUrl, officialManifest);

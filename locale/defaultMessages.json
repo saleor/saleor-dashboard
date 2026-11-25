@@ -398,6 +398,10 @@
     "context": "section description",
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
+  "/Ex5HH": {
+    "context": "install page connections row: URL that receives the app token",
+    "string": "Auth token target"
+  },
   "/FYtVx": {
     "context": "review row title",
     "string": "Attributes"
@@ -1156,6 +1160,10 @@
   },
   "2/2yg+": {
     "string": "Add"
+  },
+  "200XWt": {
+    "context": "install page section title: every URL the app is reached at",
+    "string": "Connections"
   },
   "21cJ+Z": {
     "context": "structures section name",
@@ -2752,10 +2760,6 @@
     "context": "no shipping method option",
     "string": "No shipping method"
   },
-  "7aSOPo": {
-    "context": "install page domains row: the app URL",
-    "string": "App URL"
-  },
   "7aZkUK": {
     "context": "channel inventory empty state title",
     "string": "No warehouses assigned"
@@ -3201,6 +3205,10 @@
   "98WMlR": {
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
+  },
+  "98hvB9": {
+    "context": "install page connections sub-table header for Dashboard extensions",
+    "string": "Extensions"
   },
   "99q9UB": {
     "context": "create product dialog description",
@@ -3910,10 +3918,6 @@
     "context": "label above staff email preview",
     "string": "Preview"
   },
-  "BWV38G": {
-    "context": "install page extensions section subtitle",
-    "string": "Where the app appears in the Dashboard"
-  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -4460,10 +4464,6 @@
   "D4CsYK": {
     "context": "status filter label",
     "string": "Status"
-  },
-  "D4TRsD": {
-    "context": "install page section title",
-    "string": "Dashboard extensions"
   },
   "D4W/LE": {
     "context": "dialog header",
@@ -5594,6 +5594,10 @@
   },
   "H/r5m6": {
     "string": "Move down"
+  },
+  "H11aBC": {
+    "context": "install page connections row: the app URL",
+    "string": "App URL"
   },
   "H1L1cc": {
     "context": "url",
@@ -7904,10 +7908,6 @@
   "P7PLVj": {
     "string": "Date"
   },
-  "P7b6m3": {
-    "context": "install page section title",
-    "string": "Domains"
-  },
   "P8vgix": {
     "context": "select all model types preset label",
     "string": "All model types"
@@ -9711,10 +9711,6 @@
   "VKb1MS": {
     "string": "Categories"
   },
-  "VLrP67": {
-    "context": "install page domains row hint for the auth token target",
-    "string": "Receives your store's access token"
-  },
   "VMJa9n": {
     "context": "settings search alias",
     "string": "mark as paid"
@@ -10505,6 +10501,10 @@
   "XtULua": {
     "context": "button to set cut-off date to current date and time",
     "string": "Set to current date and time"
+  },
+  "XtavJs": {
+    "context": "install page connections row: the manifest URL",
+    "string": "Manifest"
   },
   "XtlUj6": {
     "string": "Add your first rule to set up a promotion"
@@ -11548,10 +11548,6 @@
     "context": "plugin status",
     "string": "Status"
   },
-  "bMBP5O": {
-    "context": "install page domains row: a Dashboard extension URL",
-    "string": "Extension"
-  },
   "bPFp8B": {
     "context": "product type",
     "string": "Product Type"
@@ -11798,6 +11794,10 @@
   "c5B5Cg": {
     "context": "password login mode option description",
     "string": "No user can log in with a password"
+  },
+  "c5LrvQ": {
+    "context": "install page connections section subtitle",
+    "string": "Where the app receives your store's data"
   },
   "c5fFin": {
     "context": "ExitFormPrompt title",
@@ -14711,6 +14711,10 @@
     "context": "variant stocks section subtitle",
     "string": "Assigning the stocks will be possible after the product is saved."
   },
+  "li/xmq": {
+    "context": "install page connections row hint for the auth token target",
+    "string": "Receives your store's access token"
+  },
   "li1BBk": {
     "context": "export items as csv file",
     "string": "Plain CSV file"
@@ -16442,10 +16446,6 @@
   "r6AVkm": {
     "context": "Collection scheduled for future publication in channel",
     "string": "Scheduled for {date}"
-  },
-  "r7fGhW": {
-    "context": "install page domains section subtitle",
-    "string": "Where the app receives your store's data"
   },
   "r7uSVR": {
     "context": "model seo options description",
@@ -18616,10 +18616,6 @@
   "xypzXx": {
     "string": "GraphiQL Explorer"
   },
-  "xzNHBG": {
-    "context": "install page domains row: the manifest URL",
-    "string": "Manifest"
-  },
   "xzgaxr": {
     "context": "dialog description when restock warehouse must be selected",
     "string": "Canceling a fulfillment will restock products at the selected warehouse. The warehouse this fulfillment shipped from is pre-selected."
@@ -18935,10 +18931,6 @@
   "z9wQ/U": {
     "context": "no variant stock in warehouse",
     "string": "No Stock"
-  },
-  "zBBr1c": {
-    "context": "install page domains row: URL that receives the app token",
-    "string": "Auth token target"
   },
   "zBtMtz": {
     "context": "toast title after voucher create succeeds",

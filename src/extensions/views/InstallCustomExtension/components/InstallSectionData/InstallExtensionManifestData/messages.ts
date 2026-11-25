@@ -63,15 +63,15 @@ export const manifestMessages = defineMessages({
     id: "tH1Z76",
     description: "install page section title",
   },
-  domains: {
-    defaultMessage: "Domains",
-    id: "P7b6m3",
-    description: "install page section title",
+  connections: {
+    defaultMessage: "Connections",
+    id: "200XWt",
+    description: "install page section title: every URL the app is reached at",
   },
-  domainsSubtitle: {
+  connectionsSubtitle: {
     defaultMessage: "Where the app receives your store's data",
-    id: "r7fGhW",
-    description: "install page domains section subtitle",
+    id: "c5LrvQ",
+    description: "install page connections section subtitle",
   },
   permissions: {
     defaultMessage: "Permissions",
@@ -94,14 +94,9 @@ export const manifestMessages = defineMessages({
     description: "badge on a permission that grants access to payments, staff or personal data",
   },
   extensions: {
-    defaultMessage: "Dashboard extensions",
-    id: "D4TRsD",
-    description: "install page section title",
-  },
-  extensionsSubtitle: {
-    defaultMessage: "Where the app appears in the Dashboard",
-    id: "BWV38G",
-    description: "install page extensions section subtitle",
+    defaultMessage: "Extensions",
+    id: "98hvB9",
+    description: "install page connections sub-table header for Dashboard extensions",
   },
   webhooks: {
     defaultMessage: "Webhooks",
@@ -110,28 +105,23 @@ export const manifestMessages = defineMessages({
   },
   endpointManifest: {
     defaultMessage: "Manifest",
-    id: "xzNHBG",
-    description: "install page domains row: the manifest URL",
+    id: "XtavJs",
+    description: "install page connections row: the manifest URL",
   },
   endpointApp: {
     defaultMessage: "App URL",
-    id: "7aSOPo",
-    description: "install page domains row: the app URL",
+    id: "H11aBC",
+    description: "install page connections row: the app URL",
   },
   endpointTokenTarget: {
     defaultMessage: "Auth token target",
-    id: "zBBr1c",
-    description: "install page domains row: URL that receives the app token",
+    id: "/Ex5HH",
+    description: "install page connections row: URL that receives the app token",
   },
   endpointTokenTargetHint: {
     defaultMessage: "Receives your store's access token",
-    id: "VLrP67",
-    description: "install page domains row hint for the auth token target",
-  },
-  endpointExtension: {
-    defaultMessage: "Extension",
-    id: "bMBP5O",
-    description: "install page domains row: a Dashboard extension URL",
+    id: "li/xmq",
+    description: "install page connections row hint for the auth token target",
   },
   differentDomain: {
     defaultMessage: "Different domain",

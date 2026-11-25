@@ -1,8 +1,10 @@
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { ExternalLinkNext } from "@dashboard/components/ExternalLink/ExternalLink";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Chip, Text } from "@saleor/macaw-ui-next";
+import { Box, Chip, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Check } from "lucide-react";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
@@ -27,7 +29,10 @@ const MonoText = ({ text }: { text: string }) => (
   </Text>
 );
 
-/** The value itself is the copy control; it turns green for a moment once copied. */
+/**
+ * The value itself is the copy control. Like other copy actions in the Dashboard, a check
+ * icon confirms the copy in place for a moment.
+ */
 const CopyOnClick = ({ text }: { text: string }) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
@@ -41,7 +46,15 @@ const CopyOnClick = ({ text }: { text: string }) => {
       aria-label={`${label}: ${text}`}
       onClick={() => copy(text)}
     >
-      <Text size={3} color={copied ? "success1" : "default1"} className={styles.mono}>
+      {copied && (
+        <Check
+          size={iconSize.small}
+          strokeWidth={iconStrokeWidthBySize.small}
+          className={sprinkles({ color: "success1" })}
+          data-test-id="install-copied-indicator"
+        />
+      )}
+      <Text size={3} className={styles.mono}>
         {text}
       </Text>
     </button>

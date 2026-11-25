@@ -10,10 +10,15 @@ interface ResolvedUrl {
 }
 
 export type ManifestEndpoint =
-  | (ResolvedUrl & { kind: "manifest" | "app" | "tokenTarget" | "extension" })
-  | (ResolvedUrl & { kind: "webhook"; name: string; events: string[] });
-
-export type ManifestEndpointKind = ManifestEndpoint["kind"];
+  | (ResolvedUrl & { kind: "manifest" | "app" | "tokenTarget" })
+  | (ResolvedUrl & { kind: "webhook"; name: string; events: string[] })
+  | (ResolvedUrl & {
+      kind: "extension";
+      label: string;
+      mountName: string;
+      targetName: string;
+      permissions: string[];
+    });
 
 export interface ManifestEndpointGroup {
   host: string;
@@ -49,6 +54,10 @@ export const getManifestEndpoints = (
     ...manifest.extensions.map(extension => ({
       kind: "extension" as const,
       ...resolveUrl(extension.url, base),
+      label: extension.label,
+      mountName: extension.mountName,
+      targetName: extension.targetName,
+      permissions: extension.permissions.map(permission => permission.name),
     })),
     ...manifest.webhooks.map(webhook => ({
       kind: "webhook" as const,

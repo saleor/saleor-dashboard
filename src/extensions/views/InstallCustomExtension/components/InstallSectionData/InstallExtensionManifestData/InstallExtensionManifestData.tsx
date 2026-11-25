@@ -17,8 +17,7 @@ import { fromZodIssue } from "zod-validation-error";
 import { type useInstallChecks } from "../../../hooks/useInstallChecks";
 import { getManifestEndpoints, groupEndpointsByHost } from "../../../manifestEndpoints";
 import { type Manifest } from "../../../types";
-import { ManifestDomainsCard } from "./ManifestDomainsCard";
-import { ManifestExtensionsCard } from "./ManifestExtensionsCard";
+import { ManifestConnectionsCard } from "./ManifestConnectionsCard";
 import { ManifestHeader } from "./ManifestHeader";
 import { ManifestOverviewCard } from "./ManifestOverviewCard";
 import { ManifestPermissionsCard } from "./ManifestPermissionsCard";
@@ -58,10 +57,10 @@ export const InstallExtensionManifestData = ({
       content: <ManifestOverviewCard manifest={manifest} manifestUrl={manifestUrl} />,
     },
     {
-      id: "install-manifest-domains",
-      title: manifestMessages.domains,
+      id: "install-manifest-connections",
+      title: manifestMessages.connections,
       count: groups.length,
-      content: <ManifestDomainsCard groups={groups} />,
+      content: <ManifestConnectionsCard groups={groups} />,
     },
     {
       id: "install-manifest-permissions",
@@ -69,16 +68,6 @@ export const InstallExtensionManifestData = ({
       count: permissions.length,
       content: <ManifestPermissionsCard permissions={permissions} />,
     },
-    ...(manifest.extensions.length > 0
-      ? [
-          {
-            id: "install-manifest-extensions",
-            title: manifestMessages.extensions,
-            count: manifest.extensions.length,
-            content: <ManifestExtensionsCard extensions={manifest.extensions} />,
-          },
-        ]
-      : []),
   ];
 
   const { activeId, selectSection } = useDetailSectionScrollSpy({
