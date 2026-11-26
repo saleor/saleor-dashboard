@@ -126,6 +126,7 @@ export const orderErrorFragment = gql`
     addressType
     message
     orderLines
+    variants
   }
 `;
 

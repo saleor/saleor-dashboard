@@ -13,6 +13,7 @@ import {
   type DiagnosticsResult,
   type ProductDiagnosticData,
 } from "../utils/types";
+import { useProductDoctorShippingZones } from "./useProductDoctorShippingZones";
 
 interface UseProductAvailabilityDiagnosticsProps {
   product: ProductDiagnosticData | null | undefined;
@@ -50,23 +51,24 @@ export function useProductAvailabilityDiagnostics({
   } = useQuery<ChannelDiagnosticsQuery>(channelDiagnosticsQuery, {
     skip: !enabled || channelIds.length === 0,
   });
+  const {
+    zones: shippingZoneList,
+    loading: shippingZonesLoading,
+    canViewShippingZones,
+    error: shippingZonesError,
+  } = useProductDoctorShippingZones({ channelIds, skip: !enabled });
 
   // Use state to persist permission errors - Apollo may clear the error on subsequent renders
   // but we want to remember that a permission error occurred
   const [detectedPermissionError, setDetectedPermissionError] = useState<{
     canViewChannelWarehouses: boolean;
-    canViewShippingZones: boolean;
   } | null>(null);
 
   // Detect and persist permission errors when they occur
   useEffect(() => {
     if (error?.message?.includes("permission")) {
-      const errorMentionsShipping = error.message.includes("MANAGE_SHIPPING");
-      const errorMentionsChannels = error.message.includes("MANAGE_CHANNELS");
-
       setDetectedPermissionError({
-        canViewChannelWarehouses: !errorMentionsChannels,
-        canViewShippingZones: !errorMentionsShipping,
+        canViewChannelWarehouses: !error.message.includes("MANAGE_CHANNELS"),
       });
     }
   }, [error]);
@@ -77,7 +79,7 @@ export function useProductAvailabilityDiagnostics({
   const basePermissions = useMemo(() => {
     // If we've detected a permission error (persisted in state), use that
     if (detectedPermissionError) {
-      return detectedPermissionError;
+      return { ...detectedPermissionError, canViewShippingZones };
     }
 
     // If query succeeded, check if specific fields are null (permission denied for sub-fields)
@@ -85,7 +87,6 @@ export function useProductAvailabilityDiagnostics({
     if (!loading && channelData) {
       const canViewChannelWarehouses =
         channelData.channels?.some(c => c.warehouses !== null) ?? false;
-      const canViewShippingZones = channelData.shippingZones !== null;
 
       return {
         canViewChannelWarehouses,
@@ -97,9 +98,9 @@ export function useProductAvailabilityDiagnostics({
     // Return true to avoid showing "Limited" message prematurely
     return {
       canViewChannelWarehouses: true,
-      canViewShippingZones: true,
+      canViewShippingZones,
     };
-  }, [channelData, loading, detectedPermissionError]);
+  }, [channelData, loading, detectedPermissionError, canViewShippingZones]);
 
   // Compute issues and summaries
   const result = useMemo((): DiagnosticsResult => {
@@ -134,7 +135,7 @@ export function useProductAvailabilityDiagnostics({
 
     // Only wait for loading to complete - we can work with partial/missing channel data
     // by falling back to basic info from product's channel listings
-    if (loading) {
+    if (loading || shippingZonesLoading) {
       return {
         issues: [],
         channelSummaries: [],
@@ -156,9 +157,12 @@ export function useProductAvailabilityDiagnostics({
     // Build a map of shipping zones by channel ID
     const shippingZonesByChannel = new Map<string, ChannelDiagnosticData["shippingZones"]>();
 
-    // Only process shipping zones if we have permission to view them and data is available
-    if (basePermissions.canViewShippingZones && channelData?.shippingZones?.edges) {
-      channelData.shippingZones.edges.forEach(({ node: zone }) => {
+    // A failed zone fetch is unknown data, not "no zones": skip shipping checks
+    // rather than report every channel as uncovered.
+    const shippingZonesKnown = basePermissions.canViewShippingZones && !shippingZonesError;
+
+    if (shippingZonesKnown) {
+      shippingZoneList.forEach(zone => {
         zone.channels?.forEach(channel => {
           const existing = shippingZonesByChannel.get(channel.id) || [];
 
@@ -219,8 +223,7 @@ export function useProductAvailabilityDiagnostics({
             hasFullChannelData && basePermissions.canViewChannelWarehouses
               ? channel.warehouses || []
               : [],
-          shippingZones:
-            hasFullChannelData && basePermissions.canViewShippingZones ? shippingZones : [],
+          shippingZones: hasFullChannelData && shippingZonesKnown ? shippingZones : [],
         };
 
         const channelIssues = runAvailabilityChecks(
@@ -232,7 +235,7 @@ export function useProductAvailabilityDiagnostics({
           // Also skip if we don't have full channel data
           {
             skipWarehouseChecks: !hasFullChannelData || !basePermissions.canViewChannelWarehouses,
-            skipShippingChecks: !hasFullChannelData || !basePermissions.canViewShippingZones,
+            skipShippingChecks: !hasFullChannelData || !shippingZonesKnown,
             useLegacyShippingZoneStockAvailability,
           },
         );
@@ -243,7 +246,7 @@ export function useProductAvailabilityDiagnostics({
       // Collect unique countries from all shipping zones
       const allCountries = new Set<string>();
 
-      if (hasFullChannelData && basePermissions.canViewShippingZones) {
+      if (hasFullChannelData && shippingZonesKnown) {
         shippingZones.forEach(zone => {
           zone.countries?.forEach(country => allCountries.add(country.code));
         });
@@ -252,7 +255,7 @@ export function useProductAvailabilityDiagnostics({
       // Determine if we can show warehouse/shipping data
       // We need both full channel data AND the right permissions
       const canShowWarehouseData = hasFullChannelData && basePermissions.canViewChannelWarehouses;
-      const canShowShippingData = hasFullChannelData && basePermissions.canViewShippingZones;
+      const canShowShippingData = hasFullChannelData && shippingZonesKnown;
 
       // Build channel summary for ALL channels (including hidden)
       // Use "unknown" for values we can't determine due to permissions or missing channel data
@@ -313,7 +316,17 @@ export function useProductAvailabilityDiagnostics({
       useLegacyShippingZoneStockAvailability,
       isShippingRequired: product.isShippingRequired,
     };
-  }, [product, channelData, loading, enabled, intl, basePermissions]);
+  }, [
+    product,
+    channelData,
+    loading,
+    enabled,
+    intl,
+    basePermissions,
+    shippingZoneList,
+    shippingZonesLoading,
+    shippingZonesError,
+  ]);
 
   return result;
 }
