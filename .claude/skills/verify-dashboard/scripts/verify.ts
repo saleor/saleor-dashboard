@@ -12,8 +12,10 @@
  *
  *   pnpm verify up [--target local|cloud] [--saleor stable|main] [--scenario <name>]
  *   pnpm verify doctor
- *   pnpm verify shot <path> [--as <actor>] [--all] [--name <label>]
- *   pnpm verify exec <snippet.mjs> [--as <actor>] [args...]
+ *   pnpm verify shot <path> [--as <actor>] [--all] [--name <label>] [--tag <before|after>] [--caption <text>]
+ *   pnpm verify exec <snippet.mjs> [--as <actor>] [--headed] [args...]
+ *   pnpm verify record <flow.mjs> [--as <actor>] [--name <label>] [--caption <text>] [--size 1280x800] [--theme light|dark] [--gif] [--headed] [args...]
+ *   pnpm verify review [--port <port>] [--wait] [--no-open] [--dir <evidence-dir>]
  *   pnpm verify gql '<query>' ['<variables json>'] [--as <actor>]
  *   pnpm verify sql '<statement>'              # local only
  *   pnpm verify reset [--scenario <name>]      # local only
@@ -27,7 +29,7 @@ import fs from "node:fs";
 import net from "node:net";
 import os from "node:os";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { type BrowserContext, chromium, type Page, selectors } from "@playwright/test";
 
@@ -44,6 +46,12 @@ import { repoPath } from "../../../../e2e/lib/paths.ts";
 import { log, step } from "../../../../e2e/lib/progress.ts";
 import { ensureBaseline, ensureScenario, restoreScenario } from "../../../../e2e/lib/seed.ts";
 import { SCENARIOS } from "../../../../e2e/scenarios/registry.ts";
+import { CURSOR_INIT_SCRIPT } from "./cursor.ts";
+import { collectElementHitMap } from "./elements.ts";
+import { type FlowRecordingControls, recordPageFlow } from "./record.ts";
+import { writeReviewHtml } from "./review-html.ts";
+import { parseRepoSlug, parseRepoUrl, type ReviewRunMeta } from "./review-model.ts";
+import { startReviewServer } from "./review-server.ts";
 
 type VerifyTarget = "local" | "cloud";
 
@@ -79,6 +87,11 @@ interface RunState {
   scenario: string;
   worktree: string;
   revision: string;
+  repo?: string;
+  repoUrl?: string;
+  branch?: string;
+  prNumber?: number;
+  prUrl?: string;
   /** Compared by `doctor`: committing the same edits keeps it, any new edit changes it. */
   tree: string;
   apiUrl: string;
@@ -88,6 +101,8 @@ interface RunState {
   projectName?: string;
   apiPort?: number;
   devServerPid?: number;
+  reviewServerPid?: number;
+  reviewUrl?: string;
   startedAt: string;
 }
 
@@ -136,6 +151,86 @@ function fail(message: string): never {
 const runDir = (id: string) => path.join(RUN_ROOT, id);
 const stateDir = (run: RunState) => path.join(runDir(run.id), "state");
 const evidenceDir = (run: RunState) => path.join(runDir(run.id), "evidence");
+
+const detectGitContext = (
+  worktree: string,
+  { lookupPr = false }: { lookupPr?: boolean } = {},
+): Pick<ReviewRunMeta, "repo" | "repoUrl" | "branch" | "prNumber" | "prUrl"> => {
+  const runGit = (...args: string[]): string | undefined => {
+    try {
+      return execFileSync("git", args, {
+        cwd: worktree,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+    } catch {
+      return undefined;
+    }
+  };
+
+  const remote = runGit("remote", "get-url", "origin");
+  const repo = (remote ? parseRepoSlug(remote) : undefined) ?? path.basename(worktree);
+  const repoUrl = remote ? parseRepoUrl(remote) : undefined;
+  const rawBranch = runGit("rev-parse", "--abbrev-ref", "HEAD");
+  const branch =
+    rawBranch && rawBranch !== "HEAD" ? rawBranch : runGit("rev-parse", "--short", "HEAD");
+
+  let prNumber: number | undefined;
+  let prUrl: string | undefined;
+
+  if (lookupPr && rawBranch && rawBranch !== "HEAD") {
+    try {
+      const out = execFileSync("gh", ["pr", "view", "--json", "number,url"], {
+        cwd: worktree,
+        encoding: "utf8",
+        timeout: 2500,
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+      const parsed = JSON.parse(out) as { number?: number; url?: string };
+
+      if (typeof parsed.number === "number") {
+        prNumber = parsed.number;
+      }
+
+      if (typeof parsed.url === "string" && parsed.url) {
+        prUrl = parsed.url;
+      }
+    } catch {
+      // No open PR for this branch, gh unavailable, or offline.
+    }
+  }
+
+  return {
+    ...(repo ? { repo } : {}),
+    ...(repoUrl ? { repoUrl } : {}),
+    ...(branch ? { branch } : {}),
+    ...(prNumber ? { prNumber } : {}),
+    ...(prUrl ? { prUrl } : {}),
+  };
+};
+
+const reviewMeta = (
+  run: RunState,
+  { lookupPr = false }: { lookupPr?: boolean } = {},
+): ReviewRunMeta => {
+  const ctx = detectGitContext(run.worktree || repoPath(), { lookupPr });
+
+  return {
+    id: run.id,
+    target: run.target,
+    saleor: run.saleor,
+    scenario: run.scenario,
+    revision: revision(),
+    repo: ctx.repo ?? run.repo,
+    repoUrl: ctx.repoUrl ?? run.repoUrl,
+    branch: ctx.branch ?? run.branch,
+    prNumber: ctx.prNumber ?? run.prNumber,
+    prUrl: ctx.prUrl ?? run.prUrl,
+    dashboardUrl: run.dashboardUrl,
+    apiUrl: run.apiUrl,
+    evidenceDir: evidenceDir(run),
+  };
+};
 
 const isAlive = (pid: number | undefined): boolean => {
   if (!pid) {
@@ -273,6 +368,40 @@ const isListening = (port: number, host: string) =>
 const isPortFree = async (port: number) =>
   !(await isListening(port, "127.0.0.1")) && !(await isListening(port, "::1"));
 
+const pickFreePort = (preferred: number): Promise<number> =>
+  new Promise((resolve, reject) => {
+    const probe = net.createServer();
+
+    probe.once("error", () => {
+      const fallback = net.createServer();
+
+      fallback.once("error", reject);
+      fallback.listen(0, "127.0.0.1", () => {
+        const addr = fallback.address();
+        const port = typeof addr === "object" && addr ? addr.port : 0;
+
+        fallback.close(() => resolve(port));
+      });
+    });
+    probe.listen(preferred, "127.0.0.1", () => {
+      probe.close(() => resolve(preferred));
+    });
+  });
+
+const openInBrowser = (url: string) => {
+  const opener =
+    process.platform === "darwin" ? "open" : process.platform === "win32" ? "cmd" : "xdg-open";
+  const openArgs = process.platform === "win32" ? ["/c", "start", "", url] : [url];
+
+  try {
+    const child = spawn(opener, openArgs, { detached: true, stdio: "ignore" });
+
+    child.unref();
+  } catch {
+    // Headless/CI environments may not have a browser opener; the URL is printed to stdout.
+  }
+};
+
 // ---------------------------------------------------------------------------------------
 // Browser
 
@@ -314,15 +443,28 @@ const ensureLocalSession = async (run: RunState, actor: Actor): Promise<string> 
 interface OpenOptions {
   actor: Actor;
   width?: number;
+  height?: number;
   theme?: Theme;
   headed?: boolean;
+  deviceScaleFactor?: number;
+  slowMo?: number;
+  cursor?: boolean;
 }
 
 const openBrowser = async (
   run: RunState,
-  { actor, width = WIDTHS[0], theme = "light", headed = false }: OpenOptions,
+  {
+    actor,
+    width = WIDTHS[0],
+    height = 900,
+    theme = "light",
+    headed = false,
+    deviceScaleFactor,
+    slowMo,
+    cursor = false,
+  }: OpenOptions,
 ): Promise<{ context: BrowserContext; page: Page }> => {
-  const viewport = { width, height: 900 };
+  const viewport = { width, height };
   const colorScheme = theme;
   let context: BrowserContext;
 
@@ -336,13 +478,19 @@ const openBrowser = async (
       headless: !headed,
       viewport,
       colorScheme,
+      ...(deviceScaleFactor ? { deviceScaleFactor } : {}),
+      ...(slowMo ? { slowMo } : {}),
     });
   } else {
-    const browser = await chromium.launch({ headless: !headed });
+    const browser = await chromium.launch({
+      headless: !headed,
+      ...(slowMo ? { slowMo } : {}),
+    });
 
     context = await browser.newContext({
       viewport,
       colorScheme,
+      ...(deviceScaleFactor ? { deviceScaleFactor } : {}),
       storageState: actor === "anonymous" ? undefined : await ensureLocalSession(run, actor),
     });
     context.on("close", () => void browser.close());
@@ -352,6 +500,10 @@ const openBrowser = async (
     THEME_KEY,
     theme === "dark" ? "defaultDark" : "defaultLight",
   ] as const);
+
+  if (cursor) {
+    await context.addInitScript(CURSOR_INIT_SCRIPT);
+  }
 
   const page = context.pages()[0] ?? (await context.newPage());
 
@@ -434,8 +586,43 @@ const recordEvidence = (run: RunState, entry: Record<string, unknown>) => {
   const index = path.join(evidenceDir(run), "index.json");
   const entries = fs.existsSync(index) ? JSON.parse(fs.readFileSync(index, "utf8")) : [];
 
-  entries.push({ ...entry, target: run.target, saleor: run.saleor, revision: revision() });
+  entries.push({
+    ...entry,
+    target: run.target,
+    saleor: run.saleor,
+    revision: revision(),
+    createdAt: new Date().toISOString(),
+  });
   fs.writeFileSync(index, JSON.stringify(entries, null, 2));
+  writeReviewHtml(reviewMeta(run));
+};
+
+const readPageHeading = async (run: RunState, page: Page): Promise<string | undefined> => {
+  const raw = await page
+    .evaluate(() => {
+      const dialogHeading = document.querySelector(
+        '[role="dialog"] h1, [role="dialog"] h2, [role="dialog"] [data-test-id="dashboard-modal-title"]',
+      );
+      const primary = dialogHeading ?? document.querySelector("h1, [data-test-id='page-header']");
+      const text = primary?.textContent?.replace(/\s+/g, " ").trim();
+
+      return text ? text.slice(0, 120) : "";
+    })
+    .catch(() => "");
+
+  const cleaned = raw ? redact(run, raw).trim() : "";
+
+  return cleaned || undefined;
+};
+
+const routeFromUrl = (url: string): string | undefined => {
+  try {
+    const parsed = new URL(url);
+
+    return `${parsed.pathname}${parsed.search}`;
+  } catch {
+    return undefined;
+  }
 };
 
 const capture = async (
@@ -447,11 +634,33 @@ const capture = async (
   const base = `${stamp()}-${revision()}-${label.replace(/[^\w.-]+/g, "_")}`;
   const png = path.join(evidenceDir(run), `${base}.png`);
   const aria = path.join(evidenceDir(run), `${base}.aria.txt`);
+  const elementsPath = path.join(evidenceDir(run), `${base}.elements.json`);
   const mask = identityToMask(run).map(text => page.getByText(text, { exact: false }));
 
   await page.screenshot({ path: png, fullPage: true, mask });
   fs.writeFileSync(aria, redact(run, await page.locator("body").ariaSnapshot()));
-  recordEvidence(run, { file: path.basename(png), label, url: page.url(), ...extra });
+
+  const hitMap = await collectElementHitMap(page, text => redact(run, text)).catch(() => undefined);
+
+  if (hitMap) {
+    fs.writeFileSync(elementsPath, JSON.stringify(hitMap));
+  }
+
+  const viewport = page.viewportSize();
+  const heading = await readPageHeading(run, page);
+
+  recordEvidence(run, {
+    kind: "screenshot",
+    file: path.basename(png),
+    ariaFile: path.basename(aria),
+    ...(hitMap ? { elementsFile: path.basename(elementsPath) } : {}),
+    label,
+    ...(heading ? { heading } : {}),
+    url: page.url(),
+    route: routeFromUrl(page.url()),
+    ...(viewport ? { width: viewport.width, height: viewport.height } : {}),
+    ...extra,
+  });
   console.log(`evidence: ${png}`);
   console.log(`evidence: ${aria}`);
 
@@ -488,7 +697,7 @@ let cloudRefreshToken: string | undefined;
 
 /**
  * Read once per process and kept: the Cloud profile can only be open in one browser at a
- * time, so `exec` reads it before opening its own and its snippet's `gql` reuses it.
+ * time, so `exec`/`record` read it before opening their own and snippets' `gql` reuses it.
  */
 const readCloudRefreshToken = async (run: RunState): Promise<string> => {
   if (cloudRefreshToken) {
@@ -574,7 +783,7 @@ const ensureIdentity = async (run: RunState): Promise<void> => {
 };
 
 // ---------------------------------------------------------------------------------------
-// Dev server
+// Dev server & managed process groups
 
 const startDevServer = async (run: RunState): Promise<number> => {
   const logFile = path.join(evidenceDir(run), "dev-server.log");
@@ -624,7 +833,7 @@ const signalGroup = (pid: number, signal: NodeJS.Signals | 0): boolean => {
 };
 
 /** Returns once the whole group is gone, so a following `up` finds the port free. */
-const stopDevServer = async ({ devServerPid: pid }: RunState) => {
+const stopProcessGroup = async (pid: number | undefined) => {
   if (!pid || !signalGroup(pid, 0)) {
     return;
   }
@@ -670,7 +879,8 @@ const up = async () => {
 
   if (active) {
     log(`reclaiming the dead run ${active.id}`);
-    await stopDevServer(active);
+    await stopProcessGroup(active.reviewServerPid);
+    await stopProcessGroup(active.devServerPid);
 
     if (active.target === "local") {
       compose(localConfig(active), ["down"]);
@@ -831,6 +1041,11 @@ const doctor = async () => {
 
   console.log(`info target ${run.target}, Saleor line ${run.saleor}, scenario ${run.scenario}`);
   console.log(`info evidence ${evidenceDir(run)}`);
+
+  if (run.reviewUrl && isAlive(run.reviewServerPid)) {
+    console.log(`info review ${run.reviewUrl}`);
+  }
+
   process.exit(failed ? 1 : 0);
 };
 
@@ -840,6 +1055,8 @@ const shot = async () => {
   await ensureIdentity(run);
   const actor = takeOption("--as") ?? "admin";
   const label = takeOption("--name");
+  const tag = takeOption("--tag");
+  const caption = takeOption("--caption");
   const all = takeFlag("--all");
   const route = argv.shift() ?? "/";
   const variants = all
@@ -861,6 +1078,8 @@ const shot = async () => {
           route,
           width,
           theme,
+          ...(tag ? { tag } : {}),
+          ...(caption ? { caption } : {}),
         },
       );
     } finally {
@@ -879,6 +1098,7 @@ const exec = async () => {
   const { default: snippet } = (await import(pathToFileURL(path.resolve(file)).href)) as {
     default: (context: SnippetContext) => Promise<unknown>;
   };
+
   if (run.target === "cloud") {
     await readCloudRefreshToken(run);
   }
@@ -895,7 +1115,12 @@ const exec = async () => {
         await page.goto(new URL(route, run.dashboardUrl).toString());
         await settle(page);
       },
-      capture: (label: string) => capture(run, page, `${label}-${actor}`, { actor }),
+      capture: (label: string, extra?: { tag?: string; caption?: string }) =>
+        capture(run, page, `${label}-${actor}`, {
+          actor,
+          ...(extra?.tag ? { tag: extra.tag } : {}),
+          ...(extra?.caption ? { caption: extra.caption } : {}),
+        }),
       gql: (query: string, variables?: unknown) => gqlAs(run, actor, query, variables),
     });
 
@@ -915,9 +1140,356 @@ export interface SnippetContext {
   actor: Actor;
   args: string[];
   goto: (route: string) => Promise<void>;
-  capture: (label: string) => Promise<string>;
+  capture: (label: string, extra?: { tag?: string; caption?: string }) => Promise<string>;
   gql: (query: string, variables?: unknown) => Promise<GraphqlResult>;
 }
+
+/** What a `record` flow snippet's default export receives. */
+export interface RecordContext extends SnippetContext, FlowRecordingControls {}
+
+const parseSize = (raw: string): { width: number; height: number } => {
+  const match = /^(\d+)x(\d+)$/.exec(raw);
+
+  if (!match) {
+    fail(`--size must be WxH (for example 1280x800) - got "${raw}"`);
+  }
+
+  return { width: Number(match[1]), height: Number(match[2]) };
+};
+
+const record = async () => {
+  const run = requireRun();
+
+  await ensureIdentity(run);
+  const actor = takeOption("--as") ?? "admin";
+  const label = takeOption("--name");
+  const caption = takeOption("--caption");
+  const theme = (takeOption("--theme") ?? "light") as Theme;
+  const size = parseSize(takeOption("--size") ?? "1280x800");
+  const gif = takeFlag("--gif");
+  const headed = takeFlag("--headed");
+  const file = argv.shift() ?? fail("record needs a flow snippet file");
+
+  if (!THEMES.includes(theme)) {
+    fail(`--theme must be light or dark - got "${theme}"`);
+  }
+
+  const { default: flow } = (await import(pathToFileURL(path.resolve(file)).href)) as {
+    default: (context: RecordContext) => Promise<unknown>;
+  };
+
+  if (run.target === "cloud") {
+    await readCloudRefreshToken(run);
+  }
+
+  const scale = Number(process.env.VERIFY_VIDEO_SCALE ?? 2);
+  const { context, page } = await openBrowser(run, {
+    actor,
+    width: size.width,
+    height: size.height,
+    theme,
+    headed,
+    deviceScaleFactor: scale,
+    slowMo: 250,
+    cursor: true,
+  });
+
+  const cleanLabel = label ?? path.basename(file, path.extname(file));
+  const baseName = `${stamp()}-${revision()}-${`${cleanLabel}-${actor}`.replace(/[^\w.-]+/g, "_")}`;
+  const mask = identityToMask(run).map(text => page.getByText(text, { exact: false }));
+
+  try {
+    const { result, video, failure } = await recordPageFlow({
+      page,
+      outDir: evidenceDir(run),
+      baseName,
+      mask,
+      gif,
+      runFlow: controls =>
+        flow({
+          page,
+          run,
+          actor,
+          args: argv,
+          goto: async (route: string) => {
+            await page.goto(new URL(route, run.dashboardUrl).toString());
+            await settle(page);
+          },
+          capture: (shotLabel: string, extra?: { tag?: string; caption?: string }) =>
+            capture(run, page, `${shotLabel}-${actor}`, {
+              actor,
+              theme,
+              ...(extra?.tag ? { tag: extra.tag } : {}),
+              ...(extra?.caption ? { caption: extra.caption } : {}),
+            }),
+          gql: (query: string, variables?: unknown) => gqlAs(run, actor, query, variables),
+          ...controls,
+        }),
+    });
+
+    recordEvidence(run, {
+      kind: "video",
+      file: path.basename(video.mp4),
+      posterFile: path.basename(video.poster),
+      ...(video.gif ? { gifFile: path.basename(video.gif) } : {}),
+      label: cleanLabel,
+      ...(caption ? { caption } : {}),
+      url: page.url(),
+      route: routeFromUrl(page.url()),
+      actor,
+      width: size.width,
+      height: size.height,
+      theme,
+      durationMs: video.durationMs,
+      steps: video.steps,
+      ...(failure ? { error: String(failure) } : {}),
+    });
+
+    console.log(`evidence: ${video.mp4}`);
+    console.log(`evidence: ${video.poster}`);
+
+    if (video.gif) {
+      console.log(`evidence: ${video.gif}`);
+    }
+
+    if (failure) {
+      throw failure;
+    }
+
+    console.log(redact(run, JSON.stringify(result ?? null, null, 2)));
+  } finally {
+    await context.close();
+  }
+};
+
+const reviewMetaFromDir = (dir: string): ReviewRunMeta => {
+  const resolved = path.resolve(dir);
+
+  if (!fs.existsSync(resolved)) {
+    fail(`evidence directory not found: ${resolved}`);
+  }
+
+  const parentRun = path.join(path.dirname(resolved), "run.json");
+
+  if (fs.existsSync(parentRun)) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(parentRun, "utf8")) as RunState;
+
+      return {
+        id: parsed.id,
+        target: parsed.target,
+        saleor: parsed.saleor,
+        scenario: parsed.scenario,
+        revision: parsed.revision,
+        ...(parsed.repo ? { repo: parsed.repo } : {}),
+        ...(parsed.repoUrl ? { repoUrl: parsed.repoUrl } : {}),
+        ...(parsed.branch ? { branch: parsed.branch } : {}),
+        ...(parsed.prNumber ? { prNumber: parsed.prNumber } : {}),
+        ...(parsed.prUrl ? { prUrl: parsed.prUrl } : {}),
+        dashboardUrl: parsed.dashboardUrl,
+        apiUrl: parsed.apiUrl,
+        evidenceDir: resolved,
+      };
+    } catch {
+      // Fall through to synthetic metadata.
+    }
+  }
+
+  return {
+    id: path.basename(path.dirname(resolved)) || "evidence",
+    target: "local",
+    saleor: "stable",
+    scenario: "default",
+    revision: "unknown",
+    dashboardUrl: "",
+    apiUrl: "",
+    evidenceDir: resolved,
+  };
+};
+
+const review = async () => {
+  const explicitPort = takeOption("--port");
+  const explicitDir = takeOption("--dir");
+  const wait = takeFlag("--wait");
+  const noOpen = takeFlag("--no-open");
+
+  const active = explicitDir ? undefined : requireRun();
+  const meta = explicitDir
+    ? reviewMetaFromDir(explicitDir)
+    : reviewMeta(active as RunState, { lookupPr: true });
+
+  if (active) {
+    active.repo = meta.repo;
+    active.repoUrl = meta.repoUrl;
+    active.branch = meta.branch;
+    active.prNumber = meta.prNumber;
+    active.prUrl = meta.prUrl;
+    writeRun(active);
+  }
+  const reviewHtml = writeReviewHtml(meta);
+
+  if (wait || explicitDir) {
+    const port = explicitPort ? Number(explicitPort) : 0;
+
+    if (Number.isNaN(port) || port < 0) {
+      fail(`invalid --port "${explicitPort}"`);
+    }
+
+    let resolveSubmitted: (() => void) | undefined;
+    const submitted = new Promise<void>(resolve => {
+      resolveSubmitted = resolve;
+    });
+
+    const handle = await startReviewServer({
+      run: meta,
+      port,
+      onFeedback: saved => {
+        console.log(`\nfeedback saved: ${saved.feedbackJson}`);
+        console.log(`prompt saved:   ${saved.feedbackMd}\n`);
+        console.log(saved.markdown);
+
+        if (wait) {
+          resolveSubmitted?.();
+        }
+      },
+    });
+
+    console.log(
+      JSON.stringify(
+        {
+          url: handle.url,
+          reviewHtml,
+          feedbackJson: path.join(meta.evidenceDir, "feedback.json"),
+          feedbackMd: path.join(meta.evidenceDir, "feedback.md"),
+          mode: wait ? "wait" : "foreground",
+        },
+        null,
+        2,
+      ),
+    );
+
+    if (!noOpen) {
+      openInBrowser(handle.url);
+    }
+
+    if (wait) {
+      log(`waiting for feedback at ${handle.url} (click "Copy fix prompt" in the browser)`);
+      await submitted;
+      await handle.close();
+
+      return;
+    }
+
+    log(`serving review board at ${handle.url} (Ctrl+C to stop)`);
+    await new Promise<void>(resolve => {
+      process.once("SIGINT", resolve);
+      process.once("SIGTERM", resolve);
+    });
+    await handle.close();
+
+    return;
+  }
+
+  const run = active as RunState;
+
+  if (run.reviewUrl && isAlive(run.reviewServerPid)) {
+    console.log(
+      JSON.stringify(
+        {
+          url: run.reviewUrl,
+          reviewHtml,
+          feedbackJson: path.join(meta.evidenceDir, "feedback.json"),
+          feedbackMd: path.join(meta.evidenceDir, "feedback.md"),
+          reused: true,
+        },
+        null,
+        2,
+      ),
+    );
+
+    if (!noOpen) {
+      openInBrowser(run.reviewUrl);
+    }
+
+    return;
+  }
+
+  const preferredPort = explicitPort ? Number(explicitPort) : run.dashboardPort + 1;
+
+  if (Number.isNaN(preferredPort) || preferredPort <= 0) {
+    fail(`invalid --port "${explicitPort}"`);
+  }
+
+  const port = explicitPort ? preferredPort : await pickFreePort(preferredPort);
+  const logFile = path.join(meta.evidenceDir, "review-server.log");
+  const out = fs.openSync(logFile, "a");
+  const scriptPath = fileURLToPath(import.meta.url);
+  const child = spawn(
+    process.execPath,
+    [
+      "--disable-warning=MODULE_TYPELESS_PACKAGE_JSON",
+      scriptPath,
+      "__review-serve",
+      "--port",
+      String(port),
+    ],
+    {
+      cwd: repoPath(),
+      detached: true,
+      stdio: ["ignore", out, out],
+    },
+  );
+
+  child.unref();
+
+  if (!child.pid) {
+    fail(`review server did not start - see ${logFile}`);
+  }
+
+  const url = `http://127.0.0.1:${port}/`;
+  const exited = new Promise<never>((_, reject) =>
+    child.once("exit", code =>
+      reject(new Error(`review server exited with code ${code} - see ${logFile}`)),
+    ),
+  );
+
+  await Promise.race([waitForHttp(`${url}api/health`), exited]);
+
+  run.reviewServerPid = child.pid;
+  run.reviewUrl = url;
+  writeRun(run);
+
+  console.log(
+    JSON.stringify(
+      {
+        url,
+        reviewHtml,
+        feedbackJson: path.join(meta.evidenceDir, "feedback.json"),
+        feedbackMd: path.join(meta.evidenceDir, "feedback.md"),
+      },
+      null,
+      2,
+    ),
+  );
+
+  if (!noOpen) {
+    openInBrowser(url);
+  }
+};
+
+/** Internal foreground entrypoint spawned detached by `pnpm verify review`. */
+const reviewServeInternal = async () => {
+  const run = requireRun();
+  const port = Number(takeOption("--port") ?? run.dashboardPort + 1);
+  const handle = await startReviewServer({ run: reviewMeta(run, { lookupPr: true }), port });
+
+  log(`review server listening on ${handle.url}`);
+  await new Promise<void>(resolve => {
+    process.once("SIGINT", resolve);
+    process.once("SIGTERM", resolve);
+  });
+  await handle.close();
+};
 
 const gqlCommand = async () => {
   const run = requireRun();
@@ -930,7 +1502,7 @@ const gqlCommand = async () => {
   const file = path.join(evidenceDir(run), `${stamp()}-${revision()}-gql-${actor}.json`);
 
   fs.writeFileSync(file, redact(run, JSON.stringify({ actor, query, variables, result }, null, 2)));
-  recordEvidence(run, { file: path.basename(file), label: "gql", actor });
+  recordEvidence(run, { kind: "gql", file: path.basename(file), label: "gql", actor });
   console.log(redact(run, JSON.stringify(result, null, 2)));
   console.log(`evidence: ${file}`);
 };
@@ -1007,7 +1579,8 @@ const down = async () => {
     return;
   }
 
-  await stopDevServer(run);
+  await stopProcessGroup(run.reviewServerPid);
+  await stopProcessGroup(run.devServerPid);
 
   if (run.target === "local") {
     compose(localConfig(run), ["down", ...(volumes ? ["-v"] : [])]);
@@ -1015,14 +1588,23 @@ const down = async () => {
 
   fs.rmSync(stateDir(run), { recursive: true, force: true });
   fs.rmSync(ACTIVE_LINK, { force: true });
+
+  const reviewHtml = path.join(evidenceDir(run), "review.html");
+
   console.log(`run ${run.id} stopped; evidence kept in ${evidenceDir(run)}`);
+
+  if (fs.existsSync(reviewHtml)) {
+    console.log(`review board kept at ${reviewHtml}`);
+  }
 };
 
-const COMMANDS: Record<string, () => unknown> = {
+const PUBLIC_COMMANDS: Record<string, () => unknown> = {
   up,
   doctor,
   shot,
   exec,
+  record,
+  review,
   gql: gqlCommand,
   sql,
   reset,
@@ -1030,11 +1612,16 @@ const COMMANDS: Record<string, () => unknown> = {
   down,
 };
 
-const handler = command ? COMMANDS[command] : undefined;
+const ALL_COMMANDS: Record<string, () => unknown> = {
+  ...PUBLIC_COMMANDS,
+  "__review-serve": reviewServeInternal,
+};
+
+const handler = command ? ALL_COMMANDS[command] : undefined;
 
 if (!handler) {
   fail(
-    `usage: pnpm verify <${Object.keys(COMMANDS).join("|")}> - see .claude/skills/verify-dashboard/SKILL.md`,
+    `usage: pnpm verify <${Object.keys(PUBLIC_COMMANDS).join("|")}> - see .claude/skills/verify-dashboard/SKILL.md`,
   );
 }
 
