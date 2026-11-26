@@ -10,7 +10,11 @@ import {
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
+import {
+  type OrderDetailsFragment,
+  OrderErrorCode,
+  type OrderErrorFragment,
+} from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { getDatagridRowDataIndex, getStatusColor, isFirstColumn } from "@dashboard/misc";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
@@ -122,7 +126,7 @@ export const useGetCellContent = ({ columns, lines, errors }: GetCellContentProp
           },
         );
       case "status": {
-        const orderErrors = getOrderErrors(errors, rowData.id);
+        const orderErrors = getOrderLineError(errors, rowData);
         const status = getOrderLineStatus(intl, rowData, orderErrors);
 
         return tagsCell(
@@ -177,7 +181,10 @@ const getOrderLineStatus = (
   if (error) {
     statuses.push({
       type: "error",
-      status: getOrderErrorMessage(error, intl),
+      status:
+        error.code === OrderErrorCode.NOT_AVAILABLE_IN_CHANNEL
+          ? intl.formatMessage(lineAlertMessages.notAvailable)
+          : getOrderErrorMessage(error, intl),
     });
   }
 
@@ -202,6 +209,15 @@ const getOrderLineStatus = (
   return statuses;
 };
 
-function getOrderErrors(errors: OrderErrorFragment[], id: string) {
-  return errors.find(error => error.orderLines?.some(lineId => lineId === id));
-}
+// Some errors point at lines only through their variants, e.g. NOT_AVAILABLE_IN_CHANNEL on draftOrderComplete.
+export const getOrderLineError = (
+  errors: OrderErrorFragment[],
+  line: { id: string; variant: { id: string } | null },
+): OrderErrorFragment | undefined => {
+  const variantId = line.variant?.id;
+
+  return errors.find(
+    error =>
+      error.orderLines?.includes(line.id) || (!!variantId && error.variants?.includes(variantId)),
+  );
+};

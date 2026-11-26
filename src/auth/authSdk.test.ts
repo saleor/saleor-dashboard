@@ -195,6 +195,56 @@ describe("auth", () => {
       expect(result).toEqual(externalLogoutResult);
     });
 
+    it("should clear the Apollo store before resetting auth state", async () => {
+      // Arrange
+      mockedStorage.getAuthPluginId.mockReturnValue(null);
+      authStateVar({ authenticated: true, authenticating: false, isStaff: true });
+
+      let resolveClearStore: (() => void) | undefined;
+
+      client.clearStore.mockImplementation(
+        () =>
+          new Promise<void>(resolve => {
+            resolveClearStore = resolve;
+          }),
+      );
+
+      // Act
+      const logoutPromise = sdk.logout();
+
+      // Assert — auth state stays authenticated until clearStore resolves so LoginView does not
+      // mount and start queries that clearStore would immediately cancel.
+      expect(authStateVar().authenticated).toBe(true);
+
+      resolveClearStore?.();
+      await logoutPromise;
+
+      expect(authStateVar()).toEqual({
+        authenticated: false,
+        authenticating: false,
+        isStaff: false,
+      });
+    });
+
+    it("should still reset auth state and run the external logout when clearStore fails", async () => {
+      // Arrange
+      mockedStorage.getAuthPluginId.mockReturnValue("my-plugin");
+      authStateVar({ authenticated: true, authenticating: false, isStaff: true });
+      client.clearStore.mockRejectedValue(new Error("cache reset failed"));
+
+      const externalLogoutResult = { data: { externalLogout: { logoutData: "{}", errors: [] } } };
+
+      client.mutate.mockResolvedValue(externalLogoutResult);
+
+      // Act
+      const result = await sdk.logout({ input: "{}" });
+
+      // Assert
+      expect(authStateVar().authenticated).toBe(false);
+      expect(client.mutate).toHaveBeenCalled();
+      expect(result).toEqual(externalLogoutResult);
+    });
+
     it("should return null when authPluginId exists but no input is provided", async () => {
       // Arrange
       mockedStorage.getAuthPluginId.mockReturnValue("my-plugin");

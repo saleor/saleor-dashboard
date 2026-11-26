@@ -1,15 +1,16 @@
+import { type AppManageTab } from "@dashboard/extensions/urls";
 import { type AppQuery, AppTypeEnum } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
 import { ErrorBoundary } from "react-error-boundary";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
+import { type AppManageTabItem, AppManageTabs } from "../AppManageTabs/AppManageTabs";
 import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
-import { AboutCard } from "./AboutCard";
-import { DataPrivacyCard } from "./DataPrivacyCard";
 import { Header } from "./Header";
-import { PermissionsCard } from "./PermissionsCard";
+import { InstalledAppDetails } from "./InstalledAppDetails";
+import messages from "./messages";
 
 const noConfigurationScreenMessages = defineMessages({
   title: {
@@ -24,8 +25,9 @@ const noConfigurationScreenMessages = defineMessages({
 });
 
 interface AppDetailsPageProps {
-  loading: boolean;
   data: AppQuery["app"];
+  activeTab: AppManageTab | undefined;
+  onTabChange: (tab: AppManageTab) => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
   onAppDeleteOpen: () => void;
@@ -33,14 +35,23 @@ interface AppDetailsPageProps {
 
 export const AppDetailsPage = ({
   data,
-  loading,
+  activeTab,
+  onTabChange,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
 }: AppDetailsPageProps) => {
+  const intl = useIntl();
+
   if (!data) {
     return null;
   }
+
+  const tabs: Array<AppManageTabItem<AppManageTab>> = [
+    { id: "details", label: intl.formatMessage(messages.tabDetails) },
+    { id: "deliveries", label: intl.formatMessage(messages.tabWebhookDeliveries) },
+  ];
+  const currentTab = tabs.find(tab => tab.id === activeTab)?.id ?? "details";
 
   return (
     <ErrorBoundary
@@ -84,40 +95,18 @@ export const AppDetailsPage = ({
           </Box>
         </Box>
       )}
-      <Box
-        data-test-id="app-details-section"
-        display="grid"
-        gridTemplateColumns={{ desktop: 2, tablet: 2, mobile: 1 }}
-      >
-        <Box borderColor="default1" borderRightStyle={"solid"} borderRightWidth={1}>
-          <AboutCard
-            padding={6}
-            borderBottomStyle="solid"
-            borderBottomWidth={1}
-            borderColor="default1"
-            aboutApp={data?.aboutApp}
-            loading={loading}
-          />
-          <PermissionsCard
-            appId={data.id}
-            padding={6}
-            borderBottomStyle="solid"
-            borderBottomWidth={1}
-            borderColor="default1"
-            permissions={data?.permissions}
-            loading={loading}
-          />
-          <DataPrivacyCard
-            padding={6}
-            borderBottomStyle="solid"
-            borderBottomWidth={1}
-            borderColor="default1"
-            dataPrivacyUrl={data?.dataPrivacyUrl}
-            loading={loading}
-          />
+      <AppManageTabs
+        tabs={tabs}
+        activeId={currentTab}
+        onChange={onTabChange}
+        ariaLabel={intl.formatMessage(messages.tabsAriaLabel)}
+      />
+      {currentTab === "details" && (
+        <Box data-test-id="app-details-section">
+          <InstalledAppDetails app={data} />
         </Box>
-        <AppWebhooksDisplay padding={6} appId={data.id} />
-      </Box>
+      )}
+      {currentTab === "deliveries" && <AppWebhooksDisplay padding={6} appId={data.id} />}
     </ErrorBoundary>
   );
 };

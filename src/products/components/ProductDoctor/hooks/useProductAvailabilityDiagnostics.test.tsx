@@ -2,10 +2,12 @@ import { useQuery } from "@apollo/client";
 import { renderHook } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
+import { type ProductDoctorShippingZone } from "../fetchProductDoctorShippingZones";
 import { runAvailabilityChecks } from "../utils/availabilityChecks";
 import { LEGACY_MODE_FALLBACK } from "../utils/constants";
 import { type ProductDiagnosticData } from "../utils/types";
 import { useProductAvailabilityDiagnostics } from "./useProductAvailabilityDiagnostics";
+import { useProductDoctorShippingZones } from "./useProductDoctorShippingZones";
 
 // Mock Apollo's useQuery
 jest.mock("@apollo/client", () => ({
@@ -18,7 +20,23 @@ jest.mock("../utils/availabilityChecks", () => ({
   runAvailabilityChecks: jest.fn(() => []),
 }));
 
+jest.mock("./useProductDoctorShippingZones", () => ({
+  useProductDoctorShippingZones: jest.fn(),
+}));
+
 const mockUseQuery = useQuery as jest.Mock;
+const mockUseShippingZones = useProductDoctorShippingZones as jest.Mock;
+
+const defaultShippingZones: ProductDoctorShippingZone[] = [
+  {
+    __typename: "ShippingZone",
+    id: "zone-1",
+    name: "US Zone",
+    channels: [{ __typename: "Channel", id: "channel-1" }],
+    countries: [{ __typename: "CountryDisplay", code: "US", country: "United States" }],
+    warehouses: [{ __typename: "Warehouse", id: "warehouse-1", name: "Main Warehouse" }],
+  },
+];
 const mockRunAvailabilityChecks = runAvailabilityChecks as jest.Mock;
 
 // Wrapper with IntlProvider for useIntl
@@ -95,25 +113,18 @@ const createMockChannelData = (
       warehouses: [{ id: "warehouse-1", name: "Main Warehouse" }],
     },
   ],
-  shippingZones: {
-    edges: [
-      {
-        node: {
-          id: "zone-1",
-          name: "US Zone",
-          channels: [{ id: "channel-1" }],
-          countries: [{ code: "US", country: "United States" }],
-          warehouses: [{ id: "warehouse-1", name: "Main Warehouse" }],
-        },
-      },
-    ],
-  },
 });
 
 describe("useProductAvailabilityDiagnostics", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockRunAvailabilityChecks.mockReturnValue([]);
+    mockUseShippingZones.mockReturnValue({
+      zones: defaultShippingZones,
+      loading: false,
+      canViewShippingZones: true,
+      error: null,
+    });
   });
 
   it("should return empty results when product is null", () => {
@@ -261,16 +272,20 @@ describe("useProductAvailabilityDiagnostics", () => {
     expect(mockRunAvailabilityChecks).not.toHaveBeenCalled();
   });
 
-  it("should detect permission errors and update permissions state", () => {
+  it("should report missing MANAGE_SHIPPING when shipping zones are hidden", () => {
     // Arrange
     const product = createMockProduct();
 
     mockUseQuery.mockReturnValue({
-      data: null,
+      data: createMockChannelData(),
       loading: false,
-      error: {
-        message: "You need MANAGE_SHIPPING permission to access this resource",
-      },
+      error: null,
+    });
+    mockUseShippingZones.mockReturnValue({
+      zones: [],
+      loading: false,
+      canViewShippingZones: false,
+      error: null,
     });
 
     // Act
@@ -281,6 +296,81 @@ describe("useProductAvailabilityDiagnostics", () => {
     // Assert
     expect(result.current.permissions.canViewShippingZones).toBe(false);
     expect(result.current.permissions.missingPermissions).toContain("MANAGE_SHIPPING");
+  });
+
+  it("should count only the zones linked to each channel", () => {
+    // Arrange
+    const product = createMockProduct();
+    const unrelatedZones: ProductDoctorShippingZone[] = Array.from({ length: 120 }, (_, i) => ({
+      __typename: "ShippingZone",
+      id: `other-${i}`,
+      name: `Other ${i}`,
+      channels: [{ __typename: "Channel", id: "channel-other" }],
+      countries: [],
+      warehouses: [],
+    }));
+
+    mockUseQuery.mockReturnValue({ data: createMockChannelData(), loading: false, error: null });
+    mockUseShippingZones.mockReturnValue({
+      zones: [...unrelatedZones, ...defaultShippingZones],
+      loading: false,
+      canViewShippingZones: true,
+      error: null,
+    });
+
+    // Act
+    const { result } = renderHook(() => useProductAvailabilityDiagnostics({ product }), {
+      wrapper,
+    });
+
+    // Assert
+    expect(result.current.channelSummaries[0].shippingZoneCount).toBe(1);
+    expect(mockRunAvailabilityChecks.mock.calls[0][1].shippingZones).toHaveLength(1);
+  });
+
+  it("should stay loading while shipping zones are fetched", () => {
+    // Arrange
+    const product = createMockProduct();
+
+    mockUseQuery.mockReturnValue({ data: createMockChannelData(), loading: false, error: null });
+    mockUseShippingZones.mockReturnValue({
+      zones: [],
+      loading: true,
+      canViewShippingZones: true,
+      error: null,
+    });
+
+    // Act
+    const { result } = renderHook(() => useProductAvailabilityDiagnostics({ product }), {
+      wrapper,
+    });
+
+    // Assert
+    expect(result.current.isLoading).toBe(true);
+    expect(mockRunAvailabilityChecks).not.toHaveBeenCalled();
+  });
+
+  it("should skip shipping checks instead of reporting zero zones when the zone fetch fails", () => {
+    // Arrange
+    const product = createMockProduct();
+
+    mockUseQuery.mockReturnValue({ data: createMockChannelData(), loading: false, error: null });
+    mockUseShippingZones.mockReturnValue({
+      zones: [],
+      loading: false,
+      canViewShippingZones: true,
+      error: new Error("Network error"),
+    });
+
+    // Act
+    const { result } = renderHook(() => useProductAvailabilityDiagnostics({ product }), {
+      wrapper,
+    });
+
+    // Assert
+    expect(result.current.channelSummaries[0].shippingZoneCount).toBe("unknown");
+    expect(mockRunAvailabilityChecks.mock.calls[0][4]).toMatchObject({ skipShippingChecks: true });
+    expect(result.current.permissions.missingPermissions).not.toContain("MANAGE_SHIPPING");
   });
 
   it("should detect when channel warehouses are not accessible", () => {
@@ -297,9 +387,6 @@ describe("useProductAvailabilityDiagnostics", () => {
           warehouses: null, // No access to warehouses
         },
       ],
-      shippingZones: {
-        edges: [],
-      },
     };
 
     mockUseQuery.mockReturnValue({
@@ -322,7 +409,6 @@ describe("useProductAvailabilityDiagnostics", () => {
     const product = createMockProduct();
     const channelData = {
       channels: [], // Channel not found in query results
-      shippingZones: null,
     };
 
     mockUseQuery.mockReturnValue({

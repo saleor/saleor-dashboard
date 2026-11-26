@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { type Control, useWatch } from "react-hook-form";
 
-import { type ExtensionInstallFormData, type InstallDetailsManifestData } from "../../types";
+import { type useInstallChecks } from "../../hooks/useInstallChecks";
+import { type ExtensionInstallFormData, type Manifest } from "../../types";
 import { InstallExtensionManifestData } from "./InstallExtensionManifestData/InstallExtensionManifestData";
 import { InstallSectionData } from "./InstallSectionData";
 
@@ -15,11 +16,24 @@ jest.mock("react-hook-form", () => ({
 
 describe("InstallSectionData", () => {
   const mockControl = {} as Control<ExtensionInstallFormData>;
-  const mockManifest: InstallDetailsManifestData = {
+  const mockManifest: Manifest = {
+    __typename: "Manifest",
+    identifier: "test.extension",
+    version: "1.0.0",
     name: "Test Extension",
-    permissions: [],
+    about: null,
+    author: null,
+    appUrl: null,
+    tokenTargetUrl: null,
+    dataPrivacy: null,
     dataPrivacyUrl: "https://example.com/privacy",
     deprecationReason: null,
+    homepageUrl: null,
+    supportUrl: null,
+    requiredSaleorVersion: null,
+    permissions: [],
+    extensions: [],
+    webhooks: [],
     brand: {
       __typename: "AppManifestBrand",
       logo: {
@@ -27,6 +41,13 @@ describe("InstallSectionData", () => {
         default: "https://example.com/logo.png",
       },
     },
+  };
+  const checks: ReturnType<typeof useInstallChecks> = {
+    issues: undefined,
+    isOfficial: false,
+    deprecation: { acknowledged: true, setAcknowledged: jest.fn() },
+    trust: { acknowledged: false, setAcknowledged: jest.fn() },
+    canInstall: false,
   };
 
   it("displays skeleton loading state when isFetchingManifest is true", () => {
@@ -39,8 +60,7 @@ describe("InstallSectionData", () => {
         manifest={undefined}
         lastFetchedManifestUrl={undefined}
         control={mockControl}
-        deprecationAcknowledged={true}
-        onDeprecationAcknowledgedChange={jest.fn()}
+        checks={checks}
       />,
     );
 
@@ -62,15 +82,14 @@ describe("InstallSectionData", () => {
         manifest={mockManifest}
         lastFetchedManifestUrl={manifestUrl}
         control={mockControl}
-        deprecationAcknowledged={true}
-        onDeprecationAcknowledgedChange={jest.fn()}
+        checks={checks}
       />,
     );
 
     // Assert
     expect(screen.getByText("Mock Manifest Data")).toBeInTheDocument();
     expect(InstallExtensionManifestData).toHaveBeenCalledWith(
-      expect.objectContaining({ manifest: mockManifest, deprecationAcknowledged: true }),
+      expect.objectContaining({ manifest: mockManifest, manifestUrl, checks }),
       expect.anything(),
     );
   });
@@ -85,8 +104,7 @@ describe("InstallSectionData", () => {
         manifest={mockManifest}
         lastFetchedManifestUrl="https://different-url.com/manifest.json"
         control={mockControl}
-        deprecationAcknowledged={true}
-        onDeprecationAcknowledgedChange={jest.fn()}
+        checks={checks}
       />,
     );
 
@@ -104,8 +122,7 @@ describe("InstallSectionData", () => {
         manifest={undefined}
         lastFetchedManifestUrl={undefined}
         control={mockControl}
-        deprecationAcknowledged={true}
-        onDeprecationAcknowledgedChange={jest.fn()}
+        checks={checks}
       />,
     );
 

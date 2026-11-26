@@ -45,6 +45,7 @@ const createError = (code: OrderErrorCode, field: string | null): OrderErrorFrag
   addressType: null,
   message: "Error",
   orderLines: null,
+  variants: null,
 });
 
 const noBillingAddress = createError(OrderErrorCode.BILLING_ADDRESS_NOT_SET, "order");

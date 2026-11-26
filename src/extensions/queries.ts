@@ -112,6 +112,29 @@ export const appDetails = gql`
       ...App
       aboutApp
       author
+      extensions {
+        id
+        label
+        url
+        mountName
+        targetName
+        permissions {
+          code
+          name
+        }
+      }
+      webhooks @include(if: $hasManagedAppsPermission) {
+        id
+        name
+        targetUrl
+        subscriptionQuery
+        syncEvents {
+          eventType
+        }
+        asyncEvents {
+          eventType
+        }
+      }
       permissions {
         code
         name

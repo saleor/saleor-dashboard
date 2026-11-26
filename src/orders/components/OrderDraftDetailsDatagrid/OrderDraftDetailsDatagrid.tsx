@@ -19,14 +19,18 @@ import { productUrl } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { withAppMountUri } from "@dashboard/utils/urls";
 import { type Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import { ExternalLink, Percent, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { type FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { OrderDraftLineRemoveDialog } from "../OrderDraftLineRemoveDialog/OrderDraftLineRemoveDialog";
-import { orderDraftDetailsStaticColumnsAdapter, useGetCellContent } from "./datagrid";
+import {
+  getOrderLineError,
+  orderDraftDetailsStaticColumnsAdapter,
+  useGetCellContent,
+} from "./datagrid";
 import { messages } from "./messages";
 import { OrderDraftDetailsRowActions } from "./OrderDraftDetailsRowActions";
 
@@ -103,6 +107,20 @@ export const OrderDraftDetailsDatagrid = ({
     lines,
     errors,
   });
+  const { themeValues } = useTheme();
+  const errorBackground = themeValues.colors.background.critical1;
+  const getRowThemeOverride = useCallback(
+    (row: number) => {
+      const line = lines[row];
+
+      if (!line || !getOrderLineError(errors, line)) {
+        return undefined;
+      }
+
+      return { bgCell: errorBackground, bgCellMedium: errorBackground };
+    },
+    [lines, errors, errorBackground],
+  );
   const getMenuItems = useCallback(
     (index: number) => [
       {
@@ -256,6 +274,7 @@ export const OrderDraftDetailsDatagrid = ({
         emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
+        getRowThemeOverride={getRowThemeOverride}
         menuItems={getMenuItems}
         rows={lines.length}
         selectionActions={() => null}

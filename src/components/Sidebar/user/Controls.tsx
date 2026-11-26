@@ -242,7 +242,11 @@ export const UserControls = ({ collapsed = false }: { collapsed?: boolean }) => 
                   </Dropdown.Item>
                 )}
                 <Dropdown.Item>
-                  <List.Item onClick={logout} {...listItemStyles} data-test-id="log-out-button">
+                  <List.Item
+                    onClick={() => logout?.()}
+                    {...listItemStyles}
+                    data-test-id="log-out-button"
+                  >
                     <Text>
                       <FormattedMessage id="qLbse5" defaultMessage="Log out" description="button" />
                     </Text>

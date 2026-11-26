@@ -20,14 +20,18 @@ export async function login<T>(
   return result!;
 }
 
-export async function checkIfCredentialsExist() {
-  const credential = await navigator.credentials.get({ password: true });
-
-  if (credential === null) {
+export async function checkIfCredentialsExist(): Promise<boolean> {
+  if (!isSupported) {
     return false;
   }
 
-  return true;
+  try {
+    const credential = await navigator.credentials.get({ password: true });
+
+    return credential !== null;
+  } catch {
+    return false;
+  }
 }
 
 export async function saveCredentials(

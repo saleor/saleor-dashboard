@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { useFetchManifest } from "./hooks/useFetchManifest";
 import { useInstallApp } from "./hooks/useInstallApp";
 import { InstallCustomExtension } from "./InstallCustomExtension";
+import { type Manifest } from "./types";
 
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ children }) => <div>{children}</div>),
@@ -18,6 +19,27 @@ jest.mock("./hooks/useInstallApp");
 jest.mock("@dashboard/components/Savebar");
 
 jest.useFakeTimers();
+
+const testManifest: Manifest = {
+  __typename: "Manifest",
+  identifier: "test.app",
+  version: "1.0.0",
+  name: "Test App",
+  about: null,
+  author: null,
+  appUrl: "https://example.com",
+  tokenTargetUrl: "https://example.com/api/register",
+  dataPrivacy: null,
+  dataPrivacyUrl: null,
+  deprecationReason: null,
+  homepageUrl: null,
+  supportUrl: null,
+  requiredSaleorVersion: null,
+  brand: null,
+  permissions: [],
+  extensions: [],
+  webhooks: [],
+};
 
 describe("InstallCustomExtension", () => {
   const manifestUrl = "https://example.com/manifest.json";
@@ -152,12 +174,7 @@ describe("InstallCustomExtension", () => {
 
     it("shows app details after manifest fetch", async () => {
       // Arrange
-      const mockManifest = {
-        id: "app-id",
-        name: "Test App",
-        version: "1.0.0",
-        permissions: [],
-      };
+      const mockManifest = testManifest;
       const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
       const manifestState: { manifest: typeof mockManifest | null } = { manifest: null };
 
@@ -184,10 +201,7 @@ describe("InstallCustomExtension", () => {
 
       // Assert
       await waitFor(() => {
-        expect(
-          // Assert pure translation message, because mocked intl doesn't have formatting implemented
-          screen.getAllByText(`You are about to install Test App`).length,
-        ).toBeGreaterThan(0);
+        expect(screen.getAllByText("Test App").length).toBeGreaterThan(0);
       });
     });
   });
@@ -243,13 +257,7 @@ describe("InstallCustomExtension", () => {
 
     it("shows app details immediately after direct manifest fetch", async () => {
       // Arrange
-      const mockManifest = {
-        id: "app-id",
-        name: "Test App",
-        version: "1.0.0",
-        permissions: [],
-        brand: { logo: { default: null } },
-      };
+      const mockManifest = testManifest;
 
       mockUseFetchManifest.mockReturnValue({
         submitFetchManifest: mockFetchManifestFn,
@@ -264,9 +272,35 @@ describe("InstallCustomExtension", () => {
 
       // Assert
       await waitFor(() => {
-        // Assert pure translation message, because mocked intl doesn't have formatting implemented
-        expect(screen.getAllByText(`You are about to install Test App`).length).toBeGreaterThan(0);
+        expect(screen.getAllByText("Test App").length).toBeGreaterThan(0);
       });
+    });
+
+    it("requires trusting an external app before it can be installed", async () => {
+      // Arrange
+      mockUseFetchManifest.mockReturnValue({
+        submitFetchManifest: mockFetchManifestFn,
+        manifest: testManifest,
+        lastFetchedManifestUrl: manifestUrl,
+        isFetchingManifest: false,
+      });
+
+      await act(async () => {
+        render(<InstallCustomExtension params={params} />);
+      });
+
+      const installButton = screen.getByRole("button", { name: "save" });
+
+      expect(screen.getByTestId("install-external-warning")).toBeInTheDocument();
+      expect(installButton).toBeDisabled();
+
+      // Act
+      await act(async () => {
+        screen.getByRole("checkbox").click();
+      });
+
+      // Assert
+      expect(installButton).toBeEnabled();
     });
 
     it("shows fetch error when manifest URL from param is invalid", async () => {

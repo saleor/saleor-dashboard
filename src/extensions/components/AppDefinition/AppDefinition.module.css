@@ -1,0 +1,113 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-4);
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mu-spacing-4);
+  padding: var(--mu-spacing-3) var(--mu-spacing-6);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.rowEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--mu-spacing-1);
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mu-spacing-3);
+  padding: var(--mu-spacing-2) var(--mu-spacing-6);
+  background-color: var(--mu-colors-background-default2);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.groupHeader:not(:first-child),
+.group + .group .groupHeader {
+  border-top: 1px solid var(--mu-colors-border-default1);
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mu-spacing-4);
+  padding: var(--mu-spacing-1) 0;
+}
+
+.mono {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  overflow-wrap: anywhere;
+}
+
+.copyValue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: right;
+  cursor: pointer;
+}
+
+.copyValue:hover {
+  text-decoration: underline;
+}
+
+.subHeader {
+  padding: var(--mu-spacing-2) var(--mu-spacing-6);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+/* Row actions stay collapsed until the row is hovered, focused, or shows a copy confirmation. */
+.rowActions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--mu-spacing-1);
+  box-sizing: border-box;
+  max-width: 0;
+  padding-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-width 0.2s ease-out,
+    padding-left 0.2s ease-out,
+    opacity 0.2s ease-out;
+}
+
+.row:hover .rowActions,
+.rowActions:focus-within,
+.rowActions:has([data-visible="true"]) {
+  max-width: 120px;
+  padding-left: var(--mu-spacing-2);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rowActions {
+    transition: none;
+  }
+}
+
+.reservedSlot {
+  display: flex;
+  visibility: hidden;
+}

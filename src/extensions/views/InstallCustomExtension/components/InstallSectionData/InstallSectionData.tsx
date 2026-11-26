@@ -1,18 +1,16 @@
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { type Control, useWatch } from "react-hook-form";
-import { type ZodIssue } from "zod";
 
-import { type ExtensionInstallFormData, type InstallDetailsManifestData } from "../../types";
+import { type useInstallChecks } from "../../hooks/useInstallChecks";
+import { type ExtensionInstallFormData, type Manifest } from "../../types";
 import { InstallExtensionManifestData } from "./InstallExtensionManifestData/InstallExtensionManifestData";
 
 interface IInstallSectionDataProps {
   isFetchingManifest: boolean;
-  manifest: InstallDetailsManifestData | undefined;
+  manifest: Manifest | undefined;
   lastFetchedManifestUrl: string | undefined;
   control: Control<ExtensionInstallFormData>;
-  issues?: ZodIssue[];
-  deprecationAcknowledged: boolean;
-  onDeprecationAcknowledgedChange: (acknowledged: boolean) => void;
+  checks: ReturnType<typeof useInstallChecks>;
 }
 
 export const InstallSectionData = ({
@@ -20,9 +18,7 @@ export const InstallSectionData = ({
   manifest,
   lastFetchedManifestUrl,
   control,
-  issues,
-  deprecationAcknowledged,
-  onDeprecationAcknowledgedChange,
+  checks,
 }: IInstallSectionDataProps) => {
   const manifestUrlInputValue = useWatch({
     control,
@@ -49,13 +45,12 @@ export const InstallSectionData = ({
     );
   }
 
-  if (manifest && lastFetchedManifestUrl === manifestUrlInputValue) {
+  if (manifest && lastFetchedManifestUrl && lastFetchedManifestUrl === manifestUrlInputValue) {
     return (
       <InstallExtensionManifestData
         manifest={manifest}
-        issues={issues}
-        deprecationAcknowledged={deprecationAcknowledged}
-        onDeprecationAcknowledgedChange={onDeprecationAcknowledgedChange}
+        manifestUrl={lastFetchedManifestUrl}
+        checks={checks}
       />
     );
   }
