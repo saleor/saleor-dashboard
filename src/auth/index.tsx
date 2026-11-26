@@ -2,7 +2,7 @@ import { Route } from "@dashboard/components/Router";
 import { parseQs } from "@dashboard/url-utils";
 import { Switch } from "react-router-dom";
 
-import Layout from "./components/Layout";
+import { Layout } from "./components/Layout";
 import { type LoginUrlQueryParams, passwordResetPath, passwordResetSuccessPath } from "./urls";
 import LoginViewComponent from "./views/Login";
 import ResetPassword from "./views/ResetPassword";

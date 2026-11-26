@@ -1,6 +1,6 @@
 import useForm, { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import type * as React from "react";
+import { type FormEvent, type ReactNode } from "react";
 
 export interface LoginFormData {
   email: string;
@@ -15,13 +15,11 @@ interface UseLoginFormResult {
 }
 
 interface LoginFormProps {
-  children: (props: UseLoginFormResult) => React.ReactNode;
+  children: (props: UseLoginFormResult) => ReactNode;
   onSubmit: (data: LoginFormData) => SubmitPromise;
 }
 
-const getLoginFormData = () => {
-  return { email: "", password: "" };
-};
+const getLoginFormData = (): LoginFormData => ({ email: "", password: "" });
 
 function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLoginFormResult {
   const form = useForm(getLoginFormData());
@@ -37,17 +35,15 @@ function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLogi
   };
 }
 
-const LoginForm = ({ children, onSubmit }: LoginFormProps) => {
+export const LoginForm = ({ children, onSubmit }: LoginFormProps): ReactNode => {
   const props = useLoginForm(onSubmit);
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     await props.submit();
-
-    props.reset(); // clear fields after submit
+    props.reset();
   };
 
   return <form onSubmit={handleSubmit}>{children(props)}</form>;
 };
 
 LoginForm.displayName = "LoginForm";
-export default LoginForm;

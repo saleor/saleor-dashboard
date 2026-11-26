@@ -5,12 +5,15 @@ import { THROBBER_BEAM_LENGTH, THROBBER_PATH_D, THROBBER_PATH_LENGTH } from "./t
 interface SaleorThrobberProps {
   size?: number;
   className?: string;
+  /** Accessible name; defaults to "Loading". */
+  label?: string;
   "data-test-id"?: string;
 }
 
 export function SaleorThrobber({
   size = 40,
   className,
+  label,
   "data-test-id": dataTestId,
 }: SaleorThrobberProps) {
   const intl = useIntl();
@@ -34,10 +37,13 @@ export function SaleorThrobber({
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label={intl.formatMessage({
-          id: "iFsDVR",
-          defaultMessage: "Loading",
-        })}
+        aria-label={
+          label ??
+          intl.formatMessage({
+            id: "iFsDVR",
+            defaultMessage: "Loading",
+          })
+        }
         role="progressbar"
       >
         <style>

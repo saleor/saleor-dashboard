@@ -5,7 +5,8 @@ import { extractMutationErrors } from "@dashboard/misc";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import ResetPasswordPage, {
+import {
+  ResetPasswordPage,
   type ResetPasswordPageFormData,
 } from "../components/ResetPasswordPage/ResetPasswordPage";
 import { passwordResetSuccessUrl } from "../urls";
@@ -37,7 +38,7 @@ const ResetPasswordView = () => {
   return (
     <ResetPasswordPage
       disabled={requestPasswordResetOpts.loading}
-      error={error as string}
+      error={error}
       onSubmit={handleSubmit}
     />
   );

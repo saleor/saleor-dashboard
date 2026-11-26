@@ -1,12 +1,20 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import ResetPasswordPage from "./ResetPasswordPage";
+import { AuthShell } from "../Layout";
+import { ResetPasswordPage } from "./ResetPasswordPage";
 
 const meta: Meta<typeof ResetPasswordPage> = {
-  title: "Auth/ResetPasswordPage",
+  title: "Auth / ResetPasswordPage",
   component: ResetPasswordPage,
   parameters: { layout: "fullscreen" },
+  decorators: [
+    (Story: StoryFn) => (
+      <AuthShell isCloudInstance>
+        <Story />
+      </AuthShell>
+    ),
+  ],
   args: {
     disabled: false,
     error: "",
@@ -19,7 +27,6 @@ export default meta;
 type Story = StoryObj<typeof ResetPasswordPage>;
 
 export const Default: Story = {};
-
 export const Disabled: Story = { args: { disabled: true } };
 
 export const WithError: Story = {

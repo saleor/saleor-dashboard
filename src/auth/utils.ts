@@ -3,6 +3,7 @@ import {
   type INotification,
   type INotificationCallback,
 } from "@dashboard/components/notifications/NotificationContext";
+import { getAbsoluteApiUrl } from "@dashboard/config";
 import { connectionMessages } from "@dashboard/connection/messages";
 import { getServerErrorProblem, type ServerErrorProblem } from "@dashboard/connection/serverErrors";
 import { commonMessages } from "@dashboard/intl";
@@ -167,6 +168,17 @@ export async function handleQueryAuthError(
     showAllErrors({ notify, error, intl, context: "load" });
   }
 }
+
+export const getSafeApiHost = (): string | null => {
+  try {
+    return new URL(getAbsoluteApiUrl()).host || null;
+  } catch {
+    return null;
+  }
+};
+
+export const getIsCloudInstance = (): boolean =>
+  typeof window !== "undefined" && window.__SALEOR_CONFIG__?.IS_CLOUD_INSTANCE === "true";
 
 export const getNewPasswordResetRedirectUrl = () =>
   urlJoin(window.location.origin, getAppMountUriForRedirect(), newPasswordUrl().replace(/\?/, ""));

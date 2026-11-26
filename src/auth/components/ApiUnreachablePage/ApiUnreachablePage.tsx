@@ -1,8 +1,13 @@
-import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { getIsCloudInstance } from "@dashboard/auth/utils";
+import { type ReactNode } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { AuthButton } from "../AuthButton/AuthButton";
+import { AuthWell } from "../AuthWell/AuthWell";
+import styles from "./ApiUnreachablePage.module.css";
 import { apiUnreachableMessages as messages } from "./messages";
+
+const SALEOR_SUPPORT_HREF = "mailto:support@saleor.io";
 
 interface ApiUnreachablePageProps {
   /** Host of the Saleor API, so a self-hosted setup can spot a wrong address. */
@@ -10,6 +15,7 @@ interface ApiUnreachablePageProps {
   retrying: boolean;
   onRetry: () => void;
   onSignIn: () => void;
+  showSupportLink?: boolean;
 }
 
 /**
@@ -22,45 +28,65 @@ export const ApiUnreachablePage = ({
   retrying,
   onRetry,
   onSignIn,
-}: ApiUnreachablePageProps): React.ReactNode => {
+  showSupportLink = getIsCloudInstance(),
+}: ApiUnreachablePageProps): ReactNode => {
   const intl = useIntl();
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="flex-start"
-      gap={4}
-      width="100%"
-      data-test-id="api-unreachable"
-    >
-      <Text as="h1" size={6} fontWeight="bold" lineHeight={3}>
-        {intl.formatMessage(messages.title)}
-      </Text>
-      <Text>{intl.formatMessage(messages.description)}</Text>
+    <AuthWell data-test-id="api-unreachable">
+      <div className={styles.header}>
+        <p className={styles.eyebrow}>
+          <span className={styles.signalDot} aria-hidden="true" />
+          <span>{intl.formatMessage(messages.kicker)}</span>
+        </p>
+
+        <h1 className={styles.title}>{intl.formatMessage(messages.title)}</h1>
+
+        <p className={styles.lede}>{intl.formatMessage(messages.description)}</p>
+      </div>
+
       {apiHost && (
-        <Text size={2} color="default2" data-test-id="api-unreachable-host">
+        <p className={styles.hostLine} data-test-id="api-unreachable-host">
           {intl.formatMessage(messages.apiAddress, { host: apiHost })}
-        </Text>
+        </p>
       )}
-      <ButtonWithLoader
-        width="100%"
-        variant="primary"
-        transitionState={retrying ? "loading" : "default"}
-        disabled={retrying}
-        onClick={onRetry}
-        data-test-id="api-unreachable-retry"
-      >
-        {intl.formatMessage(messages.tryAgain)}
-      </ButtonWithLoader>
-      <Button
-        width="100%"
-        variant="tertiary"
-        onClick={onSignIn}
-        data-test-id="api-unreachable-sign-in"
-      >
-        {intl.formatMessage(messages.signIn)}
-      </Button>
-    </Box>
+
+      <div className={styles.actions}>
+        <AuthButton
+          variant="primary"
+          loading={retrying}
+          onClick={onRetry}
+          data-test-id="api-unreachable-retry"
+        >
+          {intl.formatMessage(messages.tryAgain)}
+        </AuthButton>
+
+        <AuthButton
+          variant="secondary"
+          type="button"
+          onClick={onSignIn}
+          data-test-id="api-unreachable-sign-in"
+        >
+          {intl.formatMessage(messages.signIn)}
+        </AuthButton>
+      </div>
+
+      {showSupportLink && (
+        <p className={styles.help}>
+          <FormattedMessage
+            {...messages.stillStuck}
+            values={{
+              contactLink: (
+                <a href={SALEOR_SUPPORT_HREF} className={styles.helpLink}>
+                  <FormattedMessage {...messages.contactSupport} />
+                </a>
+              ),
+            }}
+          />
+        </p>
+      )}
+    </AuthWell>
   );
 };
+
+ApiUnreachablePage.displayName = "ApiUnreachablePage";

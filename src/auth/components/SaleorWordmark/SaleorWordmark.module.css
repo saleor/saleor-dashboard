@@ -1,0 +1,7 @@
+.wordmark {
+  display: block;
+  width: 100px;
+  height: auto;
+  color: var(--mu-colors-text-default1);
+  flex-shrink: 0;
+}

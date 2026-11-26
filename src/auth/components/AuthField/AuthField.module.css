@@ -1,0 +1,123 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--mu-colors-text-default1);
+}
+
+.inputWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  background-color: var(--mu-colors-background-default1);
+  color: var(--mu-colors-text-default1);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  transition: border-color 150ms ease;
+}
+
+.inputWithToggle {
+  padding-right: 44px;
+}
+
+.input::placeholder {
+  color: var(--mu-colors-text-default2);
+  opacity: 0.45;
+}
+
+.input:hover:not(:disabled) {
+  border-color: var(--mu-colors-border-default1-hovered);
+}
+
+.input:focus {
+  outline: 2px solid var(--mu-colors-border-default1-focused);
+  outline-offset: 0;
+  border-color: var(--mu-colors-border-default1-focused);
+}
+
+.inputError {
+  border-color: var(--mu-colors-border-critical1);
+}
+
+.inputError:focus {
+  outline-color: var(--mu-colors-border-critical1);
+  border-color: var(--mu-colors-border-critical1);
+}
+
+.input:disabled {
+  background-color: var(--mu-colors-background-default-disabled);
+  color: var(--mu-colors-text-default-disabled);
+  cursor: not-allowed;
+}
+
+.passwordToggle {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--mu-colors-text-default2);
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.passwordToggle:hover:not(:disabled) {
+  color: var(--mu-colors-text-default1);
+  background-color: var(--mu-colors-background-default1-hovered);
+}
+
+.passwordToggle:focus-visible {
+  outline: 2px solid var(--mu-colors-border-default1-focused);
+  outline-offset: 0;
+  color: var(--mu-colors-text-default1);
+}
+
+.passwordToggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.helperText {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--mu-colors-text-default2);
+}
+
+.helperTextError {
+  color: var(--mu-colors-text-critical1);
+}
