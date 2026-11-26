@@ -39,6 +39,7 @@ const invalidCodeError: OrderErrorFragment = {
   addressType: null,
   message: "Voucher code is invalid.",
   orderLines: null,
+  variants: null,
 };
 
 const renderDialog = ({

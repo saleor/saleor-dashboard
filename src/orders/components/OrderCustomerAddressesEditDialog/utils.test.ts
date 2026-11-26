@@ -43,6 +43,7 @@ const createOrderError = (overrides: Partial<OrderErrorFragment> = {}): OrderErr
   addressType: null,
   message: "This field cannot be blank",
   orderLines: null,
+  variants: null,
   ...overrides,
 });
 

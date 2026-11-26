@@ -1289,6 +1289,7 @@ export const OrderErrorFragmentDoc = gql`
   addressType
   message
   orderLines
+  variants
 }
     `;
 export const PageErrorFragmentDoc = gql`
