@@ -13,6 +13,7 @@ export class AppDetailsPage extends BasePage {
   constructor(
     page: Page,
     readonly appDetailsSection = page.getByTestId("app-details-section"),
+    readonly appActionsMenuButton = page.getByTestId("app-actions-menu-button"),
     readonly appDeleteButton = page.getByTestId("app-delete-button"),
     readonly appActivateButton = page.getByTestId("app-activate-button"),
     readonly appEditPermissionsButton = page.getByTestId("app-edit-permissions-button"),
@@ -24,10 +25,12 @@ export class AppDetailsPage extends BasePage {
   }
 
   async clickAppDeleteButton() {
+    await this.appActionsMenuButton.click();
     await this.appDeleteButton.click();
   }
 
   async clickAppActivateButton() {
+    await this.appActionsMenuButton.click();
     await this.appActivateButton.click();
   }
 }

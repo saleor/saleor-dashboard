@@ -1,7 +1,17 @@
-.tabs {
+.row {
   display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-4);
   padding: 0 var(--mu-spacing-6);
   border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.tabs {
+  display: flex;
+}
+
+.actions {
+  margin-left: auto;
 }
 
 /* Same tab look as ModelTypeTabs. */
