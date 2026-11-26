@@ -32,7 +32,6 @@ for (const permission of permissionList) {
     await extensionsPage.extensionViewDetailsButton.first().click();
     await expect(appPage.appSettingsButton).toBeVisible();
     await appPage.appSettingsButton.click();
-    await appPage.waitContentLoad();
     await expect(appDetailsPage.appDetailsSection).toBeVisible();
 
     const buttons = [

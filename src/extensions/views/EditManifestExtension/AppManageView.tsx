@@ -35,7 +35,7 @@ interface Props {
 export const EditManifestExtension = ({ id, params }: Props) => {
   const client = useApolloClient();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { data, loading, refetch } = useAppQuery({
+  const { data, refetch } = useAppQuery({
     displayLoader: true,
     variables: { id, hasManagedAppsPermission },
   });
@@ -149,7 +149,12 @@ export const EditManifestExtension = ({ id, params }: Props) => {
       />
       <AppDetailsPage
         data={data?.app || null}
-        loading={loading}
+        activeTab={params.activeTab}
+        onTabChange={activeTab =>
+          navigate(ExtensionsUrls.resolveEditManifestExtensionUrl(id, { ...params, activeTab }), {
+            replace: true,
+          })
+        }
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
         onAppDeleteOpen={() => openModal("app-delete")}

@@ -1,6 +1,6 @@
 import { getAbsoluteApiUrl } from "@dashboard/config";
 import { type FlagList } from "@dashboard/featureFlags/availableFlags";
-import { type Dialog, type SingleAction } from "@dashboard/types";
+import { type ActiveTab, type Dialog, type SingleAction } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";
 import urlJoin from "url-join";
@@ -118,7 +118,9 @@ interface AppDetailsCommonParams {
   theme: ThemeType;
 }
 
+export type AppManageTab = "details" | "deliveries";
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
+  ActiveTab<AppManageTab> &
   SingleAction &
   AppDetailsUrlMountQueryParams &
   FeatureFlagsQueryParams;
