@@ -29,6 +29,8 @@ interface AppDefinition {
     targetUrl: string;
     syncEvents: string[] | null;
     asyncEvents: string[] | null;
+    /** Only installed webhooks expose their subscription query. */
+    subscriptionQuery?: string | null;
   }> | null;
 }
 
@@ -47,6 +49,7 @@ export const installedAppDefinition = (app: InstalledApp): AppDefinition => ({
       targetUrl: webhook.targetUrl,
       syncEvents: webhook.syncEvents.map(event => event.eventType),
       asyncEvents: webhook.asyncEvents.map(event => event.eventType),
+      subscriptionQuery: webhook.subscriptionQuery,
     })) ?? null,
 });
 
@@ -59,7 +62,12 @@ interface ResolvedUrl {
 
 export type AppEndpoint =
   | (ResolvedUrl & { kind: "manifest" | "app" | "tokenTarget" })
-  | (ResolvedUrl & { kind: "webhook"; name: string; events: string[] })
+  | (ResolvedUrl & {
+      kind: "webhook";
+      name: string;
+      events: string[];
+      subscriptionQuery: string | null;
+    })
   | (ResolvedUrl & {
       kind: "extension";
       label: string;
@@ -114,6 +122,7 @@ export const getAppEndpoints = (
       ...resolveUrl(webhook.targetUrl, base),
       name: webhook.name,
       events: [...(webhook.syncEvents ?? []), ...(webhook.asyncEvents ?? [])],
+      subscriptionQuery: webhook.subscriptionQuery ?? null,
     })),
   ];
 };

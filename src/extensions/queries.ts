@@ -127,6 +127,7 @@ export const appDetails = gql`
         id
         name
         targetUrl
+        subscriptionQuery
         syncEvents {
           eventType
         }

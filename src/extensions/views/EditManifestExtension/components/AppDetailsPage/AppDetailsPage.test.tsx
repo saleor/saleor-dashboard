@@ -1,10 +1,11 @@
 import { appDetails } from "@dashboard/extensions/fixtures";
 import { AppTypeEnum } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { type ComponentProps } from "react";
 
 import { AppDetailsPage } from "./AppDetailsPage";
+import { installedAppStory } from "./storyFixtures";
 
 const mockHeader = jest.fn();
 
@@ -51,6 +52,23 @@ describe("Apps AppDetailsPage", () => {
     expect(screen.getByText("Manage orders.")).toBeInTheDocument();
     expect(screen.getByTestId("app-edit-permissions-button")).toBeInTheDocument();
     expect(screen.getByTestId("app-manage-tab-details")).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("copies a webhook's subscription query decoded and formatted as GraphQL", async () => {
+    // Arrange
+    const writeText = jest.fn().mockResolvedValue(undefined);
+
+    Object.assign(navigator, { clipboard: { writeText } });
+    renderPage({ data: installedAppStory });
+
+    // Act
+    fireEvent.click(screen.getByRole("button", { name: "Copy subscription" }));
+
+    // Assert
+    await waitFor(() => expect(writeText).toHaveBeenCalledTimes(1));
+    expect(writeText.mock.calls[0][0]).toBe(
+      'subscription {\n  event {\n    ... on OrderCreated {\n      order {\n        id\n        metafield(key: "crm")\n      }\n    }\n  }\n}',
+    );
   });
 
   it("shows webhook deliveries on their own tab", () => {

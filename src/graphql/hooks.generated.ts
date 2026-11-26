@@ -12188,6 +12188,7 @@ export const AppDocument = gql`
       id
       name
       targetUrl
+      subscriptionQuery
       syncEvents {
         eventType
       }
