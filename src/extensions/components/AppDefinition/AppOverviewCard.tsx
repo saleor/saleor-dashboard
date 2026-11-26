@@ -3,16 +3,15 @@ import { ExternalLinkNext } from "@dashboard/components/ExternalLink/ExternalLin
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Chip, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Check } from "lucide-react";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
-import { type Manifest } from "../../../types";
-import styles from "./InstallExtensionManifestData.module.css";
+import styles from "./AppDefinition.module.css";
 import { manifestMessages } from "./messages";
 
-const Field = ({ label, children }: { label: string; children: ReactNode }) => (
+export const OverviewField = ({ label, children }: { label: string; children: ReactNode }) => (
   <Box className={styles.field}>
     <Text size={3} color="default2">
       {label}
@@ -23,7 +22,7 @@ const Field = ({ label, children }: { label: string; children: ReactNode }) => (
   </Box>
 );
 
-const MonoText = ({ text }: { text: string }) => (
+export const MonoText = ({ text }: { text: string }) => (
   <Text size={3} className={styles.mono}>
     {text}
   </Text>
@@ -33,7 +32,7 @@ const MonoText = ({ text }: { text: string }) => (
  * The value itself is the copy control. Like other copy actions in the Dashboard, a check
  * icon confirms the copy in place for a moment.
  */
-const CopyOnClick = ({ text }: { text: string }) => {
+export const CopyOnClick = ({ text }: { text: string }) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const label = intl.formatMessage(buttonMessages.copyToClipboard);
@@ -61,53 +60,45 @@ const CopyOnClick = ({ text }: { text: string }) => {
   );
 };
 
-export const ManifestOverviewCard = ({
-  manifest,
-  manifestUrl,
+/** About, the fields passed as children, then the app's links. */
+export const AppOverviewCard = ({
+  about,
+  homepageUrl,
+  supportUrl,
+  dataPrivacyUrl,
+  children,
 }: {
-  manifest: Manifest;
-  manifestUrl: string;
+  about: string | null;
+  homepageUrl: string | null;
+  supportUrl: string | null;
+  dataPrivacyUrl: string | null;
+  children?: ReactNode;
 }) => {
   const intl = useIntl();
   const links = [
-    { url: manifest.homepageUrl, label: manifestMessages.homepage },
-    { url: manifest.supportUrl, label: manifestMessages.support },
-    { url: manifest.dataPrivacyUrl, label: manifestMessages.privacyPolicy },
+    { url: homepageUrl, label: manifestMessages.homepage },
+    { url: supportUrl, label: manifestMessages.support },
+    { url: dataPrivacyUrl, label: manifestMessages.privacyPolicy },
   ].filter((link): link is typeof link & { url: string } => !!link.url);
 
   return (
     <DetailSettingsCard title={intl.formatMessage(manifestMessages.overview)}>
       <Box display="flex" flexDirection="column" gap={2}>
-        {manifest.about && (
+        {about && (
           <Text size={3} color="default2">
-            {manifest.about}
+            {about}
           </Text>
         )}
         <Box>
-          <Field label={intl.formatMessage(manifestMessages.identifier)}>
-            <CopyOnClick text={manifest.identifier} />
-          </Field>
-          <Field label={intl.formatMessage(manifestMessages.manifestUrl)}>
-            <CopyOnClick text={manifestUrl} />
-          </Field>
-          {manifest.requiredSaleorVersion && (
-            <Field label={intl.formatMessage(manifestMessages.requiredSaleorVersion)}>
-              <MonoText text={manifest.requiredSaleorVersion.constraint} />
-              {!manifest.requiredSaleorVersion.satisfied && (
-                <Chip backgroundColor="critical1" borderColor="critical1" color="critical1">
-                  {intl.formatMessage(manifestMessages.versionNotSupported)}
-                </Chip>
-              )}
-            </Field>
-          )}
+          {children}
           {links.length > 0 && (
-            <Field label={intl.formatMessage(manifestMessages.links)}>
+            <OverviewField label={intl.formatMessage(manifestMessages.links)}>
               {links.map(link => (
                 <ExternalLinkNext key={link.url} href={link.url} target="_blank" color="accent1">
                   {intl.formatMessage(link.label)}
                 </ExternalLinkNext>
               ))}
-            </Field>
+            </OverviewField>
           )}
         </Box>
       </Box>

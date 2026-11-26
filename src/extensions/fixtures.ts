@@ -40,6 +40,7 @@ export const appDetails: NonNullable<AppQuery["app"]> = {
   type: AppTypeEnum.THIRDPARTY,
   version: "1.0.0",
   webhooks: [],
+  extensions: [],
   brand: null,
 };
 

@@ -7,22 +7,30 @@ import {
   type DetailSectionNavItem,
 } from "@dashboard/components/DetailSectionNav/DetailSectionNav";
 import { useDetailSectionScrollSpy } from "@dashboard/components/DetailSectionNav/useDetailSectionScrollSpy";
+import { AppConnectionsCard } from "@dashboard/extensions/components/AppDefinition/AppConnectionsCard";
+import {
+  getAppEndpoints,
+  groupEndpointsByHost,
+} from "@dashboard/extensions/components/AppDefinition/appEndpoints";
+import {
+  AppOverviewCard,
+  CopyOnClick,
+  MonoText,
+  OverviewField,
+} from "@dashboard/extensions/components/AppDefinition/AppOverviewCard";
+import { AppPermissionsCard } from "@dashboard/extensions/components/AppDefinition/AppPermissionsCard";
+import { manifestMessages } from "@dashboard/extensions/components/AppDefinition/messages";
 import { AppDeprecationNotice } from "@dashboard/extensions/components/AppDeprecation/AppDeprecation";
 import { deprecationMessages } from "@dashboard/extensions/messages";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Chip, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode, useMemo } from "react";
 import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 import { fromZodIssue } from "zod-validation-error";
 
 import { type useInstallChecks } from "../../../hooks/useInstallChecks";
-import { getManifestEndpoints, groupEndpointsByHost } from "../../../manifestEndpoints";
 import { type Manifest } from "../../../types";
-import { ManifestConnectionsCard } from "./ManifestConnectionsCard";
 import { ManifestHeader } from "./ManifestHeader";
-import { ManifestOverviewCard } from "./ManifestOverviewCard";
-import { ManifestPermissionsCard } from "./ManifestPermissionsCard";
 import { ManifestTrustCallout } from "./ManifestTrustCallout";
-import { manifestMessages } from "./messages";
 
 interface ManifestSection {
   id: string;
@@ -45,7 +53,7 @@ export const InstallExtensionManifestData = ({
 }) => {
   const intl = useIntl();
   const groups = useMemo(
-    () => groupEndpointsByHost(getManifestEndpoints(manifestUrl, manifest)),
+    () => groupEndpointsByHost(getAppEndpoints(manifestUrl, manifest)),
     [manifestUrl, manifest],
   );
   const permissions = manifest.permissions ?? [];
@@ -54,19 +62,43 @@ export const InstallExtensionManifestData = ({
     {
       id: "install-manifest-overview",
       title: manifestMessages.overview,
-      content: <ManifestOverviewCard manifest={manifest} manifestUrl={manifestUrl} />,
+      content: (
+        <AppOverviewCard
+          about={manifest.about}
+          homepageUrl={manifest.homepageUrl}
+          supportUrl={manifest.supportUrl}
+          dataPrivacyUrl={manifest.dataPrivacyUrl}
+        >
+          <OverviewField label={intl.formatMessage(manifestMessages.identifier)}>
+            <CopyOnClick text={manifest.identifier} />
+          </OverviewField>
+          <OverviewField label={intl.formatMessage(manifestMessages.manifestUrl)}>
+            <CopyOnClick text={manifestUrl} />
+          </OverviewField>
+          {manifest.requiredSaleorVersion && (
+            <OverviewField label={intl.formatMessage(manifestMessages.requiredSaleorVersion)}>
+              <MonoText text={manifest.requiredSaleorVersion.constraint} />
+              {!manifest.requiredSaleorVersion.satisfied && (
+                <Chip backgroundColor="critical1" borderColor="critical1" color="critical1">
+                  {intl.formatMessage(manifestMessages.versionNotSupported)}
+                </Chip>
+              )}
+            </OverviewField>
+          )}
+        </AppOverviewCard>
+      ),
     },
     {
       id: "install-manifest-connections",
       title: manifestMessages.connections,
       count: groups.length,
-      content: <ManifestConnectionsCard groups={groups} />,
+      content: <AppConnectionsCard groups={groups} />,
     },
     {
       id: "install-manifest-permissions",
       title: manifestMessages.permissions,
       count: permissions.length,
-      content: <ManifestPermissionsCard permissions={permissions} />,
+      content: <AppPermissionsCard permissions={permissions} />,
     },
   ];
 

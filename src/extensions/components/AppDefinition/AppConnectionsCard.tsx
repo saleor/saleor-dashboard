@@ -3,12 +3,11 @@ import { Box, Chip, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { type MessageDescriptor, useIntl } from "react-intl";
 
-import { type ManifestEndpoint, type ManifestEndpointGroup } from "../../../manifestEndpoints";
-import styles from "./InstallExtensionManifestData.module.css";
+import styles from "./AppDefinition.module.css";
+import { type AppEndpoint, type AppEndpointGroup, type AppEndpointOf } from "./appEndpoints";
 import { manifestMessages } from "./messages";
 
-type EndpointOf<Kind extends ManifestEndpoint["kind"]> = Extract<ManifestEndpoint, { kind: Kind }>;
-type UrlEndpoint = EndpointOf<"manifest" | "app" | "tokenTarget">;
+type UrlEndpoint = AppEndpointOf<"manifest" | "app" | "tokenTarget">;
 
 const endpointLabels: Record<UrlEndpoint["kind"], MessageDescriptor> = {
   manifest: manifestMessages.endpointManifest,
@@ -17,8 +16,8 @@ const endpointLabels: Record<UrlEndpoint["kind"], MessageDescriptor> = {
 };
 
 const ofKind =
-  <Kind extends ManifestEndpoint["kind"]>(...kinds: Kind[]) =>
-  (endpoint: ManifestEndpoint): endpoint is EndpointOf<Kind> =>
+  <Kind extends AppEndpoint["kind"]>(...kinds: Kind[]) =>
+  (endpoint: AppEndpoint): endpoint is AppEndpointOf<Kind> =>
     (kinds as string[]).includes(endpoint.kind);
 
 const Row = ({
@@ -66,9 +65,9 @@ const SubTable = ({ title, children }: { title: MessageDescriptor; children: Rea
   );
 };
 
-export const ManifestConnectionsCard = ({ groups }: { groups: ManifestEndpointGroup[] }) => {
+export const AppConnectionsCard = ({ groups }: { groups: AppEndpointGroup[] }) => {
   const intl = useIntl();
-  // The manifest endpoint is always listed first, so its host is the first group.
+  // The manifest endpoint, when present, is listed first, so its host is the first group.
   const manifestHost = groups[0]?.host;
 
   return (
