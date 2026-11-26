@@ -18,6 +18,9 @@ const getValidManifestBase = (overrides: Partial<AppManifestFragment> = {}) => {
     deprecationReason: null,
     homepageUrl: "",
     supportUrl: "",
+    author: null,
+    requiredSaleorVersion: null,
+    webhooks: [],
     brand: {
       __typename: "AppManifestBrand",
       logo: {

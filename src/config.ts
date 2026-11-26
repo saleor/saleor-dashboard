@@ -37,8 +37,12 @@ export const getAbsoluteApiUrl = () => new URL(getApiUrl(), window.location.orig
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL ?? "300", 10);
 export const IS_CLOUD_INSTANCE = window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
 
-export const getSaleorCloudAppDomain = (): string | null =>
-  window?.__SALEOR_CONFIG__?.SALEOR_CLOUD_APP_DOMAIN || null;
+/** Saleor's own apps are hosted here regardless of who hosts the Dashboard. */
+const DEFAULT_SALEOR_CLOUD_APP_DOMAIN = "saleor.app";
+
+/** Domain of official Saleor apps. Falls back to saleor.app when the env var is not set. */
+export const getSaleorCloudAppDomain = (): string =>
+  window?.__SALEOR_CONFIG__?.SALEOR_CLOUD_APP_DOMAIN || DEFAULT_SALEOR_CLOUD_APP_DOMAIN;
 
 /** @public Used by the Saleor Cloud extensions. */
 export const getCloudApiUrl = (): string | null => window?.__SALEOR_CONFIG__?.CLOUD_API_URL || null;

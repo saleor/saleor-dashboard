@@ -62,6 +62,9 @@ describe("useInstallApp", () => {
     tokenTargetUrl: null,
     brand: null,
     extensions: [],
+    author: null,
+    requiredSaleorVersion: null,
+    webhooks: [],
   } satisfies AppManifestFragment;
   const mockNavigate = jest.fn();
   const mockNotify = jest.fn();

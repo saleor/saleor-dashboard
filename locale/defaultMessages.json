@@ -398,6 +398,10 @@
     "context": "section description",
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
+  "/Ex5HH": {
+    "context": "install page connections row: URL that receives the app token",
+    "string": "Auth token target"
+  },
   "/FYtVx": {
     "context": "review row title",
     "string": "Attributes"
@@ -889,6 +893,10 @@
     "context": "Dry run no objects found",
     "string": "No objects found in the provided query"
   },
+  "0uiR43": {
+    "context": "badge on a permission that grants access to payments, staff or personal data",
+    "string": "Sensitive"
+  },
   "0wIbPW": {
     "string": "Add column to left"
   },
@@ -1153,6 +1161,10 @@
   "2/2yg+": {
     "string": "Add"
   },
+  "200XWt": {
+    "context": "install page section title: every URL the app is reached at",
+    "string": "Connections"
+  },
   "21cJ+Z": {
     "context": "structures section name",
     "string": "Structures"
@@ -1406,6 +1418,10 @@
     "context": "channel metadata dialog header",
     "string": "Channel Metadata"
   },
+  "2rOG8A": {
+    "context": "checkbox required before installing an external app; domains is a list of hosts",
+    "string": "I trust {domains}"
+  },
   "2s7Mv6": {
     "context": "Saleor Cloud environment snapshots and data settings section name",
     "string": "Snapshots and data"
@@ -1446,9 +1462,9 @@
     "context": "button",
     "string": "View all orders"
   },
-  "3/IQO9": {
-    "context": "extension install page, permissions section",
-    "string": "Installing this extension will give it following permissions"
+  "3/WV/P": {
+    "context": "warning body on the install page for an app not hosted by Saleor",
+    "string": "This app is not published by Saleor. It can copy the name and logo of a known vendor, but not its domain. Once installed, it gets an access token for your store and the access listed below."
   },
   "31IkHD": {
     "context": "voucher type pill scope: entire order",
@@ -1787,10 +1803,6 @@
   "4JcNaA": {
     "context": "button",
     "string": "Invite staff member"
-  },
-  "4KRhwm": {
-    "context": "link in infoCardText, to Saleor docs",
-    "string": "Learn more about data privacy."
   },
   "4Kq3O6": {
     "string": "This unit will be used as default shipping weight"
@@ -2775,10 +2787,6 @@
     "context": "TopNav destination link tooltip to models list",
     "string": "All models"
   },
-  "7eGvyy": {
-    "context": "extension install page, extension permissions (from manifest)",
-    "string": "Permissions"
-  },
   "7ejEbB": {
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
     "string": "Authorized"
@@ -3197,6 +3205,10 @@
   "98WMlR": {
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
+  },
+  "98hvB9": {
+    "context": "install page connections sub-table header for Dashboard extensions",
+    "string": "Extensions"
   },
   "99q9UB": {
     "context": "create product dialog description",
@@ -3817,6 +3829,10 @@
     "context": "order history message",
     "string": "Shipping details was sent to customer"
   },
+  "BCQwnf": {
+    "context": "info body on the install page for an official Saleor app",
+    "string": "The manifest and every endpoint are hosted by Saleor."
+  },
   "BDbgCL": {
     "string": "Heading 3"
   },
@@ -3994,6 +4010,10 @@
     "context": "bulk publish review warning about variants left without a channel listing",
     "string": "{count, plural, one {# variant has no price here and stays unlisted} other {# variants have no price here and stay unlisted}}. Set a price to publish {count, plural, one {it} other {them}}."
   },
+  "Bhp8dq": {
+    "context": "install page overview field",
+    "string": "Identifier"
+  },
   "BikTYV": {
     "context": "Collection is visible in channel without scheduled date",
     "string": "Visible now"
@@ -4162,10 +4182,6 @@
   "C9pcQx": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}"
-  },
-  "CB7xpk": {
-    "context": "subheader on extension install page",
-    "string": "You are about to install {extensionName}"
   },
   "CCjH3M": {
     "string": "Refunds & returns settings"
@@ -5229,6 +5245,10 @@
     "context": "dialog header",
     "string": "Select a channel"
   },
+  "G/weiO": {
+    "context": "info title on the install page for an official Saleor app",
+    "string": "Official Saleor app"
+  },
   "G/yZLu": {
     "string": "Remove"
   },
@@ -5314,6 +5334,10 @@
   "GGhg9z": {
     "context": "order header date, earlier today",
     "string": "Created today at {time}"
+  },
+  "GHPwJu": {
+    "context": "app author in the install header",
+    "string": "by {author}"
   },
   "GHu/0h": {
     "context": "toast description when save fails due to voucher code errors",
@@ -5571,6 +5595,10 @@
   "H/r5m6": {
     "string": "Move down"
   },
+  "H11aBC": {
+    "context": "install page connections row: the app URL",
+    "string": "App URL"
+  },
   "H1L1cc": {
     "context": "url",
     "string": "URL"
@@ -5596,6 +5624,10 @@
   "H60H6L": {
     "context": "attribute values list: name column header",
     "string": "Default Store View"
+  },
+  "H6GK2f": {
+    "context": "install page permissions section subtitle",
+    "string": "What the app can read and change"
   },
   "H6SfJd": {
     "context": "draft created from replace event title",
@@ -7004,6 +7036,10 @@
     "context": "shown under expire orders when auto-confirm is enabled",
     "string": "No effect while {autoConfirm} is on — orders become {unfulfilled} straight away and never reach the {unconfirmed} state this applies to."
   },
+  "M8Ni/L": {
+    "context": "badge when the store's Saleor version does not match the app's requirement",
+    "string": "Not supported by this Saleor"
+  },
   "M8sTdd": {
     "context": "bulk publish review table stock column",
     "string": "Stock"
@@ -7412,6 +7448,10 @@
   "NWxomz": {
     "string": "Fulfillment status"
   },
+  "NX6phB": {
+    "context": "install page link to the app data privacy page",
+    "string": "Privacy policy"
+  },
   "NYwJyM": {
     "context": "inline add attribute value placeholder",
     "string": "Type a value and press Enter"
@@ -7431,6 +7471,10 @@
   "NaEM7l": {
     "context": "section header",
     "string": "Customer attributes"
+  },
+  "NcsgOQ": {
+    "context": "install page overview field",
+    "string": "Required Saleor version"
   },
   "NelCIl": {
     "context": "content section name",
@@ -7584,10 +7628,6 @@
   "O9QPe1": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
-  },
-  "O9SefD": {
-    "context": "card text, app install page",
-    "string": "Uninstalling the extension will remove all metadata stored by {extensionName}. {learnMoreLink}"
   },
   "OA+fw+": {
     "context": "conjunction, choice between going to dashboard or refreshing page",
@@ -9456,6 +9496,10 @@
     "context": "bulk publish stock disabled without any warehouses",
     "string": "Create at least one warehouse in your shop to set stock levels."
   },
+  "Ugxzyw": {
+    "context": "install page section title",
+    "string": "Permissions"
+  },
   "Uh3NX/": {
     "context": "remove failed installation dialog content",
     "string": "Are you sure you want to delete {name} failed installation?"
@@ -9899,6 +9943,10 @@
     "context": "product variants grid search placeholder",
     "string": "Search variants by name or SKU"
   },
+  "W5ROsw": {
+    "context": "install page overview field",
+    "string": "Manifest URL"
+  },
   "W5hb5H": {
     "context": "warehouse input",
     "string": "Warehouse"
@@ -10050,9 +10098,6 @@
     "context": "helper text",
     "string": "All items refunded"
   },
-  "Wj5TbN": {
-    "string": "Issues"
-  },
   "WjqtMG": {
     "string": "Variant: {name}"
   },
@@ -10089,6 +10134,10 @@
   "WrlaSD": {
     "context": "catalog setup status when shop has no warehouses",
     "string": "No warehouse"
+  },
+  "Wt1+QW": {
+    "context": "error title when the fetched app manifest fails validation",
+    "string": "The manifest has {count, plural, one {# issue} other {# issues}}. The app can't be installed."
   },
   "WuuXbr": {
     "context": "callout title when Saleor can’t open an SMTP session",
@@ -10357,6 +10406,10 @@
     "context": "bulk publish exit wizard confirmation",
     "string": "Your product selection and pricing changes will be lost."
   },
+  "XZggY6": {
+    "context": "badge on an app that is not hosted on the Saleor app domain",
+    "string": "External app"
+  },
   "XZpRr8": {
     "context": "btn label",
     "string": "Go to all products"
@@ -10448,6 +10501,10 @@
   "XtULua": {
     "context": "button to set cut-off date to current date and time",
     "string": "Set to current date and time"
+  },
+  "XtavJs": {
+    "context": "install page connections row: the manifest URL",
+    "string": "Manifest"
   },
   "XtlUj6": {
     "string": "Add your first rule to set up a promotion"
@@ -11302,6 +11359,10 @@
   "aheQdn": {
     "string": "Last Name"
   },
+  "aihRBP": {
+    "context": "app version in the install header",
+    "string": "v{version}"
+  },
   "ak62Oe": {
     "context": "plugin details page header",
     "string": "{pluginName} details"
@@ -11733,6 +11794,10 @@
   "c5B5Cg": {
     "context": "password login mode option description",
     "string": "No user can log in with a password"
+  },
+  "c5LrvQ": {
+    "context": "install page connections section subtitle",
+    "string": "Where the app receives your store's data"
   },
   "c5fFin": {
     "context": "ExitFormPrompt title",
@@ -12879,6 +12944,10 @@
   "g9PCqW": {
     "string": "Warehouse created and assigned"
   },
+  "gBOIO2": {
+    "context": "warning title on the install page for an app not hosted by Saleor",
+    "string": "External apps can be dangerous"
+  },
   "gCZYcl": {
     "context": "tooltip shown when shipping method is selected but no other options exist",
     "string": "No alternative shipping methods available"
@@ -13080,6 +13149,10 @@
   "gu2cez": {
     "context": "warehouse shipping zones empty state",
     "string": "Add a shipping zone that shares this warehouse's channel."
+  },
+  "gwKrrn": {
+    "context": "badge on an app whose every endpoint is on the Saleor app domain",
+    "string": "Official Saleor app"
   },
   "gxBIiJ": {
     "context": "attributes card header, total values assigned across reference attributes",
@@ -13342,6 +13415,10 @@
   "hqbdaB": {
     "context": "customer type unique slug error",
     "string": "A customer type with this slug already exists. Please provide another."
+  },
+  "hqzFSf": {
+    "context": "install page permissions section, empty state",
+    "string": "This app doesn't request any permissions."
   },
   "hrhqju": {
     "string": "You are currently logged in using an external identity provider. Logging in through email and password may result in loss of permissions and may render you incapable of managing the store. If you experience trouble authenticating, go back and contact your organization's administrator for assistance."
@@ -14634,6 +14711,10 @@
     "context": "variant stocks section subtitle",
     "string": "Assigning the stocks will be possible after the product is saved."
   },
+  "li/xmq": {
+    "context": "install page connections row hint for the auth token target",
+    "string": "Receives your store's access token"
+  },
   "li1BBk": {
     "context": "export items as csv file",
     "string": "Plain CSV file"
@@ -14879,6 +14960,10 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
+  },
+  "mVcNuH": {
+    "context": "badge on a domain that differs from the manifest's domain",
+    "string": "Different domain"
   },
   "mVcZkr": {
     "context": "seo slug field hint",
@@ -16563,6 +16648,10 @@
     "context": "Description when product is not visible in listings",
     "string": "Customers can still access it via direct link."
   },
+  "roSQMa": {
+    "context": "install page overview field",
+    "string": "Links"
+  },
   "rpVzFU": {
     "string": "Could not assign shipping zone to this channel"
   },
@@ -16994,6 +17083,10 @@
     "context": "account settings empty state title",
     "string": "No pinned model types"
   },
+  "tH1Z76": {
+    "context": "install page section title",
+    "string": "Overview"
+  },
   "tI7/Ib": {
     "string": "Extension requested permissions that are not available in Saleor."
   },
@@ -17344,6 +17437,10 @@
     "context": "error message",
     "string": "Invoice not found"
   },
+  "uRdxRu": {
+    "context": "install page section title",
+    "string": "Webhooks"
+  },
   "uRfta0": {
     "context": "Enable email confirmation",
     "string": "Enable email confirmation"
@@ -17684,10 +17781,6 @@
   "vG57x5": {
     "context": "card update success alert title",
     "string": "Card balance updated"
-  },
-  "vGfmv8": {
-    "context": "card title, app install page, about privacy",
-    "string": "Info"
   },
   "vHn/ii": {
     "context": "promotion save composition segment for active dates",
@@ -18210,6 +18303,10 @@
   },
   "wpONQ2": {
     "string": "Enter any extra information regarding this customer."
+  },
+  "wpiMMk": {
+    "context": "install page link to the app support page",
+    "string": "Support"
   },
   "wqT5JO": {
     "string": "Attach Token"
@@ -18767,9 +18864,6 @@
     "context": "attribute translation section subtitle",
     "string": "The attribute label shown in your storefront"
   },
-  "yyJcyW": {
-    "string": "App manifest contains issues. You can still install it, but it may not work properly. See technical details below:"
-  },
   "z/2AZY": {
     "string": "Discount type"
   },
@@ -18910,6 +19004,10 @@
   "zKgsu9": {
     "string": "Rule updated"
   },
+  "zL7WfX": {
+    "context": "aria label of the section navigation on the install page",
+    "string": "App manifest sections"
+  },
   "zLtb4N": {
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
@@ -18987,6 +19085,10 @@
   "zZaxb8": {
     "context": "Expanded help for channel setup",
     "string": "Vouchers only apply in assigned channels. Assign every market where shoppers should be able to use this code."
+  },
+  "zZuZ+4": {
+    "context": "install page link to the app homepage",
+    "string": "Homepage"
   },
   "zZx1pG": {
     "context": "create model type dialog title",

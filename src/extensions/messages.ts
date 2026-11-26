@@ -272,37 +272,6 @@ export const messages = defineMessages({
     id: "sXSde1",
     description: "link to docs in add custom extensions page subheader",
   },
-  installExtensionNameHeader: {
-    defaultMessage: "You are about to install {extensionName}",
-    id: "CB7xpk",
-    description: "subheader on extension install page",
-  },
-  permissions: {
-    defaultMessage: "Permissions",
-    id: "7eGvyy",
-    description: "extension install page, extension permissions (from manifest)",
-  },
-  permissionsExplanation: {
-    defaultMessage: "Installing this extension will give it following permissions",
-    id: "3/IQO9",
-    description: "extension install page, permissions section",
-  },
-  infoCardTitle: {
-    defaultMessage: "Info",
-    id: "vGfmv8",
-    description: "card title, app install page, about privacy",
-  },
-  infoCardText: {
-    defaultMessage:
-      "Uninstalling the extension will remove all metadata stored by {extensionName}. {learnMoreLink}",
-    id: "O9SefD",
-    description: "card text, app install page",
-  },
-  infoCardLearnMoreLink: {
-    defaultMessage: "Learn more about data privacy.",
-    id: "4KRhwm",
-    description: "link in infoCardText, to Saleor docs",
-  },
   manifestUrlLabel: {
     defaultMessage: "Provide Manifest URL",
     id: "mZrAiu",
