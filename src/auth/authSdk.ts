@@ -168,12 +168,21 @@ export const auth = ({
     const authPluginId = storage.getAuthPluginId();
 
     storage.clear();
-    resetAuthState();
 
     // `clearStore`, not `resetStore`: now that auth shares the app's single client, `resetStore`
     // would refetch every active Dashboard query the instant the token is gone, and each one
-    // would 401.
-    client.clearStore();
+    // would 401. Await it before `resetAuthState()` so Apollo finishes discarding watches before
+    // `<LoginView>` mounts and fetches `availableExternalAuthentications` — otherwise `clearStore`
+    // cancels that query in-flight and leaves the login card stuck on its loading spinner.
+    // The tokens are already gone, so a cache that fails to clear must not stop the logout:
+    // callers don't await it, and the external logout below still has to run.
+    try {
+      await client.clearStore();
+    } catch {
+      // Nothing to recover; the session has ended either way.
+    }
+
+    resetAuthState();
 
     if (authPluginId && opts?.input) {
       const result = await client.mutate<ExternalLogoutMutation, ExternalLogoutMutationVariables>({
