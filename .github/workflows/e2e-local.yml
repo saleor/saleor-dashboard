@@ -1,9 +1,9 @@
 # The local-stack E2E suite: a disposable Saleor in docker, the dashboard built from this
 # branch, no Saleor Cloud involved.
 #
-# Nightly and on demand. The suite is young, and a full run is dominated by a `vite build`
-# per target; putting it on every pull request before it has earned the time would mostly
-# buy queue. Moving it onto pull requests is a one-line change to the `on:` block.
+# Nightly, on demand, and on pull requests labelled `e2e`. The suite is young, and a full run
+# is dominated by a `vite build` per target; running it on every pull request before it has
+# earned the time would mostly buy queue, so a pull request opts in.
 name: E2E (local stack)
 
 on:
@@ -11,6 +11,10 @@ on:
   # a Saleor change that breaks the dashboard before a release does.
   schedule:
     - cron: "0 3 * * *"
+  # Only with the `e2e` label - see the job's `if`. `labeled` starts the first run; later
+  # pushes rerun it while the label stays.
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
   workflow_dispatch:
     inputs:
       target:
@@ -27,16 +31,24 @@ on:
         description: "Playwright --grep filter (optional)"
         required: false
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 permissions: {}
 
 jobs:
   e2e:
+    # Adding any other label also fires `labeled`; only adding `e2e` itself starts a run.
+    if: >-
+      github.event_name != 'pull_request' ||
+      (contains(github.event.pull_request.labels.*.name, 'e2e') &&
+      (github.event.action != 'labeled' || github.event.label.name == 'e2e'))
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+
+    # On the job, not the workflow: a run whose job is skipped - a pull request event without
+    # the label - must not cancel one that is testing. Per target, so they do not cancel
+    # each other.
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.target }}
+      cancel-in-progress: true
 
     strategy:
       # The targets are independent; a break in one is worth seeing alongside the other.
