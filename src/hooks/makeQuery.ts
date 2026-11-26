@@ -120,7 +120,7 @@ export function useQuery<TData, TVariables>(
       if (handleError) {
         handleError(error);
       } else if (!isConnectionError(error)) {
-        handleQueryAuthError(error, notify, user.logout, intl);
+        handleQueryAuthError(error, notify, () => user.logout?.({ sessionExpired: true }), intl);
       } else if (!connectionMonitor.isBannerAttached()) {
         // No connection banner on this screen (sign-in, startup) to explain the failure and
         // reload the data, so say it here, without the network text.

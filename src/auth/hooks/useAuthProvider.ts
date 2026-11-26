@@ -28,6 +28,7 @@ import {
   type ExternalLoginInput,
   type GetExternalAccessTokenData,
   type LoginData,
+  type LogoutOptions,
   type RequestExternalLoginInput,
   type RequestExternalLogoutInput,
   type UserContext,
@@ -103,19 +104,29 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       setErrors(["unknownLoginError"]);
     }
   };
-  const handleLogout = async () => {
+  const handleLogout = async ({ sessionExpired = false }: LogoutOptions = {}) => {
+    // Only one `navigator.credentials.get()` may be pending: either the auto-login effect signs
+    // the merchant back in after an expired session, or a chosen logout probes for saved
+    // credentials below and must not be signed straight back in.
+    if (!sessionExpired) {
+      permitCredentialsAPI.current = false;
+    }
+
     const returnTo = urlJoin(window.location.origin, getAppMountUriForRedirect());
     const result = await logout({
       input: JSON.stringify({
         returnTo,
       } as RequestExternalLogoutInput),
     });
-    // Clear credentials from browser's credential manager only when exist.
-    // Chrome 115 crash when calling preventSilentAccess() when no credentials exist.
-    const hasCredentials = await checkIfCredentialsExist();
 
-    if (isCredentialsManagementAPISupported && !!hasCredentials) {
-      navigator.credentials.preventSilentAccess();
+    if (!sessionExpired) {
+      // Clear credentials from browser's credential manager only when exist.
+      // Chrome 115 crash when calling preventSilentAccess() when no credentials exist.
+      const hasCredentials = await checkIfCredentialsExist();
+
+      if (isCredentialsManagementAPISupported && !!hasCredentials) {
+        navigator.credentials.preventSilentAccess();
+      }
     }
 
     const errors = result?.errors || [];

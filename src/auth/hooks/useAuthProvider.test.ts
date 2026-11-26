@@ -6,7 +6,10 @@ import {
   useAuthState,
 } from "@dashboard/auth/authState";
 import { AccountErrorCode } from "@dashboard/graphql";
-import { login as loginWithCredentialsManagementAPI } from "@dashboard/utils/credentialsManagement";
+import {
+  checkIfCredentialsExist,
+  login as loginWithCredentialsManagementAPI,
+} from "@dashboard/utils/credentialsManagement";
 import { act, renderHook } from "@testing-library/react";
 
 import { useAuthProvider } from "./useAuthProvider";
@@ -308,6 +311,62 @@ describe("useAuthProvider", () => {
 
       // Assert
       expect(result.current.errors).toContain("loginError");
+    });
+  });
+
+  describe("handleLogout", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("does not trigger auto-login via Credential Management API after explicit logout", async () => {
+      // Arrange
+      (useAuthState as jest.Mock).mockReturnValue({ ...useAuthStateMock, authenticated: true });
+
+      const { result, rerender } = renderHook(() =>
+        useAuthProvider({
+          intl: mockIntl as any,
+          notify: mockNotify,
+          apolloClient: mockApolloClient as any,
+        }),
+      );
+
+      // Act
+      await act(async () => {
+        await result.current.logout?.();
+      });
+
+      (useAuthState as jest.Mock).mockReturnValue({ ...useAuthStateMock, authenticated: false });
+      rerender();
+
+      // Assert
+      expect(loginWithCredentialsManagementAPI).not.toHaveBeenCalled();
+      expect(checkIfCredentialsExist).toHaveBeenCalledTimes(1);
+    });
+
+    it("lets the saved password sign the merchant back in after the session expired", async () => {
+      // Arrange
+      (useAuthState as jest.Mock).mockReturnValue({ ...useAuthStateMock, authenticated: true });
+
+      const { result, rerender } = renderHook(() =>
+        useAuthProvider({
+          intl: mockIntl as any,
+          notify: mockNotify,
+          apolloClient: mockApolloClient as any,
+        }),
+      );
+
+      // Act
+      await act(async () => {
+        await result.current.logout?.({ sessionExpired: true });
+      });
+
+      (useAuthState as jest.Mock).mockReturnValue({ ...useAuthStateMock, authenticated: false });
+      rerender();
+
+      // Assert
+      expect(loginWithCredentialsManagementAPI).toHaveBeenCalledTimes(1);
+      expect(checkIfCredentialsExist).not.toHaveBeenCalled();
     });
   });
 });
