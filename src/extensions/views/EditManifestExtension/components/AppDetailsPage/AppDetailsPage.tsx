@@ -8,6 +8,7 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { type AppManageTabItem, AppManageTabs } from "../AppManageTabs/AppManageTabs";
 import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
+import { AppActionsMenu } from "./AppActionsMenu";
 import { Header } from "./Header";
 import { InstalledAppDetails } from "./InstalledAppDetails";
 import messages from "./messages";
@@ -64,12 +65,7 @@ export const AppDetailsPage = ({
         </Box>
       )}
     >
-      <Header
-        data={data}
-        onAppActivateOpen={onAppActivateOpen}
-        onAppDeactivateOpen={onAppDeactivateOpen}
-        onAppDeleteOpen={onAppDeleteOpen}
-      />
+      <Header data={data} />
       {data.type === AppTypeEnum.THIRDPARTY && !data.appUrl && (
         <Box
           data-test-id="no-configuration-screen-info"
@@ -100,6 +96,14 @@ export const AppDetailsPage = ({
         activeId={currentTab}
         onChange={onTabChange}
         ariaLabel={intl.formatMessage(messages.tabsAriaLabel)}
+        actions={
+          <AppActionsMenu
+            isActive={!!data.isActive}
+            onAppActivateOpen={onAppActivateOpen}
+            onAppDeactivateOpen={onAppDeactivateOpen}
+            onAppDeleteOpen={onAppDeleteOpen}
+          />
+        }
       />
       {currentTab === "details" && (
         <Box data-test-id="app-details-section">

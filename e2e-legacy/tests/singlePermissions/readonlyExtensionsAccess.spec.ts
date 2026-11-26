@@ -34,11 +34,7 @@ for (const permission of permissionList) {
     await appPage.appSettingsButton.click();
     await expect(appDetailsPage.appDetailsSection).toBeVisible();
 
-    const buttons = [
-      appDetailsPage.appDeleteButton,
-      appDetailsPage.appActivateButton,
-      appDetailsPage.appEditPermissionsButton,
-    ];
+    const buttons = [appDetailsPage.appActionsMenuButton, appDetailsPage.appEditPermissionsButton];
 
     for (const button of buttons) {
       await expect(button).toBeDisabled();

@@ -2,6 +2,7 @@ import { appDetails } from "@dashboard/extensions/fixtures";
 import { AppTypeEnum } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { type ComponentProps } from "react";
 
 import { AppDetailsPage } from "./AppDetailsPage";
@@ -69,6 +70,25 @@ describe("Apps AppDetailsPage", () => {
     expect(writeText.mock.calls[0][0]).toBe(
       'subscription {\n  event {\n    ... on OrderCreated {\n      order {\n        id\n        metafield(key: "crm")\n      }\n    }\n  }\n}',
     );
+  });
+
+  it("opens delete and deactivate dialogs from the actions menu next to the tabs", async () => {
+    // Arrange
+    const onAppDeleteOpen = jest.fn();
+    const onAppDeactivateOpen = jest.fn();
+
+    renderPage({ data: { ...appDetails, isActive: true }, onAppDeleteOpen, onAppDeactivateOpen });
+    expect(screen.getByTestId("app-status")).toHaveTextContent("Active");
+
+    // Act
+    await userEvent.click(screen.getByTestId("app-actions-menu-button"));
+    await userEvent.click(await screen.findByTestId("app-delete-button"));
+    await userEvent.click(screen.getByTestId("app-actions-menu-button"));
+    await userEvent.click(await screen.findByText("Deactivate"));
+
+    // Assert
+    expect(onAppDeleteOpen).toHaveBeenCalledTimes(1);
+    expect(onAppDeactivateOpen).toHaveBeenCalledTimes(1);
   });
 
   it("shows webhook deliveries on their own tab", () => {
