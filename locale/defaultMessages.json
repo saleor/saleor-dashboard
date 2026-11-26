@@ -2019,6 +2019,10 @@
     "context": "staff member has not signed in yet after invite",
     "string": "Pending invite"
   },
+  "5LBDEe": {
+    "context": "manage app overview field and updates section title",
+    "string": "Version"
+  },
   "5M+hLZ": {
     "string": "User permissions"
   },
@@ -2510,10 +2514,6 @@
     "context": "success toast after activating a customer",
     "string": "Customer activated"
   },
-  "6jyoEd": {
-    "context": "section header",
-    "string": "About this extension"
-  },
   "6kPUGg": {
     "context": "empty product variant reference list",
     "string": "No product variants"
@@ -2610,10 +2610,6 @@
   "74Zo/H": {
     "context": "channel slug",
     "string": "Slug"
-  },
-  "750Ymk": {
-    "context": "apps about permissions",
-    "string": "This extension has permissions to:"
   },
   "769/mX": {
     "context": "gift card metadata dialog header",
@@ -3205,6 +3201,10 @@
   "98WMlR": {
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
+  },
+  "98a49a": {
+    "context": "aria label of the section navigation on the manage app details tab",
+    "string": "Installed app sections"
   },
   "98hvB9": {
     "context": "install page connections sub-table header for Dashboard extensions",
@@ -4273,6 +4273,10 @@
   "CVaEon": {
     "context": "Product save pipeline step label",
     "string": "Attribute files"
+  },
+  "CW+YYK": {
+    "context": "manage app overview field: installation date; also a column header",
+    "string": "Installed"
   },
   "CWDuMj": {
     "context": "remaining quantity",
@@ -5414,6 +5418,10 @@
   "GVM/fi": {
     "context": "order history message",
     "string": "Payment was authorized"
+  },
+  "GWjchd": {
+    "context": "manage app page tab: what is installed",
+    "string": "Details"
   },
   "GXxpRA": {
     "context": "channel detail title secondary meta after status pill",
@@ -7422,9 +7430,6 @@
     "context": "bulk publish review spreadsheet paste hint",
     "string": "{hasStock, select, true {You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill price, cost price, and stock down the list.} other {You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill price and cost price down the list.}}"
   },
-  "NUBTlN": {
-    "string": "Extension doesn't provide a privacy policy."
-  },
   "NUevU9": {
     "context": "attribute values list: slug column header",
     "string": "Swatch"
@@ -7535,10 +7540,6 @@
   "Nsbu46": {
     "context": "Placeholder for channel search input",
     "string": "Search channels..."
-  },
-  "Nsk5WL": {
-    "context": "link",
-    "string": "Get support"
   },
   "NtFVFS": {
     "context": "weight",
@@ -9810,6 +9811,10 @@
   "Vf57Ie": {
     "string": "Partially fulfilled"
   },
+  "Vh8XXX": {
+    "context": "aria label of the manage app page tabs",
+    "string": "Manage app sections"
+  },
   "VhAHLQ": {
     "context": "assign picker, client-side filter emptied the loaded pages",
     "string": "Everything loaded so far is already assigned. Search by name, or keep loading the list."
@@ -11156,10 +11161,6 @@
   "a4iag6": {
     "context": "order header date, earlier today",
     "string": "Placed today at {time}"
-  },
-  "a55zOn": {
-    "context": "section header",
-    "string": "Data privacy"
   },
   "a5eZlA": {
     "context": "short product count column header in category sidebar",
@@ -14057,6 +14058,10 @@
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
   },
+  "jlO8Vq": {
+    "context": "manage app page tab: delivery attempts of the app's webhooks",
+    "string": "Webhook deliveries"
+  },
   "jm/spn": {
     "string": "Reset"
   },
@@ -14066,9 +14071,6 @@
   },
   "jmZSK1": {
     "string": "Product is not available in selected channels"
-  },
-  "joN8sy": {
-    "string": "Extension doesn't have any permissions granted."
   },
   "jofw4F": {
     "context": "warehouse channel remove confirmation, names the zones that would unlink",
@@ -14117,10 +14119,6 @@
   "jwDaI+": {
     "context": "settings search alias",
     "string": "charge"
-  },
-  "jwTwhf": {
-    "context": "app privacy policy link",
-    "string": "View this extension's privacy policy."
   },
   "jwwgtR": {
     "context": "setup review row title",
@@ -14371,9 +14369,6 @@
   "kbdk/c": {
     "context": "bulk publish wizard review step",
     "string": "Review products"
-  },
-  "kbezTI": {
-    "string": "Extension doesn't provide a description."
   },
   "kc4c4d": {
     "context": "product label",
@@ -17387,10 +17382,6 @@
   },
   "uGqPKY": {
     "string": "Select a Model Type. All Models extending the type will be available as refund reasons when issuing a refund."
-  },
-  "uIYU0D": {
-    "context": "section header",
-    "string": "Extension permissions"
   },
   "uIgWIr": {
     "string": "Choose language"
