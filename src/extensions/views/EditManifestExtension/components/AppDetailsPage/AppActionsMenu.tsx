@@ -30,14 +30,12 @@ export const AppActionsMenu = ({
     {
       label: intl.formatMessage(isActive ? buttonMessages.deactivate : buttonMessages.activate),
       testId: "app-activate-button",
-      color: isActive ? "warning1" : undefined,
       icon: <Power {...iconProps} />,
       onSelect: isActive ? onAppDeactivateOpen : onAppActivateOpen,
     },
     {
       label: intl.formatMessage(buttonMessages.delete),
       testId: "app-delete-button",
-      color: "critical1",
       icon: <Trash2 {...iconProps} />,
       onSelect: onAppDeleteOpen,
     },
