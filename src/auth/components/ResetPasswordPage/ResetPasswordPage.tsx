@@ -1,6 +1,5 @@
 import { useLastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import Form from "@dashboard/components/Form/Form";
-import { getAppMountUri } from "@dashboard/config";
 import { type AccountErrorCode } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
@@ -48,6 +47,9 @@ const resetPasswordMessages = defineMessages({
   },
 });
 
+/** Router path of the sign-in page; the router's basename already holds the mount URI. */
+const LOGIN_PATH = "/";
+
 export interface ResetPasswordPageFormData {
   email: string;
 }
@@ -65,13 +67,12 @@ export const ResetPasswordPage = ({
 }: ResetPasswordPageProps): ReactNode => {
   const intl = useIntl();
   const { hasUserLoggedViaExternalMethod } = useLastLoginMethod();
-  const loginHref = getAppMountUri();
 
   return (
     <AuthWell>
       <div className={styles.header}>
         <Link
-          to={loginHref}
+          to={LOGIN_PATH}
           className={styles.backButton}
           data-auth-link-button="true"
           aria-label={intl.formatMessage(resetPasswordMessages.backToSignIn)}
@@ -96,7 +97,7 @@ export const ResetPasswordPage = ({
       )}
 
       <Form initial={{ email: "" }} onSubmit={onSubmit}>
-        {({ change: handleChange, data, submit: handleSubmit }) => (
+        {({ change: handleChange, data }) => (
           <div className={styles.fields}>
             <AuthField
               autoFocus
@@ -118,7 +119,6 @@ export const ResetPasswordPage = ({
               data-test-id="submit"
               loading={disabled}
               variant="primary"
-              onClick={handleSubmit}
               type="submit"
             >
               <FormattedMessage {...resetPasswordMessages.submitButton} />
@@ -132,7 +132,7 @@ export const ResetPasswordPage = ({
           {...resetPasswordMessages.rememberedPrompt}
           values={{
             loginLink: (
-              <Link to={loginHref} className={styles.helpLink}>
+              <Link to={LOGIN_PATH} className={styles.helpLink}>
                 <FormattedMessage {...resetPasswordMessages.backToLogin} />
               </Link>
             ),

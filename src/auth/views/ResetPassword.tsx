@@ -38,7 +38,7 @@ const ResetPasswordView = () => {
   return (
     <ResetPasswordPage
       disabled={requestPasswordResetOpts.loading}
-      error={error as string}
+      error={error}
       onSubmit={handleSubmit}
     />
   );
