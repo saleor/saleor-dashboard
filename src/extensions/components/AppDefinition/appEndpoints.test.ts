@@ -1,11 +1,11 @@
 import { type AppManifestFragment, WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 
 import {
-  getManifestEndpoints,
+  type AppEndpoint,
+  getAppEndpoints,
   groupEndpointsByHost,
   isOfficialManifest,
-  type ManifestEndpoint,
-} from "./manifestEndpoints";
+} from "./appEndpoints";
 
 type EndpointFields = Pick<
   AppManifestFragment,
@@ -38,7 +38,7 @@ const officialManifest: EndpointFields = {
 
 const manifestUrl = "https://adyen.saleor.app/api/manifest";
 
-describe("manifestEndpoints", () => {
+describe("appEndpoints", () => {
   const originalConfig = window.__SALEOR_CONFIG__;
 
   beforeEach(() => {
@@ -51,7 +51,7 @@ describe("manifestEndpoints", () => {
 
   it("lists every endpoint and resolves relative extension URLs against appUrl", () => {
     // Arrange & Act
-    const endpoints = getManifestEndpoints(manifestUrl, officialManifest);
+    const endpoints = getAppEndpoints(manifestUrl, officialManifest);
 
     // Assert
     expect(endpoints.map(({ kind, url }) => [kind, url])).toEqual([
@@ -65,7 +65,7 @@ describe("manifestEndpoints", () => {
 
   it("keeps webhook name and events on webhook endpoints", () => {
     // Arrange & Act
-    const webhook = getManifestEndpoints(manifestUrl, officialManifest).find(
+    const webhook = getAppEndpoints(manifestUrl, officialManifest).find(
       endpoint => endpoint.kind === "webhook",
     );
 
@@ -75,7 +75,7 @@ describe("manifestEndpoints", () => {
 
   it("keeps extension label and mount on extension endpoints", () => {
     // Arrange & Act
-    const extension = getManifestEndpoints(manifestUrl, officialManifest).find(
+    const extension = getAppEndpoints(manifestUrl, officialManifest).find(
       endpoint => endpoint.kind === "extension",
     );
 
@@ -89,7 +89,7 @@ describe("manifestEndpoints", () => {
 
   it("is official when every endpoint is on the Saleor app domain", () => {
     // Arrange
-    const endpoints = getManifestEndpoints(manifestUrl, officialManifest);
+    const endpoints = getAppEndpoints(manifestUrl, officialManifest);
 
     // Act & Assert
     expect(isOfficialManifest(endpoints)).toBe(true);
@@ -97,7 +97,7 @@ describe("manifestEndpoints", () => {
 
   it("is not official when the token goes to another host", () => {
     // Arrange
-    const endpoints = getManifestEndpoints(manifestUrl, {
+    const endpoints = getAppEndpoints(manifestUrl, {
       ...officialManifest,
       tokenTargetUrl: "https://collector.example.com/register",
     });
@@ -108,7 +108,7 @@ describe("manifestEndpoints", () => {
 
   it("is not official for a look-alike host", () => {
     // Arrange
-    const endpoints = getManifestEndpoints("https://adyen.saleor.app.evil.io/manifest", {
+    const endpoints = getAppEndpoints("https://adyen.saleor.app.evil.io/manifest", {
       ...officialManifest,
       appUrl: null,
       tokenTargetUrl: null,
@@ -122,7 +122,7 @@ describe("manifestEndpoints", () => {
 
   it("is not official when a URL cannot be parsed", () => {
     // Arrange
-    const endpoints = getManifestEndpoints(manifestUrl, {
+    const endpoints = getAppEndpoints(manifestUrl, {
       ...officialManifest,
       tokenTargetUrl: "not a url",
     });
@@ -133,13 +133,14 @@ describe("manifestEndpoints", () => {
 
   it("groups endpoints by host with the manifest host first", () => {
     // Arrange
-    const endpoints: ManifestEndpoint[] = [
+    const endpoints: AppEndpoint[] = [
       { kind: "manifest", url: "https://a.example.com/m", host: "a.example.com" },
       {
         kind: "webhook",
         url: "https://b.example.com/w",
         host: "b.example.com",
         name: "Order paid",
+        subscriptionQuery: null,
         events: ["ORDER_FULLY_PAID"],
       },
       { kind: "app", url: "https://a.example.com/", host: "a.example.com" },

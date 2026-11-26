@@ -1,10 +1,11 @@
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Chip, Text } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
-import { type Manifest } from "../../../types";
-import styles from "./InstallExtensionManifestData.module.css";
+import styles from "./AppDefinition.module.css";
+import { type AppDefinitionPermission } from "./appEndpoints";
 import { manifestMessages } from "./messages";
 
 /** Permissions that reach money, staff accounts or customers' personal data. */
@@ -15,10 +16,22 @@ const SENSITIVE_PERMISSIONS = new Set<PermissionEnum>([
   PermissionEnum.IMPERSONATE_USER,
 ]);
 
-export const ManifestPermissionsCard = ({
+const SensitivePermissionChip = () => {
+  const intl = useIntl();
+
+  return (
+    <Chip backgroundColor="critical1" borderColor="critical1" color="critical1">
+      {intl.formatMessage(manifestMessages.sensitive)}
+    </Chip>
+  );
+};
+
+export const AppPermissionsCard = ({
   permissions,
+  headerEnd,
 }: {
-  permissions: NonNullable<Manifest["permissions"]>;
+  permissions: AppDefinitionPermission[];
+  headerEnd?: ReactNode;
 }) => {
   const intl = useIntl();
 
@@ -26,6 +39,7 @@ export const ManifestPermissionsCard = ({
     <DetailSettingsCard
       title={intl.formatMessage(manifestMessages.permissions)}
       subtitle={intl.formatMessage(manifestMessages.permissionsSubtitle)}
+      headerEnd={headerEnd}
       contentFlush
     >
       {permissions.length === 0 && (
@@ -39,11 +53,7 @@ export const ManifestPermissionsCard = ({
         <Box key={permission.code} className={styles.row}>
           <Text size={3}>{permission.name}</Text>
           <Box display="flex" alignItems="center" gap={2}>
-            {SENSITIVE_PERMISSIONS.has(permission.code) && (
-              <Chip backgroundColor="critical1" borderColor="critical1" color="critical1">
-                {intl.formatMessage(manifestMessages.sensitive)}
-              </Chip>
-            )}
+            {SENSITIVE_PERMISSIONS.has(permission.code) && <SensitivePermissionChip />}
             <Text size={2} color="default2" className={styles.mono}>
               {permission.code}
             </Text>

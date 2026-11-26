@@ -1,8 +1,7 @@
+import { manifestMessages } from "@dashboard/extensions/components/AppDefinition/messages";
 import { Chip } from "@saleor/macaw-ui-next";
 import { ShieldCheck, TriangleAlert } from "lucide-react";
 import { useIntl } from "react-intl";
-
-import { manifestMessages } from "./messages";
 
 export const TrustChip = ({ isOfficial }: { isOfficial: boolean }) => {
   const intl = useIntl();

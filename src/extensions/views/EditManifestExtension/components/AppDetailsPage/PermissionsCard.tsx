@@ -1,81 +1,24 @@
 import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip/ButtonWithTooltip";
-import { type PermissionEnum } from "@dashboard/graphql";
+import { type AppDefinitionPermission } from "@dashboard/extensions/components/AppDefinition/appEndpoints";
+import { AppPermissionsCard } from "@dashboard/extensions/components/AppDefinition/AppPermissionsCard";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, type BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { AppPermissionsDialog } from "../AppPermissionsDialog/AppPermissionsDialog";
 import messages from "./messages";
 
-type PermissionsCardProps = {
-  permissions: Array<{
-    name: string;
-    code: PermissionEnum;
-  }> | null;
-  loading: boolean;
-  appId: string; // todo wrap with App Context
-} & BoxProps;
-
 export const PermissionsCard = ({
   permissions,
-  loading,
   appId,
-  ...boxProps
-}: PermissionsCardProps) => {
+}: {
+  permissions: AppDefinitionPermission[];
+  appId: string;
+}) => {
   const [editPermissionDialogOpen, setEditPermissionDialogOpen] = useState(false);
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const editPermissionsButton = (
-    <ButtonWithTooltip
-      tooltip={
-        !hasManagedAppsPermission ? intl.formatMessage(buttonMessages.noPermission) : undefined
-      }
-      variant="secondary"
-      data-test-id="app-edit-permissions-button"
-      disabled={!hasManagedAppsPermission}
-      onClick={() => setEditPermissionDialogOpen(true)}
-    >
-      {intl.formatMessage(messages.editPermissionsButton)}
-    </ButtonWithTooltip>
-  );
-  const renderContent = () => {
-    if (loading) {
-      return <Skeleton />;
-    }
-
-    if (permissions && permissions.length === 0) {
-      return (
-        <>
-          <Text marginBottom={4} as={"p"}>
-            {intl.formatMessage(messages.appNoPermissions)}
-          </Text>
-          {editPermissionsButton}
-        </>
-      );
-    }
-
-    if (permissions && permissions.length > 0) {
-      return (
-        <>
-          <Text as={"p"} marginBottom={4}>
-            <FormattedMessage {...messages.appPermissionsDescription} />
-          </Text>
-          <Box as={"ul"}>
-            {permissions?.map(perm => (
-              <Box as={"li"} paddingX={4} paddingY={2} key={perm.code}>
-                <Text>{perm.name}</Text>
-              </Box>
-            ))}
-          </Box>
-          {editPermissionsButton}
-        </>
-      );
-    }
-
-    throw new Error('Leaking "if" statement, should never happen');
-  };
 
   return (
     <>
@@ -83,15 +26,28 @@ export const PermissionsCard = ({
         <AppPermissionsDialog
           appId={appId}
           onClose={() => setEditPermissionDialogOpen(false)}
-          assignedPermissions={permissions?.map(p => p.code) ?? []}
+          assignedPermissions={permissions.map(p => p.code)}
         />
       )}
-      <Box {...boxProps}>
-        <Text size={5} fontWeight="bold" marginBottom={4} as={"h2"}>
-          {intl.formatMessage(messages.appPermissionsTitle)}
-        </Text>
-        <Box>{renderContent()}</Box>
-      </Box>
+      <AppPermissionsCard
+        permissions={permissions}
+        headerEnd={
+          <ButtonWithTooltip
+            tooltip={
+              !hasManagedAppsPermission
+                ? intl.formatMessage(buttonMessages.noPermission)
+                : undefined
+            }
+            variant="secondary"
+            size="small"
+            data-test-id="app-edit-permissions-button"
+            disabled={!hasManagedAppsPermission}
+            onClick={() => setEditPermissionDialogOpen(true)}
+          >
+            {intl.formatMessage(messages.editPermissionsButton)}
+          </ButtonWithTooltip>
+        }
+      />
     </>
   );
 };

@@ -152,6 +152,10 @@
     "context": "disabled status option label",
     "string": "Disabled"
   },
+  "+WWyPu": {
+    "context": "manage app overview field: installation date",
+    "string": "Installed"
+  },
   "+Wm2vY": {
     "context": "discount type percentage",
     "string": "Percentage"
@@ -2510,10 +2514,6 @@
     "context": "success toast after activating a customer",
     "string": "Customer activated"
   },
-  "6jyoEd": {
-    "context": "section header",
-    "string": "About this extension"
-  },
   "6kPUGg": {
     "context": "empty product variant reference list",
     "string": "No product variants"
@@ -2610,10 +2610,6 @@
   "74Zo/H": {
     "context": "channel slug",
     "string": "Slug"
-  },
-  "750Ymk": {
-    "context": "apps about permissions",
-    "string": "This extension has permissions to:"
   },
   "769/mX": {
     "context": "gift card metadata dialog header",
@@ -3205,6 +3201,10 @@
   "98WMlR": {
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
+  },
+  "98a49a": {
+    "context": "aria label of the section navigation on the manage app details tab",
+    "string": "Installed app sections"
   },
   "98hvB9": {
     "context": "install page connections sub-table header for Dashboard extensions",
@@ -5415,6 +5415,10 @@
     "context": "order history message",
     "string": "Payment was authorized"
   },
+  "GWjchd": {
+    "context": "manage app page tab: what is installed",
+    "string": "Details"
+  },
   "GXxpRA": {
     "context": "channel detail title secondary meta after status pill",
     "string": "{country} · {currency}"
@@ -7422,9 +7426,6 @@
     "context": "bulk publish review spreadsheet paste hint",
     "string": "{hasStock, select, true {You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill price, cost price, and stock down the list.} other {You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill price and cost price down the list.}}"
   },
-  "NUBTlN": {
-    "string": "Extension doesn't provide a privacy policy."
-  },
   "NUevU9": {
     "context": "attribute values list: slug column header",
     "string": "Swatch"
@@ -7536,10 +7537,6 @@
     "context": "Placeholder for channel search input",
     "string": "Search channels..."
   },
-  "Nsk5WL": {
-    "context": "link",
-    "string": "Get support"
-  },
   "NtFVFS": {
     "context": "weight",
     "string": "{value} {unit}"
@@ -7574,6 +7571,10 @@
   "Nyxzpe": {
     "context": "onboarding step description",
     "string": "Saleor includes a GraphQL Playground, an interactive GraphQL editor, allowing access to your Saleor instance's API through the web browser. The Playground lets you quickly familiarize yourself with the API, perform example operations, and send your first queries and mutations."
+  },
+  "NzE+Rw": {
+    "context": "icon button on a connection row that copies its URL",
+    "string": "Copy URL"
   },
   "NzifUg": {
     "context": "window title",
@@ -8645,6 +8646,10 @@
   },
   "Rp/Okl": {
     "string": "Shipping Weight Unit"
+  },
+  "RqPJRg": {
+    "context": "manage app overview field: installed app version",
+    "string": "Version"
   },
   "RqeG2I": {
     "context": "customer type attributes card intro",
@@ -9809,6 +9814,10 @@
   },
   "Vf57Ie": {
     "string": "Partially fulfilled"
+  },
+  "Vh8XXX": {
+    "context": "aria label of the manage app page tabs",
+    "string": "Manage app sections"
   },
   "VhAHLQ": {
     "context": "assign picker, client-side filter emptied the loaded pages",
@@ -11156,10 +11165,6 @@
   "a4iag6": {
     "context": "order header date, earlier today",
     "string": "Placed today at {time}"
-  },
-  "a55zOn": {
-    "context": "section header",
-    "string": "Data privacy"
   },
   "a5eZlA": {
     "context": "short product count column header in category sidebar",
@@ -13593,6 +13598,10 @@
     "context": "warning when assigning staff order alert recipients partially fails",
     "string": "Some staff couldn’t be added. Try again."
   },
+  "iMRgMk": {
+    "context": "icon button on a connection row that opens its URL in a new tab",
+    "string": "Open in new tab"
+  },
   "iMZEfi": {
     "context": "model detail page menu, opens model type configuration",
     "string": "Model type settings"
@@ -14057,6 +14066,10 @@
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
   },
+  "jlO8Vq": {
+    "context": "manage app page tab: delivery attempts of the app's webhooks",
+    "string": "Webhook deliveries"
+  },
   "jm/spn": {
     "string": "Reset"
   },
@@ -14066,9 +14079,6 @@
   },
   "jmZSK1": {
     "string": "Product is not available in selected channels"
-  },
-  "joN8sy": {
-    "string": "Extension doesn't have any permissions granted."
   },
   "jofw4F": {
     "context": "warehouse channel remove confirmation, names the zones that would unlink",
@@ -14117,10 +14127,6 @@
   "jwDaI+": {
     "context": "settings search alias",
     "string": "charge"
-  },
-  "jwTwhf": {
-    "context": "app privacy policy link",
-    "string": "View this extension's privacy policy."
   },
   "jwwgtR": {
     "context": "setup review row title",
@@ -14371,9 +14377,6 @@
   "kbdk/c": {
     "context": "bulk publish wizard review step",
     "string": "Review products"
-  },
-  "kbezTI": {
-    "string": "Extension doesn't provide a description."
   },
   "kc4c4d": {
     "context": "product label",
@@ -14945,6 +14948,10 @@
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
+  },
+  "mSR4bJ": {
+    "context": "button on a webhook row that copies its subscription query",
+    "string": "Copy subscription"
   },
   "mSS92b": {
     "string": "Untitled rule"
@@ -17387,10 +17394,6 @@
   },
   "uGqPKY": {
     "string": "Select a Model Type. All Models extending the type will be available as refund reasons when issuing a refund."
-  },
-  "uIYU0D": {
-    "context": "section header",
-    "string": "Extension permissions"
   },
   "uIgWIr": {
     "string": "Choose language"

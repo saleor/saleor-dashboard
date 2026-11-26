@@ -1,10 +1,10 @@
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
+import styles from "@dashboard/extensions/components/AppDefinition/AppDefinition.module.css";
+import { manifestMessages } from "@dashboard/extensions/components/AppDefinition/messages";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { type Manifest } from "../../../types";
-import styles from "./InstallExtensionManifestData.module.css";
-import { manifestMessages } from "./messages";
 import { TrustChip } from "./TrustChip";
 
 export const ManifestHeader = ({
