@@ -32,12 +32,12 @@ export default defineMessages({
   },
   installed: {
     defaultMessage: "Installed",
-    id: "CW+YYK",
-    description: "manage app overview field: installation date; also a column header",
+    id: "+WWyPu",
+    description: "manage app overview field: installation date",
   },
   version: {
     defaultMessage: "Version",
-    id: "5LBDEe",
-    description: "manage app overview field and updates section title",
+    id: "RqPJRg",
+    description: "manage app overview field: installed app version",
   },
 });

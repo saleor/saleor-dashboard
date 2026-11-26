@@ -152,6 +152,10 @@
     "context": "disabled status option label",
     "string": "Disabled"
   },
+  "+WWyPu": {
+    "context": "manage app overview field: installation date",
+    "string": "Installed"
+  },
   "+Wm2vY": {
     "context": "discount type percentage",
     "string": "Percentage"
@@ -2018,10 +2022,6 @@
   "5L99+F": {
     "context": "staff member has not signed in yet after invite",
     "string": "Pending invite"
-  },
-  "5LBDEe": {
-    "context": "manage app overview field and updates section title",
-    "string": "Version"
   },
   "5M+hLZ": {
     "string": "User permissions"
@@ -4274,10 +4274,6 @@
     "context": "Product save pipeline step label",
     "string": "Attribute files"
   },
-  "CW+YYK": {
-    "context": "manage app overview field: installation date; also a column header",
-    "string": "Installed"
-  },
   "CWDuMj": {
     "context": "remaining quantity",
     "string": "/ {max}"
@@ -5815,10 +5811,6 @@
   },
   "HlEpii": {
     "string": "Search Engine Title"
-  },
-  "Hn2vTb": {
-    "context": "icon button on a connection row that opens its URL in a new tab",
-    "string": "Open in new tab"
   },
   "HnZCl7": {
     "context": "search input placeholder",
@@ -8654,6 +8646,10 @@
   },
   "Rp/Okl": {
     "string": "Shipping Weight Unit"
+  },
+  "RqPJRg": {
+    "context": "manage app overview field: installed app version",
+    "string": "Version"
   },
   "RqeG2I": {
     "context": "customer type attributes card intro",
@@ -13601,6 +13597,10 @@
   "iM5nh1": {
     "context": "warning when assigning staff order alert recipients partially fails",
     "string": "Some staff couldn’t be added. Try again."
+  },
+  "iMRgMk": {
+    "context": "icon button on a connection row that opens its URL in a new tab",
+    "string": "Open in new tab"
   },
   "iMZEfi": {
     "context": "model detail page menu, opens model type configuration",
