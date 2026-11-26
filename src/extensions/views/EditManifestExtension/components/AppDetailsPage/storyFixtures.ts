@@ -26,6 +26,9 @@ export const installedAppStory: NonNullable<AppQuery["app"]> = {
       name: "Order created",
       isActive: true,
       targetUrl: "https://klaviyo.saleor.app/api/webhooks/order-created",
+      subscriptionQuery: JSON.stringify(
+        'subscription { event { ... on OrderCreated { order { id metafield(key: "crm") } } } }',
+      ),
       syncEvents: [],
       asyncEvents: [
         { __typename: "WebhookEventAsync", eventType: WebhookEventTypeAsyncEnum.ORDER_CREATED },

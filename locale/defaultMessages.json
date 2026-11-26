@@ -5816,6 +5816,10 @@
   "HlEpii": {
     "string": "Search Engine Title"
   },
+  "Hn2vTb": {
+    "context": "icon button on a connection row that opens its URL in a new tab",
+    "string": "Open in new tab"
+  },
   "HnZCl7": {
     "context": "search input placeholder",
     "string": "Search tax countries"
@@ -7575,6 +7579,10 @@
   "Nyxzpe": {
     "context": "onboarding step description",
     "string": "Saleor includes a GraphQL Playground, an interactive GraphQL editor, allowing access to your Saleor instance's API through the web browser. The Playground lets you quickly familiarize yourself with the API, perform example operations, and send your first queries and mutations."
+  },
+  "NzE+Rw": {
+    "context": "icon button on a connection row that copies its URL",
+    "string": "Copy URL"
   },
   "NzifUg": {
     "context": "window title",
@@ -14940,6 +14948,10 @@
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
+  },
+  "mSR4bJ": {
+    "context": "button on a webhook row that copies its subscription query",
+    "string": "Copy subscription"
   },
   "mSS92b": {
     "string": "Untitled rule"

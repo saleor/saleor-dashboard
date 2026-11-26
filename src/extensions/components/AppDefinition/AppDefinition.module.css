@@ -76,3 +76,38 @@
   padding: var(--mu-spacing-2) var(--mu-spacing-6);
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }
+
+/* Row actions stay collapsed until the row is hovered, focused, or shows a copy confirmation. */
+.rowActions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--mu-spacing-1);
+  box-sizing: border-box;
+  max-width: 0;
+  padding-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-width 0.2s ease-out,
+    padding-left 0.2s ease-out,
+    opacity 0.2s ease-out;
+}
+
+.row:hover .rowActions,
+.rowActions:focus-within,
+.rowActions:has([data-visible="true"]) {
+  max-width: 120px;
+  padding-left: var(--mu-spacing-2);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rowActions {
+    transition: none;
+  }
+}
+
+.reservedSlot {
+  display: flex;
+  visibility: hidden;
+}

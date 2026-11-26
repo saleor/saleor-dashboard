@@ -140,6 +140,7 @@ describe("appEndpoints", () => {
         url: "https://b.example.com/w",
         host: "b.example.com",
         name: "Order paid",
+        subscriptionQuery: null,
         events: ["ORDER_FULLY_PAID"],
       },
       { kind: "app", url: "https://a.example.com/", host: "a.example.com" },

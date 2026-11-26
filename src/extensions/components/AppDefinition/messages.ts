@@ -1,6 +1,21 @@
 import { defineMessages } from "react-intl";
 
 export const manifestMessages = defineMessages({
+  openInNewTab: {
+    defaultMessage: "Open in new tab",
+    id: "iMRgMk",
+    description: "icon button on a connection row that opens its URL in a new tab",
+  },
+  copyUrl: {
+    defaultMessage: "Copy URL",
+    id: "NzE+Rw",
+    description: "icon button on a connection row that copies its URL",
+  },
+  copySubscription: {
+    defaultMessage: "Copy subscription",
+    id: "mSR4bJ",
+    description: "button on a webhook row that copies its subscription query",
+  },
   externalChip: {
     defaultMessage: "External app",
     id: "XZggY6",
