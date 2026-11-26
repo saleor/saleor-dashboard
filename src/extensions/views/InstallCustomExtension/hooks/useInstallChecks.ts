@@ -1,7 +1,10 @@
+import {
+  getAppEndpoints,
+  isOfficialManifest,
+} from "@dashboard/extensions/components/AppDefinition/appEndpoints";
 import { ExtensionManifestValidator } from "@dashboard/extensions/domain/extension-manifest-validator";
 import { useMemo } from "react";
 
-import { getManifestEndpoints, isOfficialManifest } from "../manifestEndpoints";
 import { type Manifest } from "../types";
 import { useManifestAcknowledgement } from "./useManifestAcknowledgement";
 
@@ -25,10 +28,7 @@ export const useInstallChecks = ({
   }, [manifest]);
 
   const isOfficial = useMemo(
-    () =>
-      !!manifest &&
-      !!manifestUrl &&
-      isOfficialManifest(getManifestEndpoints(manifestUrl, manifest)),
+    () => !!manifest && !!manifestUrl && isOfficialManifest(getAppEndpoints(manifestUrl, manifest)),
     [manifest, manifestUrl],
   );
 

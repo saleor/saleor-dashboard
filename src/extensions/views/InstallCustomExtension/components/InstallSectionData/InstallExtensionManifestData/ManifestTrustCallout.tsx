@@ -1,9 +1,9 @@
 import { Callout } from "@dashboard/components/Callout/Callout";
+import { manifestMessages } from "@dashboard/extensions/components/AppDefinition/messages";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ManifestAcknowledgement } from "../../../hooks/useManifestAcknowledgement";
-import { manifestMessages } from "./messages";
 
 export const ManifestTrustCallout = ({
   isOfficial,
