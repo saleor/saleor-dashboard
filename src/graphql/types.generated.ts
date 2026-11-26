@@ -14297,7 +14297,7 @@ export type StockVisibilityModeQuery = { __typename: 'Query', shop: { __typename
 export type ChannelDiagnosticsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChannelDiagnosticsQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, useLegacyShippingZoneStockAvailability: boolean }, channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string, isActive: boolean, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> }> | null, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> } }> } | null };
+export type ChannelDiagnosticsQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, useLegacyShippingZoneStockAvailability: boolean }, channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string, isActive: boolean, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> }> | null };
 
 export type ProductVariantsGridQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -14310,6 +14310,15 @@ export type ProductVariantsGridQueryVariables = Exact<{
 
 
 export type ProductVariantsGridQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, productVariants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, sku: string | null, name: string, trackInventory: boolean, quantityLimitPerCustomer: number | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, isAvailableForPurchase: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null } }> } | null } | null };
+
+export type ProductDoctorShippingZonesQueryVariables = Exact<{
+  channels?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ProductDoctorShippingZonesQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> } }> } | null };
 
 export type ProductDoctorVariantsQueryVariables = Exact<{
   id: Scalars['ID']['input'];

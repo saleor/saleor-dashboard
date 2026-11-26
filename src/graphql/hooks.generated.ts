@@ -19101,25 +19101,6 @@ export const ChannelDiagnosticsDocument = gql`
       name
     }
   }
-  shippingZones(first: 100) {
-    edges {
-      node {
-        id
-        name
-        channels {
-          id
-        }
-        warehouses {
-          id
-          name
-        }
-        countries {
-          code
-          country
-        }
-      }
-    }
-  }
 }
     `;
 
@@ -19209,6 +19190,63 @@ export function useProductVariantsGridLazyQuery(baseOptions?: ApolloReactHooks.L
 export type ProductVariantsGridQueryHookResult = ReturnType<typeof useProductVariantsGridQuery>;
 export type ProductVariantsGridLazyQueryHookResult = ReturnType<typeof useProductVariantsGridLazyQuery>;
 export type ProductVariantsGridQueryResult = Apollo.QueryResult<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>;
+export const ProductDoctorShippingZonesDocument = gql`
+    query ProductDoctorShippingZones($channels: [ID!], $first: Int!, $after: String) {
+  shippingZones(first: $first, after: $after, filter: {channels: $channels}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        channels {
+          id
+        }
+        warehouses {
+          id
+          name
+        }
+        countries {
+          code
+          country
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductDoctorShippingZonesQuery__
+ *
+ * To run a query within a React component, call `useProductDoctorShippingZonesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductDoctorShippingZonesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductDoctorShippingZonesQuery({
+ *   variables: {
+ *      channels: // value for 'channels'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useProductDoctorShippingZonesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductDoctorShippingZonesQuery, Types.ProductDoctorShippingZonesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductDoctorShippingZonesQuery, Types.ProductDoctorShippingZonesQueryVariables>(ProductDoctorShippingZonesDocument, options);
+      }
+export function useProductDoctorShippingZonesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductDoctorShippingZonesQuery, Types.ProductDoctorShippingZonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductDoctorShippingZonesQuery, Types.ProductDoctorShippingZonesQueryVariables>(ProductDoctorShippingZonesDocument, options);
+        }
+export type ProductDoctorShippingZonesQueryHookResult = ReturnType<typeof useProductDoctorShippingZonesQuery>;
+export type ProductDoctorShippingZonesLazyQueryHookResult = ReturnType<typeof useProductDoctorShippingZonesLazyQuery>;
+export type ProductDoctorShippingZonesQueryResult = Apollo.QueryResult<Types.ProductDoctorShippingZonesQuery, Types.ProductDoctorShippingZonesQueryVariables>;
 export const ProductDoctorVariantsDocument = gql`
     query ProductDoctorVariants($id: ID!, $first: Int!, $after: String) {
   product(id: $id) {

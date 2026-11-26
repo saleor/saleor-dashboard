@@ -266,8 +266,8 @@ export const stockVisibilityModeQuery = gql`
 
 /**
  * Query for product availability diagnostics.
- * Fetches channel and shipping zone data needed to determine
- * if a product can be purchased in each channel.
+ * Fetches channel data needed to determine if a product can be purchased in
+ * each channel. Shipping zones come from `productDoctorShippingZonesQuery`.
  *
  * Also reads `Shop.useLegacyShippingZoneStockAvailability` (Saleor 3.23+) so
  * the doctor can adapt severity/copy based on whether the shop uses legacy
@@ -290,25 +290,6 @@ export const channelDiagnosticsQuery = gql`
       warehouses {
         id
         name
-      }
-    }
-    shippingZones(first: 100) {
-      edges {
-        node {
-          id
-          name
-          channels {
-            id
-          }
-          warehouses {
-            id
-            name
-          }
-          countries {
-            code
-            country
-          }
-        }
       }
     }
   }
@@ -342,6 +323,35 @@ export const productVariantsGridQuery = gql`
         edges {
           node {
             ...ProductDetailsVariant
+          }
+        }
+      }
+    }
+  }
+`;
+
+/** Shipping zones linked to the product's channels, walked page by page for Product Doctor. */
+export const productDoctorShippingZonesQuery = gql`
+  query ProductDoctorShippingZones($channels: [ID!], $first: Int!, $after: String) {
+    shippingZones(first: $first, after: $after, filter: { channels: $channels }) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          name
+          channels {
+            id
+          }
+          warehouses {
+            id
+            name
+          }
+          countries {
+            code
+            country
           }
         }
       }
