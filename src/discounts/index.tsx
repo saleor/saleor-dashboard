@@ -7,11 +7,12 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import { type DiscountListUrlQueryParams, DiscountListUrlSortField } from "./discountsUrls";
 import {
+  discountSection,
   saleAddPath,
   saleListPath,
   salePath,
@@ -84,6 +85,7 @@ const DiscountSection = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <Switch>
+        <Route exact path={discountSection} render={() => <Redirect to={saleListPath} />} />
         <Route exact path={saleListPath} component={SaleListView} />
         <Route exact path={saleAddPath} component={SaleCreateView} />
         <Route exact path={voucherAddPath} component={VoucherCreateView} />
