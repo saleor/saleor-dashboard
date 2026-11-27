@@ -146,13 +146,11 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
         </Box>
       </TopNav>
       <DashboardCard paddingX={6}>
-        <Box __width="370px">
-          <SearchInput
-            initialSearch={query}
-            placeholder={intl.formatMessage(messages.searchPlaceholder)}
-            onSearchChange={newQuery => handleQueryChange(newQuery)}
-          />
-        </Box>
+        <SearchInput
+          initialSearch={query}
+          placeholder={intl.formatMessage(messages.searchPlaceholder)}
+          onSearchChange={newQuery => handleQueryChange(newQuery)}
+        />
 
         <InstalledExtensionsList
           installedExtensions={[...pendingInstallations, ...filteredInstalledExtensions]}

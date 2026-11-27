@@ -24,6 +24,17 @@
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }
 
+.searchField {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* The clear control is overlaid on the field, so the query needs room to end before it. */
+.searchFieldWithClear input {
+  padding-right: 2rem;
+}
+
 .table {
   width: 100%;
   table-layout: auto;
